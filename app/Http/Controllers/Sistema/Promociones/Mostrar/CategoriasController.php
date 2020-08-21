@@ -38,6 +38,7 @@ class CategoriasController extends Controller
                                                                     'cat.catnombre',
                                                                     'cat.catimagenfondo',
                                                                     'cat.caticono',
+                                                                    'cat.catcolorhover',
                                                                     'fec.fecfecha'
                                                                 ]);
 
