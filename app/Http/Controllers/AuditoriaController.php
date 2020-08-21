@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\audauditorias;
+use App\usuusuarios;
 
 class AuditoriaController extends Controller
 {
@@ -38,7 +39,7 @@ class AuditoriaController extends Controller
         $audauditorias->auddescripcion  = $auddescripcion;
         $audauditorias->audaccion       = $audaccion;
         $audauditorias->audruta         = $audruta;
-        $audauditorias->audpk           = $audp;
+        $audauditorias->audpk           = $audpk;
         if($audauditorias->save()){
             $respuesta = true;
         }else{

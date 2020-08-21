@@ -1,11 +1,14 @@
 <?php
 
-namespace App\Http\Controllers\Promociones\Mostrar;
+namespace App\Http\Controllers\Sistema\Promociones\Mostrar;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\csccanalessucursalescategorias;
 use App\Http\Controllers\AuditoriaController;
+use App\cspcanalessucursalespromociones;
+use App\prppromocionesproductos;
+use App\prbpromocionesbonificaciones;
 
 class PromocionesMostrarController extends Controller
 {
@@ -100,12 +103,12 @@ class PromocionesMostrarController extends Controller
         }
 
         $requestsalida = response()->json([
-            $respuesta      => $respuesta,
-            $mensaje        => $mensaje,
-            $datos          => $datos,
-            $linea          => $linea,
-            $mensajeDetalle => $mensajeDetalle,
-            $mensajedev     => $mensajedev
+            'respuesta'      => $respuesta,
+            'mensaje'        => $mensaje,
+            'datos'          => $datos,
+            'linea'          => $linea,
+            'mensajeDetalle' => $mensajeDetalle,
+            'mensajedev'     => $mensajedev
         ]);
 
         $AuditoriaController = new AuditoriaController;
