@@ -73,7 +73,7 @@ class PromocionesMostrarController extends Controller
                                                                                         ]);
                             
                             if(sizeof($prbpromocionesbonificaciones) > 0){
-                                $cspcanalessucursalespromociones[$posicionPromociones]['productosbonificados'] = $prppromocionesproductos;
+                                $cspcanalessucursalespromociones[$posicionPromociones]['productosbonificados'] = $prbpromocionesbonificaciones;
                             }else{
                                 $cspcanalessucursalespromociones[$posicionPromociones]['productosbonificados'] = [];
                             }
