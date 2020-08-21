@@ -27,7 +27,7 @@ class loginController extends Controller
             $usuusaurio = usuusuarios::where('usuusuario', $usuario)
                                         ->first([
                                             'usuid',
-                                            'usuusaurio',
+                                            'usuusuario',
                                             'usutoken',
                                             'usucontrasena',
 
