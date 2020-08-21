@@ -29,16 +29,18 @@ class loginController extends Controller
 
             if($usuusaurio){
 
-                if (Hash::check($contrasena, $usuarusuusaurioio->usucontrasena)) {
+                if (Hash::check($contrasena, $usuusaurio->usucontrasena)) {
                     $respuesta      = true;
                     $mensaje        = 'Login Correcto';
                     $mensajeDetalle = 'Bienvenido.';
                     $linea          = __LINE__;
+                    $datos          = $usuusaurio;
                 }else{
                     $respuesta      = false;
                     $mensaje        = 'Login Incorrecto';
                     $mensajeDetalle = 'La contraseña es incorrecta.';
                     $linea          = __LINE__;
+                    $datos          = [];
                 }
 
             }else{
@@ -46,7 +48,7 @@ class loginController extends Controller
                 $mensaje        = 'Login Incorrecto';
                 $mensajeDetalle = 'El usuario no esta registrado.';
                 $linea          = __LINE__;
-
+                $datos          = [];
             }
 
         } catch (Exception $e) {
@@ -55,12 +57,12 @@ class loginController extends Controller
         }
         
         return response()->json([
-            $respuesta      => $respuesta,
-            $mensaje        => $mensaje,
-            $datos          => $datos,
-            $linea          => $linea,
-            $mensajeDetalle => $mensajeDetalle,
-            $mensajedev     => $mensajedev
+            'respuesta'      => $respuesta,
+            'mensaje'        => $mensaje,
+            'datos'          => $datos,
+            'linea'          => $linea,
+            'mensajeDetalle' => $mensajeDetalle,
+            'mensajedev'     => $mensajedev
         ]);
     }
 }
