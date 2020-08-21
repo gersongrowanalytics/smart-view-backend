@@ -25,7 +25,13 @@ class loginController extends Controller
         try{
             
             $usuusaurio = usuusuarios::where('usuusuario', $usuario)
-                                        ->first(['usucontrasena']);
+                                        ->first([
+                                            'usuid',
+                                            'usuusaurio',
+                                            'usutoken',
+                                            'usucontrasena',
+
+                                        ]);
 
             if($usuusaurio){
 
