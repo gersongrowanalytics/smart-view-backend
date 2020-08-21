@@ -31,6 +31,7 @@ class CategoriasController extends Controller
                                                                 ->where('fec.fecano', $ano)
                                                                 ->where('fec.fecmes', $mes)
                                                                 ->where('fec.fecdia', $dia)
+                                                                ->where('scasucursalescategorias.tsuid', null)
                                                                 ->get([
                                                                     'scasucursalescategorias.scaid',
                                                                     'cat.catid',
