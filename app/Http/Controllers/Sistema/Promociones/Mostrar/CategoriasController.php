@@ -44,7 +44,7 @@ class CategoriasController extends Controller
                 $linea          = __LINE__;
                 $datos          = $scasucursalescategorias;
                 $respuesta      = true;
-                $mensaje        = 'Las categirias fueron cargadas satisfactoriamente.';
+                $mensaje        = 'Las categorias fueron cargadas satisfactoriamente.';
                 $mensajeDetalle = sizeof($scasucursalescategorias).' registros encontrados.';
             }else{
                 $respuesta      = false;
@@ -59,12 +59,12 @@ class CategoriasController extends Controller
         }
 
         return response()->json([
-            $respuesta      => $respuesta,
-            $mensaje        => $mensaje,
-            $datos          => $datos,
-            $linea          => $linea,
-            $mensajeDetalle => $mensajeDetalle,
-            $mensajedev     => $mensajedev
+            'respuesta'      => $respuesta,
+            'mensaje'        => $mensaje,
+            'datos'          => $datos,
+            'linea'          => $linea,
+            'mensajeDetalle' => $mensajeDetalle,
+            'mensajedev'     => $mensajedev
         ]);
     }
 }

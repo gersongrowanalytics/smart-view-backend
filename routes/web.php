@@ -15,5 +15,6 @@ $router->get('/', function () use ($router) {
     return $router->app->version();
 });
 
-$router->post('login', 'Sistema\loginController@login');
+$router->post('/login', 'Sistema\loginController@login');
+$router->post('/promociones/mostrar/categorias', 'Sistema\Promociones\Mostrar\CategoriasController@mostrarCategorias');
 
