@@ -65,7 +65,7 @@ class VentasMostrarController extends Controller
 
 
                 $linea          = __LINE__;
-                $datos          = $scasucursalescategorias;
+                $datos          = $tsutipospromocionessucursales;
                 $respuesta      = true;
                 $mensaje        = 'Los tipos de promociones se cargaron satisfactoriamente.';
             }else{
