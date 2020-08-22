@@ -17,6 +17,7 @@ class Perpersonas extends Migration
             $table->increments('perid');
             $table->unsignedInteger('tdiid');
             $table->string('pernumerodocumentoidentidad');
+            $table->string('pernombrecompleto');
             $table->string('pernombre');
             $table->string('perapellidopaterno');
             $table->string('perapellidomaterno');

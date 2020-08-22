@@ -81,12 +81,12 @@ class VentasMostrarController extends Controller
         }
 
         $requestsalida = response()->json([
-            $respuesta      => $respuesta,
-            $mensaje        => $mensaje,
-            $datos          => $datos,
-            $linea          => $linea,
-            $mensajeDetalle => $mensajeDetalle,
-            $mensajedev     => $mensajedev
+            "respuesta"      => $respuesta,
+            "mensaje"        => $mensaje,
+            "datos"          => $datos,
+            "linea"          => $linea,
+            "mensajeDetalle" => $mensajeDetalle,
+            "mensajedev"     => $mensajedev
         ]);
 
         $AuditoriaController = new AuditoriaController;

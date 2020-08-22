@@ -17,15 +17,16 @@ class Osoobjetivossso extends Migration
             $table->increments('osoid');
             $table->unsignedInteger('fecid');
             $table->unsignedInteger('proid');
-            // $table->unsignedInteger('cliid');
+            $table->unsignedInteger('sucid');
             $table->unsignedInteger('umeid');
             $table->unsignedInteger('tpmid');
             $table->string('osocantidad');
+            $table->string('osovalorizado');
             $table->timestamps();
 
             $table->foreign('fecid')->references('fecid')->on('fecfechas');
             $table->foreign('proid')->references('proid')->on('proproductos');
-            // $table->foreign('cliid')->references('cliid')->on('cliclientes');
+            $table->foreign('sucid')->references('sucid')->on('sucsucursales');
             $table->foreign('umeid')->references('umeid')->on('umeunidadesmedidas');
             $table->foreign('tpmid')->references('tpmid')->on('tpmtiposmonedas');
         });

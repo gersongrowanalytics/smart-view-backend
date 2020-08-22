@@ -16,6 +16,10 @@ $router->get('/', function () use ($router) {
 });
 
 $router->post('/login', 'Sistema\loginController@login');
+
+$router->post('/ventas/mostrar', 'Sistema\Ventas\Mostrar\VentasMostrarController@mostrarVentas');
+
+
 $router->post('/promociones/mostrar/categorias', 'Sistema\Promociones\Mostrar\CategoriasController@mostrarCategorias');
 $router->post('/promociones/mostrar/promociones', 'Sistema\Promociones\Mostrar\PromocionesMostrarController@mostrarPromociones');
 

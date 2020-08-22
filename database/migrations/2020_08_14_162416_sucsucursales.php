@@ -15,11 +15,9 @@ class Sucsucursales extends Migration
     {
         Schema::create('sucsucursales', function (Blueprint $table) {
             $table->increments('sucid');
-            $table->unsignedInteger('usuid');
             $table->string('sucnombre');
             $table->timestamps();
             
-            $table->foreign('usuid')->references('usuid')->on('usuusuarios');
         });
     }
 
