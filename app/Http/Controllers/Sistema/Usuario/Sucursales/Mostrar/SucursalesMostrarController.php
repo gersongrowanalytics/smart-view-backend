@@ -12,7 +12,8 @@ class SucursalesMostrarController extends Controller
 {
     public function mostrarSucursales(Request $request)
     {
-
+        $usutoken = $request->header('api_token');
+        
         $respuesta      = false;
         $mensaje        = '';
         $datos          = [];
