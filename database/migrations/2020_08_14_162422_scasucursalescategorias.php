@@ -18,7 +18,7 @@ class Scasucursalescategorias extends Migration
             $table->unsignedInteger('sucid');
             $table->unsignedInteger('catid');
             $table->unsignedInteger('fecid');
-            $table->unsignedInteger('tsuid');
+            $table->unsignedInteger('tsuid')->nullable();
             $table->string('scavalorizadoobjetivo');
             $table->string('scavalorizadoreal');
             $table->string('scavalorizadotogo');
