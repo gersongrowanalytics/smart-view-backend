@@ -29,8 +29,12 @@ class VentasMostrarController extends Controller
         $mensajedev     = null;
 
         try{
-            $tsutipospromocionessucursales = tsutipospromocionessucursales::join('tprtipospromociones as tpr', 'tpr.tprid', 'tsutipospromocionessucursales.tprid')
+            $tsutipospromocionessucursales = tsutipospromocionessucursales::join('fecfechas as fec', 'tsutipospromocionessucursales.fecid', 'fec.fecid')
+                                                                        ->join('tprtipospromociones as tpr', 'tpr.tprid', 'tsutipospromocionessucursales.tprid')
                                                                         ->where('tsutipospromocionessucursales.sucid', $sucid)
+                                                                        ->where('fec.fecano', $ano)
+                                                                        ->where('fec.fecmes', $mes)
+                                                                        ->where('fec.fecdia', $dia)
                                                                         ->get([
                                                                             'tsutipospromocionessucursales.tsuid',
                                                                             'tpr.tprid',
