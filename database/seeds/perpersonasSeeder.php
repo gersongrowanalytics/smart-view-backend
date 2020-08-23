@@ -15,6 +15,7 @@ class perpersonasSeeder extends Seeder
         perpersonas::create([
             'tdiid' => 1,
             'pernumerodocumentoidentidad'   => '73819654',
+            'pernombrecompleto'  => 'GERSON VILCA ALVAREZ',
             'pernombre'          => 'GERSON',
             'perapellidopaterno' => 'VILCA',
             'perapellidomaterno' => 'ALVAREZ',
