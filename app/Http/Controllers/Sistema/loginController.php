@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\usuusuarios;
+use App\tuptiposusuariospermisos;
+use App\ussusuariossucursales;
 
 class loginController extends Controller
 {
@@ -30,12 +32,43 @@ class loginController extends Controller
                                             'usuusuario',
                                             'usutoken',
                                             'usucontrasena',
+                                            'tpuid'
 
                                         ]);
 
             if($usuusaurio){
 
                 if (Hash::check($contrasena, $usuusaurio->usucontrasena)) {
+
+                    $tuptiposusuariospermisos = tuptiposusuariospermisos::join('pempermisos as pem', 'pem.pemid', 'tuptiposusuariospermisos.pemid')
+                                                                        ->where('tuptiposusuariospermisos.tpuid', $usuusaurio->tpuid )
+                                                                        ->get([
+                                                                            'tuptiposusuariospermisos.tupid',
+                                                                            'pem.pemnombre',
+                                                                            'pem.pemslug'
+                                                                        ]);
+
+                    if(sizeof($tuptiposusuariospermisos) > 0){
+                        $usuusaurio->permisos = $tuptiposusuariospermisos;
+                    }else{
+                        $usuusaurio->permisos = [];
+                    }
+
+                    $ussusuariossucursales = ussusuariossucursales::join('sucsucursales as suc', 'suc.sucid', 'ussusuariossucursales.sucid')
+                                                                    ->where('ussusuariossucursales.usuid', $usuusaurio->usuid )
+                                                                    ->get([
+                                                                        'ussusuariossucursales.ussid',
+                                                                        'suc.sucid',
+                                                                        'suc.sucnombre'
+                                                                    ]);
+                                                                    
+                    if(sizeof($ussusuariossucursales) > 0){
+                        $usuusaurio->sucursales = $ussusuariossucursales;
+                    }else{
+                        $usuusaurio->sucursales = [];
+                    }
+
+
                     $respuesta      = true;
                     $mensaje        = 'Login Correcto';
                     $mensajeDetalle = 'Bienvenido.';

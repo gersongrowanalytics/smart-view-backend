@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class Usssucursales extends Migration
+class Ussusuariossucursales extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class Usssucursales extends Migration
      */
     public function up()
     {
-        Schema::create('usssucursales', function (Blueprint $table) {
+        Schema::create('ussusuariossucursales', function (Blueprint $table) {
             $table->increments('ussid');
             $table->unsignedInteger('usuid');
             $table->unsignedInteger('sucid');
@@ -31,6 +31,6 @@ class Usssucursales extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('usssucursales');
+        Schema::dropIfExists('ussusuariossucursales');
     }
 }

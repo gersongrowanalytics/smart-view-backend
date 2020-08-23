@@ -17,6 +17,7 @@ class Pempermisos extends Migration
             $table->increments('pemid');
             $table->string('pemnombre');
             $table->string('pemslug');
+            $table->string('pemruta')->nullable();
             $table->timestamps();
         });
     }

@@ -13,7 +13,8 @@ class tputiposusuariosSeeder extends Seeder
     public function run()
     {
         tputiposusuarios::create([
-            'tpunombre' => 'Administrador'
+            'tpunombre' => 'Administrador',
+            'tpuprivilegio' => 'todo'
         ]);
     }
 }
