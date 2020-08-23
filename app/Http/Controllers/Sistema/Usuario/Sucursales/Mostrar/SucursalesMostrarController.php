@@ -26,7 +26,7 @@ class SucursalesMostrarController extends Controller
 
             if($usuusuario){
                 $ussusuariossucursales = ussusuariossucursales::join('sucsucursales as suc', 'suc.sucid', 'ussusuariossucursales.sucid')
-                                                            ->where('ussusuariossucursales.usuid', $usuusaurio->usuid )
+                                                            ->where('ussusuariossucursales.usuid', $usuusuario->usuid )
                                                             ->get([
                                                                 'ussusuariossucursales.ussid',
                                                                 'suc.sucid',
