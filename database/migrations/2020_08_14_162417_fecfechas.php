@@ -15,7 +15,7 @@ class Fecfechas extends Migration
     {
         Schema::create('fecfechas', function (Blueprint $table) {
             $table->increments('fecid');
-            $table->string('fecfecha');
+            $table->string('fecfecha')->date();
             $table->string('fecdia');
             $table->string('fecmes');
             $table->string('fecano');

@@ -68,6 +68,7 @@ class VentasMostrarController extends Controller
                 $datos          = $tsutipospromocionessucursales;
                 $respuesta      = true;
                 $mensaje        = 'Los tipos de promociones se cargaron satisfactoriamente.';
+                $mensajeDetalle = sizeof($tsutipospromocionessucursales).' registros encontrados.';
             }else{
                 $respuesta      = false;
                 $linea          = __LINE__;

@@ -1,0 +1,116 @@
+<?php
+
+namespace App\Http\Controllers\Sistema\Fechas\Mostrar;
+
+use App\Http\Controllers\Controller;
+use App\Http\Controllers\AuditoriaController;
+use Illuminate\Http\Request;
+use App\fecfechas;
+
+class FechasMostrarController extends Controller
+{
+    public function mostrarFechas(Request $request)
+    {
+        $usutoken = $request->header('api_token');
+
+        $respuesta      = false;
+        $mensaje        = '';
+        $datos          = [];
+        $linea          = __LINE__;
+        $mensajeDetalle = '';
+        $mensajedev     = null;
+        
+        try{
+            $fecfechas = fecfechas::OrderBy('fecfecha', 'DESC')
+                                    ->get([
+                                        'fecid',
+                                        'fecfecha',
+                                        'fecdia',
+                                        'fecmes',
+                                        'fecano'
+                                    ]);
+    
+            if(sizeof($fecfechas) > 0){
+                $fechas = array();
+                
+                foreach($fecfechas as $fecfecha){
+
+                    if(sizeof($fechas) == 0){
+                        $fechas['anos']  = array($fecfecha->fecano);
+                        $fechas['meses'] = array($fecfecha->fecmes);
+                        $fechas['dias']  = array($fecfecha->fecdia);
+                        
+                    }else{
+                        for($contador = 0; $contador < sizeof($fechas['anos']); $contador++ ){
+                            if($fechas['anos'][$contador] == $fecfecha->fecano ){
+                                break;
+                            }else if($contador+1 == sizeof($fechas['anos'])){
+                                array_push($fechas['anos'], $fecfecha->fecano);
+                            }
+                        }
+
+                        for($contador = 0; $contador < sizeof($fechas['meses']); $contador++ ){
+                            if($fechas['meses'][$contador] == $fecfecha->fecmes ){
+                                break;
+                            }else if($contador+1 == sizeof($fechas['meses'])){
+                                array_push($fechas['meses'], $fecfecha->fecmes);
+                            }
+                        }
+
+                        for($contador = 0; $contador < sizeof($fechas['dias']); $contador++ ){
+                            if($fechas['dias'][$contador] == $fecfecha->fecdia ){
+                                break;
+                            }else if($contador+1 == sizeof($fechas['dias'])){
+                                array_push($fechas['dias'], $fecfecha->fecdia);
+                            }
+                        }
+                    }
+                }
+
+                $respuesta      = true;
+                $datos          = $fechas;
+                $mensaje        = 'Las fechas se cargaron satisfactoriamente.';
+                $mensajeDetalle = sizeof($fecfechas).' registros encontrados.';
+                $linea          = __LINE__;    
+            }else{
+                $respuesta      = false;
+                $mensaje        = 'Lo sentimos, no se econtraron fechas registradas';
+                $mensajeDetalle = sizeof($fecfechas).' registros encontrados.';
+                $linea          = __LINE__;    
+            }
+        } catch (Exception $e) {
+            $mensajedev = $e->getMessage();
+            $linea      = __LINE__;
+        }
+
+        $requestsalida = response()->json([
+            "respuesta"      => $respuesta,
+            "mensaje"        => $mensaje,
+            "datos"          => $datos,
+            "linea"          => $linea,
+            "mensajeDetalle" => $mensajeDetalle,
+            "mensajedev"     => $mensajedev
+        ]);
+
+        $AuditoriaController = new AuditoriaController;
+        $registrarAuditoria  = $AuditoriaController->registrarAuditoria(
+            $usutoken,
+            null,
+            $request['ip'],
+            $request,
+            $requestsalida,
+            'Mostrar todas las fechas registradas ordenadas por la mas reciente',
+            'MOSTRAR',
+            '', //ruta
+            null
+        );
+
+        if($registrarAuditoria == true){
+
+        }else{
+            
+        }
+        
+        return $requestsalida;
+    }
+}
