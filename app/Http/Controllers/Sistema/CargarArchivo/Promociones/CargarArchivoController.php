@@ -48,21 +48,21 @@ class CargarArchivoController extends Controller
 
         $os = 0;
         echo $objPHPExcel->getActiveSheet()->getCell('A'.$os)->getCalculatedValue();
-        echo $objPHPExcel->getActiveSheet()->getCell('J'.$os)->getCalculatedValue();
-        echo $objPHPExcel->getActiveSheet()->getCell('L'.$os)->getCalculatedValue();
-        echo $objPHPExcel->getActiveSheet()->getCell('O'.$os)->getCalculatedValue();
-        echo $objPHPExcel->getActiveSheet()->getCell('P'.$os)->getCalculatedValue();
-        echo $objPHPExcel->getActiveSheet()->getCell('R'.$os)->getCalculatedValue();
-        echo $objPHPExcel->getActiveSheet()->getCell('S'.$os)->getCalculatedValue();
-        echo $objPHPExcel->getActiveSheet()->getCell('U'.$os)->getCalculatedValue();
-        echo $objPHPExcel->getActiveSheet()->getCell('V'.$os)->getCalculatedValue();
-        echo $objPHPExcel->getActiveSheet()->getCell('W'.$os)->getCalculatedValue();
-        echo $objPHPExcel->getActiveSheet()->getCell('X'.$os)->getCalculatedValue();
-        echo $objPHPExcel->getActiveSheet()->getCell('Y'.$os)->getCalculatedValue();
-        echo $objPHPExcel->getActiveSheet()->getCell('Z'.$os)->getCalculatedValue();
-        echo $objPHPExcel->getActiveSheet()->getCell('AA'.$os)->getCalculatedValue();
-        echo $objPHPExcel->getActiveSheet()->getCell('AD'.$os)->getCalculatedValue();
-        echo $objPHPExcel->getActiveSheet()->getCell('AH'.$os)->getCalculatedValue();
+        // echo $objPHPExcel->getActiveSheet()->getCell('J'.$os)->getCalculatedValue();
+        // echo $objPHPExcel->getActiveSheet()->getCell('L'.$os)->getCalculatedValue();
+        // echo $objPHPExcel->getActiveSheet()->getCell('O'.$os)->getCalculatedValue();
+        // echo $objPHPExcel->getActiveSheet()->getCell('P'.$os)->getCalculatedValue();
+        // echo $objPHPExcel->getActiveSheet()->getCell('R'.$os)->getCalculatedValue();
+        // echo $objPHPExcel->getActiveSheet()->getCell('S'.$os)->getCalculatedValue();
+        // echo $objPHPExcel->getActiveSheet()->getCell('U'.$os)->getCalculatedValue();
+        // echo $objPHPExcel->getActiveSheet()->getCell('V'.$os)->getCalculatedValue();
+        // echo $objPHPExcel->getActiveSheet()->getCell('W'.$os)->getCalculatedValue();
+        // echo $objPHPExcel->getActiveSheet()->getCell('X'.$os)->getCalculatedValue();
+        // echo $objPHPExcel->getActiveSheet()->getCell('Y'.$os)->getCalculatedValue();
+        // echo $objPHPExcel->getActiveSheet()->getCell('Z'.$os)->getCalculatedValue();
+        // echo $objPHPExcel->getActiveSheet()->getCell('AA'.$os)->getCalculatedValue();
+        // echo $objPHPExcel->getActiveSheet()->getCell('AD'.$os)->getCalculatedValue();
+        // echo $objPHPExcel->getActiveSheet()->getCell('AH'.$os)->getCalculatedValue();
         return $archivo;
         try{
             
