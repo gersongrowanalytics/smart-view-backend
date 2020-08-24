@@ -41,7 +41,7 @@ class CargarArchivoController extends Controller
         }
 
         
-        $objPHPExcel    = IOFactory::load(basename($_FILES['file']['name']));
+        $objPHPExcel    = IOFactory::load($fichero_subido);
         $objPHPExcel->setActiveSheetIndex(0);
         $numRows        = $objPHPExcel->setActiveSheetIndex(0)->getHighestRow();
         $ultimaColumna  = $objPHPExcel->setActiveSheetIndex(0)->getHighestColumn();
