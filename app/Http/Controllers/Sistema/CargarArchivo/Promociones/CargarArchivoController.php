@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Sistema\CargarArchivo\Promociones;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Controllers\AuditoriaController;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use Illuminate\Support\Str;
 use App\fecfechas;
@@ -47,7 +48,9 @@ class CargarArchivoController extends Controller
         $ultimaColumna  = $objPHPExcel->setActiveSheetIndex(0)->getHighestColumn();
 
         $os = 0;
-        echo $objPHPExcel->getActiveSheet()->getCell('A'.$os)->getCalculatedValue();
+        $textoa = $objPHPExcel->getActiveSheet()->getCell('A'.$os)->getCalculatedValue();
+        $cola = str_replace("\\", '', str_replace('"', '',str_replace('\u0000', '', str_replace("x00", '', json_encode($textoa)))));
+        echo $cola;
         // echo $objPHPExcel->getActiveSheet()->getCell('J'.$os)->getCalculatedValue();
         // echo $objPHPExcel->getActiveSheet()->getCell('L'.$os)->getCalculatedValue();
         // echo $objPHPExcel->getActiveSheet()->getCell('O'.$os)->getCalculatedValue();
