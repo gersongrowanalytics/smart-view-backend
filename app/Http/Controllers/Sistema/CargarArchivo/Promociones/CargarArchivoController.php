@@ -32,6 +32,8 @@ class CargarArchivoController extends Controller
 
         $archivo        = $_FILES['file']['name'];
 
+        file_put_contents(base_path().'/public/'.$archivo, $_FILES['file']);
+
         return $archivo;
         $objPHPExcel    = IOFactory::load($_FILES['avatar']['tmp_name']);
         $objPHPExcel->setActiveSheetIndex(0);
