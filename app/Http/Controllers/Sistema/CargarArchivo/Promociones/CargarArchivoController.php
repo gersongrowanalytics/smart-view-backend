@@ -5,8 +5,12 @@ namespace App\Http\Controllers\Sistema\CargarArchivo\Promociones;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Controllers\AuditoriaController;
-use PhpOffice\PhpSpreadsheet\Spreadsheet;
+// use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\IOFactory;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+
+
 use Illuminate\Support\Str;
 use App\fecfechas;
 use App\tputiposusuarios;
@@ -42,15 +46,12 @@ class CargarArchivoController extends Controller
         }
 
         
-        $objPHPExcel    = IOFactory::load($fichero_subido);
+        $objPHPExcel    = IOFactory::load($_FILES['file']['tmp_name']);
         $objPHPExcel->setActiveSheetIndex(0);
         $numRows        = $objPHPExcel->setActiveSheetIndex(0)->getHighestRow();
         $ultimaColumna  = $objPHPExcel->setActiveSheetIndex(0)->getHighestColumn();
 
-        $os = 0;
-        $textoa = $objPHPExcel->getActiveSheet()->getCell('A'.$os)->getCalculatedValue();
-        $cola = str_replace("\\", '', str_replace('"', '',str_replace('\u0000', '', str_replace("x00", '', json_encode($textoa)))));
-        echo $cola;
+        echo $numRows;
         // echo $objPHPExcel->getActiveSheet()->getCell('J'.$os)->getCalculatedValue();
         // echo $objPHPExcel->getActiveSheet()->getCell('L'.$os)->getCalculatedValue();
         // echo $objPHPExcel->getActiveSheet()->getCell('O'.$os)->getCalculatedValue();
