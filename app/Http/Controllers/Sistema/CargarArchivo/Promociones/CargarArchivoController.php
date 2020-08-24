@@ -32,7 +32,15 @@ class CargarArchivoController extends Controller
 
         $archivo        = $_FILES['file']['name'];
 
-        file_put_contents(base_path().'/public/'.$archivo, $_FILES['file']['tmp_name']);
+        // file_put_contents(base_path().'/public/'.$archivo, $_FILES['file']['tmp_name']);
+        $fichero_subido = base_path().'/public/'.basename($_FILES['file']['name']);
+
+        echo '<pre>';
+        if (move_uploaded_file($_FILES['file']['tmp_name'], $fichero_subido)) {
+            echo "El fichero es válido y se subió con éxito.\n";
+        } else {
+            echo "¡Posible ataque de subida de ficheros!\n";
+        }
 
         return $archivo;
         $objPHPExcel    = IOFactory::load($_FILES['avatar']['tmp_name']);
