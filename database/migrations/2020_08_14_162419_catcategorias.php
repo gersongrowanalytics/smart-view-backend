@@ -19,6 +19,8 @@ class Catcategorias extends Migration
             $table->string('catimagenfondo');
             $table->string('caticono');
             $table->string('catcolorhover');
+            $table->string('catcolor');
+            $table->string('caticonoseleccionado');
             $table->timestamps();
         });
     }
