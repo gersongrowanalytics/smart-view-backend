@@ -100,16 +100,16 @@ class CargarArchivoController extends Controller
                     }
                 }
     
-                $tipoUsuario = tputiposusuarios::where('tupnombre', $subCanal)->first(['tupid']);
-                $tupid = 0;
+                $tipoUsuario = tputiposusuarios::where('tupnombre', $subCanal)->first(['tpuid']);
+                $tpuid = 0;
                 if($tipoUsuario){
-                    $tupid = $tipoUsuario->tupid;
+                    $tpuid = $tipoUsuario->tpuid;
                 }else{
                     $nuevoTipoUsuario = new tputiposusuarios;
                     $nuevoTipoUsuario->tpunombre     = $subCanal;
                     $nuevoTipoUsuario->tpuprivilegio = null;
                     if($nuevoTipoUsuario->save()){
-                        $tupid = $nuevoTipoUsuario->tupid;
+                        $tpuid = $nuevoTipoUsuario->tpuid;
                     }else{
     
                     }
@@ -136,7 +136,7 @@ class CargarArchivoController extends Controller
                 }
     
                 // VERIFICAR SI EXISTE EL USUARIO
-                $distribuidor = usuusuarios::where('tupid', $tupid)
+                $distribuidor = usuusuarios::where('tpuid', $tpuid)
                                             ->where('perid', $perid)
                                             ->first(['usuid']);
                 $usuid = 0;
@@ -144,7 +144,7 @@ class CargarArchivoController extends Controller
                     $usuid = $distribuidor->usuid;
                 }else{
                     $nuevoUsuario = new usuusuarios;
-                    $nuevoUsuario->tpuid         = $tupid;
+                    $nuevoUsuario->tpuid         = $tpuid;
                     $nuevoUsuario->perid         = $perid;
                     $nuevoUsuario->usuusuario    = null;
                     $nuevoUsuario->usucorreo     = null;
@@ -178,7 +178,7 @@ class CargarArchivoController extends Controller
                 }
     
                 // VERIFICAR SI EXISTE EL USUARIO
-                $usuCliente = usuusuarios::where('tupid', $tupid)
+                $usuCliente = usuusuarios::where('tpuid', $tpuid)
                                             ->where('perid', $clienteperid)
                                             ->first(['usuid']);
                 $clienteusuid = 0;
@@ -186,7 +186,7 @@ class CargarArchivoController extends Controller
                     $clienteusuid = $usuCliente->usuid;
                 }else{
                     $clienteNuevoUsuario = new usuusuarios;
-                    $clienteNuevoUsuario->tpuid         = $tupid;
+                    $clienteNuevoUsuario->tpuid         = $tpuid;
                     $clienteNuevoUsuario->perid         = $perid;
                     $clienteNuevoUsuario->usuusuario    = null;
                     $clienteNuevoUsuario->usucorreo     = null;
