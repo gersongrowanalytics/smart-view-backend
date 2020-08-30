@@ -16,7 +16,13 @@ class Prmpromociones extends Migration
         Schema::create('prmpromociones', function (Blueprint $table) {
             $table->increments('prmid');
             $table->unsignedInteger('tprid');
-            $table->string('prmcombos');
+            $table->text('prmmecanica');
+            $table->string('prmcantidadcombo');
+            $table->string('prmcantidadplancha');
+            $table->string('prmtotalcombo');
+            $table->string('prmtotalplancha');
+            $table->string('prmtotal');
+            $table->string('prmaccion');
             $table->timestamps();
 
             $table->foreign('tprid')->references('tprid')->on('tprtipospromociones');

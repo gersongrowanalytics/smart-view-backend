@@ -20,6 +20,14 @@ use App\catcategorias;
 use App\proproductos;
 use App\tprtipospromociones;
 use App\cancanales;
+use App\ussusuariossucursales;
+use App\sucsucursales;
+use App\scasucursalescategorias;
+use App\csccanalessucursalescategorias;
+use App\prmpromociones;
+use App\cspcanalessucursalespromociones;
+use App\prbpromocionesbonificaciones;
+use App\prppromocionesproductos;
 
 class CargarArchivoController extends Controller
 {
@@ -34,6 +42,7 @@ class CargarArchivoController extends Controller
         $linea          = __LINE__;
         $mensajeDetalle = '';
         $mensajedev     = null;
+        $numeroCelda    = 0;
         $usutoken       = $request->header('api_token');
         $archivo        = $_FILES['file']['name'];
 
@@ -56,6 +65,7 @@ class CargarArchivoController extends Controller
                     $ejecutivo  = $objPHPExcel->getActiveSheet()->getCell('L'.$i)->getCalculatedValue();
                     $soldTo     = $objPHPExcel->getActiveSheet()->getCell('O'.$i)->getCalculatedValue();
                     $cliente    = $objPHPExcel->getActiveSheet()->getCell('P'.$i)->getCalculatedValue();
+                    $accion     = $objPHPExcel->getActiveSheet()->getCell('Q'.$i)->getCalculatedValue();
                     // *
                     $cantCompra = $objPHPExcel->getActiveSheet()->getCell('R'.$i)->getCalculatedValue();
                     $cantBonifi = $objPHPExcel->getActiveSheet()->getCell('S'.$i)->getCalculatedValue();
@@ -68,7 +78,13 @@ class CargarArchivoController extends Controller
                     $productoBo = $objPHPExcel->getActiveSheet()->getCell('Z'.$i)->getCalculatedValue();
                     $tipoPromo  = $objPHPExcel->getActiveSheet()->getCell('AA'.$i)->getCalculatedValue();
                     $tipoClien  = $objPHPExcel->getActiveSheet()->getCell('AD'.$i)->getCalculatedValue();
+                    $planchas   = $objPHPExcel->getActiveSheet()->getCell('AG'.$i)->getCalculatedValue();
                     $combos     = $objPHPExcel->getActiveSheet()->getCell('AH'.$i)->getCalculatedValue();
+                    $precXcombo = $objPHPExcel->getActiveSheet()->getCell('AI'.$i)->getCalculatedValue();
+                    $precXplanc = $objPHPExcel->getActiveSheet()->getCell('AJ'.$i)->getCalculatedValue();
+                    $precXtodo  = $objPHPExcel->getActiveSheet()->getCell('AK'.$i)->getCalculatedValue();
+
+
         
                     $fecfecha = fecfechas::where('fecdia', $dia)
                                         ->where('fecmes', $mes)
@@ -172,11 +188,26 @@ class CargarArchivoController extends Controller
                                                 ->where('perid', $clienteperid)
                                                 ->first(['usuid']);
                     $clienteusuid = 0;
+                    $sucursalClienteId = 0;
                     if($usuCliente){
                         $clienteusuid = $usuCliente->usuid;
+                        
+                        $sucursalesCliente = ussusuariossucursales::where('usuid', $clienteusuid)->first(['sucid']);
+                        if($sucursalesCliente){
+                            $sucursalClienteId = $sucursalesCliente->sucid;
+                        }else{
+                            $nuevaSucursal = new sucsucursales;
+                            $nuevaSucursal->sucnombre = $clienteperpersona;
+                            if($nuevaSucursal->save()){
+                                $sucursalClienteId = $nuevaSucursal->sucid;
+                            }else{
+
+                            }
+                        }
+
                     }else{
                         $clienteNuevoUsuario = new usuusuarios;
-                        $clienteNuevoUsuario->tpuid         = $tpuid;
+                        $clienteNuevoUsuario->tpuid         = 2; // tipo de usuario (cliente)
                         $clienteNuevoUsuario->perid         = $perid;
                         $clienteNuevoUsuario->usuusuario    = null;
                         $clienteNuevoUsuario->usucorreo     = null;
@@ -184,11 +215,21 @@ class CargarArchivoController extends Controller
                         $clienteNuevoUsuario->usutoken      = Str::random(60);
                         if($clienteNuevoUsuario->save()){
                             $clienteusuid = $clienteNuevoUsuario->usuid;
+                            $nuevaSucursal = new sucsucursales;
+                            $nuevaSucursal->sucnombre = $clienteperpersona;
+                            if($nuevaSucursal->save()){
+                                $sucursalClienteId = $nuevaSucursal->sucid;
+                            }else{
+
+                            }
                         }else{
         
                         }
                     }
-        
+                    
+
+
+
                     $catcategoria = catcategorias::where('catnombre', $categoria)
                                                     ->first(['catid']);
                     
@@ -198,17 +239,44 @@ class CargarArchivoController extends Controller
                     }else{
                         $nuevacategoria                 = new catcategorias;
                         $nuevacategoria->catnombre      = $categoria;
-                        $nuevacategoria->catimagenfondo = '';
-                        $nuevacategoria->caticono       = '';
+                        $nuevacategoria->catimagenfondo = env('APP_URL').'/Sistema/abs/img/nohay.png';
+                        $nuevacategoria->caticono       = env('APP_URL').'/Sistema/abs/img/nohay.png';
                         $nuevacategoria->catcolorhover  = '';
                         $nuevacategoria->catcolor       = '';
-                        $nuevacategoria->caticonoseleccionado = '';
+                        $nuevacategoria->caticonoseleccionado = env('APP_URL').'/Sistema/abs/img/nohay.png';
                         if($nuevacategoria->save()){
                             $catid = $nuevacategoria->catid;
                         }else{
         
                         }
                     }
+
+                    $scasucursalescategorias = scasucursalescategorias::where('fecid', $fecid)
+                                                                    ->where('catid', $catid)
+                                                                    ->where('sucid', $sucursalClienteId)
+                                                                    ->where('tsuid', null)
+                                                                    ->first(['scaid']);
+                    
+                    $scaid = 0;
+                    if($scasucursalescategorias){
+                        $scaid = $scasucursalescategorias->scaid;
+                    }else{
+                        $nuevoSca = new scasucursalescategorias;
+                        $nuevoSca->sucid    = $sucursalClienteId;
+                        $nuevoSca->catid    = $catid;
+                        $nuevoSca->fecid    = $fecid;
+                        $nuevoSca->tsuid    = null;
+                        $nuevoSca->scavalorizadoobjetivo = null;
+                        $nuevoSca->scavalorizadoreal     = null;
+                        $nuevoSca->scavalorizadotogo     = null;
+                        if($nuevoSca->save()){
+                            $scaid = $nuevoSca->scaid;
+                        }else{
+
+                        }
+                    }
+
+                    
         
                     // VERIFICAR SI EL PRODUCTO ESTA REGISTRADO
                     $proproducto = proproductos::where('catid', $catid)
@@ -283,6 +351,118 @@ class CargarArchivoController extends Controller
         
                         }
                     }
+
+                    $csc = csccanalessucursalescategorias::where('canid', $canid)
+                                                     ->where('scaid', $scaid)
+                                                     ->where('fecid', $fecid)
+                                                     ->first(['cscid']);
+                    $cscid = 0;
+                    if($csc){
+                        $cscid = $csc->cscid;
+                    }else{
+                        $nuevoCsc = new csccanalessucursalescategorias;
+                        $nuevoCsc->canid = $canid;
+                        $nuevoCsc->scaid = $scaid;
+                        $nuevoCsc->fecid = $fecid;
+                        if($nuevoCsc->save()){
+                            $cscid = $nuevoCsc->cscid;
+                        }else{
+
+                        }
+                    }
+
+                    $prm = prmpromociones::where('tprid', $tprid)
+                                    ->where('prmmecanica', $mecanica)
+                                    ->where('prmcantidadcombo', $combos)
+                                    ->where('prmcantidadplancha', $planchas)
+                                    ->where('prmtotalcombo', $precXcombo)
+                                    ->where('prmtotalplancha', $precXplanc)
+                                    ->where('prmtotal', $precXtodo)
+                                    ->where('prmaccion', $accion)
+                                    ->first(['prmid']);
+
+                    $prmid = 0;
+                    if($prm){
+                        $prmid = $prm->prmid;
+                    }else{
+                        $nuevoPrm = new prmpromociones;
+                        $nuevoPrm->tprid                = $tprid;
+                        $nuevoPrm->prmcantidadcombo     = $combos;
+                        $nuevoPrm->prmmecanica          = $mecanica;
+                        $nuevoPrm->prmcantidadplancha   = $planchas;
+                        $nuevoPrm->prmtotalcombo        = $precXcombo;
+                        $nuevoPrm->prmtotalplancha      = $precXplanc;
+                        $nuevoPrm->prmtotal             = $precXtodo;
+                        $nuevoPrm->prmaccion            = $accion;
+                        if($nuevoPrm->save()){
+                            $prmid = $nuevoPrm->prmid;
+                        }else{
+
+                        }
+                    }
+
+                    $csp = cspcanalessucursalespromociones::where('csc', $cscid )
+                                                            ->where('fecid', $fecid)
+                                                            ->where('prmid', $prmid)
+                                                            ->first(['cspid']);
+                        
+                    $cspid = 0;
+                    if($csp){
+                        $cspid = $csp->cspid;
+                    }else{
+                        $nuevoCsp = new cspcanalessucursalespromociones;
+                        $nuevoCsp->cscid         = $cscid;
+                        $nuevoCsp->fecid         = $fecid;
+                        $nuevoCsp->prmid         = $prmid;
+                        $nuevoCsp->cspvalorizado = 0;
+                        $nuevoCsp->cspplanchas   = 0;
+                        $nuevoCsp->cspcompletado = 0;
+                        if($nuevoCsp->save()){
+                            $cspid = $nuevoCsp->cspid;
+                        }else{
+                            
+                        }
+                    }
+
+                    $prb = prbpromocionesbonificaciones::where('prmid', $prmid)
+                                                    ->where('proid', $bonificadoproid)
+                                                    ->where('prbcantidad', $cantBonifi)
+                                                    ->first(['prbid']);
+
+                    if($prb){
+
+                    }else{
+                        $nuevoPrb = new prbpromocionesbonificaciones;
+                        $nuevoPrb->prmid        = $prmid;
+                        $nuevoPrb->proid        = $bonificadoproid;
+                        $nuevoPrb->prbcantidad  = $cantBonifi;
+                        if($nuevoPrb->save()){
+
+                        }else{
+
+                        }
+
+                    }
+
+                    $prp = prppromocionesproductos::where('prmid', $prmid)
+                                                ->where('proid', $proid)
+                                                ->where('prpcantidad', $cantCompra)
+                                                ->first(['prpid']);
+
+                    if($prp){
+                        
+                    }else{
+                        $nuevoPrp = new prppromocionesproductos;
+                        $nuevoPrp->prmid        = $prmid;
+                        $nuevoPrp->proid        = $proid;
+                        $nuevoPrp->prpcantidad  = $cantCompra;
+                        if($nuevoPrp->save()){
+
+                        }else{
+
+                        }
+                    }
+
                 }                
             } else {
                 
@@ -299,7 +479,8 @@ class CargarArchivoController extends Controller
             "datos"          => $datos,
             "linea"          => $linea,
             "mensajeDetalle" => $mensajeDetalle,
-            "mensajedev"     => $mensajedev
+            "mensajedev"     => $mensajedev,
+            "numeroCelda"    => $numeroCelda
         ]);
 
         $AuditoriaController = new AuditoriaController;

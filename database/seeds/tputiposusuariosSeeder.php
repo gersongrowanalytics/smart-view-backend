@@ -16,5 +16,10 @@ class tputiposusuariosSeeder extends Seeder
             'tpunombre' => 'Administrador',
             'tpuprivilegio' => 'todo'
         ]);
+
+        tputiposusuarios::create([
+            'tpunombre' => 'Cliente',
+            'tpuprivilegio' => null
+        ]);
     }
 }
