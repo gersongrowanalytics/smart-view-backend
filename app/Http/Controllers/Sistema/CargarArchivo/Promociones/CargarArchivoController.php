@@ -231,7 +231,7 @@ class CargarArchivoController extends Controller
                     $nuevoProducto->catid     = $catid;
                     $nuevoProducto->prosku    = $sku;
                     $nuevoProducto->pronombre = $producto;
-                    $nuevoProducto->proimagen = null;
+                    $nuevoProducto->proimagen = env('APP_URL').'/Sistema/abs/img/nohay.png';
                     if($nuevoProducto->save()){
                         $proid = $nuevoProducto->proid;
                     }else{

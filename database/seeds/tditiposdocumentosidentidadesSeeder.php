@@ -16,5 +16,10 @@ class tditiposdocumentosidentidadesSeeder extends Seeder
             'tdiabreviacion' => 'DNI',
             'tdinombre'      => 'DOCUMENTO NACIONAL DE IDENTIDAD'
         ]);
+
+        tditiposdocumentosidentidades::create([
+            'tdiabreviacion' => 'RUC',
+            'tdinombre'      => 'REGISTRO UNICO DEL CONTRIBUYENTE'
+        ]);
     }
 }

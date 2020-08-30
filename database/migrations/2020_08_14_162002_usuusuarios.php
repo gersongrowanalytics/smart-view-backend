@@ -17,9 +17,9 @@ class Usuusuarios extends Migration
             $table->increments('usuid');
             $table->unsignedInteger('tpuid');
             $table->unsignedInteger('perid');
-            $table->string('usuusuario');
-            $table->string('usucorreo');
-            $table->string('usucontrasena');
+            $table->string('usuusuario')->nullable();
+            $table->string('usucorreo')->nullable();
+            $table->string('usucontrasena')->nullable();
             $table->string('usutoken');
             $table->timestamps();
 

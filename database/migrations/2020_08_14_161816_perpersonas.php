@@ -16,11 +16,11 @@ class Perpersonas extends Migration
         Schema::create('perpersonas', function (Blueprint $table) {
             $table->increments('perid');
             $table->unsignedInteger('tdiid');
-            $table->string('pernumerodocumentoidentidad');
+            $table->string('pernumerodocumentoidentidad')->nullable();
             $table->string('pernombrecompleto');
-            $table->string('pernombre');
-            $table->string('perapellidopaterno');
-            $table->string('perapellidomaterno');
+            $table->string('pernombre')->nullable();
+            $table->string('perapellidopaterno')->nullable();
+            $table->string('perapellidomaterno')->nullable();
             $table->timestamps();
 
             $table->foreign('tdiid')->references('tdiid')->on('tditiposdocumentosidentidades');
