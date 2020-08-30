@@ -100,7 +100,7 @@ class CargarArchivoController extends Controller
                     }
                 }
     
-                $tipoUsuario = tputiposusuarios::where('tupnombre', $subCanal)->first(['tpuid']);
+                $tipoUsuario = tputiposusuarios::where('tpunombre', $subCanal)->first(['tpuid']);
                 $tpuid = 0;
                 if($tipoUsuario){
                     $tpuid = $tipoUsuario->tpuid;
