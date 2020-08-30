@@ -37,6 +37,7 @@ class CargarArchivoController extends Controller
         $usutoken       = $request->header('api_token');
         $archivo        = $_FILES['file']['name'];
 
+        $numRows = 0;
         try{
             // file_put_contents(base_path().'/public/'.$archivo, $_FILES['file']['tmp_name']);
             $fichero_subido = base_path().'/public/'.basename($_FILES['file']['name']);
@@ -46,7 +47,7 @@ class CargarArchivoController extends Controller
                 $numRows        = $objPHPExcel->setActiveSheetIndex(0)->getHighestRow();
                 $ultimaColumna  = $objPHPExcel->setActiveSheetIndex(0)->getHighestColumn();
 
-                return $numRows;              
+                
             } else {
                 
             }
@@ -55,6 +56,8 @@ class CargarArchivoController extends Controller
             $mensajedev = $e->getMessage();
             $linea      = __LINE__;
         }
+
+        return $numRows;
 
         $requestsalida = response()->json([
             "respuesta"      => $respuesta,
