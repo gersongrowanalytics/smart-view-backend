@@ -85,7 +85,7 @@ class CargarArchivoController extends Controller
                                     ->where('fecano', $ano)
                                     ->first(['fecid']);
                 $fecid = 0;
-                if($fecfechas){
+                if($fecfecha){
                     $fecid = $fecfecha->fecid;
                 }else{
                     $nuevaFecha = new fecfechas;
