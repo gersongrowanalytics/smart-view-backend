@@ -51,7 +51,7 @@ class CargarArchivoController extends Controller
         $numRows        = $objPHPExcel->setActiveSheetIndex(0)->getHighestRow();
         $ultimaColumna  = $objPHPExcel->setActiveSheetIndex(0)->getHighestColumn();
 
-        $os = 0;
+        $os = 2;
         echo $numRows;
         echo $objPHPExcel->getActiveSheet()->getCell('J'.$os)->getCalculatedValue();
         return $archivo;
