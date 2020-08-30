@@ -246,13 +246,13 @@ class CargarArchivoController extends Controller
                 
                 $bonificadoproid = 0;
                 if($proproductoBonificado){
-                    $bonificadoproid = $proproducto->proid;
+                    $bonificadoproid = $proproductoBonificado->proid;
                 }else{
                     $nuevoProductoBonificado = new proproductos;
                     $nuevoProductoBonificado->catid     = $catid;
                     $nuevoProductoBonificado->prosku    = $skuBonifi;
                     $nuevoProductoBonificado->pronombre = $productoBo;
-                    $nuevoProductoBonificado->proimagen = null;
+                    $nuevoProductoBonificado->proimagen = env('APP_URL').'/Sistema/abs/img/nohay.png';
                     if($nuevoProductoBonificado->save()){
                         $bonificadoproid = $nuevoProductoBonificado->proid;
                     }else{
