@@ -306,7 +306,7 @@ class CargarArchivoController extends Controller
         $registrarAuditoria  = $AuditoriaController->registrarAuditoria(
             $usutoken,
             null,
-            $request['ip'],
+            null,
             $fichero_subido,
             $requestsalida,
             'CARGAR DATA DE UN EXCEL AL SISTEMA',
