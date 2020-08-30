@@ -207,10 +207,12 @@ class CargarArchivoController extends Controller
                     $catid = $catcategoria->catid;
                 }else{
                     $nuevacategoria                 = new catcategorias;
-                    $nuevacategoria->catnombre      = '';
+                    $nuevacategoria->catnombre      = $categoria;
                     $nuevacategoria->catimagenfondo = '';
                     $nuevacategoria->caticono       = '';
                     $nuevacategoria->catcolorhover  = '';
+                    $nuevacategoria->catcolor       = '';
+                    $nuevacategoria->caticonoseleccionado = '';
                     if($nuevacategoria->save()){
                         $catid = $nuevacategoria->catid;
                     }else{

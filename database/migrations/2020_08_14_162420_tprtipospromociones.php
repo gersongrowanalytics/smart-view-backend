@@ -16,7 +16,7 @@ class Tprtipospromociones extends Migration
         Schema::create('tprtipospromociones', function (Blueprint $table) {
             $table->increments('tprid');
             $table->string('tprnombre');
-            $table->string('tpricono');
+            $table->string('tpricono')->nullable();
             $table->timestamps();
         });
     }
