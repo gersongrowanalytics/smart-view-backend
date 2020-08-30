@@ -34,7 +34,7 @@ class CargarArchivoController extends Controller
         $linea          = __LINE__;
         $mensajeDetalle = '';
         $mensajedev     = null;
-
+        $usutoken       = $request->header('api_token');
         $archivo        = $_FILES['file']['name'];
 
         // file_put_contents(base_path().'/public/'.$archivo, $_FILES['file']['tmp_name']);
@@ -314,8 +314,8 @@ class CargarArchivoController extends Controller
             $request['ip'],
             $request,
             $requestsalida,
-            'Mostrar todas las fechas registradas ordenadas por la mas reciente',
-            'MOSTRAR',
+            'CARGAR DATA DE UN EXCEL AL SISTEMA',
+            'IMPORTAR',
             '', //ruta
             null
         );
