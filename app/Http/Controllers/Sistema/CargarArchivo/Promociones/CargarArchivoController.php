@@ -52,12 +52,12 @@ class CargarArchivoController extends Controller
         $ultimaColumna  = $objPHPExcel->setActiveSheetIndex(0)->getHighestColumn();
 
         $os = 2;
-        echo $numRows;
-        echo $objPHPExcel->getActiveSheet()->getCell('J'.$os)->getCalculatedValue();
-        return $archivo;
+        // echo $numRows;
+        // echo $objPHPExcel->getActiveSheet()->getCell('J'.$os)->getCalculatedValue();
+        // return $archivo;
         try{
             
-            for ($i=0; $i < $numRows ; $i++) {
+            for ($i=2; $i <= $numRows ; $i++) {
                 $ano = '2020';
                 $dia = '01';
     
