@@ -232,7 +232,7 @@ class CargarArchivoController extends Controller
 
                                 $sucursalUsuario = new ussusuariossucursales;
                                 $sucursalUsuario->usuid = $clienteusuid;
-                                $sucursalUsuario->suci  = $sucursalClienteId;
+                                $sucursalUsuario->sucid = $sucursalClienteId;
                                 if($sucursalUsuario->save()){
 
                                 }else{
