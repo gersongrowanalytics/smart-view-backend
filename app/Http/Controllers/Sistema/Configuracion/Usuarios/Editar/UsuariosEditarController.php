@@ -36,7 +36,7 @@ class UsuariosEditarController extends Controller
             $usuario->usuusuario    = $nuevUsua;
             $usuario->usucorreo     = $nuevCorr;
             if($editarCont == true){
-                $usuario->usucontrasena = $nuevCont;
+                $usuario->usucontrasena = Hash::make($nuevCont);
             }
 
             if($usuario->update()){
