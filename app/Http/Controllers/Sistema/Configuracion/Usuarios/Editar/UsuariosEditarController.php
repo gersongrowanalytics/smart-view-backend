@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Sistema\Configuracion\Usuarios\Editar;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Controllers\AuditoriaController;
+use Illuminate\Support\Facades\Hash;
 use App\usuusuarios;
 
 class UsuariosEditarController extends Controller
