@@ -218,7 +218,7 @@ class CargarArchivoController extends Controller
                     }else{
                         $clienteNuevoUsuario = new usuusuarios;
                         $clienteNuevoUsuario->tpuid         = 2; // tipo de usuario (cliente)
-                        $clienteNuevoUsuario->perid         = $perid;
+                        $clienteNuevoUsuario->perid         = $clienteperid;
                         $clienteNuevoUsuario->usuusuario    = null;
                         $clienteNuevoUsuario->usucorreo     = null;
                         $clienteNuevoUsuario->usucontrasena = null;
