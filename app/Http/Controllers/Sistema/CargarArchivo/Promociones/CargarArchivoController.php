@@ -401,7 +401,7 @@ class CargarArchivoController extends Controller
                         }
                     }
 
-                    $csp = cspcanalessucursalespromociones::where('csc', $cscid )
+                    $csp = cspcanalessucursalespromociones::where('cscid', $cscid )
                                                             ->where('fecid', $fecid)
                                                             ->where('prmid', $prmid)
                                                             ->first(['cspid']);
