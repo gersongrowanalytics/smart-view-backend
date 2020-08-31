@@ -184,7 +184,7 @@ class CargarArchivoController extends Controller
                     }
         
                     // VERIFICAR SI EXISTE EL USUARIO
-                    $usuCliente = usuusuarios::where('tpuid', $tpuid)
+                    $usuCliente = usuusuarios::where('tpuid', 2)
                                                 ->where('perid', $clienteperid)
                                                 ->first(['usuid']);
                     $clienteusuid = 0;
@@ -197,9 +197,19 @@ class CargarArchivoController extends Controller
                             $sucursalClienteId = $sucursalesCliente->sucid;
                         }else{
                             $nuevaSucursal = new sucsucursales;
-                            $nuevaSucursal->sucnombre = $clienteperpersona;
+                            $nuevaSucursal->sucnombre = $cliente;
                             if($nuevaSucursal->save()){
                                 $sucursalClienteId = $nuevaSucursal->sucid;
+
+                                $sucursalUsuario = new ussusuariossucursales;
+                                $sucursalUsuario->usuid = $clienteusuid;
+                                $sucursalUsuario->suci  = $sucursalClienteId;
+                                if($sucursalUsuario->save()){
+
+                                }else{
+
+                                }
+
                             }else{
 
                             }
@@ -216,9 +226,19 @@ class CargarArchivoController extends Controller
                         if($clienteNuevoUsuario->save()){
                             $clienteusuid = $clienteNuevoUsuario->usuid;
                             $nuevaSucursal = new sucsucursales;
-                            $nuevaSucursal->sucnombre = $clienteperpersona;
+                            $nuevaSucursal->sucnombre = $cliente;
                             if($nuevaSucursal->save()){
                                 $sucursalClienteId = $nuevaSucursal->sucid;
+
+                                $sucursalUsuario = new ussusuariossucursales;
+                                $sucursalUsuario->usuid = $clienteusuid;
+                                $sucursalUsuario->suci  = $sucursalClienteId;
+                                if($sucursalUsuario->save()){
+
+                                }else{
+
+                                }
+
                             }else{
 
                             }
