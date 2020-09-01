@@ -40,6 +40,7 @@ class VentasMostrarController extends Controller
                                                                             'tpr.tprid',
                                                                             'tpr.tprnombre',
                                                                             'tpr.tpricono',
+                                                                            'tpr.tprcolor',
                                                                             'tsutipospromocionessucursales.tsuvalorizadoobjetivo',
                                                                             'tsutipospromocionessucursales.tsuvalorizadoreal',
                                                                             'tsutipospromocionessucursales.tsuvalorizadotogo',

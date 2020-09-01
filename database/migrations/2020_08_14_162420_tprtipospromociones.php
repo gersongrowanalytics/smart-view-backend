@@ -17,6 +17,7 @@ class Tprtipospromociones extends Migration
             $table->increments('tprid');
             $table->string('tprnombre');
             $table->string('tpricono')->nullable();
+            $table->string('tprcolor')->nullable();
             $table->timestamps();
         });
     }
