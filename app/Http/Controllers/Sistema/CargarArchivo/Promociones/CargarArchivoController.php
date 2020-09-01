@@ -257,13 +257,14 @@ class CargarArchivoController extends Controller
                     if($catcategoria){
                         $catid = $catcategoria->catid;
                     }else{
-                        $nuevacategoria                 = new catcategorias;
-                        $nuevacategoria->catnombre      = $categoria;
-                        $nuevacategoria->catimagenfondo = env('APP_URL').'/Sistema/abs/img/nohay.png';
-                        $nuevacategoria->caticono       = env('APP_URL').'/Sistema/abs/img/nohay.png';
-                        $nuevacategoria->catcolorhover  = '';
-                        $nuevacategoria->catcolor       = '';
+                        $nuevacategoria                       = new catcategorias;
+                        $nuevacategoria->catnombre            = $categoria;
+                        $nuevacategoria->catimagenfondo       = env('APP_URL').'/Sistema/abs/img/nohay.png';
+                        $nuevacategoria->caticono             = env('APP_URL').'/Sistema/abs/img/nohay.png';
+                        $nuevacategoria->catcolorhover        = '';
+                        $nuevacategoria->catcolor             = '';
                         $nuevacategoria->caticonoseleccionado = env('APP_URL').'/Sistema/abs/img/nohay.png';
+                        $nuevacategoria->caticonohover        = env('APP_URL').'/Sistema/abs/img/nohay.png';
                         if($nuevacategoria->save()){
                             $catid = $nuevacategoria->catid;
                         }else{

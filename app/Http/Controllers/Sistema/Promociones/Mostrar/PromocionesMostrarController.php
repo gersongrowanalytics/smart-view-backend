@@ -39,9 +39,21 @@ class PromocionesMostrarController extends Controller
             if(sizeof($csccanalessucursalescategorias) > 0){
                 
                 foreach($csccanalessucursalescategorias as $posicion => $csccanalesucursalcategoria){
-                    $cspcanalessucursalespromociones = cspcanalessucursalespromociones::where('cscid', $csccanalesucursalcategoria->cscid)
+                    $cspcanalessucursalespromociones = cspcanalessucursalespromociones::join('prmpromociones as prm', 'prm.prmid', 'cspcanalessucursalespromociones.prmid')
+                                                                                        ->where('cscid', $csccanalesucursalcategoria->cscid)
                                                                                         ->get([
-                                                                                           'prmid'
+                                                                                            'cspcanalessucursalespromociones.cspid',
+                                                                                            'prm.prmid',
+                                                                                            'cspcanalessucursalespromociones.cspvalorizado',
+                                                                                            'cspcanalessucursalespromociones.cspplanchas',
+                                                                                            'cspcanalessucursalespromociones.cspcompletado',
+                                                                                            'prm.prmcantidadcombo',
+                                                                                            'prm.prmmecanica',
+                                                                                            'prm.prmcantidadplancha',
+                                                                                            'prm.prmtotalcombo',
+                                                                                            'prm.prmtotalplancha',
+                                                                                            'prm.prmtotal',
+                                                                                            'prm.prmaccion'
                                                                                         ]);
 
                     if(sizeof($cspcanalessucursalespromociones) > 0){
