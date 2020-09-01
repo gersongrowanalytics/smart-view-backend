@@ -55,10 +55,13 @@ class PromocionesMostrarController extends Controller
                                                                                             'prm.prmtotal',
                                                                                             'prm.prmaccion'
                                                                                         ]);
-
+                    $numeroPromocionesTerminadas = 0;
+                                                                                       
                     if(sizeof($cspcanalessucursalespromociones) > 0){
                         foreach($cspcanalessucursalespromociones as $posicionPromociones => $cspcanalesucursalpromocion){
-
+                            if($cspcanalesucursalpromocion->cspcompletado == true){
+                                $numeroPromocionesTerminadas = $numeroPromocionesTerminadas+1;
+                            }
                             $prppromocionesproductos = prppromocionesproductos::join('proproductos as pro', 'pro.proid', 'prppromocionesproductos.proid')
                                                                                 ->where('prppromocionesproductos.prmid', $cspcanalesucursalpromocion->prmid )
                                                                                 ->get([
@@ -93,7 +96,8 @@ class PromocionesMostrarController extends Controller
                     }else{
                         $cspcanalessucursalespromociones = [];
                     }
-
+                    
+                    $csccanalessucursalescategorias[$posicion]['porcentaje'] = (sizeof($cspcanalessucursalespromociones)*$numeroPromocionesTerminadas)/100;
                     $csccanalessucursalescategorias[$posicion]['promociones'] = $cspcanalessucursalespromociones;
                 }
 
