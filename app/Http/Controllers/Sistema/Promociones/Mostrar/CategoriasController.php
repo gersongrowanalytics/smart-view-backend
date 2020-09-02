@@ -37,6 +37,7 @@ class CategoriasController extends Controller
                                                                     'cat.catid',
                                                                     'cat.catnombre',
                                                                     'cat.catimagenfondo',
+                                                                    'cat.catimagenfondoseleccionado',
                                                                     'cat.caticono',
                                                                     'cat.catcolorhover',
                                                                     'cat.catcolor',
