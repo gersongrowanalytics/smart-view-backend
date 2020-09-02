@@ -22,6 +22,7 @@ class Scasucursalescategorias extends Migration
             $table->string('scavalorizadoobjetivo');
             $table->string('scavalorizadoreal');
             $table->string('scavalorizadotogo');
+            $table->string('scaiconocategoria');
             $table->timestamps();
 
             $table->foreign('tsuid')->references('tsuid')->on('tsutipospromocionessucursales');

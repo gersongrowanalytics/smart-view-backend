@@ -60,7 +60,8 @@ class VentasMostrarController extends Controller
                                                                         'cat.caticono',
                                                                         'scasucursalescategorias.scavalorizadoobjetivo',
                                                                         'scasucursalescategorias.scavalorizadoreal',
-                                                                        'scasucursalescategorias.scavalorizadotogo'
+                                                                        'scasucursalescategorias.scavalorizadotogo',
+                                                                        'scasucursalescategorias.scaiconocategoria'
                                                                     ]);
                     if(sizeof($scasucursalescategorias) > 0){
                         $tsutipospromocionessucursales[$posicion]['categorias'] = $scasucursalescategorias;
