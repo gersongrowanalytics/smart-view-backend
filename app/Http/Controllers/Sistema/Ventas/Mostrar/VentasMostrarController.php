@@ -57,6 +57,7 @@ class VentasMostrarController extends Controller
                                                                     ->get([
                                                                         'cat.catnombre',
                                                                         'cat.catimagenfondo',
+                                                                        'cat.catimagenfondoopaco',
                                                                         'cat.caticono',
                                                                         'scasucursalescategorias.scavalorizadoobjetivo',
                                                                         'scasucursalescategorias.scavalorizadoreal',
