@@ -40,6 +40,7 @@ class CategoriasController extends Controller
                                                                     'cat.catimagenfondoseleccionado',
                                                                     'cat.catimagenfondoopaco',
                                                                     'cat.caticono',
+                                                                    'cat.caticonohover',
                                                                     'cat.catcolorhover',
                                                                     'cat.catcolor',
                                                                     'cat.caticonoseleccionado',
