@@ -16,6 +16,7 @@ class Prmpromociones extends Migration
         Schema::create('prmpromociones', function (Blueprint $table) {
             $table->increments('prmid');
             $table->unsignedInteger('tprid');
+            $table->string('prmcodigo');
             $table->text('prmmecanica');
             $table->string('prmcantidadcombo');
             $table->string('prmcantidadplancha');

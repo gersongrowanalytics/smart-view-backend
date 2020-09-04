@@ -66,23 +66,37 @@ class CargarArchivoController extends Controller
                     $soldTo     = $objPHPExcel->getActiveSheet()->getCell('O'.$i)->getCalculatedValue();
                     $cliente    = $objPHPExcel->getActiveSheet()->getCell('P'.$i)->getCalculatedValue();
                     $accion     = $objPHPExcel->getActiveSheet()->getCell('Q'.$i)->getCalculatedValue();
-                    // *
                     $cantCompra = $objPHPExcel->getActiveSheet()->getCell('R'.$i)->getCalculatedValue();
                     $cantBonifi = $objPHPExcel->getActiveSheet()->getCell('S'.$i)->getCalculatedValue();
                     $mecanica   = $objPHPExcel->getActiveSheet()->getCell('U'.$i)->getCalculatedValue();
-                    // *
                     $categoria  = $objPHPExcel->getActiveSheet()->getCell('V'.$i)->getCalculatedValue();
-                    $sku        = $objPHPExcel->getActiveSheet()->getCell('W'.$i)->getCalculatedValue();
-                    $producto   = $objPHPExcel->getActiveSheet()->getCell('X'.$i)->getCalculatedValue();
-                    $skuBonifi  = $objPHPExcel->getActiveSheet()->getCell('Y'.$i)->getCalculatedValue();
-                    $productoBo = $objPHPExcel->getActiveSheet()->getCell('Z'.$i)->getCalculatedValue();
-                    $tipoPromo  = $objPHPExcel->getActiveSheet()->getCell('AA'.$i)->getCalculatedValue();
-                    $tipoClien  = $objPHPExcel->getActiveSheet()->getCell('AD'.$i)->getCalculatedValue();
-                    $planchas   = $objPHPExcel->getActiveSheet()->getCell('AG'.$i)->getCalculatedValue();
-                    $combos     = $objPHPExcel->getActiveSheet()->getCell('AH'.$i)->getCalculatedValue();
-                    $precXcombo = $objPHPExcel->getActiveSheet()->getCell('AI'.$i)->getCalculatedValue();
-                    $precXplanc = $objPHPExcel->getActiveSheet()->getCell('AJ'.$i)->getCalculatedValue();
-                    $precXtodo  = $objPHPExcel->getActiveSheet()->getCell('AK'.$i)->getCalculatedValue();
+
+                    /**NUEVOS CAMPOS */
+                    $codPromoc  = $objPHPExcel->getActiveSheet()->getCell('W'.$i)->getCalculatedValue();
+                    $codPrinci  = $objPHPExcel->getActiveSheet()->getCell('X'.$i)->getCalculatedValue();
+                    /***/
+
+                    $sku        = $objPHPExcel->getActiveSheet()->getCell('Y'.$i)->getCalculatedValue();
+                    $producto   = $objPHPExcel->getActiveSheet()->getCell('Z'.$i)->getCalculatedValue();
+
+                    /**NUEVOS CAMPOS */
+                    $productoPpt = $objPHPExcel->getActiveSheet()->getCell('AA'.$i)->getCalculatedValue();
+                    $compraPpt   = $objPHPExcel->getActiveSheet()->getCell('AB'.$i)->getCalculatedValue();
+                    /***/
+
+                    $skuBonifi  = $objPHPExcel->getActiveSheet()->getCell('AC'.$i)->getCalculatedValue();
+                    $productoBo = $objPHPExcel->getActiveSheet()->getCell('AD'.$i)->getCalculatedValue();
+                    /**NUEVOS CAMPOS */
+                    $proBoniPpt = $objPHPExcel->getActiveSheet()->getCell('AE'.$i)->getCalculatedValue();
+                    $compBonPpt = $objPHPExcel->getActiveSheet()->getCell('AF'.$i)->getCalculatedValue();
+                    /***/
+                    $tipoPromo  = $objPHPExcel->getActiveSheet()->getCell('AG'.$i)->getCalculatedValue();
+                    $tipoClien  = $objPHPExcel->getActiveSheet()->getCell('AJ'.$i)->getCalculatedValue();
+                    $planchas   = $objPHPExcel->getActiveSheet()->getCell('AM'.$i)->getCalculatedValue();
+                    $combos     = $objPHPExcel->getActiveSheet()->getCell('AN'.$i)->getCalculatedValue();
+                    $precXcombo = $objPHPExcel->getActiveSheet()->getCell('AO'.$i)->getCalculatedValue();
+                    $precXplanc = $objPHPExcel->getActiveSheet()->getCell('AP'.$i)->getCalculatedValue();
+                    $precXtodo  = $objPHPExcel->getActiveSheet()->getCell('AQ'.$i)->getCalculatedValue();
 
 
         
@@ -312,7 +326,7 @@ class CargarArchivoController extends Controller
                         $nuevoProducto->catid     = $catid;
                         $nuevoProducto->prosku    = $sku;
                         $nuevoProducto->pronombre = $producto;
-                        $nuevoProducto->proimagen = env('APP_URL').'/Sistema/abs/img/nohay.png';
+                        $nuevoProducto->proimagen = env('APP_URL').'/Sistema/promociones/'.$categoria.'/'.$tipoClien.'/'.$codPromoc.'/'.$productoPpt.'.png';
                         if($nuevoProducto->save()){
                             $proid = $nuevoProducto->proid;
                         }else{
@@ -333,7 +347,7 @@ class CargarArchivoController extends Controller
                         $nuevoProductoBonificado->catid     = $catid;
                         $nuevoProductoBonificado->prosku    = $skuBonifi;
                         $nuevoProductoBonificado->pronombre = $productoBo;
-                        $nuevoProductoBonificado->proimagen = env('APP_URL').'/Sistema/abs/img/nohay.png';
+                        $nuevoProductoBonificado->proimagen = env('APP_URL').'/Sistema/promociones/'.$categoria.'/'.$tipoClien.'/'.$codPromoc.'/'.$productoPpt.' - Gratis.png';
                         if($nuevoProductoBonificado->save()){
                             $bonificadoproid = $nuevoProductoBonificado->proid;
                         }else{
@@ -393,6 +407,7 @@ class CargarArchivoController extends Controller
                     }
 
                     $prm = prmpromociones::where('tprid', $tprid)
+                                    ->where('prmcodigo', $codPromoc)
                                     ->where('prmmecanica', $mecanica)
                                     ->where('prmcantidadcombo', $combos)
                                     ->where('prmcantidadplancha', $planchas)
@@ -408,6 +423,7 @@ class CargarArchivoController extends Controller
                     }else{
                         $nuevoPrm = new prmpromociones;
                         $nuevoPrm->tprid                = $tprid;
+                        $nuevoPrm->prmcodigo            = $codPromoc;
                         $nuevoPrm->prmcantidadcombo     = $combos;
                         $nuevoPrm->prmmecanica          = $mecanica;
                         $nuevoPrm->prmcantidadplancha   = $planchas;
@@ -425,6 +441,7 @@ class CargarArchivoController extends Controller
                     $csp = cspcanalessucursalespromociones::where('cscid', $cscid )
                                                             ->where('fecid', $fecid)
                                                             ->where('prmid', $prmid)
+                                                            ->where('cspcodigoprincipal', $codPrinci)
                                                             ->first(['cspid']);
                         
                     $cspid = 0;
@@ -432,12 +449,13 @@ class CargarArchivoController extends Controller
                         $cspid = $csp->cspid;
                     }else{
                         $nuevoCsp = new cspcanalessucursalespromociones;
-                        $nuevoCsp->cscid         = $cscid;
-                        $nuevoCsp->fecid         = $fecid;
-                        $nuevoCsp->prmid         = $prmid;
-                        $nuevoCsp->cspvalorizado = 0;
-                        $nuevoCsp->cspplanchas   = 0;
-                        $nuevoCsp->cspcompletado = 0;
+                        $nuevoCsp->cscid                = $cscid;
+                        $nuevoCsp->fecid                = $fecid;
+                        $nuevoCsp->prmid                = $prmid;
+                        $nuevoCsp->cspcodigoprincipal   = $codPrinci;
+                        $nuevoCsp->cspvalorizado        = 0;
+                        $nuevoCsp->cspplanchas          = 0;
+                        $nuevoCsp->cspcompletado        = 0;
                         if($nuevoCsp->save()){
                             $cspid = $nuevoCsp->cspid;
                         }else{
@@ -446,6 +464,8 @@ class CargarArchivoController extends Controller
                     }
 
                     $prb = prbpromocionesbonificaciones::where('prmid', $prmid)
+                                                    ->where('prbproductoppt', $proBoniPpt)
+                                                    ->where('prbcomprappt', $compBonPpt)
                                                     ->where('proid', $bonificadoproid)
                                                     ->where('prbcantidad', $cantBonifi)
                                                     ->first(['prbid']);
@@ -454,9 +474,11 @@ class CargarArchivoController extends Controller
 
                     }else{
                         $nuevoPrb = new prbpromocionesbonificaciones;
-                        $nuevoPrb->prmid        = $prmid;
-                        $nuevoPrb->proid        = $bonificadoproid;
-                        $nuevoPrb->prbcantidad  = $cantBonifi;
+                        $nuevoPrb->prmid            = $prmid;
+                        $nuevoPrb->proid            = $bonificadoproid;
+                        $nuevoPrb->prbcantidad      = $cantBonifi;
+                        $nuevoPrb->prbproductoppt   = $proBoniPpt;
+                        $nuevoPrb->prbcomprappt     = $compBonPpt;
                         if($nuevoPrb->save()){
 
                         }else{
@@ -467,6 +489,8 @@ class CargarArchivoController extends Controller
 
                     $prp = prppromocionesproductos::where('prmid', $prmid)
                                                 ->where('proid', $proid)
+                                                ->where('prpproductoppt', $productoPpt)
+                                                ->where('prpcomprappt', $compraPpt)
                                                 ->where('prpcantidad', $cantCompra)
                                                 ->first(['prpid']);
 

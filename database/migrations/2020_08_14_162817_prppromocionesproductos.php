@@ -18,6 +18,8 @@ class Prppromocionesproductos extends Migration
             $table->unsignedInteger('prmid');
             $table->unsignedInteger('proid');
             $table->integer('prpcantidad');
+            $table->string('prpproductoppt');
+            $table->string('prpcomprappt');
             $table->timestamps();
 
             $table->foreign('prmid')->references('prmid')->on('prmpromociones');

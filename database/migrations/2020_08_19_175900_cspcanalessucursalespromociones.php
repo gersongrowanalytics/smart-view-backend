@@ -21,6 +21,7 @@ class Cspcanalessucursalespromociones extends Migration
             $table->string('cspvalorizado');
             $table->string('cspplanchas');
             $table->boolean('cspcompletado')->default(false);
+            $table->string('cspcodigoprincipal');
             $table->timestamps();
 
             $table->foreign('cscid')->references('cscid')->on('csccanalessucursalescategorias');
