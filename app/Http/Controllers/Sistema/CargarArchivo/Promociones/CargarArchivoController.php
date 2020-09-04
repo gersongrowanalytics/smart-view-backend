@@ -498,9 +498,11 @@ class CargarArchivoController extends Controller
                         
                     }else{
                         $nuevoPrp = new prppromocionesproductos;
-                        $nuevoPrp->prmid        = $prmid;
-                        $nuevoPrp->proid        = $proid;
-                        $nuevoPrp->prpcantidad  = $cantCompra;
+                        $nuevoPrp->prmid            = $prmid;
+                        $nuevoPrp->proid            = $proid;
+                        $nuevoPrp->prpcantidad      = $cantCompra;
+                        $nuevoPrb->prpproductoppt   = $productoPpt;
+                        $nuevoPrb->prpcomprappt     = $compraPpt;
                         if($nuevoPrp->save()){
 
                         }else{
