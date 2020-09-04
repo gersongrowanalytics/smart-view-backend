@@ -19,10 +19,10 @@ class Scasucursalescategorias extends Migration
             $table->unsignedInteger('catid');
             $table->unsignedInteger('fecid');
             $table->unsignedInteger('tsuid')->nullable();
-            $table->string('scavalorizadoobjetivo');
-            $table->string('scavalorizadoreal');
-            $table->string('scavalorizadotogo');
-            $table->string('scaiconocategoria');
+            $table->string('scavalorizadoobjetivo')->nullable();
+            $table->string('scavalorizadoreal')->nullable();
+            $table->string('scavalorizadotogo')->nullable();
+            $table->string('scaiconocategoria')->nullable();
             $table->timestamps();
 
             $table->foreign('tsuid')->references('tsuid')->on('tsutipospromocionessucursales');

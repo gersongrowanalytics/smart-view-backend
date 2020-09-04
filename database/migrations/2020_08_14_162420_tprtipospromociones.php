@@ -18,6 +18,8 @@ class Tprtipospromociones extends Migration
             $table->string('tprnombre');
             $table->string('tpricono')->nullable();
             $table->string('tprcolor')->nullable();
+            $table->string('tprcolorbarra')->nullable();
+            $table->string('tprcolortooltip')->nullable();
             $table->timestamps();
         });
     }
