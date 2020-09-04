@@ -91,7 +91,7 @@ class CargarArchivoController extends Controller
                     $proBoniPpt = $objPHPExcel->getActiveSheet()->getCell('AE'.$i)->getCalculatedValue();
                     $compBonPpt = $objPHPExcel->getActiveSheet()->getCell('AF'.$i)->getCalculatedValue();
                     /***/
-                    
+
                     $tipoPromo  = $objPHPExcel->getActiveSheet()->getCell('AG'.$i)->getCalculatedValue();
                     $tipoClien  = $objPHPExcel->getActiveSheet()->getCell('AJ'.$i)->getCalculatedValue();
                     $planchas   = $objPHPExcel->getActiveSheet()->getCell('AM'.$i)->getCalculatedValue();
@@ -503,8 +503,8 @@ class CargarArchivoController extends Controller
                         $nuevoPrp->prmid            = $prmid;
                         $nuevoPrp->proid            = $proid;
                         $nuevoPrp->prpcantidad      = $cantCompra;
-                        $nuevoPrb->prpproductoppt   = $productoPpt;
-                        $nuevoPrb->prpcomprappt     = $compraPpt;
+                        $nuevoPrp->prpproductoppt   = $productoPpt;
+                        $nuevoPrp->prpcomprappt     = $compraPpt;
                         if($nuevoPrp->save()){
 
                         }else{
