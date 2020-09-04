@@ -86,10 +86,12 @@ class CargarArchivoController extends Controller
 
                     $skuBonifi  = $objPHPExcel->getActiveSheet()->getCell('AC'.$i)->getCalculatedValue();
                     $productoBo = $objPHPExcel->getActiveSheet()->getCell('AD'.$i)->getCalculatedValue();
+
                     /**NUEVOS CAMPOS */
                     $proBoniPpt = $objPHPExcel->getActiveSheet()->getCell('AE'.$i)->getCalculatedValue();
                     $compBonPpt = $objPHPExcel->getActiveSheet()->getCell('AF'.$i)->getCalculatedValue();
                     /***/
+                    
                     $tipoPromo  = $objPHPExcel->getActiveSheet()->getCell('AG'.$i)->getCalculatedValue();
                     $tipoClien  = $objPHPExcel->getActiveSheet()->getCell('AJ'.$i)->getCalculatedValue();
                     $planchas   = $objPHPExcel->getActiveSheet()->getCell('AM'.$i)->getCalculatedValue();
@@ -347,7 +349,7 @@ class CargarArchivoController extends Controller
                         $nuevoProductoBonificado->catid     = $catid;
                         $nuevoProductoBonificado->prosku    = $skuBonifi;
                         $nuevoProductoBonificado->pronombre = $productoBo;
-                        $nuevoProductoBonificado->proimagen = env('APP_URL').'/Sistema/promociones/'.$categoria.'/'.$tipoClien.'/'.$codPromoc.'/'.$productoPpt.' - Gratis.png';
+                        $nuevoProductoBonificado->proimagen = env('APP_URL').'/Sistema/promociones/'.$categoria.'/'.$tipoClien.'/'.$codPromoc.'/'.$proBoniPpt.' - Gratis.png';
                         if($nuevoProductoBonificado->save()){
                             $bonificadoproid = $nuevoProductoBonificado->proid;
                         }else{
