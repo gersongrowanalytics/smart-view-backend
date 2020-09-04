@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use App\tuptiposusuariospermisos;
 
 class tuptiposusuariospermisosSeeder extends Seeder
 {
@@ -11,6 +12,24 @@ class tuptiposusuariospermisosSeeder extends Seeder
      */
     public function run()
     {
-        //
+        tuptiposusuariospermisos::create([
+            'pemid' => 1,
+            'tpuid' => 2
+        ]);
+
+        tuptiposusuariospermisos::create([
+            'pemid' => 2,
+            'tpuid' => 2
+        ]);
+
+        tuptiposusuariospermisos::create([
+            'pemid' => 3,
+            'tpuid' => 2
+        ]);
+
+        tuptiposusuariospermisos::create([
+            'pemid' => 4,
+            'tpuid' => 2
+        ]);
     }
 }

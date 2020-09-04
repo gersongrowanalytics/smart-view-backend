@@ -15,6 +15,7 @@ class DatabaseSeeder extends Seeder
         $this->call('perpersonasSeeder');
         $this->call('tputiposusuariosSeeder');
         $this->call('usuusuariosSeeder');
+        $this->call('pempermisosSeeder');
         
     }
 }

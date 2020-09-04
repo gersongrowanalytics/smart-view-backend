@@ -17,7 +17,7 @@ class usuusuariosSeeder extends Seeder
         usuusuarios::create([
             'tpuid'         => 1,
             'perid'         => 1,
-            'usuusuario'    => 'gerson',
+            'usuusuario'    => 'Administrador',
             'usucorreo'     => 'Gerson.Vilca@grow-analytics.com',
             'usucontrasena' => Hash::make('1234'),
             'usutoken'      => Str::random(60),
