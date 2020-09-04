@@ -35,6 +35,7 @@ class VentasMostrarController extends Controller
                                                                         ->where('fec.fecano', $ano)
                                                                         ->where('fec.fecmes', $mes)
                                                                         ->where('fec.fecdia', $dia)
+                                                                        ->OrderBy('tpr.tprnombre', 'ASC')
                                                                         ->get([
                                                                             'tsutipospromocionessucursales.tsuid',
                                                                             'tpr.tprid',
