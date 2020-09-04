@@ -16,6 +16,10 @@ class DatabaseSeeder extends Seeder
         $this->call('tputiposusuariosSeeder');
         $this->call('usuusuariosSeeder');
         $this->call('pempermisosSeeder');
+        $this->call('sucsucursalSeeder');
+        $this->call('ussusuariossucursalesSeeder');
+        $this->call('tuptiposusuariospermisos');
+        $this->call('catcategoriasSeeder');
         
     }
 }
