@@ -96,6 +96,8 @@ class VentasMostrarController extends Controller
                         "categorias" => []
                     )
                 );
+
+                
                 $datos = $dataVacia;
                 $respuesta      = true;
                 $linea          = __LINE__;
