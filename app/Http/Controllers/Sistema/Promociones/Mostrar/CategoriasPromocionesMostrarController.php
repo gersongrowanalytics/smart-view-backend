@@ -170,13 +170,13 @@ class CategoriasPromocionesMostrarController extends Controller
                                     if(sizeof($prppromocionesproductos) > 0){
                                         foreach($prppromocionesproductos as $posicionProductos => $prp ){
                                             $ignorar = false;
-                                            for($i = 0; $i < sizeof($nuevoArray); $i++){
-                                                if($nuevoArray[$i] == $prp->prpcodigoprincipal){
+                                            for($i = 0; $i < sizeof($arrCodigosPrincipales); $i++){
+                                                if($arrCodigosPrincipales[$i] == $prp->prpcodigoprincipal){
                                                     $ignorar = true;
                                                     break;
                                                 }
                                             }
-                                            $nuevoArray[] = $prp->prpcodigoprincipal;
+                                            $arrCodigosPrincipales[] = $prp->prpcodigoprincipal;
                                             if($primeraPrp == false){
                                                 $nuevoArray[$contador]['SKU']      = $prp->prosku;
                                                 $nuevoArray[$contador]['PRODUCTO'] = $prp->prpproductoppt;
@@ -220,9 +220,7 @@ class CategoriasPromocionesMostrarController extends Controller
                                                 $nuevoArray[$contador]['SKU BONIFICADO']      = '';
                                                 $nuevoArray[$contador]['PRODUCTO BONIFICADO'] = '';
                                             }
-                                            if($ignorar == false){
-                                                
-                                            }
+                                            
                                         }
                                     }else{
                                         $nuevoArray[$contador]['SKU']      = '';
