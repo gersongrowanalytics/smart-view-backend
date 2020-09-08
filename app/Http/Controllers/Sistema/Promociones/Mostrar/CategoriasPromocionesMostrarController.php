@@ -10,6 +10,7 @@ use App\scasucursalescategorias;
 use App\prppromocionesproductos;
 use App\prbpromocionesbonificaciones;
 use App\cspcanalessucursalespromociones;
+use App\usuusuarios;
 
 class CategoriasPromocionesMostrarController extends Controller
 {
