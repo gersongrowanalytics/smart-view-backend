@@ -533,7 +533,7 @@ class CargarArchivoController extends Controller
             $fechaActual = date('Y-m-d H:i:s');
 
             $nuevoCargaArchivo = new carcargasarchivos;
-            $nuevoCargaArchivo->tcaid = 2;
+            $nuevoCargaArchivo->tcaid = 1;
             $nuevoCargaArchivo->fecid = $fecid;
             $nuevoCargaArchivo->usuid = null;
             $nuevoCargaArchivo->carnombrearchivo = $archivo;
