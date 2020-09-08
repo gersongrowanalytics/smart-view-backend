@@ -92,7 +92,8 @@ class VentasMostrarController extends Controller
                         "tsuvalorizadoreal"         => "0",
                         "tsuvalorizadotogo"         => "0",
                         "tsuporcentajecumplimiento" => "0",
-                        "tsuvalorizadorebate"       => "0"
+                        "tsuvalorizadorebate"       => "0",
+                        "categorias" => []
                     )
                 );
                 $datos = $dataVacia;
