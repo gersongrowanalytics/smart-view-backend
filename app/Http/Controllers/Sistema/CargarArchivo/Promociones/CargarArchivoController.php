@@ -411,27 +411,31 @@ class CargarArchivoController extends Controller
                     $prm = prmpromociones::where('tprid', $tprid)
                                     ->where('prmcodigo', $codPromoc)
                                     ->where('prmmecanica', $mecanica)
-                                    ->where('prmcantidadcombo', $combos)
-                                    ->where('prmcantidadplancha', $planchas)
-                                    ->where('prmtotalcombo', $precXcombo)
-                                    ->where('prmtotalplancha', $precXplanc)
-                                    ->where('prmtotal', $precXtodo)
                                     ->where('prmaccion', $accion)
                                     ->first(['prmid']);
 
                     $prmid = 0;
                     if($prm){
                         $prmid = $prm->prmid;
+                        // SI EL CODIGO DE LA PROMOCION SE REPITE SUMAR LA CANTIDAD DE COMBOS Y PLANCHAS
+                        $prm->prmcantidadcombo   = $prm->prmcantidadcombo + $combos;
+                        $prm->prmcantidadplancha = $prm->prmcantidadplancha + $planchas;
+                        if($prm->update()){
+
+                        }else{
+                            
+                        }
+
                     }else{
                         $nuevoPrm = new prmpromociones;
                         $nuevoPrm->tprid                = $tprid;
                         $nuevoPrm->prmcodigo            = $codPromoc;
-                        $nuevoPrm->prmcantidadcombo     = $combos;
+                        // $nuevoPrm->prmcantidadcombo     = $combos;
                         $nuevoPrm->prmmecanica          = $mecanica;
-                        $nuevoPrm->prmcantidadplancha   = $planchas;
-                        $nuevoPrm->prmtotalcombo        = $precXcombo;
-                        $nuevoPrm->prmtotalplancha      = $precXplanc;
-                        $nuevoPrm->prmtotal             = $precXtodo;
+                        // $nuevoPrm->prmcantidadplancha   = $planchas;
+                        // $nuevoPrm->prmtotalcombo        = $precXcombo;
+                        // $nuevoPrm->prmtotalplancha      = $precXplanc;
+                        // $nuevoPrm->prmtotal             = $precXtodo;
                         $nuevoPrm->prmaccion            = $accion;
                         if($nuevoPrm->save()){
                             $prmid = $nuevoPrm->prmid;
@@ -440,78 +444,91 @@ class CargarArchivoController extends Controller
                         }
                     }
 
-                    $csp = cspcanalessucursalespromociones::where('cscid', $cscid )
-                                                            ->where('fecid', $fecid)
-                                                            ->where('prmid', $prmid)
-                                                            ->where('cspcodigoprincipal', $codPrinci)
-                                                            ->first(['cspid']);
-                        
-                    $cspid = 0;
-                    if($csp){
-                        $cspid = $csp->cspid;
-                    }else{
-                        $nuevoCsp = new cspcanalessucursalespromociones;
-                        $nuevoCsp->cscid                = $cscid;
-                        $nuevoCsp->fecid                = $fecid;
-                        $nuevoCsp->prmid                = $prmid;
-                        $nuevoCsp->cspcodigoprincipal   = $codPrinci;
-                        $nuevoCsp->cspvalorizado        = 0;
-                        $nuevoCsp->cspplanchas          = 0;
-                        $nuevoCsp->cspcompletado        = 0;
-                        if($nuevoCsp->save()){
-                            $cspid = $nuevoCsp->cspid;
-                        }else{
-                            
-                        }
-                    }
+
+
+
 
                     $prb = prbpromocionesbonificaciones::where('prmid', $prmid)
-                                                    ->where('prbproductoppt', $proBoniPpt)
-                                                    ->where('prbcomprappt', $compBonPpt)
-                                                    ->where('proid', $bonificadoproid)
-                                                    ->where('prbcantidad', $cantBonifi)
+                                                    ->where('proid', $bonificadoproid) 
+                                                    ->where('prbcodigoprincipal', $codPrinci) 
                                                     ->first(['prbid']);
 
                     if($prb){
 
                     }else{
                         $nuevoPrb = new prbpromocionesbonificaciones;
-                        $nuevoPrb->prmid            = $prmid;
-                        $nuevoPrb->proid            = $bonificadoproid;
-                        $nuevoPrb->prbcantidad      = $cantBonifi;
-                        $nuevoPrb->prbproductoppt   = $proBoniPpt;
-                        $nuevoPrb->prbcomprappt     = $compBonPpt;
+                        $nuevoPrb->prmid                = $prmid;
+                        $nuevoPrb->proid                = $bonificadoproid;
+                        $nuevoPrb->prbcantidad          = $cantBonifi;
+                        $nuevoPrb->prbproductoppt       = $proBoniPpt;
+                        $nuevoPrb->prbcomprappt         = $compBonPpt;
+                        $nuevoPrb->prbcodigoprincipal   = $codPrinci;
+
                         if($nuevoPrb->save()){
+                            $prp = prppromocionesproductos::where('prmid', $prmid)
+                                                            ->where('proid', $proid)
+                                                            ->where('prpcodigoprincipal', $codPrinci)
+                                                            ->first(['prpid']);
 
+                            if($prp){
+                                
+                            }else{
+                                $nuevoPrp = new prppromocionesproductos;
+                                $nuevoPrp->prmid                = $prmid;
+                                $nuevoPrp->proid                = $proid;
+                                $nuevoPrp->prpcantidad          = $cantCompra;
+                                $nuevoPrp->prpproductoppt       = $productoPpt;
+                                $nuevoPrp->prpcomprappt         = $compraPpt;
+                                $nuevoPrp->prpcodigoprincipal   = $codPrinci;
+                                if($nuevoPrp->save()){
+                                    $csp = cspcanalessucursalespromociones::where('cscid', $cscid )
+                                                            ->where('fecid', $fecid)
+                                                            ->where('prmid', $prmid)
+                                                            ->first(['cspid']);
+
+                                    $cspid = 0;
+                                    if($csp){
+                                        
+                                        $cspid = $csp->cspid;
+                                        // SI EL CODIGO DE LA PROMOCION SE REPITE SUMAR LA CANTIDAD DE COMBOS Y PLANCHAS
+                                        $csp->cspcantidadcombo   = $csp->cspcantidadcombo + $combos;
+                                        $csp->cspcantidadplancha = $csp->cspcantidadplancha + $planchas;
+                                        if($csp->update()){
+
+                                        }else{
+                                            
+                                        }
+
+                                    }else{
+                                        $nuevoCsp = new cspcanalessucursalespromociones;
+                                        $nuevoCsp->cscid                = $cscid;
+                                        $nuevoCsp->fecid                = $fecid;
+                                        $nuevoCsp->prmid                = $prmid;
+                                        // $nuevoCsp->cspcodigoprincipal   = $codPrinci;
+                                        $nuevoCsp->cspvalorizado        = 0;
+                                        $nuevoCsp->cspplanchas          = 0;
+                                        $nuevoCsp->cspcompletado        = 0;
+
+                                        $nuevoCsp->cspcantidadcombo     = $combos;
+                                        $nuevoCsp->cspcantidadplancha   = $planchas;
+                                        $nuevoCsp->csptotalcombo        = $precXcombo;
+                                        $nuevoCsp->csptotalplancha      = $precXplanc;
+                                        $nuevoCsp->csptotal             = $precXtodo;
+
+                                        if($nuevoCsp->save()){
+                                            $cspid = $nuevoCsp->cspid;
+                                        }else{
+                                            
+                                        }
+                                    }
+                                }else{
+
+                                }
+                            }
                         }else{
 
                         }
-
                     }
-
-                    $prp = prppromocionesproductos::where('prmid', $prmid)
-                                                ->where('proid', $proid)
-                                                ->where('prpproductoppt', $productoPpt)
-                                                ->where('prpcomprappt', $compraPpt)
-                                                ->where('prpcantidad', $cantCompra)
-                                                ->first(['prpid']);
-
-                    if($prp){
-                        
-                    }else{
-                        $nuevoPrp = new prppromocionesproductos;
-                        $nuevoPrp->prmid            = $prmid;
-                        $nuevoPrp->proid            = $proid;
-                        $nuevoPrp->prpcantidad      = $cantCompra;
-                        $nuevoPrp->prpproductoppt   = $productoPpt;
-                        $nuevoPrp->prpcomprappt     = $compraPpt;
-                        if($nuevoPrp->save()){
-
-                        }else{
-
-                        }
-                    }
-
                 }                
             } else {
                 

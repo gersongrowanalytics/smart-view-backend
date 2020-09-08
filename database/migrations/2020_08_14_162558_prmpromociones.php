@@ -18,11 +18,11 @@ class Prmpromociones extends Migration
             $table->unsignedInteger('tprid');
             $table->string('prmcodigo');
             $table->text('prmmecanica');
-            $table->string('prmcantidadcombo');
-            $table->string('prmcantidadplancha');
-            $table->string('prmtotalcombo');
-            $table->string('prmtotalplancha');
-            $table->string('prmtotal');
+            // $table->string('prmcantidadcombo');
+            // $table->string('prmcantidadplancha');
+            // $table->string('prmtotalcombo');
+            // $table->string('prmtotalplancha');
+            // $table->string('prmtotal');
             $table->string('prmaccion');
             $table->timestamps();
 
