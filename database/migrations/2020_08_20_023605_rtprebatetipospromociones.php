@@ -34,6 +34,6 @@ class Rtprebatetipospromociones extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tsutipospromocionessucursales');
+        Schema::dropIfExists('rtprebatetipospromociones');
     }
 }

@@ -22,6 +22,7 @@ class DatabaseSeeder extends Seeder
         $this->call('catcategoriasSeeder');
         $this->call('tprtipospromocionesSeeder');
         $this->call('fecfechasSeeder');
+        $this->call('tcatiposcargasarchivosSeeder');
         
     }
 }

@@ -28,6 +28,7 @@ use App\prmpromociones;
 use App\cspcanalessucursalespromociones;
 use App\prbpromocionesbonificaciones;
 use App\prppromocionesproductos;
+use App\carcargasarchivos;
 
 class CargarArchivoController extends Controller
 {
@@ -524,9 +525,27 @@ class CargarArchivoController extends Controller
                         }
                     }
                 }                
+            
             } else {
                 
             }
+            date_default_timezone_set("America/Lima");
+            $fechaActual = date('Y-m-d H:i:s');
+
+            $nuevoCargaArchivo = new carcargasarchivos;
+            $nuevoCargaArchivo->tcaid = 2;
+            $nuevoCargaArchivo->fecid = $fecid;
+            $nuevoCargaArchivo->usuid = null;
+            $nuevoCargaArchivo->carnombrearchivo = $archivo;
+            $nuevoCargaArchivo->carubicacion = $fichero_subido;
+            $nuevoCargaArchivo->carexito = true;
+            if($nuevoCargaArchivo->save()){
+
+            }else{
+
+            }
+            
+            
 
         } catch (Exception $e) {
             $mensajedev = $e->getMessage();
