@@ -29,6 +29,7 @@ class CategoriasPromocionesMostrarController extends Controller
         $mensajeDetalle = '';
         $mensajedev     = null;
 
+        $arrCodigosPrincipales = [];
 
         try{
 
@@ -149,6 +150,13 @@ class CategoriasPromocionesMostrarController extends Controller
 
                                     $prppromocionesproductos = prppromocionesproductos::join('proproductos as pro', 'pro.proid', 'prppromocionesproductos.proid')
                                                                                         ->where('prppromocionesproductos.prmid', $cspcanalesucursalpromocion->prmid )
+                                                                                        // ->where(function ($query) use($arrCodigosPrincipales) {
+
+                                                                                        //     for($i = 0; $i < sizeof($arrCodigosPrincipales); $i++){
+                                                                                        //         $query->where('prpcodigoprincipal', '!=' , $arrCodigosPrincipales[$i]);
+                                                                                        //     }
+
+                                                                                        // })
                                                                                         ->get([
                                                                                             'pro.proid',
                                                                                             'pro.prosku',
@@ -161,48 +169,59 @@ class CategoriasPromocionesMostrarController extends Controller
                                     $primeraPrp = false;
                                     if(sizeof($prppromocionesproductos) > 0){
                                         foreach($prppromocionesproductos as $posicionProductos => $prp ){
-                                            if($primeraPrp == false){
-                                                $nuevoArray[$contador]['SKU']      = $prp->prosku;
-                                                $nuevoArray[$contador]['PRODUCTO'] = $prp->prpproductoppt;
-                                                $primeraPrp = true;
-                                            }else{
-                                                $contador = $contador+1;
-                                                $nuevoArray[$contador]['ANIO']                = $anio;
-                                                $nuevoArray[$contador]['MES']                 = $mes;
-                                                $nuevoArray[$contador]['CATEGORIA']           = $sca->catnombre;
-                                                $nuevoArray[$contador]['CANAL']               = $csccanalesucursalcategoria->cannombre;
-                                                $nuevoArray[$contador]['MECANICA']            = $cspcanalesucursalpromocion->prmmecanica;
-                                                $nuevoArray[$contador]['PLANCHAS ROTAR']      = $cspcanalesucursalpromocion->cspcantidadplancha;
-                                                $nuevoArray[$contador]['#COMBOS']             = $cspcanalesucursalpromocion->cspcantidadcombo;
-                                                $nuevoArray[$contador]['RECONOCER X COMBO']   = $cspcanalesucursalpromocion->csptotalcombo;
-                                                $nuevoArray[$contador]['RECONOCER X PLANCHA'] = $cspcanalesucursalpromocion->csptotalplancha;
-                                                $nuevoArray[$contador]['TOTAL SOLES']         = $cspcanalesucursalpromocion->csptotal;
-                                                $nuevoArray[$contador]['ACCION']              = $cspcanalesucursalpromocion->prmaccion;
-                                                $nuevoArray[$contador]['SKU']                 = $prp->prosku;
-                                                $nuevoArray[$contador]['PRODUCTO']            = $prp->prpproductoppt;
+                                            $ignorar = false;
+                                            for($i = 0; $i < sizeof($nuevoArray); $i++){
+                                                if($nuevoArray[$i] == $prp->prpcodigoprincipal){
+                                                    $ignorar = true;
+                                                    break;
+                                                }
                                             }
 
-
-
-                                            $prbpromocionesbonificaciones = prbpromocionesbonificaciones::join('proproductos as pro', 'pro.proid', 'prbpromocionesbonificaciones.proid')
-                                                                                                ->where('prbpromocionesbonificaciones.prmid', $cspcanalesucursalpromocion->prmid )
-                                                                                                ->where('prbcodigoprincipal', $prp->prpcodigoprincipal )
-                                                                                                ->first([
-                                                                                                    'pro.proid',
-                                                                                                    'pro.prosku',
-                                                                                                    'pro.pronombre',
-                                                                                                    'pro.proimagen',
-                                                                                                    'prbproductoppt',
-                                                                                                    'prbcomprappt',
-                                                                                                    'prbcodigoprincipal'
-                                                                                                ]);
-                                    
-                                            if($prbpromocionesbonificaciones){
-                                                $nuevoArray[$contador]['SKU BONIFICADO']      = $prbpromocionesbonificaciones->prosku;
-                                                $nuevoArray[$contador]['PRODUCTO BONIFICADO'] = $prbpromocionesbonificaciones->prbproductoppt;
-                                            }else{
-                                                $nuevoArray[$contador]['SKU BONIFICADO']      = '';
-                                                $nuevoArray[$contador]['PRODUCTO BONIFICADO'] = '';
+                                            if($ignorar == false){
+                                                $nuevoArray[] = $prp->prpcodigoprincipal;
+                                                if($primeraPrp == false){
+                                                    $nuevoArray[$contador]['SKU']      = $prp->prosku;
+                                                    $nuevoArray[$contador]['PRODUCTO'] = $prp->prpproductoppt;
+                                                    $primeraPrp = true;
+                                                }else{
+                                                    $contador = $contador+1;
+                                                    $nuevoArray[$contador]['ANIO']                = $anio;
+                                                    $nuevoArray[$contador]['MES']                 = $mes;
+                                                    $nuevoArray[$contador]['CATEGORIA']           = $sca->catnombre;
+                                                    $nuevoArray[$contador]['CANAL']               = $csccanalesucursalcategoria->cannombre;
+                                                    $nuevoArray[$contador]['MECANICA']            = $cspcanalesucursalpromocion->prmmecanica;
+                                                    $nuevoArray[$contador]['PLANCHAS ROTAR']      = $cspcanalesucursalpromocion->cspcantidadplancha;
+                                                    $nuevoArray[$contador]['#COMBOS']             = $cspcanalesucursalpromocion->cspcantidadcombo;
+                                                    $nuevoArray[$contador]['RECONOCER X COMBO']   = $cspcanalesucursalpromocion->csptotalcombo;
+                                                    $nuevoArray[$contador]['RECONOCER X PLANCHA'] = $cspcanalesucursalpromocion->csptotalplancha;
+                                                    $nuevoArray[$contador]['TOTAL SOLES']         = $cspcanalesucursalpromocion->csptotal;
+                                                    $nuevoArray[$contador]['ACCION']              = $cspcanalesucursalpromocion->prmaccion;
+                                                    $nuevoArray[$contador]['SKU']                 = $prp->prosku;
+                                                    $nuevoArray[$contador]['PRODUCTO']            = $prp->prpproductoppt;
+                                                }
+    
+    
+    
+                                                $prbpromocionesbonificaciones = prbpromocionesbonificaciones::join('proproductos as pro', 'pro.proid', 'prbpromocionesbonificaciones.proid')
+                                                                                                    ->where('prbpromocionesbonificaciones.prmid', $cspcanalesucursalpromocion->prmid )
+                                                                                                    ->where('prbcodigoprincipal', $prp->prpcodigoprincipal )
+                                                                                                    ->first([
+                                                                                                        'pro.proid',
+                                                                                                        'pro.prosku',
+                                                                                                        'pro.pronombre',
+                                                                                                        'pro.proimagen',
+                                                                                                        'prbproductoppt',
+                                                                                                        'prbcomprappt',
+                                                                                                        'prbcodigoprincipal'
+                                                                                                    ]);
+                                        
+                                                if($prbpromocionesbonificaciones){
+                                                    $nuevoArray[$contador]['SKU BONIFICADO']      = $prbpromocionesbonificaciones->prosku;
+                                                    $nuevoArray[$contador]['PRODUCTO BONIFICADO'] = $prbpromocionesbonificaciones->prbproductoppt;
+                                                }else{
+                                                    $nuevoArray[$contador]['SKU BONIFICADO']      = '';
+                                                    $nuevoArray[$contador]['PRODUCTO BONIFICADO'] = '';
+                                                }
                                             }
                                         }
                                     }else{
