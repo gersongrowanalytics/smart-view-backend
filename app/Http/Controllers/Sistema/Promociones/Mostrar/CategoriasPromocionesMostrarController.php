@@ -22,6 +22,8 @@ class CategoriasPromocionesMostrarController extends Controller
         $mes        = $request['mes'];
         $anio       = $request['ano'];
         
+        $usuusuario = usuusuarios::where('usutoken', $usutoken)->first(['ususoldto']);
+
         $respuesta      = false;
         $mensaje        = '';
         $datos          = [];
@@ -148,6 +150,9 @@ class CategoriasPromocionesMostrarController extends Controller
                                         $nuevoArray[$contador]['ACCION']              = $cspcanalesucursalpromocion->prmaccion;
                                     }
 
+
+                                    // $codigoPrincipal = $usuusuario->ususoldto.;
+
                                     $prppromocionesproductos = prppromocionesproductos::join('proproductos as pro', 'pro.proid', 'prppromocionesproductos.proid')
                                                                                         ->where('prppromocionesproductos.prmid', $cspcanalesucursalpromocion->prmid )
                                                                                         // ->where(function ($query) use($arrCodigosPrincipales) {
@@ -157,6 +162,7 @@ class CategoriasPromocionesMostrarController extends Controller
                                                                                         //     }
 
                                                                                         // })
+                                                                                        ->where('prpcodigoprincipal', 'LIKE', $usuusuario->ususoldto.'%')
                                                                                         ->get([
                                                                                             'pro.proid',
                                                                                             'pro.prosku',
