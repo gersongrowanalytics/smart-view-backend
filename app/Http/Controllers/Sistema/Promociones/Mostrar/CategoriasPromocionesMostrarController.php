@@ -4,6 +4,12 @@ namespace App\Http\Controllers\Sistema\Promociones\Mostrar;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Http\Controllers\AuditoriaController;
+use App\csccanalessucursalescategorias;
+use App\scasucursalescategorias;
+use App\prppromocionesproductos;
+use App\prbpromocionesbonificaciones;
+use App\cspcanalessucursalespromociones;
 
 class CategoriasPromocionesMostrarController extends Controller
 {
