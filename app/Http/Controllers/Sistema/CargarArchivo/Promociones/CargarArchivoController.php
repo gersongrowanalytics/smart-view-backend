@@ -417,14 +417,6 @@ class CargarArchivoController extends Controller
                     $prmid = 0;
                     if($prm){
                         $prmid = $prm->prmid;
-                        // SI EL CODIGO DE LA PROMOCION SE REPITE SUMAR LA CANTIDAD DE COMBOS Y PLANCHAS
-                        $prm->prmcantidadcombo   = $prm->prmcantidadcombo + $combos;
-                        $prm->prmcantidadplancha = $prm->prmcantidadplancha + $planchas;
-                        if($prm->update()){
-
-                        }else{
-                            
-                        }
 
                     }else{
                         $nuevoPrm = new prmpromociones;
