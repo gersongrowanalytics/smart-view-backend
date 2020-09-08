@@ -79,7 +79,24 @@ class VentasMostrarController extends Controller
                 $mensaje        = 'Los tipos de promociones se cargaron satisfactoriamente.';
                 $mensajeDetalle = sizeof($tsutipospromocionessucursales).' registros encontrados.';
             }else{
-                $respuesta      = false;
+
+                $dataVacia = array(
+                    array(
+                        "tsuid"                     => "1",
+                        "tprid"                     => "1",
+                        "tprnombre"                 => "Sell In",
+                        "tpricono"                  => "null",
+                        "tprcolorbarra"             => "0",
+                        "tprcolortooltip"           => "0",
+                        "tsuvalorizadoobjetivo"     => "0",
+                        "tsuvalorizadoreal"         => "0",
+                        "tsuvalorizadotogo"         => "0",
+                        "tsuporcentajecumplimiento" => "0",
+                        "tsuvalorizadorebate"       => "0"
+                    )
+                );
+
+                $respuesta      = true;
                 $linea          = __LINE__;
                 $mensaje        = 'Lo sentimos no encontramos tipos de promociones registradas a este filtro.';
                 $mensajeDetalle = sizeof($tsutipospromocionessucursales).' registros encontrados.';

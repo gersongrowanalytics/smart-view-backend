@@ -15,5 +15,9 @@ class tcatiposcargasarchivosSeeder extends Seeder
         tcatiposcargasarchivosSeeder::create([
             'tcanombre' => 'Carga de Promociones'
         ]);
+
+        tcatiposcargasarchivosSeeder::create([
+            'tcanombre' => 'Carga de Ventas'
+        ]);
     }
 }
