@@ -55,7 +55,7 @@ class CategoriasPromocionesMostrarController extends Controller
             $scasucursalescategorias = scasucursalescategorias::join('fecfechas as fec', 'scasucursalescategorias.fecid', 'fec.fecid')
                                                                 ->join('catcategorias as cat', 'cat.catid', 'scasucursalescategorias.catid')
                                                                 ->where('scasucursalescategorias.sucid', $sucid)
-                                                                ->where('fec.fecano', $ano)
+                                                                ->where('fec.fecano', $anio)
                                                                 ->where('fec.fecmes', $mes)
                                                                 ->where('fec.fecdia', $dia)
                                                                 ->where('scasucursalescategorias.tsuid', null)
