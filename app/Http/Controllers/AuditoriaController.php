@@ -35,7 +35,13 @@ class AuditoriaController extends Controller
         $audauditorias->usuid           = $usuid;
         $audauditorias->audip           = $audip;
         $audauditorias->audjsonentrada  = $audjsonentrada;
-        $audauditorias->audjsonsalida   = $audjsonsalida;
+
+        if(sizeof($$audjsonsalida) < 100){
+            $audauditorias->audjsonsalida   = $audjsonsalida;
+        }else{
+            $audauditorias->audjsonsalida   = null;
+        }
+
         $audauditorias->auddescripcion  = $auddescripcion;
         $audauditorias->audaccion       = $audaccion;
         $audauditorias->audruta         = $audruta;
