@@ -95,7 +95,7 @@ class VentasMostrarController extends Controller
                         "tsuvalorizadorebate"       => "0"
                     )
                 );
-
+                $datos = $dataVacia;
                 $respuesta      = true;
                 $linea          = __LINE__;
                 $mensaje        = 'Lo sentimos no encontramos tipos de promociones registradas a este filtro.';
