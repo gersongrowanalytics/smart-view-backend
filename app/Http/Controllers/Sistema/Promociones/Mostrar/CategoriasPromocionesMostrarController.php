@@ -91,9 +91,11 @@ class CategoriasPromocionesMostrarController extends Controller
                                                                         ]);
                     //**************************************** */
                     if(sizeof($csccanalessucursalescategorias) > 0){
+                        $primeraCsc = false;
                         foreach($csccanalessucursalescategorias as $posicion => $csccanalesucursalcategoria){
-                            if($posicion == 0){
+                            if($primeraCsc == false){
                                 $nuevoArray[$contador]['CANAL'] = $csccanalesucursalcategoria->cannombre;
+                                $primeraCsc = true;
                             }else{
                                 $contador = $contador+1;
                                 $nuevoArray[$contador]['ANIO']      = $anio;
@@ -118,10 +120,10 @@ class CategoriasPromocionesMostrarController extends Controller
                                                                                                     'cspcanalessucursalespromociones.csptotal',
                                                                                                     'prm.prmaccion'
                                                                                                 ]);
-
+                            $primeraCsp = false;
                             if(sizeof($cspcanalessucursalespromociones) > 0){
                                 foreach($cspcanalessucursalespromociones as $posicionPromociones => $cspcanalesucursalpromocion){
-                                    if($posicionPromociones == 0){
+                                    if($primeraCsp == false){
                                         $nuevoArray[$contador]['MECANICA']            = $cspcanalesucursalpromocion->prmmecanica;
                                         $nuevoArray[$contador]['PLANCHAS ROTAR']      = $cspcanalesucursalpromocion->cspcantidadplancha;
                                         $nuevoArray[$contador]['#COMBOS']             = $cspcanalesucursalpromocion->cspcantidadcombo;
@@ -129,6 +131,7 @@ class CategoriasPromocionesMostrarController extends Controller
                                         $nuevoArray[$contador]['RECONOCER X PLANCHA'] = $cspcanalesucursalpromocion->csptotalplancha;
                                         $nuevoArray[$contador]['TOTAL SOLES']         = $cspcanalesucursalpromocion->csptotal;
                                         $nuevoArray[$contador]['ACCION']              = $cspcanalesucursalpromocion->prmaccion;
+                                        $primeraCsp = true;
                                     }else{
                                         $contador = $contador+1;
                                         $nuevoArray[$contador]['ANIO']                = $anio;
@@ -155,12 +158,13 @@ class CategoriasPromocionesMostrarController extends Controller
                                                                                             'prpcomprappt',
                                                                                             'prpcodigoprincipal'
                                                                                         ]);
-
+                                    $primeraPrp = false;
                                     if(sizeof($prppromocionesproductos) > 0){
                                         foreach($prppromocionesproductos as $posicionProductos => $prp ){
-                                            if($posicionProductos == 0){
+                                            if($primeraPrp == false){
                                                 $nuevoArray[$contador]['SKU']      = $prp->prosku;
                                                 $nuevoArray[$contador]['PRODUCTO'] = $prp->prpproductoppt;
+                                                $primeraPrp = true;
                                             }else{
                                                 $contador = $contador+1;
                                                 $nuevoArray[$contador]['ANIO']                = $anio;
@@ -220,8 +224,8 @@ class CategoriasPromocionesMostrarController extends Controller
                         $nuevoArray[$contador]['CANAL'] = '';
                     }
 
+                    
                     $contador = $contador+1;
-
                     //**************************************** */
                 }
                 $respuesta = true;
