@@ -168,6 +168,7 @@ class CargarArchivoController extends Controller
                         $nuevoUsuario = new usuusuarios;
                         $nuevoUsuario->tpuid         = $tpuid;
                         $nuevoUsuario->perid         = $perid;
+                        $nuevoUsuario->ususoldto     = null;
                         $nuevoUsuario->usuusuario    = null;
                         $nuevoUsuario->usucorreo     = null;
                         $nuevoUsuario->usucontrasena = null;
@@ -235,6 +236,7 @@ class CargarArchivoController extends Controller
                         $clienteNuevoUsuario = new usuusuarios;
                         $clienteNuevoUsuario->tpuid         = 2; // tipo de usuario (cliente)
                         $clienteNuevoUsuario->perid         = $clienteperid;
+                        $clienteNuevoUsuario->ususoldto     = $soldTo;
                         $clienteNuevoUsuario->usuusuario    = null;
                         $clienteNuevoUsuario->usucorreo     = null;
                         $clienteNuevoUsuario->usucontrasena = null;

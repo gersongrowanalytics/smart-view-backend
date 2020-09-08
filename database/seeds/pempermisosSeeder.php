@@ -35,5 +35,11 @@ class pempermisosSeeder extends Seeder
             'pemslug'   => 'promociones.mostrar.promociones',
             'pemruta'   => '/promociones/mostrar/promociones',
         ]);
+
+        pempermisos::create([
+            'pemnombre' => 'MOSTRAR DATA ESPECIFICA DE PROMOCIONES PARA DESCARGAR EN EL EXCEL',
+            'pemslug'   => 'promociones.descargar',
+            'pemruta'   => '/promociones/descargar',
+        ]);
     }
 }
