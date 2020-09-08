@@ -47,6 +47,8 @@ class CargarArchivoController extends Controller
         $usutoken       = $request->header('api_token');
         $archivo        = $_FILES['file']['name'];
 
+        $usuusuario = usuusuarios::where('usutoken', $usutoken)->first(['usuid']);
+
         $fichero_subido = '';
         try{
             // file_put_contents(base_path().'/public/'.$archivo, $_FILES['file']['tmp_name']);
@@ -535,7 +537,7 @@ class CargarArchivoController extends Controller
             $nuevoCargaArchivo = new carcargasarchivos;
             $nuevoCargaArchivo->tcaid = 1;
             $nuevoCargaArchivo->fecid = $fecid;
-            $nuevoCargaArchivo->usuid = null;
+            $nuevoCargaArchivo->usuid = $usuusuario->usuid;
             $nuevoCargaArchivo->carnombrearchivo = $archivo;
             $nuevoCargaArchivo->carubicacion = $fichero_subido;
             $nuevoCargaArchivo->carexito = true;
@@ -565,7 +567,7 @@ class CargarArchivoController extends Controller
         $AuditoriaController = new AuditoriaController;
         $registrarAuditoria  = $AuditoriaController->registrarAuditoria(
             $usutoken,
-            null,
+            $usuusuario->usuid,
             null,
             $fichero_subido,
             $requestsalida,
