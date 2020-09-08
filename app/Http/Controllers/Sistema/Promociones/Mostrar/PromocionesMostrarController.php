@@ -47,12 +47,12 @@ class PromocionesMostrarController extends Controller
                                                                                             'cspcanalessucursalespromociones.cspvalorizado',
                                                                                             'cspcanalessucursalespromociones.cspplanchas',
                                                                                             'cspcanalessucursalespromociones.cspcompletado',
-                                                                                            'prm.prmcantidadcombo',
+                                                                                            'cspcanalessucursalespromociones.cspcantidadcombo',
                                                                                             'prm.prmmecanica',
-                                                                                            'prm.prmcantidadplancha',
-                                                                                            'prm.prmtotalcombo',
-                                                                                            'prm.prmtotalplancha',
-                                                                                            'prm.prmtotal',
+                                                                                            'cspcanalessucursalespromociones.cspcantidadplancha',
+                                                                                            'cspcanalessucursalespromociones.csptotalcombo',
+                                                                                            'cspcanalessucursalespromociones.csptotalplancha',
+                                                                                            'cspcanalessucursalespromociones.csptotal',
                                                                                             'prm.prmaccion'
                                                                                         ]);
                     $numeroPromocionesTerminadas = 0;
