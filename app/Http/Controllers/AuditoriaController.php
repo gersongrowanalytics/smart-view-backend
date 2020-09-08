@@ -31,28 +31,30 @@ class AuditoriaController extends Controller
             }
         }
 
-        $audauditorias = new audauditorias;
-        $audauditorias->usuid           = $usuid;
-        $audauditorias->audip           = $audip;
-        $audauditorias->audjsonentrada  = $audjsonentrada;
+        // $audauditorias = new audauditorias;
+        // $audauditorias->usuid           = $usuid;
+        // $audauditorias->audip           = $audip;
+        // $audauditorias->audjsonentrada  = $audjsonentrada;
 
-        // if(sizeof($$audjsonsalida) < 100){
-        //     $audauditorias->audjsonsalida   = $audjsonsalida;
+        // // if(sizeof($$audjsonsalida) < 100){
+        // //     $audauditorias->audjsonsalida   = $audjsonsalida;
+        // // }else{
+        // //     $audauditorias->audjsonsalida   = null;
+        // // }
+
+        // $audauditorias->audjsonsalida   = null;
+
+        // $audauditorias->auddescripcion  = $auddescripcion;
+        // $audauditorias->audaccion       = $audaccion;
+        // $audauditorias->audruta         = $audruta;
+        // $audauditorias->audpk           = $audpk;
+        // if($audauditorias->save()){
+        //     $respuesta = true;
         // }else{
-        //     $audauditorias->audjsonsalida   = null;
+        //     $respuesta = false;
         // }
 
-        $audauditorias->audjsonsalida   = null;
-
-        $audauditorias->auddescripcion  = $auddescripcion;
-        $audauditorias->audaccion       = $audaccion;
-        $audauditorias->audruta         = $audruta;
-        $audauditorias->audpk           = $audpk;
-        if($audauditorias->save()){
-            $respuesta = true;
-        }else{
-            $respuesta = false;
-        }
+        $respuesta = true;
 
         return $respuesta;
 
