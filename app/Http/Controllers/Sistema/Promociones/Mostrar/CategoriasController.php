@@ -67,7 +67,7 @@ class CategoriasController extends Controller
                                 "catcolorhover"              => $categoria->catcolorhover,
                                 "catcolor"                   => $categoria->catcolor,
                                 "caticonoseleccionado"       => $categoria->caticonoseleccionado,
-                                "fecfecha"                   => $sca->fecfecha,
+                                "fecfecha"                   => $scasucursalescategorias[$posicionsca]['fecfecha'],
                             );
 
                             $scasucursalescategorias[] = $nuevoArray;
