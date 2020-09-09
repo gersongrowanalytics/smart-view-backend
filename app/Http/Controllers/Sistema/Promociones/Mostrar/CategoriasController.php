@@ -56,7 +56,7 @@ class CategoriasController extends Controller
                             break;
                         }elseif($posicionsca == sizeof($scasucursalescategorias)-1){
                             $nuevoArray = array(
-                                "scaid"                      => 0,
+                                "scaid"                      => $scasucursalescategorias[$posicionsca]['scaid'].'-0-'.sizeof($scasucursalescategorias),
                                 "catid"                      => $categoria->catid,
                                 "catnombre"                  => $categoria->catnombre,
                                 "catimagenfondo"             => $categoria->catimagenfondo,
