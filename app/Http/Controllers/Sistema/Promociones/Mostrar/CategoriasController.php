@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Sistema\Promociones\Mostrar;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\scasucursalescategorias;
+use App\catcategorias;
 
 class CategoriasController extends Controller
 {
