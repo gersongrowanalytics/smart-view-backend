@@ -52,7 +52,7 @@ class CategoriasController extends Controller
                 $categorias = catcategorias::all();
                 foreach($categorias as $poscioncat => $categoria){
                     foreach($scasucursalescategorias as $posicionsca => $sca){
-                        if($categoria[$poscioncat]['catnombre'] == $sca[$posicionsca]['catnombre']){
+                        if($categorias[$poscioncat]['catnombre'] == $scasucursalescategorias[$posicionsca]['catnombre']){
                             break;
                         }elseif($posicionsca == sizeof($scasucursalescategorias)-1){
                             $nuevoArray = array(
