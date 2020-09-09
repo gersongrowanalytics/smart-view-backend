@@ -84,7 +84,7 @@ class VentasMostrarController extends Controller
 
                 $dataVacia = array(array());
 
-                $categorias = catcategorias::all();
+                $categorias = catcategorias::where('catnombre', '!=', 'MultiCategoria');
                 $tprtipospromociones = tprtipospromociones::all();
                 foreach($tprtipospromociones as $posicionTpr => $tpr){
                     
@@ -108,8 +108,8 @@ class VentasMostrarController extends Controller
                         $dataVacia[$posicionTpr]['categorias'][$posicion]['caticono']               = $categoria->caticono;
                         $dataVacia[$posicionTpr]['categorias'][$posicion]['scavalorizadoobjetivo']  = 0;
                         $dataVacia[$posicionTpr]['categorias'][$posicion]['scavalorizadoreal']      = 0;
-                        $dataVacia[$posicionTpr]['categorias'][$posicion]['scavalorizadotogo']      = 0;
-                        $dataVacia[$posicionTpr]['categorias'][$posicion]['scaiconocategoria']      = 0;
+                        $dataVacia[$posicionTpr]['categorias'][$posicion]['scavalorizadotogo']      = 100;
+                        $dataVacia[$posicionTpr]['categorias'][$posicion]['scaiconocategoria']      = env('APP_URL').'/Sistema/categorias-tiposPromociones/img/iconos/'.$categoria->catnombre.'-'.$tpr->tprnombre;
                     }
                 }
 
