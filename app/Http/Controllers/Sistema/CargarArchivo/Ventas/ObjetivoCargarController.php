@@ -107,7 +107,7 @@ class ObjetivoCargarController extends Controller
                         $nuevotsu->tsuvalorizadorebate = 0;
                         $nuevotsu->tsuvalorizadotogo = 0;
                         if($nuevotsu->save()){
-
+                            $tsuid = $nuevotsu->tsuid;
                         }else{
 
                         }
@@ -173,7 +173,7 @@ class ObjetivoCargarController extends Controller
                         $nuevosca->scavalorizadoreal     = 0;
                         $nuevosca->scavalorizadotogo     = 0;
                         if($nuevosca->save()){
-
+                            $scaid = $nuevosca->scaid;
                         }else{
 
                         }
