@@ -8,6 +8,7 @@ use App\Http\Controllers\AuditoriaController;
 use App\tsutipospromocionessucursales;
 use App\scasucursalescategorias;
 use App\tprtipospromociones;
+use App\catcategorias;
 
 class VentasMostrarController extends Controller
 {
