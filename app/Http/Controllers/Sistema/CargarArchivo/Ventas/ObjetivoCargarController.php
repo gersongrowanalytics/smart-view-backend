@@ -91,7 +91,7 @@ class ObjetivoCargarController extends Controller
                     if($tsu){
                         $tsuid = $tsu->tsuid;
                         $tsu->tsuvalorizadoobjetivo = $tsu->tsuvalorizadoobjetivo+$objetivo;
-                        if($tsuid->update()){
+                        if($tsu->update()){
 
                         }else{
 
