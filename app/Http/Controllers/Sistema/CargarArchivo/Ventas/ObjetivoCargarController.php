@@ -106,7 +106,7 @@ class ObjetivoCargarController extends Controller
 
                     // VERIFICAR SI EXISTE EL USUARIO
                     $usuCliente = usuusuarios::where('tpuid', 2)
-                                                ->where('ususoldto', $soldTo)
+                                                ->where('ususoldto', $soldto)
                                                 ->first(['usuid']);
                     $clienteusuid = 0;
                     $sucursalClienteId = 0;
@@ -140,7 +140,7 @@ class ObjetivoCargarController extends Controller
                         $clienteNuevoUsuario = new usuusuarios;
                         $clienteNuevoUsuario->tpuid         = 2; // tipo de usuario (cliente)
                         $clienteNuevoUsuario->perid         = $clienteperid;
-                        $clienteNuevoUsuario->ususoldto     = $soldTo;
+                        $clienteNuevoUsuario->ususoldto     = $soldto;
                         $clienteNuevoUsuario->usuusuario    = null;
                         $clienteNuevoUsuario->usucorreo     = null;
                         $clienteNuevoUsuario->usucontrasena = null;
