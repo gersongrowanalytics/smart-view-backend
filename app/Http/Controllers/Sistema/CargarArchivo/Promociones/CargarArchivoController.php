@@ -333,7 +333,12 @@ class CargarArchivoController extends Controller
                         $nuevoProducto->catid     = $catid;
                         $nuevoProducto->prosku    = $sku;
                         $nuevoProducto->pronombre = $producto;
+
+                        // ARMAR UBICACION DE LA IMAGEN
+
                         $nuevoProducto->proimagen = env('APP_URL').'/Sistema/promociones/'.strtoupper($categoria).'/'.strtoupper($tipoClien).'/'.strtoupper($codPromoc).'/'.$productoPpt.'.png';
+
+                        /*************************** */
                         if($nuevoProducto->save()){
                             $proid = $nuevoProducto->proid;
                         }else{
