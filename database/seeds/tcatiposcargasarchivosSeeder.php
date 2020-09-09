@@ -12,11 +12,11 @@ class tcatiposcargasarchivosSeeder extends Seeder
      */
     public function run()
     {
-        tcatiposcargasarchivosSeeder::create([
+        tcatiposcargasarchivos::create([
             'tcanombre' => 'Carga de Promociones'
         ]);
 
-        tcatiposcargasarchivosSeeder::create([
+        tcatiposcargasarchivos::create([
             'tcanombre' => 'Carga de Ventas'
         ]);
     }
