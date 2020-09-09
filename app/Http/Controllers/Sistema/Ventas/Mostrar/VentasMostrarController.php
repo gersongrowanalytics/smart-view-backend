@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\AuditoriaController;
 use App\tsutipospromocionessucursales;
 use App\scasucursalescategorias;
+use App\tprtipospromociones;
 
 class VentasMostrarController extends Controller
 {
@@ -80,24 +81,37 @@ class VentasMostrarController extends Controller
                 $mensajeDetalle = sizeof($tsutipospromocionessucursales).' registros encontrados.';
             }else{
 
-                $dataVacia = array(
-                    array(
-                        "tsuid"                     => "1",
-                        "tprid"                     => "1",
-                        "tprnombre"                 => "Sell In",
-                        "tpricono"                  => "null",
-                        "tprcolorbarra"             => "0",
-                        "tprcolortooltip"           => "0",
-                        "tsuvalorizadoobjetivo"     => "0",
-                        "tsuvalorizadoreal"         => "0",
-                        "tsuvalorizadotogo"         => "0",
-                        "tsuporcentajecumplimiento" => "0",
-                        "tsuvalorizadorebate"       => "0",
-                        "categorias" => []
-                    )
-                );
+                $dataVacia = array(array());
 
-                
+                $categorias = catcategorias::all();
+                $tprtipospromociones = tprtipospromociones::all();
+                foreach($tprtipospromociones as $posicionTpr => $tpr){
+                    
+                    $dataVacia[$posicionTpr]['tsuid']                     = 0;
+                    $dataVacia[$posicionTpr]['tprid']                     = $tpr->tprid;
+                    $dataVacia[$posicionTpr]['tprnombre']                 = $tpr->tprnombre;
+                    $dataVacia[$posicionTpr]['tpricono']                  = $tpr->tpricono;
+                    $dataVacia[$posicionTpr]['tprcolorbarra']             = $tpr->tprcolorbarra;
+                    $dataVacia[$posicionTpr]['tprcolortooltip']           = $tpr->tprcolortooltip;
+                    $dataVacia[$posicionTpr]['tsuvalorizadoobjetivo']     = 0;
+                    $dataVacia[$posicionTpr]['tsuvalorizadoreal']         = 0;
+                    $dataVacia[$posicionTpr]['tsuvalorizadotogo']         = 0;
+                    $dataVacia[$posicionTpr]['tsuporcentajecumplimiento'] = 0;
+                    $dataVacia[$posicionTpr]['tsuvalorizadorebate']       = 0;
+                    $dataVacia[$posicionTpr]['categorias'] = array(array());
+                    foreach($categorias as $posicion => $categoria){     
+                        
+                        $dataVacia[$posicionTpr]['categorias'][$posicion]['catnombre']              = $categoria->catnombre;
+                        $dataVacia[$posicionTpr]['categorias'][$posicion]['catimagenfondo']         = $categoria->catimagenfondo;
+                        $dataVacia[$posicionTpr]['categorias'][$posicion]['catimagenfondoopaco']    = $categoria->catimagenfondoopaco;
+                        $dataVacia[$posicionTpr]['categorias'][$posicion]['caticono']               = $categoria->caticono;
+                        $dataVacia[$posicionTpr]['categorias'][$posicion]['scavalorizadoobjetivo']  = 0;
+                        $dataVacia[$posicionTpr]['categorias'][$posicion]['scavalorizadoreal']      = 0;
+                        $dataVacia[$posicionTpr]['categorias'][$posicion]['scavalorizadotogo']      = 0;
+                        $dataVacia[$posicionTpr]['categorias'][$posicion]['scaiconocategoria']      = 0;
+                    }
+                }
+
                 $datos = $dataVacia;
                 $respuesta      = true;
                 $linea          = __LINE__;
