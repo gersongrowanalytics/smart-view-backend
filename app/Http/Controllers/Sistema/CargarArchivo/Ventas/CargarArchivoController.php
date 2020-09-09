@@ -57,7 +57,25 @@ class CargarArchivoController extends Controller
                     $producto   = $objPHPExcel->getActiveSheet()->getCell('J'.$i)->getCalculatedValue();
                     $sector     = $objPHPExcel->getActiveSheet()->getCell('K'.$i)->getCalculatedValue();
                     $real       = $objPHPExcel->getActiveSheet()->getCell('N'.$i)->getCalculatedValue();
-
+                    $fecfecha = fecfechas::where('fecdia', $dia)
+                                            ->where('fecmes', $mes)
+                                            ->where('fecano', $ano)
+                                            ->first(['fecid']);
+                    $fecid = 0;
+                    if($fecfecha){
+                        $fecid = $fecfecha->fecid;
+                    }else{
+                        $nuevaFecha = new fecfechas;
+                        $nuevaFecha->fecfecha = new \DateTime(date("Y-m-d", strtotime($ano.'-'.$mes.'-'.$dia)));
+                        $nuevaFecha->fecdia   = $dia;
+                        $nuevaFecha->fecmes   = $mes;
+                        $nuevaFecha->fecano   = $ano;
+                        if($nuevaFecha->save()){
+                            $fecid = $nuevaFecha->fecid;
+                        }else{
+        
+                        }
+                    }
                     if($cliente != null){
                         $categoriaid     = 0;
                         $categoriaNombre = '';
@@ -78,27 +96,6 @@ class CargarArchivoController extends Controller
                             $categoriaNombre = 'Infant Care';
                         }
             
-                        $fecfecha = fecfechas::where('fecdia', $dia)
-                                            ->where('fecmes', $mes)
-                                            ->where('fecano', $ano)
-                                            ->first(['fecid']);
-                        $fecid = 0;
-                        if($fecfecha){
-                            $fecid = $fecfecha->fecid;
-                        }else{
-                            $nuevaFecha = new fecfechas;
-                            $nuevaFecha->fecfecha = new \DateTime(date("Y-m-d", strtotime($ano.'-'.$mes.'-'.$dia)));
-                            $nuevaFecha->fecdia   = $dia;
-                            $nuevaFecha->fecmes   = $mes;
-                            $nuevaFecha->fecano   = $ano;
-                            if($nuevaFecha->save()){
-                                $fecid = $nuevaFecha->fecid;
-                            }else{
-            
-                            }
-                        }
-
-
                         // VERIFICAR SI EXISTE LA PERSONA PARA EL CLIENTE
                         // $clienteperpersona = perpersonas::where('pernombrecompleto', $cliente)->first(['perid']);
                         // $clienteperid = 0;
