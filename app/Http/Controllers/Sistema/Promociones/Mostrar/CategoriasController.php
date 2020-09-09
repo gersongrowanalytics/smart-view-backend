@@ -26,7 +26,7 @@ class CategoriasController extends Controller
         try{
 
             $scasucursalescategorias = scasucursalescategorias::join('fecfechas as fec', 'scasucursalescategorias.fecid', 'fec.fecid')
-                                                                ->leftjoin('catcategorias as cat', 'cat.catid', 'scasucursalescategorias.catid')
+                                                                ->rightjoin('catcategorias as cat', 'cat.catid', 'scasucursalescategorias.catid')
                                                                 ->where('scasucursalescategorias.sucid', $sucid)
                                                                 ->where('fec.fecano', $ano)
                                                                 ->where('fec.fecmes', $mes)
