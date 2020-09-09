@@ -45,18 +45,13 @@ class CargarArchivoController extends Controller
                 $numRows        = $objPHPExcel->setActiveSheetIndex(0)->getHighestRow();
                 $ultimaColumna  = $objPHPExcel->setActiveSheetIndex(0)->getHighestColumn();
                 
-                echo "si guardo<br/>";
-                echo $numRows.'<br/>';
-                echo $ultimaColumna;
-                
-                for ($i=6; $i <= $numRows ; $i++) {
+                for ($i=5; $i <= $numRows ; $i++) {
                     $ano = '2020';
                     $dia = '01';
         
                     // $mes = $objPHPExcel->getActiveSheet()->getCell('D'.$i)->getCalculatedValue();
                     $mes        = 'AGO';
                     $soldto     = $objPHPExcel->getActiveSheet()->getCell('G'.$i)->getCalculatedValue();
-                    echo $soldto;
                     $cliente    = $objPHPExcel->getActiveSheet()->getCell('H'.$i)->getCalculatedValue();
                     $sku        = $objPHPExcel->getActiveSheet()->getCell('I'.$i)->getCalculatedValue();
                     $producto   = $objPHPExcel->getActiveSheet()->getCell('J'.$i)->getCalculatedValue();
@@ -125,7 +120,7 @@ class CargarArchivoController extends Controller
                         // VERIFICAR SI EXISTE EL USUARIO
                         $usuCliente = usuusuarios::where('tpuid', 2)
                                                     // ->where('perid', $clienteperid)
-                                                    ->where('ususoldto', $soldto)
+                                                    ->where('ususoldto', 'LIKE', '%'.$soldto)
                                                     ->first(['usuid']);
                         $clienteusuid = 0;
                         $sucursalClienteId = 0;
