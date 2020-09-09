@@ -44,7 +44,11 @@ class CargarArchivoController extends Controller
                 $objPHPExcel->setActiveSheetIndex(0);
                 $numRows        = $objPHPExcel->setActiveSheetIndex(0)->getHighestRow();
                 $ultimaColumna  = $objPHPExcel->setActiveSheetIndex(0)->getHighestColumn();
-
+                
+                echo "si guardo<br/>";
+                echo $numRows.'<br/>';
+                echo $ultimaColumna;
+                
                 for ($i=6; $i <= $numRows ; $i++) {
                     $ano = '2020';
                     $dia = '01';
