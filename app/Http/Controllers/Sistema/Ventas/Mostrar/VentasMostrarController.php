@@ -101,13 +101,12 @@ class VentasMostrarController extends Controller
                     $dataVacia[$posicionTpr]['tsuvalorizadorebate']       = 0;
                     $dataVacia[$posicionTpr]['categorias'] = array(array());
                     foreach($categorias as $posicion => $categoria){     
-                        
                         $dataVacia[$posicionTpr]['categorias'][$posicion]['catnombre']              = $categoria->catnombre;
                         $dataVacia[$posicionTpr]['categorias'][$posicion]['catimagenfondo']         = $categoria->catimagenfondo;
                         $dataVacia[$posicionTpr]['categorias'][$posicion]['catimagenfondoopaco']    = $categoria->catimagenfondoopaco;
                         $dataVacia[$posicionTpr]['categorias'][$posicion]['caticono']               = $categoria->caticono;
                         $dataVacia[$posicionTpr]['categorias'][$posicion]['scavalorizadoobjetivo']  = 0;
-                        $dataVacia[$posicionTpr]['categorias'][$posicion]['scavalorizadoreal']      = 0;
+                        $dataVacia[$posicionTpr]['categorias'][$posicion]['scavalorizadoreal']      = 1;
                         $dataVacia[$posicionTpr]['categorias'][$posicion]['scavalorizadotogo']      = 100;
                         $dataVacia[$posicionTpr]['categorias'][$posicion]['scaiconocategoria']      = env('APP_URL').'/Sistema/categorias-tiposPromociones/img/iconos/'.$categoria->catnombre.'-'.$tpr->tprnombre.'.png';
                     }

@@ -333,7 +333,7 @@ class CargarArchivoController extends Controller
                         $nuevoProducto->catid     = $catid;
                         $nuevoProducto->prosku    = $sku;
                         $nuevoProducto->pronombre = $producto;
-                        $nuevoProducto->proimagen = env('APP_URL').'/Sistema/promociones/'.$categoria.'/'.$tipoClien.'/'.$codPromoc.'/'.$productoPpt.'.png';
+                        $nuevoProducto->proimagen = env('APP_URL').'/Sistema/promociones/'.strtoupper($categoria).'/'.strtoupper($tipoClien).'/'.strtoupper($codPromoc).'/'.strtoupper($productoPpt).'.png';
                         if($nuevoProducto->save()){
                             $proid = $nuevoProducto->proid;
                         }else{
@@ -354,7 +354,7 @@ class CargarArchivoController extends Controller
                         $nuevoProductoBonificado->catid     = $catid;
                         $nuevoProductoBonificado->prosku    = $skuBonifi;
                         $nuevoProductoBonificado->pronombre = $productoBo;
-                        $nuevoProductoBonificado->proimagen = env('APP_URL').'/Sistema/promociones/'.$categoria.'/'.$tipoClien.'/'.$codPromoc.'/'.$proBoniPpt.' - Gratis.png';
+                        $nuevoProductoBonificado->proimagen = env('APP_URL').'/Sistema/promociones/'.strtoupper($categoria).'/'.strtoupper($tipoClien).'/'.strtoupper($codPromoc).'/'.strtoupper($proBoniPpt).' - GRATIS.png';
                         if($nuevoProductoBonificado->save()){
                             $bonificadoproid = $nuevoProductoBonificado->proid;
                         }else{
