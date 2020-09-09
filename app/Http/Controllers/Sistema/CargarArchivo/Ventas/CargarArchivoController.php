@@ -99,28 +99,28 @@ class CargarArchivoController extends Controller
 
 
                     // VERIFICAR SI EXISTE LA PERSONA PARA EL CLIENTE
-                    $clienteperpersona = perpersonas::where('pernombrecompleto', $cliente)->first(['perid']);
-                    $clienteperid = 0;
-                    if($clienteperpersona){
-                        $clienteperid = $clienteperpersona->perid;
-                    }else{
-                        $clienteNuevaPersona = new perpersonas;
-                        $clienteNuevaPersona->tdiid    = 2;
-                        $clienteNuevaPersona->pernombrecompleto = $cliente;
-                        $clienteNuevaPersona->pernumerodocumentoidentidad = null;
-                        $clienteNuevaPersona->pernombre = null;
-                        $clienteNuevaPersona->perapellidopaterno   = null;
-                        $clienteNuevaPersona->perapellidomaterno   = null;
-                        if($clienteNuevaPersona->save()){
-                            $clienteperid = $clienteNuevaPersona->perid;
-                        }else{
+                    // $clienteperpersona = perpersonas::where('pernombrecompleto', $cliente)->first(['perid']);
+                    // $clienteperid = 0;
+                    // if($clienteperpersona){
+                    //     $clienteperid = $clienteperpersona->perid;
+                    // }else{
+                    //     $clienteNuevaPersona = new perpersonas;
+                    //     $clienteNuevaPersona->tdiid    = 2;
+                    //     $clienteNuevaPersona->pernombrecompleto = $cliente;
+                    //     $clienteNuevaPersona->pernumerodocumentoidentidad = null;
+                    //     $clienteNuevaPersona->pernombre = null;
+                    //     $clienteNuevaPersona->perapellidopaterno   = null;
+                    //     $clienteNuevaPersona->perapellidomaterno   = null;
+                    //     if($clienteNuevaPersona->save()){
+                    //         $clienteperid = $clienteNuevaPersona->perid;
+                    //     }else{
         
-                        }
-                    }
+                    //     }
+                    // }
 
                     // VERIFICAR SI EXISTE EL USUARIO
                     $usuCliente = usuusuarios::where('tpuid', 2)
-                                                ->where('perid', $clienteperid)
+                                                // ->where('perid', $clienteperid)
                                                 ->where('ususoldto', $soldto)
                                                 ->first(['usuid']);
                     $clienteusuid = 0;
@@ -154,7 +154,7 @@ class CargarArchivoController extends Controller
                     }else{
                         $clienteNuevoUsuario = new usuusuarios;
                         $clienteNuevoUsuario->tpuid         = 2; // tipo de usuario (cliente)
-                        $clienteNuevoUsuario->perid         = $clienteperid;
+                        $clienteNuevoUsuario->perid         = 1;
                         $clienteNuevoUsuario->ususoldto     = $soldto;
                         $clienteNuevoUsuario->usuusuario    = null;
                         $clienteNuevoUsuario->usucorreo     = null;
