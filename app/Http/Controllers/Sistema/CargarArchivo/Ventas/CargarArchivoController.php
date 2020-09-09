@@ -52,6 +52,7 @@ class CargarArchivoController extends Controller
                     // $mes = $objPHPExcel->getActiveSheet()->getCell('D'.$i)->getCalculatedValue();
                     $mes        = 'AGO';
                     $soldto     = $objPHPExcel->getActiveSheet()->getCell('G'.$i)->getCalculatedValue();
+                    echo $soldto;
                     $cliente    = $objPHPExcel->getActiveSheet()->getCell('H'.$i)->getCalculatedValue();
                     $sku        = $objPHPExcel->getActiveSheet()->getCell('I'.$i)->getCalculatedValue();
                     $producto   = $objPHPExcel->getActiveSheet()->getCell('J'.$i)->getCalculatedValue();
