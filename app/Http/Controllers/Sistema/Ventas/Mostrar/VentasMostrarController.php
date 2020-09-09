@@ -84,7 +84,7 @@ class VentasMostrarController extends Controller
 
                 $dataVacia = array(array());
 
-                $categorias = catcategorias::where('catnombre', '!=', 'MultiCategoria');
+                $categorias = catcategorias::where('catnombre', '!=', 'MultiCategoria')->get();
                 $tprtipospromociones = tprtipospromociones::all();
                 foreach($tprtipospromociones as $posicionTpr => $tpr){
                     
