@@ -55,18 +55,34 @@ class CategoriasController extends Controller
                         if($categoria->catnombre == $sca->catnombre){
                             break;
                         }elseif($posicionsca == sizeof($scasucursalescategorias)-1){
-                            $scasucursalescategorias[$posicionsca+1]['scaid']             = 0;
-                            $scasucursalescategorias[$posicionsca+1]['catid']             = $categoria->catid;
-                            $scasucursalescategorias[$posicionsca+1]['catnombre']         = $categoria->catnombre;
-                            $scasucursalescategorias[$posicionsca+1]['catimagenfondo']    = $categoria->catimagenfondo;
-                            $scasucursalescategorias[$posicionsca+1]['catimagenfondoseleccionado'] = $categoria->catimagenfondoseleccionado;
-                            $scasucursalescategorias[$posicionsca+1]['catimagenfondoopaco']   = $categoria->catimagenfondoopaco;
-                            $scasucursalescategorias[$posicionsca+1]['caticono']              = $categoria->caticono;
-                            $scasucursalescategorias[$posicionsca+1]['caticonohover']         = $categoria->caticonohover;
-                            $scasucursalescategorias[$posicionsca+1]['catcolorhover']         = $categoria->catcolorhover;
-                            $scasucursalescategorias[$posicionsca+1]['catcolor']              = $categoria->catcolor;
-                            $scasucursalescategorias[$posicionsca+1]['caticonoseleccionado']  = $categoria->caticonoseleccionado;
-                            $scasucursalescategorias[$posicionsca+1]['fecfecha']              = $sca->fecfecha;
+                            $nuevoArray = array(
+                                "scaid"                      => 0,
+                                "catid"                      => $categoria->catid,
+                                "catnombre"                  => $categoria->catnombre,
+                                "catimagenfondo"             => $categoria->catimagenfondo,
+                                "catimagenfondoseleccionado" => $categoria->catimagenfondoseleccionado,
+                                "catimagenfondoopaco"        => $categoria->catimagenfondoopaco,
+                                "caticono"                   => $categoria->caticono,
+                                "caticonohover"              => $categoria->caticonohover,
+                                "catcolorhover"              => $categoria->catcolorhover,
+                                "catcolor"                   => $categoria->catcolor,
+                                "caticonoseleccionado"       => $categoria->caticonoseleccionado,
+                                "fecfecha"                   => $sca->fecfecha,
+                            );
+
+                            $scasucursalescategorias[] = $nuevoArray;
+                            // $scasucursalescategorias[$posicionsca+1]['scaid']                       = 0;
+                            // $scasucursalescategorias[$posicionsca+1]['catid']                       = $categoria->catid;
+                            // $scasucursalescategorias[$posicionsca+1]['catnombre']                   = $categoria->catnombre;
+                            // $scasucursalescategorias[$posicionsca+1]['catimagenfondo']              = $categoria->catimagenfondo;
+                            // $scasucursalescategorias[$posicionsca+1]['catimagenfondoseleccionado']  = $categoria->catimagenfondoseleccionado;
+                            // $scasucursalescategorias[$posicionsca+1]['catimagenfondoopaco']         = $categoria->catimagenfondoopaco;
+                            // $scasucursalescategorias[$posicionsca+1]['caticono']                    = $categoria->caticono;
+                            // $scasucursalescategorias[$posicionsca+1]['caticonohover']               = $categoria->caticonohover;
+                            // $scasucursalescategorias[$posicionsca+1]['catcolorhover']               = $categoria->catcolorhover;
+                            // $scasucursalescategorias[$posicionsca+1]['catcolor']                    = $categoria->catcolor;
+                            // $scasucursalescategorias[$posicionsca+1]['caticonoseleccionado']        = $categoria->caticonoseleccionado;
+                            // $scasucursalescategorias[$posicionsca+1]['fecfecha']                    = $sca->fecfecha;
                         }
                     }
                 }
