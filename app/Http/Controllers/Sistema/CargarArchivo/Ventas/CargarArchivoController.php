@@ -45,7 +45,7 @@ class CargarArchivoController extends Controller
                 $numRows        = $objPHPExcel->setActiveSheetIndex(0)->getHighestRow();
                 $ultimaColumna  = $objPHPExcel->setActiveSheetIndex(0)->getHighestColumn();
 
-                for ($i=5; $i <= $numRows ; $i++) {
+                for ($i=6; $i <= $numRows ; $i++) {
                     $ano = '2020';
                     $dia = '01';
         
