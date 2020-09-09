@@ -16,6 +16,7 @@ use App\perpersonas;
 use App\ussusuariossucursales;
 use App\sucsucursales;
 use App\tsutipospromocionessucursales;
+use App\scasucursalescategorias;
 
 class CargarArchivoController extends Controller
 {
