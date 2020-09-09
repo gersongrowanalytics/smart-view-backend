@@ -77,7 +77,6 @@ class CargarArchivoController extends Controller
                         }
                     }
                     if($cliente != null){
-                        echo $cliente;
                         $categoriaid     = 0;
                         $categoriaNombre = '';
                         if($sector == 'Family Care'){
