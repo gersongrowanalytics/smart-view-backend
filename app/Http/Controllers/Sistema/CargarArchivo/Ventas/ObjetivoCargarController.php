@@ -80,7 +80,7 @@ class ObjetivoCargarController extends Controller
 
 
                     $usuarioCliente = usuusuarios::join('ussusuariossucursales as uss', 'uss.usuid', 'usuusuarios.usuid')
-                                                    ->where('usuusuarios.ususoldto', $soldto)->first(['usuid'])
+                                                    ->where('usuusuarios.ususoldto', $soldto)
                                                     ->first(['uss.sucid']);                                                
 
 
