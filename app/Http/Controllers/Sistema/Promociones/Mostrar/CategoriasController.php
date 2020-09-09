@@ -26,50 +26,52 @@ class CategoriasController extends Controller
 
         try{
 
-            // $scasucursalescategorias = scasucursalescategorias::join('fecfechas as fec', 'scasucursalescategorias.fecid', 'fec.fecid')
-            //                                                     ->join('catcategorias as cat', 'cat.catid', 'scasucursalescategorias.catid')
-            //                                                     ->where('scasucursalescategorias.sucid', $sucid)
-            //                                                     ->where('fec.fecano', $ano)
-            //                                                     ->where('fec.fecmes', $mes)
-            //                                                     ->where('fec.fecdia', $dia)
-            //                                                     ->where('scasucursalescategorias.tsuid', null)
-            //                                                     ->get([
-            //                                                         'scasucursalescategorias.scaid',
-            //                                                         'cat.catid',
-            //                                                         'cat.catnombre',
-            //                                                         'cat.catimagenfondo',
-            //                                                         'cat.catimagenfondoseleccionado',
-            //                                                         'cat.catimagenfondoopaco',
-            //                                                         'cat.caticono',
-            //                                                         'cat.caticonohover',
-            //                                                         'cat.catcolorhover',
-            //                                                         'cat.catcolor',
-            //                                                         'cat.caticonoseleccionado',
-            //                                                         'fec.fecfecha'
-            //                                                     ]);
-            $scasucursalescategorias = catcategorias::leftjoin('scasucursalescategorias as sca', 'catcategorias.catid', 'sca.catid')
-                                                    ->join('fecfechas as fec', 'sca.fecid', 'fec.fecid')
-                                                    ->where('sca.sucid', $sucid)
-                                                    ->where('fec.fecano', $ano)
-                                                    ->where('fec.fecmes', $mes)
-                                                    ->where('fec.fecdia', $dia)
-                                                    ->where('sca.tsuid', null)
-                                                    ->get([
-                                                        'sca.scaid',
-                                                        'catcategorias.catid',
-                                                        'catcategorias.catnombre',
-                                                        'catcategorias.catimagenfondo',
-                                                        'catcategorias.catimagenfondoseleccionado',
-                                                        'catcategorias.catimagenfondoopaco',
-                                                        'catcategorias.caticono',
-                                                        'catcategorias.caticonohover',
-                                                        'catcategorias.catcolorhover',
-                                                        'catcategorias.catcolor',
-                                                        'catcategorias.caticonoseleccionado',
-                                                        'fec.fecfecha'
-                                                    ]);
+            $scasucursalescategorias = scasucursalescategorias::join('fecfechas as fec', 'scasucursalescategorias.fecid', 'fec.fecid')
+                                                                ->join('catcategorias as cat', 'cat.catid', 'scasucursalescategorias.catid')
+                                                                ->where('scasucursalescategorias.sucid', $sucid)
+                                                                ->where('fec.fecano', $ano)
+                                                                ->where('fec.fecmes', $mes)
+                                                                ->where('fec.fecdia', $dia)
+                                                                ->where('scasucursalescategorias.tsuid', null)
+                                                                ->get([
+                                                                    'scasucursalescategorias.scaid',
+                                                                    'cat.catid',
+                                                                    'cat.catnombre',
+                                                                    'cat.catimagenfondo',
+                                                                    'cat.catimagenfondoseleccionado',
+                                                                    'cat.catimagenfondoopaco',
+                                                                    'cat.caticono',
+                                                                    'cat.caticonohover',
+                                                                    'cat.catcolorhover',
+                                                                    'cat.catcolor',
+                                                                    'cat.caticonoseleccionado',
+                                                                    'fec.fecfecha'
+                                                                ]);
 
             if(sizeof($scasucursalescategorias) > 0){
+                $categorias = catcategorias::all();
+                foreach($categorias as $poscioncat => $categoria){
+                    foreach($scasucursalescategorias as $posicionsca => $sca){
+                        if($categoria->catnombre == $sca->catnombre){
+                            break;
+                        }elseif($posicionsca == sizeof($scasucursalescategorias)-1){
+                            $scasucursalescategorias[$posicionsca+1]['scaid']             = 0;
+                            $scasucursalescategorias[$posicionsca+1]['catid']             = $categoria->catid;
+                            $scasucursalescategorias[$posicionsca+1]['catnombre']         = $categoria->catnombre;
+                            $scasucursalescategorias[$posicionsca+1]['catimagenfondo']    = $categoria->catimagenfondo;
+                            $scasucursalescategorias[$posicionsca+1]['catimagenfondoseleccionado'] = $categoria->catimagenfondoseleccionado;
+                            $scasucursalescategorias[$posicionsca+1]['catimagenfondoopaco']   = $categoria->catimagenfondoopaco;
+                            $scasucursalescategorias[$posicionsca+1]['caticono']              = $categoria->caticono;
+                            $scasucursalescategorias[$posicionsca+1]['caticonohover']         = $categoria->caticonohover;
+                            $scasucursalescategorias[$posicionsca+1]['catcolorhover']         = $categoria->catcolorhover;
+                            $scasucursalescategorias[$posicionsca+1]['catcolor']              = $categoria->catcolor;
+                            $scasucursalescategorias[$posicionsca+1]['caticonoseleccionado']  = $categoria->caticonoseleccionado;
+                            $scasucursalescategorias[$posicionsca+1]['fecfecha']              = $sca->fecfecha;
+                        }
+                    }
+                }
+                
+
                 $linea          = __LINE__;
                 $datos          = $scasucursalescategorias;
                 $respuesta      = true;
