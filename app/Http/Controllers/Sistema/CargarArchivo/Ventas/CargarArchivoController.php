@@ -217,6 +217,7 @@ class CargarArchivoController extends Controller
                         $sca = scasucursalescategorias::where('fecid', $fecid)
                                                     ->where('sucid', $sucursalClienteId)
                                                     ->where('catid', $categoriaid)
+                                                    ->where('tsuid', $tsuid)
                                                     ->first(['scaid']);
 
                         $scaid = 0;
