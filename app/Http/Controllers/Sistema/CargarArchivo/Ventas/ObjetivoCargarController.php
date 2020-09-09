@@ -13,6 +13,7 @@ use App\tsutipospromocionessucursales;
 use App\ussusuariossucursales;
 use App\usuusuarios;
 use App\scasucursalescategorias;
+use App\fecfechas;
 
 class ObjetivoCargarController extends Controller
 {
@@ -140,7 +141,7 @@ class ObjetivoCargarController extends Controller
                         if($sca->update()){
 
                         }else{
-                            
+
                         }
                     }else{
                         $categoriaid = 0;
