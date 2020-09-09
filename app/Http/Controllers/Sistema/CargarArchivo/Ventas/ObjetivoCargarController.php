@@ -16,6 +16,7 @@ use App\scasucursalescategorias;
 use App\fecfechas;
 use App\perpersonas;
 use App\sucsucursales;
+use Illuminate\Support\Str;
 
 class ObjetivoCargarController extends Controller
 {
