@@ -14,6 +14,8 @@ use App\ussusuariossucursales;
 use App\usuusuarios;
 use App\scasucursalescategorias;
 use App\fecfechas;
+use App\perpersonas;
+use App\sucsucursales;
 
 class ObjetivoCargarController extends Controller
 {
@@ -79,13 +81,99 @@ class ObjetivoCargarController extends Controller
                     }
 
 
-                    $usuarioCliente = usuusuarios::join('ussusuariossucursales as uss', 'uss.usuid', 'usuusuarios.usuid')
-                                                    ->where('usuusuarios.ususoldto', $soldto)
-                                                    ->first(['uss.sucid']);                                                
+                    // $usuarioCliente = usuusuarios::join('ussusuariossucursales as uss', 'uss.usuid', 'usuusuarios.usuid')
+                    //                                 ->where('usuusuarios.ususoldto', $soldto)
+                    //                                 ->first(['uss.sucid']);  
+                    // VERIFICAR SI EXISTE LA PERSONA PARA EL CLIENTE
+                    $clienteperpersona = perpersonas::where('pernombrecompleto', $cliente)->first(['perid']);
+                    $clienteperid = 0;
+                    if($clienteperpersona){
+                        $clienteperid = $clienteperpersona->perid;
+                    }else{
+                        $clienteNuevaPersona = new perpersonas;
+                        $clienteNuevaPersona->tdiid    = 2;
+                        $clienteNuevaPersona->pernombrecompleto = $cliente;
+                        $clienteNuevaPersona->pernumerodocumentoidentidad = null;
+                        $clienteNuevaPersona->pernombre = null;
+                        $clienteNuevaPersona->perapellidopaterno   = null;
+                        $clienteNuevaPersona->perapellidomaterno   = null;
+                        if($clienteNuevaPersona->save()){
+                            $clienteperid = $clienteNuevaPersona->perid;
+                        }else{
+        
+                        }
+                    }
+
+                    // VERIFICAR SI EXISTE EL USUARIO
+                    $usuCliente = usuusuarios::where('tpuid', 2)
+                                                ->where('ususoldto', $soldTo)
+                                                ->first(['usuid']);
+                    $clienteusuid = 0;
+                    $sucursalClienteId = 0;
+                    if($usuCliente){
+                        $clienteusuid = $usuCliente->usuid;
+                        
+                        $sucursalesCliente = ussusuariossucursales::where('usuid', $clienteusuid)->first(['sucid']);
+                        if($sucursalesCliente){
+                            $sucursalClienteId = $sucursalesCliente->sucid;
+                        }else{
+                            $nuevaSucursal = new sucsucursales;
+                            $nuevaSucursal->sucnombre = $cliente;
+                            if($nuevaSucursal->save()){
+                                $sucursalClienteId = $nuevaSucursal->sucid;
+
+                                $sucursalUsuario = new ussusuariossucursales;
+                                $sucursalUsuario->usuid = $clienteusuid;
+                                $sucursalUsuario->suci  = $sucursalClienteId;
+                                if($sucursalUsuario->save()){
+
+                                }else{
+
+                                }
+
+                            }else{
+
+                            }
+                        }
+
+                    }else{
+                        $clienteNuevoUsuario = new usuusuarios;
+                        $clienteNuevoUsuario->tpuid         = 2; // tipo de usuario (cliente)
+                        $clienteNuevoUsuario->perid         = $clienteperid;
+                        $clienteNuevoUsuario->ususoldto     = $soldTo;
+                        $clienteNuevoUsuario->usuusuario    = null;
+                        $clienteNuevoUsuario->usucorreo     = null;
+                        $clienteNuevoUsuario->usucontrasena = null;
+                        $clienteNuevoUsuario->usutoken      = Str::random(60);
+                        if($clienteNuevoUsuario->save()){
+                            $clienteusuid = $clienteNuevoUsuario->usuid;
+                            $nuevaSucursal = new sucsucursales;
+                            $nuevaSucursal->sucnombre = $cliente;
+                            if($nuevaSucursal->save()){
+                                $sucursalClienteId = $nuevaSucursal->sucid;
+
+                                $sucursalUsuario = new ussusuariossucursales;
+                                $sucursalUsuario->usuid = $clienteusuid;
+                                $sucursalUsuario->sucid = $sucursalClienteId;
+                                if($sucursalUsuario->save()){
+
+                                }else{
+
+                                }
+
+                            }else{
+
+                            }
+                        }else{
+        
+                        }
+                    }
+                                                    
+                                                    
 
 
                     $tsu = tsutipospromocionessucursales::where('fecid', $fecid)
-                                                        ->where('sucid', $usuarioCliente->sucid)
+                                                        ->where('sucid', $sucursalClienteId)
                                                         ->first(['tsuid']);
                     $tsuid = 0;
                     if($tsu){
@@ -99,7 +187,7 @@ class ObjetivoCargarController extends Controller
                     }else{
                         $nuevotsu = new tsutipospromocionessucursales;
                         $nuevotsu->fecid = $fecid;
-                        $nuevotsu->sucid = $usuarioCliente->sucid;
+                        $nuevotsu->sucid = $sucursalClienteId;
                         $nuevotsu->tprid = 1;
                         $nuevotsu->tsuporcentajecumplimiento = 0;
                         $nuevotsu->tsuvalorizadoobjetivo = $objetivo;
@@ -114,7 +202,7 @@ class ObjetivoCargarController extends Controller
                     }
 
                     $sca = scasucursalescategorias::where('fecid', $fecid)
-                                                ->where('sucid', $usuarioCliente->sucid)
+                                                ->where('sucid', $sucursalClienteId)
                                                 ->where(function ($query) use($sector) {
 
                                                     if($sector == 'Family'){
@@ -164,7 +252,7 @@ class ObjetivoCargarController extends Controller
                         }
 
                         $nuevosca = new scasucursalescategorias;
-                        $nuevosca->sucid                 = $usuarioCliente->sucid;
+                        $nuevosca->sucid                 = $sucursalClienteId;
                         $nuevosca->catid                 = $categoriaid;
                         $nuevosca->fecid                 = $fecid;
                         $nuevosca->tsuid                 = $tsuid;
