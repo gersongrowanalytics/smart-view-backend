@@ -204,6 +204,7 @@ class ObjetivoCargarController extends Controller
 
                     $sca = scasucursalescategorias::where('fecid', $fecid)
                                                 ->where('sucid', $sucursalClienteId)
+                                                ->where('tsuid', $tsuid)
                                                 ->where(function ($query) use($sector) {
 
                                                     if($sector == 'Family'){

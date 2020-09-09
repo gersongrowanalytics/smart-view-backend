@@ -77,6 +77,7 @@ class CargarArchivoController extends Controller
                         }
                     }
                     if($cliente != null){
+                        echo $cliente;
                         $categoriaid     = 0;
                         $categoriaNombre = '';
                         if($sector == 'Family Care'){
@@ -280,5 +281,37 @@ class CargarArchivoController extends Controller
             $mensajedev = $e->getMessage();
             $linea      = __LINE__;
         }
+
+
+        $requestsalida = response()->json([
+            "respuesta"      => $respuesta,
+            "mensaje"        => $mensaje,
+            "datos"          => $datos,
+            "linea"          => $linea,
+            "mensajeDetalle" => $mensajeDetalle,
+            "mensajedev"     => $mensajedev,
+            "numeroCelda"    => $numeroCelda
+        ]);
+
+        $AuditoriaController = new AuditoriaController;
+        $registrarAuditoria  = $AuditoriaController->registrarAuditoria(
+            $usutoken,
+            $usuusuario->usuid,
+            null,
+            $fichero_subido,
+            $requestsalida,
+            'CARGAR DATA DE UN EXCEL AL SISTEMA DE VENTAS SELL IN',
+            'IMPORTAR',
+            '', //ruta
+            null
+        );
+
+        if($registrarAuditoria == true){
+
+        }else{
+            
+        }
+        
+        return $requestsalida;
     }
 }
