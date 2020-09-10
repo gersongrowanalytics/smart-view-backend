@@ -16,6 +16,7 @@ use App\usuusuarios;
 use App\ussusuariossucursales;
 use App\sucsucursales;
 use App\carcargasarchivos;
+use App\cejclientesejecutivos;
 
 class ClientesCargarController extends Controller
 {
@@ -196,6 +197,15 @@ class ClientesCargarController extends Controller
                         }
                     }
 
+                    $nuevocej = new cejclientesejecutivos;
+                    $nuevocej->cejejecutivo = $usuEjecutivoid;
+                    $nuevocej->cejcliente   = $clienteusuid;
+                    if($nuevocej->save()){
+
+                    }else{
+
+                    }
+
 
 
                 }
@@ -203,7 +213,7 @@ class ClientesCargarController extends Controller
 
             $nuevoCargaArchivo = new carcargasarchivos;
             $nuevoCargaArchivo->tcaid = 6; // Carga de Clientes
-            $nuevoCargaArchivo->fecid = $fecid;
+            $nuevoCargaArchivo->fecid = null;
             $nuevoCargaArchivo->usuid = $usuusuario->usuid;
             $nuevoCargaArchivo->carnombrearchivo = $archivo;
             $nuevoCargaArchivo->carubicacion = $fichero_subido;

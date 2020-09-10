@@ -16,7 +16,7 @@ class Carcargasarchivos extends Migration
         Schema::create('carcargasarchivos', function (Blueprint $table) {
             $table->increments('carid');
             $table->unsignedInteger('tcaid');
-            $table->unsignedInteger('fecid');
+            $table->unsignedInteger('fecid')->nullable();
             $table->unsignedInteger('usuid');
             $table->string('carnombrearchivo');
             $table->string('carubicacion');
