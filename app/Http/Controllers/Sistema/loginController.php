@@ -26,14 +26,15 @@ class loginController extends Controller
 
         try{
             
-            $usuusaurio = usuusuarios::where('usuusuario', $usuario)
+            $usuusaurio = usuusuarios::join('perpersonas as per', 'per.perid', 'usuusuarios.perid')
+                                        ->where('usuusuarios.usuusuario', $usuario)
                                         ->first([
-                                            'usuid',
-                                            'usuusuario',
-                                            'usutoken',
-                                            'usucontrasena',
-                                            'tpuid'
-
+                                            'usuusuarios.usuid',
+                                            'usuusuarios.usuusuario',
+                                            'usuusuarios.usutoken',
+                                            'usuusuarios.usucontrasena',
+                                            'usuusuarios.tpuid',
+                                            'per.pernombre'
                                         ]);
 
             if($usuusaurio){

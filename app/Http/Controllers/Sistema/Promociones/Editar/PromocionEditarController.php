@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Sistema\Promociones\Editar;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\cspcanalessucursalespromociones;
+use App\Http\Controllers\AuditoriaController;
 
 class PromocionEditarController extends Controller
 {

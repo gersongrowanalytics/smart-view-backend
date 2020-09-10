@@ -17,7 +17,27 @@ class tcatiposcargasarchivosSeeder extends Seeder
         ]);
 
         tcatiposcargasarchivos::create([
-            'tcanombre' => 'Carga de Ventas'
+            'tcanombre' => 'Carga de Ventas Sell Out'
+        ]);
+
+        tcatiposcargasarchivos::create([
+            'tcanombre' => 'Carga de Ventas Sell in'
+        ]);
+
+        tcatiposcargasarchivos::create([
+            'tcanombre' => 'Carga de Objetivos Sell Out'
+        ]);
+
+        tcatiposcargasarchivos::create([
+            'tcanombre' => 'Carga de Objetivos Sell In'
+        ]);
+
+        tcatiposcargasarchivos::create([
+            'tcanombre' => 'Carga de Clientes'
+        ]);
+
+        tcatiposcargasarchivos::create([
+            'tcanombre' => 'Carga de Productos'
         ]);
     }
 }
