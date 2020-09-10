@@ -34,7 +34,8 @@ class loginController extends Controller
                                             'usuusuarios.usutoken',
                                             'usuusuarios.usucontrasena',
                                             'usuusuarios.tpuid',
-                                            'per.pernombre'
+                                            'per.pernombre',
+                                            'per.pernombrecompleto'
                                         ]);
 
             if($usuusaurio){
@@ -67,6 +68,22 @@ class loginController extends Controller
                         $usuusaurio->sucursales = $ussusuariossucursales;
                     }else{
                         $usuusaurio->sucursales = [];
+                    }
+
+                    $cej = cejclientesejecutivos::join('usuusaurio as usu', 'usu.usuid', 'cejclientesejecutivos.cejejecutivo')
+                                                ->join('perpersonas as per', 'per.perid', 'usu.perid')
+                                                ->where('cejclientesejecutivos.cejcliente', $usuusaurio->usuid)
+                                                ->first([
+                                                    'cejclientesejecutivos.cejid',
+                                                    'per.pernombre',
+                                                ]);
+
+                    if($cej){
+                        $usuusaurio->idcej     = $cej->cejid;
+                        $usuusaurio->ejecutivo = $cej->pernombre;
+                    }else{
+                        $usuusaurio->idcej     = 0;
+                        $usuusaurio->ejecutivo = 'No tiene';
                     }
 
 
