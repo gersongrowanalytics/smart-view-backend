@@ -77,11 +77,16 @@ class loginController extends Controller
                                                 ->first([
                                                     'cejclientesejecutivos.cejid',
                                                     'per.pernombre',
+                                                    'per.pernombrecompleto'
                                                 ]);
 
                     if($cej){
                         $usuusaurio->idcej     = $cej->cejid;
-                        $usuusaurio->ejecutivo = $cej->pernombre;
+                        if($cej->pernombre == null){
+                            $usuusaurio->ejecutivo = $cej->pernombrecompleto;
+                        }else{
+                            $usuusaurio->ejecutivo = $cej->pernombre;
+                        }
                     }else{
                         $usuusaurio->idcej     = 0;
                         $usuusaurio->ejecutivo = 'No tiene';
