@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Hash;
 use App\usuusuarios;
 use App\tuptiposusuariospermisos;
 use App\ussusuariossucursales;
+use App\cejclientesejecutivos;
 
 class loginController extends Controller
 {
