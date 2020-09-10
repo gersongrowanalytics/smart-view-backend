@@ -19,8 +19,8 @@ class Cejclientesejecutivos extends Migration
             $table->unsignedInteger('cejcliente');
             $table->timestamps();
 
-            $table->foreign('ejecutivo')->references('usuid')->on('usuusuarios');
-            $table->foreign('cliente')->references('usuid')->on('usuusuarios');
+            $table->foreign('cejejecutivo')->references('usuid')->on('usuusuarios');
+            $table->foreign('cejcliente')->references('usuid')->on('usuusuarios');
         });
     }
 
