@@ -71,7 +71,7 @@ class loginController extends Controller
                         $usuusaurio->sucursales = [];
                     }
 
-                    $cej = cejclientesejecutivos::join('usuusaurio as usu', 'usu.usuid', 'cejclientesejecutivos.cejejecutivo')
+                    $cej = cejclientesejecutivos::join('usuusuarios as usu', 'usu.usuid', 'cejclientesejecutivos.cejejecutivo')
                                                 ->join('perpersonas as per', 'per.perid', 'usu.perid')
                                                 ->where('cejclientesejecutivos.cejcliente', $usuusaurio->usuid)
                                                 ->first([
