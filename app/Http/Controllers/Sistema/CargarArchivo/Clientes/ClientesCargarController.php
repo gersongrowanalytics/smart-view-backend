@@ -21,6 +21,9 @@ class ClientesCargarController extends Controller
 {
     public function CargarClientes(Request $request)
     {   
+        date_default_timezone_set("America/Lima");
+        $fechaActual = date('Y-m-d H:i:s');
+
         $respuesta      = false;
         $mensaje        = '';
         $datos          = [];
@@ -31,12 +34,12 @@ class ClientesCargarController extends Controller
         $usutoken       = $request->header('api_token');
         $archivo        = $_FILES['file']['name'];
 
-        $usuusuario = usuusuarios::where('usutoken', $usutoken)->first(['usuid']);
+        $usuusuario = usuusuarios::where('usutoken', $usutoken)->first(['usuid', 'usuusuario']);
         $fichero_subido = '';
 
         try{
 
-            $fichero_subido = base_path().'/public/'.basename($_FILES['file']['name']);
+            $fichero_subido = base_path().'/public/Sistema/cargaArchivos/clientes/'.basename($usuusuario->usuid.'-'.$usuusuario->usuusuario.'-'.$fechaActual.'-'.$_FILES['file']['name']);
             if (move_uploaded_file($_FILES['file']['tmp_name'], $fichero_subido)) {
                 $objPHPExcel    = IOFactory::load($fichero_subido);
                 $objPHPExcel->setActiveSheetIndex(0);
@@ -197,9 +200,6 @@ class ClientesCargarController extends Controller
 
                 }
             }
-
-            date_default_timezone_set("America/Lima");
-            $fechaActual = date('Y-m-d H:i:s');
 
             $nuevoCargaArchivo = new carcargasarchivos;
             $nuevoCargaArchivo->tcaid = 6; // Carga de Clientes
