@@ -29,8 +29,9 @@ class RebateCrearController extends Controller
 
         try{
             // $usuusuario = usuusuarios::where('usutoken', $request->header('api_token'))->first(['usuid']);
-
-            $fecha = fecfechas::where('fecfecha', $fecha)->first();
+            $fefe = new \DateTime(date("Y-m-d", strtotime($fecha)));
+            
+            $fecha = fecfechas::where('fecfecha', $fefe)->first();
             if($fecha){
                 echo "existe la fecha";
             }else{
