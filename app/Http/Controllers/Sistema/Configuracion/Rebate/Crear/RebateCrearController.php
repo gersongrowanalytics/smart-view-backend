@@ -28,22 +28,44 @@ class RebateCrearController extends Controller
         $mensajedev     = null;
 
         try{
-            // $usuusuario = usuusuarios::where('usutoken', $request->header('api_token'))->first(['usuid']);
-            $fefe = new \DateTime(date("Y-m-d", strtotime($fecha)));
-            
-            $fecha = fecfechas::where('fecfecha', $fefe)->first();
-            if($fecha){
-                echo "existe la fecha";
+            $fecha = new \DateTime(date("Y-m-d", strtotime($fecha)));
+
+            $fecfecha = fecfechas::where('fecfecha', $fefe)->first(['fecid']);
+            $fecid = 0;
+            if($fecfecha){
+                $fecid = $fecfecha->fecid;
             }else{
-                echo "no existe la fecha";
+                $nuevafecha = new fecfechas;
+                $nuevafecha->fecfecha = $fecha;
+                $nuevafecha->fecdia   = date("d", strtotime($fecha));
+                $nuevafecha->fecmes   = '';
+                $nuevafecha->fecano   = date("Y", strtotime($fecha));
+                if($nuevafecha->save()){
+                    $fecid = $nuevafecha->fecid;
+                }else{
+
+                }
             }
 
-            // $rtp = new rtprebatetipospromociones;
-            // if($rtp->save()){
-
-            // }else{
-
-            // }
+            $rtp = new rtprebatetipospromociones;
+            $rtp->fecid               = $fecid;
+            $rtp->tprid               = $tipoPromocion;
+            $rtp->rtpporcentajedesde  = $porcentajeDesde;
+            $rtp->rtpporcentajehasta  = $porcentajeHasta;
+            $rtp->rtpporcentajerebate = $porcentajeRebate;
+            if($rtp->save()){
+                $respuesta      = true;
+                $mensaje        = 'El rebate se registro correctamente';
+                $datos          = $rtp;
+                $linea          = __LINE__;
+                $mensajeDetalle = 'Nuevo rebate agregado';
+            }else{
+                $respuesta      = false;
+                $mensaje        = 'Ocurrio un error al momento de agregar el rebate';
+                $datos          = $rtp;
+                $linea          = __LINE__;
+                $mensajeDetalle = 'El rebate no se agrego';
+            }
 
         } catch (Exception $e) {
             $mensajedev = $e->getMessage();
