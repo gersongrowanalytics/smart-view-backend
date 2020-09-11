@@ -32,6 +32,7 @@ class PromocionesMostrarController extends Controller
                                                                         ->where('csccanalessucursalescategorias.scaid', $scaid)
                                                                         ->get([
                                                                             'csccanalessucursalescategorias.cscid',
+                                                                            'csccanalessucursalescategorias.scaid',
                                                                             'can.canid',
                                                                             'can.cannombre'
                                                                         ]);
