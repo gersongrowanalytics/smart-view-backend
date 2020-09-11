@@ -37,9 +37,9 @@ class RebateCrearController extends Controller
             }else{
                 $nuevafecha = new fecfechas;
                 $nuevafecha->fecfecha = $fecha;
-                $nuevafecha->fecdia   = date("d", strtotime($fecha));
+                $nuevafecha->fecdia   = new \DateTime(date("d", strtotime($fecha)));
                 $nuevafecha->fecmes   = '';
-                $nuevafecha->fecano   = date("Y", strtotime($fecha));
+                $nuevafecha->fecano   = new \DateTime(date("Y", strtotime($fecha)));
                 if($nuevafecha->save()){
                     $fecid = $nuevafecha->fecid;
                 }else{
