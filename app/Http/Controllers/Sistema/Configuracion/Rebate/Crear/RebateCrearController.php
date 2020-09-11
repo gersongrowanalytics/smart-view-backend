@@ -30,7 +30,7 @@ class RebateCrearController extends Controller
         try{
             $fecha = new \DateTime(date("Y-m-d", strtotime($fecha)));
 
-            $fecfecha = fecfechas::where('fecfecha', $fefe)->first(['fecid']);
+            $fecfecha = fecfechas::where('fecfecha', $fecha)->first(['fecid']);
             $fecid = 0;
             if($fecfecha){
                 $fecid = $fecfecha->fecid;
