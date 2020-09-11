@@ -41,6 +41,7 @@ class PromocionesMostrarController extends Controller
                 
                 foreach($csccanalessucursalescategorias as $posicion => $csccanalesucursalcategoria){
                     $cspcanalessucursalespromociones = cspcanalessucursalespromociones::join('prmpromociones as prm', 'prm.prmid', 'cspcanalessucursalespromociones.prmid')
+                                                                                        ->join('tprtipospromociones as tpr', 'tpr.tprid', 'prm.tprid')
                                                                                         ->where('cscid', $csccanalesucursalcategoria->cscid)
                                                                                         ->get([
                                                                                             'cspcanalessucursalespromociones.cspid',
@@ -54,7 +55,8 @@ class PromocionesMostrarController extends Controller
                                                                                             'cspcanalessucursalespromociones.csptotalcombo',
                                                                                             'cspcanalessucursalespromociones.csptotalplancha',
                                                                                             'cspcanalessucursalespromociones.csptotal',
-                                                                                            'prm.prmaccion'
+                                                                                            'prm.prmaccion',
+                                                                                            'tpr.tprnombre'
                                                                                         ]);
                     $numeroPromocionesTerminadas = 0;
                                                                                        
