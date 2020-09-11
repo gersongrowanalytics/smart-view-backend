@@ -38,7 +38,7 @@ class CargarArchivoController extends Controller
 
         try{
 
-            $fichero_subido = base_path().'/public/'.basename($_FILES['file']['name']);
+            $fichero_subido = base_path().'/public/Sistema/cargaArchivos/ventas/'.basename($_FILES['file']['name']);
             if (move_uploaded_file($_FILES['file']['tmp_name'], $fichero_subido)) {
                 $objPHPExcel    = IOFactory::load($fichero_subido);
                 $objPHPExcel->setActiveSheetIndex(0);
