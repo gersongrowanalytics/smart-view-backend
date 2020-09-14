@@ -190,7 +190,13 @@ class CargarArchivoController extends Controller
                         if($tsu){
                             $tsuid = $tsu->tsuid;
                             $nuevoReal = $tsu->tsuvalorizadoreal+$real;
-                            $porcentajeCumplimiento = (100*$nuevoReal)/$tsu->tsuvalorizadoobjetivo;
+
+                            if($tsu->tsuvalorizadoobjetivo == 0){
+                                $porcentajeCumplimiento = $nuevoReal;
+                            }else{
+                                $porcentajeCumplimiento = (100*$nuevoReal)/$tsu->tsuvalorizadoobjetivo;
+                            }
+                            
                             
                             // OBTENER INFORMACION DEL REBATE
                             $rtp = rtprebatetipospromociones::where('fecid', $fecid)
