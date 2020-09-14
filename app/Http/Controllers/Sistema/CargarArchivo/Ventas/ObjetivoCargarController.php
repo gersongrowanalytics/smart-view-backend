@@ -46,7 +46,7 @@ class ObjetivoCargarController extends Controller
                 $numRows        = $objPHPExcel->setActiveSheetIndex(0)->getHighestRow();
                 $ultimaColumna  = $objPHPExcel->setActiveSheetIndex(0)->getHighestColumn();
 
-                for ($i=5; $i <= $numRows ; $i++) {
+                for ($i=2; $i <= $numRows ; $i++) {
                     $ano = '2020';
                     $dia = '01';
         
@@ -59,7 +59,7 @@ class ObjetivoCargarController extends Controller
                     $producto   = $objPHPExcel->getActiveSheet()->getCell('I'.$i)->getCalculatedValue();
                     $objetivo   = $objPHPExcel->getActiveSheet()->getCell('J'.$i)->getCalculatedValue();
                     
-
+                    echo $cliente.' - '.$objetivo;
         
                     $fecfecha = fecfechas::where('fecdia', $dia)
                                         ->where('fecmes', $mes)
@@ -299,6 +299,35 @@ class ObjetivoCargarController extends Controller
         }
 
 
+        $requestsalida = response()->json([
+            "respuesta"      => $respuesta,
+            "mensaje"        => $mensaje,
+            "datos"          => $datos,
+            "linea"          => $linea,
+            "mensajeDetalle" => $mensajeDetalle,
+            "mensajedev"     => $mensajedev,
+            "numeroCelda"    => $numeroCelda
+        ]);
 
+        $AuditoriaController = new AuditoriaController;
+        $registrarAuditoria  = $AuditoriaController->registrarAuditoria(
+            $usutoken,
+            $usuusuario->usuid,
+            null,
+            $fichero_subido,
+            $requestsalida,
+            'CARGAR DATA DE CLIENTES AL SISTEMA ',
+            'IMPORTAR',
+            '', //ruta
+            null
+        );
+
+        if($registrarAuditoria == true){
+
+        }else{
+            
+        }
+        
+        return $requestsalida;
     }
 }
