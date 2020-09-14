@@ -23,16 +23,26 @@ class SucursalesMostrarController extends Controller
 
         try{
             
-            $usuusuario = usuusuarios::where('usutoken', $request->header('api_token'))->first(['usuid']);
+            $usuusuario = usuusuarios::where('usutoken', $request->header('api_token'))->first(['usuid', 'tpuid']);
 
             if($usuusuario){
-                $ussusuariossucursales = ussusuariossucursales::join('sucsucursales as suc', 'suc.sucid', 'ussusuariossucursales.sucid')
+
+                if($usuusuario->tpuid == 1){
+                    $ussusuariossucursales = ussusuariossucursales::join('sucsucursales as suc', 'suc.sucid', 'ussusuariossucursales.sucid')
+                                                            ->get([
+                                                                'ussusuariossucursales.ussid',
+                                                                'suc.sucid',
+                                                                'suc.sucnombre'
+                                                            ]);
+                }else{
+                    $ussusuariossucursales = ussusuariossucursales::join('sucsucursales as suc', 'suc.sucid', 'ussusuariossucursales.sucid')
                                                             ->where('ussusuariossucursales.usuid', $usuusuario->usuid )
                                                             ->get([
                                                                 'ussusuariossucursales.ussid',
                                                                 'suc.sucid',
                                                                 'suc.sucnombre'
                                                             ]);
+                }
                                                             
                 if(sizeof($ussusuariossucursales) > 0){
                     $datos          = $ussusuariossucursales;
