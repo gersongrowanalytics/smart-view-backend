@@ -40,7 +40,11 @@ class ObjetivoCargarController extends Controller
         try{
 
             $fichero_subido = base_path().'/public/Sistema/cargaArchivos/objetivos/'.basename($_FILES['file']['name']);
+
+            echo $fichero_subido;
+
             if (move_uploaded_file($_FILES['file']['tmp_name'], $fichero_subido)) {
+                echo "se subio";
                 $objPHPExcel    = IOFactory::load($fichero_subido);
                 $objPHPExcel->setActiveSheetIndex(0);
                 $numRows        = $objPHPExcel->setActiveSheetIndex(0)->getHighestRow();
@@ -291,6 +295,8 @@ class ObjetivoCargarController extends Controller
                 }else{
 
                 }
+            }else{
+                echo "no se subio";
             }
 
         } catch (Exception $e) {
