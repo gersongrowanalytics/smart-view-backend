@@ -17,6 +17,7 @@ use App\ussusuariossucursales;
 use App\sucsucursales;
 use App\tsutipospromocionessucursales;
 use App\scasucursalescategorias;
+use App\rtprebatetipospromociones;
 
 class CargarArchivoController extends Controller
 {
@@ -189,8 +190,31 @@ class CargarArchivoController extends Controller
                         if($tsu){
                             $tsuid = $tsu->tsuid;
                             $nuevoReal = $tsu->tsuvalorizadoreal+$real;
-                            $tsu->tsuvalorizadoreal   = $nuevoReal;
-                            $tsu->tsuvalorizadotogo   = $tsu->tsuvalorizadoobjetivo - $nuevoReal;
+                            $porcentajeCumplimiento = ($nuevoReal/$tsuvalorizadoobjetivo)-1;
+                            // OBTENER INFORMACION DEL REBATE
+                            $rtp = rtprebatetipospromociones::where('fecid', $fecid)
+                                                            ->where('tprid', 1) // TIPO DE PROMOCION SELL IN
+                                                            ->where('rtpporcentajedesde', '<=', $porcentajeCumplimiento)
+                                                            ->where('rtpporcentajehasta', '>=', $porcentajeCumplimiento)
+                                                            ->first([
+                                                                'rtpporcentajedesde',
+                                                                'rtpporcentajehasta',
+                                                                'rtpporcentajerebate'
+                                                            ]);
+                            $totalRebate = 0;
+                            if($rtp){
+                                $totalRebate = $nuevoReal*$rtp->rtpporcentajerebate;
+                            }else{
+
+                            }
+
+
+
+                            
+                            $tsu->tsuvalorizadoreal         = $nuevoReal;
+                            $tsu->tsuvalorizadotogo         = $tsu->tsuvalorizadoobjetivo - $nuevoReal;
+                            $tsu->tsuporcentajecumplimiento = $porcentajeCumplimiento;
+                            $tsu->tsuvalorizadorebate       = $totalRebate;
                             if($tsu->update()){
 
                             }else{
