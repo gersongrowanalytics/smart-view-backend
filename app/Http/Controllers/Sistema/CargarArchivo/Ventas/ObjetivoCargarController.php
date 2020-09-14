@@ -41,10 +41,7 @@ class ObjetivoCargarController extends Controller
 
             $fichero_subido = base_path().'/public/Sistema/cargaArchivos/objetivos/'.basename($_FILES['file']['name']);
 
-            echo $fichero_subido;
-
             if (move_uploaded_file($_FILES['file']['tmp_name'], $fichero_subido)) {
-                echo "se subio";
                 $objPHPExcel    = IOFactory::load($fichero_subido);
                 $objPHPExcel->setActiveSheetIndex(0);
                 $numRows        = $objPHPExcel->setActiveSheetIndex(0)->getHighestRow();
@@ -62,8 +59,6 @@ class ObjetivoCargarController extends Controller
                     $sku        = $objPHPExcel->getActiveSheet()->getCell('H'.$i)->getCalculatedValue();
                     $producto   = $objPHPExcel->getActiveSheet()->getCell('I'.$i)->getCalculatedValue();
                     $objetivo   = $objPHPExcel->getActiveSheet()->getCell('J'.$i)->getCalculatedValue();
-                    
-                    echo $cliente.' - '.$objetivo;
         
                     $fecfecha = fecfechas::where('fecdia', $dia)
                                         ->where('fecmes', $mes)
@@ -179,7 +174,7 @@ class ObjetivoCargarController extends Controller
 
                     $tsu = tsutipospromocionessucursales::where('fecid', $fecid)
                                                         ->where('sucid', $sucursalClienteId)
-                                                        ->first(['tsuid']);
+                                                        ->first(['tsuid', 'tsuvalorizadoobjetivo']);
                     $tsuid = 0;
                     if($tsu){
                         $tsuid = $tsu->tsuid;
@@ -225,7 +220,7 @@ class ObjetivoCargarController extends Controller
                                                         $query->where('catid', 0);
                                                     }
                                                 })
-                                                ->first(['scaid']);
+                                                ->first(['scaid', 'scavalorizadoobjetivo']);
 
                     $scaid = 0;
                     if($sca){
@@ -296,7 +291,7 @@ class ObjetivoCargarController extends Controller
 
                 }
             }else{
-                echo "no se subio";
+
             }
 
         } catch (Exception $e) {
