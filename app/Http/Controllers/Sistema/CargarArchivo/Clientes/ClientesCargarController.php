@@ -113,14 +113,14 @@ class ClientesCargarController extends Controller
                     }
 
                     // VERIFICAR SI EXISTE LA PERSONA
-                    $perpersona = perpersonas::where('pernombrecompleto', $shipTo)->first(['perid']);
+                    $perpersona = perpersonas::where('pernombrecompleto', $soldTo)->first(['perid']);
                     $perid = 0;
                     if($perpersona){
                         $perid = $perpersona->perid;
                     }else{
                         $nuevaPersona                               = new perpersonas;
                         $nuevaPersona->tdiid                        = 2;
-                        $nuevaPersona->pernombrecompleto            = $shipTo;
+                        $nuevaPersona->pernombrecompleto            = $soldTo;
                         $nuevaPersona->pernumerodocumentoidentidad  = null;
                         $nuevaPersona->pernombre                    = $clienteHml;
                         $nuevaPersona->perapellidopaterno           = null;
