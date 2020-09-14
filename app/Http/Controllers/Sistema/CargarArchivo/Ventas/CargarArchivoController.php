@@ -184,7 +184,7 @@ class CargarArchivoController extends Controller
 
                         $tsu = tsutipospromocionessucursales::where('fecid', $fecid)
                                                             ->where('sucid', $sucursalClienteId)
-                                                            ->first(['tsuid']);
+                                                            ->first(['tsuid', 'tsuvalorizadoreal', 'tsuvalorizadoobjetivo']);
                         $tsuid = 0;
                         if($tsu){
                             $tsuid = $tsu->tsuid;
@@ -217,7 +217,7 @@ class CargarArchivoController extends Controller
                                                     ->where('sucid', $sucursalClienteId)
                                                     ->where('catid', $categoriaid)
                                                     ->where('tsuid', $tsuid)
-                                                    ->first(['scaid']);
+                                                    ->first(['scaid', 'scavalorizadoreal', 'scavalorizadoobjetivo']);
 
                         $scaid = 0;
                         if($sca){
