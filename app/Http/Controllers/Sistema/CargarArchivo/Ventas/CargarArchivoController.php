@@ -205,8 +205,8 @@ class CargarArchivoController extends Controller
                                 // OBTENER INFORMACION DEL REBATE
                                 $rtp = rtprebatetipospromociones::where('fecid', $fecid)
                                                                 ->where('tprid', 1) // TIPO DE PROMOCION SELL IN
-                                                                ->where('rtpporcentajedesde', '<=', $porcentajeCumplimiento)
-                                                                ->where('rtpporcentajehasta', '>=', $porcentajeCumplimiento)
+                                                                ->where('rtpporcentajedesde', '<=', round($porcentajeCumplimiento))
+                                                                ->where('rtpporcentajehasta', '>=', round($porcentajeCumplimiento))
                                                                 ->first([
                                                                     'rtpporcentajedesde',
                                                                     'rtpporcentajehasta',
