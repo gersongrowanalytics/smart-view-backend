@@ -11,6 +11,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        $this->call('estestadosSeeder');
         $this->call('tditiposdocumentosidentidadesSeeder');
         $this->call('perpersonasSeeder');
         $this->call('tputiposusuariosSeeder');

@@ -163,14 +163,25 @@ class CargarArchivoController extends Controller
                     // VERIFICAR SI EXISTE EL USUARIO
                     $distribuidor = usuusuarios::where('tpuid', $tpuid)
                                                 ->where('perid', $perid)
-                                                ->first(['usuid']);
+                                                ->first(['usuid', 'estid']);
                     $usuid = 0;
                     if($distribuidor){
                         $usuid = $distribuidor->usuid;
+
+                        if($distribuidor->estid == 2 ){ //SI EL ESTADO ES 2 DE DESACTIVADO CAMBIARLO A 1 DE ACTIVADO
+                            $distribuidor->estid = 1;
+                            if($distribuidor->update()){
+
+                            }else{
+
+                            }
+                        }
+
                     }else{
                         $nuevoUsuario = new usuusuarios;
                         $nuevoUsuario->tpuid         = $tpuid;
                         $nuevoUsuario->perid         = $perid;
+                        $nuevoUsuario->estid         = 1;
                         $nuevoUsuario->ususoldto     = null;
                         $nuevoUsuario->usuusuario    = null;
                         $nuevoUsuario->usucorreo     = null;
@@ -206,12 +217,23 @@ class CargarArchivoController extends Controller
                     // VERIFICAR SI EXISTE EL USUARIO
                     $usuCliente = usuusuarios::where('tpuid', 2)
                                                 ->where('perid', $clienteperid)
-                                                ->first(['usuid']);
+                                                ->first(['usuid', 'estid']);
                     $clienteusuid = 0;
                     $sucursalClienteId = 0;
                     if($usuCliente){
                         $clienteusuid = $usuCliente->usuid;
                         
+                        if($usuCliente->estid == 2){
+                            $usuCliente->estid = 1;
+                            if($usuCliente->update()){
+
+                            }else{
+                                
+                            }
+                        }else{
+
+                        }
+
                         $sucursalesCliente = ussusuariossucursales::where('usuid', $clienteusuid)->first(['sucid']);
                         if($sucursalesCliente){
                             $sucursalClienteId = $sucursalesCliente->sucid;
@@ -239,6 +261,7 @@ class CargarArchivoController extends Controller
                         $clienteNuevoUsuario = new usuusuarios;
                         $clienteNuevoUsuario->tpuid         = 2; // tipo de usuario (cliente)
                         $clienteNuevoUsuario->perid         = $clienteperid;
+                        $clienteNuevoUsuario->estid         = 1;
                         $clienteNuevoUsuario->ususoldto     = $soldTo;
                         $clienteNuevoUsuario->usuusuario    = null;
                         $clienteNuevoUsuario->usucorreo     = null;
