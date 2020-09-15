@@ -82,6 +82,13 @@ class CargarArchivoController extends Controller
 
                     if($cliente != null){
 
+                        $separarsku = explode("00000000", $sku);
+
+                        if(sizeof($separarsku) > 1){
+                            $sku = $separarsku[1];
+                        }else{
+                            $sku = $separarsku[0];
+                        }
 
                         $pro = proproductos::join('catcategorias as cat', 'cat.catid', 'proproductos.catid')
                                         ->where('proproductos.prosku', 'LIKE', '%'.$sku)
