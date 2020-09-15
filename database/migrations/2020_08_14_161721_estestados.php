@@ -15,8 +15,8 @@ class Estestados extends Migration
     {
         Schema::create('estestados', function (Blueprint $table) {
             $table->increments('estid');
-            $table->unsignedInteger('estnombre');
-            $table->unsignedInteger('estdescripcion');
+            $table->string('estnombre');
+            $table->text('estdescripcion');
             $table->timestamps();
         });
     }
