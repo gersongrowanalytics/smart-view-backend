@@ -29,6 +29,7 @@ class ObjetivoCargarController extends Controller
         $respuesta      = false;
         $mensaje        = '';
         $datos          = [];
+        $skusNoExisten  = [];
         $linea          = __LINE__;
         $mensajeDetalle = '';
         $mensajedev     = null;
@@ -252,12 +253,7 @@ class ObjetivoCargarController extends Controller
 
 
                     }else{
-                        
-
-                        echo "producto no existe";
-
-
-
+                        $skusNoExisten[] = $sku;
                     }
                 }
 

@@ -33,6 +33,7 @@ class CargarArchivoController extends Controller
         $numeroCelda    = 0;
         $usutoken       = $request->header('api_token');
         $archivo        = $_FILES['file']['name'];
+        $skusNoExisten  = [];
 
         $usuusuario = usuusuarios::where('usutoken', $usutoken)->first(['usuid']);
 
@@ -274,7 +275,7 @@ class CargarArchivoController extends Controller
                                 
                             }  
                         }else{
-
+                            $skusNoExisten[] = $sku;
                         }  
                     }
                 }
@@ -302,6 +303,12 @@ class CargarArchivoController extends Controller
             $linea      = __LINE__;
         }
 
+
+        $datos = array(
+            array(
+                "skusnoexisten" => $skusNoExisten
+            )
+        );
 
         $requestsalida = response()->json([
             "respuesta"      => $respuesta,
