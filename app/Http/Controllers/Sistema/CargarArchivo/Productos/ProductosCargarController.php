@@ -57,56 +57,61 @@ class ProductosCargarController extends Controller
                     $formato        = $objPHPExcel->getActiveSheet()->getCell('E'.$i)->getCalculatedValue();
                     $mes = 'AGO';
 
-                    $fecfecha = fecfechas::where('fecdia', $dia)
+                    if($material != null){
+                        $fecfecha = fecfechas::where('fecdia', $dia)
                                         ->where('fecmes', $mes)
                                         ->where('fecano', $ano)
                                         ->first(['fecid']);
-                    $fecid = 0;
-                    if($fecfecha){
-                        $fecid = $fecfecha->fecid;
-                    }else{
-                        $nuevaFecha = new fecfechas;
-                        $nuevaFecha->fecfecha = new \DateTime(date("Y-m-d", strtotime($ano.'-'.$mes.'-'.$dia)));
-                        $nuevaFecha->fecdia   = $dia;
-                        $nuevaFecha->fecmes   = $mes;
-                        $nuevaFecha->fecano   = $ano;
-                        if($nuevaFecha->save()){
-                            $fecid = $nuevaFecha->fecid;
+                                        
+                        $fecid = 0;
+                        if($fecfecha){
+                            $fecid = $fecfecha->fecid;
                         }else{
-        
+                            $nuevaFecha = new fecfechas;
+                            $nuevaFecha->fecfecha = new \DateTime(date("Y-m-d", strtotime($ano.'-'.$mes.'-'.$dia)));
+                            $nuevaFecha->fecdia   = $dia;
+                            $nuevaFecha->fecmes   = $mes;
+                            $nuevaFecha->fecano   = $ano;
+                            if($nuevaFecha->save()){
+                                $fecid = $nuevaFecha->fecid;
+                            }else{
+            
+                            }
+                        }
+
+                        $categoriaid = 0;
+                        if($categoria == 'Family'){
+                            $categoriaid = 1;
+                        }else if($categoria == 'Wipes'){
+                            $categoriaid = 4; 
+                        }else if($categoria == 'Adult'){
+                            $categoriaid = 3;
+                        }else if($categoria == 'Fem'){
+                            $categoriaid = 5;
+                        }else if($categoria == 'Infant + Child'){
+                            $categoriaid = 2;
+                        }
+
+                        $pro = proproductos::where('prosku', $codigoMaterial)
+                                            ->first(['proid']);
+
+                        if($pro){
+
+                        }else{
+                            $nuevopro = new proproductos;
+                            $nuevopro->catid     = $categoriaid;
+                            $nuevopro->prosku    = $codigoMaterial;
+                            $nuevopro->pronombre = $material;
+                            $nuevopro->proimagen = env('APP_URL').'/Sistema/abs/img/nohay.png';
+                            if($nuevopro->save()){
+
+                            }else{
+
+                            }
                         }
                     }
 
-                    $categoriaid = 0;
-                    if($categoria == 'Family'){
-                        $categoriaid = 1;
-                    }else if($categoria == 'Wipes'){
-                        $categoriaid = 4; 
-                    }else if($categoria == 'Adult'){
-                        $categoriaid = 3;
-                    }else if($categoria == 'Fem'){
-                        $categoriaid = 5;
-                    }else if($categoria == 'Infant + Child'){
-                        $categoriaid = 2;
-                    }
-
-                    $pro = proproductos::where('prosku', $codigoMaterial)
-                                        ->first(['proid']);
-
-                    if($pro){
-
-                    }else{
-                        $nuevopro = new proproductos;
-                        $nuevopro->catid     = $categoriaid;
-                        $nuevopro->prosku    = $codigoMaterial;
-                        $nuevopro->pronombre = $material;
-                        $nuevopro->proimagen = env('APP_URL').'/Sistema/abs/img/nohay.png';
-                        if($nuevopro->save()){
-
-                        }else{
-
-                        }
-                    }
+                    
 
 
 
