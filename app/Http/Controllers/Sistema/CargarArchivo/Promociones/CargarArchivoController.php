@@ -321,8 +321,7 @@ class CargarArchivoController extends Controller
                     
         
                     // VERIFICAR SI EL PRODUCTO ESTA REGISTRADO
-                    $proproducto = proproductos::where('catid', $catid)
-                                                ->where('prosku', $sku)
+                    $proproducto = proproductos::where('prosku', $sku)
                                                 ->first(['proid']);
                     
                     $proid = 0;
@@ -347,9 +346,8 @@ class CargarArchivoController extends Controller
                     }
         
                     // VERIFICAR SI EL PRODUCTO BONIFICADO ESTA REGISTRADO
-                    $proproductoBonificado = proproductos::where('catid', $catid)
-                                                ->where('prosku', $skuBonifi)
-                                                ->first(['proid']);
+                    $proproductoBonificado = proproductos::where('prosku', $skuBonifi)
+                                                        ->first(['proid']);
                     
                     $bonificadoproid = 0;
                     if($proproductoBonificado){
@@ -445,10 +443,6 @@ class CargarArchivoController extends Controller
 
                         }
                     }
-
-
-
-
 
                     $prb = prbpromocionesbonificaciones::where('prmid', $prmid)
                                                     ->where('proid', $bonificadoproid) 

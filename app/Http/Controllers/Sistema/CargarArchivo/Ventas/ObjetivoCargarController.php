@@ -17,6 +17,7 @@ use App\fecfechas;
 use App\perpersonas;
 use App\sucsucursales;
 use Illuminate\Support\Str;
+use App\proproductos;
 
 class ObjetivoCargarController extends Controller
 {
@@ -203,77 +204,61 @@ class ObjetivoCargarController extends Controller
                         }
                     }
 
-                    $sca = scasucursalescategorias::where('fecid', $fecid)
+
+                    $pro = proproductos::join('catcategorias as cat', 'cat.catid', 'proproductos.catid')
+                                        ->where('proproductos.prosku', $sku)
+                                        ->first([
+                                            'proproductos.catid',
+                                            'cat.catnombre'
+                                        ]);
+
+                    if($pro){
+                        $sca = scasucursalescategorias::where('fecid', $fecid)
                                                 ->where('sucid', $sucursalClienteId)
                                                 ->where('tsuid', $tsuid)
-                                                ->where(function ($query) use($sector) {
-
-                                                    if($sector == 'Family'){
-                                                        $query->where('catid', 1);
-                                                    }else if($sector == 'Wipes'){
-                                                        $query->where('catid', 4);
-                                                    }else if($sector == 'Adult'){
-                                                        $query->where('catid', 3);
-                                                    }else if($sector == 'Feminine'){
-                                                        $query->where('catid', 5);
-                                                    }else if($sector == 'Infant + Child'){
-                                                        $query->where('catid', 2);
-                                                    }else{
-                                                        $query->where('catid', 0);
-                                                    }
-                                                })
+                                                ->where('catid', $pro->catid)
                                                 ->first(['scaid', 'scavalorizadoobjetivo']);
 
-                    $scaid = 0;
-                    if($sca){
-                        $scaid = $sca->scaid;
+                        $scaid = 0;
+                        if($sca){
+                            $scaid = $sca->scaid;
 
-                        $sca->scavalorizadoobjetivo = $sca->scavalorizadoobjetivo+$objetivo;
-                        if($sca->update()){
+                            $sca->scavalorizadoobjetivo = $sca->scavalorizadoobjetivo+$objetivo;
+                            if($sca->update()){
 
+                            }else{
+
+                            }
                         }else{
+                            $categoriaid     = $pro->catid;
+                            $categoriaNombre = $pro->catnombre;
 
+                            $nuevosca = new scasucursalescategorias;
+                            $nuevosca->sucid                 = $sucursalClienteId;
+                            $nuevosca->catid                 = $categoriaid;
+                            $nuevosca->fecid                 = $fecid;
+                            $nuevosca->tsuid                 = $tsuid;
+                            $nuevosca->scavalorizadoobjetivo = $objetivo;
+                            $nuevosca->scaiconocategoria     = env('APP_URL').'/Sistema/categorias-tiposPromociones/img/iconos/'.$categoriaNombre.'-Sell In.png';
+                            $nuevosca->scavalorizadoreal     = 0;
+                            $nuevosca->scavalorizadotogo     = 0;
+                            if($nuevosca->save()){
+                                $scaid = $nuevosca->scaid;
+                            }else{
+
+                            }
+                            
                         }
+
+
                     }else{
-                        $categoriaid = 0;
-                        $categoriaNombre = '';
-                        if($sector == 'Family'){
-                            $categoriaid = 1;
-                            $categoriaNombre = 'Family Care';
-                        }else if($sector == 'Wipes'){
-                            $categoriaid = 4; 
-                            $categoriaNombre = 'Wipes';
-                        }else if($sector == 'Adult'){
-                            $categoriaid = 3;
-                            $categoriaNombre = 'Adult Care';
-                        }else if($sector == 'Feminine'){
-                            $categoriaid = 5;
-                            $categoriaNombre = 'Fem Care';
-                        }else if($sector == 'Infant + Child'){
-                            $categoriaid = 2;
-                            $categoriaNombre = 'Infant Care';
-                        }
-
-                        $nuevosca = new scasucursalescategorias;
-                        $nuevosca->sucid                 = $sucursalClienteId;
-                        $nuevosca->catid                 = $categoriaid;
-                        $nuevosca->fecid                 = $fecid;
-                        $nuevosca->tsuid                 = $tsuid;
-                        $nuevosca->scavalorizadoobjetivo = $objetivo;
-                        $nuevosca->scaiconocategoria     = env('APP_URL').'/Sistema/categorias-tiposPromociones/img/iconos/'.$categoriaNombre.'-Sell In.png';
-                        $nuevosca->scavalorizadoreal     = 0;
-                        $nuevosca->scavalorizadotogo     = 0;
-                        if($nuevosca->save()){
-                            $scaid = $nuevosca->scaid;
-                        }else{
-
-                        }
                         
+
+                        echo "producto no existe";
+
+
+
                     }
-
-
-
-
                 }
 
 
