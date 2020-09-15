@@ -121,10 +121,19 @@ class CargarArchivoController extends Controller
                                 }
                             }
 
+                            $arraysoldto = explode("00", $soldto);
+
+
+                            if(sizeof($arraysoldto) > 1){
+                                $soldto = $arraysoldto[1];
+                            }else{
+                                $soldto = $arraysoldto[0];
+                            }
+
                             // VERIFICAR SI EXISTE EL USUARIO
                             $usuCliente = usuusuarios::where('tpuid', 2)
-                                                        ->where('perid', $clienteperid)
-                                                        // ->where('ususoldto', 'LIKE', '%'.$soldto)
+                                                        // ->where('perid', $clienteperid)
+                                                        ->where('ususoldto', $soldto)
                                                         ->first(['usuid']);
                             $clienteusuid = 0;
                             $sucursalClienteId = 0;
