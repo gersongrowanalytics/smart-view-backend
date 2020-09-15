@@ -12,6 +12,7 @@ use App\carcargasarchivos;
 use App\fecfechas;
 use App\proproductos;
 use App\catcategorias;
+use App\usuusuarios;
 
 class ProductosCargarController extends Controller
 {
