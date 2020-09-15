@@ -22,6 +22,8 @@ class ObjetivoCargarController extends Controller
 {
     public function CargarObjetivo(Request $request)
     {
+        date_default_timezone_set("America/Lima");
+        $fechaActual = date('Y-m-d H:i:s');
 
         $respuesta      = false;
         $mensaje        = '';
@@ -33,13 +35,13 @@ class ObjetivoCargarController extends Controller
         $usutoken       = $request->header('api_token');
         $archivo        = $_FILES['file']['name'];
 
-        $usuusuario = usuusuarios::where('usutoken', $usutoken)->first(['usuid']);
+        $usuusuario = usuusuarios::where('usutoken', $usutoken)->first(['usuid', 'usuusuario']);
 
         $fichero_subido = '';
 
         try{
 
-            $fichero_subido = base_path().'/public/Sistema/cargaArchivos/objetivos/'.basename($_FILES['file']['name']);
+            $fichero_subido = base_path().'/public/Sistema/cargaArchivos/objetivos/'.basename($usuusuario->usuid.'-'.$usuusuario->usuusuario.'-'.$fechaActual.'-'.$_FILES['file']['name']);
 
             if (move_uploaded_file($_FILES['file']['tmp_name'], $fichero_subido)) {
                 $objPHPExcel    = IOFactory::load($fichero_subido);
@@ -298,7 +300,6 @@ class ObjetivoCargarController extends Controller
             $mensajedev = $e->getMessage();
             $linea      = __LINE__;
         }
-
 
         $requestsalida = response()->json([
             "respuesta"      => $respuesta,
