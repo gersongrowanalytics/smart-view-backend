@@ -82,7 +82,7 @@ class CargarArchivoController extends Controller
 
                     if($cliente != null){
 
-                        $separarsku = explode("00000000", $sku);
+                        $separarsku = explode("0000000000", $sku);
 
                         if(sizeof($separarsku) > 1){
                             $sku = $separarsku[1];
