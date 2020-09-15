@@ -84,7 +84,7 @@ class CargarArchivoController extends Controller
 
 
                         $pro = proproductos::join('catcategorias as cat', 'cat.catid', 'proproductos.catid')
-                                        ->where('proproductos.prosku', $sku)
+                                        ->where('proproductos.prosku', 'LIKE', '%'.$sku)
                                         ->first([
                                             'proproductos.catid',
                                             'cat.catnombre'
