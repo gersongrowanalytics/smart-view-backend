@@ -121,14 +121,16 @@ class CargarArchivoController extends Controller
                                 }
                             }
 
-                            $separarsoldto = explode("'00", $soldto);
+                            // $separarsoldto = explode("'00", $soldto);
 
 
-                            if(sizeof($separarsoldto) > 1){
-                                $soldto = $separarsoldto[1];
-                            }else{
-                                $soldto = $separarsoldto[0];
-                            }
+                            // if(sizeof($separarsoldto) > 1){
+                            //     $soldto = $separarsoldto[1];
+                            // }else{
+                            //     $soldto = $separarsoldto[0];
+                            // }
+                            
+                            $soldto = substr($soldto, 3);
 
                             // VERIFICAR SI EXISTE EL USUARIO
                             $usuCliente = usuusuarios::where('tpuid', 2)
