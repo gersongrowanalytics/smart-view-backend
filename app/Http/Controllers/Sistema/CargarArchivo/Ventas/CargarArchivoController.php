@@ -121,13 +121,13 @@ class CargarArchivoController extends Controller
                                 }
                             }
 
-                            $arraysoldto = explode("00", $soldto);
+                            $separarsoldto = explode("00", $soldto);
 
 
-                            if(sizeof($arraysoldto) > 1){
-                                $soldto = $arraysoldto[1];
+                            if(sizeof($separarsoldto) > 1){
+                                $soldto = $separarsoldto[1];
                             }else{
-                                $soldto = $arraysoldto[0];
+                                $soldto = $separarsoldto[0];
                             }
 
                             // VERIFICAR SI EXISTE EL USUARIO
