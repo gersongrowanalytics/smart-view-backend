@@ -121,7 +121,7 @@ class CargarArchivoController extends Controller
                                 }
                             }
 
-                            $separarsoldto = explode("00", $soldto);
+                            $separarsoldto = explode("'00", $soldto);
 
 
                             if(sizeof($separarsoldto) > 1){
