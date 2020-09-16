@@ -133,7 +133,7 @@ class CargarArchivoController extends Controller
                             // VERIFICAR SI EXISTE EL USUARIO
                             $usuCliente = usuusuarios::where('tpuid', 2)
                                                         // ->where('perid', $clienteperid)
-                                                        ->where('ususoldto', $soldto)
+                                                        ->where('ususoldto', 'LIKE', '%'.$soldto)
                                                         ->first(['usuid']);
                             $clienteusuid = 0;
                             $sucursalClienteId = 0;
