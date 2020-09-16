@@ -346,11 +346,21 @@ class CargarArchivoController extends Controller
         
                     // VERIFICAR SI EL PRODUCTO ESTA REGISTRADO
                     $proproducto = proproductos::where('prosku', $sku)
-                                                ->first(['proid']);
+                                                ->first(['proid', 'proimagen']);
                     
                     $proid = 0;
                     if($proproducto){
                         $proid = $proproducto->proid;
+
+                        if($proproducto->proimagen == env('APP_URL').'/Sistema/promociones/'.strtoupper($categoria).'/'.strtoupper($tipoClien).'/'.strtoupper($codPromoc).'/'.$productoPpt.'.png'){
+                            
+                        }else{
+                            $proproducto->proimagen = env('APP_URL').'/Sistema/promociones/'.strtoupper($categoria).'/'.strtoupper($tipoClien).'/'.strtoupper($codPromoc).'/'.$productoPpt.'.png';
+                            if($proproducto->update()){
+
+                            }
+                        }
+
                     }else{
                         $nuevoProducto = new proproductos;
                         $nuevoProducto->catid     = $catid;
@@ -371,11 +381,23 @@ class CargarArchivoController extends Controller
         
                     // VERIFICAR SI EL PRODUCTO BONIFICADO ESTA REGISTRADO
                     $proproductoBonificado = proproductos::where('prosku', $skuBonifi)
-                                                        ->first(['proid']);
+                                                        ->first(['proid', 'proimagen']);
                     
                     $bonificadoproid = 0;
                     if($proproductoBonificado){
                         $bonificadoproid = $proproductoBonificado->proid;
+
+                        if($proproductoBonificado->proimagen == env('APP_URL').'/Sistema/promociones/'.strtoupper($categoria).'/'.strtoupper($tipoClien).'/'.strtoupper($codPromoc).'/'.$proBoniPpt.' - Gratis.png' ){
+
+                        }else{
+                            $proproductoBonificado->proimagen = env('APP_URL').'/Sistema/promociones/'.strtoupper($categoria).'/'.strtoupper($tipoClien).'/'.strtoupper($codPromoc).'/'.$proBoniPpt.' - Gratis.png';
+                            if($proproductoBonificado->update()){
+
+                            }else{
+                                
+                            }
+                        }
+
                     }else{
                         $nuevoProductoBonificado = new proproductos;
                         $nuevoProductoBonificado->catid     = $catid;
