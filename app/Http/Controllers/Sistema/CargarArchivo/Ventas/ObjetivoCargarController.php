@@ -237,7 +237,8 @@ class ObjetivoCargarController extends Controller
 
                             $categorias = catcategorias::where('catid', '!=', 6)
                                                 ->get([
-                                                    'catid'
+                                                    'catid',
+                                                    'cat.catnombre'
                                                 ]);
 
                             foreach($categorias as $categoria){
@@ -263,7 +264,7 @@ class ObjetivoCargarController extends Controller
                                     $nuevosca->fecid                 = $fecid;
                                     $nuevosca->tsuid                 = $tsuid;
                                     $nuevosca->scavalorizadoobjetivo = 0;
-                                    $nuevosca->scaiconocategoria     = env('APP_URL').'/Sistema/categorias-tiposPromociones/img/iconos/'.$categoriaNombre.'-Sell In.png';
+                                    $nuevosca->scaiconocategoria     = env('APP_URL').'/Sistema/categorias-tiposPromociones/img/iconos/'.$categoria->catnombre.'-Sell In.png';
                                     $nuevosca->scavalorizadoreal     = 0;
                                     $nuevosca->scavalorizadotogo     = 0;
                                     if($nuevosca->save()){
