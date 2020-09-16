@@ -18,6 +18,7 @@ use App\perpersonas;
 use App\sucsucursales;
 use Illuminate\Support\Str;
 use App\proproductos;
+use App\catcategorias;
 
 class ObjetivoCargarController extends Controller
 {
@@ -234,21 +235,44 @@ class ObjetivoCargarController extends Controller
                             $categoriaid     = $pro->catid;
                             $categoriaNombre = $pro->catnombre;
 
-                            $nuevosca = new scasucursalescategorias;
-                            $nuevosca->sucid                 = $sucursalClienteId;
-                            $nuevosca->catid                 = $categoriaid;
-                            $nuevosca->fecid                 = $fecid;
-                            $nuevosca->tsuid                 = $tsuid;
-                            $nuevosca->scavalorizadoobjetivo = $objetivo;
-                            $nuevosca->scaiconocategoria     = env('APP_URL').'/Sistema/categorias-tiposPromociones/img/iconos/'.$categoriaNombre.'-Sell In.png';
-                            $nuevosca->scavalorizadoreal     = 0;
-                            $nuevosca->scavalorizadotogo     = 0;
-                            if($nuevosca->save()){
-                                $scaid = $nuevosca->scaid;
-                            }else{
+                            $categorias = catcategorias::where('catid', '!=', 6)
+                                                ->get([
+                                                    'catid'
+                                                ]);
 
+                            foreach($categorias as $categoria){
+                                if($categoriaid == $categoria->catid ){
+                                    $nuevosca = new scasucursalescategorias;
+                                    $nuevosca->sucid                 = $sucursalClienteId;
+                                    $nuevosca->catid                 = $categoriaid;
+                                    $nuevosca->fecid                 = $fecid;
+                                    $nuevosca->tsuid                 = $tsuid;
+                                    $nuevosca->scavalorizadoobjetivo = $objetivo;
+                                    $nuevosca->scaiconocategoria     = env('APP_URL').'/Sistema/categorias-tiposPromociones/img/iconos/'.$categoriaNombre.'-Sell In.png';
+                                    $nuevosca->scavalorizadoreal     = 0;
+                                    $nuevosca->scavalorizadotogo     = 0;
+                                    if($nuevosca->save()){
+                                        $scaid = $nuevosca->scaid;
+                                    }else{
+
+                                    }
+                                }else{
+                                    $nuevosca = new scasucursalescategorias;
+                                    $nuevosca->sucid                 = $sucursalClienteId;
+                                    $nuevosca->catid                 = $categoriaid;
+                                    $nuevosca->fecid                 = $fecid;
+                                    $nuevosca->tsuid                 = $tsuid;
+                                    $nuevosca->scavalorizadoobjetivo = 0;
+                                    $nuevosca->scaiconocategoria     = env('APP_URL').'/Sistema/categorias-tiposPromociones/img/iconos/'.$categoriaNombre.'-Sell In.png';
+                                    $nuevosca->scavalorizadoreal     = 0;
+                                    $nuevosca->scavalorizadotogo     = 0;
+                                    if($nuevosca->save()){
+                                        $scaid = $nuevosca->scaid;
+                                    }else{
+
+                                    }
+                                }
                             }
-                            
                         }
 
 
