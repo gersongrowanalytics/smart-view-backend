@@ -259,7 +259,7 @@ class ObjetivoCargarController extends Controller
                                 }else{
                                     $nuevosca = new scasucursalescategorias;
                                     $nuevosca->sucid                 = $sucursalClienteId;
-                                    $nuevosca->catid                 = $categoriaid;
+                                    $nuevosca->catid                 = $categoria->catid;
                                     $nuevosca->fecid                 = $fecid;
                                     $nuevosca->tsuid                 = $tsuid;
                                     $nuevosca->scavalorizadoobjetivo = 0;
