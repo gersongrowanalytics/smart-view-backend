@@ -238,7 +238,7 @@ class ObjetivoCargarController extends Controller
                             $categorias = catcategorias::where('catid', '!=', 6)
                                                 ->get([
                                                     'catid',
-                                                    'cat.catnombre'
+                                                    'catnombre'
                                                 ]);
 
                             foreach($categorias as $categoria){
