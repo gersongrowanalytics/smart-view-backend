@@ -496,7 +496,7 @@ class ObjetivoCargarController extends Controller
 
                     $tsu = tsutipospromocionessucursales::where('fecid', $fecid)
                                                         ->where('sucid', $sucursalClienteId)
-                                                        ->where('tpuid', 2)
+                                                        ->where('tprid', 2)
                                                         ->first(['tsuid', 'tsuvalorizadoobjetivo']);
                     $tsuid = 0;
                     if($tsu){
