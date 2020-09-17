@@ -64,7 +64,6 @@ class VentasMostrarController extends Controller
                     
                     $fechaActualizacion = '';
                     if($car){
-                        echo $car->created_at;
                         $meses = array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
                         $diaActualizacion   = date("j", strtotime($car->created_at))." de ";
                         $mesActualizacion   = $meses[date('n', strtotime($car->created_at))-1]." del ";
