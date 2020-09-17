@@ -56,7 +56,7 @@ class VentasMostrarController extends Controller
 
                 foreach($tsutipospromocionessucursales as $posicion => $tsutipopromocionsucursal){
 
-                    $car = carcargasarchivos::where('tcaid', 3)
+                    $car = carcargasarchivos::where('tcaid', 2)
                                             ->OrderBy('carcargasarchivos.created_at', 'DESC')
                                             ->first([
                                                 'carcargasarchivos.created_at'
