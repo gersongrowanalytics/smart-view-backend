@@ -505,6 +505,7 @@ class CargarArchivoController extends Controller
                         $nuevoPrb->prbproductoppt       = $proBoniPpt;
                         $nuevoPrb->prbcomprappt         = $compBonPpt;
                         $nuevoPrb->prbcodigoprincipal   = $codPrinci;
+                        $nuevoPrb->prbimagen            = env('APP_URL').'/Sistema/promociones/'.strtoupper($categoria).'/'.strtoupper($tipoClien).'/'.strtoupper($codPromoc).'/'.$proBoniPpt.' - Gratis.png';
 
                         if($nuevoPrb->save()){
                             $prp = prppromocionesproductos::where('prmid', $prmid)
@@ -522,6 +523,7 @@ class CargarArchivoController extends Controller
                                 $nuevoPrp->prpproductoppt       = $productoPpt;
                                 $nuevoPrp->prpcomprappt         = $compraPpt;
                                 $nuevoPrp->prpcodigoprincipal   = $codPrinci;
+                                $nuevoPrp->prpimagen            = env('APP_URL').'/Sistema/promociones/'.strtoupper($categoria).'/'.strtoupper($tipoClien).'/'.strtoupper($codPromoc).'/'.$productoPpt.'.png';
                                 if($nuevoPrp->save()){
                                     $csp = cspcanalessucursalespromociones::where('cscid', $cscid )
                                                             ->where('fecid', $fecid)
