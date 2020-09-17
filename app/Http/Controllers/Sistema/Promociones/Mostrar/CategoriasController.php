@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\scasucursalescategorias;
 use App\catcategorias;
+use App\carcargasarchivos;
 
 class CategoriasController extends Controller
 {
@@ -105,13 +106,32 @@ class CategoriasController extends Controller
             $linea      = __LINE__;
         }
 
+
+        $car = carcargasarchivos::where('tcaid', 2)
+                                ->OrderBy('carcargasarchivos.created_at', 'DESC')
+                                ->first([
+                                    'carcargasarchivos.created_at'
+                                ]);
+                    
+        $fechaActualizacion = '';
+        if($car){
+            $meses = array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
+            $diaActualizacion   = date("j", strtotime($car->created_at))." de ";
+            $mesActualizacion   = $meses[date('n', strtotime($car->created_at))-1]." del ";
+            $anioActualizacion  = date("Y", strtotime($car->created_at));
+            $fechaActualizacion = $diaActualizacion.$mesActualizacion.$anioActualizacion;
+        }else{
+
+        }
+
         return response()->json([
             'respuesta'      => $respuesta,
             'mensaje'        => $mensaje,
             'datos'          => $datos,
             'linea'          => $linea,
             'mensajeDetalle' => $mensajeDetalle,
-            'mensajedev'     => $mensajedev
+            'mensajedev'     => $mensajedev,
+            'fechaActualiza' => $fechaActualizacion
         ]);
     }
 }
