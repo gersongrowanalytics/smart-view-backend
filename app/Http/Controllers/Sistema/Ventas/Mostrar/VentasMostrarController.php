@@ -9,6 +9,7 @@ use App\tsutipospromocionessucursales;
 use App\scasucursalescategorias;
 use App\tprtipospromociones;
 use App\catcategorias;
+use App\carcargasarchivos;
 
 class VentasMostrarController extends Controller
 {
@@ -54,6 +55,26 @@ class VentasMostrarController extends Controller
             if(sizeof($tsutipospromocionessucursales) > 0){
 
                 foreach($tsutipospromocionessucursales as $posicion => $tsutipopromocionsucursal){
+
+                    $car = carcargasarchivos::join('tcatiposcargasarchivos as tca'. 'tca.tcaid', 'carcargasarchivos.tcaid')
+                                            ->where('tca.tcanombre', 'LIKE', '%'.$tsutipopromocionsucursal->tprnombre.'%')
+                                            ->OrderBy('carcargasarchivos.created_at', 'DESC')
+                                            ->first([
+                                                'carcargasarchivos.created_at'
+                                            ]);
+                    
+                    $fechaActualizacion = '';
+                    if($car){
+                        $meses = array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
+                        $diaActualizacion   = date("j", strtotime($car->created_at))." de ";
+                        $mesActualizacion   = $meses[date('n', strtotime($car->created_at))-1]." del ";
+                        $anioActualizacion  = date("Y", strtotime($car->created_at));
+                        $fechaActualizacion = $diaActualizacion.$mesActualizacion.$anioActualizacion;
+                    }else{
+
+                    }
+                    
+                    $tsutipospromocionessucursales[$posicion]['fechaActualizacion'] = $fechaActualizacion;
 
                     $scasucursalescategorias = scasucursalescategorias::join('catcategorias as cat', 'cat.catid', 'scasucursalescategorias.catid')
                                                                     ->where('scasucursalescategorias.tsuid', $tsutipopromocionsucursal->tsuid)
