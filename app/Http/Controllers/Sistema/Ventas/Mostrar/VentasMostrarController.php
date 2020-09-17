@@ -56,7 +56,7 @@ class VentasMostrarController extends Controller
 
                 foreach($tsutipospromocionessucursales as $posicion => $tsutipopromocionsucursal){
 
-                    $car = carcargasarchivos::join('tcatiposcargasarchivos as tca'. 'tca.tcaid', 'carcargasarchivos.tcaid')
+                    $car = carcargasarchivos::join('tcatiposcargasarchivos as tca', 'tca.tcaid', 'carcargasarchivos.tcaid')
                                             ->where('tca.tcanombre', 'LIKE', '%'.$tsutipopromocionsucursal->tprnombre.'%')
                                             ->OrderBy('carcargasarchivos.created_at', 'DESC')
                                             ->first([
