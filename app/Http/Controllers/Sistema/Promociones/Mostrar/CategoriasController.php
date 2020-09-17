@@ -107,7 +107,7 @@ class CategoriasController extends Controller
         }
 
 
-        $car = carcargasarchivos::where('tcaid', 2)
+        $car = carcargasarchivos::where('tcaid', 1)
                                 ->OrderBy('carcargasarchivos.created_at', 'DESC')
                                 ->first([
                                     'carcargasarchivos.created_at'
