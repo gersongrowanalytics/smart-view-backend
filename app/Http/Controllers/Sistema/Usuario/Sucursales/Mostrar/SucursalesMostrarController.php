@@ -30,17 +30,21 @@ class SucursalesMostrarController extends Controller
                 if($usuusuario->tpuid == 1){
                     $ussusuariossucursales = ussusuariossucursales::join('sucsucursales as suc', 'suc.sucid', 'ussusuariossucursales.sucid')
                                                                     ->join('usuusuarios as usu', 'usu.usuid', 'ussusuariossucursales.usuid')
+                                                                    ->join('zonzonas as zon', 'zon.zonid', 'usu.zonid')
                                                                     ->where('usu.estid', 1)
                                                                     ->get([
                                                                         'ussusuariossucursales.ussid',
+                                                                        'zon.zonnombre',
                                                                         'suc.sucid',
                                                                         'suc.sucnombre'
                                                                     ]);
                 }else{
                     $ussusuariossucursales = ussusuariossucursales::join('sucsucursales as suc', 'suc.sucid', 'ussusuariossucursales.sucid')
+                                                            ->join('zonzonas as zon', 'zon.zonid', 'usu.zonid')
                                                             ->where('ussusuariossucursales.usuid', $usuusuario->usuid )
                                                             ->get([
                                                                 'ussusuariossucursales.ussid',
+                                                                'zon.zonnombre',
                                                                 'suc.sucid',
                                                                 'suc.sucnombre'
                                                             ]);
