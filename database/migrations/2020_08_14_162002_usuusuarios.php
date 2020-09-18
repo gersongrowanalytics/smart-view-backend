@@ -18,6 +18,7 @@ class Usuusuarios extends Migration
             $table->unsignedInteger('tpuid');
             $table->unsignedInteger('perid');
             $table->unsignedInteger('estid')->default(2);
+            $table->unsignedInteger('zonid')->nullable();
             $table->string('ususoldto')->nullable();
             $table->string('usuusuario')->nullable();
             $table->string('usucorreo')->nullable();
@@ -28,6 +29,7 @@ class Usuusuarios extends Migration
             $table->foreign('tpuid')->references('tpuid')->on('tputiposusuarios');
             $table->foreign('perid')->references('perid')->on('perpersonas');
             $table->foreign('estid')->references('estid')->on('estestados');
+            $table->foreign('zonid')->references('zonid')->on('zonzonas');
         });
     }
 
