@@ -307,7 +307,7 @@ class ClientesCargarController extends Controller
                         $nuevazona = new zonzonas;
                         $nuevazona->zonnombre = $zona;
                         if($nuevazona->save()){
-                            $zonid = $zon->zonid;
+                            $zonid = $nuevazona->zonid;
                         }else{
 
                         }
