@@ -368,6 +368,15 @@ class CategoriasPromocionesMostrarController extends Controller
             "AU"
         ];
 
+        $colorPlomo         = "FF595959";
+        $colorBlanco        = "FFFFFFFF";
+        $colorAzul          = "FF002060";
+        $colorVerdeClaro    = "FF66FF33";
+        $colorRosa          = "FFFF9999";
+        $colorNaranjaClaro  = "FFFFC000";
+        $colorPiel          = "FFFFF2CC";
+        $colorVerdeLimon    = "FFCCFFCC";        
+
         try{
 
             $uss = ussusuariossucursales::join('usuusuarios as usu', 'usu.usuid', 'ussusuariossucursales.usuid' )
@@ -410,18 +419,21 @@ class CategoriasPromocionesMostrarController extends Controller
                         
                         $arrayTitulos[$contadorTitulos]['title'] = $columnasFilas;
                         $arrayTitulos[$contadorTitulos]['style']['fill']['patternType'] = 'solid';
-                        $arrayTitulos[$contadorTitulos]['style']['fill']['fgColor']['rgb'] = 'FF595959';
-                        $arrayTitulos[$contadorTitulos]['style']['font']['color']['rgb'] = 'FFFFFFFF';
-                        
-                        // style: {
-                        //     fill: {
-                        //         patternType: "solid", 
-                        //         fgColor: {
-                        //             rgb: "FFFF0000"
-                        //         }
-                        //     }
-                        // }
-
+                        if($abc == "A" || $abc == "B" || $abc == "J" || $abc == "K" || $abc == "M" || $abc == "N" || $abc == "Q" || $abc == "T" || $abc == "U" || $abc == "V" || $abc == "Z" || $abc == "AD" || $abc == "AG" || $abc == "AI" || $abc == "AK" || $abc == "AM" || $abc == "AN" || $abc == "AQ" || $abc == "AR" || $abc == "AS" || $abc == "AT"){
+                            $arrayTitulos[$contadorTitulos]['style']['fill']['fgColor']['rgb'] = $colorPlomo;
+                            $arrayTitulos[$contadorTitulos]['style']['font']['color']['rgb'] = $colorBlanco;
+                        }else if($abc == "C" || $abc == "D" || $abc == "E" || $abc == "F" || $abc == "G" || $abc == "H" || $abc == "I" || $abc == "L" || $abc == "O" || $abc == "P" || $abc == "Y" || $abc == "AC" || $abc == "AH" || $abc == "AL" || $abc == "AU"){
+                            $arrayTitulos[$contadorTitulos]['style']['fill']['fgColor']['rgb'] = $colorAzul;
+                            $arrayTitulos[$contadorTitulos]['style']['font']['color']['rgb'] = $colorBlanco;
+                        }else if($abc == "R" || $abc == "S" || $abc == "AO" || $abc == "AP"){
+                            $arrayTitulos[$contadorTitulos]['style']['fill']['fgColor']['rgb'] = $colorNaranjaClaro;
+                            $arrayTitulos[$contadorTitulos]['style']['font']['color']['rgb'] = $colorBlanco;
+                        }else if($abc == "W" || $abc == "X" || $abc == "AA" || $abc == "AB" || $abc == "AE" || $abc == "AF" || $abc == "R" ){
+                            $arrayTitulos[$contadorTitulos]['style']['fill']['fgColor']['rgb'] = $colorVerdeClaro;
+                        }else if($abc == "AJ"){
+                            $arrayTitulos[$contadorTitulos]['style']['fill']['fgColor']['rgb'] = $colorRosa;
+                            $arrayTitulos[$contadorTitulos]['style']['font']['color']['rgb'] = $colorBlanco;
+                        }
                         $contadorTitulos = $contadorTitulos+1;
                     }
 
@@ -456,6 +468,18 @@ class CategoriasPromocionesMostrarController extends Controller
                             }
 
                             $arrayFilaExcel[$contadorColumna]['value'] = $columnasFilas;
+
+                            if($abc == "L" || $abc == "O" || $abc == "P" || $abc == "R" || $abc == "S" || $abc == "Y" || $abc == "AC" || $abc == "AL" || $abc == "AU"){
+                                $arrayFilaExcel[$contadorColumna]['style']['fill']['patternType']    = 'solid';
+                                $arrayFilaExcel[$contadorColumna]['style']['fill']['fgColor']['rgb'] = $colorPiel;
+                            }else if($abc == "W" || $abc == "X" ){
+                                $arrayFilaExcel[$contadorColumna]['style']['fill']['patternType']    = 'solid';
+                                $arrayFilaExcel[$contadorColumna]['style']['fill']['fgColor']['rgb'] = $colorVerdeLimon;
+                            }else if($abc == "AH" || $abc == "AR"){
+                                $arrayFilaExcel[$contadorColumna]['style']['fill']['patternType']    = 'solid';
+                                $arrayFilaExcel[$contadorColumna]['style']['fill']['fgColor']['rgb'] = $colorNaranjaClaro;
+                            }
+
                             $contadorColumna = $contadorColumna+1;
                         }
 
