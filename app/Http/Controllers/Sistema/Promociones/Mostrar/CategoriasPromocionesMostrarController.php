@@ -394,7 +394,7 @@ class CategoriasPromocionesMostrarController extends Controller
             $numRows        = $objPHPExcel->setActiveSheetIndex(0)->getHighestRow();
             $ultimaColumna  = $objPHPExcel->setActiveSheetIndex(0)->getHighestColumn();
 
-            for ($i=2; $i <= 550 ; $i++) {
+            for ($i=2; $i <= 650 ; $i++) {
 
                 if($i == 2){
 
