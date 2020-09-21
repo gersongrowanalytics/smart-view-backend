@@ -5,12 +5,16 @@ namespace App\Http\Controllers\Sistema\Promociones\Mostrar;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Controllers\AuditoriaController;
+use PhpOffice\PhpSpreadsheet\IOFactory;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use App\csccanalessucursalescategorias;
 use App\scasucursalescategorias;
 use App\prppromocionesproductos;
 use App\prbpromocionesbonificaciones;
 use App\cspcanalessucursalespromociones;
 use App\usuusuarios;
+use App\ussusuariossucursales;
 
 class CategoriasPromocionesMostrarController extends Controller
 {
@@ -295,5 +299,124 @@ class CategoriasPromocionesMostrarController extends Controller
         }
         
         return $requestsalida;
+    }
+
+    public function mostrarCategoriasPromocionesExcel(Request $request)
+    {
+
+        $usutoken   = $request['usutoken'];
+        $sucid      = $request['sucid'];
+        $dia        = $request['dia'];
+        $mes        = $request['mes'];
+        $anio       = $request['ano'];
+        
+        $usuusuario = usuusuarios::where('usutoken', $usutoken)->first(['ususoldto']);
+
+        $respuesta      = false;
+        $mensaje        = '';
+        $datos          = [];
+        $linea          = __LINE__;
+        $mensajeDetalle = '';
+        $mensajedev     = null;
+
+        try{
+
+            $uss = ussusuariossucursales::join('usuusuarios as usu', 'usu.usuid', 'ussusuariossucursales.usuid' )
+                                        ->where('ussusuariossucursales.sucid', $sucid)
+                                        ->get([
+                                            'ussusuariossucursales.ussid',
+                                            'ussusuariossucursales.usuid',
+                                            'ussusuariossucursales.sucid',
+                                            'usu.ususoldto'
+                                        ]);
+
+            $nuevoArray = array(
+                array(
+                    "columns" => [],
+                    "data"    => []
+                )
+            );
+
+
+            $fichero_subido = base_path().'/public/Sistema/cargaArchivos/promociones/promociones.xlsx';
+
+            $objPHPExcel    = IOFactory::load($fichero_subido);
+            $objPHPExcel->setActiveSheetIndex(0);
+            $numRows        = $objPHPExcel->setActiveSheetIndex(0)->getHighestRow();
+            $ultimaColumna  = $objPHPExcel->setActiveSheetIndex(0)->getHighestColumn();
+
+            for ($i=2; $i <= $numRows ; $i++) {
+
+                if($i == 2){
+
+                    $arrayTitulos = array(
+                        array(
+                            "title" => ""
+                        )
+                    );
+
+                    $contadorTitulos = 0;
+                    foreach(range('A', $ultimaColumna) as $abc) {  
+                        $columnasFilas = $objPHPExcel->getActiveSheet()->getCell($abc.$i)->getCalculatedValue();
+                        
+                        $arrayTitulos[$contadorTitulos]['title'] = $columnasFilas;
+                        
+                        $contadorTitulos = $contadorTitulos+1;
+                    }
+
+                    $nuevoArray[0]['columns'] = $arrayTitulos;
+
+                }else{
+                    $soldto = $objPHPExcel->getActiveSheet()->getCell('O'.$i)->getCalculatedValue();
+
+                    $pertenecedata = false;
+                    foreach($uss as $u){
+                        if($u->ususoldto == $soldto ){
+                            $pertenecedata = true;
+                            break;
+                        }else{
+                            $pertenecedata = false;
+                        }
+                    }
+
+                    if($pertenecedata == true){
+                        $arrayFilaExcel = array(
+                            array(
+                                "value" => ""
+                            )
+                        );
+                        $contadorColumna = 0;
+
+                        foreach(range('A', $ultimaColumna) as $abc) {  
+                            $columnasFilas = $objPHPExcel->getActiveSheet()->getCell($abc.$i)->getCalculatedValue();
+                            $arrayFilaExcel[$contadorColumna]['value'] = $columnasFilas;
+                            $contadorColumna = $contadorColumna+1;
+                        }
+
+                        $nuevoArray[0]['data'][] = $arrayFilaExcel;
+                    }
+                }
+            }
+
+            $respuesta = true;
+            $datos     = $nuevoArray;
+
+        } catch (Exception $e) {
+            $mensajedev = $e->getMessage();
+            $linea      = __LINE__;
+        }
+
+        $requestsalida = response()->json([
+            'respuesta'      => $respuesta,
+            'mensaje'        => $mensaje,
+            'datos'          => $datos,
+            'linea'          => $linea,
+            'mensajeDetalle' => $mensajeDetalle,
+            'mensajedev'     => $mensajedev
+        ]);
+
+        return $requestsalida;
+
+
     }
 }
