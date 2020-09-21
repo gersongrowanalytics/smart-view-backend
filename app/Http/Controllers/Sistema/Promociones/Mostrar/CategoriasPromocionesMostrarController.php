@@ -319,6 +319,55 @@ class CategoriasPromocionesMostrarController extends Controller
         $mensajeDetalle = '';
         $mensajedev     = null;
 
+
+        $columnasExcel = [
+            "A",
+            "B",
+            "C",
+            "D",
+            "E",
+            "F",
+            "G",
+            "H",
+            "I",
+            "J",
+            "K",
+            "L",
+            "O",
+            "P",
+            "Q",
+            "R",
+            "S",
+            "T",
+            "U",
+            "V",
+            "W",
+            "X",
+            "Y",
+            "Z",
+            "AA",
+            "AB",
+            "AC",
+            "AD",
+            "AE",
+            "AF",
+            "AG",
+            "AH",
+            "AI",
+            "AJ",
+            "AK",
+            "AL",
+            "AM",
+            "AN",
+            "AO",
+            "AP",
+            "AQ",
+            "AR",
+            "AS",
+            "AT",
+            "AU"
+        ];
+
         try{
 
             $uss = ussusuariossucursales::join('usuusuarios as usu', 'usu.usuid', 'ussusuariossucursales.usuid' )
@@ -344,7 +393,6 @@ class CategoriasPromocionesMostrarController extends Controller
             $objPHPExcel->setActiveSheetIndex(0);
             $numRows        = $objPHPExcel->setActiveSheetIndex(0)->getHighestRow();
             $ultimaColumna  = $objPHPExcel->setActiveSheetIndex(0)->getHighestColumn();
-            echo $ultimaColumna.'----';
 
             for ($i=2; $i <= $numRows ; $i++) {
 
@@ -357,8 +405,7 @@ class CategoriasPromocionesMostrarController extends Controller
                     );
 
                     $contadorTitulos = 0;
-                    foreach(range('A', $ultimaColumna) as $abc) {  
-                        echo $abc.'-';
+                    foreach($columnasExcel as $abc) {  
                         $columnasFilas = $objPHPExcel->getActiveSheet()->getCell($abc.$i)->getCalculatedValue();
                         
                         $arrayTitulos[$contadorTitulos]['title'] = $columnasFilas;
@@ -389,7 +436,7 @@ class CategoriasPromocionesMostrarController extends Controller
                         );
                         $contadorColumna = 0;
 
-                        foreach(range('A', $ultimaColumna) as $abc) {  
+                        foreach($columnasExcel as $abc) {  
                             $columnasFilas = $objPHPExcel->getActiveSheet()->getCell($abc.$i)->getCalculatedValue();
                             $arrayFilaExcel[$contadorColumna]['value'] = $columnasFilas;
                             $contadorColumna = $contadorColumna+1;
