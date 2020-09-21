@@ -409,7 +409,18 @@ class CategoriasPromocionesMostrarController extends Controller
                         $columnasFilas = $objPHPExcel->getActiveSheet()->getCell($abc.$i)->getCalculatedValue();
                         
                         $arrayTitulos[$contadorTitulos]['title'] = $columnasFilas;
+                        $arrayTitulos[$contadorTitulos]['style']['fill']['patternType'] = 'solid';
+                        $arrayTitulos[$contadorTitulos]['style']['fill']['fgColor']['rgb'] = 'FFFF0000';
                         
+                        // style: {
+                        //     fill: {
+                        //         patternType: "solid", 
+                        //         fgColor: {
+                        //             rgb: "FFFF0000"
+                        //         }
+                        //     }
+                        // }
+
                         $contadorTitulos = $contadorTitulos+1;
                     }
 
