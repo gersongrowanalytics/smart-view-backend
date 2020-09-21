@@ -410,7 +410,8 @@ class CategoriasPromocionesMostrarController extends Controller
                         
                         $arrayTitulos[$contadorTitulos]['title'] = $columnasFilas;
                         $arrayTitulos[$contadorTitulos]['style']['fill']['patternType'] = 'solid';
-                        $arrayTitulos[$contadorTitulos]['style']['fill']['fgColor']['rgb'] = 'FFFF0000';
+                        $arrayTitulos[$contadorTitulos]['style']['fill']['fgColor']['rgb'] = 'FF595959';
+                        $arrayTitulos[$contadorTitulos]['style']['font']['color'] = 'FFFFFFFF';
                         
                         // style: {
                         //     fill: {
