@@ -365,7 +365,7 @@ class CategoriasPromocionesMostrarController extends Controller
             "AR",
             "AS",
             "AT",
-            "AU"
+            // "AU"
         ];
 
         try{
