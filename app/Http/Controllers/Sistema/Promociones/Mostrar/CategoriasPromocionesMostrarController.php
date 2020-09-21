@@ -365,7 +365,7 @@ class CategoriasPromocionesMostrarController extends Controller
             "AR",
             "AS",
             "AT",
-            // "AU"
+            "AU"
         ];
 
         try{
@@ -394,7 +394,7 @@ class CategoriasPromocionesMostrarController extends Controller
             $numRows        = $objPHPExcel->setActiveSheetIndex(0)->getHighestRow();
             $ultimaColumna  = $objPHPExcel->setActiveSheetIndex(0)->getHighestColumn();
 
-            for ($i=2; $i <= 600 ; $i++) {
+            for ($i=2; $i <= $numRows ; $i++) {
 
                 if($i == 2){
 
@@ -438,6 +438,11 @@ class CategoriasPromocionesMostrarController extends Controller
 
                         foreach($columnasExcel as $abc) {  
                             $columnasFilas = $objPHPExcel->getActiveSheet()->getCell($abc.$i)->getCalculatedValue();
+                            
+                            if($columnasFilas == null){
+                                $columnasFilas = "";
+                            }
+
                             $arrayFilaExcel[$contadorColumna]['value'] = $columnasFilas;
                             $contadorColumna = $contadorColumna+1;
                         }
