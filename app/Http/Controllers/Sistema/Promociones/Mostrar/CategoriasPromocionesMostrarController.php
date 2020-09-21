@@ -344,6 +344,7 @@ class CategoriasPromocionesMostrarController extends Controller
             $objPHPExcel->setActiveSheetIndex(0);
             $numRows        = $objPHPExcel->setActiveSheetIndex(0)->getHighestRow();
             $ultimaColumna  = $objPHPExcel->setActiveSheetIndex(0)->getHighestColumn();
+            echo $ultimaColumna.'----';
 
             for ($i=2; $i <= $numRows ; $i++) {
 
@@ -357,6 +358,7 @@ class CategoriasPromocionesMostrarController extends Controller
 
                     $contadorTitulos = 0;
                     foreach(range('A', $ultimaColumna) as $abc) {  
+                        echo $abc.'-';
                         $columnasFilas = $objPHPExcel->getActiveSheet()->getCell($abc.$i)->getCalculatedValue();
                         
                         $arrayTitulos[$contadorTitulos]['title'] = $columnasFilas;
