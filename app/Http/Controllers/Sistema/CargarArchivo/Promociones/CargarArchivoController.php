@@ -341,7 +341,52 @@ class CargarArchivoController extends Controller
                             }
                         }
 
-                        
+                        // Sacando los espacios del ultimo digito y limpiando caracteres
+                        $catEspa = substr($categoria, -1, 1);
+                        $nuevonombrecategoria = "";
+                        if($catEspa == " "){
+                            $nuevonombrecategoria = substr($categoria, 0, strlen($categoria)-1);
+                        }else{
+                            $nuevonombrecategoria = $categoria;
+                        }
+
+                        // 
+                        $tpclEspa = substr($tipoClien, -1, 1);
+                        $nuevonombretipocliente = "";
+                        if($tpclEspa == " "){
+                            $nuevonombretipocliente = substr($tipoClien, 0, strlen($tipoClien)-1);
+                        }else{
+                            $nuevonombretipocliente = $tipoClien;
+                        }
+
+                        // 
+                        $codprEspa = substr($codPromoc, -1, 1);
+                        $nuevonombrecodpromoc = "";
+                        if($codprEspa == " "){
+                            $nuevonombrecodpromoc = substr($codPromoc, 0, strlen($codPromoc)-1);
+                        }else{
+                            $nuevonombrecodpromoc = $codPromoc;
+                        }
+
+                        // 
+                        $productopptEspa = substr($productoPpt, -1, 1);
+                        $nuevonombreproductoppt = "";
+                        if($productopptEspa == " "){
+                            $nuevonombreproductoppt = substr($productoPpt, 0, strlen($productoPpt)-1);
+                        }else{
+                            $nuevonombreproductoppt = $productoPpt;
+                        }
+
+                        // 
+                        $productobonipptEspa = substr($proBoniPpt, -1, 1);
+                        $nuevonombreprobonippt = "";
+                        if($productobonipptEspa == " "){
+                            $nuevonombreprobonippt = substr($proBoniPpt, 0, strlen($proBoniPpt)-1);
+                        }else{
+                            $nuevonombreprobonippt = $proBoniPpt;
+                        }
+                        // Sacando los espacios del ultimo digito y limpiando caracteres
+
             
                         // VERIFICAR SI EL PRODUCTO ESTA REGISTRADO
                         $proproducto = proproductos::where('prosku', $sku)
@@ -351,10 +396,11 @@ class CargarArchivoController extends Controller
                         if($proproducto){
                             $proid = $proproducto->proid;
 
-                            if($proproducto->proimagen == env('APP_URL').'/Sistema/promociones/'.strtoupper($categoria).'/'.strtoupper($tipoClien).'/'.strtoupper($codPromoc).'/'.$productoPpt.'.png'){
+
+                            if($proproducto->proimagen == env('APP_URL').'/Sistema/promociones/'.strtoupper($nuevonombrecategoria).'/'.strtoupper($nuevonombretipocliente).'/'.strtoupper($nuevonombrecodpromoc).'/'.$nuevonombreproductoppt.'.png'){
                                 
                             }else{
-                                $proproducto->proimagen = env('APP_URL').'/Sistema/promociones/'.strtoupper($categoria).'/'.strtoupper($tipoClien).'/'.strtoupper($codPromoc).'/'.$productoPpt.'.png';
+                                $proproducto->proimagen = env('APP_URL').'/Sistema/promociones/'.strtoupper($nuevonombrecategoria).'/'.strtoupper($nuevonombretipocliente).'/'.strtoupper($nuevonombrecodpromoc).'/'.$nuevonombreproductoppt.'.png';
                                 if($proproducto->update()){
 
                                 }
@@ -368,7 +414,7 @@ class CargarArchivoController extends Controller
 
                             // ARMAR UBICACION DE LA IMAGEN
 
-                            $nuevoProducto->proimagen = env('APP_URL').'/Sistema/promociones/'.strtoupper($categoria).'/'.strtoupper($tipoClien).'/'.strtoupper($codPromoc).'/'.$productoPpt.'.png';
+                            $nuevoProducto->proimagen = env('APP_URL').'/Sistema/promociones/'.strtoupper($nuevonombrecategoria).'/'.strtoupper($nuevonombretipocliente).'/'.strtoupper($nuevonombrecodpromoc).'/'.$nuevonombreproductoppt.'.png';
 
                             /*************************** */
                             if($nuevoProducto->save()){
@@ -386,10 +432,10 @@ class CargarArchivoController extends Controller
                         if($proproductoBonificado){
                             $bonificadoproid = $proproductoBonificado->proid;
 
-                            if($proproductoBonificado->proimagen == env('APP_URL').'/Sistema/promociones/'.strtoupper($categoria).'/'.strtoupper($tipoClien).'/'.strtoupper($codPromoc).'/'.$proBoniPpt.' - Gratis.png' ){
+                            if($proproductoBonificado->proimagen == env('APP_URL').'/Sistema/promociones/'.strtoupper($nuevonombrecategoria).'/'.strtoupper($nuevonombretipocliente).'/'.strtoupper($nuevonombrecodpromoc).'/'.$nuevonombreprobonippt.' - Gratis.png' ){
 
                             }else{
-                                $proproductoBonificado->proimagen = env('APP_URL').'/Sistema/promociones/'.strtoupper($categoria).'/'.strtoupper($tipoClien).'/'.strtoupper($codPromoc).'/'.$proBoniPpt.' - Gratis.png';
+                                $proproductoBonificado->proimagen = env('APP_URL').'/Sistema/promociones/'.strtoupper($nuevonombrecategoria).'/'.strtoupper($nuevonombretipocliente).'/'.strtoupper($nuevonombrecodpromoc).'/'.$nuevonombreprobonippt.' - Gratis.png';
                                 if($proproductoBonificado->update()){
 
                                 }else{
@@ -402,7 +448,7 @@ class CargarArchivoController extends Controller
                             $nuevoProductoBonificado->catid     = $catid;
                             $nuevoProductoBonificado->prosku    = $skuBonifi;
                             $nuevoProductoBonificado->pronombre = $productoBo;
-                            $nuevoProductoBonificado->proimagen = env('APP_URL').'/Sistema/promociones/'.strtoupper($categoria).'/'.strtoupper($tipoClien).'/'.strtoupper($codPromoc).'/'.$proBoniPpt.' - Gratis.png';
+                            $nuevoProductoBonificado->proimagen = env('APP_URL').'/Sistema/promociones/'.strtoupper($nuevonombrecategoria).'/'.strtoupper($nuevonombretipocliente).'/'.strtoupper($nuevonombrecodpromoc).'/'.$nuevonombreprobonippt.' - Gratis.png';
                             if($nuevoProductoBonificado->save()){
                                 $bonificadoproid = $nuevoProductoBonificado->proid;
                             }else{
@@ -504,7 +550,7 @@ class CargarArchivoController extends Controller
                             $nuevoPrb->prbproductoppt       = $proBoniPpt;
                             $nuevoPrb->prbcomprappt         = $compBonPpt;
                             $nuevoPrb->prbcodigoprincipal   = $codPrinci;
-                            $nuevoPrb->prbimagen            = env('APP_URL').'/Sistema/promociones/'.strtoupper($categoria).'/'.strtoupper($tipoClien).'/'.strtoupper($codPromoc).'/'.$proBoniPpt.' - Gratis.png';
+                            $nuevoPrb->prbimagen            = env('APP_URL').'/Sistema/promociones/'.strtoupper($nuevonombrecategoria).'/'.strtoupper($nuevonombretipocliente).'/'.strtoupper($nuevonombrecodpromoc).'/'.$nuevonombreprobonippt.' - Gratis.png';
 
                             if($nuevoPrb->save()){
                                 $prp = prppromocionesproductos::where('prmid', $prmid)
@@ -522,7 +568,7 @@ class CargarArchivoController extends Controller
                                     $nuevoPrp->prpproductoppt       = $productoPpt;
                                     $nuevoPrp->prpcomprappt         = $compraPpt;
                                     $nuevoPrp->prpcodigoprincipal   = $codPrinci;
-                                    $nuevoPrp->prpimagen            = env('APP_URL').'/Sistema/promociones/'.strtoupper($categoria).'/'.strtoupper($tipoClien).'/'.strtoupper($codPromoc).'/'.$productoPpt.'.png';
+                                    $nuevoPrp->prpimagen            = env('APP_URL').'/Sistema/promociones/'.strtoupper($nuevonombrecategoria).'/'.strtoupper($nuevonombretipocliente).'/'.strtoupper($nuevonombrecodpromoc).'/'.$nuevonombreproductoppt.'.png';
                                     if($nuevoPrp->save()){
                                         $csp = cspcanalessucursalespromociones::where('cscid', $cscid )
                                                                 ->where('fecid', $fecid)

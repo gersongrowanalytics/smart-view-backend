@@ -36,6 +36,7 @@ class RebateMostrarController extends Controller
                                                 'fec.fecano',
                                                 'tpr.tprid',
                                                 'tpr.tprnombre',
+                                                'trr.trrid',
                                                 'tre.trenombre',
                                                 'rtpporcentajedesde',
                                                 'rtpporcentajehasta',

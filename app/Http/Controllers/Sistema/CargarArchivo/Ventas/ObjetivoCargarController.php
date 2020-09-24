@@ -19,6 +19,7 @@ use App\sucsucursales;
 use Illuminate\Support\Str;
 use App\proproductos;
 use App\catcategorias;
+use App\tretiposrebates;
 
 class ObjetivoCargarController extends Controller
 {
@@ -55,15 +56,15 @@ class ObjetivoCargarController extends Controller
                 for ($i=2; $i <= $numRows ; $i++) {
                     $ano = '2020';
                     $dia = '01';
-        
-                    // $mes = $objPHPExcel->getActiveSheet()->getCell('D'.$i)->getCalculatedValue();
-                    $mes        = 'AGO';
-                    $soldto     = $objPHPExcel->getActiveSheet()->getCell('B'.$i)->getCalculatedValue();
-                    $cliente    = $objPHPExcel->getActiveSheet()->getCell('C'.$i)->getCalculatedValue();
-                    $sector     = $objPHPExcel->getActiveSheet()->getCell('F'.$i)->getCalculatedValue();
-                    $sku        = $objPHPExcel->getActiveSheet()->getCell('H'.$i)->getCalculatedValue();
-                    $producto   = $objPHPExcel->getActiveSheet()->getCell('I'.$i)->getCalculatedValue();
-                    $objetivo   = $objPHPExcel->getActiveSheet()->getCell('J'.$i)->getCalculatedValue();
+
+                    $mes         = 'AGO';
+                    $soldto      = $objPHPExcel->getActiveSheet()->getCell('B'.$i)->getCalculatedValue();
+                    $cliente     = $objPHPExcel->getActiveSheet()->getCell('C'.$i)->getCalculatedValue();
+                    $grupoRebate = $objPHPExcel->getActiveSheet()->getCell('D'.$i)->getCalculatedValue();
+                    $sector      = $objPHPExcel->getActiveSheet()->getCell('F'.$i)->getCalculatedValue();
+                    $sku         = $objPHPExcel->getActiveSheet()->getCell('H'.$i)->getCalculatedValue();
+                    $producto    = $objPHPExcel->getActiveSheet()->getCell('I'.$i)->getCalculatedValue();
+                    $objetivo    = $objPHPExcel->getActiveSheet()->getCell('J'.$i)->getCalculatedValue();
         
                     $fecfecha = fecfechas::where('fecdia', $dia)
                                         ->where('fecmes', $mes)
@@ -173,8 +174,27 @@ class ObjetivoCargarController extends Controller
         
                         }
                     }
-                                                    
-                                                    
+
+                    // OBTENER EL GRUPO REBATE
+                    $grupoRebate = substr($grupoRebate, 1);
+
+                    $tre = tretiposrebates::where('trenombre', $grupoRebate)->first(['treid']);
+
+                    $treid = 0;
+                    if($tre){
+                        $treid = $tre->treid;
+                    }else{
+                        $nuevoTre = new tretiposrebates;
+                        $nuevoTre->trenombre = $grupoRebate;
+                        if($nuevoTre->save()){
+                            $treid = $nuevoTre->treid;
+                        }else{
+
+                        }
+                    }
+
+
+
 
 
                     $tsu = tsutipospromocionessucursales::where('fecid', $fecid)
@@ -192,14 +212,15 @@ class ObjetivoCargarController extends Controller
                         }
                     }else{
                         $nuevotsu = new tsutipospromocionessucursales;
-                        $nuevotsu->fecid = $fecid;
-                        $nuevotsu->sucid = $sucursalClienteId;
-                        $nuevotsu->tprid = 1;
+                        $nuevotsu->fecid                     = $fecid;
+                        $nuevotsu->sucid                     = $sucursalClienteId;
+                        $nuevotsu->tprid                     = 1;
+                        $nuevotsu->treid                     = $treid;
                         $nuevotsu->tsuporcentajecumplimiento = 0;
-                        $nuevotsu->tsuvalorizadoobjetivo = $objetivo;
-                        $nuevotsu->tsuvalorizadoreal = 0;
-                        $nuevotsu->tsuvalorizadorebate = 0;
-                        $nuevotsu->tsuvalorizadotogo = 0;
+                        $nuevotsu->tsuvalorizadoobjetivo     = $objetivo;
+                        $nuevotsu->tsuvalorizadoreal         = 0;
+                        $nuevotsu->tsuvalorizadorebate       = 0;
+                        $nuevotsu->tsuvalorizadotogo         = 0;
                         if($nuevotsu->save()){
                             $tsuid = $nuevotsu->tsuid;
                         }else{
@@ -374,14 +395,14 @@ class ObjetivoCargarController extends Controller
                     $ano = '2020';
                     $dia = '01';
         
-                    // $mes = $objPHPExcel->getActiveSheet()->getCell('D'.$i)->getCalculatedValue();
-                    $mes        = 'AGO';
-                    $soldto     = $objPHPExcel->getActiveSheet()->getCell('B'.$i)->getCalculatedValue();
-                    $cliente    = $objPHPExcel->getActiveSheet()->getCell('C'.$i)->getCalculatedValue();
-                    $sector     = $objPHPExcel->getActiveSheet()->getCell('F'.$i)->getCalculatedValue();
-                    $sku        = $objPHPExcel->getActiveSheet()->getCell('H'.$i)->getCalculatedValue();
-                    $producto   = $objPHPExcel->getActiveSheet()->getCell('I'.$i)->getCalculatedValue();
-                    $objetivo   = $objPHPExcel->getActiveSheet()->getCell('J'.$i)->getCalculatedValue();
+                    $mes         = 'AGO';
+                    $soldto      = $objPHPExcel->getActiveSheet()->getCell('B'.$i)->getCalculatedValue();
+                    $cliente     = $objPHPExcel->getActiveSheet()->getCell('C'.$i)->getCalculatedValue();
+                    $grupoRebate = $objPHPExcel->getActiveSheet()->getCell('D'.$i)->getCalculatedValue();
+                    $sector      = $objPHPExcel->getActiveSheet()->getCell('F'.$i)->getCalculatedValue();
+                    $sku         = $objPHPExcel->getActiveSheet()->getCell('H'.$i)->getCalculatedValue();
+                    $producto    = $objPHPExcel->getActiveSheet()->getCell('I'.$i)->getCalculatedValue();
+                    $objetivo    = $objPHPExcel->getActiveSheet()->getCell('J'.$i)->getCalculatedValue();
         
                     $fecfecha = fecfechas::where('fecdia', $dia)
                                         ->where('fecmes', $mes)
@@ -491,9 +512,24 @@ class ObjetivoCargarController extends Controller
         
                         }
                     }
-                                                    
-                                                    
+                    
+                    // OBTENER EL GRUPO REBATE
+                    $grupoRebate = substr($grupoRebate, 1);
 
+                    $tre = tretiposrebates::where('trenombre', $grupoRebate)->first(['treid']);
+
+                    $treid = 0;
+                    if($tre){
+                        $treid = $tre->treid;
+                    }else{
+                        $nuevoTre = new tretiposrebates;
+                        $nuevoTre->trenombre = $grupoRebate;
+                        if($nuevoTre->save()){
+                            $treid = $nuevoTre->treid;
+                        }else{
+
+                        }
+                    }
 
                     $tsu = tsutipospromocionessucursales::where('fecid', $fecid)
                                                         ->where('sucid', $sucursalClienteId)
@@ -510,14 +546,15 @@ class ObjetivoCargarController extends Controller
                         }
                     }else{
                         $nuevotsu = new tsutipospromocionessucursales;
-                        $nuevotsu->fecid = $fecid;
-                        $nuevotsu->sucid = $sucursalClienteId;
-                        $nuevotsu->tprid = 2;
+                        $nuevotsu->fecid                     = $fecid;
+                        $nuevotsu->sucid                     = $sucursalClienteId;
+                        $nuevotsu->tprid                     = 2;
+                        $nuevotsu->treid                     = $treid;
                         $nuevotsu->tsuporcentajecumplimiento = 0;
-                        $nuevotsu->tsuvalorizadoobjetivo = $objetivo;
-                        $nuevotsu->tsuvalorizadoreal = 0;
-                        $nuevotsu->tsuvalorizadorebate = 0;
-                        $nuevotsu->tsuvalorizadotogo = 0;
+                        $nuevotsu->tsuvalorizadoobjetivo     = $objetivo;
+                        $nuevotsu->tsuvalorizadoreal         = 0;
+                        $nuevotsu->tsuvalorizadorebate       = 0;
+                        $nuevotsu->tsuvalorizadotogo         = 0;
                         if($nuevotsu->save()){
                             $tsuid = $nuevotsu->tsuid;
                         }else{

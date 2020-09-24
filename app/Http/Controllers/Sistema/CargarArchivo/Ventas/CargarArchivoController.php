@@ -19,6 +19,7 @@ use App\tsutipospromocionessucursales;
 use App\scasucursalescategorias;
 use App\rtprebatetipospromociones;
 use App\proproductos;
+use App\trrtiposrebatesrebates;
 
 class CargarArchivoController extends Controller
 {
@@ -34,6 +35,7 @@ class CargarArchivoController extends Controller
         $usutoken       = $request->header('api_token');
         $archivo        = $_FILES['file']['name'];
         $skusNoExisten  = [];
+        $logs           = [];
 
         $usuusuario = usuusuarios::where('usutoken', $usutoken)->first(['usuid']);
 
@@ -201,7 +203,7 @@ class CargarArchivoController extends Controller
                             $tsu = tsutipospromocionessucursales::where('fecid', $fecid)
                                                                 ->where('sucid', $sucursalClienteId)
                                                                 ->where('tprid', 1)
-                                                                ->first(['tsuid', 'tsuvalorizadoreal', 'tsuvalorizadoobjetivo']);
+                                                                ->first(['tsuid', 'tsuvalorizadoreal', 'tsuvalorizadoobjetivo', 'treid']);
                             $tsuid = 0;
                             if($tsu){
                                 $tsuid = $tsu->tsuid;
@@ -215,20 +217,32 @@ class CargarArchivoController extends Controller
                                 
                                 
                                 // OBTENER INFORMACION DEL REBATE
-                                $rtp = rtprebatetipospromociones::where('fecid', $fecid)
-                                                                ->where('tprid', 1) // TIPO DE PROMOCION SELL IN
-                                                                ->where('rtpporcentajedesde', '<=', round($porcentajeCumplimiento))
-                                                                ->where('rtpporcentajehasta', '>=', round($porcentajeCumplimiento))
-                                                                ->first([
-                                                                    'rtpporcentajedesde',
-                                                                    'rtpporcentajehasta',
-                                                                    'rtpporcentajerebate'
-                                                                ]);
+                                $trr = trrtiposrebatesrebates::join('rtprebatetipospromociones as rtp', 'rtp.rtpid', 'trrtiposrebatesrebates.rtpid')
+                                                            ->where('trrtiposrebatesrebates.treid', $tsu->treid)
+                                                            ->where('rtp.fecid', $fecid)
+                                                            // ->where('rtp.tprid', 1) // TIPO DE PROMOCION SELL IN
+                                                            ->where('rtp.rtpporcentajedesde', '<=', round($porcentajeCumplimiento))
+                                                            ->where('rtp.rtpporcentajehasta', '>=', round($porcentajeCumplimiento))
+                                                            ->first([
+                                                                'rtp.rtpporcentajedesde',
+                                                                'rtp.rtpporcentajehasta',
+                                                                'rtp.rtpporcentajerebate'
+                                                            ]);
+
+                                // $rtp = rtprebatetipospromociones::where('fecid', $fecid)
+                                //                                 ->where('tprid', 1) // TIPO DE PROMOCION SELL IN
+                                //                                 ->where('rtpporcentajedesde', '<=', round($porcentajeCumplimiento))
+                                //                                 ->where('rtpporcentajehasta', '>=', round($porcentajeCumplimiento))
+                                //                                 ->first([
+                                //                                     'rtpporcentajedesde',
+                                //                                     'rtpporcentajehasta',
+                                //                                     'rtpporcentajerebate'
+                                //                                 ]);
                                 $totalRebate = 0;
                                 if($rtp){
                                     $totalRebate = $nuevoReal*$rtp->rtpporcentajerebate;
                                 }else{
-
+                                    $logs[] = "No existe el grupo rebate: ".$tsu->treid;
                                 }
                                 
                                 $tsu->tsuvalorizadoreal         = $nuevoReal;
@@ -373,6 +387,7 @@ class CargarArchivoController extends Controller
         $usutoken       = $request->header('api_token');
         $archivo        = $_FILES['file']['name'];
         $skusNoExisten  = [];
+        $logs           = [];
 
         $usuusuario = usuusuarios::where('usutoken', $usutoken)->first(['usuid']);
 
@@ -531,7 +546,7 @@ class CargarArchivoController extends Controller
                             $tsu = tsutipospromocionessucursales::where('fecid', $fecid)
                                                                 ->where('sucid', $sucursalClienteId)
                                                                 ->where('tprid', 2)
-                                                                ->first(['tsuid', 'tsuvalorizadoreal', 'tsuvalorizadoobjetivo']);
+                                                                ->first(['tsuid', 'tsuvalorizadoreal', 'tsuvalorizadoobjetivo', 'treid']);
                             $tsuid = 0;
                             if($tsu){
                                 $tsuid = $tsu->tsuid;
@@ -545,20 +560,31 @@ class CargarArchivoController extends Controller
                                 
                                 
                                 // OBTENER INFORMACION DEL REBATE
-                                $rtp = rtprebatetipospromociones::where('fecid', $fecid)
-                                                                ->where('tprid', 2) // TIPO DE PROMOCION SELL OUT
-                                                                ->where('rtpporcentajedesde', '<=', round($porcentajeCumplimiento))
-                                                                ->where('rtpporcentajehasta', '>=', round($porcentajeCumplimiento))
-                                                                ->first([
-                                                                    'rtpporcentajedesde',
-                                                                    'rtpporcentajehasta',
-                                                                    'rtpporcentajerebate'
-                                                                ]);
+                                $trr = trrtiposrebatesrebates::join('rtprebatetipospromociones as rtp', 'rtp.rtpid', 'trrtiposrebatesrebates.rtpid')
+                                                            ->where('trrtiposrebatesrebates.treid', $tsu->treid)
+                                                            ->where('rtp.fecid', $fecid)
+                                                            // ->where('tprid', 2) // TIPO DE PROMOCION SELL OUT
+                                                            ->where('rtp.rtpporcentajedesde', '<=', round($porcentajeCumplimiento))
+                                                            ->where('rtp.rtpporcentajehasta', '>=', round($porcentajeCumplimiento))
+                                                            ->first([
+                                                                'rtp.rtpporcentajedesde',
+                                                                'rtp.rtpporcentajehasta',
+                                                                'rtp.rtpporcentajerebate'
+                                                            ]);
+                                // $rtp = rtprebatetipospromociones::where('fecid', $fecid)
+                                //                                 ->where('tprid', 2) // TIPO DE PROMOCION SELL OUT
+                                //                                 ->where('rtpporcentajedesde', '<=', round($porcentajeCumplimiento))
+                                //                                 ->where('rtpporcentajehasta', '>=', round($porcentajeCumplimiento))
+                                //                                 ->first([
+                                //                                     'rtpporcentajedesde',
+                                //                                     'rtpporcentajehasta',
+                                //                                     'rtpporcentajerebate'
+                                //                                 ]);
                                 $totalRebate = 0;
                                 if($rtp){
                                     $totalRebate = $nuevoReal*$rtp->rtpporcentajerebate;
                                 }else{
-
+                                    $logs[] = "No existe el grupo rebate: ".$tsu->treid;
                                 }
                                 
                                 $tsu->tsuvalorizadoreal         = $nuevoReal;
