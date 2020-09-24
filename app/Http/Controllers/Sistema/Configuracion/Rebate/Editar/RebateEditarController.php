@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\fecfechas;
 use App\rtprebatetipospromociones;
 use App\trrtiposrebatesrebates;
+use Illuminate\Support\Facades\DB;
 
 class RebateEditarController extends Controller
 {
