@@ -82,7 +82,8 @@ class RebateEditarController extends Controller
                 $logs[] = "No se actualizo el grupo del rebate";
             }
 
-            
+            $respuesta = true;
+            $mensaje = "El rebate se actualizo correctamente";
 
 
 
