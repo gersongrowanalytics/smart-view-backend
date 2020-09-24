@@ -35,6 +35,7 @@ $router->group(['middleware' => ['permisos']], function() use($router) {
     $router->post('/configuracion/rebate/crearRebate', 'Sistema\Configuracion\Rebate\Crear\RebateCrearController@CrearRebate');
     $router->post('/configuracion/rebate/crear/GrupoRebate', 'Sistema\Configuracion\Rebate\Crear\GrupoRebateCrearController@CrearGrupoRebate');
     $router->post('/configuracion/rebate/mostrarRebate', 'Sistema\Configuracion\Rebate\Mostrar\RebateMostrarController@RebateMostrar');
+    $router->post('/configuracion/rebate/mostrar/GrupoRebate', 'Sistema\Configuracion\Rebate\Mostrar\GrupoRebateMostrarController@GrupoRebateMostrar');
     $router->post('/configuracion/rebate/editarRebate', 'Sistema\Configuracion\Rebate\Editar\RebateEditarController@RebateEditar');
     
     // $router->post('/promociones/descargar', 'Sistema\Promociones\Mostrar\CategoriasPromocionesMostrarController@mostrarCategoriasPromociones');
