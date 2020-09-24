@@ -260,10 +260,14 @@ class VentasMostrarController extends Controller
 
                                 foreach($categorias as $posicionCat => $categoria){
 
-                                    $dataarray[$posicionTpr]['categorias'][$posicionCat]['catnombre']           = $categoria->catnombre;
-                                    $dataarray[$posicionTpr]['categorias'][$posicionCat]['catimagenfondo']      = $categoria->catimagenfondo;
-                                    $dataarray[$posicionTpr]['categorias'][$posicionCat]['catimagenfondoopaco'] = $categoria->catimagenfondoopaco;
-                                    $dataarray[$posicionTpr]['categorias'][$posicionCat]['caticono']            = $categoria->caticono;
+                                    $dataarray[$posicionTpr]['categorias'][$posicionCat]['catnombre']             = $categoria->catnombre;
+                                    $dataarray[$posicionTpr]['categorias'][$posicionCat]['catimagenfondo']        = $categoria->catimagenfondo;
+                                    $dataarray[$posicionTpr]['categorias'][$posicionCat]['catimagenfondoopaco']   = $categoria->catimagenfondoopaco;
+                                    $dataarray[$posicionTpr]['categorias'][$posicionCat]['caticono']              = $categoria->caticono;
+                                    $dataarray[$posicionTpr]['categorias'][$posicionCat]['scavalorizadoobjetivo'] = 0;
+                                    $dataarray[$posicionTpr]['categorias'][$posicionCat]['scavalorizadoreal']     = 0;
+                                    $dataarray[$posicionTpr]['categorias'][$posicionCat]['scavalorizadotogo']     = 0;
+                                    $dataarray[$posicionTpr]['categorias'][$posicionCat]['scaiconocategoria']     = 0;
 
                                     $scas = scasucursalescategorias::where('tsuid', $tsu->tsuid )
                                                                     ->where('catid', $categoria->catid)
