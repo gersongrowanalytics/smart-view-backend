@@ -210,6 +210,7 @@ class VentasMostrarController extends Controller
             $usus = usuusuarios::join('ussusuariossucursales as uss', 'uss.usuid', 'usuusuarios.usuid')
                         ->where('usuusuarios.tpuid', 2) 
                         ->where('usuusuarios.zonid', $zonid)
+                        ->where('usuusuarios.estid', 1)
                         ->distinct('uss.sucid')
                         ->get(['usuusuarios.usuid', 'uss.ussid', 'uss.sucid']);
                         
