@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Sistema\Configuracion\Rebate\Crear;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\tretiposrebates;
+use App\Http\Controllers\AuditoriaController;
 
 class GrupoRebateCrearController extends Controller
 {
@@ -20,19 +21,28 @@ class GrupoRebateCrearController extends Controller
         $mensajeDetalle = '';
         $mensajedev     = null;
 
-        $tre = new tretiposrebates;
-        $tre->trenombre = $nombreGrupoRebate;
-        if($tre->save()){
+        $tre = tretiposrebates::where('trenombre', $nombreGrupoRebate)->first(['treid']);
 
-            $respuesta  = true;
-            $mensaje    = "Se agrego satisfactoriamente, el nuevo grupo rebate";
-            $datos      = $tre;
-            $linea      = __LINE__;
+        if($tre){
+            $nuevoTre = new tretiposrebates;
+            $nuevoTre->trenombre = $nombreGrupoRebate;
+            if($nuevoTre->save()){
+
+                $respuesta  = true;
+                $mensaje    = "Se agrego satisfactoriamente, el nuevo grupo rebate";
+                $datos      = $nuevoTre;
+                $linea      = __LINE__;
+
+            }else{
+                $respuesta  = false;
+                $mensaje    = "Lo sentimos, ocurrio un error al momento de guardar el grupo rebate";
+                $linea      = __LINE__;
+            }
 
         }else{
             $respuesta  = false;
-            $mensaje    = "Lo sentimos, ocurrio un error al momento de guardar el grupo rebate";
-            $linea      = __LINE__;
+            $mensaje    = "Lo sentimos, ese nombre de grupo rebate ya existe";
+            $linea      = __LINE__;          
         }
 
         $requestsalida = response()->json([
