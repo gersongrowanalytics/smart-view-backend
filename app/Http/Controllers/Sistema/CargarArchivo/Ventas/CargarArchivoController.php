@@ -350,7 +350,8 @@ class CargarArchivoController extends Controller
             "linea"          => $linea,
             "mensajeDetalle" => $mensajeDetalle,
             "mensajedev"     => $mensajedev,
-            "numeroCelda"    => $numeroCelda
+            "numeroCelda"    => $numeroCelda,
+            "logs"           => $logs,
         ]);
 
         $AuditoriaController = new AuditoriaController;
@@ -692,7 +693,8 @@ class CargarArchivoController extends Controller
             "linea"          => $linea,
             "mensajeDetalle" => $mensajeDetalle,
             "mensajedev"     => $mensajedev,
-            "numeroCelda"    => $numeroCelda
+            "numeroCelda"    => $numeroCelda,
+            "logs"           => $logs,
         ]);
 
         $AuditoriaController = new AuditoriaController;
