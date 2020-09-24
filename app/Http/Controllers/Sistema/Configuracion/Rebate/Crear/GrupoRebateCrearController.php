@@ -24,6 +24,10 @@ class GrupoRebateCrearController extends Controller
         $tre = tretiposrebates::where('trenombre', $nombreGrupoRebate)->first(['treid']);
 
         if($tre){
+            $respuesta  = false;
+            $mensaje    = "Lo sentimos, ese nombre de grupo rebate ya existe";
+            $linea      = __LINE__;
+        }else{
             $nuevoTre = new tretiposrebates;
             $nuevoTre->trenombre = $nombreGrupoRebate;
             if($nuevoTre->save()){
@@ -38,11 +42,6 @@ class GrupoRebateCrearController extends Controller
                 $mensaje    = "Lo sentimos, ocurrio un error al momento de guardar el grupo rebate";
                 $linea      = __LINE__;
             }
-
-        }else{
-            $respuesta  = false;
-            $mensaje    = "Lo sentimos, ese nombre de grupo rebate ya existe";
-            $linea      = __LINE__;          
         }
 
         $requestsalida = response()->json([
