@@ -10,6 +10,7 @@ use App\scasucursalescategorias;
 use App\tprtipospromociones;
 use App\catcategorias;
 use App\carcargasarchivos;
+use App\usuusuarios;
 
 class VentasMostrarController extends Controller
 {
@@ -153,26 +154,165 @@ class VentasMostrarController extends Controller
             "mensajeDetalle" => $mensajeDetalle,
             "mensajedev"     => $mensajedev
         ]);
-
-        $AuditoriaController = new AuditoriaController;
-        $registrarAuditoria  = $AuditoriaController->registrarAuditoria(
-            $usutoken,
-            null,
-            $request['ip'],
-            $request,
-            $requestsalida,
-            'Mostrar las ventas de un tipo de promocion con sus rebate y avances de venta correspondiente segun el filtro de sucursal, fecha (dia, mes, año)',
-            'MOSTRAR',
-            '', //ruta
-            null
-        );
-
-        if($registrarAuditoria == true){
-
-        }else{
-            
-        }
         
         return $requestsalida;
+    }
+
+    public function mostrarVentasXZona(Request $request)
+    {
+        $usutoken   = $request['usutoken'];
+        $zonid      = $request['zonid'];
+        $dia        = $request['dia'];
+        $mes        = $request['mes'];
+        $ano        = $request['ano'];
+
+        $respuesta      = false;
+        $mensaje        = '';
+        $datos          = [];
+        $linea          = __LINE__;
+        $mensajeDetalle = '';
+        $mensajedev     = null;
+
+        try{
+            
+            $dataarray = array(
+                array(
+                    "tsuid"                     => "",
+                    "tprid"                     => "",
+                    "tprnombre"                 => "",
+                    "tpricono"                  => "",
+                    "tprcolorbarra"             => "",
+                    "tprcolortooltip"           => "",
+
+                    "tsuvalorizadoobjetivo"     => "",
+                    "tsuvalorizadoreal"         => "",
+                    "tsuvalorizadotogo"         => "",
+                    "tsuporcentajecumplimiento" => "",
+                    "tsuvalorizadorebate"       => "",
+
+                    "fechaActualizacion"        => "",
+
+                    "categorias"                => array(
+                        array(
+                            "catnombre"             => "",
+                            "catimagenfondo"        => "",
+                            "catimagenfondoopaco"   => "",
+                            "caticono"              => "",
+                            "scavalorizadoobjetivo" => "",
+                            "scavalorizadoreal"     => "",
+                            "scavalorizadotogo"     => "",
+                            "scaiconocategoria"     => ""
+                        )
+                    )
+                )
+            );
+            
+            $usus = usuusuarios::join('ussusuariossucursales as uss', 'uss.usuid', 'usuusuarios.usuid')
+                        ->where('usuusuarios.tpuid', 2) 
+                        ->where('usuusuarios.zonid', $zonid)
+                        ->distinct('uss.sucid')
+                        ->get(['usuusuarios.usuid', 'uss.ussid', 'uss.sucid']);
+                        
+            if(sizeof($usus) > 0){
+                
+                $tprs = tprtipospromociones::get(['tprid', 'tprnombre', 'tpricono', 'tprcolorbarra', 'tprcolortooltip']);
+                
+
+                foreach($tprs as $posicionTpr => $tpr){
+                    $dataarray[$posicionTpr]['tsuid']                     = 0;
+                    $dataarray[$posicionTpr]['tprid']                     = $tpr->tprid;
+                    $dataarray[$posicionTpr]['tprnombre']                 = $tpr->tprnombre;
+                    $dataarray[$posicionTpr]['tpricono']                  = $tpr->tpricono;
+                    $dataarray[$posicionTpr]['tprcolorbarra']             = $tpr->tprcolorbarra;
+                    $dataarray[$posicionTpr]['tprcolortooltip']           = $tpr->tprcolortooltip;
+                    $dataarray[$posicionTpr]['tsuvalorizadoobjetivo']     = 0;
+                    $dataarray[$posicionTpr]['tsuvalorizadoreal']         = 0;
+                    $dataarray[$posicionTpr]['tsuvalorizadotogo']         = 0;
+                    $dataarray[$posicionTpr]['tsuporcentajecumplimiento'] = 0;
+                    $dataarray[$posicionTpr]['tsuvalorizadorebate']       = 0;
+
+                    $dataarray[$posicionTpr]['categorias'] = array(array());
+
+                    foreach($usus as $usu){
+                        $tsu = tsutipospromocionessucursales::join('fecfechas as fec', 'tsutipospromocionessucursales.fecid', 'fec.fecid')
+                                                            ->where('tsutipospromocionessucursales.sucid', $usu->sucid)
+                                                            ->where('tsutipospromocionessucursales.tprid', $tpr->tprid)
+                                                            ->where('fec.fecano', $ano)
+                                                            ->where('fec.fecmes', $mes)
+                                                            ->where('fec.fecdia', $dia)
+                                                            ->first([
+                                                                'tsutipospromocionessucursales.tsuvalorizadoobjetivo',
+                                                                'tsutipospromocionessucursales.tsuvalorizadoreal',
+                                                                'tsutipospromocionessucursales.tsuvalorizadotogo',
+                                                                'tsutipospromocionessucursales.tsuporcentajecumplimiento',
+                                                                'tsutipospromocionessucursales.tsuvalorizadorebate'
+                                                            ]);
+                        if($tsu){
+                            $dataarray[$posicionTpr]['tsuvalorizadoobjetivo']     = $dataarray[$posicionTpr]['tsuvalorizadoobjetivo']     + $tsu->tsuvalorizadoobjetivo;
+                            $dataarray[$posicionTpr]['tsuvalorizadoreal']         = $dataarray[$posicionTpr]['tsuvalorizadoreal']         + $tsu->tsuvalorizadoreal;
+                            $dataarray[$posicionTpr]['tsuvalorizadotogo']         = $dataarray[$posicionTpr]['tsuvalorizadotogo']         + $tsu->tsuvalorizadotogo;
+                            $dataarray[$posicionTpr]['tsuporcentajecumplimiento'] = $dataarray[$posicionTpr]['tsuporcentajecumplimiento'] + $tsu->tsuporcentajecumplimiento;
+                            $dataarray[$posicionTpr]['tsuvalorizadorebate']       = $dataarray[$posicionTpr]['tsuvalorizadorebate']       + $tsu->tsuvalorizadorebate;
+                            
+                            $categorias = catcategorias::where('catnombre', '!=', 'MultiCategoria')->orderBy('catid')->get(['catid', 'catnombre', 'catimagenfondo', 'catimagenfondoopaco', 'caticono']);
+
+                            if(sizeof($categorias) > 0){
+
+                                foreach($categorias as $posicionCat => $categoria){
+
+                                    $dataarray[$posicionTpr]['categorias'][$posicionCat]['catnombre']           = $categoria->catnombre;
+                                    $dataarray[$posicionTpr]['categorias'][$posicionCat]['catimagenfondo']      = $categoria->catimagenfondo;
+                                    $dataarray[$posicionTpr]['categorias'][$posicionCat]['catimagenfondoopaco'] = $categoria->catimagenfondoopaco;
+                                    $dataarray[$posicionTpr]['categorias'][$posicionCat]['caticono']            = $categoria->caticono;
+
+                                    $scas = scasucursalescategorias::where('tsuid', $tsu->tsuid )
+                                                                    ->where('catid', $categoria->catid)
+                                                                    ->get(['scavalorizadoobjetivo', 'scavalorizadoreal', 'scavalorizadotogo', 'scaiconocategoria']);
+
+                                    if(sizeof($scas) > 0){
+
+                                        foreach($scas as $sca){
+                                            $dataarray[$posicionTpr]['categorias'][$posicionCat]['scavalorizadoobjetivo'] = $dataarray[$posicionTpr]['categorias'][$posicionCat]['scavalorizadoobjetivo'] + $sca->scavalorizadoobjetivo;
+                                            $dataarray[$posicionTpr]['categorias'][$posicionCat]['scavalorizadoreal']     = $dataarray[$posicionTpr]['categorias'][$posicionCat]['scavalorizadoreal']     + $sca->scavalorizadoreal;
+                                            $dataarray[$posicionTpr]['categorias'][$posicionCat]['scavalorizadotogo']     = $dataarray[$posicionTpr]['categorias'][$posicionCat]['scavalorizadotogo']     + $sca->scavalorizadotogo;
+                                            $dataarray[$posicionTpr]['categorias'][$posicionCat]['scaiconocategoria']     = $sca->scaiconocategoria;
+                                        }
+
+                                    }else{
+
+                                    }
+                                    
+                                }
+                            }else{
+
+                            }
+                        }else{
+
+                        }
+                    }
+                }
+            }else{
+
+            }
+            
+            $datos = $dataarray;
+
+
+        } catch (Exception $e) {
+            $mensajedev = $e->getMessage();
+            $linea      = __LINE__;
+        }
+
+        $requestsalida = response()->json([
+            "respuesta"      => $respuesta,
+            "mensaje"        => $mensaje,
+            "datos"          => $datos,
+            "linea"          => $linea,
+            "mensajeDetalle" => $mensajeDetalle,
+            "mensajedev"     => $mensajedev
+        ]);
+        
+        return $requestsalida;
+
     }
 }
