@@ -241,6 +241,7 @@ class VentasMostrarController extends Controller
                                                             ->where('fec.fecmes', $mes)
                                                             ->where('fec.fecdia', $dia)
                                                             ->first([
+                                                                'tsutipospromocionessucursales.tsuid',
                                                                 'tsutipospromocionessucursales.tsuvalorizadoobjetivo',
                                                                 'tsutipospromocionessucursales.tsuvalorizadoreal',
                                                                 'tsutipospromocionessucursales.tsuvalorizadotogo',
