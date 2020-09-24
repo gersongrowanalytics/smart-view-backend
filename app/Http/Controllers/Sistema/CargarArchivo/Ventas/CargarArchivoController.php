@@ -217,7 +217,7 @@ class CargarArchivoController extends Controller
                                 
                                 
                                 // OBTENER INFORMACION DEL REBATE
-                                $trr = trrtiposrebatesrebates::join('rtprebatetipospromociones as rtp', 'rtp.rtpid', 'trrtiposrebatesrebates.rtpid')
+                                $rtp = trrtiposrebatesrebates::join('rtprebatetipospromociones as rtp', 'rtp.rtpid', 'trrtiposrebatesrebates.rtpid')
                                                             ->where('trrtiposrebatesrebates.treid', $tsu->treid)
                                                             ->where('rtp.fecid', $fecid)
                                                             // ->where('rtp.tprid', 1) // TIPO DE PROMOCION SELL IN
@@ -560,7 +560,7 @@ class CargarArchivoController extends Controller
                                 
                                 
                                 // OBTENER INFORMACION DEL REBATE
-                                $trr = trrtiposrebatesrebates::join('rtprebatetipospromociones as rtp', 'rtp.rtpid', 'trrtiposrebatesrebates.rtpid')
+                                $rtp = trrtiposrebatesrebates::join('rtprebatetipospromociones as rtp', 'rtp.rtpid', 'trrtiposrebatesrebates.rtpid')
                                                             ->where('trrtiposrebatesrebates.treid', $tsu->treid)
                                                             ->where('rtp.fecid', $fecid)
                                                             // ->where('tprid', 2) // TIPO DE PROMOCION SELL OUT
