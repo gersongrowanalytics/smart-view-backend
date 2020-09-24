@@ -8,6 +8,7 @@ use App\fecfechas;
 use App\rtprebatetipospromociones;
 use App\trrtiposrebatesrebates;
 use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\AuditoriaController;
 
 class RebateEditarController extends Controller
 {
