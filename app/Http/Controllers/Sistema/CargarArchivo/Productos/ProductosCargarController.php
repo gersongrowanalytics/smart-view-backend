@@ -168,7 +168,7 @@ class ProductosCargarController extends Controller
             'IMPORTAR',
             '/cargarArchivo/productos', //ruta
             $pkid,
-            $log
+            null
         );
 
         if($registrarAuditoria == true){
