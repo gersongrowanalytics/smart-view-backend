@@ -47,7 +47,14 @@ class AuditoriaController extends Controller
         $audauditorias->audaccion       = $audaccion;
         $audauditorias->audruta         = $audruta;
         $audauditorias->audpk           = $audpk;
-        $audauditorias->audlog          = json_encode($log);
+        
+        $log = json_encode($log);
+        if(strlen($log) < 100){
+            $audauditorias->audlog   = $log;
+        }else{
+            $audauditorias->audlog   = substr($log, 0, 100);
+        }
+
         if($audauditorias->save()){
             $respuesta = true;
         }else{
