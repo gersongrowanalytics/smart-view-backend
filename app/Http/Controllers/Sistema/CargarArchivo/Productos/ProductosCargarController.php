@@ -167,7 +167,7 @@ class ProductosCargarController extends Controller
             'CARGAR DATA DE PRODUCTOS AL SISTEMA ',
             'IMPORTAR',
             '/cargarArchivo/productos', //ruta
-            null,
+            $pkid,
             null
         );
 
