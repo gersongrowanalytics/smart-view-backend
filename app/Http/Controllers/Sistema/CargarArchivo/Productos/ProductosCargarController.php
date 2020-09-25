@@ -161,14 +161,14 @@ class ProductosCargarController extends Controller
         $registrarAuditoria  = $AuditoriaController->registrarAuditoria(
             $usutoken,
             $usuusuario->usuid,
-            $request['ip'],
-            "",
+            null,
+            $fichero_subido,
             $requestsalida,
             'CARGAR DATA DE PRODUCTOS AL SISTEMA ',
             'IMPORTAR',
             '/cargarArchivo/productos', //ruta
             $pkid,
-            null
+            $log
         );
 
         if($registrarAuditoria == true){
