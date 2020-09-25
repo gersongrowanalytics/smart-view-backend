@@ -333,6 +333,8 @@ class CategoriasPromocionesMostrarController extends Controller
             "J",
             "K",
             "L",
+            "M",
+            "N",
             "O",
             "P",
             "Q",
