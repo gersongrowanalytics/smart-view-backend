@@ -246,7 +246,7 @@ class CargarArchivoController extends Controller
                                 }
                                 
                                 $tsu->tsuvalorizadoreal         = $nuevoReal;
-                                $tsu->tsuvalorizadotogo         = $nuevoReal - $tsu->tsuvalorizadoobjetivo;
+                                $tsu->tsuvalorizadotogo         = $tsu->tsuvalorizadoobjetivo - $nuevoReal;
                                 $tsu->tsuporcentajecumplimiento = $porcentajeCumplimiento;
                                 $tsu->tsuvalorizadorebate       = $totalRebate;
                                 if($tsu->update()){
@@ -283,7 +283,7 @@ class CargarArchivoController extends Controller
 
                                 $nuevoRealSca = $real + $sca->scavalorizadoreal;
                                 $sca->scavalorizadoreal = $nuevoRealSca;
-                                $sca->scavalorizadotogo = $nuevoRealSca - $sca->scavalorizadoobjetivo;
+                                $sca->scavalorizadotogo = $sca->scavalorizadoobjetivo - $nuevoRealSca;
                                 if($sca->update()){
 
                                 }else{
@@ -589,7 +589,7 @@ class CargarArchivoController extends Controller
                                 }
                                 
                                 $tsu->tsuvalorizadoreal         = $nuevoReal;
-                                $tsu->tsuvalorizadotogo         = $nuevoReal - $tsu->tsuvalorizadoobjetivo;
+                                $tsu->tsuvalorizadotogo         = $tsu->tsuvalorizadoobjetivo - $nuevoReal;
                                 $tsu->tsuporcentajecumplimiento = $porcentajeCumplimiento;
                                 $tsu->tsuvalorizadorebate       = $totalRebate;
                                 if($tsu->update()){
@@ -626,7 +626,7 @@ class CargarArchivoController extends Controller
 
                                 $nuevoRealSca = $real + $sca->scavalorizadoreal;
                                 $sca->scavalorizadoreal = $nuevoRealSca;
-                                $sca->scavalorizadotogo = $nuevoRealSca - $sca->scavalorizadoobjetivo;
+                                $sca->scavalorizadotogo = $sca->scavalorizadoobjetivo - $nuevoRealSca;
                                 if($sca->update()){
 
                                 }else{
