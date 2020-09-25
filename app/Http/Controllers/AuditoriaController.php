@@ -37,13 +37,12 @@ class AuditoriaController extends Controller
         $audauditorias->audip           = $audip;
         $audauditorias->audjsonentrada  = $audjsonentrada;
 
-        // if(sizeof($audjsonsalida) < 100){
-        //     $audauditorias->audjsonsalida   = $audjsonsalida;
-        // }else{
-        //     $audauditorias->audjsonsalida   = null;
-        // }
+        if(strlen($audjsonsalida) < 100){
+            $audauditorias->audjsonsalida   = $audjsonsalida;
+        }else{
+            $audauditorias->audjsonsalida   = substr($audjsonsalida, 0, 100);
+        }
 
-        $audauditorias->audjsonsalida   = $audjsonsalida;
         $audauditorias->auddescripcion  = $auddescripcion;
         $audauditorias->audaccion       = $audaccion;
         $audauditorias->audruta         = $audruta;
