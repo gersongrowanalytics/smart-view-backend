@@ -161,7 +161,7 @@ class ProductosCargarController extends Controller
         $registrarAuditoria  = $AuditoriaController->registrarAuditoria(
             $usutoken,
             $usuusuario->usuid,
-            null,
+            $request['ip'],
             "",
             $requestsalida,
             'CARGAR DATA DE PRODUCTOS AL SISTEMA ',
