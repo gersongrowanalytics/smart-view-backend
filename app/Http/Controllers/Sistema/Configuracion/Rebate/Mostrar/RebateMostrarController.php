@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Sistema\Configuracion\Rebate\Mostrar;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Http\Controllers\AuditoriaController;
 use App\rtprebatetipospromociones;
 
 class RebateMostrarController extends Controller
@@ -71,25 +70,6 @@ class RebateMostrarController extends Controller
             "mensajeDetalle" => $mensajeDetalle,
             "mensajedev"     => $mensajedev
         ]);
-
-        $AuditoriaController = new AuditoriaController;
-        $registrarAuditoria  = $AuditoriaController->registrarAuditoria(
-            $usutoken,
-            null,
-            $request['ip'],
-            $request,
-            $requestsalida,
-            'Mostrar todos los rebates',
-            'MOSTRAR',
-            '', //ruta
-            null
-        );
-
-        if($registrarAuditoria == true){
-
-        }else{
-            
-        }
         
         return $requestsalida;
 

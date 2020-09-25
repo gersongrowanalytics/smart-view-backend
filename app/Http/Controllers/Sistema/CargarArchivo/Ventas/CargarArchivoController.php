@@ -35,12 +35,13 @@ class CargarArchivoController extends Controller
         $usutoken       = $request->header('api_token');
         $archivo        = $_FILES['file']['name'];
         $skusNoExisten  = [];
-        $logs           = [];
+        $log            = [];
+        $pkid           = 0;
 
         $usuusuario = usuusuarios::where('usutoken', $usutoken)->first(['usuid']);
 
         $fichero_subido = '';
-
+        
         try{
 
             $fichero_subido = base_path().'/public/Sistema/cargaArchivos/ventas/sellin/'.basename($_FILES['file']['name']);
@@ -242,7 +243,7 @@ class CargarArchivoController extends Controller
                                 if($rtp){
                                     $totalRebate = $nuevoReal*$rtp->rtpporcentajerebate;
                                 }else{
-                                    $logs[] = "No existe el grupo rebate: ".$tsu->treid;
+                                    $log[] = "No existe el grupo rebate: ".$tsu->treid;
                                 }
                                 
                                 $tsu->tsuvalorizadoreal         = $nuevoReal;
@@ -325,7 +326,7 @@ class CargarArchivoController extends Controller
                 $nuevoCargaArchivo->carubicacion = $fichero_subido;
                 $nuevoCargaArchivo->carexito = true;
                 if($nuevoCargaArchivo->save()){
-
+                    $pkid = "CAR-".$nuevoCargaArchivo->carid;
                 }else{
 
                 }
@@ -334,6 +335,7 @@ class CargarArchivoController extends Controller
         } catch (Exception $e) {
             $mensajedev = $e->getMessage();
             $linea      = __LINE__;
+            $log[]      = $mensajedev;
         }
 
 
@@ -351,7 +353,7 @@ class CargarArchivoController extends Controller
             "mensajeDetalle" => $mensajeDetalle,
             "mensajedev"     => $mensajedev,
             "numeroCelda"    => $numeroCelda,
-            "logs"           => $logs,
+            "logs"           => $log,
         ]);
 
         $AuditoriaController = new AuditoriaController;
@@ -363,8 +365,9 @@ class CargarArchivoController extends Controller
             $requestsalida,
             'CARGAR DATA DE UN EXCEL AL SISTEMA DE VENTAS SELL IN',
             'IMPORTAR',
-            '', //ruta
-            null
+            '/cargarArchivo/ventas/sellin', //ruta
+            $pkid,
+            $log
         );
 
         if($registrarAuditoria == true){
@@ -388,7 +391,8 @@ class CargarArchivoController extends Controller
         $usutoken       = $request->header('api_token');
         $archivo        = $_FILES['file']['name'];
         $skusNoExisten  = [];
-        $logs           = [];
+        $log            = [];
+        $pkid           = 0;
 
         $usuusuario = usuusuarios::where('usutoken', $usutoken)->first(['usuid']);
 
@@ -585,7 +589,7 @@ class CargarArchivoController extends Controller
                                 if($rtp){
                                     $totalRebate = $nuevoReal*$rtp->rtpporcentajerebate;
                                 }else{
-                                    $logs[] = "No existe el grupo rebate: ".$tsu->treid;
+                                    $log[] = "No existe el grupo rebate: ".$tsu->treid;
                                 }
                                 
                                 $tsu->tsuvalorizadoreal         = $nuevoReal;
@@ -668,7 +672,7 @@ class CargarArchivoController extends Controller
                 $nuevoCargaArchivo->carubicacion = $fichero_subido;
                 $nuevoCargaArchivo->carexito = true;
                 if($nuevoCargaArchivo->save()){
-
+                    $pkid = "CAR-".$nuevoCargaArchivo->carid;
                 }else{
 
                 }
@@ -694,20 +698,21 @@ class CargarArchivoController extends Controller
             "mensajeDetalle" => $mensajeDetalle,
             "mensajedev"     => $mensajedev,
             "numeroCelda"    => $numeroCelda,
-            "logs"           => $logs,
+            "logs"           => $log,
         ]);
 
         $AuditoriaController = new AuditoriaController;
         $registrarAuditoria  = $AuditoriaController->registrarAuditoria(
             $usutoken,
             $usuusuario->usuid,
-            null,
+            $request['ip'],
             $fichero_subido,
             $requestsalida,
             'CARGAR DATA DE UN EXCEL AL SISTEMA DE VENTAS SELL OUT',
             'IMPORTAR',
-            '', //ruta
-            null
+            '/cargarArchivo/ventas/sellout', //ruta
+            $pkid,
+            $log
         );
 
         if($registrarAuditoria == true){

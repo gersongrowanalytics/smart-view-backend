@@ -13,13 +13,16 @@ class GrupoRebateCrearController extends Controller
     {
 
         $nombreGrupoRebate = $request['nombreGrupoRebate'];
-
+        $usutoken       = $request->header('api_token');
         $respuesta      = false;
         $mensaje        = '';
         $datos          = [];
         $linea          = __LINE__;
         $mensajeDetalle = '';
         $mensajedev     = null;
+        $log            = [];
+
+        $pkid           = 0;
 
         $tre = tretiposrebates::where('trenombre', $nombreGrupoRebate)->first(['treid']);
 
@@ -27,6 +30,7 @@ class GrupoRebateCrearController extends Controller
             $respuesta  = false;
             $mensaje    = "Lo sentimos, ese nombre de grupo rebate ya existe";
             $linea      = __LINE__;
+            $log[]      = "El tre (nombre de grupo de rebate) ya existe";
         }else{
             $nuevoTre = new tretiposrebates;
             $nuevoTre->trenombre = $nombreGrupoRebate;
@@ -36,11 +40,13 @@ class GrupoRebateCrearController extends Controller
                 $mensaje    = "Se agrego satisfactoriamente, el nuevo grupo rebate";
                 $datos      = $nuevoTre;
                 $linea      = __LINE__;
-
+                $log[]      = "El grupo rebate se creo satisfactoriamente";
+                $pkid       = $nuevoTre->treid;
             }else{
                 $respuesta  = false;
                 $mensaje    = "Lo sentimos, ocurrio un error al momento de guardar el grupo rebate";
                 $linea      = __LINE__;
+                $log[]      = "Ocurrio un error al momento de intentar crear el grupo rebate";
             }
         }
 
@@ -55,15 +61,16 @@ class GrupoRebateCrearController extends Controller
 
         $AuditoriaController = new AuditoriaController;
         $registrarAuditoria  = $AuditoriaController->registrarAuditoria(
-            null,
+            $usutoken,
             null,
             $request['ip'],
             $request,
             $requestsalida,
             'Agregar un nuevo grupo rebate',
             'AGREGAR',
-            '', //ruta
-            null
+            '/configuracion/rebate/crear/GrupoRebate', //ruta
+            'TRE-'.$pkid,
+            $log
         );
 
         if($registrarAuditoria == true){
@@ -73,7 +80,5 @@ class GrupoRebateCrearController extends Controller
         }
         
         return $requestsalida;
-
-
     }
 }

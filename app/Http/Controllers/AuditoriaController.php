@@ -17,7 +17,8 @@ class AuditoriaController extends Controller
         $auddescripcion,
         $audaccion,
         $audruta,
-        $audpk
+        $audpk,
+        $log
     )
     {
         $respuesta = false;
@@ -31,30 +32,28 @@ class AuditoriaController extends Controller
             }
         }
 
-        // $audauditorias = new audauditorias;
-        // $audauditorias->usuid           = $usuid;
-        // $audauditorias->audip           = $audip;
-        // $audauditorias->audjsonentrada  = $audjsonentrada;
+        $audauditorias = new audauditorias;
+        $audauditorias->usuid           = $usuid;
+        $audauditorias->audip           = $audip;
+        $audauditorias->audjsonentrada  = $audjsonentrada;
 
-        // // if(sizeof($$audjsonsalida) < 100){
-        // //     $audauditorias->audjsonsalida   = $audjsonsalida;
-        // // }else{
-        // //     $audauditorias->audjsonsalida   = null;
-        // // }
-
-        // $audauditorias->audjsonsalida   = null;
-
-        // $audauditorias->auddescripcion  = $auddescripcion;
-        // $audauditorias->audaccion       = $audaccion;
-        // $audauditorias->audruta         = $audruta;
-        // $audauditorias->audpk           = $audpk;
-        // if($audauditorias->save()){
-        //     $respuesta = true;
+        // if(sizeof($audjsonsalida) < 100){
+        //     $audauditorias->audjsonsalida   = $audjsonsalida;
         // }else{
-        //     $respuesta = false;
+        //     $audauditorias->audjsonsalida   = null;
         // }
 
-        $respuesta = true;
+        $audauditorias->audjsonsalida   = $audjsonsalida;
+        $audauditorias->auddescripcion  = $auddescripcion;
+        $audauditorias->audaccion       = $audaccion;
+        $audauditorias->audruta         = $audruta;
+        $audauditorias->audpk           = $audpk;
+        $audauditorias->audlog          = $log;
+        if($audauditorias->save()){
+            $respuesta = true;
+        }else{
+            $respuesta = false;
+        }
 
         return $respuesta;
 

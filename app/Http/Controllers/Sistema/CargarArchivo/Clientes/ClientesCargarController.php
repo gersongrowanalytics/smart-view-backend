@@ -39,6 +39,9 @@ class ClientesCargarController extends Controller
         $usuusuario = usuusuarios::where('usutoken', $usutoken)->first(['usuid', 'usuusuario']);
         $fichero_subido = '';
 
+        $pkid = 0;
+        $log  = [];
+
         try{
 
             $fichero_subido = base_path().'/public/Sistema/cargaArchivos/clientes/'.basename($usuusuario->usuid.'-'.$usuusuario->usuusuario.'-'.$fechaActual.'-'.$_FILES['file']['name']);
@@ -220,7 +223,7 @@ class ClientesCargarController extends Controller
             $nuevoCargaArchivo->carubicacion = $fichero_subido;
             $nuevoCargaArchivo->carexito = true;
             if($nuevoCargaArchivo->save()){
-
+                $pkid = "CAR-".$nuevoCargaArchivo->carid;
             }else{
 
             }
@@ -228,6 +231,7 @@ class ClientesCargarController extends Controller
         } catch (Exception $e) {
             $mensajedev = $e->getMessage();
             $linea      = __LINE__;
+            $log[]      = $mensajedev;
         }
 
         $requestsalida = response()->json([
@@ -249,8 +253,9 @@ class ClientesCargarController extends Controller
             $requestsalida,
             'CARGAR DATA DE CLIENTES AL SISTEMA ',
             'IMPORTAR',
-            '', //ruta
-            null
+            '/cargarArchivo/clientes', //ruta
+            $pkid,
+            $log
         );
 
         if($registrarAuditoria == true){
@@ -281,6 +286,9 @@ class ClientesCargarController extends Controller
 
         $usuusuario = usuusuarios::where('usutoken', $usutoken)->first(['usuid', 'usuusuario']);
         $fichero_subido = '';
+        
+        $pkid = 0;
+        $log  = [];
 
         try{
 
@@ -323,18 +331,18 @@ class ClientesCargarController extends Controller
                     }
                 }
 
-                // $nuevoCargaArchivo = new carcargasarchivos;
-                // $nuevoCargaArchivo->tcaid = 6; // Carga de Clientes
-                // $nuevoCargaArchivo->fecid = null;
-                // $nuevoCargaArchivo->usuid = $usuusuario->usuid;
-                // $nuevoCargaArchivo->carnombrearchivo = $archivo;
-                // $nuevoCargaArchivo->carubicacion = $fichero_subido;
-                // $nuevoCargaArchivo->carexito = true;
-                // if($nuevoCargaArchivo->save()){
+                $nuevoCargaArchivo = new carcargasarchivos;
+                $nuevoCargaArchivo->tcaid = 8; // Actualizar Clientes
+                $nuevoCargaArchivo->fecid = null;
+                $nuevoCargaArchivo->usuid = $usuusuario->usuid;
+                $nuevoCargaArchivo->carnombrearchivo = $archivo;
+                $nuevoCargaArchivo->carubicacion = $fichero_subido;
+                $nuevoCargaArchivo->carexito = true;
+                if($nuevoCargaArchivo->save()){
+                    $pkid = "CAR-".$nuevoCargaArchivo->carid;
+                }else{
 
-                // }else{
-
-                // }
+                }
             }else{
 
             }
@@ -342,6 +350,7 @@ class ClientesCargarController extends Controller
         } catch (Exception $e) {
             $mensajedev = $e->getMessage();
             $linea      = __LINE__;
+            $log[]      = $mensajedev;
         }
 
         $requestsalida = response()->json([
@@ -358,13 +367,14 @@ class ClientesCargarController extends Controller
         $registrarAuditoria  = $AuditoriaController->registrarAuditoria(
             $usutoken,
             $usuusuario->usuid,
-            null,
+            $request['ip'],
             $fichero_subido,
             $requestsalida,
             'ACTUALIZAR LAS ZONAS DE UN CLIENTE ',
             'IMPORTAR',
-            '', //ruta
-            null
+            '/cargarArchivo/clientes/acutalizarzonas', //ruta
+            $pkid,
+            $log
         );
 
         if($registrarAuditoria == true){
@@ -375,6 +385,4 @@ class ClientesCargarController extends Controller
         
         return $requestsalida;
     }
-
-
 }

@@ -22,6 +22,7 @@ class Audauditorias extends Migration
             $table->text('auddescripcion');
             $table->string('audaccion');
             $table->string('audruta');
+            $table->text('audlog')->nullable();
             $table->string('audpk')->nullable();
             $table->timestamps();
 

@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Sistema\Promociones\Mostrar;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Http\Controllers\AuditoriaController;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
@@ -278,25 +277,6 @@ class CategoriasPromocionesMostrarController extends Controller
             'mensajeDetalle' => $mensajeDetalle,
             'mensajedev'     => $mensajedev
         ]);
-
-        $AuditoriaController = new AuditoriaController;
-        $registrarAuditoria  = $AuditoriaController->registrarAuditoria(
-            $usutoken,
-            null,
-            $request['ip'],
-            $request,
-            $requestsalida,
-            'MOSTRAR LAS PROMOCIONES DE UN USUARIO PARA DESCARGAR UN EXCEL',
-            'DESCARGAR',
-            '',
-            null
-        );
-
-        if($registrarAuditoria == true){
-
-        }else{
-            
-        }
         
         return $requestsalida;
     }

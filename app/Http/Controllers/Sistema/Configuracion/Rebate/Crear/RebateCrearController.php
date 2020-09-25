@@ -26,6 +26,8 @@ class RebateCrearController extends Controller
         $linea          = __LINE__;
         $mensajeDetalle = '';
         $mensajedev     = null;
+        $log            = [];
+        $pkid           = 0;
 
         try{
             $fecha = new \DateTime(date("Y-m-d", strtotime($fecha)));
@@ -34,7 +36,9 @@ class RebateCrearController extends Controller
             $fecid = 0;
             if($fecfecha){
                 $fecid = $fecfecha->fecid;
+                $log[] = "Existe la fecha";
             }else{
+                $log[] = "No existe la fecha";
                 $nuevafecha = new fecfechas;
                 $nuevafecha->fecfecha = $fecha;
                 $nuevafecha->fecdia   = '';
@@ -42,8 +46,12 @@ class RebateCrearController extends Controller
                 $nuevafecha->fecano   = '';
                 if($nuevafecha->save()){
                     $fecid = $nuevafecha->fecid;
-                }else{
 
+                    $pkid = "FEC-".$fecid." ";
+                    $log[] = "Se agrego la fecha";
+                }else{
+                    $pkid = "";
+                    $log[] = "No se pudo agregar la fecha";
                 }
             }
 
@@ -59,17 +67,21 @@ class RebateCrearController extends Controller
                 $datos          = $rtp;
                 $linea          = __LINE__;
                 $mensajeDetalle = 'Nuevo rebate agregado';
+                $pkid           = $pkid."RTP-".$rtp->rtpid;
+                $log[]          = "Se agrego el rebate";
             }else{
                 $respuesta      = false;
                 $mensaje        = 'Ocurrio un error al momento de agregar el rebate';
-                $datos          = $rtp;
+                $datos          = [];
                 $linea          = __LINE__;
                 $mensajeDetalle = 'El rebate no se agrego';
+                $log[]          = "No se pudo agregar el rebate";
             }
 
         } catch (Exception $e) {
             $mensajedev = $e->getMessage();
             $linea      = __LINE__;
+            $log[]      = "ERROR DE SERVIDOR: ".$mensajedev;
         }
 
         $requestsalida = response()->json([
@@ -90,8 +102,9 @@ class RebateCrearController extends Controller
             $requestsalida,
             'Agregar un nuevo registro de rebate',
             'AGREGAR',
-            '', //ruta
-            null
+            '/configuracion/rebate/crearRebate', //ruta
+            $pkid,
+            $log
         );
 
         if($registrarAuditoria == true){

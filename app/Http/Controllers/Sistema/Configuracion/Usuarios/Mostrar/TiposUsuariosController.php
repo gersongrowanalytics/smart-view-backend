@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Sistema\Configuracion\Usuarios\Mostrar;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Http\Controllers\AuditoriaController;
 use App\tputiposusuarios;
 
 class TiposUsuariosController extends Controller
@@ -42,19 +41,6 @@ class TiposUsuariosController extends Controller
             $mensajedev = $e->getMessage();
             $linea      = __LINE__;
         }
-
-        $AuditoriaController = new AuditoriaController;
-        $registrarAuditoria  = $AuditoriaController->registrarAuditoria(
-            $usutoken,
-            null,
-            $request['ip'],
-            $request,
-            $requestsalida,
-            'Mostrar todos los tipos de usuarios',
-            'MOSTRAR',
-            '', //ruta
-            null
-        );
 
         if($registrarAuditoria == true){
 

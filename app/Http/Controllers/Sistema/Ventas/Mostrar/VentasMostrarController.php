@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Sistema\Ventas\Mostrar;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Http\Controllers\AuditoriaController;
 use App\tsutipospromocionessucursales;
 use App\scasucursalescategorias;
 use App\tprtipospromociones;

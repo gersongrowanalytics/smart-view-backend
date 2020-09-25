@@ -43,6 +43,10 @@ class ObjetivoCargarController extends Controller
 
         $fichero_subido = '';
 
+        $pkid = 0;
+        $log  = [];
+
+
         try{
 
             $fichero_subido = base_path().'/public/Sistema/cargaArchivos/objetivos/sellin/'.basename($usuusuario->usuid.'-'.$usuusuario->usuusuario.'-'.$fechaActual.'-'.$_FILES['file']['name']);
@@ -316,7 +320,7 @@ class ObjetivoCargarController extends Controller
                 $nuevoCargaArchivo->carubicacion = $fichero_subido;
                 $nuevoCargaArchivo->carexito = true;
                 if($nuevoCargaArchivo->save()){
-
+                    $pkid = "CAR-".$nuevoCargaArchivo->carid;
                 }else{
 
                 }
@@ -327,6 +331,7 @@ class ObjetivoCargarController extends Controller
         } catch (Exception $e) {
             $mensajedev = $e->getMessage();
             $linea      = __LINE__;
+            $log[]      = $mensajedev;
         }
 
         $requestsalida = response()->json([
@@ -343,13 +348,14 @@ class ObjetivoCargarController extends Controller
         $registrarAuditoria  = $AuditoriaController->registrarAuditoria(
             $usutoken,
             $usuusuario->usuid,
-            null,
+            $request['ip'],
             $fichero_subido,
             $requestsalida,
-            'CARGAR DATA DE CLIENTES AL SISTEMA ',
+            'CARGAR DATA DE OBJETIVOS SELL IN',
             'IMPORTAR',
-            '', //ruta
-            null
+            '/cargarArchivo/ventas/obejtivos', //ruta
+            $pkid,
+            $log
         );
 
         if($registrarAuditoria == true){
@@ -376,6 +382,7 @@ class ObjetivoCargarController extends Controller
         $numeroCelda    = 0;
         $usutoken       = $request->header('api_token');
         $archivo        = $_FILES['file']['name'];
+        $log            = [];
 
         $usuusuario = usuusuarios::where('usutoken', $usutoken)->first(['usuid', 'usuusuario']);
 
@@ -650,7 +657,7 @@ class ObjetivoCargarController extends Controller
                 $nuevoCargaArchivo->carubicacion = $fichero_subido;
                 $nuevoCargaArchivo->carexito = true;
                 if($nuevoCargaArchivo->save()){
-
+                    $pkid = "CAR-".$nuevoCargaArchivo->carid;
                 }else{
 
                 }
@@ -661,6 +668,7 @@ class ObjetivoCargarController extends Controller
         } catch (Exception $e) {
             $mensajedev = $e->getMessage();
             $linea      = __LINE__;
+            $log[]      = $mensajedev;
         }
 
         $requestsalida = response()->json([
@@ -677,13 +685,14 @@ class ObjetivoCargarController extends Controller
         $registrarAuditoria  = $AuditoriaController->registrarAuditoria(
             $usutoken,
             $usuusuario->usuid,
-            null,
+            $request['ip'],
             $fichero_subido,
             $requestsalida,
             'CARGAR DATA DE OBEJETIVOS SELL OUT',
             'IMPORTAR',
-            '', //ruta
-            null
+            '/cargarArchivo/ventas/obejtivossellout', //ruta
+            $pkid,
+            $log
         );
 
         if($registrarAuditoria == true){

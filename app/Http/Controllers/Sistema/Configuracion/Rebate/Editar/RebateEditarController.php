@@ -32,7 +32,7 @@ class RebateEditarController extends Controller
         $linea          = __LINE__;
         $mensajeDetalle = '';
         $mensajedev     = null;
-        $logs           = [];
+        $log           = [];
         $usutoken       = $request->header('api_token');
 
         DB::beginTransaction(); 
@@ -46,18 +46,18 @@ class RebateEditarController extends Controller
 
             $fecid = 0;
             if($fecfecha){
-                $logs[] = "La fecha existe";
+                $log[] = "La fecha existe";
                 $fecid = $fecfecha->fecid;
             }else{
-                $logs[] = "No existe la fecha";
+                $log[] = "No existe la fecha";
                 $nuevaFecha = new fecfechas;
                 $nuevaFecha->fecmes = $mes;
                 $nuevaFecha->fecano = $anio;
                 $nuevaFecha->fecdia = $dia;
                 if($nuevaFecha->save()){
-                    $logs[] = "La fecha se agrego";
+                    $log[] = "La fecha se agrego";
                 }else{
-                    $logs[] = "La fecha no se pudo agregar";
+                    $log[] = "La fecha no se pudo agregar";
                 }
             }
 
@@ -68,18 +68,18 @@ class RebateEditarController extends Controller
             $rtp->rtpporcentajehasta  = $hasta;
             $rtp->rtpporcentajerebate = $rebate;
             if($rtp->update()){
-                $logs[] = "El rebate se actualizo";
+                $log[] = "El rebate se actualizo";
             }else{
-                $logs[] = "No se actualizo el rebate";
+                $log[] = "No se actualizo el rebate";
             }
 
             $trr = trrtiposrebatesrebates::find($trrid);
             $trr->treid = $treid;
             $trr->rtpid = $rtpid;
             if($trr->update()){
-                $logs[] = "El grupo rebate se actualizo";
+                $log[] = "El grupo rebate se actualizo";
             }else{
-                $logs[] = "No se actualizo el grupo del rebate";
+                $log[] = "No se actualizo el grupo del rebate";
             }
 
             $respuesta = true;
@@ -115,8 +115,9 @@ class RebateEditarController extends Controller
             $requestsalida,
             'EDITAR REBATE',
             'EDITAR',
-            '', //ruta
-            null
+            '/configuracion/rebate/editar/Rebate', //ruta
+            'RTP-'.$rtpid,
+            $log
         );
         
         return $requestsalida;

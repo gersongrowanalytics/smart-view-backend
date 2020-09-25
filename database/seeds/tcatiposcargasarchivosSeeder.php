@@ -39,5 +39,9 @@ class tcatiposcargasarchivosSeeder extends Seeder
         tcatiposcargasarchivos::create([
             'tcanombre' => 'Carga de Productos'
         ]);
+
+        tcatiposcargasarchivos::create([
+            'tcanombre' => 'Carga de actualizacion de clientes'
+        ]);
     }
 }

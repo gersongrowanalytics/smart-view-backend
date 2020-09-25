@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Sistema\Usuario\Sucursales\Mostrar;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Http\Controllers\AuditoriaController;
 use App\usuusuarios;
 use App\ussusuariossucursales;
 
@@ -105,25 +104,6 @@ class SucursalesMostrarController extends Controller
             'mensajedev'     => $mensajedev,
             'zonas'          => $zonas
         ]);
-
-        $AuditoriaController = new AuditoriaController;
-        $registrarAuditoria  = $AuditoriaController->registrarAuditoria(
-            $usutoken,
-            null,
-            $request['ip'],
-            $request,
-            $requestsalida,
-            'Mostrar las sucursales que tiene un usuario',
-            'MOSTRAR',
-            '',
-            null
-        );
-
-        if($registrarAuditoria == true){
-
-        }else{
-            
-        }
         
         return $requestsalida;
 

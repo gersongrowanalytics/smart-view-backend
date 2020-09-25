@@ -35,6 +35,10 @@ class ProductosCargarController extends Controller
 
         $fichero_subido = '';
 
+        $pkid = 0;
+        $log  = [];
+
+        $exitoSubirExcel = false;
         try{
             
             $fichero_subido = base_path().'/public/Sistema/cargaArchivos/productos/'.basename($usuusuario->usuid.'-'.$usuusuario->usuusuario.'-'.$fechaActual.'-'.$_FILES['file']['name']);
@@ -110,27 +114,37 @@ class ProductosCargarController extends Controller
                             }
                         }
                     }
-
-                    
-
-
-
                 }
 
+                $exitoSubirExcel = true;
 
             }else{
-                $respuesta      = false;
-                $mensaje        = "Lo sentimos, no se guardar el archivo";
-                $mensajeDetalle = "";
-                $linea          = __LINE__;
+                $respuesta       = false;
+                $mensaje         = "Lo sentimos, no se guardar el archivo";
+                $mensajeDetalle  = "";
+                $linea           = __LINE__;
+                $exitoSubirExcel = false;
             }
 
+            $nuevoCargaArchivo = new carcargasarchivos;
+            $nuevoCargaArchivo->tcaid            = 7;
+            $nuevoCargaArchivo->fecid            = $fecid;
+            $nuevoCargaArchivo->usuid            = $usuusuario->usuid;
+            $nuevoCargaArchivo->carnombrearchivo = $archivo;
+            $nuevoCargaArchivo->carubicacion     = $fichero_subido;
+            $nuevoCargaArchivo->carexito         = $exitoSubirExcel;
+            if($nuevoCargaArchivo->save()){
+                $pkid = "CAR-".$nuevoCargaArchivo->carid;
+            }else{
+
+            }
 
 
 
         } catch (Exception $e) {
             $mensajedev = $e->getMessage();
             $linea      = __LINE__;
+            $log[]      = $mensajedev;
         }
 
         $requestsalida = response()->json([
@@ -147,13 +161,14 @@ class ProductosCargarController extends Controller
         $registrarAuditoria  = $AuditoriaController->registrarAuditoria(
             $usutoken,
             $usuusuario->usuid,
-            null,
+            $request['ip'],
             $fichero_subido,
             $requestsalida,
             'CARGAR DATA DE PRODUCTOS AL SISTEMA ',
             'IMPORTAR',
-            '', //ruta
-            null
+            '/cargarArchivo/productos', //ruta
+            $pkid,
+            $log
         );
 
         if($registrarAuditoria == true){

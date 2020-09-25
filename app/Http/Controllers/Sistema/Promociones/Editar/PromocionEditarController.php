@@ -24,6 +24,9 @@ class PromocionEditarController extends Controller
         $mensajeDetalle = '';
         $mensajedev     = null;
 
+        $pkid = 0;
+        $log  = [];
+
         try{
 
             $csp = cspcanalessucursalespromociones::find($cspid);
@@ -31,24 +34,27 @@ class PromocionEditarController extends Controller
             $csp->cspplanchas   = $planchas;
             $csp->cspcompletado = true;
             if($csp->update()){
+                $pkid           = $csp->cspid;
                 $linea          = __LINE__;
                 $respuesta      = true;
                 $datos          = $csp;
                 $mensaje        = 'La promoción se actualizo correctamente';
                 $mensajeDetalle = 'Recuerda que puedes seguir editando la promoción durante el resto del día';
-
+                $log[]          = "Se edito correctamente el csp";
             }else{
                 $linea          = __LINE__;
                 $respuesta      = false;
                 $datos          = [];
                 $mensaje        = 'Lo sentimos, la promoción no se pudo guardar';
                 $mensajeDetalle = 'Actualice la pagina o comuniquese con alguien de soporte';
+                $log[]          = "No se edito el csp";
             }
 
 
         } catch (Exception $e) {
             $mensajedev = $e->getMessage();
             $linea      = __LINE__;
+            $log[]      = "ERROR SERVIDOR: ".$e->getMessage();
         }
 
         $requestsalida = response()->json([
@@ -69,8 +75,9 @@ class PromocionEditarController extends Controller
             $requestsalida,
             'Editar la promocion, datos como el valorizado la plancha por usuario',
             'EDITAR',
-            '', //ruta
-            null
+            '/promociones/editar', //ruta
+            $pkid,
+            $log
         );
 
         if($registrarAuditoria == true){

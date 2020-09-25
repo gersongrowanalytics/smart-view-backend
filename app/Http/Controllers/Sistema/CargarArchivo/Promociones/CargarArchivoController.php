@@ -50,6 +50,9 @@ class CargarArchivoController extends Controller
         $usuusuario = usuusuarios::where('usutoken', $usutoken)->first(['usuid']);
 
         $fichero_subido = '';
+
+        $pkid = 0;
+        $log  = [];
         try{
             // file_put_contents(base_path().'/public/'.$archivo, $_FILES['file']['tmp_name']);
             $fichero_subido = base_path().'/public/Sistema/cargaArchivos/promociones/'.basename($_FILES['file']['name']);
@@ -637,7 +640,7 @@ class CargarArchivoController extends Controller
             $nuevoCargaArchivo->carubicacion = $fichero_subido;
             $nuevoCargaArchivo->carexito = true;
             if($nuevoCargaArchivo->save()){
-
+                $pkid = "CAR-".$nuevoCargaArchivo->carid;
             }else{
 
             }
@@ -647,6 +650,7 @@ class CargarArchivoController extends Controller
         } catch (Exception $e) {
             $mensajedev = $e->getMessage();
             $linea      = __LINE__;
+            $log[]      = $mensajedev;
         }
 
         $requestsalida = response()->json([
@@ -663,13 +667,14 @@ class CargarArchivoController extends Controller
         $registrarAuditoria  = $AuditoriaController->registrarAuditoria(
             $usutoken,
             $usuusuario->usuid,
-            null,
+            $request['ip'],
             $fichero_subido,
             $requestsalida,
-            'CARGAR DATA DE UN EXCEL AL SISTEMA',
+            'CARGAR DATA DE PROMOCIONES DE UN EXCEL AL SISTEMA',
             'IMPORTAR',
-            '', //ruta
-            null
+            '/cargarArchivo/promociones', //ruta
+            $pkid,
+            $log
         );
 
         if($registrarAuditoria == true){
