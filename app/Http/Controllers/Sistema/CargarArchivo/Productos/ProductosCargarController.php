@@ -157,25 +157,25 @@ class ProductosCargarController extends Controller
             "numeroCelda"    => $numeroCelda
         ]);
 
-        // $AuditoriaController = new AuditoriaController;
-        // $registrarAuditoria  = $AuditoriaController->registrarAuditoria(
-        //     $usutoken,
-        //     $usuusuario->usuid,
-        //     $request['ip'],
-        //     $fichero_subido,
-        //     $requestsalida,
-        //     'CARGAR DATA DE PRODUCTOS AL SISTEMA ',
-        //     'IMPORTAR',
-        //     '/cargarArchivo/productos', //ruta
-        //     $pkid,
-        //     $log
-        // );
+        $AuditoriaController = new AuditoriaController;
+        $registrarAuditoria  = $AuditoriaController->registrarAuditoria(
+            $usutoken,
+            $usuusuario->usuid,
+            $request['ip'],
+            $fichero_subido,
+            $requestsalida,
+            'CARGAR DATA DE PRODUCTOS AL SISTEMA ',
+            'IMPORTAR',
+            '/cargarArchivo/productos', //ruta
+            $pkid,
+            $log
+        );
 
-        // if($registrarAuditoria == true){
+        if($registrarAuditoria == true){
 
-        // }else{
+        }else{
             
-        // }
+        }
         
         return $requestsalida;
     }
