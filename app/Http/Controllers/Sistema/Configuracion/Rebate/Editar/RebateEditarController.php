@@ -110,7 +110,7 @@ class RebateEditarController extends Controller
         $registrarAuditoria  = $AuditoriaController->registrarAuditoria(
             $usutoken,
             null,
-            $request['ip'],
+            null,
             $request,
             $requestsalida,
             'EDITAR REBATE',

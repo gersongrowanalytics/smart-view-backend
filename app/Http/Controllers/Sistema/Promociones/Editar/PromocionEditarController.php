@@ -70,7 +70,7 @@ class PromocionEditarController extends Controller
         $registrarAuditoria  = $AuditoriaController->registrarAuditoria(
             $usutoken,
             null,
-            $request['ip'],
+            null,
             $request,
             $requestsalida,
             'Editar la promocion, datos como el valorizado la plancha por usuario',

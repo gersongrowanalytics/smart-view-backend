@@ -77,7 +77,7 @@ class UsuariosEditarController extends Controller
         $registrarAuditoria  = $AuditoriaController->registrarAuditoria(
             $usutoken,
             null,
-            $request['ip'],
+            null,
             $request,
             $requestsalida,
             'Editar los datos del usuario, tipo de usuario, usuario, correo y contraseña',

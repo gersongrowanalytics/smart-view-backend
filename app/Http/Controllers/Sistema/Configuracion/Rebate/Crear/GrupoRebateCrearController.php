@@ -63,7 +63,7 @@ class GrupoRebateCrearController extends Controller
         $registrarAuditoria  = $AuditoriaController->registrarAuditoria(
             $usutoken,
             null,
-            $request['ip'],
+            null,
             $request,
             $requestsalida,
             'Agregar un nuevo grupo rebate',

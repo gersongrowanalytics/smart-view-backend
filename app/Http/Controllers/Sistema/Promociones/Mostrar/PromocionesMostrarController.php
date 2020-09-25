@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Sistema\Promociones\Mostrar;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\csccanalessucursalescategorias;
-use App\Http\Controllers\AuditoriaController;
 use App\cspcanalessucursalespromociones;
 use App\prppromocionesproductos;
 use App\prbpromocionesbonificaciones;
@@ -138,25 +137,6 @@ class PromocionesMostrarController extends Controller
             'mensajeDetalle' => $mensajeDetalle,
             'mensajedev'     => $mensajedev
         ]);
-
-        $AuditoriaController = new AuditoriaController;
-        $registrarAuditoria  = $AuditoriaController->registrarAuditoria(
-            $usutoken,
-            null,
-            $request['ip'],
-            $request,
-            $requestsalida,
-            'Mostrar las promociones de una categoria seleccionada, con su canal correspondiente segun el filtro de sucursal, fecha (dia, mes, año)',
-            'MOSTRAR',
-            '',
-            null
-        );
-
-        if($registrarAuditoria == true){
-
-        }else{
-            
-        }
         
         return $requestsalida;
     }

@@ -367,7 +367,7 @@ class ClientesCargarController extends Controller
         $registrarAuditoria  = $AuditoriaController->registrarAuditoria(
             $usutoken,
             $usuusuario->usuid,
-            $request['ip'],
+            null,
             $fichero_subido,
             $requestsalida,
             'ACTUALIZAR LAS ZONAS DE UN CLIENTE ',

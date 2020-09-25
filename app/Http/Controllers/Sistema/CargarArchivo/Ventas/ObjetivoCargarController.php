@@ -348,7 +348,7 @@ class ObjetivoCargarController extends Controller
         $registrarAuditoria  = $AuditoriaController->registrarAuditoria(
             $usutoken,
             $usuusuario->usuid,
-            $request['ip'],
+            null,
             $fichero_subido,
             $requestsalida,
             'CARGAR DATA DE OBJETIVOS SELL IN',
@@ -685,7 +685,7 @@ class ObjetivoCargarController extends Controller
         $registrarAuditoria  = $AuditoriaController->registrarAuditoria(
             $usutoken,
             $usuusuario->usuid,
-            $request['ip'],
+            null,
             $fichero_subido,
             $requestsalida,
             'CARGAR DATA DE OBEJETIVOS SELL OUT',

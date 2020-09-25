@@ -97,7 +97,7 @@ class RebateCrearController extends Controller
         $registrarAuditoria  = $AuditoriaController->registrarAuditoria(
             $usutoken,
             null,
-            $request['ip'],
+            null,
             $request,
             $requestsalida,
             'Agregar un nuevo registro de rebate',
