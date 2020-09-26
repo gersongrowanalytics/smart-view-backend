@@ -4,13 +4,16 @@ namespace App\Http\Controllers\Sistema\Promociones\Mostrar;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Http\Controllers\AuditoriaController;
+use PhpOffice\PhpSpreadsheet\IOFactory;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use App\csccanalessucursalescategorias;
 use App\scasucursalescategorias;
 use App\prppromocionesproductos;
 use App\prbpromocionesbonificaciones;
 use App\cspcanalessucursalespromociones;
 use App\usuusuarios;
+use App\ussusuariossucursales;
 
 class CategoriasPromocionesMostrarController extends Controller
 {
@@ -274,26 +277,218 @@ class CategoriasPromocionesMostrarController extends Controller
             'mensajeDetalle' => $mensajeDetalle,
             'mensajedev'     => $mensajedev
         ]);
-
-        $AuditoriaController = new AuditoriaController;
-        $registrarAuditoria  = $AuditoriaController->registrarAuditoria(
-            $usutoken,
-            null,
-            $request['ip'],
-            $request,
-            $requestsalida,
-            'MOSTRAR LAS PROMOCIONES DE UN USUARIO PARA DESCARGAR UN EXCEL',
-            'DESCARGAR',
-            '',
-            null
-        );
-
-        if($registrarAuditoria == true){
-
-        }else{
-            
-        }
         
         return $requestsalida;
+    }
+
+    public function mostrarCategoriasPromocionesExcel(Request $request)
+    {
+
+        $usutoken   = $request['usutoken'];
+        $sucid      = $request['sucid'];
+        $dia        = $request['dia'];
+        $mes        = $request['mes'];
+        $anio       = $request['ano'];
+        
+        $usuusuario = usuusuarios::where('usutoken', $usutoken)->first(['ususoldto']);
+
+        $respuesta      = false;
+        $mensaje        = '';
+        $datos          = [];
+        $linea          = __LINE__;
+        $mensajeDetalle = '';
+        $mensajedev     = null;
+
+
+        $columnasExcel = [
+            "A",
+            "B",
+            "C",
+            "D",
+            "E",
+            "F",
+            "G",
+            "H",
+            "I",
+            "J",
+            "K",
+            "L",
+            "M",
+            "N",
+            "O",
+            "P",
+            "Q",
+            "R",
+            "S",
+            "T",
+            "U",
+            "V",
+            // "W",
+            // "X",
+            "Y",
+            "Z",
+            // "AA",
+            // "AB",
+            "AC",
+            "AD",
+            // "AE",
+            // "AF",
+            "AG",
+            "AH",
+            "AI",
+            "AJ",
+            "AK",
+            "AL",
+            "AM",
+            "AN",
+            "AO",
+            "AP",
+            "AQ",
+            "AR",
+            "AS",
+            "AT",
+            "AU"
+        ];
+
+        $colorPlomo         = "FF595959";
+        $colorBlanco        = "FFFFFFFF";
+        $colorAzul          = "FF002060";
+        $colorVerdeClaro    = "FF66FF33";
+        $colorRosa          = "FFFF9999";
+        $colorNaranjaClaro  = "FFFFC000";
+        $colorPiel          = "FFFFF2CC";
+        $colorVerdeLimon    = "FFCCFFCC";        
+
+        try{
+
+            $uss = ussusuariossucursales::join('usuusuarios as usu', 'usu.usuid', 'ussusuariossucursales.usuid' )
+                                        ->where('ussusuariossucursales.sucid', $sucid)
+                                        ->get([
+                                            'ussusuariossucursales.ussid',
+                                            'ussusuariossucursales.usuid',
+                                            'ussusuariossucursales.sucid',
+                                            'usu.ususoldto'
+                                        ]);
+
+            $nuevoArray = array(
+                array(
+                    "columns" => [],
+                    "data"    => []
+                )
+            );
+
+
+            $fichero_subido = base_path().'/public/Sistema/cargaArchivos/promociones/promociones.xlsx';
+
+            $objPHPExcel    = IOFactory::load($fichero_subido);
+            $objPHPExcel->setActiveSheetIndex(0);
+            $numRows        = $objPHPExcel->setActiveSheetIndex(0)->getHighestRow();
+            $ultimaColumna  = $objPHPExcel->setActiveSheetIndex(0)->getHighestColumn();
+
+            for ($i=2; $i <= $numRows ; $i++) {
+
+                if($i == 2){
+
+                    $arrayTitulos = array(
+                        array(
+                            "title" => ""
+                        )
+                    );
+
+                    $contadorTitulos = 0;
+                    foreach($columnasExcel as $abc) {  
+                        $columnasFilas = $objPHPExcel->getActiveSheet()->getCell($abc.$i)->getCalculatedValue();
+                        
+                        $arrayTitulos[$contadorTitulos]['title'] = $columnasFilas;
+                        $arrayTitulos[$contadorTitulos]['style']['fill']['patternType'] = 'solid';
+                        if($abc == "A" || $abc == "B" || $abc == "J" || $abc == "K" || $abc == "M" || $abc == "N" || $abc == "Q" || $abc == "T" || $abc == "U" || $abc == "V" || $abc == "Z" || $abc == "AD" || $abc == "AG" || $abc == "AI" || $abc == "AK" || $abc == "AM" || $abc == "AN" || $abc == "AQ" || $abc == "AR" || $abc == "AS" || $abc == "AT"){
+                            $arrayTitulos[$contadorTitulos]['style']['fill']['fgColor']['rgb'] = $colorPlomo;
+                            $arrayTitulos[$contadorTitulos]['style']['font']['color']['rgb'] = $colorBlanco;
+                        }else if($abc == "C" || $abc == "D" || $abc == "E" || $abc == "F" || $abc == "G" || $abc == "H" || $abc == "I" || $abc == "L" || $abc == "O" || $abc == "P" || $abc == "Y" || $abc == "AC" || $abc == "AH" || $abc == "AL" || $abc == "AU"){
+                            $arrayTitulos[$contadorTitulos]['style']['fill']['fgColor']['rgb'] = $colorAzul;
+                            $arrayTitulos[$contadorTitulos]['style']['font']['color']['rgb'] = $colorBlanco;
+                        }else if($abc == "R" || $abc == "S" || $abc == "AO" || $abc == "AP"){
+                            $arrayTitulos[$contadorTitulos]['style']['fill']['fgColor']['rgb'] = $colorNaranjaClaro;
+                            $arrayTitulos[$contadorTitulos]['style']['font']['color']['rgb'] = $colorBlanco;
+                        }else if($abc == "W" || $abc == "X" || $abc == "AA" || $abc == "AB" || $abc == "AE" || $abc == "AF" || $abc == "R" ){
+                            $arrayTitulos[$contadorTitulos]['style']['fill']['fgColor']['rgb'] = $colorVerdeClaro;
+                        }else if($abc == "AJ"){
+                            $arrayTitulos[$contadorTitulos]['style']['fill']['fgColor']['rgb'] = $colorRosa;
+                            $arrayTitulos[$contadorTitulos]['style']['font']['color']['rgb'] = $colorBlanco;
+                        }
+                        $contadorTitulos = $contadorTitulos+1;
+                    }
+
+                    $nuevoArray[0]['columns'] = $arrayTitulos;
+
+                }else{
+                    $soldto = $objPHPExcel->getActiveSheet()->getCell('O'.$i)->getCalculatedValue();
+
+                    $pertenecedata = false;
+                    foreach($uss as $u){
+                        if($u->ususoldto == $soldto ){
+                            $pertenecedata = true;
+                            break;
+                        }else{
+                            $pertenecedata = false;
+                        }
+                    }
+
+                    if($pertenecedata == true){
+                        $arrayFilaExcel = array(
+                            array(
+                                "value" => ""
+                            )
+                        );
+                        $contadorColumna = 0;
+
+                        foreach($columnasExcel as $abc) {  
+                            $columnasFilas = $objPHPExcel->getActiveSheet()->getCell($abc.$i)->getCalculatedValue();
+                            
+                            if($columnasFilas == null){
+                                $columnasFilas = "";
+                            }
+
+                            $arrayFilaExcel[$contadorColumna]['value'] = $columnasFilas;
+
+                            if($abc == "L" || $abc == "O" || $abc == "P" || $abc == "R" || $abc == "S" || $abc == "Y" || $abc == "AC" || $abc == "AL" || $abc == "AU"){
+                                $arrayFilaExcel[$contadorColumna]['style']['fill']['patternType']    = 'solid';
+                                $arrayFilaExcel[$contadorColumna]['style']['fill']['fgColor']['rgb'] = $colorPiel;
+                            }else if($abc == "W" || $abc == "X" ){
+                                $arrayFilaExcel[$contadorColumna]['style']['fill']['patternType']    = 'solid';
+                                $arrayFilaExcel[$contadorColumna]['style']['fill']['fgColor']['rgb'] = $colorVerdeLimon;
+                            }else if($abc == "AH" || $abc == "AR"){
+                                $arrayFilaExcel[$contadorColumna]['style']['fill']['patternType']    = 'solid';
+                                $arrayFilaExcel[$contadorColumna]['style']['fill']['fgColor']['rgb'] = $colorNaranjaClaro;
+                            }
+
+                            $contadorColumna = $contadorColumna+1;
+                        }
+
+                        $nuevoArray[0]['data'][] = $arrayFilaExcel;
+                    }
+                }
+            }
+
+            $respuesta = true;
+            $datos     = $nuevoArray;
+
+        } catch (Exception $e) {
+            $mensajedev = $e->getMessage();
+            $linea      = __LINE__;
+        }
+
+        $requestsalida = response()->json([
+            'respuesta'      => $respuesta,
+            'mensaje'        => $mensaje,
+            'datos'          => $datos,
+            'linea'          => $linea,
+            'mensajeDetalle' => $mensajeDetalle,
+            'mensajedev'     => $mensajedev
+        ]);
+
+        return $requestsalida;
+
+
     }
 }

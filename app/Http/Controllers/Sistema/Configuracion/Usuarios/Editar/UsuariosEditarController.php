@@ -29,6 +29,7 @@ class UsuariosEditarController extends Controller
         $linea          = __LINE__;
         $mensajeDetalle = '';
         $mensajedev     = null;
+        $log            = [];
 
         try{
             
@@ -38,6 +39,7 @@ class UsuariosEditarController extends Controller
             $usuario->usucorreo     = $nuevCorr;
             if($editarCont == true){
                 $usuario->usucontrasena = Hash::make($nuevCont);
+                $log[] = "La contraseña se esta editando";
             }
 
             if($usuario->update()){
@@ -46,17 +48,20 @@ class UsuariosEditarController extends Controller
                 $linea          = __LINE__;
                 $mensaje        = 'El usuario se edito correctamente';
                 $mensajeDetalle = '';
+                $log[] = "El usuario se edito correctamente";
             }else{
                 $respuesta      = false;
                 $datos          = [];
                 $linea          = __LINE__;
                 $mensaje        = 'Lo sentimos, no se pudo editar el usuario';
                 $mensajeDetalle = '';
+                $log[] = "Hubo problemas al momento de editar el usuario";
             }
 
         } catch (Exception $e) {
             $mensajedev = $e->getMessage();
             $linea      = __LINE__;
+            $log[] = "ERROR DE SERVIDOR: ".$mensajedev;
         }
 
         $requestsalida = response()->json([
@@ -72,13 +77,14 @@ class UsuariosEditarController extends Controller
         $registrarAuditoria  = $AuditoriaController->registrarAuditoria(
             $usutoken,
             null,
-            $request['ip'],
+            null,
             $request,
             $requestsalida,
             'Editar los datos del usuario, tipo de usuario, usuario, correo y contraseña',
             'EDITAR',
-            '', //ruta
-            null
+            '/configuracion/usuarios/editarUsuario', //ruta
+            $usuid,
+            $log
         );
 
         if($registrarAuditoria == true){

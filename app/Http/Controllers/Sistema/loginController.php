@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Hash;
 use App\usuusuarios;
 use App\tuptiposusuariospermisos;
 use App\ussusuariossucursales;
+use App\cejclientesejecutivos;
 
 class loginController extends Controller
 {
@@ -26,14 +27,16 @@ class loginController extends Controller
 
         try{
             
-            $usuusaurio = usuusuarios::where('usuusuario', $usuario)
+            $usuusaurio = usuusuarios::join('perpersonas as per', 'per.perid', 'usuusuarios.perid')
+                                        ->where('usuusuarios.usuusuario', $usuario)
                                         ->first([
-                                            'usuid',
-                                            'usuusuario',
-                                            'usutoken',
-                                            'usucontrasena',
-                                            'tpuid'
-
+                                            'usuusuarios.usuid',
+                                            'usuusuarios.usuusuario',
+                                            'usuusuarios.usutoken',
+                                            'usuusuarios.usucontrasena',
+                                            'usuusuarios.tpuid',
+                                            'per.pernombre',
+                                            'per.pernombrecompleto'
                                         ]);
 
             if($usuusaurio){
@@ -66,6 +69,27 @@ class loginController extends Controller
                         $usuusaurio->sucursales = $ussusuariossucursales;
                     }else{
                         $usuusaurio->sucursales = [];
+                    }
+
+                    $cej = cejclientesejecutivos::join('usuusuarios as usu', 'usu.usuid', 'cejclientesejecutivos.cejejecutivo')
+                                                ->join('perpersonas as per', 'per.perid', 'usu.perid')
+                                                ->where('cejclientesejecutivos.cejcliente', $usuusaurio->usuid)
+                                                ->first([
+                                                    'cejclientesejecutivos.cejid',
+                                                    'per.pernombre',
+                                                    'per.pernombrecompleto'
+                                                ]);
+
+                    if($cej){
+                        $usuusaurio->idcej     = $cej->cejid;
+                        if($cej->pernombre == null){
+                            $usuusaurio->ejecutivo = $cej->pernombrecompleto;
+                        }else{
+                            $usuusaurio->ejecutivo = $cej->pernombre;
+                        }
+                    }else{
+                        $usuusaurio->idcej     = 0;
+                        $usuusaurio->ejecutivo = 'No tiene';
                     }
 
 

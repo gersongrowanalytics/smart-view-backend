@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Sistema\Promociones\Mostrar;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\csccanalessucursalescategorias;
-use App\Http\Controllers\AuditoriaController;
 use App\cspcanalessucursalespromociones;
 use App\prppromocionesproductos;
 use App\prbpromocionesbonificaciones;
@@ -29,9 +28,13 @@ class PromocionesMostrarController extends Controller
 
         try{
             $csccanalessucursalescategorias = csccanalessucursalescategorias::join('cancanales as can', 'can.canid', 'csccanalessucursalescategorias.canid')
+                                                                        ->join('cspcanalessucursalespromociones as csp', 'csp.cscid', 'csccanalessucursalescategorias.cscid')
                                                                         ->where('csccanalessucursalescategorias.scaid', $scaid)
+                                                                        ->where('csp.cspcantidadcombo', '!=', "0")
+                                                                        ->distinct('can.canid')
                                                                         ->get([
                                                                             'csccanalessucursalescategorias.cscid',
+                                                                            'csccanalessucursalescategorias.scaid',
                                                                             'can.canid',
                                                                             'can.cannombre'
                                                                         ]);
@@ -40,6 +43,7 @@ class PromocionesMostrarController extends Controller
                 
                 foreach($csccanalessucursalescategorias as $posicion => $csccanalesucursalcategoria){
                     $cspcanalessucursalespromociones = cspcanalessucursalespromociones::join('prmpromociones as prm', 'prm.prmid', 'cspcanalessucursalespromociones.prmid')
+                                                                                        ->join('tprtipospromociones as tpr', 'tpr.tprid', 'prm.tprid')
                                                                                         ->where('cscid', $csccanalesucursalcategoria->cscid)
                                                                                         ->get([
                                                                                             'cspcanalessucursalespromociones.cspid',
@@ -53,7 +57,8 @@ class PromocionesMostrarController extends Controller
                                                                                             'cspcanalessucursalespromociones.csptotalcombo',
                                                                                             'cspcanalessucursalespromociones.csptotalplancha',
                                                                                             'cspcanalessucursalespromociones.csptotal',
-                                                                                            'prm.prmaccion'
+                                                                                            'prm.prmaccion',
+                                                                                            'tpr.tprnombre'
                                                                                         ]);
                     $numeroPromocionesTerminadas = 0;
                                                                                        
@@ -70,7 +75,8 @@ class PromocionesMostrarController extends Controller
                                                                                     'pro.pronombre',
                                                                                     'pro.proimagen',
                                                                                     'prpproductoppt',
-                                                                                    'prpcomprappt'
+                                                                                    'prpcomprappt',
+                                                                                    'prpimagen'
                                                                                 ]);
 
                             if(sizeof($prppromocionesproductos) > 0){
@@ -88,7 +94,8 @@ class PromocionesMostrarController extends Controller
                                                                                             'pro.pronombre',
                                                                                             'pro.proimagen',
                                                                                             'prbproductoppt',
-                                                                                            'prbcomprappt'
+                                                                                            'prbcomprappt',
+                                                                                            'prbimagen'
                                                                                         ]);
                             
                             if(sizeof($prbpromocionesbonificaciones) > 0){
@@ -130,25 +137,6 @@ class PromocionesMostrarController extends Controller
             'mensajeDetalle' => $mensajeDetalle,
             'mensajedev'     => $mensajedev
         ]);
-
-        $AuditoriaController = new AuditoriaController;
-        $registrarAuditoria  = $AuditoriaController->registrarAuditoria(
-            $usutoken,
-            null,
-            $request['ip'],
-            $request,
-            $requestsalida,
-            'Mostrar las promociones de una categoria seleccionada, con su canal correspondiente segun el filtro de sucursal, fecha (dia, mes, año)',
-            'MOSTRAR',
-            '',
-            null
-        );
-
-        if($registrarAuditoria == true){
-
-        }else{
-            
-        }
         
         return $requestsalida;
     }

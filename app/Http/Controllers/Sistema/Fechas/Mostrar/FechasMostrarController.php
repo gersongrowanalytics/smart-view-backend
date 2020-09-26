@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Sistema\Fechas\Mostrar;
 
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\AuditoriaController;
 use Illuminate\Http\Request;
 use App\fecfechas;
 
@@ -91,25 +90,6 @@ class FechasMostrarController extends Controller
             "mensajeDetalle" => $mensajeDetalle,
             "mensajedev"     => $mensajedev
         ]);
-
-        $AuditoriaController = new AuditoriaController;
-        $registrarAuditoria  = $AuditoriaController->registrarAuditoria(
-            $usutoken,
-            null,
-            $request['ip'],
-            $request,
-            $requestsalida,
-            'Mostrar todas las fechas registradas ordenadas por la mas reciente',
-            'MOSTRAR',
-            '', //ruta
-            null
-        );
-
-        if($registrarAuditoria == true){
-
-        }else{
-            
-        }
         
         return $requestsalida;
     }

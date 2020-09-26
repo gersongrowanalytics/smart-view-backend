@@ -41,5 +41,11 @@ class pempermisosSeeder extends Seeder
             'pemslug'   => 'promociones.descargar',
             'pemruta'   => '/promociones/descargar',
         ]);
+
+        pempermisos::create([
+            'pemnombre' => 'Editar la promocion, planchas y valorizado',
+            'pemslug'   => 'promociones.editar',
+            'pemruta'   => '/promociones/editar',
+        ]);
     }
 }

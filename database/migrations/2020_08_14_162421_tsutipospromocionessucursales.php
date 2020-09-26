@@ -18,6 +18,7 @@ class Tsutipospromocionessucursales extends Migration
             $table->unsignedInteger('tprid');
             $table->unsignedInteger('sucid');
             $table->unsignedInteger('fecid');
+            $table->unsignedInteger('treid')->nullable();
             $table->string('tsuvalorizadoobjetivo');
             $table->string('tsuvalorizadoreal');
             $table->string('tsuvalorizadotogo');
@@ -28,6 +29,7 @@ class Tsutipospromocionessucursales extends Migration
             $table->foreign('tprid')->references('tprid')->on('tprtipospromociones');
             $table->foreign('sucid')->references('sucid')->on('sucsucursales');
             $table->foreign('fecid')->references('fecid')->on('fecfechas');
+            $table->foreign('treid')->references('treid')->on('tretiposrebates');
         });
     }
 

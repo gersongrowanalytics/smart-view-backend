@@ -17,7 +17,8 @@ class AuditoriaController extends Controller
         $auddescripcion,
         $audaccion,
         $audruta,
-        $audpk
+        $audpk,
+        $log
     )
     {
         $respuesta = false;
@@ -31,30 +32,34 @@ class AuditoriaController extends Controller
             }
         }
 
-        // $audauditorias = new audauditorias;
-        // $audauditorias->usuid           = $usuid;
-        // $audauditorias->audip           = $audip;
-        // $audauditorias->audjsonentrada  = $audjsonentrada;
+        $audauditorias = new audauditorias;
+        $audauditorias->usuid           = $usuid;
+        $audauditorias->audip           = $audip;
+        $audauditorias->audjsonentrada  = $audjsonentrada;
 
-        // // if(sizeof($$audjsonsalida) < 100){
-        // //     $audauditorias->audjsonsalida   = $audjsonsalida;
-        // // }else{
-        // //     $audauditorias->audjsonsalida   = null;
-        // // }
+        if(strlen($audjsonsalida) < 100){
+            $audauditorias->audjsonsalida   = $audjsonsalida;
+        }else{
+            $audauditorias->audjsonsalida   = substr($audjsonsalida, 0, 100);
+        }
 
-        // $audauditorias->audjsonsalida   = null;
+        $audauditorias->auddescripcion  = $auddescripcion;
+        $audauditorias->audaccion       = $audaccion;
+        $audauditorias->audruta         = $audruta;
+        $audauditorias->audpk           = $audpk;
+        
+        $log = json_encode($log);
+        if(strlen($log) < 100){
+            $audauditorias->audlog   = $log;
+        }else{
+            $audauditorias->audlog   = substr($log, 0, 100);
+        }
 
-        // $audauditorias->auddescripcion  = $auddescripcion;
-        // $audauditorias->audaccion       = $audaccion;
-        // $audauditorias->audruta         = $audruta;
-        // $audauditorias->audpk           = $audpk;
-        // if($audauditorias->save()){
-        //     $respuesta = true;
-        // }else{
-        //     $respuesta = false;
-        // }
-
-        $respuesta = true;
+        if($audauditorias->save()){
+            $respuesta = true;
+        }else{
+            $respuesta = false;
+        }
 
         return $respuesta;
 

@@ -21,6 +21,7 @@ class Prbpromocionesbonificaciones extends Migration
             $table->string('prbproductoppt');
             $table->string('prbcomprappt');
             $table->string('prbcodigoprincipal');
+            $table->string('prbimagen');
             $table->timestamps();
 
             $table->foreign('prmid')->references('prmid')->on('prmpromociones');

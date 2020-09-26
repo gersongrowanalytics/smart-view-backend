@@ -17,9 +17,9 @@ class Rtprebatetipospromociones extends Migration
             $table->increments('rtpid');
             $table->unsignedInteger('fecid');
             $table->unsignedInteger('tprid');
-            $table->string('rtpporcentajedesde');
-            $table->string('rtpporcentajehasta');
-            $table->string('rtpporcentajerebate');
+            $table->integer('rtpporcentajedesde');
+            $table->integer('rtpporcentajehasta');
+            $table->double('rtpporcentajerebate');
             $table->timestamps();
 
             $table->foreign('fecid')->references('fecid')->on('fecfechas');

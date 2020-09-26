@@ -11,6 +11,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        $this->call('estestadosSeeder');
         $this->call('tditiposdocumentosidentidadesSeeder');
         $this->call('perpersonasSeeder');
         $this->call('tputiposusuariosSeeder');
@@ -23,6 +24,8 @@ class DatabaseSeeder extends Seeder
         $this->call('tprtipospromocionesSeeder');
         $this->call('fecfechasSeeder');
         $this->call('tcatiposcargasarchivosSeeder');
-        
+        $this->call('tretiposrebatesSeeder');
+        $this->call('rtprebatetipospromocionesSeeder');
+        $this->call('trrtiposrebatesrebatesSeeder');
     }
 }

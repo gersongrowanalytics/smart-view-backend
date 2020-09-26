@@ -36,5 +36,10 @@ class tuptiposusuariospermisosSeeder extends Seeder
             'pemid' => 5,
             'tpuid' => 2
         ]);
+
+        tuptiposusuariospermisos::create([
+            'pemid' => 6,
+            'tpuid' => 2
+        ]);
     }
 }

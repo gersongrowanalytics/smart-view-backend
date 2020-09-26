@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\scasucursalescategorias;
 use App\catcategorias;
+use App\carcargasarchivos;
+use App\csccanalessucursalescategorias;
 
 class CategoriasController extends Controller
 {
@@ -53,6 +55,12 @@ class CategoriasController extends Controller
                 foreach($categorias as $poscioncat => $categoria){
                     foreach($scasucursalescategorias as $posicionsca => $sca){
                         if($categorias[$poscioncat]['catnombre'] == $scasucursalescategorias[$posicionsca]['catnombre']){
+
+                            $numeroPromociones = csccanalessucursalescategorias::join('cspcanalessucursalespromociones as csp', 'csp.cscid', 'csccanalessucursalescategorias.cscid')
+                                                            ->where('csccanalessucursalescategorias.scaid', $scasucursalescategorias[$posicionsca]['scaid'])
+                                                            ->count();
+
+                            $scasucursalescategorias[$posicionsca]['cantidadPromociones'] = $numeroPromociones;
                             break;
                         }elseif($posicionsca == sizeof($scasucursalescategorias)-1){
                             $nuevoArray = array(
@@ -68,6 +76,7 @@ class CategoriasController extends Controller
                                 "catcolor"                   => $categoria->catcolor,
                                 "caticonoseleccionado"       => $categoria->caticonoseleccionado,
                                 "fecfecha"                   => $scasucursalescategorias[$posicionsca]['fecfecha'],
+                                "cantidadPromociones"        => 0
                             );
 
                             $scasucursalescategorias[] = $nuevoArray;
@@ -105,13 +114,32 @@ class CategoriasController extends Controller
             $linea      = __LINE__;
         }
 
+
+        $car = carcargasarchivos::where('tcaid', 1)
+                                ->OrderBy('carcargasarchivos.created_at', 'DESC')
+                                ->first([
+                                    'carcargasarchivos.created_at'
+                                ]);
+                    
+        $fechaActualizacion = '';
+        if($car){
+            $meses = array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
+            $diaActualizacion   = date("j", strtotime($car->created_at))." de ";
+            $mesActualizacion   = $meses[date('n', strtotime($car->created_at))-1]." del ";
+            $anioActualizacion  = date("Y", strtotime($car->created_at));
+            $fechaActualizacion = $diaActualizacion.$mesActualizacion.$anioActualizacion;
+        }else{
+
+        }
+
         return response()->json([
             'respuesta'      => $respuesta,
             'mensaje'        => $mensaje,
             'datos'          => $datos,
             'linea'          => $linea,
             'mensajeDetalle' => $mensajeDetalle,
-            'mensajedev'     => $mensajedev
+            'mensajedev'     => $mensajedev,
+            'fechaActualiza' => $fechaActualizacion
         ]);
     }
 }

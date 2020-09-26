@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Sistema\Configuracion\Usuarios\Mostrar;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Http\Controllers\AuditoriaController;
 use App\usuusuarios;
 
 class UsuariosMostrarController extends Controller
@@ -62,25 +61,6 @@ class UsuariosMostrarController extends Controller
             "mensajedev"     => $mensajedev
         ]);
 
-        $AuditoriaController = new AuditoriaController;
-        $registrarAuditoria  = $AuditoriaController->registrarAuditoria(
-            $usutoken,
-            null,
-            $request['ip'],
-            $request,
-            $requestsalida,
-            'Mostrar todos las usuarios registradas con su tipo de usuario y nombre completo',
-            'MOSTRAR',
-            '', //ruta
-            null
-        );
-
-        if($registrarAuditoria == true){
-
-        }else{
-            
-        }
-        
         return $requestsalida;
     }
 }
