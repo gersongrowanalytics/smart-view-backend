@@ -27,7 +27,8 @@ class loginController extends Controller
 
         try{
             
-            $usuusaurio = usuusuarios::join('perpersonas as per', 'per.perid', 'usuusuarios.perid')
+            $usuusaurio = usuusuarios::join('tputiposusuarios as tpu', 'tpuid', 'usuusuarios.tpuid')
+                                        ->join('perpersonas as per', 'per.perid', 'usuusuarios.perid')
                                         ->where('usuusuarios.usuusuario', $usuario)
                                         ->first([
                                             'usuusuarios.usuid',
@@ -35,6 +36,8 @@ class loginController extends Controller
                                             'usuusuarios.usutoken',
                                             'usuusuarios.usucontrasena',
                                             'usuusuarios.tpuid',
+                                            'tpu.tpunombre',
+                                            'tpu.tpuprivilegio',
                                             'per.pernombre',
                                             'per.pernombrecompleto'
                                         ]);
