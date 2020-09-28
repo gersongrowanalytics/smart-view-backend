@@ -33,7 +33,7 @@ class PermisosController extends Controller
     
                 if($tup){
     
-                    if($dat->seleccionado == false){
+                    if($dat['seleccionado'] == false){
                         if($tup->delete()){
                             $log[] = "El tup ".$tup->tupid." que le pertenecia al permiso: ".$dat['pemid']." del tipo de usaurio: ".$tpuid." se elimino correctamente";
                             $linea = __LINE__;
@@ -46,7 +46,7 @@ class PermisosController extends Controller
                     }
     
                 }else{
-                    if($dat->seleccionado == true){
+                    if($dat['seleccionado'] == true){
                         $nuevoTup = new tuptiposusuariospermisos;
                         $nuevoTup->pemid = $dat['pemid'];
                         $nuevoTup->tpuid = $tpuid;
