@@ -14,7 +14,7 @@ class PermisosController extends Controller
     {
         $tpuid = $request['tpuid'];
         $data  = $request['data'];
-        dd($data);
+        
         $respuesta      = true;
         $mensaje        = 'Los permisos se actualizaron correctamente';
         $datos          = [];
@@ -27,6 +27,7 @@ class PermisosController extends Controller
         try{
 
             foreach($data as $dat){
+                dd($dat);
 
                 $tup = tuptiposusuariospermisos::where('pemid', $dat->pemid)
                                             ->where('tpuid', $tpuid)
