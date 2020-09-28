@@ -34,6 +34,7 @@ $router->group(['middleware' => ['permisos']], function() use($router) {
     $router->post('/configuracion/usuarios/mostrar/TiposUsuarios', 'Sistema\Configuracion\Usuarios\Mostrar\TiposUsuariosController@mostrarTiposUsuarios');
 
     $router->post('/configuracion/usuarios/mostrar/permisos/tipoUsuario', 'Sistema\Configuracion\Usuarios\Mostrar\PermisosController@MostrarPermisosTipoUsuario');
+    $router->post('/configuracion/usuarios/editar/permisos/tipoUsuario', 'Sistema\Configuracion\Usuarios\Editar\PermisosController@EditarPermisosTipoUsuario');
 
     $router->post('/configuracion/rebate/crearRebate', 'Sistema\Configuracion\Rebate\Crear\RebateCrearController@CrearRebate');
     $router->post('/configuracion/rebate/crear/GrupoRebate', 'Sistema\Configuracion\Rebate\Crear\GrupoRebateCrearController@CrearGrupoRebate');
