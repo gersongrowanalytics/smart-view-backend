@@ -41,12 +41,6 @@ class TiposUsuariosController extends Controller
             $mensajedev = $e->getMessage();
             $linea      = __LINE__;
         }
-
-        if($registrarAuditoria == true){
-
-        }else{
-            
-        }
         
         return $requestsalida;
     }
