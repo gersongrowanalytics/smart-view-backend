@@ -12,6 +12,7 @@ class PermisosController extends Controller
 {
     public function EditarPermisosTipoUsuario(Request $request)
     {
+        $usutoken   = $request->header('api_token');
         $tpuid = $request['tpuid'];
         $data  = $request['data'];
         
