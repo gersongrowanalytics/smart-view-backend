@@ -17,7 +17,6 @@ class PermisosController extends Controller
         
         $respuesta      = true;
         $mensaje        = 'Los permisos se actualizaron correctamente';
-        $datos          = [];
         $linea          = __LINE__;
         $mensajeDetalle = '';
         $mensajedev     = null;
@@ -27,9 +26,8 @@ class PermisosController extends Controller
         try{
 
             foreach($data as $dat){
-                dd($dat);
 
-                $tup = tuptiposusuariospermisos::where('pemid', $dat->pemid)
+                $tup = tuptiposusuariospermisos::where('pemid', $dat['pemid'])
                                             ->where('tpuid', $tpuid)
                                             ->first(['tupid']);
     
@@ -37,10 +35,10 @@ class PermisosController extends Controller
     
                     if($dat->seleccionado == false){
                         if($tup->delete()){
-                            $log[] = "El tup ".$tup->tupid." que le pertenecia al permiso: ".$dat->pemid." del tipo de usaurio: ".$tpuid." se elimino correctamente";
+                            $log[] = "El tup ".$tup->tupid." que le pertenecia al permiso: ".$dat['pemid']." del tipo de usaurio: ".$tpuid." se elimino correctamente";
                             $linea = __LINE__;
                         }else{
-                            $log[] = "El tup ".$tup->tupid." que le pertenece al permiso: ".$dat->pemid." del tipo de usaurio: ".$tpuid." no se pudo eliminar";
+                            $log[] = "El tup ".$tup->tupid." que le pertenece al permiso: ".$dat['pemid']." del tipo de usaurio: ".$tpuid." no se pudo eliminar";
                             $respuesta = false;
                             $linea = __LINE__;
                             $mensaje = 'Lo sentimos, ocurrio un error al momento de quitar uno de los permisos';
@@ -50,13 +48,13 @@ class PermisosController extends Controller
                 }else{
                     if($dat->seleccionado == true){
                         $nuevoTup = new tuptiposusuariospermisos;
-                        $nuevoTup->pemid = $dat->pemid;
+                        $nuevoTup->pemid = $dat['pemid'];
                         $nuevoTup->tpuid = $tpuid;
                         if($nuevoTup->save()){
-                            $log[] = "El tup ".$nuevoTup->tupid." que le pertenece al permiso: ".$dat->pemid." del tipo de usaurio: ".$tpuid." se creo satisfactoriamente";
+                            $log[] = "El tup ".$nuevoTup->tupid." que le pertenece al permiso: ".$dat['pemid']." del tipo de usaurio: ".$tpuid." se creo satisfactoriamente";
                             $linea = __LINE__;
                         }else{
-                            $log[] = "El tup ".$nuevoTup->tupid." que le pertenece al permiso: ".$dat->pemid." del tipo de usaurio: ".$tpuid." no se pudo crear";
+                            $log[] = "El tup ".$nuevoTup->tupid." que le pertenece al permiso: ".$dat['pemid']." del tipo de usaurio: ".$tpuid." no se pudo crear";
                             $respuesta = false;
                             $linea = __LINE__;
                             $mensaje = 'Lo sentimos, ocurrio un error al momento agregar un permiso';
@@ -78,7 +76,6 @@ class PermisosController extends Controller
         $requestsalida = response()->json([
             "respuesta"      => $respuesta,
             "mensaje"        => $mensaje,
-            "datos"          => $datos,
             "linea"          => $linea,
             "mensajeDetalle" => $mensajeDetalle,
             "mensajedev"     => $mensajedev
