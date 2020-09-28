@@ -27,6 +27,7 @@ class PermisosController extends Controller
         $pems = pempermisos::get(['pemid', 'pemnombre', 'pemslug', 'pemruta']);
 
         foreach($pems as $posicionPem => $pem){
+            $pems[$posicionPem]['seleccionado'] = false;
             foreach($tups as $tup){
                 if($pem->pemid == $tup->pemid){
                     $pems[$posicionPem]['seleccionado'] = true;
