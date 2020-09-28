@@ -14,7 +14,7 @@ class PermisosController extends Controller
     {
         $tpuid = $request['tpuid'];
         $data  = $request['data'];
-        echo $data;
+        dd($data);
         $respuesta      = true;
         $mensaje        = 'Los permisos se actualizaron correctamente';
         $datos          = [];
