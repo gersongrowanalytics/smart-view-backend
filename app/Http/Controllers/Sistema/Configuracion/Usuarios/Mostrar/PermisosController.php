@@ -15,7 +15,7 @@ class PermisosController extends Controller
         $tpuid = $request['tpuid'];
 
         $tups = tuptiposusuariospermisos::join('pempermisos as pem', 'pem.pemid', 'tuptiposusuariospermisos.pemid')
-                                        ->where()
+                                        ->where('tuptiposusuariospermisos.tpuid', $tpuid)
                                         ->get([
                                             'pem.pemid',
                                             'pem.pemnombre',
