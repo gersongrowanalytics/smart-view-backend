@@ -41,6 +41,15 @@ class TiposUsuariosController extends Controller
             $mensajedev = $e->getMessage();
             $linea      = __LINE__;
         }
+
+        $requestsalida = response()->json([
+            "respuesta"      => $respuesta,
+            "mensaje"        => $mensaje,
+            "datos"          => $datos,
+            "linea"          => $linea,
+            "mensajeDetalle" => $mensajeDetalle,
+            "mensajedev"     => $mensajedev
+        ]);
         
         return $requestsalida;
     }
