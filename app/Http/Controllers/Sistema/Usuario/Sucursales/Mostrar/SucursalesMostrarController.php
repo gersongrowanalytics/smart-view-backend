@@ -29,7 +29,7 @@ class SucursalesMostrarController extends Controller
             if($usuusuario){
                 $tup = tuptiposusuariospermisos::join('pempermisos as pem', 'pem.pemid', 'tuptiposusuariospermisos.pemid')
                                                 ->where('pem.pemid', 7)
-                                                ->where('tuptiposusuariospermisos.tpuid', 3)
+                                                ->where('tuptiposusuariospermisos.tpuid', $usuusuario->tpuid)
                                                 ->first([
                                                     'pem.pemid'
                                                 ]);
