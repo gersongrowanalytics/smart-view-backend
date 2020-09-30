@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\usuusuarios;
 use App\ussusuariossucursales;
+use App\tuptiposusuariospermisos;
 
 class SucursalesMostrarController extends Controller
 {
@@ -26,8 +27,14 @@ class SucursalesMostrarController extends Controller
             $usuusuario = usuusuarios::where('usutoken', $request->header('api_token'))->first(['usuid', 'tpuid']);
 
             if($usuusuario){
-                
-                if($usuusuario->tpuid == 1){
+                $tup = tuptiposusuariospermisos::join('pempermisos as pem', 'pem.pemid', 'tuptiposusuariospermisos.pemid')
+                                                ->where('pem.pemslug', 'mostrar.sucursales.zona.todo')
+                                                ->first([
+                                                    'pem.pemid'
+                                                ]);
+                                                
+                // if($usuusuario->tpuid == 1){
+                if($tup || $usuusuario->tpuid == 1){
 
                     $zonas = ussusuariossucursales::join('sucsucursales as suc', 'suc.sucid', 'ussusuariossucursales.sucid')
                                                     ->join('usuusuarios as usu', 'usu.usuid', 'ussusuariossucursales.usuid')
