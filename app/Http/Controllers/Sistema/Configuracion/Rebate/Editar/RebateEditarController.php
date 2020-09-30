@@ -35,7 +35,7 @@ class RebateEditarController extends Controller
         $log           = [];
         $usutoken       = $request->header('api_token');
 
-        DB::beginTransaction(); 
+        DB::beginTransaction();
 
         try{
             

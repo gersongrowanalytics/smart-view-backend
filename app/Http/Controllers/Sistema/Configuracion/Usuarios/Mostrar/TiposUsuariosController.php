@@ -42,11 +42,14 @@ class TiposUsuariosController extends Controller
             $linea      = __LINE__;
         }
 
-        if($registrarAuditoria == true){
-
-        }else{
-            
-        }
+        $requestsalida = response()->json([
+            "respuesta"      => $respuesta,
+            "mensaje"        => $mensaje,
+            "datos"          => $datos,
+            "linea"          => $linea,
+            "mensajeDetalle" => $mensajeDetalle,
+            "mensajedev"     => $mensajedev
+        ]);
         
         return $requestsalida;
     }
