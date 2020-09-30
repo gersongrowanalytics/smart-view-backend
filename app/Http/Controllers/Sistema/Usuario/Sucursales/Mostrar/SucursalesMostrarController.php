@@ -28,7 +28,7 @@ class SucursalesMostrarController extends Controller
 
             if($usuusuario){
                 $tup = tuptiposusuariospermisos::join('pempermisos as pem', 'pem.pemid', 'tuptiposusuariospermisos.pemid')
-                                                ->where('pem.pemslug', 'mostrar.sucursales.zona.todo')
+                                                ->where('pem.pemid', 7)
                                                 ->where('tuptiposusuariospermisos.tpuid', 3)
                                                 ->first([
                                                     'pem.pemid'
