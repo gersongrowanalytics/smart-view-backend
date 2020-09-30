@@ -29,12 +29,13 @@ class SucursalesMostrarController extends Controller
             if($usuusuario){
                 $tup = tuptiposusuariospermisos::join('pempermisos as pem', 'pem.pemid', 'tuptiposusuariospermisos.pemid')
                                                 ->where('pem.pemslug', 'mostrar.sucursales.zona.todo')
+                                                ->where('tuptiposusuariospermisos.tupid', $usuusuario->tpuid)
                                                 ->first([
                                                     'pem.pemid'
                                                 ]);
                                                 
                 // if($usuusuario->tpuid == 1){
-                if($tup || $usuusuario->tpuid == 1){
+                if($tup ){
 
                     $zonas = ussusuariossucursales::join('sucsucursales as suc', 'suc.sucid', 'ussusuariossucursales.sucid')
                                                     ->join('usuusuarios as usu', 'usu.usuid', 'ussusuariossucursales.usuid')
