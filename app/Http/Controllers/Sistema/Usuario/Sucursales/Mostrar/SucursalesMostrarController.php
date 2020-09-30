@@ -35,7 +35,7 @@ class SucursalesMostrarController extends Controller
                                                 ]);
                                                 
                 // if($usuusuario->tpuid == 1){
-                if($tup){
+                if($tup || $usuusuario->tpuid == 1){
 
                     $zonas = ussusuariossucursales::join('sucsucursales as suc', 'suc.sucid', 'ussusuariossucursales.sucid')
                                                     ->join('usuusuarios as usu', 'usu.usuid', 'ussusuariossucursales.usuid')
