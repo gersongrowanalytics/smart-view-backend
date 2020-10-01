@@ -47,5 +47,18 @@ class pempermisosSeeder extends Seeder
             'pemslug'   => 'promociones.editar',
             'pemruta'   => '/promociones/editar',
         ]);
+        
+        pempermisos::create([
+            'pemid'     => 7,
+            'pemnombre' => 'VER TODAS LAS ZONAS CON SUS DISTRIBUIDORAS DISPONIBLES',
+            'pemslug'   => 'mostrar.sucursales.zona.todo',
+            'pemruta'   => '',
+        ]);
+
+        pempermisos::create([
+            'pemnombre' => 'Mostrar todas las fechas disponibles',
+            'pemslug'   => 'fechas.mostrar',
+            'pemruta'   => '/fechas/mostrar/fechas',
+        ]);
     }
 }
