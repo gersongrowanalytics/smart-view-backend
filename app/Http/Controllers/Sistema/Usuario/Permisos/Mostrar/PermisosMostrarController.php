@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Sistema\Usuario\Permisos\Mostar;
+namespace App\Http\Controllers\Sistema\Usuario\Permisos\Mostrar;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
