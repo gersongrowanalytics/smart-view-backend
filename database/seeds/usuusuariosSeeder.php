@@ -20,7 +20,8 @@ class usuusuariosSeeder extends Seeder
             'usuusuario'    => 'Administrador',
             'usucorreo'     => 'Gerson.Vilca@grow-analytics.com',
             'usucontrasena' => Hash::make('1234'),
-            'usutoken'      => Str::random(60),
+            // 'usutoken'      => Str::random(60),
+            'usutoken'      => "HJ0t4xbw7zmQdZnpAyhffbMORIn8RpD9cUyRihQmXejkIOgmym6fuDOyWag0"
         ]);
     }
 }
