@@ -139,5 +139,12 @@ class pempermisosSeeder extends Seeder
             'pemslug'   => 'modulo.promocion.boton.editar.promocion',
             'pemruta'   => null,
         ]);
+
+        pempermisos::create([
+            'pemid'     => 19,
+            'pemnombre' => 'EDITAR LAS IMAGENES DE PRODUCTOS Y BONIFICACIONES EN PROMOCIONES',
+            'pemslug'   => 'promociones.editar.imagenes',
+            'pemruta'   => '/promociones/editar/imagenes',
+        ]);
     }
 }

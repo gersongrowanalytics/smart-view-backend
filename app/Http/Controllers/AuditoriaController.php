@@ -35,7 +35,11 @@ class AuditoriaController extends Controller
         $audauditorias = new audauditorias;
         $audauditorias->usuid           = $usuid;
         $audauditorias->audip           = $audip;
-        $audauditorias->audjsonentrada  = $audjsonentrada;
+        if(strlen($audjsonentrada) < 100){
+            $audauditorias->audjsonentrada   = $audjsonentrada;
+        }else{
+            $audauditorias->audjsonentrada   = substr($audjsonentrada, 0, 100);
+        }
 
         if(strlen($audjsonsalida) < 100){
             $audauditorias->audjsonsalida   = $audjsonsalida;
