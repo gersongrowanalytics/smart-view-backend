@@ -16,7 +16,7 @@ $router->get('/', function () use ($router) {
 });
 
 
-
+$router->get('/mail', 'MailController@getMail');
 $router->post('/login', 'Sistema\loginController@login');
 
 $router->group(['middleware' => ['permisos']], function() use($router) {
@@ -29,8 +29,10 @@ $router->group(['middleware' => ['permisos']], function() use($router) {
     $router->post('/usuario/mostrar/sucursales', 'Sistema\Usuario\Sucursales\Mostrar\SucursalesMostrarController@mostrarSucursales');
     $router->post('/usuario/mostrar/permisos', 'Sistema\Usuario\Permisos\Mostrar\PermisosMostrarController@mostrarPermisosUsuario');
     
+    $router->post('/configuracion/usuarios/crear/usuario', 'Sistema\Configuracion\Usuarios\Crear\UsuarioCrearController@CrearUsuario');
     $router->post('/configuracion/usuarios/editarUsuario', 'Sistema\Configuracion\Usuarios\Editar\UsuariosEditarController@editarUsuario');
     $router->post('/configuracion/usuarios/mostrarUsuarios', 'Sistema\Configuracion\Usuarios\Mostrar\UsuariosMostrarController@mostrarUsuarios');
+    $router->post('/configuracion/usuarios/mostrar/ejecutivos', 'Sistema\Configuracion\Usuarios\Mostrar\EjecutivosMostrarController@mostrarEjecutivos');
     $router->post('/configuracion/usuarios/mostrar/TiposUsuarios', 'Sistema\Configuracion\Usuarios\Mostrar\TiposUsuariosController@mostrarTiposUsuarios');
 
     $router->post('/configuracion/usuarios/mostrar/permisos/tipoUsuario', 'Sistema\Configuracion\Usuarios\Mostrar\PermisosController@MostrarPermisosTipoUsuario');

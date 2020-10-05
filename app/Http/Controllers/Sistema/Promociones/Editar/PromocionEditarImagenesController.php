@@ -21,7 +21,7 @@ class PromocionEditarImagenesController extends Controller
         $imagenBonificado   = $request['imagenBonificado'];
 
         $respuesta      = true;
-        $mensaje        = '';
+        $mensaje        = 'Las imagenes se actualizaron correctamente';
         $datos          = [];
         $linea          = __LINE__;
         $mensajeDetalle = '';
@@ -52,6 +52,7 @@ class PromocionEditarImagenesController extends Controller
                     }else{
                         $respuesta = false;
                         $log[]   = "NO SE EDITO LA IMAGEN DEL PRODUCTO";
+                        $mensaje = 'Lo sentimos, ocurrio un error al momento de editar la imagen de producto';
                     }
 
                 }else{
@@ -78,6 +79,7 @@ class PromocionEditarImagenesController extends Controller
                     }else{
                         $respuesta = false;
                         $log[]   = "NO SE EDITO LA IMAGEN DEL PRODUCTO";
+                        $mensaje = 'Lo sentimos, ocurrio un error al momento de editar la imagen de bonificado';
                     }
                 }else{
                     $respuesta = false;

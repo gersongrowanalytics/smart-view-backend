@@ -24,7 +24,7 @@ class EjecutivosMostrarController extends Controller
         try{
             $usuarios = usuusuarios::join('perpersonas as per', 'per.perid', 'usuusuarios.perid')
                                 ->join('tputiposusuarios as tpu', 'tpu.tpuid', 'usuusuarios.tpuid')
-                                ->where('usuusuarios.tpuid', 3 )
+                                ->where('usuusuarios.tpuid', 3 ) // TIPO DE USUARIO EJECUTIVO
                                 ->get([
                                     'usuusuarios.usuid',
                                     'tpu.tpuid',
