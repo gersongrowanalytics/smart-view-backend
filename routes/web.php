@@ -50,7 +50,8 @@ $router->group(['middleware' => ['permisos']], function() use($router) {
     $router->post('/promociones/editar', 'Sistema\Promociones\Editar\PromocionEditarController@editarPromocion');
     $router->post('/promociones/editar/imagenes', 'Sistema\Promociones\Editar\PromocionEditarImagenesController@EditarImagenesPromocion');
 
-
+    $router->post('/mostrar/tpus', 'Sistema\Tpu\Mostrar\TpusMostrarController@MostrarTpus');
+    $router->post('/mostrar/tdis', 'Sistema\Tdi\Mostrar\TdisMostrarController@MostrarTdis');
 
     $router->post('/cargarArchivo/promociones', 'Sistema\CargarArchivo\Promociones\CargarArchivoController@CargarArchivo');
     $router->post('/cargarArchivo/ventas/obejtivos', 'Sistema\CargarArchivo\Ventas\ObjetivoCargarController@CargarObjetivo');
