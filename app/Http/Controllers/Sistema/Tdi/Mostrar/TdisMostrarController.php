@@ -14,7 +14,7 @@ class TdisMostrarController extends Controller
         $mensaje    = "Se cargaron todos los tdis satisfactoriamente";
         $data       = [];
 
-        $tdis = tditiposdocumentosidentidades::get();
+        $tdis = tditiposdocumentosidentidades::get(['tdiid', 'tdiabreviacion']);
         if(sizeof($tdis) > 0){
             $data = $tdis;
         }else{
