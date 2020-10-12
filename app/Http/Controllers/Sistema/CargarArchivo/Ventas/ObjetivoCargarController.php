@@ -58,20 +58,23 @@ class ObjetivoCargarController extends Controller
                 $ultimaColumna  = $objPHPExcel->setActiveSheetIndex(0)->getHighestColumn();
 
                 for ($i=2; $i <= $numRows ; $i++) {
-                    $ano = '2020';
+                    // $ano = '2020';
                     $dia = '01';
 
-                    $mes         = 'AGO';
-                    $soldto      = $objPHPExcel->getActiveSheet()->getCell('B'.$i)->getCalculatedValue();
-                    $cliente     = $objPHPExcel->getActiveSheet()->getCell('C'.$i)->getCalculatedValue();
-                    $grupoRebate = $objPHPExcel->getActiveSheet()->getCell('D'.$i)->getCalculatedValue();
-                    $sector      = $objPHPExcel->getActiveSheet()->getCell('F'.$i)->getCalculatedValue();
-                    $sku         = $objPHPExcel->getActiveSheet()->getCell('H'.$i)->getCalculatedValue();
-                    $producto    = $objPHPExcel->getActiveSheet()->getCell('I'.$i)->getCalculatedValue();
-                    $objetivo    = $objPHPExcel->getActiveSheet()->getCell('J'.$i)->getCalculatedValue();
+                    $mesTxt      = 'SET';
+                    $ano         = $objPHPExcel->getActiveSheet()->getCell('A'.$i)->getCalculatedValue();
+                    $mes         = $objPHPExcel->getActiveSheet()->getCell('B'.$i)->getCalculatedValue();
+
+                    $soldto      = $objPHPExcel->getActiveSheet()->getCell('D'.$i)->getCalculatedValue();
+                    $cliente     = $objPHPExcel->getActiveSheet()->getCell('E'.$i)->getCalculatedValue();
+                    $grupoRebate = $objPHPExcel->getActiveSheet()->getCell('F'.$i)->getCalculatedValue();
+                    $sector      = $objPHPExcel->getActiveSheet()->getCell('H'.$i)->getCalculatedValue();
+                    $sku         = $objPHPExcel->getActiveSheet()->getCell('J'.$i)->getCalculatedValue();
+                    $producto    = $objPHPExcel->getActiveSheet()->getCell('K'.$i)->getCalculatedValue();
+                    $objetivo    = $objPHPExcel->getActiveSheet()->getCell('L'.$i)->getCalculatedValue();
         
                     $fecfecha = fecfechas::where('fecdia', $dia)
-                                        ->where('fecmes', $mes)
+                                        ->where('fecmes', $mesTxt)
                                         ->where('fecano', $ano)
                                         ->first(['fecid']);
                     $fecid = 0;
@@ -81,7 +84,7 @@ class ObjetivoCargarController extends Controller
                         $nuevaFecha = new fecfechas;
                         $nuevaFecha->fecfecha = new \DateTime(date("Y-m-d", strtotime($ano.'-'.$mes.'-'.$dia)));
                         $nuevaFecha->fecdia   = $dia;
-                        $nuevaFecha->fecmes   = $mes;
+                        $nuevaFecha->fecmes   = $mesTxt;
                         $nuevaFecha->fecano   = $ano;
                         if($nuevaFecha->save()){
                             $fecid = $nuevaFecha->fecid;
@@ -399,20 +402,23 @@ class ObjetivoCargarController extends Controller
                 $ultimaColumna  = $objPHPExcel->setActiveSheetIndex(0)->getHighestColumn();
 
                 for ($i=2; $i <= $numRows ; $i++) {
-                    $ano = '2020';
+                    // $ano = '2020';
                     $dia = '01';
         
-                    $mes         = 'AGO';
-                    $soldto      = $objPHPExcel->getActiveSheet()->getCell('B'.$i)->getCalculatedValue();
-                    $cliente     = $objPHPExcel->getActiveSheet()->getCell('C'.$i)->getCalculatedValue();
-                    $grupoRebate = $objPHPExcel->getActiveSheet()->getCell('D'.$i)->getCalculatedValue();
-                    $sector      = $objPHPExcel->getActiveSheet()->getCell('F'.$i)->getCalculatedValue();
-                    $sku         = $objPHPExcel->getActiveSheet()->getCell('H'.$i)->getCalculatedValue();
-                    $producto    = $objPHPExcel->getActiveSheet()->getCell('I'.$i)->getCalculatedValue();
-                    $objetivo    = $objPHPExcel->getActiveSheet()->getCell('J'.$i)->getCalculatedValue();
+                    $mesTxt      = 'SET';
+                    $ano         = $objPHPExcel->getActiveSheet()->getCell('A'.$i)->getCalculatedValue();
+                    $mes         = $objPHPExcel->getActiveSheet()->getCell('B'.$i)->getCalculatedValue();
+
+                    $soldto      = $objPHPExcel->getActiveSheet()->getCell('D'.$i)->getCalculatedValue();
+                    $cliente     = $objPHPExcel->getActiveSheet()->getCell('E'.$i)->getCalculatedValue();
+                    $grupoRebate = $objPHPExcel->getActiveSheet()->getCell('F'.$i)->getCalculatedValue();
+                    $sector      = $objPHPExcel->getActiveSheet()->getCell('H'.$i)->getCalculatedValue();
+                    $sku         = $objPHPExcel->getActiveSheet()->getCell('J'.$i)->getCalculatedValue();
+                    $producto    = $objPHPExcel->getActiveSheet()->getCell('K'.$i)->getCalculatedValue();
+                    $objetivo    = $objPHPExcel->getActiveSheet()->getCell('L'.$i)->getCalculatedValue();
         
                     $fecfecha = fecfechas::where('fecdia', $dia)
-                                        ->where('fecmes', $mes)
+                                        ->where('fecmes', $mesTxt)
                                         ->where('fecano', $ano)
                                         ->first(['fecid']);
                     $fecid = 0;
@@ -422,7 +428,7 @@ class ObjetivoCargarController extends Controller
                         $nuevaFecha = new fecfechas;
                         $nuevaFecha->fecfecha = new \DateTime(date("Y-m-d", strtotime($ano.'-'.$mes.'-'.$dia)));
                         $nuevaFecha->fecdia   = $dia;
-                        $nuevaFecha->fecmes   = $mes;
+                        $nuevaFecha->fecmes   = $mesTxt;
                         $nuevaFecha->fecano   = $ano;
                         if($nuevaFecha->save()){
                             $fecid = $nuevaFecha->fecid;

@@ -3,20 +3,20 @@
 }
 
 #cabezaCorreo{
-    width: 100%;
+    /* width: 100%;
     height: 200px;
-    background: cornflowerblue;
+    background: cornflowerblue; */
 
 }
 
 #cuerpoCorreo{
-    text-align: -webkit-center;
+    /* text-align: -webkit-center; */
 }
 
 #tituloSaludo{
-    color: #518AFF;
+    /* color: #518AFF;
     padding-top: 10px;
-    padding-bottom: 10px;
+    padding-bottom: 10px; */
 }
 
 #txtNegrita{
@@ -24,16 +24,16 @@
 }
 
 #piesCorreo{
-    background: #ECF1FA;
-    padding: 20px;
+    /* background: #ECF1FA;
+    padding: 20px; */
 }
 
 #logoPies{
-    float: right;
+    /* float: right; */
 }
 
 #btnPlataforma{
-    text-decoration: none;
+    /* text-decoration: none;
     color: white;
     background: #558CFF;
     padding-top: 10px;
@@ -41,9 +41,9 @@
     padding-left: 35px;
     padding-right: 35px;
     border-radius: 20px;
-    margin-top: 40px;
+    margin-top: 40px; */
 }
 
 #direccionCorreo{
-    color: #70AAFF;
+    /* color: #70AAFF; */
 }

@@ -63,48 +63,49 @@ class CargarArchivoController extends Controller
                 $ultimaColumna  = $objPHPExcel->setActiveSheetIndex(0)->getHighestColumn();
 
                 for ($i=3; $i <= $numRows ; $i++) {
-                    $ano = '2020';
+                    // $ano = '2020';
                     $dia = '01';
         
-                    $mes        = $objPHPExcel->getActiveSheet()->getCell('A'.$i)->getCalculatedValue();
-                    $subCanal   = $objPHPExcel->getActiveSheet()->getCell('J'.$i)->getCalculatedValue();
-                    $ejecutivo  = $objPHPExcel->getActiveSheet()->getCell('L'.$i)->getCalculatedValue();
-                    $soldTo     = $objPHPExcel->getActiveSheet()->getCell('O'.$i)->getCalculatedValue();
-                    $cliente    = $objPHPExcel->getActiveSheet()->getCell('P'.$i)->getCalculatedValue();
-                    $accion     = $objPHPExcel->getActiveSheet()->getCell('Q'.$i)->getCalculatedValue();
-                    $cantCompra = $objPHPExcel->getActiveSheet()->getCell('R'.$i)->getCalculatedValue();
-                    $cantBonifi = $objPHPExcel->getActiveSheet()->getCell('S'.$i)->getCalculatedValue();
-                    $mecanica   = $objPHPExcel->getActiveSheet()->getCell('U'.$i)->getCalculatedValue();
-                    $categoria  = $objPHPExcel->getActiveSheet()->getCell('V'.$i)->getCalculatedValue();
+                    $ano        = $objPHPExcel->getActiveSheet()->getCell('A'.$i)->getCalculatedValue();
+                    $mes        = $objPHPExcel->getActiveSheet()->getCell('B'.$i)->getCalculatedValue();
+                    $subCanal   = $objPHPExcel->getActiveSheet()->getCell('K'.$i)->getCalculatedValue();
+                    $ejecutivo  = $objPHPExcel->getActiveSheet()->getCell('M'.$i)->getCalculatedValue();
+                    $soldTo     = $objPHPExcel->getActiveSheet()->getCell('P'.$i)->getCalculatedValue();
+                    $cliente    = $objPHPExcel->getActiveSheet()->getCell('Q'.$i)->getCalculatedValue();
+                    $accion     = $objPHPExcel->getActiveSheet()->getCell('R'.$i)->getCalculatedValue();
+                    $cantCompra = $objPHPExcel->getActiveSheet()->getCell('S'.$i)->getCalculatedValue();
+                    $cantBonifi = $objPHPExcel->getActiveSheet()->getCell('T'.$i)->getCalculatedValue();
+                    $mecanica   = $objPHPExcel->getActiveSheet()->getCell('V'.$i)->getCalculatedValue();
+                    $categoria  = $objPHPExcel->getActiveSheet()->getCell('W'.$i)->getCalculatedValue();
 
                     /**NUEVOS CAMPOS */
-                    $codPromoc  = $objPHPExcel->getActiveSheet()->getCell('W'.$i)->getCalculatedValue();
-                    $codPrinci  = $objPHPExcel->getActiveSheet()->getCell('X'.$i)->getCalculatedValue();
+                    $codPromoc  = $objPHPExcel->getActiveSheet()->getCell('X'.$i)->getCalculatedValue();
+                    $codPrinci  = $objPHPExcel->getActiveSheet()->getCell('Y'.$i)->getCalculatedValue();
                     /***/
 
-                    $sku        = $objPHPExcel->getActiveSheet()->getCell('Y'.$i)->getCalculatedValue();
-                    $producto   = $objPHPExcel->getActiveSheet()->getCell('Z'.$i)->getCalculatedValue();
+                    $sku        = $objPHPExcel->getActiveSheet()->getCell('Z'.$i)->getCalculatedValue();
+                    $producto   = $objPHPExcel->getActiveSheet()->getCell('AA'.$i)->getCalculatedValue();
 
                     /**NUEVOS CAMPOS */
-                    $productoPpt = $objPHPExcel->getActiveSheet()->getCell('AA'.$i)->getCalculatedValue();
-                    $compraPpt   = $objPHPExcel->getActiveSheet()->getCell('AB'.$i)->getCalculatedValue();
+                    $productoPpt = $objPHPExcel->getActiveSheet()->getCell('AB'.$i)->getCalculatedValue();
+                    $compraPpt   = $objPHPExcel->getActiveSheet()->getCell('AC'.$i)->getCalculatedValue();
                     /***/
 
-                    $skuBonifi  = $objPHPExcel->getActiveSheet()->getCell('AC'.$i)->getCalculatedValue();
-                    $productoBo = $objPHPExcel->getActiveSheet()->getCell('AD'.$i)->getCalculatedValue();
+                    $skuBonifi  = $objPHPExcel->getActiveSheet()->getCell('AD'.$i)->getCalculatedValue();
+                    $productoBo = $objPHPExcel->getActiveSheet()->getCell('AE'.$i)->getCalculatedValue();
 
                     /**NUEVOS CAMPOS */
-                    $proBoniPpt = $objPHPExcel->getActiveSheet()->getCell('AE'.$i)->getCalculatedValue();
-                    $compBonPpt = $objPHPExcel->getActiveSheet()->getCell('AF'.$i)->getCalculatedValue();
+                    $proBoniPpt = $objPHPExcel->getActiveSheet()->getCell('AG'.$i)->getCalculatedValue();
+                    $compBonPpt = $objPHPExcel->getActiveSheet()->getCell('AH'.$i)->getCalculatedValue();
                     /***/
 
-                    $tipoPromo  = $objPHPExcel->getActiveSheet()->getCell('AG'.$i)->getCalculatedValue();
-                    $tipoClien  = $objPHPExcel->getActiveSheet()->getCell('AJ'.$i)->getCalculatedValue();
-                    $planchas   = $objPHPExcel->getActiveSheet()->getCell('AM'.$i)->getCalculatedValue();
-                    $combos     = $objPHPExcel->getActiveSheet()->getCell('AN'.$i)->getCalculatedValue();
-                    $precXcombo = $objPHPExcel->getActiveSheet()->getCell('AO'.$i)->getCalculatedValue();
-                    $precXplanc = $objPHPExcel->getActiveSheet()->getCell('AP'.$i)->getCalculatedValue();
-                    $precXtodo  = $objPHPExcel->getActiveSheet()->getCell('AQ'.$i)->getCalculatedValue();
+                    $tipoPromo  = $objPHPExcel->getActiveSheet()->getCell('AF'.$i)->getCalculatedValue();
+                    $tipoClien  = $objPHPExcel->getActiveSheet()->getCell('AK'.$i)->getCalculatedValue();
+                    $planchas   = $objPHPExcel->getActiveSheet()->getCell('AN'.$i)->getCalculatedValue();
+                    $combos     = $objPHPExcel->getActiveSheet()->getCell('AO'.$i)->getCalculatedValue();
+                    $precXcombo = $objPHPExcel->getActiveSheet()->getCell('AP'.$i)->getCalculatedValue();
+                    $precXplanc = $objPHPExcel->getActiveSheet()->getCell('AQ'.$i)->getCalculatedValue();
+                    $precXtodo  = $objPHPExcel->getActiveSheet()->getCell('AR'.$i)->getCalculatedValue();
 
                     if($mes != null){
                         $fecfecha = fecfechas::where('fecdia', $dia)

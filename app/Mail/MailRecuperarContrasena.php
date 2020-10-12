@@ -7,7 +7,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class MailCrearUsuario extends Mailable
+class MailRecuperarContrasena extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -30,8 +30,8 @@ class MailCrearUsuario extends Mailable
     public function build()
     {
         return $this->from('smartview@grow-analytics.com', 'SmartView')
-                    ->view('CorreoCrearUsuario')
-                    ->subject('Confirmación de Correo SmartView')
+                    ->view('CorreoRecuperarContrasena')
+                    ->subject('RECUPERAR CUENTA SMART VIEW')
                     ->with($this->data);
     }
 }

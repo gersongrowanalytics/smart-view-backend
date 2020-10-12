@@ -4,21 +4,59 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Mail\TestMail;
+use App\Mail\MailRecuperarContrasena;
+use App\Mail\MailCrearUsuario;
 use Illuminate\Support\Facades\Mail;
+use App\usuusuarios;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Hash;
 
 class MailController extends Controller
 {
     public function getMail()
     {
-        $mensaje    = "No se pudo enviar el correo";
-        $usuario = "usuarioasd";
-        $data = ['name' => 'Mauricio'];
+        
+        $data = ['nombre' => 'Gerson Vilca Alvarez', "usuario" => "Gerson", "contrasena" => "1234", "correo" => "gerson@hotmail.com"];
 
-        // Mail::send('testmail', $data, function($message){
-        //     $message->to('gerson.vilca@tecsup.edu.pe')->subject('Verifica tu correo');
-        // });
-        // Mail::to('gerson.vilca@tecsup.edu.pe')->send(new TestMail($data));
-        return view('testmail'); 
 
+        Mail::to('gerson.vilca@grow-analytics.com')->send(new TestMail($data));
+        return view('testmail')->with($data);
+    }
+
+    public function recuperarContrasena(Request $request)
+    {
+
+        // $correo = $request['correo'];
+
+        // $usu = usuusuarios::where('usucorreo', $correo)->first(['usuid']);
+
+        // $respuesta  = true;
+        // $mensaje    = "Se envio el correo de recuperación satisfactoriamente";
+
+        // if($usu){
+
+        //     $nuevaContrasena = Str::random(6);
+
+        //     $usu->usucontrasena = Hash::make($nuevaContrasena);
+
+        //     $data = ["contrasena" => $nuevaContrasena];
+
+        //     Mail::to($correo)->send(new TestMail($data));
+        // }else{
+        //     $respuesta = false;
+        //     $mensaje = "Lo sentimos, ese correo no esta registrado en Smart View";
+        // }
+
+        // return response()->json([
+        //     "respuesta" => $respuesta,
+        //     "mensaje"   => $mensaje
+        // ]);
+
+        $data = ["contrasena" => "asd"];
+
+        Mail::to("gerson.vilca@tecsup.edu.pe")->send(new MailRecuperarContrasena($data));
+
+        
+        // return view('CorreoRecuperarContrasena')->with($data);
     }
 }
