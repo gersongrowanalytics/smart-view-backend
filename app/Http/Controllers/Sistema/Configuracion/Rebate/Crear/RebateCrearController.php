@@ -114,7 +114,7 @@ class RebateCrearController extends Controller
 
                     $trrn = new trrtiposrebatesrebates;
                     $trrn->treid = $treid;
-                    $trrn->rtpid = $rtp->rtpid;
+                    $trrn->rtpid = $rtpn->rtpid;
                     $trrn->catid = $catid;
                     if($trrn->save()){
                         
