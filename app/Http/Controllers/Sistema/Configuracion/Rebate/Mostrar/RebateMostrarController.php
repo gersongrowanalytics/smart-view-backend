@@ -23,6 +23,7 @@ class RebateMostrarController extends Controller
         try{
             
             $rtp = rtprebatetipospromociones::join('trrtiposrebatesrebates as trr', 'trr.rtpid', 'rtprebatetipospromociones.rtpid')
+                                            ->leftjoin('catcategorias as cat', 'cat.catid', 'trr.catid')
                                             ->join('tretiposrebates as tre', 'tre.treid', 'trr.treid')
                                             ->join('fecfechas as fec', 'fec.fecid', 'rtprebatetipospromociones.fecid')
                                             ->join('tprtipospromociones as tpr', 'tpr.tprid', 'rtprebatetipospromociones.tprid')
@@ -40,7 +41,8 @@ class RebateMostrarController extends Controller
                                                 'tre.trenombre',
                                                 'rtpporcentajedesde',
                                                 'rtpporcentajehasta',
-                                                'rtpporcentajerebate'
+                                                'rtpporcentajerebate',
+                                                'cat.catnombre'
                                             ]);
 
             if(sizeof($rtp) > 0){
