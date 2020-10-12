@@ -17,10 +17,12 @@ class Trrtiposrebatesrebates extends Migration
             $table->increments('trrid');
             $table->unsignedInteger('treid');
             $table->unsignedInteger('rtpid');
+            $table->unsignedInteger('catid');
             $table->timestamps();
 
             $table->foreign('treid')->references('treid')->on('tretiposrebates');
             $table->foreign('rtpid')->references('rtpid')->on('rtprebatetipospromociones');
+            $table->foreign('catid')->references('catid')->on('catcategorias');
         });
     }
 

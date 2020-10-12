@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\AuditoriaController;
 use App\rtprebatetipospromociones;
 use App\fecfechas;
+use App\trrtiposrebatesrebates;
 
 class RebateCrearController extends Controller
 {
@@ -16,6 +17,8 @@ class RebateCrearController extends Controller
 
         $fecha            = $request['fecha'];
         $tipoPromocion    = $request['tipoPromocion'];
+        $catid            = $request['catid'];  //nuevo
+        $treid            = $request['treid'];  //nuevo
         $porcentajeDesde  = $request['porcentajeDesde'];
         $porcentajeHasta  = $request['porcentajeHasta'];
         $porcentajeRebate = $request['porcentajeRebate'];
@@ -55,28 +58,94 @@ class RebateCrearController extends Controller
                 }
             }
 
-            $rtp = new rtprebatetipospromociones;
-            $rtp->fecid               = $fecid;
-            $rtp->tprid               = $tipoPromocion;
-            $rtp->rtpporcentajedesde  = $porcentajeDesde;
-            $rtp->rtpporcentajehasta  = $porcentajeHasta;
-            $rtp->rtpporcentajerebate = $porcentajeRebate;
-            if($rtp->save()){
-                $respuesta      = true;
-                $mensaje        = 'El rebate se registro correctamente';
-                $datos          = $rtp;
-                $linea          = __LINE__;
-                $mensajeDetalle = 'Nuevo rebate agregado';
-                $pkid           = $pkid."RTP-".$rtp->rtpid;
-                $log[]          = "Se agrego el rebate";
+            $rtp = rtprebatetipospromociones::where('fecid', $fecid)
+                                            ->where('tprid', $tipoPromocion)
+                                            ->where('rtpporcentajedesde', $porcentajeDesde)
+                                            ->where('rtpporcentajehasta', $porcentajeHasta)
+                                            ->where('rtpporcentajerebate', $porcentajeRebate)
+                                            ->first(['rtpid']);
+
+            if($rtp){
+
+                $trr = trrtiposrebatesrebates::where('treid', $treid)
+                                            ->where('rtpid', $rtp->rtpid)
+                                            ->where('catid', $catid)
+                                            ->first(['trrid']);
+
+                if($trr){
+                    $respuesta      = true;
+                    $mensaje        = 'El rebate ya existe';
+                    $datos          = $trrn;
+                    $linea          = __LINE__;
+                    $mensajeDetalle = 'El rebate junto con el grupo asignado y tipo de promoción ya existen';
+                    $log[]          = "No se creo nada nuevo, porque ya existe todo lo enviado";
+                }else{
+                    $trrn = new trrtiposrebatesrebates;
+                    $trrn->treid = $treid;
+                    $trrn->rtpid = $rtp->rtpid;
+                    $trrn->catid = $catid;
+                    if($trrn->save()){
+                        $respuesta      = true;
+                        $mensaje        = 'El rebate se registro correctamente';
+                        $datos          = $trrn;
+                        $linea          = __LINE__;
+                        $mensajeDetalle = 'Nuevo rebate agregado';
+                        $log[]          = "Se agrego el trr";
+                        $pkid           = $pkid."TRR-".$trrn->trrid;
+                    }else{
+                        $respuesta      = false;
+                        $mensaje        = 'Ocurrio un error al momento de asignar la categoria y el grupo al rebate';
+                        $datos          = [];
+                        $linea          = __LINE__;
+                        $mensajeDetalle = 'El trr no se agrego';
+                        $log[]          = "No se pudo agregar el registro trr";
+                    }
+                }
+
+
             }else{
-                $respuesta      = false;
-                $mensaje        = 'Ocurrio un error al momento de agregar el rebate';
-                $datos          = [];
-                $linea          = __LINE__;
-                $mensajeDetalle = 'El rebate no se agrego';
-                $log[]          = "No se pudo agregar el rebate";
+                $rtpn = new rtprebatetipospromociones;
+                $rtpn->fecid               = $fecid;
+                $rtpn->tprid               = $tipoPromocion;
+                $rtpn->rtpporcentajedesde  = $porcentajeDesde;
+                $rtpn->rtpporcentajehasta  = $porcentajeHasta;
+                $rtpn->rtpporcentajerebate = $porcentajeRebate;
+                if($rtpn->save()){
+
+                    $trrn = new trrtiposrebatesrebates;
+                    $trrn->treid = $treid;
+                    $trrn->rtpid = $rtp->rtpid;
+                    $trrn->catid = $catid;
+                    if($trrn->save()){
+                        
+                        $respuesta      = true;
+                        $mensaje        = 'El rebate se registro correctamente';
+                        $datos          = $rtpn;
+                        $linea          = __LINE__;
+                        $mensajeDetalle = 'Nuevo rebate agregado';
+                        $pkid           = $pkid."RTP-".$rtpn->rtpid;
+                        $log[]          = "Se agrego el rebate";
+
+                    }else{
+                        $respuesta      = false;
+                        $mensaje        = 'Ocurrio un error al momento de asignar la categoria y el grupo al rebate';
+                        $datos          = [];
+                        $linea          = __LINE__;
+                        $mensajeDetalle = 'El trr no se agrego';
+                        $log[]          = "No se pudo agregar el registro trr";
+                    }
+
+                }else{
+                    $respuesta      = false;
+                    $mensaje        = 'Ocurrio un error al momento de agregar el rebate';
+                    $datos          = [];
+                    $linea          = __LINE__;
+                    $mensajeDetalle = 'El rebate no se agrego';
+                    $log[]          = "No se pudo agregar el rebate";
+                }
             }
+
+            
 
         } catch (Exception $e) {
             $mensajedev = $e->getMessage();
