@@ -372,6 +372,8 @@ class CargarArchivoController extends Controller
                             $nuevonombrecodpromoc = $codPromoc;
                         }
 
+                        $nuevonombrecodpromoc = str_replace("/", "", $nuevonombrecodpromoc);
+
                         // 
                         $productopptEspa = substr($productoPpt, -1, 1);
                         $nuevonombreproductoppt = "";
@@ -381,6 +383,8 @@ class CargarArchivoController extends Controller
                             $nuevonombreproductoppt = $productoPpt;
                         }
 
+                        $nuevonombreproductoppt = str_replace("/", "", $nuevonombreproductoppt);
+
                         // 
                         $productobonipptEspa = substr($proBoniPpt, -1, 1);
                         $nuevonombreprobonippt = "";
@@ -389,6 +393,9 @@ class CargarArchivoController extends Controller
                         }else{
                             $nuevonombreprobonippt = $proBoniPpt;
                         }
+
+                        $nuevonombreprobonippt = str_replace("/", "", $nuevonombreprobonippt);
+
                         // Sacando los espacios del ultimo digito y limpiando caracteres
 
             
