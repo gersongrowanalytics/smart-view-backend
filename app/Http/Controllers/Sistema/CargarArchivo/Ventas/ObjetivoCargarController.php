@@ -344,6 +344,7 @@ class ObjetivoCargarController extends Controller
             $mensajedev = $e->getMessage();
             $linea      = __LINE__;
             $log[]      = $mensajedev;
+            $respuesta  = false;
         }
 
         $requestsalida = response()->json([
