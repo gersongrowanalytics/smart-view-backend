@@ -18,7 +18,7 @@ class RebateActualizarController extends Controller
      */
     public function ActualizarValorizadoRebateFecha(Request $request)
     {
-        $fecid      = $request['fecid']; 
+        $fecid      = $request['fecha']; 
         $usutoken   = $request->header('api_token');
 
         $respuesta      = false;
@@ -33,6 +33,7 @@ class RebateActualizarController extends Controller
         try{
             $scas = scasucursalescategorias::join('tsutipospromocionessucursales as tsu', 'tsu.tsuid', 'scasucursalescategorias.tsuid')
                                     ->where('tsu.fecid', $fecid)
+                                    ->where('scasucursalescategorias.tsuid', '!=', null)
                                     ->get([
                                         'scasucursalescategorias.scaid',
                                         'scasucursalescategorias.sucid',
