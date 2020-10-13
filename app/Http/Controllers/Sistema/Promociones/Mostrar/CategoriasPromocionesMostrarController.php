@@ -435,7 +435,13 @@ class CategoriasPromocionesMostrarController extends Controller
                             $nuevoArray[0]['columns'] = $arrayTitulos;
 
                         }else{
-                            $soldto = $objPHPExcel->getActiveSheet()->getCell('P'.$i)->getCalculatedValue();
+                            $nombreTituloSoldTo = $objPHPExcel->getActiveSheet()->getCell('O2')->getCalculatedValue();
+                            $soldto = "";
+                            if($nombreTituloSoldTo == "SOLD TO"){
+                                $soldto = $objPHPExcel->getActiveSheet()->getCell('O'.$i)->getCalculatedValue();    
+                            }else{
+                                $soldto = $objPHPExcel->getActiveSheet()->getCell('P'.$i)->getCalculatedValue();
+                            }
 
                             $pertenecedata = false;
                             foreach($uss as $u){
