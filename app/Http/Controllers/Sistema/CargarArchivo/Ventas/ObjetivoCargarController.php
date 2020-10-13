@@ -312,8 +312,11 @@ class ObjetivoCargarController extends Controller
 
                             if($skusNoExisten[$i] == $sku){
                                 break;
-                            }else{
+                            }
+
+                            if($i+1 == sizeof($skusNoExisten)){
                                 $skusNoExisten[] = $sku;
+                                break;
                             }
                             
                         }
