@@ -119,6 +119,8 @@ class RebateActualizarController extends Controller
                         // $log[] = "La suma de valorizado rebate de los sca que tiene el tsu: TSU-".$tsu->tsuid." es el mismo que se tenia anteriormente en la tabla tsu por ende no se actualiza";
                     }
                 }
+            }else{
+                $log[] = "No se encontraron scas registrados";
             }
 
             
