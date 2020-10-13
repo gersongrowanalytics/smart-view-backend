@@ -458,7 +458,7 @@ class CategoriasPromocionesMostrarController extends Controller
                                 foreach($columnasExcel as $abc) {  
                                     $columnasFilas = $objPHPExcel->getActiveSheet()->getCell($abc.$i)->getCalculatedValue();
                                     
-                                    if($columnasFilas == null){
+                                    if($columnasFilas == null || $columnasFilas == " " ){
                                         $columnasFilas = "";
                                     }
 
