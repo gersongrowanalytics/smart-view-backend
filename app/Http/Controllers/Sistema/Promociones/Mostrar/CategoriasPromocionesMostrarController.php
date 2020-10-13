@@ -350,7 +350,7 @@ class CategoriasPromocionesMostrarController extends Controller
             "AS",
             "AT",
             "AU",
-            "AV"
+            // "AV"
         ];
 
         $colorPlomo         = "FF595959";
