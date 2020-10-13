@@ -79,7 +79,7 @@ class RebateCrearController extends Controller
                     if($trr){
                         $respuesta      = true;
                         $mensaje        = 'El rebate ya existe';
-                        $datos          = $trrn;
+                        $datos          = $trr;
                         $linea          = __LINE__;
                         $mensajeDetalle = 'El rebate junto con el grupo asignado y tipo de promoción ya existen';
                         $log[]          = "No se creo nada nuevo, porque ya existe todo lo enviado";
