@@ -31,7 +31,7 @@ class ObjetivoCargarController extends Controller
         $respuesta      = false;
         $mensaje        = '';
         $datos          = [];
-        $skusNoExisten  = [];
+        $skusNoExisten  = [1];
         $linea          = __LINE__;
         $mensajeDetalle = '';
         $mensajedev     = null;
