@@ -38,7 +38,7 @@ class RebateActualizarController extends Controller
                                         'scasucursalescategorias.scaid',
                                         'scasucursalescategorias.sucid',
                                         'scasucursalescategorias.scavalorizadoobjetivo',
-                                        'scasucursalescategorias.scavalrizadoreal',
+                                        'scasucursalescategorias.scavalorizadoreal', 
                                         'scasucursalescategorias.scavalorizadorebate',
                                         'scasucursalescategorias.scaporcentajecumplimiento',
                                         'scasucursalescategorias.catid',
@@ -48,7 +48,7 @@ class RebateActualizarController extends Controller
 
             foreach($scas as $sca){
 
-                $cumplimientoSca = (($sca->scavalrizadoreal*100)/$sca->scavalorizadoobjetivo);
+                $cumplimientoSca = (($sca->scavalorizadoreal*100)/$sca->scavalorizadoobjetivo);
 
                 if($cumplimientoSca != $sca->scaporcentajecumplimiento){
                     $scaf = scasucursalescategorias::find($sca->scaid);
@@ -72,7 +72,7 @@ class RebateActualizarController extends Controller
 
                 $totalRebate = 0;
                 if($trr){
-                    $totalRebate = $sca->scavalrizadoreal * $trr->rtpporcentajerebate;
+                    $totalRebate = $sca->scavalorizadoreal * $trr->rtpporcentajerebate;
                 }else{
                     $log[] = "El cumplimiento no entra en el rango, o no existe una rebate para esa categoria o grupo en dicha fecha asignada";
                 }
