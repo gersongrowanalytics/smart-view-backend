@@ -100,7 +100,9 @@ class RebateActualizarController extends Controller
                     }
                 }
 
-                $tsus = tsutipospromocionessucursales::get([
+                $tsus = tsutipospromocionessucursales::
+                where('fecid', $fecid)
+                ->get([
                     'tsuid',
                     'fecid',
                     'sucid',
