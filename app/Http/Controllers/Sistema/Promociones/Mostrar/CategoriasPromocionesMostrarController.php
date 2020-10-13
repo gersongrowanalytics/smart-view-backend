@@ -380,9 +380,9 @@ class CategoriasPromocionesMostrarController extends Controller
                 )
             );
 
-            $fec = fecfechas::where('fecdia', $dia)
-                            ->where('fecmes', $mes)
-                            ->where('fecano', $anio)
+            $fec = fecfechas::where('fecdia', 'LIKE', "%".$dia."%")
+                            ->where('fecmes', 'LIKE', "%".$mes."%")
+                            ->where('fecano', 'LIKE', "%".$anio."%")
                             ->first(['fecid']);
 
             if($fec){
