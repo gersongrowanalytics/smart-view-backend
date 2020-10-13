@@ -14,6 +14,8 @@ use App\prbpromocionesbonificaciones;
 use App\cspcanalessucursalespromociones;
 use App\usuusuarios;
 use App\ussusuariossucursales;
+use App\fecfechas;
+use App\carcargasarchivos;
 
 class CategoriasPromocionesMostrarController extends Controller
 {
@@ -377,101 +379,122 @@ class CategoriasPromocionesMostrarController extends Controller
                 )
             );
 
+            $fec = fecfechas::where('fecdia', $dia)
+                            ->where('fecmes', $mes)
+                            ->where('fecano', $anio)
+                            ->first(['fecid']);
 
-            $fichero_subido = base_path().'/public/Sistema/cargaArchivos/promociones/promociones.xlsx';
+            if($fec){
+                $car = carcargasarchivos::where('fecid', $fecfecha->fecid)
+                                    ->where('tcaid', 1)
+                                    ->first(['carid', 'carnombrearchivo']);
 
-            $objPHPExcel    = IOFactory::load($fichero_subido);
-            $objPHPExcel->setActiveSheetIndex(0);
-            $numRows        = $objPHPExcel->setActiveSheetIndex(0)->getHighestRow();
-            $ultimaColumna  = $objPHPExcel->setActiveSheetIndex(0)->getHighestColumn();
+                if($car){
+                    $fichero_subido = base_path().'/public/Sistema/cargaArchivos/promociones/'.$car->carnombrearchivo;
 
-            for ($i=2; $i <= $numRows ; $i++) {
+                    $objPHPExcel    = IOFactory::load($fichero_subido);
+                    $objPHPExcel->setActiveSheetIndex(0);
+                    $numRows        = $objPHPExcel->setActiveSheetIndex(0)->getHighestRow();
+                    $ultimaColumna  = $objPHPExcel->setActiveSheetIndex(0)->getHighestColumn();
 
-                if($i == 2){
+                    for ($i=2; $i <= $numRows ; $i++) {
 
-                    $arrayTitulos = array(
-                        array(
-                            "title" => ""
-                        )
-                    );
+                        if($i == 2){
 
-                    $contadorTitulos = 0;
-                    foreach($columnasExcel as $abc) {  
-                        $columnasFilas = $objPHPExcel->getActiveSheet()->getCell($abc.$i)->getCalculatedValue();
-                        
-                        $arrayTitulos[$contadorTitulos]['title'] = $columnasFilas;
-                        $arrayTitulos[$contadorTitulos]['style']['fill']['patternType'] = 'solid';
-                        if($abc == "A" || $abc == "B" || $abc == "J" || $abc == "K" || $abc == "M" || $abc == "N" || $abc == "Q" || $abc == "T" || $abc == "U" || $abc == "V" || $abc == "Z" || $abc == "AD" || $abc == "AG" || $abc == "AI" || $abc == "AK" || $abc == "AM" || $abc == "AN" || $abc == "AQ" || $abc == "AR" || $abc == "AS" || $abc == "AT"){
-                            $arrayTitulos[$contadorTitulos]['style']['fill']['fgColor']['rgb'] = $colorPlomo;
-                            $arrayTitulos[$contadorTitulos]['style']['font']['color']['rgb'] = $colorBlanco;
-                        }else if($abc == "C" || $abc == "D" || $abc == "E" || $abc == "F" || $abc == "G" || $abc == "H" || $abc == "I" || $abc == "L" || $abc == "O" || $abc == "P" || $abc == "Y" || $abc == "AC" || $abc == "AH" || $abc == "AL" || $abc == "AU"){
-                            $arrayTitulos[$contadorTitulos]['style']['fill']['fgColor']['rgb'] = $colorAzul;
-                            $arrayTitulos[$contadorTitulos]['style']['font']['color']['rgb'] = $colorBlanco;
-                        }else if($abc == "R" || $abc == "S" || $abc == "AO" || $abc == "AP"){
-                            $arrayTitulos[$contadorTitulos]['style']['fill']['fgColor']['rgb'] = $colorNaranjaClaro;
-                            $arrayTitulos[$contadorTitulos]['style']['font']['color']['rgb'] = $colorBlanco;
-                        }else if($abc == "W" || $abc == "X" || $abc == "AA" || $abc == "AB" || $abc == "AE" || $abc == "AF" || $abc == "R" ){
-                            $arrayTitulos[$contadorTitulos]['style']['fill']['fgColor']['rgb'] = $colorVerdeClaro;
-                        }else if($abc == "AJ"){
-                            $arrayTitulos[$contadorTitulos]['style']['fill']['fgColor']['rgb'] = $colorRosa;
-                            $arrayTitulos[$contadorTitulos]['style']['font']['color']['rgb'] = $colorBlanco;
-                        }
-                        $contadorTitulos = $contadorTitulos+1;
-                    }
+                            $arrayTitulos = array(
+                                array(
+                                    "title" => ""
+                                )
+                            );
 
-                    $nuevoArray[0]['columns'] = $arrayTitulos;
+                            $contadorTitulos = 0;
+                            foreach($columnasExcel as $abc) {  
+                                $columnasFilas = $objPHPExcel->getActiveSheet()->getCell($abc.$i)->getCalculatedValue();
+                                
+                                $arrayTitulos[$contadorTitulos]['title'] = $columnasFilas;
+                                $arrayTitulos[$contadorTitulos]['style']['fill']['patternType'] = 'solid';
+                                if($abc == "A" || $abc == "B" || $abc == "J" || $abc == "K" || $abc == "M" || $abc == "N" || $abc == "Q" || $abc == "T" || $abc == "U" || $abc == "V" || $abc == "Z" || $abc == "AD" || $abc == "AG" || $abc == "AI" || $abc == "AK" || $abc == "AM" || $abc == "AN" || $abc == "AQ" || $abc == "AR" || $abc == "AS" || $abc == "AT"){
+                                    $arrayTitulos[$contadorTitulos]['style']['fill']['fgColor']['rgb'] = $colorPlomo;
+                                    $arrayTitulos[$contadorTitulos]['style']['font']['color']['rgb'] = $colorBlanco;
+                                }else if($abc == "C" || $abc == "D" || $abc == "E" || $abc == "F" || $abc == "G" || $abc == "H" || $abc == "I" || $abc == "L" || $abc == "O" || $abc == "P" || $abc == "Y" || $abc == "AC" || $abc == "AH" || $abc == "AL" || $abc == "AU"){
+                                    $arrayTitulos[$contadorTitulos]['style']['fill']['fgColor']['rgb'] = $colorAzul;
+                                    $arrayTitulos[$contadorTitulos]['style']['font']['color']['rgb'] = $colorBlanco;
+                                }else if($abc == "R" || $abc == "S" || $abc == "AO" || $abc == "AP"){
+                                    $arrayTitulos[$contadorTitulos]['style']['fill']['fgColor']['rgb'] = $colorNaranjaClaro;
+                                    $arrayTitulos[$contadorTitulos]['style']['font']['color']['rgb'] = $colorBlanco;
+                                }else if($abc == "W" || $abc == "X" || $abc == "AA" || $abc == "AB" || $abc == "AE" || $abc == "AF" || $abc == "R" ){
+                                    $arrayTitulos[$contadorTitulos]['style']['fill']['fgColor']['rgb'] = $colorVerdeClaro;
+                                }else if($abc == "AJ"){
+                                    $arrayTitulos[$contadorTitulos]['style']['fill']['fgColor']['rgb'] = $colorRosa;
+                                    $arrayTitulos[$contadorTitulos]['style']['font']['color']['rgb'] = $colorBlanco;
+                                }
+                                $contadorTitulos = $contadorTitulos+1;
+                            }
 
-                }else{
-                    $soldto = $objPHPExcel->getActiveSheet()->getCell('O'.$i)->getCalculatedValue();
+                            $nuevoArray[0]['columns'] = $arrayTitulos;
 
-                    $pertenecedata = false;
-                    foreach($uss as $u){
-                        if($u->ususoldto == $soldto ){
-                            $pertenecedata = true;
-                            break;
                         }else{
+                            $soldto = $objPHPExcel->getActiveSheet()->getCell('O'.$i)->getCalculatedValue();
+
                             $pertenecedata = false;
+                            foreach($uss as $u){
+                                if($u->ususoldto == $soldto ){
+                                    $pertenecedata = true;
+                                    break;
+                                }else{
+                                    $pertenecedata = false;
+                                }
+                            }
+
+                            if($pertenecedata == true){
+                                $arrayFilaExcel = array(
+                                    array(
+                                        "value" => ""
+                                    )
+                                );
+                                $contadorColumna = 0;
+
+                                foreach($columnasExcel as $abc) {  
+                                    $columnasFilas = $objPHPExcel->getActiveSheet()->getCell($abc.$i)->getCalculatedValue();
+                                    
+                                    if($columnasFilas == null){
+                                        $columnasFilas = "";
+                                    }
+
+                                    $arrayFilaExcel[$contadorColumna]['value'] = $columnasFilas;
+
+                                    if($abc == "L" || $abc == "O" || $abc == "P" || $abc == "R" || $abc == "S" || $abc == "Y" || $abc == "AC" || $abc == "AL" || $abc == "AU"){
+                                        $arrayFilaExcel[$contadorColumna]['style']['fill']['patternType']    = 'solid';
+                                        $arrayFilaExcel[$contadorColumna]['style']['fill']['fgColor']['rgb'] = $colorPiel;
+                                    }else if($abc == "W" || $abc == "X" ){
+                                        $arrayFilaExcel[$contadorColumna]['style']['fill']['patternType']    = 'solid';
+                                        $arrayFilaExcel[$contadorColumna]['style']['fill']['fgColor']['rgb'] = $colorVerdeLimon;
+                                    }else if($abc == "AH" || $abc == "AR"){
+                                        $arrayFilaExcel[$contadorColumna]['style']['fill']['patternType']    = 'solid';
+                                        $arrayFilaExcel[$contadorColumna]['style']['fill']['fgColor']['rgb'] = $colorNaranjaClaro;
+                                    }
+
+                                    $contadorColumna = $contadorColumna+1;
+                                }
+
+                                $nuevoArray[0]['data'][] = $arrayFilaExcel;
+                            }
                         }
                     }
 
-                    if($pertenecedata == true){
-                        $arrayFilaExcel = array(
-                            array(
-                                "value" => ""
-                            )
-                        );
-                        $contadorColumna = 0;
-
-                        foreach($columnasExcel as $abc) {  
-                            $columnasFilas = $objPHPExcel->getActiveSheet()->getCell($abc.$i)->getCalculatedValue();
-                            
-                            if($columnasFilas == null){
-                                $columnasFilas = "";
-                            }
-
-                            $arrayFilaExcel[$contadorColumna]['value'] = $columnasFilas;
-
-                            if($abc == "L" || $abc == "O" || $abc == "P" || $abc == "R" || $abc == "S" || $abc == "Y" || $abc == "AC" || $abc == "AL" || $abc == "AU"){
-                                $arrayFilaExcel[$contadorColumna]['style']['fill']['patternType']    = 'solid';
-                                $arrayFilaExcel[$contadorColumna]['style']['fill']['fgColor']['rgb'] = $colorPiel;
-                            }else if($abc == "W" || $abc == "X" ){
-                                $arrayFilaExcel[$contadorColumna]['style']['fill']['patternType']    = 'solid';
-                                $arrayFilaExcel[$contadorColumna]['style']['fill']['fgColor']['rgb'] = $colorVerdeLimon;
-                            }else if($abc == "AH" || $abc == "AR"){
-                                $arrayFilaExcel[$contadorColumna]['style']['fill']['patternType']    = 'solid';
-                                $arrayFilaExcel[$contadorColumna]['style']['fill']['fgColor']['rgb'] = $colorNaranjaClaro;
-                            }
-
-                            $contadorColumna = $contadorColumna+1;
-                        }
-
-                        $nuevoArray[0]['data'][] = $arrayFilaExcel;
-                    }
-                }
+                    $respuesta = true;
+                    $datos     = $nuevoArray;
+                }else{
+                    $respuesta = false;
+                    $mensaje = "Lo sentimos, no pudimos encontrar un registro de excel subido a este mes seleccionado";
+                    $mensajeDetalle = "Vuelve a seleccionar la fecha o comunicate con soporte";
+                }         
+            }else{
+                $respuesta = false;
+                $mensaje = "Lo sentimos, no pudimos encontrar la fecha seleccionada";
+                $mensajeDetalle = "Vuelve a seleccionar la fecha o comunicate con soporte"
             }
 
-            $respuesta = true;
-            $datos     = $nuevoArray;
 
         } catch (Exception $e) {
             $mensajedev = $e->getMessage();

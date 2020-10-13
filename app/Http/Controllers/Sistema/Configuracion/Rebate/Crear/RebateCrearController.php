@@ -8,6 +8,8 @@ use App\Http\Controllers\AuditoriaController;
 use App\rtprebatetipospromociones;
 use App\fecfechas;
 use App\trrtiposrebatesrebates;
+use App\tsutipospromocionessucursales;
+use App\sucsucursales;
 
 class RebateCrearController extends Controller
 {
@@ -148,6 +150,25 @@ class RebateCrearController extends Controller
                     $log[]          = "No se pudo agregar el rebate";
                 }
             }
+
+
+            // ACTUALIZAR EL TOTAL DE REBATE EN LAS SUCURSALES
+
+            $sucs = sucsucursales::get(['sucid']);
+
+            foreach($sucs as $suc){
+                $tsu = tsutipospromocionessucursales::where('fecid', $fecid)
+                                                ->where('sucid', $suc->$suc)
+                                                ->where('tprid', $tipoPromocion)
+                                                ->first(['tsuid', 'tsuvalorizadoreal', 'tsuvalorizadoobjetivo', 'treid']);
+
+                if($tsu){
+                    
+                }else{
+                    
+                }
+            }   
+            
 
             
 
