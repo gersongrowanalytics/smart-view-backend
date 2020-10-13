@@ -49,7 +49,11 @@ class RebateActualizarController extends Controller
             if(sizeof($scas) > 0){
                 foreach($scas as $sca){
 
-                    $cumplimientoSca = (($sca->scavalorizadoreal*100)/$sca->scavalorizadoobjetivo);
+                    if($sca->scavalorizadoobjetivo == 0){
+                        $cumplimientoSca = $sca->scavalorizadoreal;
+                    }else{
+                        $cumplimientoSca = (($sca->scavalorizadoreal*100)/$sca->scavalorizadoobjetivo);
+                    }
     
                     if($cumplimientoSca != $sca->scaporcentajecumplimiento){
                         $scaf = scasucursalescategorias::find($sca->scaid);
