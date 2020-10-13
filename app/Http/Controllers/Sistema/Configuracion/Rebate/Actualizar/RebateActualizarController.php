@@ -28,7 +28,7 @@ class RebateActualizarController extends Controller
         $mensajedev     = null;
         $log           = [];
 
-        DB::beginTransaction();
+        
 
         try{
             $scas = scasucursalescategorias::join('tsutipospromocionessucursales as tsu', 'tsu.tsuid', 'scasucursalescategorias.tsuid')
@@ -64,6 +64,7 @@ class RebateActualizarController extends Controller
                                         ->where('tprid', $sca->tprid)
                                         ->where('rtp.rtpporcentajedesde', '<=', round($cumplimientoSca))
                                         ->where('rtp.rtpporcentajehasta', '>=', round($cumplimientoSca))
+                                        ->where('trrtiposrebatesrebates.catid', $sca->catid)
                                         ->first([
                                             'rtp.rtpporcentajedesde',
                                             'rtp.rtpporcentajehasta',
@@ -112,10 +113,10 @@ class RebateActualizarController extends Controller
             $respuesta = true;
             $mensaje = "El valorizado rebate se actualizo correctamente";
 
-            DB::commit();
+            
 
         } catch (Exception $e) {
-            DB::rollBack();
+            
             $mensajedev = $e->getMessage();
         }
 
