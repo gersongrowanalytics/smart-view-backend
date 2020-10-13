@@ -344,7 +344,8 @@ class ObjetivoCargarController extends Controller
             "linea"          => $linea,
             "mensajeDetalle" => $mensajeDetalle,
             "mensajedev"     => $mensajedev,
-            "numeroCelda"    => $numeroCelda
+            "numeroCelda"    => $numeroCelda,
+            "skusNoExisten"  => $skusNoExisten
         ]);
 
         $AuditoriaController = new AuditoriaController;
@@ -684,7 +685,8 @@ class ObjetivoCargarController extends Controller
             "linea"          => $linea,
             "mensajeDetalle" => $mensajeDetalle,
             "mensajedev"     => $mensajedev,
-            "numeroCelda"    => $numeroCelda
+            "numeroCelda"    => $numeroCelda,
+            "skusNoExisten"  => $skusNoExisten
         ]);
 
         $AuditoriaController = new AuditoriaController;
