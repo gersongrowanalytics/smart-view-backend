@@ -307,16 +307,16 @@ class ObjetivoCargarController extends Controller
 
 
                     }else{
-                        $skusNoExisten[] = $sku;
-                        // for($i = 0; $i < sizeof($skusNoExisten) ; $i++){
+                        // $skusNoExisten[] = $sku;
+                        for($i = 0; $i < sizeof($skusNoExisten); $i++){
 
-                        //     if($skusNoExisten[$i] == $sku){
-                        //         break;
-                        //     }else{
-                        //         $skusNoExisten[] = $sku;
-                        //     }
+                            if($skusNoExisten[$i] == $sku){
+                                break;
+                            }else{
+                                $skusNoExisten[] = $sku;
+                            }
                             
-                        // }
+                        }
                     }
                 }
 
