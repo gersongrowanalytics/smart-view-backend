@@ -492,7 +492,7 @@ class CategoriasPromocionesMostrarController extends Controller
             }else{
                 $respuesta = false;
                 $mensaje = "Lo sentimos, no pudimos encontrar la fecha seleccionada";
-                $mensajeDetalle = "Vuelve a seleccionar la fecha o comunicate con soporte"
+                $mensajeDetalle = "Vuelve a seleccionar la fecha o comunicate con soporte";
             }
 
 
