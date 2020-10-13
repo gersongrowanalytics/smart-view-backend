@@ -393,7 +393,7 @@ class CategoriasPromocionesMostrarController extends Controller
 
                 if($car){
                     $fichero_subido = base_path().'/public/Sistema/cargaArchivos/promociones/'.$car->carnombrearchivo;
-
+                    echo $car->carnombrearchivo;
                     $objPHPExcel    = IOFactory::load($fichero_subido);
                     $objPHPExcel->setActiveSheetIndex(0);
                     $numRows        = $objPHPExcel->setActiveSheetIndex(0)->getHighestRow();
