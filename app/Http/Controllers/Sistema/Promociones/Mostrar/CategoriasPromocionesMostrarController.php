@@ -349,7 +349,8 @@ class CategoriasPromocionesMostrarController extends Controller
             "AR",
             "AS",
             "AT",
-            "AU"
+            "AU",
+            "AV"
         ];
 
         $colorPlomo         = "FF595959";
@@ -434,7 +435,7 @@ class CategoriasPromocionesMostrarController extends Controller
                             $nuevoArray[0]['columns'] = $arrayTitulos;
 
                         }else{
-                            $soldto = $objPHPExcel->getActiveSheet()->getCell('O'.$i)->getCalculatedValue();
+                            $soldto = $objPHPExcel->getActiveSheet()->getCell('P'.$i)->getCalculatedValue();
 
                             $pertenecedata = false;
                             foreach($uss as $u){
