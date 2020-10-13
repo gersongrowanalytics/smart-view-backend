@@ -22,6 +22,8 @@ class Scasucursalescategorias extends Migration
             $table->string('scavalorizadoobjetivo')->nullable();
             $table->string('scavalorizadoreal')->nullable();
             $table->string('scavalorizadotogo')->nullable();
+            $table->string('scavalorizadorebate')->nullable();
+            $table->string('scaporcentajecumplimiento')->nullable();
             $table->string('scaiconocategoria')->nullable();
             $table->timestamps();
 

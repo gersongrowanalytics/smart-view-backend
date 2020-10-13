@@ -20,7 +20,7 @@ class RebateCrearController extends Controller
         $fecha            = $request['fecha'];
         $tipoPromocion    = $request['tipoPromocion'];
         $catsid           = $request['catsid'];  //nuevo
-        $treid            = $request['treid'];  //nuevo
+        $treid            = $request['treid'];   //nuevo
         $porcentajeDesde  = $request['porcentajeDesde'];
         $porcentajeHasta  = $request['porcentajeHasta'];
         $porcentajeRebate = $request['porcentajeRebate'];
@@ -152,22 +152,7 @@ class RebateCrearController extends Controller
             }
 
 
-            // ACTUALIZAR EL TOTAL DE REBATE EN LAS SUCURSALES
-
-            $sucs = sucsucursales::get(['sucid']);
-
-            foreach($sucs as $suc){
-                $tsu = tsutipospromocionessucursales::where('fecid', $fecid)
-                                                ->where('sucid', $suc->$suc)
-                                                ->where('tprid', $tipoPromocion)
-                                                ->first(['tsuid', 'tsuvalorizadoreal', 'tsuvalorizadoobjetivo', 'treid']);
-
-                if($tsu){
-                    
-                }else{
-                    
-                }
-            }   
+            
             
 
             
