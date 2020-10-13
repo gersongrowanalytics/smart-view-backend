@@ -46,69 +46,82 @@ class RebateActualizarController extends Controller
                                         'tsu.tprid'
                                     ]);
 
-            foreach($scas as $sca){
+            if(sizeof($scas) > 0){
+                foreach($scas as $sca){
 
-                $cumplimientoSca = (($sca->scavalorizadoreal*100)/$sca->scavalorizadoobjetivo);
-
-                if($cumplimientoSca != $sca->scaporcentajecumplimiento){
-                    $scaf = scasucursalescategorias::find($sca->scaid);
-                    $scaf->scaporcentajecumplimiento = $cumplimientoSca;
-                    $scaf->update();
-                }else{
-                    $log[] = "El cumplimiento de sca es igual al nuevo porcentaje obtenido, por ende no se actualiza en la tabla sca";
+                    $cumplimientoSca = (($sca->scavalorizadoreal*100)/$sca->scavalorizadoobjetivo);
+    
+                    if($cumplimientoSca != $sca->scaporcentajecumplimiento){
+                        $scaf = scasucursalescategorias::find($sca->scaid);
+                        $scaf->scaporcentajecumplimiento = $cumplimientoSca;
+                        if($scaf->update()){
+                            $log[] = "El porcentaje de cumplimiento del SCA-".$sca->scaid." se actualizo correctamente";
+                        }else{
+                            $log[] = "No se pudo actualizar el porcentaje de cumplimiento del SCA-".$sca->scaid;
+                        }
+                    }else{
+                        $log[] = "El cumplimiento de sca es igual al nuevo porcentaje obtenido, por ende no se actualiza en la tabla sca";
+                    }
+    
+                    $trr = trrtiposrebatesrebates::join('rtprebatetipospromociones as rtp', 'rtp.rtpid', 'trrtiposrebatesrebates.rtpid')
+                                            ->where('trrtiposrebatesrebates.treid', $sca->treid)
+                                            ->where('rtp.fecid', $fecid)
+                                            ->where('tprid', $sca->tprid)
+                                            ->where('rtp.rtpporcentajedesde', '<=', round($cumplimientoSca))
+                                            ->where('rtp.rtpporcentajehasta', '>=', round($cumplimientoSca))
+                                            ->where('trrtiposrebatesrebates.catid', $sca->catid)
+                                            ->first([
+                                                'rtp.rtpporcentajedesde',
+                                                'rtp.rtpporcentajehasta',
+                                                'rtp.rtpporcentajerebate'
+                                            ]);
+    
+                    $totalRebate = 0;
+                    if($trr){
+                        $totalRebate = $sca->scavalorizadoreal * $trr->rtpporcentajerebate;
+                    }else{
+                        $log[] = "El cumplimiento no entra en el rango, o no existe una rebate para esa categoria o grupo en dicha fecha asignada";
+                    }
+    
+                    if($sca->scavalorizadorebate != $totalRebate){
+                        $scaf = scasucursalescategorias::find($sca->scaid);
+                        $scaf->scavalorizadorebate = $totalRebate;
+                        if($scaf->update()){
+                            $log[] = "Se actualizo correctamente el valorizado rebate: SCA-".$sca->scaid;
+                        }else{
+                            $log[] = "No se pudo actualizar el valorizado rebate: SCA-".$sca->scaid;
+                        }
+                    }else{
+                        $log[] = "El nuevo valorizado rebate del sca es el mismo que se tenia anteriormente, por ende no se actualiza en la tabla sca";
+                    }
                 }
 
-                $trr = trrtiposrebatesrebates::join('rtprebatetipospromociones as rtp', 'rtp.rtpid', 'trrtiposrebatesrebates.rtpid')
-                                        ->where('trrtiposrebatesrebates.treid', $sca->treid)
-                                        ->where('rtp.fecid', $fecid)
-                                        ->where('tprid', $sca->tprid)
-                                        ->where('rtp.rtpporcentajedesde', '<=', round($cumplimientoSca))
-                                        ->where('rtp.rtpporcentajehasta', '>=', round($cumplimientoSca))
-                                        ->where('trrtiposrebatesrebates.catid', $sca->catid)
-                                        ->first([
-                                            'rtp.rtpporcentajedesde',
-                                            'rtp.rtpporcentajehasta',
-                                            'rtp.rtpporcentajerebate'
-                                        ]);
-
-                $totalRebate = 0;
-                if($trr){
-                    $totalRebate = $sca->scavalorizadoreal * $trr->rtpporcentajerebate;
-                }else{
-                    $log[] = "El cumplimiento no entra en el rango, o no existe una rebate para esa categoria o grupo en dicha fecha asignada";
+                $tsus = tsutipospromocionessucursales::get([
+                    'tsuid',
+                    'fecid',
+                    'sucid',
+                    'tsuvalorizadorebate'
+                ]);
+                
+                foreach($tsus as $tsu){
+                    $scasum = scasucursalescategorias::where('tsuid', $tsu->tsuid)
+                                                    ->sum('scavalorizadorebate');
+    
+                    if($scasum != $tsu->tsuvalorizadorebate){
+                        $tsu = tsutipospromocionessucursales::find($tsu->tsuid);
+                        $tsu->tsuvalorizadorebate = $scasum;
+                        if($tsu->update()){
+    
+                        }else{
+    
+                        }
+                    }else{
+                        // $log[] = "La suma de valorizado rebate de los sca que tiene el tsu: TSU-".$tsu->tsuid." es el mismo que se tenia anteriormente en la tabla tsu por ende no se actualiza";
+                    }
                 }
-
-                if($sca->scavalorizadorebate != $totalRebate){
-                    $scaf = scasucursalescategorias::find($sca->scaid);
-                    $scaf->scavalorizadorebate = $totalRebate;
-                    $scaf->update();
-                }else{
-                    $log[] = "El nuevo valorizado rebate del sca es el mismo que se tenia anteriormente, por ende no se actualiza en la tabla sca";
-                }
-
-
             }
 
-
-            $tsus = tsutipospromocionessucursales::get([
-                'tsuid',
-                'fecid',
-                'sucid',
-                'tsuvalorizadorebate'
-            ]);
             
-            foreach($tsus as $tsu){
-                $scasum = scasucursalescategorias::where('tsuid', $tsu->tsuid)
-                                                ->sum('scavalorizadorebate');
-
-                if($scasum != $tsu->tsuvalorizadorebate){
-                    $tsu = tsutipospromocionessucursales::find($tsu->tsuid);
-                    $tsu->tsuvalorizadorebate = $scasum;
-                    $tsu->update();
-                }else{
-                    $log[] = "La suma de valorizado rebate de los sca que tiene el tsu: TSU-".$tsu->tsuid." es el mismo que se tenia anteriormente en la tabla tsu por ende no se actualiza";
-                }
-            }
 
             $respuesta = true;
             $mensaje = "El valorizado rebate se actualizo correctamente";
