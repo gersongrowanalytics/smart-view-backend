@@ -107,6 +107,14 @@ class CargarArchivoController extends Controller
                     $precXplanc = $objPHPExcel->getActiveSheet()->getCell('AQ'.$i)->getCalculatedValue();
                     $precXtodo  = $objPHPExcel->getActiveSheet()->getCell('AR'.$i)->getCalculatedValue();
 
+                    if($tipoClien == "Puesto de mercado"){
+                        $tipoClien = "PDM";
+                    }else if($tipoClien == "Bodegas"){
+                        $tipoClien = "Bodega";
+                    }
+
+
+
                     if($mes != null){
                         $fecfecha = fecfechas::where('fecdia', $dia)
                                         ->where('fecmes', $mes)
