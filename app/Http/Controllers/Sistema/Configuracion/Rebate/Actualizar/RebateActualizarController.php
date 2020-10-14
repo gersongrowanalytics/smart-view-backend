@@ -206,10 +206,13 @@ class RebateActualizarController extends Controller
                                                 ]);
 
                 if(sizeof($trrs) > 0){
-                    $log['escala']['entra'][] = "Si entra en la escala rebate: ".$tsu->tsuid." de la sucursal: ".$tsu->sucid;
+                    
                     if(sizeof($trrs) <= 5){
                         $totalRebate = 0;
-                        foreach($trrs as $trr){
+                        foreach($trrs as $posicion => $trr){
+                            if($posicion == 0){
+                                $log['escala']['entra'][] = "Si entra en la escala rebate: ".$tsu->tsuid." de la sucursal: ".$tsu->sucid." con un cumplimiento de: ".round($tsu->tsuporcentajecumplimiento)." y escalas desde: ".$trr->rtpporcentajedesde." y hasta: ".$trr->rtpporcentajehasta;
+                            }
                             $sca = scasucursalescategorias::where('tsuid', $tsu->tsuid)
                                                         ->where('fecid', $fecid)
                                                         ->where('catid', $trr->catid)
