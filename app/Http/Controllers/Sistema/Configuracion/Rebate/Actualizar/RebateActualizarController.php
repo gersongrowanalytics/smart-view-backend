@@ -231,7 +231,10 @@ class RebateActualizarController extends Controller
 
 
                 }else{
-
+                    echo "Hay mas de 5 datos: ";
+                    foreach($trrs as $trr){
+                        echo $trr->trrid;
+                    }
                 }
             }
         }
