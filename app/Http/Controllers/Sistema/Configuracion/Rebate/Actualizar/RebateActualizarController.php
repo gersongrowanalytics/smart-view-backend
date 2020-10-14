@@ -179,7 +179,8 @@ class RebateActualizarController extends Controller
         $mensajedev     = null;
         $log            = [];
 
-        $tsus = tsutipospromocionessucursales::where('fecid', $fecid)
+        try{
+            $tsus = tsutipospromocionessucursales::where('fecid', $fecid)
                                             ->get([
                                                 'tsuid',
                                                 'treid',
@@ -187,56 +188,85 @@ class RebateActualizarController extends Controller
                                                 'tsuporcentajecumplimiento'
                                             ]);
 
-        foreach($tsus as $tsu){
+            foreach($tsus as $tsu){
 
-            $trrs = trrtiposrebatesrebates::join('rtprebatetipospromociones as rtp', 'rtp.rtpid', 'trrtiposrebatesrebates.rtpid')
-                                            ->where('trrtiposrebatesrebates.treid', $tsu->treid)
-                                            ->where('rtp.fecid', $fecid)
-                                            ->where('rtp.tprid', $tsu->tprid)
-                                            ->where('rtp.rtpporcentajedesde', '<=', round($tsu->tsuporcentajecumplimiento))
-                                            ->where('rtp.rtpporcentajehasta', '>=', round($tsu->tsuporcentajecumplimiento))
-                                            ->get([
-                                                'trrtiposrebatesrebates.trrid',
-                                                'rtp.rtpporcentajedesde',
-                                                'rtp.rtpporcentajehasta',
-                                                'rtp.rtpporcentajerebate',
-                                                'trrtiposrebatesrebates.catid'
-                                            ]);
+                $trrs = trrtiposrebatesrebates::join('rtprebatetipospromociones as rtp', 'rtp.rtpid', 'trrtiposrebatesrebates.rtpid')
+                                                ->where('trrtiposrebatesrebates.treid', $tsu->treid)
+                                                ->where('rtp.fecid', $fecid)
+                                                ->where('rtp.tprid', $tsu->tprid)
+                                                ->where('rtp.rtpporcentajedesde', '<=', round($tsu->tsuporcentajecumplimiento))
+                                                ->where('rtp.rtpporcentajehasta', '>=', round($tsu->tsuporcentajecumplimiento))
+                                                ->get([
+                                                    'trrtiposrebatesrebates.trrid',
+                                                    'rtp.rtpporcentajedesde',
+                                                    'rtp.rtpporcentajehasta',
+                                                    'rtp.rtpporcentajerebate',
+                                                    'trrtiposrebatesrebates.catid'
+                                                ]);
 
-            if($trrs){
-                if(sizeof($trrs) <= 5){
+                if($trrs){
+                    if(sizeof($trrs) <= 5){
 
-                    $totalRebate = 0;
-                    foreach($trrs as $trr){
-                        $sca = scasucursalescategorias::where('tsuid', $tsu->tsuid)
-                                                    ->where('fecid', $fecid)
-                                                    ->where('catid', $trr->catid)
-                                                    ->first([
-                                                        'scaid',
-                                                        'scavalorizadoreal'
-                                                    ]);
+                        $totalRebate = 0;
+                        foreach($trrs as $trr){
+                            $sca = scasucursalescategorias::where('tsuid', $tsu->tsuid)
+                                                        ->where('fecid', $fecid)
+                                                        ->where('catid', $trr->catid)
+                                                        ->first([
+                                                            'scaid',
+                                                            'scavalorizadoreal'
+                                                        ]);
 
-                        if($sca){
-                            $nuevoRebate = ($sca->scavalorizadoreal*$trr->rtpporcentajerebate)/100;
-                            $totalRebate = $totalRebate + $nuevoRebate;
-                        }else{
+                            if($sca){
+                                $nuevoRebate = ($sca->scavalorizadoreal*$trr->rtpporcentajerebate)/100;
+                                $totalRebate = $totalRebate + $nuevoRebate;
+                            }else{
+
+                            }
 
                         }
 
-                    }
-
-                    $tsuu = tsutipospromocionessucursales::find($tsu->tsuid);
-                    $tsuu->tsuvalorizadorebate = $totalRebate;
-                    $tsuu->update();
+                        $tsuu = tsutipospromocionessucursales::find($tsu->tsuid);
+                        $tsuu->tsuvalorizadorebate = $totalRebate;
+                        $tsuu->update();
 
 
-                }else{
-                    echo "Hay mas de 5 datos: ";
-                    foreach($trrs as $trr){
-                        echo $trr->trrid;
+                    }else{
+                        echo "Hay mas de 5 datos: ";
+                        foreach($trrs as $trr){
+                            echo $trr->trrid;
+                        }
                     }
                 }
             }
+        } catch (Exception $e) {   
+            $mensajedev = $e->getMessage();
         }
+
+        $requestsalida = response()->json([
+            "respuesta"      => $respuesta,
+            "mensaje"        => $mensaje,
+            "mensajeDetalle" => $mensajeDetalle,
+            "mensajedev"     => $mensajedev,
+            "logs"           => $log
+        ]);
+
+        $AuditoriaController = new AuditoriaController;
+        $registrarAuditoria  = $AuditoriaController->registrarAuditoria(
+            $usutoken,
+            null,
+            null,
+            $request,
+            $requestsalida,
+            'ACTUALIZAR EL VALORIZADO REBATE EN LOS SCA Y TSU',
+            'ACTUALIZAR',
+            '/configuracion/rebate/actualizar/Rebate', //ruta
+            '',
+            $log
+        );
+        
+        return $requestsalida;
+
+        
     }
 }
