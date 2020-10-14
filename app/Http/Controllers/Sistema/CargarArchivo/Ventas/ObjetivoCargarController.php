@@ -20,6 +20,7 @@ use Illuminate\Support\Str;
 use App\proproductos;
 use App\catcategorias;
 use App\tretiposrebates;
+use Illuminate\Support\Facades\DB;
 
 class ObjetivoCargarController extends Controller
 {
@@ -28,10 +29,10 @@ class ObjetivoCargarController extends Controller
         date_default_timezone_set("America/Lima");
         $fechaActual = date('Y-m-d H:i:s');
 
-        $respuesta      = false;
+        $respuesta      = true;
         $mensaje        = '';
         $datos          = [];
-        $skusNoExisten  = [1];
+        $skusNoExisten  = [];
         $linea          = __LINE__;
         $mensajeDetalle = '';
         $mensajedev     = null;
@@ -46,7 +47,7 @@ class ObjetivoCargarController extends Controller
         $pkid = 0;
         $log  = [];
 
-
+        DB::beginTransaction();
         try{
 
             $fichero_subido = base_path().'/public/Sistema/cargaArchivos/objetivos/sellin/'.basename($usuusuario->usuid.'-'.$usuusuario->usuusuario.'-'.$fechaActual.'-'.$_FILES['file']['name']);
@@ -316,6 +317,7 @@ class ObjetivoCargarController extends Controller
 
                             if($posicion+1 == sizeof($skusNoExisten)){
                                 $skusNoExisten[] = $sku;
+                                $respuesta = false;
                                 break;
                             }
                         
@@ -324,26 +326,58 @@ class ObjetivoCargarController extends Controller
                 }
 
 
-                date_default_timezone_set("America/Lima");
-                $fechaActual = date('Y-m-d H:i:s');
+                if($respuesta == true){
+                    date_default_timezone_set("America/Lima");
+                    $fechaActual = date('Y-m-d H:i:s');
 
-                $nuevoCargaArchivo = new carcargasarchivos;
-                $nuevoCargaArchivo->tcaid = 2;
-                $nuevoCargaArchivo->fecid = $fecid;
-                $nuevoCargaArchivo->usuid = $usuusuario->usuid;
-                $nuevoCargaArchivo->carnombrearchivo = $archivo;
-                $nuevoCargaArchivo->carubicacion = $fichero_subido;
-                $nuevoCargaArchivo->carexito = true;
-                if($nuevoCargaArchivo->save()){
-                    $pkid = "CAR-".$nuevoCargaArchivo->carid;
+                    $nuevoCargaArchivo = new carcargasarchivos;
+                    $nuevoCargaArchivo->tcaid = 2;
+                    $nuevoCargaArchivo->fecid = $fecid;
+                    $nuevoCargaArchivo->usuid = $usuusuario->usuid;
+                    $nuevoCargaArchivo->carnombrearchivo = $archivo;
+                    $nuevoCargaArchivo->carubicacion = $fichero_subido;
+                    $nuevoCargaArchivo->carexito = true;
+                    if($nuevoCargaArchivo->save()){
+                        $pkid = "CAR-".$nuevoCargaArchivo->carid;
+                    }else{
+
+                    }
+
+                    $AuditoriaController = new AuditoriaController;
+                    $registrarAuditoria  = $AuditoriaController->registrarAuditoria(
+                        $usutoken,
+                        $usuusuario->usuid,
+                        null,
+                        $fichero_subido,
+                        $requestsalida,
+                        'CARGAR DATA DE OBJETIVOS SELL IN',
+                        'IMPORTAR',
+                        '/cargarArchivo/ventas/obejtivos', //ruta
+                        $pkid,
+                        $log
+                    );
+
+                    if($registrarAuditoria == true){
+
+                    }else{
+                        
+                    }
+
+                    DB::commit();
                 }else{
-
+                    DB::rollBack();
                 }
+                
             }else{
-
+                $respuesta  = false;
+                $mensaje    = "No se pudo guardar el excel en el sistema";
             }
 
+            
+
+
         } catch (Exception $e) {
+            DB::rollBack();
             $mensajedev = $e->getMessage();
             $linea      = __LINE__;
             $log[]      = $mensajedev;
@@ -360,26 +394,6 @@ class ObjetivoCargarController extends Controller
             "numeroCelda"    => $numeroCelda,
             "skusNoExisten"  => $skusNoExisten
         ]);
-
-        $AuditoriaController = new AuditoriaController;
-        $registrarAuditoria  = $AuditoriaController->registrarAuditoria(
-            $usutoken,
-            $usuusuario->usuid,
-            null,
-            $fichero_subido,
-            $requestsalida,
-            'CARGAR DATA DE OBJETIVOS SELL IN',
-            'IMPORTAR',
-            '/cargarArchivo/ventas/obejtivos', //ruta
-            $pkid,
-            $log
-        );
-
-        if($registrarAuditoria == true){
-
-        }else{
-            
-        }
         
         return $requestsalida;
     }
@@ -404,6 +418,7 @@ class ObjetivoCargarController extends Controller
         $usuusuario = usuusuarios::where('usutoken', $usutoken)->first(['usuid', 'usuusuario']);
 
         $fichero_subido = '';
+
 
         try{
 
