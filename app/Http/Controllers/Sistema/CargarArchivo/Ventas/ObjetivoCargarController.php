@@ -343,26 +343,6 @@ class ObjetivoCargarController extends Controller
 
                     }
 
-                    $AuditoriaController = new AuditoriaController;
-                    $registrarAuditoria  = $AuditoriaController->registrarAuditoria(
-                        $usutoken,
-                        $usuusuario->usuid,
-                        null,
-                        $fichero_subido,
-                        $requestsalida,
-                        'CARGAR DATA DE OBJETIVOS SELL IN',
-                        'IMPORTAR',
-                        '/cargarArchivo/ventas/obejtivos', //ruta
-                        $pkid,
-                        $log
-                    );
-
-                    if($registrarAuditoria == true){
-
-                    }else{
-                        
-                    }
-
                     DB::commit();
                 }else{
                     DB::rollBack();
@@ -394,6 +374,28 @@ class ObjetivoCargarController extends Controller
             "numeroCelda"    => $numeroCelda,
             "skusNoExisten"  => $skusNoExisten
         ]);
+
+        if($respuesta == true){
+            $AuditoriaController = new AuditoriaController;
+            $registrarAuditoria  = $AuditoriaController->registrarAuditoria(
+                $usutoken,
+                $usuusuario->usuid,
+                null,
+                $fichero_subido,
+                $requestsalida,
+                'CARGAR DATA DE OBJETIVOS SELL IN',
+                'IMPORTAR',
+                '/cargarArchivo/ventas/obejtivos', //ruta
+                $pkid,
+                $log
+            );
+
+            if($registrarAuditoria == true){
+
+            }else{
+                
+            }
+        }
         
         return $requestsalida;
     }
@@ -403,7 +405,7 @@ class ObjetivoCargarController extends Controller
         date_default_timezone_set("America/Lima");
         $fechaActual = date('Y-m-d H:i:s');
 
-        $respuesta      = false;
+        $respuesta      = true;
         $mensaje        = '';
         $datos          = [];
         $skusNoExisten  = [];
@@ -414,6 +416,7 @@ class ObjetivoCargarController extends Controller
         $usutoken       = $request->header('api_token');
         $archivo        = $_FILES['file']['name'];
         $log            = [];
+        $pkid           = 0;
 
         $usuusuario = usuusuarios::where('usutoken', $usutoken)->first(['usuid', 'usuusuario']);
 
