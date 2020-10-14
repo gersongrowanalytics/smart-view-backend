@@ -177,7 +177,7 @@ class RebateActualizarController extends Controller
         $datos          = [];
         $mensajeDetalle = '';
         $mensajedev     = null;
-        $log            = [];
+        $log            = ["escala" => ["entra" => [], "noentra" => []]];
 
         try{
             $tsus = tsutipospromocionessucursales::where('fecid', $fecid)
@@ -185,7 +185,8 @@ class RebateActualizarController extends Controller
                                                 'tsuid',
                                                 'treid',
                                                 'tprid',
-                                                'tsuporcentajecumplimiento'
+                                                'tsuporcentajecumplimiento',
+                                                'sucid'
                                             ]);
 
             foreach($tsus as $tsu){
@@ -205,8 +206,8 @@ class RebateActualizarController extends Controller
                                                 ]);
 
                 if($trrs){
+                    $log['escala']['entra'][] = "Si entra en la escala rebate: ".$tsu->tsuid." de la sucursal: ".$tsu->sucid;
                     if(sizeof($trrs) <= 5){
-
                         $totalRebate = 0;
                         foreach($trrs as $trr){
                             $sca = scasucursalescategorias::where('tsuid', $tsu->tsuid)
@@ -237,6 +238,8 @@ class RebateActualizarController extends Controller
                             echo $trr->trrid;
                         }
                     }
+                }else{
+                    $log['escala']['noentra'][] = "No entra en la escala rebate: ".$tsu->tsuid." de la sucursal: ".$tsu->sucid;
                 }
             }
         } catch (Exception $e) {   
