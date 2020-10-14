@@ -51,7 +51,7 @@ class CargarArchivoController extends Controller
                 $numRows        = $objPHPExcel->setActiveSheetIndex(0)->getHighestRow();
                 $ultimaColumna  = $objPHPExcel->setActiveSheetIndex(0)->getHighestColumn();
                 
-                for ($i=5; $i <= $numRows ; $i++) {
+                for ($i=2; $i <= $numRows ; $i++) {
                     // $ano = '2020';
                     $dia = '01';
         
@@ -87,235 +87,238 @@ class CargarArchivoController extends Controller
                         }
                     }
 
-                    if($cliente != null){
+                    echo $ano.'---------';
+                    echo $mes.'---------';
 
-                        $separarsku = explode("0000000000", $sku);
+                    // if($cliente != null){
 
-                        if(sizeof($separarsku) > 1){
-                            $sku = $separarsku[1];
-                        }else{
-                            $sku = $separarsku[0];
-                        }
+                    //     $separarsku = explode("0000000000", $sku);
 
-                        $pro = proproductos::join('catcategorias as cat', 'cat.catid', 'proproductos.catid')
-                                        ->where('proproductos.prosku', 'LIKE', '%'.$sku)
-                                        ->first([
-                                            'proproductos.catid',
-                                            'cat.catnombre'
-                                        ]);
+                    //     if(sizeof($separarsku) > 1){
+                    //         $sku = $separarsku[1];
+                    //     }else{
+                    //         $sku = $separarsku[0];
+                    //     }
+
+                    //     $pro = proproductos::join('catcategorias as cat', 'cat.catid', 'proproductos.catid')
+                    //                     ->where('proproductos.prosku', 'LIKE', '%'.$sku)
+                    //                     ->first([
+                    //                         'proproductos.catid',
+                    //                         'cat.catnombre'
+                    //                     ]);
                         
-                        if($pro){
-                            $categoriaid     = $pro->catid;
-                            $categoriaNombre = $pro->catnombre;
+                    //     if($pro){
+                    //         $categoriaid     = $pro->catid;
+                    //         $categoriaNombre = $pro->catnombre;
 
-                            // VERIFICAR SI EXISTE LA PERSONA PARA EL CLIENTE
-                            $clienteperpersona = perpersonas::where('pernombrecompleto', $cliente)->first(['perid']);
-                            $clienteperid = 0;
-                            if($clienteperpersona){
-                                $clienteperid = $clienteperpersona->perid;
-                            }else{
-                                $clienteNuevaPersona = new perpersonas;
-                                $clienteNuevaPersona->tdiid                         = 2;
-                                $clienteNuevaPersona->pernombrecompleto             = $cliente;
-                                $clienteNuevaPersona->pernumerodocumentoidentidad   = null;
-                                $clienteNuevaPersona->pernombre                     = null;
-                                $clienteNuevaPersona->perapellidopaterno            = null;
-                                $clienteNuevaPersona->perapellidomaterno            = null;
-                                if($clienteNuevaPersona->save()){
-                                    $clienteperid = $clienteNuevaPersona->perid;
-                                }else{
+                    //         // VERIFICAR SI EXISTE LA PERSONA PARA EL CLIENTE
+                    //         $clienteperpersona = perpersonas::where('pernombrecompleto', $cliente)->first(['perid']);
+                    //         $clienteperid = 0;
+                    //         if($clienteperpersona){
+                    //             $clienteperid = $clienteperpersona->perid;
+                    //         }else{
+                    //             $clienteNuevaPersona = new perpersonas;
+                    //             $clienteNuevaPersona->tdiid                         = 2;
+                    //             $clienteNuevaPersona->pernombrecompleto             = $cliente;
+                    //             $clienteNuevaPersona->pernumerodocumentoidentidad   = null;
+                    //             $clienteNuevaPersona->pernombre                     = null;
+                    //             $clienteNuevaPersona->perapellidopaterno            = null;
+                    //             $clienteNuevaPersona->perapellidomaterno            = null;
+                    //             if($clienteNuevaPersona->save()){
+                    //                 $clienteperid = $clienteNuevaPersona->perid;
+                    //             }else{
                 
-                                }
-                            }
+                    //             }
+                    //         }
 
-                            // $separarsoldto = explode("'00", $soldto);
+                    //         // $separarsoldto = explode("'00", $soldto);
 
 
-                            // if(sizeof($separarsoldto) > 1){
-                            //     $soldto = $separarsoldto[1];
-                            // }else{
-                            //     $soldto = $separarsoldto[0];
-                            // }
+                    //         // if(sizeof($separarsoldto) > 1){
+                    //         //     $soldto = $separarsoldto[1];
+                    //         // }else{
+                    //         //     $soldto = $separarsoldto[0];
+                    //         // }
                             
-                            $soldto = substr($soldto, 3);
+                    //         $soldto = substr($soldto, 3);
 
-                            // VERIFICAR SI EXISTE EL USUARIO
-                            $usuCliente = usuusuarios::where('tpuid', 2)
-                                                        // ->where('perid', $clienteperid)
-                                                        ->where('ususoldto', 'LIKE', '%'.$soldto)
-                                                        ->first(['usuid']);
-                            $clienteusuid = 0;
-                            $sucursalClienteId = 0;
-                            if($usuCliente){
-                                $clienteusuid = $usuCliente->usuid;
+                    //         // VERIFICAR SI EXISTE EL USUARIO
+                    //         $usuCliente = usuusuarios::where('tpuid', 2)
+                    //                                     // ->where('perid', $clienteperid)
+                    //                                     ->where('ususoldto', 'LIKE', '%'.$soldto)
+                    //                                     ->first(['usuid']);
+                    //         $clienteusuid = 0;
+                    //         $sucursalClienteId = 0;
+                    //         if($usuCliente){
+                    //             $clienteusuid = $usuCliente->usuid;
                                 
-                                $sucursalesCliente = ussusuariossucursales::where('usuid', $clienteusuid)->first(['sucid']);
-                                if($sucursalesCliente){
-                                    $sucursalClienteId = $sucursalesCliente->sucid;
-                                }else{
-                                    $nuevaSucursal = new sucsucursales;
-                                    $nuevaSucursal->sucnombre = $cliente;
-                                    if($nuevaSucursal->save()){
-                                        $sucursalClienteId = $nuevaSucursal->sucid;
+                    //             $sucursalesCliente = ussusuariossucursales::where('usuid', $clienteusuid)->first(['sucid']);
+                    //             if($sucursalesCliente){
+                    //                 $sucursalClienteId = $sucursalesCliente->sucid;
+                    //             }else{
+                    //                 $nuevaSucursal = new sucsucursales;
+                    //                 $nuevaSucursal->sucnombre = $cliente;
+                    //                 if($nuevaSucursal->save()){
+                    //                     $sucursalClienteId = $nuevaSucursal->sucid;
 
-                                        $sucursalUsuario = new ussusuariossucursales;
-                                        $sucursalUsuario->usuid = $clienteusuid;
-                                        $sucursalUsuario->suci  = $sucursalClienteId;
-                                        if($sucursalUsuario->save()){
+                    //                     $sucursalUsuario = new ussusuariossucursales;
+                    //                     $sucursalUsuario->usuid = $clienteusuid;
+                    //                     $sucursalUsuario->suci  = $sucursalClienteId;
+                    //                     if($sucursalUsuario->save()){
 
-                                        }else{
+                    //                     }else{
 
-                                        }
+                    //                     }
 
-                                    }else{
+                    //                 }else{
 
-                                    }
-                                }
+                    //                 }
+                    //             }
 
-                            }else{
-                                $clienteNuevoUsuario = new usuusuarios;
-                                $clienteNuevoUsuario->tpuid         = 2; // tipo de usuario (cliente)
-                                $clienteNuevoUsuario->perid         = $clienteperid;
-                                $clienteNuevoUsuario->ususoldto     = $soldto;
-                                $clienteNuevoUsuario->usuusuario    = null;
-                                $clienteNuevoUsuario->usucorreo     = null;
-                                $clienteNuevoUsuario->usucontrasena = null;
-                                $clienteNuevoUsuario->usutoken      = Str::random(60);
-                                if($clienteNuevoUsuario->save()){
-                                    $clienteusuid = $clienteNuevoUsuario->usuid;
-                                    $nuevaSucursal = new sucsucursales;
-                                    $nuevaSucursal->sucnombre = $cliente;
-                                    if($nuevaSucursal->save()){
-                                        $sucursalClienteId = $nuevaSucursal->sucid;
+                    //         }else{
+                    //             $clienteNuevoUsuario = new usuusuarios;
+                    //             $clienteNuevoUsuario->tpuid         = 2; // tipo de usuario (cliente)
+                    //             $clienteNuevoUsuario->perid         = $clienteperid;
+                    //             $clienteNuevoUsuario->ususoldto     = $soldto;
+                    //             $clienteNuevoUsuario->usuusuario    = null;
+                    //             $clienteNuevoUsuario->usucorreo     = null;
+                    //             $clienteNuevoUsuario->usucontrasena = null;
+                    //             $clienteNuevoUsuario->usutoken      = Str::random(60);
+                    //             if($clienteNuevoUsuario->save()){
+                    //                 $clienteusuid = $clienteNuevoUsuario->usuid;
+                    //                 $nuevaSucursal = new sucsucursales;
+                    //                 $nuevaSucursal->sucnombre = $cliente;
+                    //                 if($nuevaSucursal->save()){
+                    //                     $sucursalClienteId = $nuevaSucursal->sucid;
 
-                                        $sucursalUsuario = new ussusuariossucursales;
-                                        $sucursalUsuario->usuid = $clienteusuid;
-                                        $sucursalUsuario->sucid = $sucursalClienteId;
-                                        if($sucursalUsuario->save()){
+                    //                     $sucursalUsuario = new ussusuariossucursales;
+                    //                     $sucursalUsuario->usuid = $clienteusuid;
+                    //                     $sucursalUsuario->sucid = $sucursalClienteId;
+                    //                     if($sucursalUsuario->save()){
 
-                                        }else{
+                    //                     }else{
 
-                                        }
+                    //                     }
 
-                                    }else{
+                    //                 }else{
 
-                                    }
-                                }else{
+                    //                 }
+                    //             }else{
                 
-                                }
-                            }
+                    //             }
+                    //         }
 
-                            $tsu = tsutipospromocionessucursales::where('fecid', $fecid)
-                                                                ->where('sucid', $sucursalClienteId)
-                                                                ->where('tprid', 1)
-                                                                ->first(['tsuid', 'tsuvalorizadoreal', 'tsuvalorizadoobjetivo', 'treid']);
-                            $tsuid = 0;
-                            if($tsu){
-                                $tsuid = $tsu->tsuid;
-                                $nuevoReal = $tsu->tsuvalorizadoreal+$real;
+                    //         $tsu = tsutipospromocionessucursales::where('fecid', $fecid)
+                    //                                             ->where('sucid', $sucursalClienteId)
+                    //                                             ->where('tprid', 1)
+                    //                                             ->first(['tsuid', 'tsuvalorizadoreal', 'tsuvalorizadoobjetivo', 'treid']);
+                    //         $tsuid = 0;
+                    //         if($tsu){
+                    //             $tsuid = $tsu->tsuid;
+                    //             $nuevoReal = $tsu->tsuvalorizadoreal+$real;
 
-                                if($tsu->tsuvalorizadoobjetivo == 0){
-                                    $porcentajeCumplimiento = $nuevoReal;
-                                }else{
-                                    $porcentajeCumplimiento = (100*$nuevoReal)/$tsu->tsuvalorizadoobjetivo;
-                                }
+                    //             if($tsu->tsuvalorizadoobjetivo == 0){
+                    //                 $porcentajeCumplimiento = $nuevoReal;
+                    //             }else{
+                    //                 $porcentajeCumplimiento = (100*$nuevoReal)/$tsu->tsuvalorizadoobjetivo;
+                    //             }
                                 
                                 
-                                // OBTENER INFORMACION DEL REBATE
-                                $rtp = trrtiposrebatesrebates::join('rtprebatetipospromociones as rtp', 'rtp.rtpid', 'trrtiposrebatesrebates.rtpid')
-                                                            ->where('trrtiposrebatesrebates.treid', $tsu->treid)
-                                                            ->where('rtp.fecid', $fecid)
-                                                            // ->where('rtp.tprid', 1) // TIPO DE PROMOCION SELL IN
-                                                            ->where('rtp.rtpporcentajedesde', '<=', round($porcentajeCumplimiento))
-                                                            ->where('rtp.rtpporcentajehasta', '>=', round($porcentajeCumplimiento))
-                                                            ->first([
-                                                                'rtp.rtpporcentajedesde',
-                                                                'rtp.rtpporcentajehasta',
-                                                                'rtp.rtpporcentajerebate'
-                                                            ]);
+                    //             // OBTENER INFORMACION DEL REBATE
+                    //             $rtp = trrtiposrebatesrebates::join('rtprebatetipospromociones as rtp', 'rtp.rtpid', 'trrtiposrebatesrebates.rtpid')
+                    //                                         ->where('trrtiposrebatesrebates.treid', $tsu->treid)
+                    //                                         ->where('rtp.fecid', $fecid)
+                    //                                         // ->where('rtp.tprid', 1) // TIPO DE PROMOCION SELL IN
+                    //                                         ->where('rtp.rtpporcentajedesde', '<=', round($porcentajeCumplimiento))
+                    //                                         ->where('rtp.rtpporcentajehasta', '>=', round($porcentajeCumplimiento))
+                    //                                         ->first([
+                    //                                             'rtp.rtpporcentajedesde',
+                    //                                             'rtp.rtpporcentajehasta',
+                    //                                             'rtp.rtpporcentajerebate'
+                    //                                         ]);
 
-                                // $rtp = rtprebatetipospromociones::where('fecid', $fecid)
-                                //                                 ->where('tprid', 1) // TIPO DE PROMOCION SELL IN
-                                //                                 ->where('rtpporcentajedesde', '<=', round($porcentajeCumplimiento))
-                                //                                 ->where('rtpporcentajehasta', '>=', round($porcentajeCumplimiento))
-                                //                                 ->first([
-                                //                                     'rtpporcentajedesde',
-                                //                                     'rtpporcentajehasta',
-                                //                                     'rtpporcentajerebate'
-                                //                                 ]);
-                                $totalRebate = 0;
-                                if($rtp){
-                                    $totalRebate = $nuevoReal*$rtp->rtpporcentajerebate;
-                                }else{
-                                    $log[] = "No existe el grupo rebate: ".$tsu->treid;
-                                }
+                    //             // $rtp = rtprebatetipospromociones::where('fecid', $fecid)
+                    //             //                                 ->where('tprid', 1) // TIPO DE PROMOCION SELL IN
+                    //             //                                 ->where('rtpporcentajedesde', '<=', round($porcentajeCumplimiento))
+                    //             //                                 ->where('rtpporcentajehasta', '>=', round($porcentajeCumplimiento))
+                    //             //                                 ->first([
+                    //             //                                     'rtpporcentajedesde',
+                    //             //                                     'rtpporcentajehasta',
+                    //             //                                     'rtpporcentajerebate'
+                    //             //                                 ]);
+                    //             $totalRebate = 0;
+                    //             if($rtp){
+                    //                 $totalRebate = $nuevoReal*$rtp->rtpporcentajerebate;
+                    //             }else{
+                    //                 $log[] = "No existe el grupo rebate: ".$tsu->treid;
+                    //             }
                                 
-                                $tsu->tsuvalorizadoreal         = $nuevoReal;
-                                $tsu->tsuvalorizadotogo         = $tsu->tsuvalorizadoobjetivo - $nuevoReal;
-                                $tsu->tsuporcentajecumplimiento = $porcentajeCumplimiento;
-                                $tsu->tsuvalorizadorebate       = $totalRebate;
-                                if($tsu->update()){
+                    //             $tsu->tsuvalorizadoreal         = $nuevoReal;
+                    //             $tsu->tsuvalorizadotogo         = $tsu->tsuvalorizadoobjetivo - $nuevoReal;
+                    //             $tsu->tsuporcentajecumplimiento = $porcentajeCumplimiento;
+                    //             $tsu->tsuvalorizadorebate       = $totalRebate;
+                    //             if($tsu->update()){
 
-                                }else{
+                    //             }else{
 
-                                }
-                            }else{
-                                $nuevotsu = new tsutipospromocionessucursales;
-                                $nuevotsu->fecid = $fecid;
-                                $nuevotsu->sucid = $sucursalClienteId;
-                                $nuevotsu->tprid = 1;
-                                $nuevotsu->tsuporcentajecumplimiento = 0;
-                                $nuevotsu->tsuvalorizadoobjetivo  = 0;
-                                $nuevotsu->tsuvalorizadoreal      = $real;
-                                $nuevotsu->tsuvalorizadorebate    = 0;
-                                $nuevotsu->tsuvalorizadotogo      = 0;
-                                if($nuevotsu->save()){
-                                    $tsuid = $nuevotsu->tsuid;
-                                }else{
+                    //             }
+                    //         }else{
+                    //             $nuevotsu = new tsutipospromocionessucursales;
+                    //             $nuevotsu->fecid = $fecid;
+                    //             $nuevotsu->sucid = $sucursalClienteId;
+                    //             $nuevotsu->tprid = 1;
+                    //             $nuevotsu->tsuporcentajecumplimiento = 0;
+                    //             $nuevotsu->tsuvalorizadoobjetivo  = 0;
+                    //             $nuevotsu->tsuvalorizadoreal      = $real;
+                    //             $nuevotsu->tsuvalorizadorebate    = 0;
+                    //             $nuevotsu->tsuvalorizadotogo      = 0;
+                    //             if($nuevotsu->save()){
+                    //                 $tsuid = $nuevotsu->tsuid;
+                    //             }else{
 
-                                }
-                            }
+                    //             }
+                    //         }
 
-                            $sca = scasucursalescategorias::where('fecid', $fecid)
-                                                        ->where('sucid', $sucursalClienteId)
-                                                        ->where('catid', $categoriaid)
-                                                        ->where('tsuid', $tsuid)
-                                                        ->first(['scaid', 'scavalorizadoreal', 'scavalorizadoobjetivo']);
+                    //         $sca = scasucursalescategorias::where('fecid', $fecid)
+                    //                                     ->where('sucid', $sucursalClienteId)
+                    //                                     ->where('catid', $categoriaid)
+                    //                                     ->where('tsuid', $tsuid)
+                    //                                     ->first(['scaid', 'scavalorizadoreal', 'scavalorizadoobjetivo']);
 
-                            $scaid = 0;
-                            if($sca){
-                                $scaid = $sca->scaid;
+                    //         $scaid = 0;
+                    //         if($sca){
+                    //             $scaid = $sca->scaid;
 
-                                $nuevoRealSca = $real + $sca->scavalorizadoreal;
-                                $sca->scavalorizadoreal = $nuevoRealSca;
-                                $sca->scavalorizadotogo = $sca->scavalorizadoobjetivo - $nuevoRealSca;
-                                if($sca->update()){
+                    //             $nuevoRealSca = $real + $sca->scavalorizadoreal;
+                    //             $sca->scavalorizadoreal = $nuevoRealSca;
+                    //             $sca->scavalorizadotogo = $sca->scavalorizadoobjetivo - $nuevoRealSca;
+                    //             if($sca->update()){
 
-                                }else{
+                    //             }else{
 
-                                }
-                            }else{
+                    //             }
+                    //         }else{
 
-                                $nuevosca = new scasucursalescategorias;
-                                $nuevosca->sucid                 = $sucursalClienteId;
-                                $nuevosca->catid                 = $categoriaid;
-                                $nuevosca->fecid                 = $fecid;
-                                $nuevosca->tsuid                 = $tsuid;
-                                $nuevosca->scavalorizadoobjetivo = 0;
-                                $nuevosca->scaiconocategoria     = env('APP_URL').'/Sistema/categorias-tiposPromociones/img/iconos/'.$categoriaNombre.'-Sell In.png';
-                                $nuevosca->scavalorizadoreal     = $real;
-                                $nuevosca->scavalorizadotogo     = 0;
-                                if($nuevosca->save()){
-                                    $scaid = $nuevosca->scaid;
-                                }else{
+                    //             $nuevosca = new scasucursalescategorias;
+                    //             $nuevosca->sucid                 = $sucursalClienteId;
+                    //             $nuevosca->catid                 = $categoriaid;
+                    //             $nuevosca->fecid                 = $fecid;
+                    //             $nuevosca->tsuid                 = $tsuid;
+                    //             $nuevosca->scavalorizadoobjetivo = 0;
+                    //             $nuevosca->scaiconocategoria     = env('APP_URL').'/Sistema/categorias-tiposPromociones/img/iconos/'.$categoriaNombre.'-Sell In.png';
+                    //             $nuevosca->scavalorizadoreal     = $real;
+                    //             $nuevosca->scavalorizadotogo     = 0;
+                    //             if($nuevosca->save()){
+                    //                 $scaid = $nuevosca->scaid;
+                    //             }else{
 
-                                }
+                    //             }
                                 
-                            }  
-                        }else{
-                            $skusNoExisten[] = $sku;
-                        }  
-                    }
+                    //         }  
+                    //     }else{
+                    //         $skusNoExisten[] = $sku;
+                    //     }  
+                    // }
                 }
 
 
