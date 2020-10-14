@@ -466,6 +466,8 @@ class CategoriasPromocionesMostrarController extends Controller
                                     
                                     if($columnasFilas == null || $columnasFilas == " " ){
                                         $columnasFilas = "";
+                                    }else if($columnasFilas == "-"){
+                                        $columnasFilas = "0";
                                     }
 
                                     $arrayFilaExcel[$contadorColumna]['value'] = $columnasFilas;
