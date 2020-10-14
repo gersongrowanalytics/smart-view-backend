@@ -205,7 +205,7 @@ class RebateActualizarController extends Controller
                                                     'trrtiposrebatesrebates.catid'
                                                 ]);
 
-                if($trrs){
+                if(sizeof($trrs) > 0){
                     $log['escala']['entra'][] = "Si entra en la escala rebate: ".$tsu->tsuid." de la sucursal: ".$tsu->sucid;
                     if(sizeof($trrs) <= 5){
                         $totalRebate = 0;
