@@ -172,7 +172,7 @@ class RebateActualizarController extends Controller
         $fecid      = $request['fecha']; 
         $usutoken   = $request->header('api_token');
 
-        $respuesta      = false;
+        $respuesta      = true;
         $mensaje        = '';
         $datos          = [];
         $mensajeDetalle = '';
