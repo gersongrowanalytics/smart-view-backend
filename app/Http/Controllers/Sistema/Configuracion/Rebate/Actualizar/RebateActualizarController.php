@@ -16,7 +16,7 @@ class RebateActualizarController extends Controller
     /**
      * Actualiza el valorizado rebate en tsu(por tipo de promicion) y sca(por categoria)
      */
-    public function ActualizarValorizadoRebateFecha(Request $request)
+    public function ActualizarValorizadoRebateFechabk(Request $request)
     {
         $fecid      = $request['fecha']; 
         $usutoken   = $request->header('api_token');
@@ -165,5 +165,75 @@ class RebateActualizarController extends Controller
         
         return $requestsalida;
 
+    }
+
+    public function ActualizarValorizadoRebateFecha(Request $request)
+    {
+        $fecid      = $request['fecha']; 
+        $usutoken   = $request->header('api_token');
+
+        $respuesta      = false;
+        $mensaje        = '';
+        $datos          = [];
+        $mensajeDetalle = '';
+        $mensajedev     = null;
+        $log            = [];
+
+        $tsus = tsutipospromocionessucursales::where('fecid', $fecid)
+                                            ->get([
+                                                'tsuid',
+                                                'treid',
+                                                'tprid',
+                                                'tsuporcentajecumplimiento'
+                                            ]);
+
+        foreach($tsus as $tsu){
+
+            $trrs = trrtiposrebatesrebates::join('rtprebatetipospromociones as rtp', 'rtp.rtpid', 'trrtiposrebatesrebates.rtpid')
+                                            ->where('trrtiposrebatesrebates.treid', $tsu->treid)
+                                            ->where('rtp.fecid', $fecid)
+                                            ->where('rtp.tprid', $tsu->tprid)
+                                            ->where('rtp.rtpporcentajedesde', '<=', round($tsu->tsuporcentajecumplimiento))
+                                            ->where('rtp.rtpporcentajehasta', '>=', round($tsu->tsuporcentajecumplimiento))
+                                            ->get([
+                                                'trrtiposrebatesrebates.trrid',
+                                                'rtp.rtpporcentajedesde',
+                                                'rtp.rtpporcentajehasta',
+                                                'rtp.rtpporcentajerebate',
+                                                'trrtiposrebatesrebates.catid'
+                                            ]);
+
+            if($trrs){
+                if(sizeof($trrs) <= 5){
+
+                    $totalRebate = 0;
+                    foreach($trrs as $trr){
+                        $sca = scasucursalescategorias::where('tsuid', $tsu->tsuid)
+                                                    ->where('fecid', $fecid)
+                                                    ->where('catid', $trr->catid)
+                                                    ->first([
+                                                        'scaid',
+                                                        'scavalorizadoreal'
+                                                    ]);
+
+                        if($sca){
+                            $nuevoRebate = ($sca->scavalorizadoreal*$trr->rtpporcentajerebate)/100;
+                            $totalRebate = $totalRebate + $nuevoRebate;
+                        }else{
+
+                        }
+
+                    }
+
+                    $tsuu = tsutipospromocionessucursales::find($tsu->tsuid);
+                    $tsuu->tsuvalorizadorebate = $totalRebate;
+                    $tsuu->update();
+
+
+                }else{
+
+                }
+            }
+        }
     }
 }
