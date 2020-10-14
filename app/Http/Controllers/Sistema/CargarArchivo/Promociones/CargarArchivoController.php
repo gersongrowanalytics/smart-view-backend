@@ -162,7 +162,11 @@ class CargarArchivoController extends Controller
             
                             }
                         }
-            
+                        
+                        if($planchas == null){
+                            $planchas = 0;
+                        }
+
                         // VERIFICAR SI EXISTE EL USUARIO
                         $distribuidor = usuusuarios::where('tpuid', $tpuid)
                                                     ->where('perid', $perid)
