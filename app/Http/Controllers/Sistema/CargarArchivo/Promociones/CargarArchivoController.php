@@ -53,6 +53,9 @@ class CargarArchivoController extends Controller
 
         $pkid = 0;
         $log  = [];
+
+        $fecActual = new \DateTime(date("Y-m-d", strtotime("2020-10-20")));
+
         try{
             // file_put_contents(base_path().'/public/'.$archivo, $_FILES['file']['tmp_name']);
             $fichero_subido = base_path().'/public/Sistema/cargaArchivos/promociones/'.basename($_FILES['file']['name']);
@@ -62,7 +65,7 @@ class CargarArchivoController extends Controller
                 $numRows        = $objPHPExcel->setActiveSheetIndex(0)->getHighestRow();
                 $ultimaColumna  = $objPHPExcel->setActiveSheetIndex(0)->getHighestColumn();
 
-                for ($i=3; $i <= $numRows ; $i++) {
+                for ($i=2; $i <= $numRows ; $i++) {
                     // $ano = '2020';
                     $dia = '01';
         
@@ -420,14 +423,14 @@ class CargarArchivoController extends Controller
                             $proid = $proproducto->proid;
 
 
-                            if($proproducto->proimagen == env('APP_URL').'/Sistema/promociones/'.strtoupper($nuevonombrecategoria).'/'.strtoupper($nuevonombretipocliente).'/'.strtoupper($nuevonombrecodpromoc).'/'.$nuevonombreproductoppt.'.png'){
+                            // if($proproducto->proimagen == env('APP_URL').'/Sistema/promociones/'.strtoupper($nuevonombrecategoria).'/'.strtoupper($nuevonombretipocliente).'/'.strtoupper($nuevonombrecodpromoc).'/'.$nuevonombreproductoppt.'.png'){
                                 
-                            }else{
-                                $proproducto->proimagen = env('APP_URL').'/Sistema/promociones/'.strtoupper($nuevonombrecategoria).'/'.strtoupper($nuevonombretipocliente).'/'.strtoupper($nuevonombrecodpromoc).'/'.$nuevonombreproductoppt.'.png';
-                                if($proproducto->update()){
+                            // }else{
+                            //     $proproducto->proimagen = env('APP_URL').'/Sistema/promociones/'.strtoupper($nuevonombrecategoria).'/'.strtoupper($nuevonombretipocliente).'/'.strtoupper($nuevonombrecodpromoc).'/'.$nuevonombreproductoppt.'.png';
+                            //     if($proproducto->update()){
 
-                                }
-                            }
+                            //     }
+                            // }
 
                         }else{
                             $nuevoProducto = new proproductos;
@@ -455,16 +458,16 @@ class CargarArchivoController extends Controller
                         if($proproductoBonificado){
                             $bonificadoproid = $proproductoBonificado->proid;
 
-                            if($proproductoBonificado->proimagen == env('APP_URL').'/Sistema/promociones/'.strtoupper($nuevonombrecategoria).'/'.strtoupper($nuevonombretipocliente).'/'.strtoupper($nuevonombrecodpromoc).'/'.$nuevonombreprobonippt.' - Gratis.png' ){
+                            // if($proproductoBonificado->proimagen == env('APP_URL').'/Sistema/promociones/'.strtoupper($nuevonombrecategoria).'/'.strtoupper($nuevonombretipocliente).'/'.strtoupper($nuevonombrecodpromoc).'/'.$nuevonombreprobonippt.' - Gratis.png' ){
 
-                            }else{
-                                $proproductoBonificado->proimagen = env('APP_URL').'/Sistema/promociones/'.strtoupper($nuevonombrecategoria).'/'.strtoupper($nuevonombretipocliente).'/'.strtoupper($nuevonombrecodpromoc).'/'.$nuevonombreprobonippt.' - Gratis.png';
-                                if($proproductoBonificado->update()){
+                            // }else{
+                            //     $proproductoBonificado->proimagen = env('APP_URL').'/Sistema/promociones/'.strtoupper($nuevonombrecategoria).'/'.strtoupper($nuevonombretipocliente).'/'.strtoupper($nuevonombrecodpromoc).'/'.$nuevonombreprobonippt.' - Gratis.png';
+                            //     if($proproductoBonificado->update()){
 
-                                }else{
+                            //     }else{
                                     
-                                }
-                            }
+                            //     }
+                            // }
 
                         }else{
                             $nuevoProductoBonificado = new proproductos;
@@ -563,8 +566,9 @@ class CargarArchivoController extends Controller
                                                         ->where('prbcodigoprincipal', $codPrinci) 
                                                         ->first(['prbid']);
 
+                        $prbid = 0;
                         if($prb){
-
+                            $prbid = $prb->prbid;
                         }else{
                             $nuevoPrb = new prbpromocionesbonificaciones;
                             $nuevoPrb->prmid                = $prmid;
@@ -576,71 +580,81 @@ class CargarArchivoController extends Controller
                             $nuevoPrb->prbimagen            = env('APP_URL').'/Sistema/promociones/'.strtoupper($nuevonombrecategoria).'/'.strtoupper($nuevonombretipocliente).'/'.strtoupper($nuevonombrecodpromoc).'/'.$nuevonombreprobonippt.' - Gratis.png';
 
                             if($nuevoPrb->save()){
-                                $prp = prppromocionesproductos::where('prmid', $prmid)
-                                                                ->where('proid', $proid)
-                                                                ->where('prpcodigoprincipal', $codPrinci)
-                                                                ->first(['prpid']);
+                                $prbid = $nuevoPrb->prbid;
+                            }else{
 
-                                if($prp){
-                                    
+                            }
+                        }
+
+                        
+                        $prp = prppromocionesproductos::where('prmid', $prmid)
+                                                        ->where('proid', $proid)
+                                                        ->where('prpcodigoprincipal', $codPrinci)
+                                                        ->first(['prpid']);
+                        $prpid = 0;
+                        if($prp){
+                            $prpid = $prp->prpid;
+                        }else{
+                            $nuevoPrp = new prppromocionesproductos;
+                            $nuevoPrp->prmid                = $prmid;
+                            $nuevoPrp->proid                = $proid;
+                            $nuevoPrp->prpcantidad          = $cantCompra;
+                            $nuevoPrp->prpproductoppt       = $productoPpt;
+                            $nuevoPrp->prpcomprappt         = $compraPpt;
+                            $nuevoPrp->prpcodigoprincipal   = $codPrinci;
+                            $nuevoPrp->prpimagen            = env('APP_URL').'/Sistema/promociones/'.strtoupper($nuevonombrecategoria).'/'.strtoupper($nuevonombretipocliente).'/'.strtoupper($nuevonombrecodpromoc).'/'.$nuevonombreproductoppt.'.png';
+                            if($nuevoPrp->save()){
+                                $prpid = $nuevoPrp->prpid;
+                            }else{
+
+                            }
+                        }
+
+                        $csp = cspcanalessucursalespromociones::where('cscid', $cscid)
+                                                        ->where('fecid', $fecid)
+                                                        ->where('prmid', $prmid)
+                                                        ->first(['cspid', 'cspcantidadcombo', 'cspcantidadplancha', 'created_at']);
+
+                        $cspid = 0;
+                        if($csp){
+                            
+                            $cspid = $csp->cspid;
+                            // SI EL CODIGO DE LA PROMOCION SE REPITE SUMAR LA CANTIDAD DE COMBOS Y PLANCHAS
+
+                            if($csp->created_at > $fecActual){
+                                $csp->cspcantidadcombo   = $csp->cspcantidadcombo + $combos;
+                                $csp->cspcantidadplancha = $csp->cspcantidadplancha + $planchas;
+                                if($csp->update()){
+
                                 }else{
-                                    $nuevoPrp = new prppromocionesproductos;
-                                    $nuevoPrp->prmid                = $prmid;
-                                    $nuevoPrp->proid                = $proid;
-                                    $nuevoPrp->prpcantidad          = $cantCompra;
-                                    $nuevoPrp->prpproductoppt       = $productoPpt;
-                                    $nuevoPrp->prpcomprappt         = $compraPpt;
-                                    $nuevoPrp->prpcodigoprincipal   = $codPrinci;
-                                    $nuevoPrp->prpimagen            = env('APP_URL').'/Sistema/promociones/'.strtoupper($nuevonombrecategoria).'/'.strtoupper($nuevonombretipocliente).'/'.strtoupper($nuevonombrecodpromoc).'/'.$nuevonombreproductoppt.'.png';
-                                    if($nuevoPrp->save()){
-                                        $csp = cspcanalessucursalespromociones::where('cscid', $cscid )
-                                                                ->where('fecid', $fecid)
-                                                                ->where('prmid', $prmid)
-                                                                ->first(['cspid', 'cspcantidadcombo', 'cspcantidadplancha']);
-
-                                        $cspid = 0;
-                                        if($csp){
-                                            
-                                            $cspid = $csp->cspid;
-                                            // SI EL CODIGO DE LA PROMOCION SE REPITE SUMAR LA CANTIDAD DE COMBOS Y PLANCHAS
-                                            $csp->cspcantidadcombo   = $csp->cspcantidadcombo + $combos;
-                                            $csp->cspcantidadplancha = $csp->cspcantidadplancha + $planchas;
-                                            if($csp->update()){
-
-                                            }else{
-                                                
-                                            }
-
-                                        }else{
-                                            $nuevoCsp = new cspcanalessucursalespromociones;
-                                            $nuevoCsp->cscid                = $cscid;
-                                            $nuevoCsp->fecid                = $fecid;
-                                            $nuevoCsp->prmid                = $prmid;
-                                            // $nuevoCsp->cspcodigoprincipal   = $codPrinci;
-                                            $nuevoCsp->cspvalorizado        = 0;
-                                            $nuevoCsp->cspplanchas          = 0;
-                                            $nuevoCsp->cspcompletado        = 0;
-
-                                            $nuevoCsp->cspcantidadcombo     = $combos;
-                                            $nuevoCsp->cspcantidadplancha   = $planchas;
-                                            $nuevoCsp->csptotalcombo        = $precXcombo;
-                                            $nuevoCsp->csptotalplancha      = $precXplanc;
-                                            $nuevoCsp->csptotal             = $precXtodo;
-
-                                            if($nuevoCsp->save()){
-                                                $cspid = $nuevoCsp->cspid;
-                                            }else{
-                                                
-                                            }
-                                        }
-                                    }else{
-
-                                    }
+                                    
                                 }
                             }else{
 
                             }
-                        }    
+
+                        }else{
+                            $nuevoCsp = new cspcanalessucursalespromociones;
+                            $nuevoCsp->cscid                = $cscid;
+                            $nuevoCsp->fecid                = $fecid;
+                            $nuevoCsp->prmid                = $prmid;
+                            // $nuevoCsp->cspcodigoprincipal   = $codPrinci;
+                            $nuevoCsp->cspvalorizado        = 0;
+                            $nuevoCsp->cspplanchas          = 0;
+                            $nuevoCsp->cspcompletado        = 0;
+
+                            $nuevoCsp->cspcantidadcombo     = $combos;
+                            $nuevoCsp->cspcantidadplancha   = $planchas;
+                            $nuevoCsp->csptotalcombo        = $precXcombo;
+                            $nuevoCsp->csptotalplancha      = $precXplanc;
+                            $nuevoCsp->csptotal             = $precXtodo;
+
+                            if($nuevoCsp->save()){
+                                $cspid = $nuevoCsp->cspid;
+                            }else{
+                                
+                            }
+                        }
                     }
         
                     
