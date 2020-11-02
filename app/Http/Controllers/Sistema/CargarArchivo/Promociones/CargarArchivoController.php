@@ -564,6 +564,7 @@ class CargarArchivoController extends Controller
                         $prb = prbpromocionesbonificaciones::where('prmid', $prmid)
                                                         ->where('proid', $bonificadoproid) 
                                                         ->where('prbcodigoprincipal', $codPrinci) 
+                                                        ->where('prbcomprappt', $compBonPpt) 
                                                         ->first(['prbid']);
 
                         $prbid = 0;
@@ -590,6 +591,7 @@ class CargarArchivoController extends Controller
                         $prp = prppromocionesproductos::where('prmid', $prmid)
                                                         ->where('proid', $proid)
                                                         ->where('prpcodigoprincipal', $codPrinci)
+                                                        ->where('prpcomprappt', $compraPpt)
                                                         ->first(['prpid']);
                         $prpid = 0;
                         if($prp){
@@ -620,18 +622,14 @@ class CargarArchivoController extends Controller
                             
                             $cspid = $csp->cspid;
                             // SI EL CODIGO DE LA PROMOCION SE REPITE SUMAR LA CANTIDAD DE COMBOS Y PLANCHAS
+                            $csp->cspcantidadcombo   = $csp->cspcantidadcombo + $combos;
+                            $csp->cspcantidadplancha = $csp->cspcantidadplancha + $planchas;
+                            if($csp->update()){
 
-                            if($csp->created_at > $fecActual){
-                                $csp->cspcantidadcombo   = $csp->cspcantidadcombo + $combos;
-                                $csp->cspcantidadplancha = $csp->cspcantidadplancha + $planchas;
-                                if($csp->update()){
-
-                                }else{
-                                    
-                                }
                             }else{
-
+                                
                             }
+                            
 
                         }else{
                             $nuevoCsp = new cspcanalessucursalespromociones;

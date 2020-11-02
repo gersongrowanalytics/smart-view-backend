@@ -48,6 +48,7 @@ class PromocionesMostrarController extends Controller
                                                                                         ->get([
                                                                                             'cspcanalessucursalespromociones.cspid',
                                                                                             'prm.prmid',
+                                                                                            'prm.prmcodigo',
                                                                                             'cspcanalessucursalespromociones.cspvalorizado',
                                                                                             'cspcanalessucursalespromociones.cspplanchas',
                                                                                             'cspcanalessucursalespromociones.cspcompletado',
