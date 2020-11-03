@@ -108,7 +108,7 @@ class ProductosCargarController extends Controller
                             $nuevopro->pronombre = $material;
                             $nuevopro->proimagen = env('APP_URL').'/Sistema/abs/img/nohay.png';
                             if($nuevopro->save()){
-
+                                $log[] = "Nuevo producto: ".$codigoMaterial;
                             }else{
 
                             }
@@ -154,7 +154,8 @@ class ProductosCargarController extends Controller
             "linea"          => $linea,
             "mensajeDetalle" => $mensajeDetalle,
             "mensajedev"     => $mensajedev,
-            "numeroCelda"    => $numeroCelda
+            "numeroCelda"    => $numeroCelda,
+            "logs"           => $log
         ]);
 
         $AuditoriaController = new AuditoriaController;
