@@ -97,12 +97,13 @@ class CargarArchivoController extends Controller
                     $skuBonifi  = $objPHPExcel->getActiveSheet()->getCell('AD'.$i)->getCalculatedValue();
                     $productoBo = $objPHPExcel->getActiveSheet()->getCell('AE'.$i)->getCalculatedValue();
 
+
                     /**NUEVOS CAMPOS */
-                    $proBoniPpt = $objPHPExcel->getActiveSheet()->getCell('AG'.$i)->getCalculatedValue();
-                    $compBonPpt = $objPHPExcel->getActiveSheet()->getCell('AH'.$i)->getCalculatedValue();
+                    $proBoniPpt = $objPHPExcel->getActiveSheet()->getCell('AF'.$i)->getCalculatedValue();
+                    $compBonPpt = $objPHPExcel->getActiveSheet()->getCell('AG'.$i)->getCalculatedValue();
                     /***/
 
-                    $tipoPromo  = $objPHPExcel->getActiveSheet()->getCell('AF'.$i)->getCalculatedValue();
+                    $tipoPromo  = $objPHPExcel->getActiveSheet()->getCell('AH'.$i)->getCalculatedValue();
                     $tipoClien  = $objPHPExcel->getActiveSheet()->getCell('AK'.$i)->getCalculatedValue();
                     $planchas   = $objPHPExcel->getActiveSheet()->getCell('AN'.$i)->getCalculatedValue();
                     $combos     = $objPHPExcel->getActiveSheet()->getCell('AO'.$i)->getCalculatedValue();
