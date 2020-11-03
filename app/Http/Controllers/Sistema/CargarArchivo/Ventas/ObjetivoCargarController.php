@@ -59,12 +59,10 @@ class ObjetivoCargarController extends Controller
                 $ultimaColumna  = $objPHPExcel->setActiveSheetIndex(0)->getHighestColumn();
 
                 for ($i=2; $i <= $numRows ; $i++) {
-                    // $ano = '2020';
                     $dia = '01';
 
-                    $mesTxt      = 'SET';
                     $ano         = $objPHPExcel->getActiveSheet()->getCell('A'.$i)->getCalculatedValue();
-                    $mes         = $objPHPExcel->getActiveSheet()->getCell('B'.$i)->getCalculatedValue();
+                    $mesTxt      = $objPHPExcel->getActiveSheet()->getCell('B'.$i)->getCalculatedValue();
 
                     $soldto      = $objPHPExcel->getActiveSheet()->getCell('D'.$i)->getCalculatedValue();
                     $cliente     = $objPHPExcel->getActiveSheet()->getCell('E'.$i)->getCalculatedValue();
@@ -82,6 +80,15 @@ class ObjetivoCargarController extends Controller
                     if($fecfecha){
                         $fecid = $fecfecha->fecid;
                     }else{
+                        $mes = "0";
+                        if($mesTxt == "AGO"){
+                            $mes = "08";
+                        }else if($mesTxt == "SET"){
+                            $mes = "09";
+                        }else if($mesTxt == "OCT"){
+                            $mes = "10";
+                        }
+
                         $nuevaFecha = new fecfechas;
                         $nuevaFecha->fecfecha = new \DateTime(date("Y-m-d", strtotime($ano.'-'.$mes.'-'.$dia)));
                         $nuevaFecha->fecdia   = $dia;
@@ -434,12 +441,10 @@ class ObjetivoCargarController extends Controller
                 $ultimaColumna  = $objPHPExcel->setActiveSheetIndex(0)->getHighestColumn();
 
                 for ($i=2; $i <= $numRows ; $i++) {
-                    // $ano = '2020';
                     $dia = '01';
         
-                    $mesTxt      = 'SET';
                     $ano         = $objPHPExcel->getActiveSheet()->getCell('A'.$i)->getCalculatedValue();
-                    $mes         = $objPHPExcel->getActiveSheet()->getCell('B'.$i)->getCalculatedValue();
+                    $mesTxt      = $objPHPExcel->getActiveSheet()->getCell('B'.$i)->getCalculatedValue();
 
                     $soldto      = $objPHPExcel->getActiveSheet()->getCell('D'.$i)->getCalculatedValue();
                     $cliente     = $objPHPExcel->getActiveSheet()->getCell('E'.$i)->getCalculatedValue();
@@ -457,6 +462,15 @@ class ObjetivoCargarController extends Controller
                     if($fecfecha){
                         $fecid = $fecfecha->fecid;
                     }else{
+                        $mes = "0";
+                        if($mesTxt == "AGO"){
+                            $mes = "08";
+                        }else if($mesTxt == "SET"){
+                            $mes = "09";
+                        }else if($mesTxt == "OCT"){
+                            $mes = "10";
+                        }
+                        
                         $nuevaFecha = new fecfechas;
                         $nuevaFecha->fecfecha = new \DateTime(date("Y-m-d", strtotime($ano.'-'.$mes.'-'.$dia)));
                         $nuevaFecha->fecdia   = $dia;
