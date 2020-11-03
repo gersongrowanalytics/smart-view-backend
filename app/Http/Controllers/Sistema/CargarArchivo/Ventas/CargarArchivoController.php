@@ -84,7 +84,7 @@ class CargarArchivoController extends Controller
                         $nuevaFecha = new fecfechas;
                         $nuevaFecha->fecfecha = new \DateTime(date("Y-m-d", strtotime($ano.'-'.$mes.'-'.$dia)));
                         $nuevaFecha->fecdia   = $dia;
-                        $nuevaFecha->fecmes   = $mestxt;
+                        $nuevaFecha->fecmes   = $mesTxt;
                         $nuevaFecha->fecano   = $ano;
                         if($nuevaFecha->save()){
                             $fecid = $nuevaFecha->fecid;
