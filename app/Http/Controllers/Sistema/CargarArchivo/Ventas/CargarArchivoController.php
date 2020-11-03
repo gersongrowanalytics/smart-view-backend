@@ -52,13 +52,10 @@ class CargarArchivoController extends Controller
                 $ultimaColumna  = $objPHPExcel->setActiveSheetIndex(0)->getHighestColumn();
                 
                 for ($i=2; $i <= $numRows ; $i++) {
-                    // $ano = '2020';
                     $dia = '01';
-        
-                    // $mes = $objPHPExcel->getActiveSheet()->getCell('D'.$i)->getCalculatedValue();
-                    $mestxt     = 'SET';
+
                     $ano        = $objPHPExcel->getActiveSheet()->getCell('D'.$i)->getCalculatedValue();
-                    $mes        = $objPHPExcel->getActiveSheet()->getCell('E'.$i)->getCalculatedValue();
+                    $mestxt     = $objPHPExcel->getActiveSheet()->getCell('E'.$i)->getCalculatedValue();
 
                     $soldto     = $objPHPExcel->getActiveSheet()->getCell('H'.$i)->getCalculatedValue();
                     $cliente    = $objPHPExcel->getActiveSheet()->getCell('I'.$i)->getCalculatedValue();
@@ -75,6 +72,15 @@ class CargarArchivoController extends Controller
                     if($fecfecha){
                         $fecid = $fecfecha->fecid;
                     }else{
+                        $mes = "0";
+                        if($mesTxt == "AGO"){
+                            $mes = "08";
+                        }else if($mesTxt == "SET"){
+                            $mes = "09";
+                        }else if($mesTxt == "OCT"){
+                            $mes = "10";
+                        }
+
                         $nuevaFecha = new fecfechas;
                         $nuevaFecha->fecfecha = new \DateTime(date("Y-m-d", strtotime($ano.'-'.$mes.'-'.$dia)));
                         $nuevaFecha->fecdia   = $dia;
@@ -411,30 +417,39 @@ class CargarArchivoController extends Controller
                 $numRows        = $objPHPExcel->setActiveSheetIndex(0)->getHighestRow();
                 $ultimaColumna  = $objPHPExcel->setActiveSheetIndex(0)->getHighestColumn();
                 
-                for ($i=5; $i <= $numRows ; $i++) {
-                    $ano = '2020';
+                for ($i=2; $i <= $numRows ; $i++) {
                     $dia = '01';
         
-                    // $mes = $objPHPExcel->getActiveSheet()->getCell('D'.$i)->getCalculatedValue();
-                    $mes        = 'AGO';
-                    $soldto     = $objPHPExcel->getActiveSheet()->getCell('G'.$i)->getCalculatedValue();
-                    $cliente    = $objPHPExcel->getActiveSheet()->getCell('H'.$i)->getCalculatedValue();
-                    $sku        = $objPHPExcel->getActiveSheet()->getCell('I'.$i)->getCalculatedValue();
-                    $producto   = $objPHPExcel->getActiveSheet()->getCell('J'.$i)->getCalculatedValue();
-                    $sector     = $objPHPExcel->getActiveSheet()->getCell('K'.$i)->getCalculatedValue();
-                    $real       = $objPHPExcel->getActiveSheet()->getCell('N'.$i)->getCalculatedValue();
+                    $ano        = $objPHPExcel->getActiveSheet()->getCell('D'.$i)->getCalculatedValue();
+                    $mestxt     = $objPHPExcel->getActiveSheet()->getCell('E'.$i)->getCalculatedValue();
+
+                    $soldto     = $objPHPExcel->getActiveSheet()->getCell('H'.$i)->getCalculatedValue();
+                    $cliente    = $objPHPExcel->getActiveSheet()->getCell('I'.$i)->getCalculatedValue();
+                    $sku        = $objPHPExcel->getActiveSheet()->getCell('J'.$i)->getCalculatedValue();
+                    $producto   = $objPHPExcel->getActiveSheet()->getCell('K'.$i)->getCalculatedValue();
+                    $sector     = $objPHPExcel->getActiveSheet()->getCell('L'.$i)->getCalculatedValue();
+                    $real       = $objPHPExcel->getActiveSheet()->getCell('O'.$i)->getCalculatedValue();
                     $fecfecha = fecfechas::where('fecdia', $dia)
-                                            ->where('fecmes', $mes)
+                                            ->where('fecmes', $mestxt)
                                             ->where('fecano', $ano)
                                             ->first(['fecid']);
                     $fecid = 0;
                     if($fecfecha){
                         $fecid = $fecfecha->fecid;
                     }else{
+                        $mes = "0";
+                        if($mesTxt == "AGO"){
+                            $mes = "08";
+                        }else if($mesTxt == "SET"){
+                            $mes = "09";
+                        }else if($mesTxt == "OCT"){
+                            $mes = "10";
+                        }
+                        
                         $nuevaFecha = new fecfechas;
                         $nuevaFecha->fecfecha = new \DateTime(date("Y-m-d", strtotime($ano.'-'.$mes.'-'.$dia)));
                         $nuevaFecha->fecdia   = $dia;
-                        $nuevaFecha->fecmes   = $mes;
+                        $nuevaFecha->fecmes   = $mestxt;
                         $nuevaFecha->fecano   = $ano;
                         if($nuevaFecha->save()){
                             $fecid = $nuevaFecha->fecid;
