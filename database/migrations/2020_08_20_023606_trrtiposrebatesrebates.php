@@ -17,7 +17,7 @@ class Trrtiposrebatesrebates extends Migration
             $table->increments('trrid');
             $table->unsignedInteger('treid');
             $table->unsignedInteger('rtpid');
-            $table->unsignedInteger('catid');
+            $table->unsignedInteger('catid')->nullable();
             $table->timestamps();
 
             $table->foreign('treid')->references('treid')->on('tretiposrebates');
