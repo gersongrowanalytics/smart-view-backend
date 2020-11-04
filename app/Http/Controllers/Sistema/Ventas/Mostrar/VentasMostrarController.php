@@ -223,6 +223,10 @@ class VentasMostrarController extends Controller
             
             $dataarray = array(
                 array(
+
+                    'fecid' => "",
+                    'treid' => "",
+                    'trenombre' => "",
                     "tsuid"                     => "",
                     "tprid"                     => "",
                     "tprnombre"                 => "",
@@ -282,12 +286,16 @@ class VentasMostrarController extends Controller
 
                     foreach($usus as $usu){
                         $tsu = tsutipospromocionessucursales::join('fecfechas as fec', 'tsutipospromocionessucursales.fecid', 'fec.fecid')
+                                                            ->join('tretiposrebates as tre', 'tre.treid', 'tsutipospromocionessucursales.treid')
                                                             ->where('tsutipospromocionessucursales.sucid', $usu->sucid)
                                                             ->where('tsutipospromocionessucursales.tprid', $tpr->tprid)
                                                             ->where('fec.fecano', $ano)
                                                             ->where('fec.fecmes', $mes)
                                                             ->where('fec.fecdia', $dia)
                                                             ->first([
+                                                                'fec.fecid',
+                                                                'tre.treid',
+                                                                'tre.trenombre',
                                                                 'tsutipospromocionessucursales.tsuid',
                                                                 'tsutipospromocionessucursales.tsuvalorizadoobjetivo',
                                                                 'tsutipospromocionessucursales.tsuvalorizadoreal',
@@ -296,6 +304,35 @@ class VentasMostrarController extends Controller
                                                                 'tsutipospromocionessucursales.tsuvalorizadorebate'
                                                             ]);
                         if($tsu){
+                            $dataarray[$posicionTpr]['fecid'] = "";
+                            $dataarray[$posicionTpr]['treid'] = "";
+                            $dataarray[$posicionTpr]['trenombre'] = "";
+                            $trrs = array(
+                                array(
+                                    "rtpid" => 0,
+                                    "rtpporcentajedesde" => "95",
+                                    "rtpporcentajehasta" => "99",
+                                    "rtpporcentajerebate" => "0"
+                                ),
+                                array(
+                                    "rtpid" => 0,
+                                    "rtpporcentajedesde" => "100",
+                                    "rtpporcentajehasta" => "104",
+                                    "rtpporcentajerebate" => "0"
+                                ),
+                                array(
+                                    "rtpid" => 0,
+                                    "rtpporcentajedesde" => "105",
+                                    "rtpporcentajehasta" => "10000",
+                                    "rtpporcentajerebate" => "0"
+                                ),
+                            );
+
+                            $dataarray[$posicionTpr]['trrs'] = $trss;
+
+
+
+
                             $dataarray[$posicionTpr]['tsuvalorizadoobjetivo']     = $dataarray[$posicionTpr]['tsuvalorizadoobjetivo']     + $tsu->tsuvalorizadoobjetivo;
                             $dataarray[$posicionTpr]['tsuvalorizadoreal']         = $dataarray[$posicionTpr]['tsuvalorizadoreal']         + $tsu->tsuvalorizadoreal;
                             $dataarray[$posicionTpr]['tsuvalorizadotogo']         = $dataarray[$posicionTpr]['tsuvalorizadotogo']         + $tsu->tsuvalorizadotogo;
