@@ -15,8 +15,11 @@ class Sucsucursales extends Migration
     {
         Schema::create('sucsucursales', function (Blueprint $table) {
             $table->increments('sucid');
+            $table->unsignedInteger('treid')->nullable();
             $table->string('sucnombre');
             $table->timestamps();
+
+            $table->foreign('treid')->references('treid')->on('tretiposrebates');
             
         });
     }
