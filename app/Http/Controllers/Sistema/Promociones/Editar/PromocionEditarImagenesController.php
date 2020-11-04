@@ -41,7 +41,9 @@ class PromocionEditarImagenesController extends Controller
                     $fichero = '/Sistema/promociones/IMAGENES/PRODUCTOS/';
                     
                     $archivo = base64_decode($base64);
-                    $nombre  = Str::random(10).'.png';
+
+                    $nombre  = $prp->prmid."-".$prp->proid."-".$prp->prpproductoppt."-".$prp->prpcomprappt.".png";
+                    // Str::random(10).'.png';
 
                     file_put_contents(base_path().'/public'.$fichero.$nombre, $archivo);
                     $prp->prpimagen = env('APP_URL').$fichero.$nombre;
@@ -69,7 +71,8 @@ class PromocionEditarImagenesController extends Controller
                     $fichero = '/Sistema/promociones/IMAGENES/BONIFICADOS/';
                     
                     $archivo = base64_decode($base64);
-                    $nombre  = Str::random(10).'.png';
+                    $nombre  = $prb->prmid."-".$prb->proid."-".$prb->prbproductoppt."-".$prb->prbcomprappt.".png";
+                    // Str::random(10).'.png';
 
                     file_put_contents(base_path().'/public'.$fichero.$nombre, $archivo);
                     $prb->prbimagen = env('APP_URL').$fichero.$nombre;;
