@@ -103,6 +103,7 @@ class VentasMostrarController extends Controller
                                                     ->where('treid', $tsutipopromocionsucursal->treid)
                                                     ->where('rtp.tprid', $tsutipopromocionsucursal->tprid)
                                                     ->where('rtp.fecid', $tsutipopromocionsucursal->fecid)
+                                                    ->distinct('rtpid')
                                                     ->get([
                                                         'rtp.rtpid',
                                                         'rtpporcentajedesde',
