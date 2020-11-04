@@ -109,7 +109,32 @@ class VentasMostrarController extends Controller
                                                         'rtpporcentajehasta',
                                                         'rtpporcentajerebate'
                                                     ]);
+                    if(sizeof($trrs) > 0){
 
+                    }else{
+                        $trrs = array(
+                            array(
+                                "rtpid" => 0,
+                                "rtpporcentajedesde" => "95",
+                                "rtpporcentajehasta" => "99",
+                                "rtpporcentajerebate" => "0"
+                            ),
+                            array(
+                                "rtpid" => 0,
+                                "rtpporcentajedesde" => "100",
+                                "rtpporcentajehasta" => "104",
+                                "rtpporcentajerebate" => "0"
+                            ),
+                            array(
+                                "rtpid" => 0,
+                                "rtpporcentajedesde" => "105",
+                                "rtpporcentajehasta" => "10000",
+                                "rtpporcentajerebate" => "0"
+                            ),
+                        );
+
+
+                    }
                     
                     $tsutipospromocionessucursales[$posicion]["trrs"] = $trrs;
 
