@@ -605,21 +605,21 @@ class ObjetivoCargarController extends Controller
 
                         // }
                     }else{
-                        $nuevotsu = new tsutipospromocionessucursales;
-                        $nuevotsu->fecid                     = $fecid;
-                        $nuevotsu->sucid                     = $sucursalClienteId;
-                        $nuevotsu->tprid                     = 2;
-                        $nuevotsu->treid                     = $treid;
-                        $nuevotsu->tsuporcentajecumplimiento = 0;
-                        $nuevotsu->tsuvalorizadoobjetivo     = $objetivo;
-                        $nuevotsu->tsuvalorizadoreal         = 0;
-                        $nuevotsu->tsuvalorizadorebate       = 0;
-                        $nuevotsu->tsuvalorizadotogo         = 0;
-                        if($nuevotsu->save()){
-                            $tsuid = $nuevotsu->tsuid;
-                        }else{
+                        // $nuevotsu = new tsutipospromocionessucursales;
+                        // $nuevotsu->fecid                     = $fecid;
+                        // $nuevotsu->sucid                     = $sucursalClienteId;
+                        // $nuevotsu->tprid                     = 2;
+                        // $nuevotsu->treid                     = $treid;
+                        // $nuevotsu->tsuporcentajecumplimiento = 0;
+                        // $nuevotsu->tsuvalorizadoobjetivo     = $objetivo;
+                        // $nuevotsu->tsuvalorizadoreal         = 0;
+                        // $nuevotsu->tsuvalorizadorebate       = 0;
+                        // $nuevotsu->tsuvalorizadotogo         = 0;
+                        // if($nuevotsu->save()){
+                        //     $tsuid = $nuevotsu->tsuid;
+                        // }else{
 
-                        }
+                        // }
                     }
 
 
