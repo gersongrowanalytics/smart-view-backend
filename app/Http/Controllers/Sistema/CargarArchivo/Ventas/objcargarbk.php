@@ -422,18 +422,17 @@ class ObjetivoCargarController extends Controller
         $numeroCelda    = 0;
         $usutoken       = $request->header('api_token');
         $archivo        = $_FILES['file']['name'];
+        $log            = [];
+        $pkid           = 0;
 
         $usuusuario = usuusuarios::where('usutoken', $usutoken)->first(['usuid', 'usuusuario']);
 
         $fichero_subido = '';
 
-        $pkid = 0;
-        $log  = [];
 
-        DB::beginTransaction();
         try{
 
-            $fichero_subido = base_path().'/public/Sistema/cargaArchivos/objetivos/sellin/'.basename($usuusuario->usuid.'-'.$usuusuario->usuusuario.'-'.$fechaActual.'-'.$_FILES['file']['name']);
+            $fichero_subido = base_path().'/public/Sistema/cargaArchivos/objetivos/sellout/'.basename($usuusuario->usuid.'-'.$usuusuario->usuusuario.'-'.$fechaActual.'-'.$_FILES['file']['name']);
 
             if (move_uploaded_file($_FILES['file']['tmp_name'], $fichero_subido)) {
                 $objPHPExcel    = IOFactory::load($fichero_subido);
@@ -443,7 +442,7 @@ class ObjetivoCargarController extends Controller
 
                 for ($i=2; $i <= $numRows ; $i++) {
                     $dia = '01';
-
+        
                     $ano         = $objPHPExcel->getActiveSheet()->getCell('A'.$i)->getCalculatedValue();
                     $mesTxt      = $objPHPExcel->getActiveSheet()->getCell('B'.$i)->getCalculatedValue();
 
@@ -471,7 +470,7 @@ class ObjetivoCargarController extends Controller
                         }else if($mesTxt == "OCT"){
                             $mes = "10";
                         }
-
+                        
                         $nuevaFecha = new fecfechas;
                         $nuevaFecha->fecfecha = new \DateTime(date("Y-m-d", strtotime($ano.'-'.$mes.'-'.$dia)));
                         $nuevaFecha->fecdia   = $dia;
@@ -572,7 +571,7 @@ class ObjetivoCargarController extends Controller
         
                         }
                     }
-
+                    
                     // OBTENER EL GRUPO REBATE
                     $grupoRebate = substr($grupoRebate, 1);
 
@@ -665,7 +664,7 @@ class ObjetivoCargarController extends Controller
                                     $nuevosca->fecid                 = $fecid;
                                     $nuevosca->tsuid                 = $tsuid;
                                     $nuevosca->scavalorizadoobjetivo = $objetivo;
-                                    $nuevosca->scaiconocategoria     = env('APP_URL').'/Sistema/categorias-tiposPromociones/img/iconos/'.$categoriaNombre.'-Sell In.png';
+                                    $nuevosca->scaiconocategoria     = env('APP_URL').'/Sistema/categorias-tiposPromociones/img/iconos/'.$categoriaNombre.'-Sell Out.png';
                                     $nuevosca->scavalorizadoreal     = 0;
                                     $nuevosca->scavalorizadotogo     = 0;
                                     if($nuevosca->save()){
@@ -680,7 +679,7 @@ class ObjetivoCargarController extends Controller
                                     $nuevosca->fecid                 = $fecid;
                                     $nuevosca->tsuid                 = $tsuid;
                                     $nuevosca->scavalorizadoobjetivo = 0;
-                                    $nuevosca->scaiconocategoria     = env('APP_URL').'/Sistema/categorias-tiposPromociones/img/iconos/'.$categoria->catnombre.'-Sell In.png';
+                                    $nuevosca->scaiconocategoria     = env('APP_URL').'/Sistema/categorias-tiposPromociones/img/iconos/'.$categoria->catnombre.'-Sell Out.png';
                                     $nuevosca->scavalorizadoreal     = 0;
                                     $nuevosca->scavalorizadotogo     = 0;
                                     if($nuevosca->save()){
@@ -694,8 +693,7 @@ class ObjetivoCargarController extends Controller
 
 
                     }else{
-                        // $skusNoExisten[] = $sku;
-
+                        
                         foreach($skusNoExisten as $posicion => $skuNoExisten){
                             if($skuNoExisten == $sku){
                                 break;
@@ -712,39 +710,29 @@ class ObjetivoCargarController extends Controller
                 }
 
 
-                if($respuesta == true){
-                    date_default_timezone_set("America/Lima");
-                    $fechaActual = date('Y-m-d H:i:s');
+                date_default_timezone_set("America/Lima");
+                $fechaActual = date('Y-m-d H:i:s');
 
-                    $nuevoCargaArchivo = new carcargasarchivos;
-                    $nuevoCargaArchivo->tcaid = 4;
-                    $nuevoCargaArchivo->fecid = $fecid;
-                    $nuevoCargaArchivo->usuid = $usuusuario->usuid;
-                    $nuevoCargaArchivo->carnombrearchivo = $archivo;
-                    $nuevoCargaArchivo->carubicacion = $fichero_subido;
-                    $nuevoCargaArchivo->carexito = true;
-                    if($nuevoCargaArchivo->save()){
-                        $pkid = "CAR-".$nuevoCargaArchivo->carid;
-                    }else{
-
-                    }
-
-                    DB::commit();
+                $nuevoCargaArchivo = new carcargasarchivos;
+                $nuevoCargaArchivo->tcaid = 4;
+                $nuevoCargaArchivo->fecid = $fecid;
+                $nuevoCargaArchivo->usuid = $usuusuario->usuid;
+                $nuevoCargaArchivo->carnombrearchivo = $archivo;
+                $nuevoCargaArchivo->carubicacion = $fichero_subido;
+                $nuevoCargaArchivo->carexito = true;
+                if($nuevoCargaArchivo->save()){
+                    $pkid = "CAR-".$nuevoCargaArchivo->carid;
                 }else{
-                    DB::rollBack();
+
                 }
-                
             }else{
-                $respuesta  = false;
-                $mensaje    = "No se pudo guardar el excel en el sistema";
+
             }
 
         } catch (Exception $e) {
-            DB::rollBack();
             $mensajedev = $e->getMessage();
             $linea      = __LINE__;
             $log[]      = $mensajedev;
-            $respuesta  = false;
         }
 
         $requestsalida = response()->json([
@@ -758,26 +746,24 @@ class ObjetivoCargarController extends Controller
             "skusNoExisten"  => $skusNoExisten
         ]);
 
-        if($respuesta == true){
-            $AuditoriaController = new AuditoriaController;
-            $registrarAuditoria  = $AuditoriaController->registrarAuditoria(
-                $usutoken,
-                $usuusuario->usuid,
-                null,
-                $fichero_subido,
-                $requestsalida,
-                'CARGAR DATA DE OBJETIVOS SELL OUT',
-                'IMPORTAR',
-                '/cargarArchivo/ventas/obejtivossellout', //ruta
-                $pkid,
-                $log
-            );
+        $AuditoriaController = new AuditoriaController;
+        $registrarAuditoria  = $AuditoriaController->registrarAuditoria(
+            $usutoken,
+            $usuusuario->usuid,
+            null,
+            $fichero_subido,
+            $requestsalida,
+            'CARGAR DATA DE OBEJETIVOS SELL OUT',
+            'IMPORTAR',
+            '/cargarArchivo/ventas/obejtivossellout', //ruta
+            $pkid,
+            $log
+        );
 
-            if($registrarAuditoria == true){
+        if($registrarAuditoria == true){
 
-            }else{
-                
-            }
+        }else{
+            
         }
         
         return $requestsalida;
