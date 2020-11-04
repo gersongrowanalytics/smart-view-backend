@@ -573,23 +573,23 @@ class ObjetivoCargarController extends Controller
                         }
                     }
 
-                    // OBTENER EL GRUPO REBATE
-                    $grupoRebate = substr($grupoRebate, 1);
+                    // // OBTENER EL GRUPO REBATE
+                    // $grupoRebate = substr($grupoRebate, 1);
 
-                    $tre = tretiposrebates::where('trenombre', $grupoRebate)->first(['treid']);
+                    // $tre = tretiposrebates::where('trenombre', $grupoRebate)->first(['treid']);
 
-                    $treid = 0;
-                    if($tre){
-                        $treid = $tre->treid;
-                    }else{
-                        $nuevoTre = new tretiposrebates;
-                        $nuevoTre->trenombre = $grupoRebate;
-                        if($nuevoTre->save()){
-                            $treid = $nuevoTre->treid;
-                        }else{
+                    // $treid = 0;
+                    // if($tre){
+                    //     $treid = $tre->treid;
+                    // }else{
+                    //     $nuevoTre = new tretiposrebates;
+                    //     $nuevoTre->trenombre = $grupoRebate;
+                    //     if($nuevoTre->save()){
+                    //         $treid = $nuevoTre->treid;
+                    //     }else{
 
-                        }
-                    }
+                    //     }
+                    // }
 
                     $tsu = tsutipospromocionessucursales::where('fecid', $fecid)
                                                         ->where('sucid', $sucursalClienteId)
@@ -598,12 +598,12 @@ class ObjetivoCargarController extends Controller
                     $tsuid = 0;
                     if($tsu){
                         $tsuid = $tsu->tsuid;
-                        $tsu->tsuvalorizadoobjetivo = $tsu->tsuvalorizadoobjetivo+$objetivo;
-                        if($tsu->update()){
+                        // $tsu->tsuvalorizadoobjetivo = $tsu->tsuvalorizadoobjetivo+$objetivo;
+                        // if($tsu->update()){
 
-                        }else{
+                        // }else{
 
-                        }
+                        // }
                     }else{
                         $nuevotsu = new tsutipospromocionessucursales;
                         $nuevotsu->fecid                     = $fecid;
