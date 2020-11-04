@@ -461,14 +461,18 @@ class ClientesCargarController extends Controller
                             $suc->treid = $treid;
                             $suc->update();
 
-                            $tsu = tsutipospromocionessucursales::where('sucid', $sucursalClienteId)
+                            $tsus = tsutipospromocionessucursales::where('sucid', $sucursalClienteId)
                                                                 ->where('fecid', $fecid)
-                                                                ->first();
+                                                                ->get(['tsuid']);
 
-                            if($tsu){
-                                $tsu->treid = $treid;
-                                $tsu->update();
+                                                                
+                            foreach($tsus as $tsu){
+                                $tsue = tsutipospromocionessucursales::find($tsu->tsuid);
+                                $tsue->treid = $treid;
+                                $tsue->update();
                             }
+
+                            
 
     
 
