@@ -10,6 +10,7 @@ use App\tprtipospromociones;
 use App\catcategorias;
 use App\carcargasarchivos;
 use App\usuusuarios;
+use App\trrtiposrebatesrebates;
 
 class VentasMostrarController extends Controller
 {
@@ -34,6 +35,7 @@ class VentasMostrarController extends Controller
         try{
             $tsutipospromocionessucursales = tsutipospromocionessucursales::join('fecfechas as fec', 'tsutipospromocionessucursales.fecid', 'fec.fecid')
                                                                         ->join('tprtipospromociones as tpr', 'tpr.tprid', 'tsutipospromocionessucursales.tprid')
+                                                                        ->join('tretiposrebates as tre', 'tre.treid', 'tsutipospromocionessucursales.treid')
                                                                         ->where('tsutipospromocionessucursales.sucid', $sucid)
                                                                         ->where('fec.fecano', $ano)
                                                                         ->where('fec.fecmes', $mes)
@@ -42,6 +44,9 @@ class VentasMostrarController extends Controller
                                                                         ->get([
                                                                             'tsutipospromocionessucursales.tsuid',
                                                                             'tpr.tprid',
+                                                                            'fec.fecid',
+                                                                            'tre.treid',
+                                                                            'tre.trenombre',
                                                                             'tpr.tprnombre',
                                                                             'tpr.tpricono',
                                                                             'tpr.tprcolorbarra',
@@ -93,6 +98,22 @@ class VentasMostrarController extends Controller
                     }else{
                         $tsutipospromocionessucursales[$posicion]['categorias'] = [];
                     }
+
+                    $trrs = trrtiposrebatesrebates::join('rtprebatetipospromociones as rtp', 'rtp.rtpid', 'trrtiposrebatesrebates.rtpid')
+                                                    ->where('treid', $tsutipopromocionsucursal->treid)
+                                                    ->where('rtp.tprid', $tsutipopromocionsucursal->tprid)
+                                                    ->where('rtp.fecid', $tsutipopromocionsucursal->fecid)
+                                                    ->get([
+                                                        'rtp.rtpid',
+                                                        'rtpporcentajedesde',
+                                                        'rtpporcentajehasta',
+                                                        'rtpporcentajerebate'
+                                                    ]);
+
+                    
+                    $tsutipospromocionessucursales[$posicion]["trrs"] = $trrs;
+
+
                 }
 
 
