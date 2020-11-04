@@ -421,7 +421,7 @@ class CargarArchivoController extends Controller
                     $dia = '01';
         
                     $ano        = $objPHPExcel->getActiveSheet()->getCell('D'.$i)->getCalculatedValue();
-                    $mestxt     = $objPHPExcel->getActiveSheet()->getCell('E'.$i)->getCalculatedValue();
+                    $mesTxt     = $objPHPExcel->getActiveSheet()->getCell('E'.$i)->getCalculatedValue();
 
                     $soldto     = $objPHPExcel->getActiveSheet()->getCell('H'.$i)->getCalculatedValue();
                     $cliente    = $objPHPExcel->getActiveSheet()->getCell('I'.$i)->getCalculatedValue();
@@ -430,7 +430,7 @@ class CargarArchivoController extends Controller
                     $sector     = $objPHPExcel->getActiveSheet()->getCell('L'.$i)->getCalculatedValue();
                     $real       = $objPHPExcel->getActiveSheet()->getCell('O'.$i)->getCalculatedValue();
                     $fecfecha = fecfechas::where('fecdia', $dia)
-                                            ->where('fecmes', $mestxt)
+                                            ->where('fecmes', $mesTxt)
                                             ->where('fecano', $ano)
                                             ->first(['fecid']);
                     $fecid = 0;
