@@ -622,8 +622,8 @@ class CargarArchivoController extends Controller
                             
                             $cspid = $csp->cspid;
                             // SI EL CODIGO DE LA PROMOCION SE REPITE SUMAR LA CANTIDAD DE COMBOS Y PLANCHAS
-                            // $csp->cspcantidadcombo   = $csp->cspcantidadcombo + $combos;
-                            $csp->cspcantidadplancha = $csp->cspcantidadplancha - $planchas;
+                            $csp->cspcantidadcombo   = $csp->cspcantidadcombo + $combos;
+                            $csp->cspcantidadplancha = $csp->cspcantidadplancha + $planchas;
                             if($csp->update()){
 
                             }else{

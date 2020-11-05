@@ -16,6 +16,7 @@ class Prmpromociones extends Migration
         Schema::create('prmpromociones', function (Blueprint $table) {
             $table->increments('prmid');
             $table->unsignedInteger('tprid');
+            $table->unsignedInteger('fecid');
             $table->string('prmcodigo');
             $table->text('prmmecanica');
             // $table->string('prmcantidadcombo');
@@ -27,6 +28,7 @@ class Prmpromociones extends Migration
             $table->timestamps();
 
             $table->foreign('tprid')->references('tprid')->on('tprtipospromociones');
+            $table->foreign('fecid')->references('fecid')->on('fecfechas');
         });
     }
 
