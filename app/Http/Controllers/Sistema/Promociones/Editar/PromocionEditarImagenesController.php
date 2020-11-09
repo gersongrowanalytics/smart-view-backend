@@ -16,6 +16,7 @@ class PromocionEditarImagenesController extends Controller
     {
         $usutoken   = $request->header('api_token');
         $prpid              = $request['prpid'];
+        $fecid              = $request['fecid'];
         $imagenProducto     = $request['imagenProducto'];
         $prbid              = $request['prbid'];
         $imagenBonificado   = $request['imagenBonificado'];
@@ -30,6 +31,10 @@ class PromocionEditarImagenesController extends Controller
         $pkidprp = 0;
         $pkidprb = 0;
 
+        if($fecid == null){
+            $fecid = 3;
+        }
+
         DB::beginTransaction();
 
         try{
@@ -42,7 +47,7 @@ class PromocionEditarImagenesController extends Controller
                     
                     $archivo = base64_decode($base64);
 
-                    $nombre  = $prp->prmid."-".$prp->proid."-".$prp->prpproductoppt."-".$prp->prpcomprappt.".png";
+                    $nombre  = $fecid."-".$prp->prmid."-".$prp->proid."-".$prp->prpproductoppt."-".$prp->prpcomprappt.".png";
                     // Str::random(10).'.png';
 
                     file_put_contents(base_path().'/public'.$fichero.$nombre, $archivo);
@@ -71,7 +76,7 @@ class PromocionEditarImagenesController extends Controller
                     $fichero = '/Sistema/promociones/IMAGENES/BONIFICADOS/';
                     
                     $archivo = base64_decode($base64);
-                    $nombre  = $prb->prmid."-".$prb->proid."-".$prb->prbproductoppt."-".$prb->prbcomprappt.".png";
+                    $nombre  = $fecid."-".$prb->prmid."-".$prb->proid."-".$prb->prbproductoppt."-".$prb->prbcomprappt.".png";
                     // Str::random(10).'.png';
 
                     file_put_contents(base_path().'/public'.$fichero.$nombre, $archivo);

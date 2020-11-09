@@ -52,7 +52,14 @@ class CargarArchivoController extends Controller
         $fichero_subido = '';
 
         $pkid = 0;
-        $log  = [];
+        $log  = array(
+            "NUEVO_PROMOCIONES_ASIGNDADAS" => [],
+            "NUEVO_PRP_CREADO" => [],
+            "NUEVO_PRB_CREADO" => [],
+            "NUEVO_PROMOCION_CREADO" => [],
+            "NUEVO_CANAL_ASIGNADO" => [],
+            "NUEVO_CATEGORIA_ASIGNADO" => []
+        );
 
         $fecActual = new \DateTime(date("Y-m-d", strtotime("2020-10-20")));
 
@@ -356,6 +363,7 @@ class CargarArchivoController extends Controller
                             $nuevoSca->scavalorizadotogo     = null;
                             if($nuevoSca->save()){
                                 $scaid = $nuevoSca->scaid;
+                                $log["NUEVO_CATEGORIA_ASIGNADO"][] = $scaid;
                             }else{
 
                             }
@@ -529,6 +537,7 @@ class CargarArchivoController extends Controller
                             $nuevoCsc->fecid = $fecid;
                             if($nuevoCsc->save()){
                                 $cscid = $nuevoCsc->cscid;
+                                $log["NUEVO_CANAL_ASIGNADO"][] = $cscid;
                             }else{
 
                             }
@@ -552,6 +561,7 @@ class CargarArchivoController extends Controller
                             $nuevoPrm->prmaccion            = $accion;
                             if($nuevoPrm->save()){
                                 $prmid = $nuevoPrm->prmid;
+                                $log["NUEVO_PROMOCION_CREADO"][] = $prmid;
                             }else{
 
                             }
@@ -576,10 +586,12 @@ class CargarArchivoController extends Controller
                             $nuevoPrb->prbproductoppt       = $proBoniPpt;
                             $nuevoPrb->prbcomprappt         = $compBonPpt;
                             $nuevoPrb->prbcodigoprincipal   = $codPrinci;
-                            $nuevoPrb->prbimagen            = env('APP_URL').'/Sistema/promociones/'.strtoupper($nuevonombrecategoria).'/'.strtoupper($nuevonombretipocliente).'/'.strtoupper($nuevonombrecodpromoc).'/'.$nuevonombreprobonippt.' - Gratis.png';
+                            // $nuevoPrb->prbimagen            = env('APP_URL').'/Sistema/promociones/'.strtoupper($nuevonombrecategoria).'/'.strtoupper($nuevonombretipocliente).'/'.strtoupper($nuevonombrecodpromoc).'/'.$nuevonombreprobonippt.' - Gratis.png';
+                            $nuevoPrb->prbimagen            = env('APP_URL')."/Sistema/promociones/IMAGENES/BONIFICADOS/".$fecid."-".$prmid."-".$bonificadoproid."-".$proBoniPpt."-".$compBonPpt.".png";
 
                             if($nuevoPrb->save()){
                                 $prbid = $nuevoPrb->prbid;
+                                $log["NUEVO_PRB_CREADO"][] = $prpid;
                             }else{
 
                             }
@@ -604,9 +616,11 @@ class CargarArchivoController extends Controller
                             $nuevoPrp->prpproductoppt       = $productoPpt;
                             $nuevoPrp->prpcomprappt         = $compraPpt;
                             $nuevoPrp->prpcodigoprincipal   = $codPrinci;
-                            $nuevoPrp->prpimagen            = env('APP_URL').'/Sistema/promociones/'.strtoupper($nuevonombrecategoria).'/'.strtoupper($nuevonombretipocliente).'/'.strtoupper($nuevonombrecodpromoc).'/'.$nuevonombreproductoppt.'.png';
+                            // $nuevoPrp->prpimagen            = env('APP_URL').'/Sistema/promociones/'.strtoupper($nuevonombrecategoria).'/'.strtoupper($nuevonombretipocliente).'/'.strtoupper($nuevonombrecodpromoc).'/'.$nuevonombreproductoppt.'.png';
+                            $nuevoPrp->prpimagen            = env('APP_URL').'/Sistema/promociones/IMAGENES/PRODUCTOS/'.$fecid."-".$prmid."-".$proid."-".$productoPpt."-".$compraPpt.".png";
                             if($nuevoPrp->save()){
                                 $prpid = $nuevoPrp->prpid;
+                                $log["NUEVO_PRP_CREADO"][] = $prpid;
                             }else{
 
                             }
@@ -622,6 +636,11 @@ class CargarArchivoController extends Controller
                             
                             $cspid = $csp->cspid;
                             // SI EL CODIGO DE LA PROMOCION SE REPITE SUMAR LA CANTIDAD DE COMBOS Y PLANCHAS
+
+                            $csp->csptotalcombo        = $precXcombo;
+                            $csp->csptotalplancha      = $precXplanc;
+                            $csp->csptotal             = $precXtodo;
+
                             $csp->cspcantidadcombo   = $csp->cspcantidadcombo + $combos;
                             $csp->cspcantidadplancha = $csp->cspcantidadplancha + $planchas;
                             if($csp->update()){
@@ -649,6 +668,7 @@ class CargarArchivoController extends Controller
 
                             if($nuevoCsp->save()){
                                 $cspid = $nuevoCsp->cspid;
+                                $log["NUEVO_PROMOCIONES_ASIGNDADAS"][] = $cspid;
                             }else{
                                 
                             }
@@ -692,7 +712,8 @@ class CargarArchivoController extends Controller
             "linea"          => $linea,
             "mensajeDetalle" => $mensajeDetalle,
             "mensajedev"     => $mensajedev,
-            "numeroCelda"    => $numeroCelda
+            "numeroCelda"    => $numeroCelda,
+            "log"    => $log,
         ]);
 
         $AuditoriaController = new AuditoriaController;
