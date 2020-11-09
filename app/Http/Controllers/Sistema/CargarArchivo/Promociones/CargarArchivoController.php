@@ -363,7 +363,7 @@ class CargarArchivoController extends Controller
                             $nuevoSca->scavalorizadotogo     = null;
                             if($nuevoSca->save()){
                                 $scaid = $nuevoSca->scaid;
-                                $log["NUEVO_CATEGORIA_ASIGNADO"][] = $scaid;
+                                $log["NUEVO_CATEGORIA_ASIGNADO"][] = $i."-".$scaid;
                             }else{
 
                             }
@@ -537,7 +537,7 @@ class CargarArchivoController extends Controller
                             $nuevoCsc->fecid = $fecid;
                             if($nuevoCsc->save()){
                                 $cscid = $nuevoCsc->cscid;
-                                $log["NUEVO_CANAL_ASIGNADO"][] = $cscid;
+                                $log["NUEVO_CANAL_ASIGNADO"][] = $i."-".$cscid;
                             }else{
 
                             }
@@ -561,7 +561,7 @@ class CargarArchivoController extends Controller
                             $nuevoPrm->prmaccion            = $accion;
                             if($nuevoPrm->save()){
                                 $prmid = $nuevoPrm->prmid;
-                                $log["NUEVO_PROMOCION_CREADO"][] = $prmid;
+                                $log["NUEVO_PROMOCION_CREADO"][] = $i."-".$prmid;
                             }else{
 
                             }
@@ -591,7 +591,7 @@ class CargarArchivoController extends Controller
 
                             if($nuevoPrb->save()){
                                 $prbid = $nuevoPrb->prbid;
-                                $log["NUEVO_PRB_CREADO"][] = $prpid;
+                                $log["NUEVO_PRB_CREADO"][] = $i."-".$prpid;
                             }else{
 
                             }
@@ -620,7 +620,7 @@ class CargarArchivoController extends Controller
                             $nuevoPrp->prpimagen            = env('APP_URL').'/Sistema/promociones/IMAGENES/PRODUCTOS/'.$fecid."-".$prmid."-".$proid."-".$productoPpt."-".$compraPpt.".png";
                             if($nuevoPrp->save()){
                                 $prpid = $nuevoPrp->prpid;
-                                $log["NUEVO_PRP_CREADO"][] = $prpid;
+                                $log["NUEVO_PRP_CREADO"][] = $i."-".$prpid;
                             }else{
 
                             }
@@ -668,7 +668,7 @@ class CargarArchivoController extends Controller
 
                             if($nuevoCsp->save()){
                                 $cspid = $nuevoCsp->cspid;
-                                $log["NUEVO_PROMOCIONES_ASIGNDADAS"][] = $cspid;
+                                $log["NUEVO_PROMOCIONES_ASIGNDADAS"][] = $i."-".$cspid;
                             }else{
                                 
                             }
