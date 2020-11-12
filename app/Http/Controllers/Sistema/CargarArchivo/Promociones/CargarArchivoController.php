@@ -35,8 +35,6 @@ class CargarArchivoController extends Controller
     public function CargarArchivo(Request $request)
     {
 
-
-
         $respuesta      = false;
         $mensaje        = '';
         $datos          = [];
