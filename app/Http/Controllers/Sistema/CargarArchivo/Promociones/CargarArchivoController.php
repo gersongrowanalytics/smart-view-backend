@@ -607,7 +607,7 @@ class CargarArchivoController extends Controller
 
                             if($nuevoPrb->save()){
                                 $prbid = $nuevoPrb->prbid;
-                                $log["NUEVO_PRB_CREADO"][] = $i."-".$prpid;
+                                $log["NUEVO_PRB_CREADO"][] = $i."-".$prbid;
                             }else{
 
                             }
