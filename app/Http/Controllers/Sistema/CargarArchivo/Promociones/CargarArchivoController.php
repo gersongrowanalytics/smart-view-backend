@@ -156,20 +156,20 @@ class CargarArchivoController extends Controller
                             }
                         }
             
-                        $tipoUsuario = tputiposusuarios::where('tpunombre', $subCanal)->first(['tpuid']);
-                        $tpuid = 0;
-                        if($tipoUsuario){
-                            $tpuid = $tipoUsuario->tpuid;
-                        }else{
-                            $nuevoTipoUsuario = new tputiposusuarios;
-                            $nuevoTipoUsuario->tpunombre     = $subCanal;
-                            $nuevoTipoUsuario->tpuprivilegio = null;
-                            if($nuevoTipoUsuario->save()){
-                                $tpuid = $nuevoTipoUsuario->tpuid;
-                            }else{
+                        // $tipoUsuario = tputiposusuarios::where('tpunombre', $subCanal)->first(['tpuid']);
+                        // $tpuid = 0;
+                        // if($tipoUsuario){
+                        //     $tpuid = $tipoUsuario->tpuid;
+                        // }else{
+                        //     $nuevoTipoUsuario = new tputiposusuarios;
+                        //     $nuevoTipoUsuario->tpunombre     = $subCanal;
+                        //     $nuevoTipoUsuario->tpuprivilegio = null;
+                        //     if($nuevoTipoUsuario->save()){
+                        //         $tpuid = $nuevoTipoUsuario->tpuid;
+                        //     }else{
             
-                            }
-                        }
+                        //     }
+                        // }
             
                         // VERIFICAR SI EXISTE LA PERSONA
                         $perpersona = perpersonas::where('pernombrecompleto', $ejecutivo)->first(['perid']);
@@ -195,9 +195,12 @@ class CargarArchivoController extends Controller
                             $planchas = 0;
                         }
 
-                        // VERIFICAR SI EXISTE EL USUARIO
-                        $distribuidor = usuusuarios::where('tpuid', $tpuid)
-                                                    ->where('perid', $perid)
+                        // // VERIFICAR SI EXISTE EL USUARIO
+                        // $distribuidor = usuusuarios::where('tpuid', $tpuid)
+                        //                             ->where('perid', $perid)
+                        //                             ->first(['usuid', 'estid']);
+
+                        $distribuidor = usuusuarios::where('perid', $perid)
                                                     ->first(['usuid', 'estid']);
                         $usuid = 0;
                         if($distribuidor){
@@ -214,7 +217,7 @@ class CargarArchivoController extends Controller
 
                         }else{
                             $nuevoUsuario = new usuusuarios;
-                            $nuevoUsuario->tpuid         = $tpuid;
+                            $nuevoUsuario->tpuid         = 2;
                             $nuevoUsuario->perid         = $perid;
                             $nuevoUsuario->estid         = 1;
                             $nuevoUsuario->ususoldto     = null;
