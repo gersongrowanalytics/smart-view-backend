@@ -252,11 +252,11 @@ class CargarArchivoController extends Controller
                                 //                                     'rtpporcentajerebate'
                                 //                                 ]);
                                 $totalRebate = 0;
-                                if($rtp){
-                                    $totalRebate = $nuevoReal*$rtp->rtpporcentajerebate;
-                                }else{
-                                    $log[] = "No existe el grupo rebate: ".$tsu->treid;
-                                }
+                                // if($rtp){
+                                //     $totalRebate = $nuevoReal*$rtp->rtpporcentajerebate;
+                                // }else{
+                                //     $log[] = "No existe el grupo rebate: ".$tsu->treid;
+                                // }
                                 
                                 $tsu->tsuvalorizadoreal         = $nuevoReal;
                                 $tsu->tsuvalorizadotogo         = $tsu->tsuvalorizadoobjetivo - $nuevoReal;
@@ -938,17 +938,17 @@ class CargarArchivoController extends Controller
                                 
                                 
                                 // OBTENER INFORMACION DEL REBATE
-                                $rtp = trrtiposrebatesrebates::join('rtprebatetipospromociones as rtp', 'rtp.rtpid', 'trrtiposrebatesrebates.rtpid')
-                                                            ->where('trrtiposrebatesrebates.treid', $tsu->treid)
-                                                            ->where('rtp.fecid', $fecid)
-                                                            // ->where('tprid', 2) // TIPO DE PROMOCION SELL OUT
-                                                            ->where('rtp.rtpporcentajedesde', '<=', round($porcentajeCumplimiento))
-                                                            ->where('rtp.rtpporcentajehasta', '>=', round($porcentajeCumplimiento))
-                                                            ->first([
-                                                                'rtp.rtpporcentajedesde',
-                                                                'rtp.rtpporcentajehasta',
-                                                                'rtp.rtpporcentajerebate'
-                                                            ]);
+                                // $rtp = trrtiposrebatesrebates::join('rtprebatetipospromociones as rtp', 'rtp.rtpid', 'trrtiposrebatesrebates.rtpid')
+                                //                             ->where('trrtiposrebatesrebates.treid', $tsu->treid)
+                                //                             ->where('rtp.fecid', $fecid)
+                                //                             // ->where('tprid', 2) // TIPO DE PROMOCION SELL OUT
+                                //                             ->where('rtp.rtpporcentajedesde', '<=', round($porcentajeCumplimiento))
+                                //                             ->where('rtp.rtpporcentajehasta', '>=', round($porcentajeCumplimiento))
+                                //                             ->first([
+                                //                                 'rtp.rtpporcentajedesde',
+                                //                                 'rtp.rtpporcentajehasta',
+                                //                                 'rtp.rtpporcentajerebate'
+                                //                             ]);
                                 // $rtp = rtprebatetipospromociones::where('fecid', $fecid)
                                 //                                 ->where('tprid', 2) // TIPO DE PROMOCION SELL OUT
                                 //                                 ->where('rtpporcentajedesde', '<=', round($porcentajeCumplimiento))
@@ -959,11 +959,11 @@ class CargarArchivoController extends Controller
                                 //                                     'rtpporcentajerebate'
                                 //                                 ]);
                                 $totalRebate = 0;
-                                if($rtp){
-                                    $totalRebate = $nuevoReal*$rtp->rtpporcentajerebate;
-                                }else{
-                                    $log[] = "No existe el grupo rebate: ".$tsu->treid;
-                                }
+                                // if($rtp){
+                                //     $totalRebate = $nuevoReal*$rtp->rtpporcentajerebate;
+                                // }else{
+                                //     $log[] = "No existe el grupo rebate: ".$tsu->treid;
+                                // }
                                 
                                 $tsu->tsuvalorizadoreal         = $nuevoReal;
                                 $tsu->tsuvalorizadotogo         = $tsu->tsuvalorizadoobjetivo - $nuevoReal;
