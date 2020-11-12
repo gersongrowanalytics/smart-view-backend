@@ -328,7 +328,7 @@ class VentasMostrarController extends Controller
                                 ),
                             );
 
-                            $dataarray[$posicionTpr]['trrs'] = $trss;
+                            $dataarray[$posicionTpr]['trrs'] = $trrs;
 
 
 
