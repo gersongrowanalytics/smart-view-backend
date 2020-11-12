@@ -17,6 +17,7 @@ class Prmpromociones extends Migration
             $table->increments('prmid');
             $table->unsignedInteger('tprid');
             $table->unsignedInteger('fecid');
+            $table->string('prmcodigoprincipal');
             $table->string('prmcodigo');
             $table->text('prmmecanica');
             // $table->string('prmcantidadcombo');

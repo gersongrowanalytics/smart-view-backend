@@ -407,10 +407,11 @@ class CargarArchivoController extends Controller
         $usuusuario = usuusuarios::where('usutoken', $usutoken)->first(['usuid']);
 
         $fichero_subido = '';
-        
+
+        $fecid = 0;
         try{
 
-            $fichero_subido = base_path().'/public/Sistema/cargaArchivos/ventas/sellin/'.basename($_FILES['file']['name']);
+            $fichero_subido = base_path().'/public/Sistema/cargaArchivos/ventas/sellout/'.basename($_FILES['file']['name']);
             if (move_uploaded_file($_FILES['file']['tmp_name'], $fichero_subido)) {
                 $objPHPExcel    = IOFactory::load($fichero_subido);
                 $objPHPExcel->setActiveSheetIndex(0);
@@ -434,7 +435,7 @@ class CargarArchivoController extends Controller
                                             ->where('fecmes', $mesTxt)
                                             ->where('fecano', $ano)
                                             ->first(['fecid']);
-                    $fecid = 0;
+                    
                     if($fecfecha){
                         $fecid = $fecfecha->fecid;
                     }else{
@@ -499,15 +500,6 @@ class CargarArchivoController extends Controller
                 
                                 }
                             }
-
-                            // $separarsoldto = explode("'00", $soldto);
-
-
-                            // if(sizeof($separarsoldto) > 1){
-                            //     $soldto = $separarsoldto[1];
-                            // }else{
-                            //     $soldto = $separarsoldto[0];
-                            // }
                             
                             $soldto = substr($soldto, 3);
 
@@ -594,36 +586,27 @@ class CargarArchivoController extends Controller
                                 
                                 
                                 // OBTENER INFORMACION DEL REBATE
-                                $rtp = trrtiposrebatesrebates::join('rtprebatetipospromociones as rtp', 'rtp.rtpid', 'trrtiposrebatesrebates.rtpid')
-                                                            ->where('trrtiposrebatesrebates.treid', $tsu->treid)
-                                                            ->where('rtp.fecid', $fecid)
-                                                            // ->where('rtp.tprid', 2) // TIPO DE PROMOCION SELL IN
-                                                            ->where('rtp.rtpporcentajedesde', '<=', round($porcentajeCumplimiento))
-                                                            ->where('rtp.rtpporcentajehasta', '>=', round($porcentajeCumplimiento))
-                                                            ->first([
-                                                                'rtp.rtpporcentajedesde',
-                                                                'rtp.rtpporcentajehasta',
-                                                                'rtp.rtpporcentajerebate'
-                                                            ]);
+                                // $rtp = trrtiposrebatesrebates::join('rtprebatetipospromociones as rtp', 'rtp.rtpid', 'trrtiposrebatesrebates.rtpid')
+                                //                             ->where('trrtiposrebatesrebates.treid', $tsu->treid)
+                                //                             ->where('rtp.fecid', $fecid)
+                                //                             ->where('rtp.tprid', $tsu->tprid) // TIPO DE PROMOCION SELL OUT
+                                //                             ->where('rtp.rtpporcentajedesde', '<=', round($porcentajeCumplimiento))
+                                //                             ->where('rtp.rtpporcentajehasta', '>=', round($porcentajeCumplimiento))
+                                //                             ->first([
+                                //                                 'rtp.rtpporcentajedesde',
+                                //                                 'rtp.rtpporcentajehasta',
+                                //                                 'rtp.rtpporcentajerebate'
+                                //                             ]);
 
-                                // $rtp = rtprebatetipospromociones::where('fecid', $fecid)
-                                //                                 ->where('tprid', 2) // TIPO DE PROMOCION SELL IN
-                                //                                 ->where('rtpporcentajedesde', '<=', round($porcentajeCumplimiento))
-                                //                                 ->where('rtpporcentajehasta', '>=', round($porcentajeCumplimiento))
-                                //                                 ->first([
-                                //                                     'rtpporcentajedesde',
-                                //                                     'rtpporcentajehasta',
-                                //                                     'rtpporcentajerebate'
-                                //                                 ]);
                                 $totalRebate = 0;
-                                if($rtp){
-                                    $totalRebate = $nuevoReal*$rtp->rtpporcentajerebate;
-                                }else{
-                                    $log[] = "No existe el grupo rebate: ".$tsu->treid;
-                                }
+                                // if($rtp){
+                                //     $totalRebate = $nuevoReal*$rtp->rtpporcentajerebate;
+                                // }else{
+                                //     $log[] = "No existe el grupo rebate: ".$tsu->treid;
+                                // }
                                 
                                 $tsu->tsuvalorizadoreal         = $nuevoReal;
-                                $tsu->tsuvalorizadotogo         = $tsu->tsuvalorizadoobjetivo - $nuevoReal;
+                                $tsu->tsuvalorizadotogo         = $tsu->tsuvalorizadoobjetivo + $nuevoReal;
                                 $tsu->tsuporcentajecumplimiento = $porcentajeCumplimiento;
                                 $tsu->tsuvalorizadorebate       = $totalRebate;
                                 if($tsu->update()){
@@ -660,7 +643,7 @@ class CargarArchivoController extends Controller
 
                                 $nuevoRealSca = $real + $sca->scavalorizadoreal;
                                 $sca->scavalorizadoreal = $nuevoRealSca;
-                                $sca->scavalorizadotogo = $sca->scavalorizadoobjetivo - $nuevoRealSca;
+                                $sca->scavalorizadotogo = $sca->scavalorizadoobjetivo + $nuevoRealSca;
                                 if($sca->update()){
 
                                 }else{
@@ -674,7 +657,7 @@ class CargarArchivoController extends Controller
                                 $nuevosca->fecid                 = $fecid;
                                 $nuevosca->tsuid                 = $tsuid;
                                 $nuevosca->scavalorizadoobjetivo = 0;
-                                $nuevosca->scaiconocategoria     = env('APP_URL').'/Sistema/categorias-tiposPromociones/img/iconos/'.$categoriaNombre.'-Sell In.png';
+                                $nuevosca->scaiconocategoria     = env('APP_URL').'/Sistema/categorias-tiposPromociones/img/iconos/'.$categoriaNombre.'-Sell Out.png';
                                 $nuevosca->scavalorizadoreal     = $real;
                                 $nuevosca->scavalorizadotogo     = 0;
                                 if($nuevosca->save()){
@@ -730,6 +713,7 @@ class CargarArchivoController extends Controller
             "mensajedev"     => $mensajedev,
             "numeroCelda"    => $numeroCelda,
             "logs"           => $log,
+            "fecid"          => $fecid
         ]);
 
         $AuditoriaController = new AuditoriaController;

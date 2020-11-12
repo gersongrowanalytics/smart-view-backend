@@ -547,6 +547,8 @@ class CargarArchivoController extends Controller
                                         ->where('prmcodigo', $codPromoc)
                                         ->where('prmmecanica', $mecanica)
                                         ->where('prmaccion', $accion)
+                                        ->where('fecid', $fecid)
+                                        ->where('prmcodigoprincipal', $codPrinci)
                                         ->first(['prmid']);
 
                         $prmid = 0;
@@ -556,6 +558,8 @@ class CargarArchivoController extends Controller
                         }else{
                             $nuevoPrm = new prmpromociones;
                             $nuevoPrm->tprid                = $tprid;
+                            $nuevoPrm->fecid                = $fecid;
+                            $nuevoPrm->prmcodigoprincipal   = $codPrinci;
                             $nuevoPrm->prmcodigo            = $codPromoc;
                             $nuevoPrm->prmmecanica          = $mecanica;
                             $nuevoPrm->prmaccion            = $accion;
