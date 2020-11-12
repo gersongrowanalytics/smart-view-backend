@@ -77,7 +77,7 @@ class CargarArchivoController extends Controller
                     $dia = '01';
         
                     $ano        = $objPHPExcel->getActiveSheet()->getCell('A'.$i)->getCalculatedValue();
-                    $mes        = $objPHPExcel->getActiveSheet()->getCell('B'.$i)->getCalculatedValue();
+                    $mesTxt     = $objPHPExcel->getActiveSheet()->getCell('B'.$i)->getCalculatedValue();
                     $subCanal   = $objPHPExcel->getActiveSheet()->getCell('K'.$i)->getCalculatedValue();
                     $ejecutivo  = $objPHPExcel->getActiveSheet()->getCell('M'.$i)->getCalculatedValue();
                     $soldTo     = $objPHPExcel->getActiveSheet()->getCell('P'.$i)->getCalculatedValue();
@@ -126,19 +126,30 @@ class CargarArchivoController extends Controller
 
 
 
-                    if($mes != null){
+                    if($mesTxt != null){
                         $fecfecha = fecfechas::where('fecdia', $dia)
-                                        ->where('fecmes', $mes)
+                                        ->where('fecmes', $mesTxt)
                                         ->where('fecano', $ano)
                                         ->first(['fecid']);
                         $fecid = 0;
                         if($fecfecha){
                             $fecid = $fecfecha->fecid;
                         }else{
+                            $mes = "0";
+                            if($mesTxt == "AGO"){
+                                $mes = "08";
+                            }else if($mesTxt == "SET"){
+                                $mes = "09";
+                            }else if($mesTxt == "OCT"){
+                                $mes = "10";
+                            }else if($mesTxt == "NOV"){
+                                $mes = "11";
+                            }
+
                             $nuevaFecha = new fecfechas;
                             $nuevaFecha->fecfecha = new \DateTime(date("Y-m-d", strtotime($ano.'-'.$mes.'-'.$dia)));
                             $nuevaFecha->fecdia   = $dia;
-                            $nuevaFecha->fecmes   = $mes;
+                            $nuevaFecha->fecmes   = $mesTxt;
                             $nuevaFecha->fecano   = $ano;
                             if($nuevaFecha->save()){
                                 $fecid = $nuevaFecha->fecid;

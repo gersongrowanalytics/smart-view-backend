@@ -87,6 +87,8 @@ class ObjetivoCargarController extends Controller
                             $mes = "09";
                         }else if($mesTxt == "OCT"){
                             $mes = "10";
+                        }else if($mesTxt == "NOV"){
+                            $mes = "11";
                         }
 
                         $nuevaFecha = new fecfechas;
@@ -191,25 +193,29 @@ class ObjetivoCargarController extends Controller
                     }
 
                     // OBTENER EL GRUPO REBATE
-                    $grupoRebate = substr($grupoRebate, 1);
+                    // $grupoRebate = substr($grupoRebate, 1);
 
-                    $tre = tretiposrebates::where('trenombre', $grupoRebate)->first(['treid']);
+                    // $tre = tretiposrebates::where('trenombre', $grupoRebate)->first(['treid']);
 
+                    // $treid = 0;
+                    // if($tre){
+                    //     $treid = $tre->treid;
+                    // }else{
+                    //     $nuevoTre = new tretiposrebates;
+                    //     $nuevoTre->trenombre = $grupoRebate;
+                    //     if($nuevoTre->save()){
+                    //         $treid = $nuevoTre->treid;
+                    //     }else{
+
+                    //     }
+                    // }
+
+                    // OBTENER EL GRUPO REBATE
+                    $suc = sucsucursales::find($sucursalClienteId);
                     $treid = 0;
-                    if($tre){
-                        $treid = $tre->treid;
-                    }else{
-                        $nuevoTre = new tretiposrebates;
-                        $nuevoTre->trenombre = $grupoRebate;
-                        if($nuevoTre->save()){
-                            $treid = $nuevoTre->treid;
-                        }else{
-
-                        }
+                    if($suc){
+                        $treid = $suc->treid;
                     }
-
-
-
 
 
                     $tsu = tsutipospromocionessucursales::where('fecid', $fecid)
@@ -470,6 +476,8 @@ class ObjetivoCargarController extends Controller
                             $mes = "09";
                         }else if($mesTxt == "OCT"){
                             $mes = "10";
+                        }else if($mesTxt == "NOV"){
+                            $mes = "11";
                         }
 
                         $nuevaFecha = new fecfechas;
@@ -574,22 +582,30 @@ class ObjetivoCargarController extends Controller
                     }
 
                     // OBTENER EL GRUPO REBATE
-                    $grupoRebate = substr($grupoRebate, 1);
+                    // $grupoRebate = substr($grupoRebate, 1);
 
-                    $tre = tretiposrebates::where('trenombre', $grupoRebate)->first(['treid']);
+                    // $tre = tretiposrebates::where('trenombre', $grupoRebate)->first(['treid']);
 
+                    // $treid = 0;
+                    // if($tre){
+                    //     $treid = $tre->treid;
+                    // }else{
+                    //     $nuevoTre = new tretiposrebates;
+                    //     $nuevoTre->trenombre = $grupoRebate;
+                    //     if($nuevoTre->save()){
+                    //         $treid = $nuevoTre->treid;
+                    //     }else{
+
+                    //     }
+                    // }
+
+                    // OBTENER EL GRUPO REBATE
+                    $suc = sucsucursales::find($sucursalClienteId);
                     $treid = 0;
-                    if($tre){
-                        $treid = $tre->treid;
-                    }else{
-                        $nuevoTre = new tretiposrebates;
-                        $nuevoTre->trenombre = $grupoRebate;
-                        if($nuevoTre->save()){
-                            $treid = $nuevoTre->treid;
-                        }else{
-
-                        }
+                    if($suc){
+                        $treid = $suc->treid;
                     }
+
 
                     $tsu = tsutipospromocionessucursales::where('fecid', $fecid)
                                                         ->where('sucid', $sucursalClienteId)

@@ -79,6 +79,8 @@ class CargarArchivoController extends Controller
                             $mes = "09";
                         }else if($mesTxt == "OCT"){
                             $mes = "10";
+                        }else if($mesTxt == "NOV"){
+                            $mes = "11";
                         }
 
                         $nuevaFecha = new fecfechas;
@@ -228,17 +230,17 @@ class CargarArchivoController extends Controller
                                 
                                 
                                 // OBTENER INFORMACION DEL REBATE
-                                $rtp = trrtiposrebatesrebates::join('rtprebatetipospromociones as rtp', 'rtp.rtpid', 'trrtiposrebatesrebates.rtpid')
-                                                            ->where('trrtiposrebatesrebates.treid', $tsu->treid)
-                                                            ->where('rtp.fecid', $fecid)
-                                                            // ->where('rtp.tprid', 1) // TIPO DE PROMOCION SELL IN
-                                                            ->where('rtp.rtpporcentajedesde', '<=', round($porcentajeCumplimiento))
-                                                            ->where('rtp.rtpporcentajehasta', '>=', round($porcentajeCumplimiento))
-                                                            ->first([
-                                                                'rtp.rtpporcentajedesde',
-                                                                'rtp.rtpporcentajehasta',
-                                                                'rtp.rtpporcentajerebate'
-                                                            ]);
+                                // $rtp = trrtiposrebatesrebates::join('rtprebatetipospromociones as rtp', 'rtp.rtpid', 'trrtiposrebatesrebates.rtpid')
+                                //                             ->where('trrtiposrebatesrebates.treid', $tsu->treid)
+                                //                             ->where('rtp.fecid', $fecid)
+                                //                             // ->where('rtp.tprid', 1) // TIPO DE PROMOCION SELL IN
+                                //                             ->where('rtp.rtpporcentajedesde', '<=', round($porcentajeCumplimiento))
+                                //                             ->where('rtp.rtpporcentajehasta', '>=', round($porcentajeCumplimiento))
+                                //                             ->first([
+                                //                                 'rtp.rtpporcentajedesde',
+                                //                                 'rtp.rtpporcentajehasta',
+                                //                                 'rtp.rtpporcentajerebate'
+                                //                             ]);
 
                                 // $rtp = rtprebatetipospromociones::where('fecid', $fecid)
                                 //                                 ->where('tprid', 1) // TIPO DE PROMOCION SELL IN
@@ -446,6 +448,8 @@ class CargarArchivoController extends Controller
                             $mes = "09";
                         }else if($mesTxt == "OCT"){
                             $mes = "10";
+                        }else if($mesTxt == "NOV"){
+                            $mes = "11";
                         }
 
                         $nuevaFecha = new fecfechas;
