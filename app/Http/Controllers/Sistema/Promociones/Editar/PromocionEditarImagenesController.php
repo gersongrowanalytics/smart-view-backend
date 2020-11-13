@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\prppromocionesproductos;
 use App\prbpromocionesbonificaciones;
+use App\prmpromociones;
 use App\Http\Controllers\AuditoriaController;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
@@ -32,7 +33,7 @@ class PromocionEditarImagenesController extends Controller
         $pkidprb = 0;
 
         if($fecid == null){
-            $fecid = 3;
+            $fecid = 7;
         }
 
         DB::beginTransaction();
@@ -56,6 +57,22 @@ class PromocionEditarImagenesController extends Controller
                     if($prp->update()){
                         $pkidprp = "PRP-".$prp->prpid;
                         $log[]   = "SE EDITO LA IMAGEN DEL PRODUCTO: ".$prp->prpimagen;
+
+                        $prm = prmpromociones::find($prp->prmid);
+
+                        $prmt = prmpromociones::where('fecid', $prm->fecid)
+                                            ->where('prmcodigo', $prm->prmcodigo)
+                                            ->get();
+
+                        foreach($prmt as $prma){
+                            $prpe = prppromocionesproductos::where('prmid', $prma->prmid)->first();
+                            if($prpe){
+                                $nuevoNombre  = $fecid."-".$prpe->prmid."-".$prpe->proid."-".$prpe->prpproductoppt."-".$prpe->prpcomprappt.".png";
+                                $prpe->prpimagen = env('APP_URL').$fichero.$nuevoNombre;
+                                $prpe->update();
+                            }
+                        }
+
                     }else{
                         $respuesta = false;
                         $log[]   = "NO SE EDITO LA IMAGEN DEL PRODUCTO";
@@ -84,6 +101,26 @@ class PromocionEditarImagenesController extends Controller
                     if($prb->update()){
                         $pkidprb = "PRB-".$prb->prpid;
                         $log[]   = "SE EDITO LA IMAGEN DEL PRODUCTO BONIFICADO: ".$prb->prbimagen ;
+
+                        $prm = prmpromociones::find($prb->prmid);
+
+                        $prmt = prmpromociones::where('fecid', $prm->fecid)
+                                            ->where('prmcodigo', $prm->prmcodigo)
+                                            ->get([
+                                                'prmid'
+                                            ]);
+
+                        foreach($prmt as $prma){
+                            $prbe = prbpromocionesbonificaciones::where('prmid', $prma->prmid)->first();
+
+                            if($prbe){
+                                $nuevoNombre  = $fecid."-".$prbe->prmid."-".$prbe->proid."-".$prbe->prbproductoppt."-".$prbe->prbcomprappt.".png";
+
+                                $prbe->prbimagen = env('APP_URL').$fichero.$nuevoNombre;
+                                $prbe->update();
+                            }
+                        }
+
                     }else{
                         $respuesta = false;
                         $log[]   = "NO SE EDITO LA IMAGEN DEL PRODUCTO";
