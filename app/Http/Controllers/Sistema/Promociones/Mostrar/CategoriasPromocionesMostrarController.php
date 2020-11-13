@@ -325,17 +325,17 @@ class CategoriasPromocionesMostrarController extends Controller
             "T",
             "U",
             "V",
-            // "W",
+            "W",
             // "X",
-            "Y",
+            // "Y",
             "Z",
-            // "AA",
+            "AA",
             // "AB",
-            "AC",
+            // "AC",
             "AD",
-            // "AE",
+            "AE",
             // "AF",
-            "AG",
+            // "AG",
             "AH",
             "AI",
             "AJ",
@@ -347,9 +347,9 @@ class CategoriasPromocionesMostrarController extends Controller
             "AP",
             "AQ",
             "AR",
-            "AS",
+            // "AS",
             // "AT",
-            "AU",
+            // "AU",
             // "AV"
         ];
 
@@ -398,9 +398,9 @@ class CategoriasPromocionesMostrarController extends Controller
                     $numRows        = $objPHPExcel->setActiveSheetIndex(0)->getHighestRow();
                     $ultimaColumna  = $objPHPExcel->setActiveSheetIndex(0)->getHighestColumn();
 
-                    for ($i=2; $i <= $numRows ; $i++) {
+                    for ($i=1; $i <= $numRows ; $i++) {
 
-                        if($i == 2){
+                        if($i == 1){
 
                             $arrayTitulos = array(
                                 array(
