@@ -59,6 +59,7 @@ class PromocionesMostrarController extends Controller
                                                                                             'cspcanalessucursalespromociones.csptotalcombo',
                                                                                             'cspcanalessucursalespromociones.csptotalplancha',
                                                                                             'cspcanalessucursalespromociones.csptotal',
+                                                                                            'cspcanalessucursalespromociones.cspgratis',
                                                                                             'prm.prmaccion',
                                                                                             'tpr.tprnombre'
                                                                                         ]);
