@@ -95,6 +95,37 @@ class CargarArchivoController extends Controller
                         }
                     }
 
+                    if($i == 2){
+                        $scas = scasucursalescategorias::join('tsutipospromocionessucursales as tsu', 'tsu.tsuid', 'scasucursalescategorias.tsuid')
+                                                        ->where('tsu.fecid', $fecid)
+                                                        ->where('tsu.tprid', 1)
+                                                        ->get(['scasucursalescategorias.scaid']);
+
+                        foreach($scas as $sca){
+                            $scad = scasucursalescategorias::find($sca->scaid);
+                            if($scad->delete()){
+
+                            }else{
+                                $log[] = "No se pudo eliminar el sca: ".$sca->scaid;
+                            }
+                        }
+
+                        $tsus = tsutipospromocionessucursales::where('fecid', $fecid)
+                                                            ->where('tprid', 1)
+                                                            ->get(['tsuid']);
+
+                        foreach($tsus as $tsu){
+                            $tsud = tsutipospromocionessucursales::find($tsu->tsuid);
+                            if($tsud->delete()){
+
+                            }else{
+                                $log[] = "No se pudo eliminar el tsu: ".$tsu->tsuid;
+                            }
+
+                        }
+
+                    }
+
                     if($cliente != null){
 
                         $separarsku = explode("0000000000", $sku);
@@ -462,6 +493,37 @@ class CargarArchivoController extends Controller
                         }else{
         
                         }
+                    }
+
+                    if($i == 2){
+                        $scas = scasucursalescategorias::join('tsutipospromocionessucursales as tsu', 'tsu.tsuid', 'scasucursalescategorias.tsuid')
+                                                        ->where('tsu.fecid', $fecid)
+                                                        ->where('tsu.tprid', 2)
+                                                        ->get(['scasucursalescategorias.scaid']);
+
+                        foreach($scas as $sca){
+                            $scad = scasucursalescategorias::find($sca->scaid);
+                            if($scad->delete()){
+
+                            }else{
+                                $log[] = "No se pudo eliminar el sca: ".$sca->scaid;
+                            }
+                        }
+
+                        $tsus = tsutipospromocionessucursales::where('fecid', $fecid)
+                                                            ->where('tprid', 2)
+                                                            ->get(['tsuid']);
+
+                        foreach($tsus as $tsu){
+                            $tsud = tsutipospromocionessucursales::find($tsu->tsuid);
+                            if($tsud->delete()){
+
+                            }else{
+                                $log[] = "No se pudo eliminar el tsu: ".$tsu->tsuid;
+                            }
+
+                        }
+
                     }
 
                     if($cliente != null){
