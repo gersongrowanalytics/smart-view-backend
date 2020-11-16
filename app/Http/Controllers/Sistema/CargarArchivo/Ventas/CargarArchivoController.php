@@ -505,7 +505,7 @@ class CargarArchivoController extends Controller
                     if($i == 2){
                         $scas = scasucursalescategorias::join('tsutipospromocionessucursales as tsu', 'tsu.tsuid', 'scasucursalescategorias.tsuid')
                                                         ->where('tsu.fecid', $fecid)
-                                                        ->where('tsu.tprid', 1)
+                                                        ->where('tsu.tprid', 2)
                                                         ->get(['scasucursalescategorias.scaid']);
 
                         foreach($scas as $sca){
@@ -521,7 +521,7 @@ class CargarArchivoController extends Controller
                         }
 
                         $tsus = tsutipospromocionessucursales::where('fecid', $fecid)
-                                                            ->where('tprid', 1)
+                                                            ->where('tprid', 2)
                                                             ->get(['tsuid']);
 
                         foreach($tsus as $tsu){
