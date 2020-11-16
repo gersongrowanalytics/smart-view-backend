@@ -102,11 +102,14 @@ class CargarArchivoController extends Controller
                                                         ->get(['scasucursalescategorias.scaid']);
 
                         foreach($scas as $sca){
-                            $scad = scasucursalescategorias::find($sca->scaid);
-                            if($scad->delete()){
+                            $scae = scasucursalescategorias::find($sca->scaid);
+
+                            $scae->scavalorizadoreal = 0;
+                            $scae->scavalorizadotogo = 0;
+                            if($scae->update()){
 
                             }else{
-                                $log[] = "No se pudo eliminar el sca: ".$sca->scaid;
+                                $log[] = "No se pudo editar el sca: ".$sca->scaid;
                             }
                         }
 
@@ -115,11 +118,15 @@ class CargarArchivoController extends Controller
                                                             ->get(['tsuid']);
 
                         foreach($tsus as $tsu){
-                            $tsud = tsutipospromocionessucursales::find($tsu->tsuid);
-                            if($tsud->delete()){
+                            $tsue = tsutipospromocionessucursales::find($tsu->tsuid);
+                            $tsue->tsuvalorizadoreal = 0;
+                            $tsue->tsuvalorizadotogo = 0;
+                            $tsue->tsuporcentajecumplimiento = 0;
+                            $tsue->tsuvalorizadorebate = 0;
+                            if($tsue->update()){
 
                             }else{
-                                $log[] = "No se pudo eliminar el tsu: ".$tsu->tsuid;
+                                $log[] = "No se pudo editar el tsu: ".$tsu->tsuid;
                             }
 
                         }
@@ -498,28 +505,35 @@ class CargarArchivoController extends Controller
                     if($i == 2){
                         $scas = scasucursalescategorias::join('tsutipospromocionessucursales as tsu', 'tsu.tsuid', 'scasucursalescategorias.tsuid')
                                                         ->where('tsu.fecid', $fecid)
-                                                        ->where('tsu.tprid', 2)
+                                                        ->where('tsu.tprid', 1)
                                                         ->get(['scasucursalescategorias.scaid']);
 
                         foreach($scas as $sca){
-                            $scad = scasucursalescategorias::find($sca->scaid);
-                            if($scad->delete()){
+                            $scae = scasucursalescategorias::find($sca->scaid);
+
+                            $scae->scavalorizadoreal = 0;
+                            $scae->scavalorizadotogo = 0;
+                            if($scae->update()){
 
                             }else{
-                                $log[] = "No se pudo eliminar el sca: ".$sca->scaid;
+                                $log[] = "No se pudo editar el sca: ".$sca->scaid;
                             }
                         }
 
                         $tsus = tsutipospromocionessucursales::where('fecid', $fecid)
-                                                            ->where('tprid', 2)
+                                                            ->where('tprid', 1)
                                                             ->get(['tsuid']);
 
                         foreach($tsus as $tsu){
-                            $tsud = tsutipospromocionessucursales::find($tsu->tsuid);
-                            if($tsud->delete()){
+                            $tsue = tsutipospromocionessucursales::find($tsu->tsuid);
+                            $tsue->tsuvalorizadoreal = 0;
+                            $tsue->tsuvalorizadotogo = 0;
+                            $tsue->tsuporcentajecumplimiento = 0;
+                            $tsue->tsuvalorizadorebate = 0;
+                            if($tsue->update()){
 
                             }else{
-                                $log[] = "No se pudo eliminar el tsu: ".$tsu->tsuid;
+                                $log[] = "No se pudo editar el tsu: ".$tsu->tsuid;
                             }
 
                         }
