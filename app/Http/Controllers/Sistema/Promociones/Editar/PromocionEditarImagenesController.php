@@ -69,6 +69,7 @@ class PromocionEditarImagenesController extends Controller
                             $prpe = prppromocionesproductos::where('prmid', $prma->prmid)->where('prpid', '!=', $prpid)->first();
                             if($prpe){
                                 $nuevoNombre  = $fecid."-".$prpe->prmid."-".$prpe->proid."-".$prpe->prpproductoppt."-".$prpe->prpcomprappt.".png";
+                                $nuevoNombre  = str_replace("/", "-", $nuevoNombre);
 
                                 file_put_contents(base_path().'/public'.$fichero.$nuevoNombre, $archivo);
                                 $prpe->prpimagen = env('APP_URL').$fichero.$nuevoNombre;
@@ -119,6 +120,8 @@ class PromocionEditarImagenesController extends Controller
 
                             if($prbe){
                                 $nuevoNombre  = $fecid."-".$prbe->prmid."-".$prbe->proid."-".$prbe->prbproductoppt."-".$prbe->prbcomprappt.".png";
+                                $nuevoNombre  = str_replace("/", "-", $nuevoNombre);
+                                
                                 file_put_contents(base_path().'/public'.$fichero.$nuevoNombre, $archivo);
                                 $prbe->prbimagen = env('APP_URL').$fichero.$nuevoNombre;
                                 $prbe->update();
