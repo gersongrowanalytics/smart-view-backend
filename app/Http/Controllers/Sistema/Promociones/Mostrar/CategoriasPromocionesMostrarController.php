@@ -461,13 +461,17 @@ class CategoriasPromocionesMostrarController extends Controller
                                 );
                                 $contadorColumna = 0;
 
-                                foreach($columnasExcel as $abc) {  
+                                foreach($columnasExcel as $abc) {
                                     $columnasFilas = $objPHPExcel->getActiveSheet()->getCell($abc.$i)->getCalculatedValue();
                                     
                                     if($columnasFilas == null || $columnasFilas == " " ){
                                         $columnasFilas = "";
                                     }else if($columnasFilas == "-"){
                                         $columnasFilas = "0";
+                                    }
+
+                                    if($abc == "AR"){
+                                        $columnasFilas = number_format($columnasFilas, 2);
                                     }
 
                                     $arrayFilaExcel[$contadorColumna]['value'] = $columnasFilas;
