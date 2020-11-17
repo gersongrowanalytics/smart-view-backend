@@ -470,7 +470,7 @@ class CategoriasPromocionesMostrarController extends Controller
                                         $columnasFilas = "0";
                                     }
 
-                                    if($abc == "AR"){
+                                    if(is_numeric($columnasFilas)){
                                         $columnasFilas = number_format($columnasFilas, 2);
                                     }
 
