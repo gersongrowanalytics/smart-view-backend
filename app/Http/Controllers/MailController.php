@@ -46,7 +46,7 @@ class MailController extends Controller
             $nuevaContrasena = Str::random(6);
 
             $usu->usucontrasena = Hash::make($nuevaContrasena);
-
+            $usu->update();
             $data = [
                 "correo"     => $correo,
                 'nombre'     => $usu->pernombrecompleto,
