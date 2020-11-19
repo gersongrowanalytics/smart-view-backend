@@ -28,7 +28,14 @@ class MailController extends Controller
 
         $correo = $request['correoElectronico'];
 
-        $usu = usuusuarios::where('usucorreo', $correo)->first(['usuid', 'usucontrasena']);
+        $usu = usuusuarios::join('perpersonas per', 'per.perid', 'usuusuarios.perid')
+                            ->where('usuusuarios.usucorreo', $correo)
+                            ->first([
+                                'usuusuarios.usuid', 
+                                'usuusuarios.usuusuario',
+                                'usuusuarios.usucontrasena',
+                                'per.pernombrecompleto'
+                            ]);
 
         $respuesta  = true;
         $mensaje    = "Se envio el correo de recuperación satisfactoriamente";
@@ -39,7 +46,12 @@ class MailController extends Controller
 
             $usu->usucontrasena = Hash::make($nuevaContrasena);
 
-            $data = ["contrasena" => $nuevaContrasena];
+            $data = [
+                "correo"     => $correo,
+                'nombre'     => $usu->pernombrecompleto,
+                "usuario"    => $usu->usuusuario,
+                "contrasena" => $nuevaContrasena
+            ];
 
             Mail::to($correo)->send(new TestMail($data));
         }else{
