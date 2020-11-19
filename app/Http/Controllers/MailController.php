@@ -84,6 +84,6 @@ class MailController extends Controller
     {
         $data = ['nombre' => 'Gerson Vilca Alvarez', "usuario" => "Gerson", "contrasena" => "1234", "correo" => "gerson@hotmail.com"];
 
-        return view('CorreoRecupearContrasenaOutlook')->with($data);
+        return view('CorreoRecuperarContrasena')->with($data);
     }
 }
