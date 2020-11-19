@@ -17,7 +17,7 @@ $router->get('/', function () use ($router) {
 
 
 $router->get('/mail', 'MailController@getMail');
-$router->get('/recuperar/contrasena', 'MailController@recuperarContrasena');
+$router->post('/recuperar/contrasena', 'MailController@recuperarContrasena');
 $router->post('/login', 'Sistema\loginController@login');
 
 $router->group(['middleware' => ['permisos']], function() use($router) {
