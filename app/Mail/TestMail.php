@@ -33,7 +33,5 @@ class TestMail extends Mailable
                     ->view('testmail')
                     ->subject('Titulo del correo')
                     ->with($this->data);
-
-    }               
-
+    }
 }

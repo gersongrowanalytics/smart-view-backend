@@ -53,7 +53,7 @@ class MailController extends Controller
                 "contrasena" => $nuevaContrasena
             ];
 
-            Mail::to($correo)->send(new TestMail($data));
+            Mail::to($correo)->send(new MailRecuperarContrasena($data));
         }else{
             $respuesta = false;
             $mensaje = "Lo sentimos, ese correo no esta registrado en Smart View";
