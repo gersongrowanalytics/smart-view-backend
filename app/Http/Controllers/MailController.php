@@ -26,35 +26,35 @@ class MailController extends Controller
     public function recuperarContrasena(Request $request)
     {
 
-        // $correo = $request['correo'];
+        $correo = $request['correoElectronico'];
 
-        // $usu = usuusuarios::where('usucorreo', $correo)->first(['usuid']);
+        $usu = usuusuarios::where('usucorreo', $correo)->first(['usuid', 'usucontrasena']);
 
-        // $respuesta  = true;
-        // $mensaje    = "Se envio el correo de recuperación satisfactoriamente";
+        $respuesta  = true;
+        $mensaje    = "Se envio el correo de recuperación satisfactoriamente";
 
-        // if($usu){
+        if($usu){
 
-        //     $nuevaContrasena = Str::random(6);
+            $nuevaContrasena = Str::random(6);
 
-        //     $usu->usucontrasena = Hash::make($nuevaContrasena);
+            $usu->usucontrasena = Hash::make($nuevaContrasena);
 
-        //     $data = ["contrasena" => $nuevaContrasena];
+            $data = ["contrasena" => $nuevaContrasena];
 
-        //     Mail::to($correo)->send(new TestMail($data));
-        // }else{
-        //     $respuesta = false;
-        //     $mensaje = "Lo sentimos, ese correo no esta registrado en Smart View";
-        // }
+            Mail::to($correo)->send(new TestMail($data));
+        }else{
+            $respuesta = false;
+            $mensaje = "Lo sentimos, ese correo no esta registrado en Smart View";
+        }
 
-        // return response()->json([
-        //     "respuesta" => $respuesta,
-        //     "mensaje"   => $mensaje
-        // ]);
+        return response()->json([
+            "respuesta" => $respuesta,
+            "mensaje"   => $mensaje
+        ]);
 
-        $data = ["contrasena" => "asd"];
+        // $data = ["contrasena" => "asd"];
 
-        Mail::to("gerson.vilca@tecsup.edu.pe")->send(new MailRecuperarContrasena($data));
+        // Mail::to("gerson.vilca@tecsup.edu.pe")->send(new MailRecuperarContrasena($data));
 
         
         // return view('CorreoRecuperarContrasena')->with($data);
