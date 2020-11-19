@@ -28,7 +28,7 @@ class MailController extends Controller
 
         $correo = $request['correoElectronico'];
 
-        $usu = usuusuarios::join('perpersonas per', 'per.perid', 'usuusuarios.perid')
+        $usu = usuusuarios::join('perpersonas as per', 'per.perid', 'usuusuarios.perid')
                             ->where('usuusuarios.usucorreo', $correo)
                             ->first([
                                 'usuusuarios.usuid', 
