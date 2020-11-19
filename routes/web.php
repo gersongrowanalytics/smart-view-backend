@@ -16,7 +16,7 @@ $router->get('/', function () use ($router) {
 });
 
 
-$router->get('/mail', 'MailController@getMail');
+$router->get('/mail', 'MailController@vista');
 $router->post('/recuperar/contrasena', 'MailController@recuperarContrasena');
 $router->post('/login', 'Sistema\loginController@login');
 

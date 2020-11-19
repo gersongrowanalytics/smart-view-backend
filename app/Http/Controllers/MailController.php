@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Mail\TestMail;
 use App\Mail\MailRecuperarContrasena;
+use App\Mail\MailRecuperarContrasenaOutlook;
 use App\Mail\MailCrearUsuario;
 use Illuminate\Support\Facades\Mail;
 use App\usuusuarios;
@@ -53,7 +54,14 @@ class MailController extends Controller
                 "contrasena" => $nuevaContrasena
             ];
 
-            Mail::to($correo)->send(new MailRecuperarContrasena($data));
+            $pos = strpos($correo, "@gmail.com");
+
+            if($pos){
+                Mail::to($correo)->send(new MailRecuperarContrasena($data));
+            }else{
+                Mail::to($correo)->send(new MailRecuperarContrasenaOutlook($data));
+            }
+            
         }else{
             $respuesta = false;
             $mensaje = "Lo sentimos, ese correo no esta registrado en Smart View";
@@ -70,5 +78,12 @@ class MailController extends Controller
 
         
         // return view('CorreoRecuperarContrasena')->with($data);
+    }
+
+    public function vista()
+    {
+        $data = ['nombre' => 'Gerson Vilca Alvarez', "usuario" => "Gerson", "contrasena" => "1234", "correo" => "gerson@hotmail.com"];
+
+        return view('CorreoRecupearContrasenaOutlook')->with($data);
     }
 }
