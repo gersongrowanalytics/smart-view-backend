@@ -7,6 +7,7 @@ use App\Mail\TestMail;
 use App\Mail\MailRecuperarContrasena;
 use App\Mail\MailRecuperarContrasenaOutlook;
 use App\Mail\MailCrearUsuario;
+use App\Mail\MailCrearUsuarioOutlook;
 use Illuminate\Support\Facades\Mail;
 use App\usuusuarios;
 use Illuminate\Support\Str;
@@ -84,6 +85,6 @@ class MailController extends Controller
     {
         $data = ['nombre' => 'Gerson Vilca Alvarez', "usuario" => "Gerson", "contrasena" => "1234", "correo" => "gerson@hotmail.com"];
 
-        return view('CorreoRecuperarContrasena')->with($data);
+        return view('bienvenida.CorreoBienvenidaOutlook')->with($data);
     }
 }
