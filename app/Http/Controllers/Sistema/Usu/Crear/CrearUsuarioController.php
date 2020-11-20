@@ -33,13 +33,13 @@ class CrearUsuarioController extends Controller
 
         $usutoken   = $request->header('api_token');
 
-        $nombre   = $request['nombre'];
-        $apellPat = $request['apellPat'];
-        $apellMat = $request['apellMat'];
+        $nombre   = $request['pernom'];
+        $apellPat = $request['perapellpat'];
+        $apellMat = $request['perapellmat'];
         $soldto   = $request['soldto'];
         $correo   = $request['correo'];
         $usuario  = $request['usuario'];
-        $pass     = $request['pass'];
+        $pass     = $request['contrasena'];
         $tpuid    = $request['tpuid'];
         $zonid    = $request['zonid'];
 
