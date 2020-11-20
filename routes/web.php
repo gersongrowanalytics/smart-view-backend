@@ -19,7 +19,6 @@ $router->get('/', function () use ($router) {
 $router->get('/mail', 'MailController@vista');
 $router->post('/recuperar/contrasena', 'MailController@recuperarContrasena');
 $router->post('/login', 'Sistema\loginController@login');
-$router->post('/configuracion/usuarios/crear/usuario', 'Sistema\Usu\Crear\CrearUsuarioController@CrearUsuario');
 
 $router->group(['middleware' => ['permisos']], function() use($router) {
     
@@ -31,7 +30,7 @@ $router->group(['middleware' => ['permisos']], function() use($router) {
     $router->post('/usuario/mostrar/sucursales', 'Sistema\Usuario\Sucursales\Mostrar\SucursalesMostrarController@mostrarSucursales');
     $router->post('/usuario/mostrar/permisos', 'Sistema\Usuario\Permisos\Mostrar\PermisosMostrarController@mostrarPermisosUsuario');
     
-    
+    $router->post('/configuracion/usuarios/crear/usuario', 'Sistema\Usu\Crear\CrearUsuarioController@CrearUsuario');
 
     $router->post('/configuracion/usuarios/editarUsuario', 'Sistema\Configuracion\Usuarios\Editar\UsuariosEditarController@editarUsuario');
     $router->post('/configuracion/usuarios/mostrarUsuarios', 'Sistema\Configuracion\Usuarios\Mostrar\UsuariosMostrarController@mostrarUsuarios');
