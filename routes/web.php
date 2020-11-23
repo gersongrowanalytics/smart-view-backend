@@ -15,6 +15,8 @@ $router->get('/', function () use ($router) {
     return $router->app->version();
 });
 
+$router->get('/actualizar', 'salvacionController@salvacion');
+
 
 $router->get('/mail', 'MailController@vista');
 $router->post('/recuperar/contrasena', 'MailController@recuperarContrasena');
