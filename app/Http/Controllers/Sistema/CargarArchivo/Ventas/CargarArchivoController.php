@@ -335,6 +335,7 @@ class CargarArchivoController extends Controller
                                 $nuevoRealSca = $real + $sca->scavalorizadoreal;
                                 $sca->scavalorizadoreal = $nuevoRealSca;
                                 $sca->scavalorizadotogo = $sca->scavalorizadoobjetivo - $nuevoRealSca;
+                                $sca->scaiconocategoria = env('APP_URL').'/Sistema/categorias-tiposPromociones/img/iconos/'.$categoriaNombre.'-Sell In.png';
                                 if($sca->update()){
 
                                 }else{
@@ -724,6 +725,7 @@ class CargarArchivoController extends Controller
                                 $nuevoRealSca = $real + $sca->scavalorizadoreal;
                                 $sca->scavalorizadoreal = $nuevoRealSca;
                                 $sca->scavalorizadotogo = $sca->scavalorizadoobjetivo + $nuevoRealSca;
+                                $sca->scaiconocategoria = env('APP_URL').'/Sistema/categorias-tiposPromociones/img/iconos/'.$categoriaNombre.'-Sell Out.png';
                                 if($sca->update()){
 
                                 }else{
