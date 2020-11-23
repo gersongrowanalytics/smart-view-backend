@@ -9,7 +9,7 @@ class salvacionController extends Controller
 {
     public function salvacion()
     {
-        $pros = proproductos::all();
+        $pros = proproductos::where('proimagen', 'LIKE', '%http://backs.gavsistemas.co%')->get();
 
         foreach($pros as $pro){
             $proe = proproductos::find($pro->proid);
