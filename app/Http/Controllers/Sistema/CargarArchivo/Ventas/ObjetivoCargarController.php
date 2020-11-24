@@ -192,6 +192,22 @@ class ObjetivoCargarController extends Controller
                         }
                     }
 
+
+                    if($i == 2){
+                        $tsus = tsutipospromocionessucursales::where('fecid', $fecid)
+                                                            ->where('tprid', 1)
+                                                            ->get(['tsuid']);
+
+                        foreach($tsus as $tsu){
+                            $tsue = tsutipospromocionessucursales::find($tsu->tsuid);
+                            $tsue->tsuvalorizadoobjetivo = 0;
+                            if($tsue->update()){
+                                $scas = scasucursalescategorias::where('tsuid', $tsu->tsuid)
+                                                                ->update(['scavalorizadoobjetivo' => 0]);
+                            }
+                        }
+                    }
+
                     // OBTENER EL GRUPO REBATE
                     // $grupoRebate = substr($grupoRebate, 1);
 
@@ -336,7 +352,59 @@ class ObjetivoCargarController extends Controller
                         
                         }
                     }
+
+
+
+
+                    // 
+                    if($i == $numRows){
+                        $scas = scasucursalescategorias::join('tsutipospromocionessucursales as tsu', 'tsu.tsuid', 'scasucursalescategorias.tsuid')
+                                                        ->where('tsu.fecid', $fecid)
+                                                        ->where('tsu.tprid', 1)
+                                                        ->get(['scasucursalescategorias.scaid', 'scasucursalescategorias.scavalorizadoobjetivo', 'scasucursalescategorias.scavalorizadoreal']);
+
+                        foreach($scas as $sca){
+                            $scae = scasucursalescategorias::find($sca->scaid);
+                            $scae->scavalorizadotogo = $sca->scavalorizadoobjetivo - $sca->scavalorizadoreal;
+
+                            if($scae->update()){
+
+                            }else{
+                                $log[] = "No se pudo editar el sca: ".$sca->scaid;
+                            }
+                        }
+
+                        $tsus = tsutipospromocionessucursales::where('fecid', $fecid)
+                                                            ->where('tprid', 1)
+                                                            ->get(['tsuid', 'tsuvalorizadoreal', 'tsuvalorizadoobjetivo']);
+
+                        foreach($tsus as $tsu){
+                            $tsue = tsutipospromocionessucursales::find($tsu->tsuid);
+
+                            if($tsu->tsuvalorizadoobjetivo == 0){
+                                $porcentajeCumplimiento = $tsu->tsuvalorizadoreal;
+                            }else{
+                                $porcentajeCumplimiento = (100*$tsu->tsuvalorizadoreal)/$tsu->tsuvalorizadoobjetivo;
+                            }
+                            
+                            $totalRebate = 0;
+                            
+                            $tsu->tsuvalorizadotogo         = $tsu->tsuvalorizadoobjetivo + $tsu->tsuvalorizadoreal;
+                            $tsu->tsuporcentajecumplimiento = $porcentajeCumplimiento;
+                            $tsu->tsuvalorizadorebate       = $totalRebate;
+                            if($tsue->update()){
+
+                            }else{
+                                $log[] = "No se pudo editar el tsu: ".$tsu->tsuid;
+                            }
+
+                        }
+                    }
+                    
                 }
+
+
+                
 
 
                 if($respuesta == true){
@@ -581,6 +649,21 @@ class ObjetivoCargarController extends Controller
                         }
                     }
 
+                    if($i == 2){
+                        $tsus = tsutipospromocionessucursales::where('fecid', $fecid)
+                                                            ->where('tprid', 2)
+                                                            ->get(['tsuid']);
+
+                        foreach($tsus as $tsu){
+                            $tsue = tsutipospromocionessucursales::find($tsu->tsuid);
+                            $tsue->tsuvalorizadoobjetivo = 0;
+                            if($tsue->update()){
+                                $scas = scasucursalescategorias::where('tsuid', $tsu->tsuid)
+                                                                ->update(['scavalorizadoobjetivo' => 0]);
+                            }
+                        }
+                    }
+
                     // OBTENER EL GRUPO REBATE
                     // $grupoRebate = substr($grupoRebate, 1);
 
@@ -723,6 +806,50 @@ class ObjetivoCargarController extends Controller
                                 break;
                             }
                         
+                        }
+                    }
+
+                    if($i == $numRows){
+                        $scas = scasucursalescategorias::join('tsutipospromocionessucursales as tsu', 'tsu.tsuid', 'scasucursalescategorias.tsuid')
+                                                        ->where('tsu.fecid', $fecid)
+                                                        ->where('tsu.tprid', 2)
+                                                        ->get(['scasucursalescategorias.scaid', 'scasucursalescategorias.scavalorizadoobjetivo', 'scasucursalescategorias.scavalorizadoreal']);
+
+                        foreach($scas as $sca){
+                            $scae = scasucursalescategorias::find($sca->scaid);
+                            $scae->scavalorizadotogo = $sca->scavalorizadoobjetivo - $sca->scavalorizadoreal;
+
+                            if($scae->update()){
+
+                            }else{
+                                $log[] = "No se pudo editar el sca: ".$sca->scaid;
+                            }
+                        }
+
+                        $tsus = tsutipospromocionessucursales::where('fecid', $fecid)
+                                                            ->where('tprid', 2)
+                                                            ->get(['tsuid', 'tsuvalorizadoreal', 'tsuvalorizadoobjetivo']);
+
+                        foreach($tsus as $tsu){
+                            $tsue = tsutipospromocionessucursales::find($tsu->tsuid);
+
+                            if($tsu->tsuvalorizadoobjetivo == 0){
+                                $porcentajeCumplimiento = $tsu->tsuvalorizadoreal;
+                            }else{
+                                $porcentajeCumplimiento = (100*$tsu->tsuvalorizadoreal)/$tsu->tsuvalorizadoobjetivo;
+                            }
+                            
+                            $totalRebate = 0;
+                            
+                            $tsu->tsuvalorizadotogo         = $tsu->tsuvalorizadoobjetivo + $tsu->tsuvalorizadoreal;
+                            $tsu->tsuporcentajecumplimiento = $porcentajeCumplimiento;
+                            $tsu->tsuvalorizadorebate       = $totalRebate;
+                            if($tsue->update()){
+
+                            }else{
+                                $log[] = "No se pudo editar el tsu: ".$tsu->tsuid;
+                            }
+
                         }
                     }
                 }
