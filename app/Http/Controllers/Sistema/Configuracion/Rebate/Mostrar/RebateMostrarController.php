@@ -27,7 +27,7 @@ class RebateMostrarController extends Controller
                                             ->join('tretiposrebates as tre', 'tre.treid', 'trr.treid')
                                             ->join('fecfechas as fec', 'fec.fecid', 'rtprebatetipospromociones.fecid')
                                             ->join('tprtipospromociones as tpr', 'tpr.tprid', 'rtprebatetipospromociones.tprid')
-                                            ->OrderBy('created_at')
+                                            ->OrderBy('rtprebatetipospromociones.created_at')
                                             ->get([
                                                 'rtprebatetipospromociones.rtpid',
                                                 'fec.fecid',
