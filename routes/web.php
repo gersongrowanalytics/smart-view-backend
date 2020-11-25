@@ -75,6 +75,3 @@ $router->group(['middleware' => ['permisos']], function() use($router) {
 
     $router->post('/mostrar/controlArchivos', 'Sistema\ControlArchivos\Mostrar\ControlArchivosMostrarController@MostrarControlArchivos');
 });
-
-
-

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Sistema\ControlArchivos\Mostrar;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\carcargasarchivos;
+use App\fecfechas;
 
 class ControlArchivosMostrarController extends Controller
 {
