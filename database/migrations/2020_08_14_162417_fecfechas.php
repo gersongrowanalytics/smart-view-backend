@@ -18,6 +18,7 @@ class Fecfechas extends Migration
             $table->date('fecfecha');
             $table->string('fecdia');
             $table->string('fecmes');
+            $table->integer('fecmesnumero')->nullable();
             $table->string('fecano');
             $table->timestamps();
         });

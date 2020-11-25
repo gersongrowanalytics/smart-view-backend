@@ -72,6 +72,8 @@ $router->group(['middleware' => ['permisos']], function() use($router) {
 
     $router->post('/cargarArchivo/productos', 'Sistema\CargarArchivo\Productos\ProductosCargarController@CargarProductos');
     $router->post('/fechas/mostrar/fechas', 'Sistema\Fechas\Mostrar\FechasMostrarController@mostrarFechas');
+
+    $router->post('/mostrar/controlArchivos', 'Sistema\ControlArchivos\Mostrar\ControlArchivosMostrarController@MostrarControlArchivos');
 });
 
 

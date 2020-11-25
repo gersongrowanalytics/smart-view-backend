@@ -146,5 +146,19 @@ class pempermisosSeeder extends Seeder
             'pemslug'   => 'promociones.editar.imagenes',
             'pemruta'   => '/promociones/editar/imagenes',
         ]);
+
+        pempermisos::create([
+            'pemid'     => 20,
+            'pemnombre' => 'CARGAR DATA EN EL SERVIDOR',
+            'pemslug'   => 'cargar.data.servidor',
+            'pemruta'   => null,
+        ]);
+
+        pempermisos::create([
+            'pemid'     => 21,
+            'pemnombre' => 'MOSTRAR EL MODULO DE CONTROL DE ARCHIVOS',
+            'pemslug'   => 'modulo.control.archivos',
+            'pemruta'   => null,
+        ]);
     }
 }
