@@ -34,13 +34,15 @@ class ControlArchivosMostrarController extends Controller
                                     }
 
                                 })
+                                ->orderBy('carcargasarchivos.created_at', 'DESC')
                                 ->get([
                                     'carid',
                                     'tcanombre',
                                     'usuusuario',
                                     'carnombrearchivo',
                                     'carubicacion',
-                                    'carexito'
+                                    'carexito',
+                                    'carcargasarchivos.created_at'
                                     
                                 ]);
         $respuesta = true;
