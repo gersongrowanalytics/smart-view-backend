@@ -197,8 +197,8 @@ class VentasMostrarController extends Controller
                         $dataVacia[$posicionTpr]['categorias'][$posicion]['catimagenfondoopaco']    = $categoria->catimagenfondoopaco;
                         $dataVacia[$posicionTpr]['categorias'][$posicion]['caticono']               = $categoria->caticono;
                         $dataVacia[$posicionTpr]['categorias'][$posicion]['scavalorizadoobjetivo']  = 0;
-                        $dataVacia[$posicionTpr]['categorias'][$posicion]['scavalorizadoreal']      = 1;
-                        $dataVacia[$posicionTpr]['categorias'][$posicion]['scavalorizadotogo']      = 100;
+                        $dataVacia[$posicionTpr]['categorias'][$posicion]['scavalorizadoreal']      = 0;
+                        $dataVacia[$posicionTpr]['categorias'][$posicion]['scavalorizadotogo']      = 0;
                         $dataVacia[$posicionTpr]['categorias'][$posicion]['scaiconocategoria']      = env('APP_URL').'/Sistema/categorias-tiposPromociones/img/iconos/'.$categoria->catnombre.'-'.$tpr->tprnombre.'.png';
                     }
                 }
