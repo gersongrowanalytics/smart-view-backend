@@ -307,6 +307,29 @@ class VentasMostrarController extends Controller
 
                     $dataarray[$posicionTpr]['categorias'] = array(array());
 
+                    $trrs = array(
+                        array(
+                            "rtpid" => 0,
+                            "rtpporcentajedesde" => "95",
+                            "rtpporcentajehasta" => "99",
+                            "rtpporcentajerebate" => "0"
+                        ),
+                        array(
+                            "rtpid" => 0,
+                            "rtpporcentajedesde" => "100",
+                            "rtpporcentajehasta" => "104",
+                            "rtpporcentajerebate" => "0"
+                        ),
+                        array(
+                            "rtpid" => 0,
+                            "rtpporcentajedesde" => "105",
+                            "rtpporcentajehasta" => "10000",
+                            "rtpporcentajerebate" => "0"
+                        ),
+                    );
+
+                    $dataarray[$posicionTpr]['trrs'] = $trrs;
+                    
                     foreach($usus as $usu){
                         $tsu = tsutipospromocionessucursales::join('fecfechas as fec', 'tsutipospromocionessucursales.fecid', 'fec.fecid')
                                                             ->join('tretiposrebates as tre', 'tre.treid', 'tsutipospromocionessucursales.treid')
@@ -330,28 +353,7 @@ class VentasMostrarController extends Controller
                             $dataarray[$posicionTpr]['fecid'] = "";
                             $dataarray[$posicionTpr]['treid'] = "";
                             $dataarray[$posicionTpr]['trenombre'] = "";
-                            $trrs = array(
-                                array(
-                                    "rtpid" => 0,
-                                    "rtpporcentajedesde" => "95",
-                                    "rtpporcentajehasta" => "99",
-                                    "rtpporcentajerebate" => "0"
-                                ),
-                                array(
-                                    "rtpid" => 0,
-                                    "rtpporcentajedesde" => "100",
-                                    "rtpporcentajehasta" => "104",
-                                    "rtpporcentajerebate" => "0"
-                                ),
-                                array(
-                                    "rtpid" => 0,
-                                    "rtpporcentajedesde" => "105",
-                                    "rtpporcentajehasta" => "10000",
-                                    "rtpporcentajerebate" => "0"
-                                ),
-                            );
-
-                            $dataarray[$posicionTpr]['trrs'] = $trrs;
+                            
 
 
 
