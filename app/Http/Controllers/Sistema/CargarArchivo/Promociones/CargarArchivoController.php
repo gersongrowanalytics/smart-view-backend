@@ -807,6 +807,7 @@ class CargarArchivoController extends Controller
             $nuevoCargaArchivo->carnombrearchivo = $archivo;
             $nuevoCargaArchivo->carubicacion     = $fichero_subido;
             $nuevoCargaArchivo->carexito         = $cargarData;
+            $nuevoCargaArchivo->carurl           = env('APP_URL').'/Sistema/cargaArchivos/promociones/'.$archivo;
             if($nuevoCargaArchivo->save()){
                 $pkid = "CAR-".$nuevoCargaArchivo->carid;
             }else{

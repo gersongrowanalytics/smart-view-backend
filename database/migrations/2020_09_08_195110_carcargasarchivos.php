@@ -20,6 +20,7 @@ class Carcargasarchivos extends Migration
             $table->unsignedInteger('usuid');
             $table->string('carnombrearchivo');
             $table->string('carubicacion');
+            $table->string('carurl')->nullable();
             $table->boolean('carexito');
             $table->timestamps();
 

@@ -479,6 +479,7 @@ class CargarArchivoController extends Controller
                 $nuevoCargaArchivo->carnombrearchivo = $archivo;
                 $nuevoCargaArchivo->carubicacion     = $fichero_subido;
                 $nuevoCargaArchivo->carexito         = $cargarData;
+                $nuevoCargaArchivo->carurl           = env('APP_URL').'/Sistema/cargaArchivos/ventas/sellin/'.$archivo;
                 if($nuevoCargaArchivo->save()){
                     $pkid = "CAR-".$nuevoCargaArchivo->carid;
                 }else{
@@ -971,6 +972,7 @@ class CargarArchivoController extends Controller
                 $nuevoCargaArchivo->carnombrearchivo  = $archivo;
                 $nuevoCargaArchivo->carubicacion      = $fichero_subido;
                 $nuevoCargaArchivo->carexito          = $cargarData;
+                $nuevoCargaArchivo->carurl            = env('APP_URL').'/Sistema/cargaArchivos/ventas/sellout/'.$archivo;
                 if($nuevoCargaArchivo->save()){
                     $pkid = "CAR-".$nuevoCargaArchivo->carid;
                 }else{

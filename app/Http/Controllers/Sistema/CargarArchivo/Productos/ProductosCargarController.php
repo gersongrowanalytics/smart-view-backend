@@ -133,6 +133,7 @@ class ProductosCargarController extends Controller
             $nuevoCargaArchivo->carnombrearchivo = $archivo;
             $nuevoCargaArchivo->carubicacion     = $fichero_subido;
             $nuevoCargaArchivo->carexito         = $exitoSubirExcel;
+            $nuevoCargaArchivo->carurl           = env('APP_URL').'/Sistema/cargaArchivos/productos/'.$archivo;
             if($nuevoCargaArchivo->save()){
                 $pkid = "CAR-".$nuevoCargaArchivo->carid;
             }else{

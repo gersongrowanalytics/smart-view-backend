@@ -220,11 +220,12 @@ class ClientesCargarController extends Controller
             }
 
             $nuevoCargaArchivo = new carcargasarchivos;
-            $nuevoCargaArchivo->tcaid = 6; // Carga de Clientes
-            $nuevoCargaArchivo->fecid = null;
-            $nuevoCargaArchivo->usuid = $usuusuario->usuid;
+            $nuevoCargaArchivo->tcaid            = 6; // Carga de Clientes
+            $nuevoCargaArchivo->fecid            = null;
+            $nuevoCargaArchivo->usuid            = $usuusuario->usuid;
             $nuevoCargaArchivo->carnombrearchivo = $archivo;
-            $nuevoCargaArchivo->carubicacion = $fichero_subido;
+            $nuevoCargaArchivo->carubicacion     = $fichero_subido;
+            $nuevoCargaArchivo->carurl           = env('APP_URL').'/public/Sistema/cargaArchivos/clientes/'.$archivo;
             $nuevoCargaArchivo->carexito = true;
             if($nuevoCargaArchivo->save()){
                 $pkid = "CAR-".$nuevoCargaArchivo->carid;
