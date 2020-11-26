@@ -42,6 +42,7 @@ class ControlArchivosMostrarController extends Controller
                                     'carnombrearchivo',
                                     'carubicacion',
                                     'carexito',
+                                    'carurl',
                                     'carcargasarchivos.created_at'
                                     
                                 ]);
