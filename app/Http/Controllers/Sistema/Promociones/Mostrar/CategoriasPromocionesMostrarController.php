@@ -470,8 +470,10 @@ class CategoriasPromocionesMostrarController extends Controller
                                         $columnasFilas = "0";
                                     }
 
-                                    if(is_numeric($columnasFilas)){
-                                        $columnasFilas = number_format($columnasFilas, 2);
+                                    if($abc != "A"){
+                                        if(is_numeric($columnasFilas)){
+                                            $columnasFilas = number_format($columnasFilas, 2);
+                                        }
                                     }
 
                                     $arrayFilaExcel[$contadorColumna]['value'] = $columnasFilas;
