@@ -329,7 +329,10 @@ class VentasMostrarController extends Controller
                     );
 
                     $dataarray[$posicionTpr]['trrs'] = $trrs;
-                    
+                    $dataarray[$posicionTpr]['fecid'] = "";
+                    $dataarray[$posicionTpr]['treid'] = "";
+                    $dataarray[$posicionTpr]['trenombre'] = "";
+
                     foreach($usus as $usu){
                         $tsu = tsutipospromocionessucursales::join('fecfechas as fec', 'tsutipospromocionessucursales.fecid', 'fec.fecid')
                                                             ->join('tretiposrebates as tre', 'tre.treid', 'tsutipospromocionessucursales.treid')
@@ -350,14 +353,8 @@ class VentasMostrarController extends Controller
                                                                 'tsutipospromocionessucursales.tsuvalorizadorebate'
                                                             ]);
                         if($tsu){
-                            $dataarray[$posicionTpr]['fecid'] = "";
-                            $dataarray[$posicionTpr]['treid'] = "";
-                            $dataarray[$posicionTpr]['trenombre'] = "";
                             
-
-
-
-
+                            
                             $dataarray[$posicionTpr]['tsuvalorizadoobjetivo']     = $dataarray[$posicionTpr]['tsuvalorizadoobjetivo']     + $tsu->tsuvalorizadoobjetivo;
                             $dataarray[$posicionTpr]['tsuvalorizadoreal']         = $dataarray[$posicionTpr]['tsuvalorizadoreal']         + $tsu->tsuvalorizadoreal;
                             $dataarray[$posicionTpr]['tsuvalorizadotogo']         = $dataarray[$posicionTpr]['tsuvalorizadotogo']         + $tsu->tsuvalorizadotogo;
@@ -404,7 +401,34 @@ class VentasMostrarController extends Controller
 
                             }
                         }else{
+                            $dataarray[$posicionTpr]['tsuvalorizadoobjetivo']     = $dataarray[$posicionTpr]['tsuvalorizadoobjetivo']     + 0;
+                            $dataarray[$posicionTpr]['tsuvalorizadoreal']         = $dataarray[$posicionTpr]['tsuvalorizadoreal']         + 0;
+                            $dataarray[$posicionTpr]['tsuvalorizadotogo']         = $dataarray[$posicionTpr]['tsuvalorizadotogo']         + 0;
+                            $dataarray[$posicionTpr]['tsuporcentajecumplimiento'] = $dataarray[$posicionTpr]['tsuporcentajecumplimiento'] + 0;
+                            $dataarray[$posicionTpr]['tsuvalorizadorebate']       = $dataarray[$posicionTpr]['tsuvalorizadorebate']       + 0;
 
+                            $categorias = catcategorias::where('catnombre', '!=', 'MultiCategoria')->orderBy('catid')->get(['catid', 'catnombre', 'catimagenfondo', 'catimagenfondoopaco', 'caticono']);
+
+                            if(sizeof($categorias) > 0){
+
+                                foreach($categorias as $posicionCat => $categoria){
+
+                                    $dataarray[$posicionTpr]['categorias'][$posicionCat]['catnombre']             = $categoria->catnombre;
+                                    $dataarray[$posicionTpr]['categorias'][$posicionCat]['catimagenfondo']        = $categoria->catimagenfondo;
+                                    $dataarray[$posicionTpr]['categorias'][$posicionCat]['catimagenfondoopaco']   = $categoria->catimagenfondoopaco;
+                                    $dataarray[$posicionTpr]['categorias'][$posicionCat]['caticono']              = $categoria->caticono;
+
+                                    if(!isset($dataarray[$posicionTpr]['categorias'][$posicionCat]['scavalorizadoobjetivo'])){
+                                        $dataarray[$posicionTpr]['categorias'][$posicionCat]['scavalorizadoobjetivo'] = 0;
+                                        $dataarray[$posicionTpr]['categorias'][$posicionCat]['scavalorizadoreal']     = 0;
+                                        $dataarray[$posicionTpr]['categorias'][$posicionCat]['scavalorizadotogo']     = 0;
+                                        $dataarray[$posicionTpr]['categorias'][$posicionCat]['scaiconocategoria']     = 0;
+                                    }
+                                    
+                                }
+                            }else{
+
+                            }
                         }
                     }
                 }
