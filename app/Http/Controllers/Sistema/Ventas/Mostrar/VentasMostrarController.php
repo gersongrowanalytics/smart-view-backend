@@ -154,6 +154,28 @@ class VentasMostrarController extends Controller
 
                 $categorias = catcategorias::where('catnombre', '!=', 'MultiCategoria')->get();
                 $tprtipospromociones = tprtipospromociones::all();
+
+                $trrs = array(
+                    array(
+                        "rtpid" => 0,
+                        "rtpporcentajedesde" => "95",
+                        "rtpporcentajehasta" => "99",
+                        "rtpporcentajerebate" => "0"
+                    ),
+                    array(
+                        "rtpid" => 0,
+                        "rtpporcentajedesde" => "100",
+                        "rtpporcentajehasta" => "104",
+                        "rtpporcentajerebate" => "0"
+                    ),
+                    array(
+                        "rtpid" => 0,
+                        "rtpporcentajedesde" => "105",
+                        "rtpporcentajehasta" => "10000",
+                        "rtpporcentajerebate" => "0"
+                    ),
+                );
+
                 foreach($tprtipospromociones as $posicionTpr => $tpr){
                     
                     $dataVacia[$posicionTpr]['tsuid']                     = 0;
@@ -167,6 +189,7 @@ class VentasMostrarController extends Controller
                     $dataVacia[$posicionTpr]['tsuvalorizadotogo']         = 0;
                     $dataVacia[$posicionTpr]['tsuporcentajecumplimiento'] = 0;
                     $dataVacia[$posicionTpr]['tsuvalorizadorebate']       = 0;
+                    $dataVacia[$posicionTpr]["trrs"] = $trrs;
                     $dataVacia[$posicionTpr]['categorias'] = array(array());
                     foreach($categorias as $posicion => $categoria){     
                         $dataVacia[$posicionTpr]['categorias'][$posicion]['catnombre']              = $categoria->catnombre;

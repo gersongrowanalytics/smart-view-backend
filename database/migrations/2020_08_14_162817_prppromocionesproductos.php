@@ -17,7 +17,7 @@ class Prppromocionesproductos extends Migration
             $table->increments('prpid');
             $table->unsignedInteger('prmid');
             $table->unsignedInteger('proid');
-            $table->integer('prpcantidad');
+            $table->string('prpcantidad');
             $table->string('prpproductoppt');
             $table->string('prpcomprappt');
             $table->string('prpcodigoprincipal');
