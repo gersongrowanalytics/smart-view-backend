@@ -16,9 +16,10 @@ $router->get('/', function () use ($router) {
 });
 
 $router->get('/actualizar', 'salvacionController@salvacion');
+$router->get('/asignarsuc', 'salvacionController@asignarzonassucursales');
 
 
-$router->get('/mail', 'MailController@vista');
+$router->get('/mail', 'MailController@getMail');
 $router->post('/recuperar/contrasena', 'MailController@recuperarContrasena');
 $router->post('/login', 'Sistema\loginController@login');
 

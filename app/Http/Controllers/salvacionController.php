@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\proproductos;
 use App\prbpromocionesbonificaciones;
 use App\prppromocionesproductos;
+use App\ussusuariossucursales;
+use App\sucsucursales;
 
 class salvacionController extends Controller
 {
@@ -63,6 +65,30 @@ class salvacionController extends Controller
                 
     
             }
+    }
+
+    public function asignarzonassucursales()
+    {
+        $array = [];
+
+        $usss = ussusuariossucursales::join('usuusuarios as usu', 'usu.usuid', 'ussusuariossucursales.usuid')
+                                    ->join('zonzonas as zon', 'zon.zonid', 'usu.zonid')
+                                    ->get([
+                                        'ussusuariossucursales.usuid',
+                                        'ussusuariossucursales.sucid',
+                                        'zon.zonnombre',
+                                        'usu.zonid'
+                                    ]);
+
+        foreach($usss as $posicion => $uss){
+            $suce = sucsucursales::find($uss->sucid);
+            $suce->zonid = $uss->zonid;
+            if($suce->update()){
+                $array[] = $uss->zonnombre." - ".$suce->sucnombre;
+            }
+        }
+        
+        dd($array);
     }
 }
 
