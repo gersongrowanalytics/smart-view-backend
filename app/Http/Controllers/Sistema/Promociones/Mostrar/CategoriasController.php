@@ -60,7 +60,7 @@ class CategoriasController extends Controller
                             $numeroPromociones = csccanalessucursalescategorias::join('cspcanalessucursalespromociones as csp', 'csp.cscid', 'csccanalessucursalescategorias.cscid')
                                                             ->where('csccanalessucursalescategorias.scaid', $scasucursalescategorias[$posicionsca]['scaid'])
                                                             // ->where('csp.cspcantidadcombo', "!=", 0)
-                                                            ->where('csp.cspcantidadplancha', "!=", 0)
+                                                            ->where('csp.cspcantidadplancha', "!=", "0")
                                                             ->count();
 
                             $scasucursalescategorias[$posicionsca]['cantidadPromociones'] = $numeroPromociones;
