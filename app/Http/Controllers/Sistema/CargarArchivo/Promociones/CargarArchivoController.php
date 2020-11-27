@@ -688,10 +688,17 @@ class CargarArchivoController extends Controller
                                 }
                             }
     
-                            $csp = cspcanalessucursalespromociones::where('cscid', $cscid)
-                                                            ->where('fecid', $fecid)
-                                                            ->where('prmid', $prmid)
-                                                            ->first(['cspid', 'cspcantidadcombo', 'cspcantidadplancha', 'created_at']);
+                            $csp = cspcanalessucursalespromociones::join('prmpromociones as prm', 'prm.prmid', 'cspcanalessucursalespromociones.prmid')
+                                                            ->where('cspcanalessucursalespromociones.cscid', $cscid)
+                                                            ->where('cspcanalessucursalespromociones.fecid', $fecid)
+                                                            // ->where('cspcanalessucursalespromociones.prmid', $prmid)
+                                                            ->where('prm.prmcodigo', $codPromoc)
+                                                            ->first([
+                                                                'cspcanalessucursalespromociones.cspid', 
+                                                                'cspcanalessucursalespromociones.cspcantidadcombo', 
+                                                                'cspcanalessucursalespromociones.cspcantidadplancha', 
+                                                                'cspcanalessucursalespromociones.created_at'
+                                                            ]);
     
                             $cspid = 0;
                             if($csp){
