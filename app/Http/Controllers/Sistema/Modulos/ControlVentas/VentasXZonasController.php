@@ -34,18 +34,28 @@ class VentasXZonasController extends Controller
         $contador = 0;
 
         foreach($zonas as $posicion => $zona){
-            $sumValReal = tsutipospromocionessucursales::join('sucsucursales as suc', 'suc.sucid', 'tsutipospromocionessucursales.sucid')
+            $tsusReal = tsutipospromocionessucursales::join('sucsucursales as suc', 'suc.sucid', 'tsutipospromocionessucursales.sucid')
                                                 ->where('suc.zonid', $zona->zonid)
-                                                ->sum(['tsutipospromocionessucursales.tsuvalorizadoreal']);
+                                                ->get(['tsutipospromocionessucursales.tsuvalorizadoreal']);
 
-            // $sumValObje = tsutipospromocionessucursales::join('sucsucursales as suc', 'suc.sucid', 'tsutipospromocionessucursales.sucid')
-            //                                     ->where('suc.zonid', $zona->zonid)
-            //                                     ->sum(['tsuvalorizadoobjetivo']);
+            $real = 0;
+            foreach($tsusReal as $tsuReal){
+                $real = $real + $tsuReal->tsuvalorizadoreal;
+            }
+
+            $tsusObje = tsutipospromocionessucursales::join('sucsucursales as suc', 'suc.sucid', 'tsutipospromocionessucursales.sucid')
+                                                ->where('suc.zonid', $zona->zonid)
+                                                ->sum(['tsuvalorizadoobjetivo']);
+
+            $obj = 0;
+            foreach($tsusObje as $tsuObje){
+                $obj = $obj + $tsuObje->tsuvalorizadoobjetivo;
+            }
 
                     
             $datos[$contador]['zona'] = $zona->zonnombre;
-            $datos[$contador]['real'] = $sumValReal;
-            $datos[$contador]['objetivo'] = "20";
+            $datos[$contador]['real'] = $real;
+            $datos[$contador]['objetivo'] = $obj;
 
             $contador = $contador+1;
 
