@@ -52,7 +52,8 @@ class VentasXZonasController extends Controller
         }
 
         return response()->json([
-            "datos"     => $datos
+            "datos"     => $datos,
+            "respuesta" => true,
         ]);
     }
 }
