@@ -45,7 +45,7 @@ class VentasXZonasController extends Controller
 
             $tsusObje = tsutipospromocionessucursales::join('sucsucursales as suc', 'suc.sucid', 'tsutipospromocionessucursales.sucid')
                                                 ->where('suc.zonid', $zona->zonid)
-                                                ->sum(['tsuvalorizadoobjetivo']);
+                                                ->get(['tsuvalorizadoobjetivo']);
 
             $obj = 0;
             foreach($tsusObje as $tsuObje){
