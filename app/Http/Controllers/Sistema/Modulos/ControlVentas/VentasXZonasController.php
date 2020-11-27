@@ -34,17 +34,17 @@ class VentasXZonasController extends Controller
         $contador = 0;
 
         foreach($zonas as $posicion => $zona){
-            // $sumValReal = tsutipospromocionessucursales::join('sucsucursales as suc', 'suc.sucid', 'tsutipospromocionessucursales.sucid')
-            //                                     ->where('suc.zonid', $zona->zonid)
-            //                                     ->sum(['tsuvalorizadoreal']);
+            $sumValReal = tsutipospromocionessucursales::join('sucsucursales as suc', 'suc.sucid', 'tsutipospromocionessucursales.sucid')
+                                                ->where('suc.zonid', $zona->zonid)
+                                                ->sum(['tsutipospromocionessucursales.tsuvalorizadoreal']);
 
             // $sumValObje = tsutipospromocionessucursales::join('sucsucursales as suc', 'suc.sucid', 'tsutipospromocionessucursales.sucid')
             //                                     ->where('suc.zonid', $zona->zonid)
             //                                     ->sum(['tsuvalorizadoobjetivo']);
 
                     
-            $datos[$contador]['zona'] = "zona";
-            $datos[$contador]['real'] = "10";
+            $datos[$contador]['zona'] = $zona->zonnombre;
+            $datos[$contador]['real'] = $sumValReal;
             $datos[$contador]['objetivo'] = "20";
 
             $contador = $contador+1;
