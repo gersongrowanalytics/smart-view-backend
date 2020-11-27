@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Sistema\Modulos\ControlVentas;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\tsutipospromocionessucursales;
+use App\ussusuariossucursales;
 
 class VentasXZonasController extends Controller
 {
@@ -29,20 +31,23 @@ class VentasXZonasController extends Controller
                                         'zon.zonnombre',
                                     ]);
 
-        foreach($zonas as $zona){
-            $tsuc = tsutipospromocionessucursales::join('sucsucursales as suc', 'suc.sucid', 'tsutipospromocionessucursales.sucid')
-                                                ->join('ussusuariossucursales as uss', 'uss.sucid', 'suc.sucid')
-                                                ->join('usuusuarios as usu', 'usu.usuid', 'uss.usuid')
-                                                ->where('usu.zonid', $zona->zonid)
+        foreach($zonas as $posicion => $zona){
+            $sumValReal = tsutipospromocionessucursales::join('sucsucursales as suc', 'suc.sucid', 'tsutipospromocionessucursales.sucid')
+                                                ->where('suc.zonid', $zona->zonid)
                                                 ->sum(['tsuvalorizadoreal']);
+
+            $sumValObje = tsutipospromocionessucursales::join('sucsucursales as suc', 'suc.sucid', 'tsutipospromocionessucursales.sucid')
+                                                ->where('suc.zonid', $zona->zonid)
+                                                ->sum(['tsuvalorizadoobjetivo']);
+
+            $datos[$posicion]['zona'] = $zona->zonnombre;
+            $datos[$posicion]['real'] = $sumValReal;
+            $datos[$posicion]['objetivo'] = $sumValObje;
 
         }
 
-
-
-        
-
-
-
+        return response()->json([
+            "datos"     => $datos
+        ]);
     }
 }
