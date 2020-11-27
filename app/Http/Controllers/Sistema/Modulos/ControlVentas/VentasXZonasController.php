@@ -12,14 +12,7 @@ class VentasXZonasController extends Controller
     public function VentasXZonas(Request $request)
     {
 
-        $datos = array(
-            array(
-                "zona" => "",
-                "real" => "",
-                "objetivo" => "",
-
-            )
-        );
+        $datos = array();
 
         $zonas = ussusuariossucursales::join('sucsucursales as suc', 'suc.sucid', 'ussusuariossucursales.sucid')
                                     ->join('usuusuarios as usu', 'usu.usuid', 'ussusuariossucursales.usuid')
@@ -40,10 +33,12 @@ class VentasXZonasController extends Controller
                                                 ->where('suc.zonid', $zona->zonid)
                                                 ->sum(['tsuvalorizadoobjetivo']);
 
-            $datos[$posicion]['zona'] = $zona->zonnombre;
-            $datos[$posicion]['real'] = $sumValReal;
-            $datos[$posicion]['objetivo'] = $sumValObje;
+            $datos[] = array(
+                "zona" => $zona->zonnombre,
+                "real" => $sumValReal,
+                "objetivo" => $sumValObje,
 
+            );
         }
 
         return response()->json([
