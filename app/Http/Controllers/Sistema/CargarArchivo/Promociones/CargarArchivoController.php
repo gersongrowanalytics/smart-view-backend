@@ -715,8 +715,14 @@ class CargarArchivoController extends Controller
                                 }else{
                                     $csp->cspcantidadcombo   = $combos;
                                 }
+
+                                if($planchas != 'NA'){
+                                    $csp->cspcantidadplancha = $csp->cspcantidadplancha + $planchas;
+                                }else{
+                                    $csp->cspcantidadplancha   = $planchas;
+                                }
                                 
-                                $csp->cspcantidadplancha = $csp->cspcantidadplancha + $planchas;
+                                
                                 if($csp->update()){
     
                                 }else{
