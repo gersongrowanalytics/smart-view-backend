@@ -54,8 +54,8 @@ class VentasXZonasController extends Controller
 
                     
             $datos[$contador]['zona'] = $zona->zonnombre;
-            $datos[$contador]['real'] = number_format($real, 2);
-            $datos[$contador]['objetivo'] = number_format($obj, 2);
+            $datos[$contador]['real'] = sprintf("%.2f",$real);
+            $datos[$contador]['objetivo'] = sprintf("%.2f",$obj);
 
             $contador = $contador+1;
 
