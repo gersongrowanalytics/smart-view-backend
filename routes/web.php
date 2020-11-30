@@ -60,7 +60,7 @@ $router->group(['middleware' => ['permisos']], function() use($router) {
     $router->post('/mostrar/tdis', 'Sistema\Tdi\Mostrar\TdisMostrarController@MostrarTdis');
     $router->post('/mostrar/zons', 'Sistema\Zon\Mostrar\ZonsMostrarController@MostrarZons');
     $router->post('/mostrar/cats', 'Sistema\Cat\Mostrar\CatsMostrarController@MostrarCats');
-    $router->post('/mostrar/sucs/xzona', 'Sistema\Tablas\Suc\Mostrar\SucursalesMostrarController@MostrarSucsXZona');
+    $router->post('/mostrar/sucs/xzona', 'Sistema\Tablas\Suc\Mostrar\SucsMostrarController@MostrarSucsXZona');
 
     $router->post('/cargarArchivo/promociones', 'Sistema\CargarArchivo\Promociones\CargarArchivoController@CargarArchivo');
     $router->post('/cargarArchivo/ventas/obejtivos', 'Sistema\CargarArchivo\Ventas\ObjetivoCargarController@CargarObjetivo');
