@@ -60,8 +60,7 @@ class SucursalesMostrarController extends Controller
                                                                     ]);
                 }else{
                     $zonas = ussusuariossucursales::join('sucsucursales as suc', 'suc.sucid', 'ussusuariossucursales.sucid')
-                                                    ->join('usuusuarios as usu', 'usu.usuid', 'ussusuariossucursales.usuid')
-                                                    ->join('zonzonas as zon', 'zon.zonid', 'usu.zonid')
+                                                    ->join('zonzonas as zon', 'zon.zonid', 'suc.zonid')
                                                     ->where('ussusuariossucursales.usuid', $usuusuario->usuid )
                                                     ->distinct('zon.zonid')
                                                     ->get([
@@ -70,8 +69,7 @@ class SucursalesMostrarController extends Controller
                                                     ]);
 
                     $ussusuariossucursales = ussusuariossucursales::join('sucsucursales as suc', 'suc.sucid', 'ussusuariossucursales.sucid')
-                                                            ->join('usuusuarios as usu', 'usu.usuid', 'ussusuariossucursales.usuid')
-                                                            ->join('zonzonas as zon', 'zon.zonid', 'usu.zonid')
+                                                            ->join('zonzonas as zon', 'zon.zonid', 'suc.zonid')
                                                             ->where('ussusuariossucursales.usuid', $usuusuario->usuid )
                                                             ->get([
                                                                 'ussusuariossucursales.ussid',
