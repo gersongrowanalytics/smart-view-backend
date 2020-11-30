@@ -70,6 +70,7 @@ class SucursalesMostrarController extends Controller
                                                     ]);
 
                     $ussusuariossucursales = ussusuariossucursales::join('sucsucursales as suc', 'suc.sucid', 'ussusuariossucursales.sucid')
+                                                            ->join('usuusuarios as usu', 'usu.usuid', 'ussusuariossucursales.usuid')
                                                             ->join('zonzonas as zon', 'zon.zonid', 'usu.zonid')
                                                             ->where('ussusuariossucursales.usuid', $usuusuario->usuid )
                                                             ->get([
