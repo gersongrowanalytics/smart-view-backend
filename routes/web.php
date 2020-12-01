@@ -79,4 +79,6 @@ $router->group(['middleware' => ['permisos']], function() use($router) {
 
     $router->post('/controlVentas/estadistica/xzona', 'Sistema\Modulos\ControlVentas\VentasXZonasController@VentasXZonas');
 
+    $router->post('/control/promociones/lista', 'Sistema\Modulos\Control\ControlPromociones\TablaPromocionesController@MostrarPromociones');
+
 });
