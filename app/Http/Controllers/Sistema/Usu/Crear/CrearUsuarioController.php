@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Hash;
 use App\Http\Controllers\AuditoriaController;
 use App\perpersonas;
 use App\usuusuarios;
+use App\ussusuariossucursales;
 use App\Mail\MailCrearUsuario;
 use App\Mail\MailCrearUsuarioOutlook;
 use Illuminate\Support\Facades\Mail;
@@ -28,20 +29,21 @@ class CrearUsuarioController extends Controller
             "usuusuarios" => []
         );
 
-        $mensajeDetalle = '';
+        $mensajeDetalle = 'Usuario creado satisfactoriamente';
         $mensajedev     = null;
 
         $usutoken   = $request->header('api_token');
 
-        $nombre   = $request['pernom'];
-        $apellPat = $request['perapellpat'];
-        $apellMat = $request['perapellmat'];
-        $soldto   = $request['soldto'];
-        $correo   = $request['correo'];
-        $usuario  = $request['usuario'];
-        $pass     = $request['contrasena'];
-        $tpuid    = $request['tpuid'];
-        $zonid    = $request['zonid'];
+        $nombre     = $request['pernom'];
+        $apellPat   = $request['perapellpat'];
+        $apellMat   = $request['perapellmat'];
+        $soldto     = $request['soldto'];
+        $correo     = $request['correo'];
+        $usuario    = $request['usuario'];
+        $pass       = $request['contrasena'];
+        $tpuid      = $request['tpuid'];
+        $zonid      = $request['zonid'];
+        $sucursales = $request['sucursales'];
 
 
         DB::beginTransaction();
@@ -73,34 +75,35 @@ class CrearUsuarioController extends Controller
 
 
             $pkid = $perid;
-            $ususoldto = usuusuarios::where('ususoldto', $soldto)->first(['usuid']);
 
-            if(!$ususoldto){
+            $usuusuario = usuusuarios::where('usuusuario', $usuario)->first(['usuid']);
 
-                $usuusuario = usuusuarios::where('usuusuario', $usuario)->first(['usuid']);
+            if(!$usuusuario){
 
-                if(!$usuusuario){
+                $usun = new usuusuarios;
+                $usun->tpuid         = $tpuid;
+                $usun->perid         = $perid;
+                $usun->estid         = 1;
+                $usun->zonid         = $zonid;
+                $usun->ususoldto     = $soldto;
+                $usun->usuusuario    = $usuario;
+                $usun->usucorreo     = $correo;
+                $usun->usucontrasena = Hash::make($pass);
+                $usun->usutoken      = Str::random(60);
+                if($usun->save()){
+                    $pkid = $pkid." ".$usun->usuid;
 
-                    $usun = new usuusuarios;
-                    $usun->tpuid         = $tpuid;
-                    $usun->perid         = $perid;
-                    $usun->estid         = 1;
-                    $usun->zonid         = $zonid;
-                    $usun->ususoldto     = $soldto;
-                    $usun->usuusuario    = $usuario;
-                    $usun->usucorreo     = $correo;
-                    $usun->usucontrasena = Hash::make($pass);
-                    $usun->usutoken      = Str::random(60);
-                    if($usun->save()){
-                        $pkid = $pkid." ".$usun->usuid;
-
+                    $uss = new ussusuariossucursales;
+                    $uss->usuid = $usun->usuid;
+                    $uss->sucid = $sucursales[1];
+                    if($uss->save()){
                         $data = [
                             "correo"     => $correo,
                             'nombre'     => $nombre." ".$apellPat." ".$apellMat,
                             "usuario"    => $usuario,
                             "contrasena" => $pass
                         ];
-
+    
                         $pos = strpos($correo, "@gmail.com");
                         
                         if($pos){
@@ -108,20 +111,18 @@ class CrearUsuarioController extends Controller
                         }else{
                             Mail::to($correo)->send(new MailCrearUsuarioOutlook($data));
                         }
-
-                    }else{
-                        $log['usuusuarios'][] = "No se pudo agregar el usuario: ".$usuario;
                     }
 
                 }else{
-                    $respuesta = false;
-                    $mensaje = "El usuario: ".$usuario." ya existe";
+                    $log['usuusuarios'][] = "No se pudo agregar el usuario: ".$usuario;
                 }
 
             }else{
                 $respuesta = false;
-                $mensaje = "El Sold To: ".$soldto." ya existe";
+                $mensaje = "El usuario: ".$usuario." ya existe";
             }
+
+            
 
             DB::commit();
 
