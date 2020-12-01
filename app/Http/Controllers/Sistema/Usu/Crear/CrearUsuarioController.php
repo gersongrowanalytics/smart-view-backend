@@ -21,7 +21,7 @@ class CrearUsuarioController extends Controller
     {
 
         $respuesta = true;
-        $mensaje = "";
+        $mensaje = "Usuario creado satisfactoriamente";
         $linea   = __LINE__;
 
         $log = array(
@@ -29,7 +29,7 @@ class CrearUsuarioController extends Controller
             "usuusuarios" => []
         );
 
-        $mensajeDetalle = 'Usuario creado satisfactoriamente';
+        $mensajeDetalle = '';
         $mensajedev     = null;
 
         $usutoken   = $request->header('api_token');
@@ -107,9 +107,9 @@ class CrearUsuarioController extends Controller
                         $pos = strpos($correo, "@gmail.com");
                         
                         if($pos){
-                            Mail::to($correo)->send(new MailCrearUsuario($data));
+                            // Mail::to($correo)->send(new MailCrearUsuario($data));
                         }else{
-                            Mail::to($correo)->send(new MailCrearUsuarioOutlook($data));
+                            // Mail::to($correo)->send(new MailCrearUsuarioOutlook($data));
                         }
                     }
 
