@@ -105,23 +105,29 @@ class TablaPromocionesController extends Controller
         foreach($csps as $posicionCsp => $csp){
             $prb = prbpromocionesbonificaciones::where('prmid', $csp->prmid)
                                              ->first([
+                                                 'prbid',
                                                  'prbimagen'
                                              ]);
             if($prb){
                 $csps[$posicionCsp]['prbimagen'] = $prb->prbimagen;
+                $csps[$posicionCsp]['prbid']     = $prb->prbid;
             }else{
                 $csps[$posicionCsp]['prbimagen'] = "";
+                $csps[$posicionCsp]['prbid']     = 0;
             }
 
             $prp = prppromocionesproductos::where('prmid', $csp->prmid)
                                             ->first([
+                                                'prpid',
                                                 'prpimagen'
                                             ]);
 
             if($prp){
                 $csps[$posicionCsp]['prpimagen'] = $prp->prpimagen;
+                $csps[$posicionCsp]['prpid']     = $prp->prpid;
             }else{
                 $csps[$posicionCsp]['prpimagen'] = "";
+                $csps[$posicionCsp]['prpid']     = 0;
             }
         }
 
