@@ -95,54 +95,8 @@ class CrearUsuarioController extends Controller
 
                     $uss = new ussusuariossucursales;
                     $uss->usuid = $usun->usuid;
-                    $uss->sucid = 76;
+                    $uss->sucid = $sucursales[1];
                     if($uss->save()){
-                        
-                        $uss = new ussusuariossucursales;
-                        $uss->usuid = $usun->usuid;
-                        $uss->sucid = 77;
-                        $uss->save();
-
-                        $uss = new ussusuariossucursales;
-                        $uss->usuid = $usun->usuid;
-                        $uss->sucid = 78;
-                        $uss->save();
-
-                        $uss = new ussusuariossucursales;
-                        $uss->usuid = $usun->usuid;
-                        $uss->sucid = 84;
-                        $uss->save();
-
-                        $uss = new ussusuariossucursales;
-                        $uss->usuid = $usun->usuid;
-                        $uss->sucid = 142;
-                        $uss->save();
-
-                        $uss = new ussusuariossucursales;
-                        $uss->usuid = $usun->usuid;
-                        $uss->sucid = 146;
-                        $uss->save();
-
-                        $uss = new ussusuariossucursales;
-                        $uss->usuid = $usun->usuid;
-                        $uss->sucid = 147;
-                        $uss->save();
-
-                        $uss = new ussusuariossucursales;
-                        $uss->usuid = $usun->usuid;
-                        $uss->sucid = 214;
-                        $uss->save();
-
-                        $uss = new ussusuariossucursales;
-                        $uss->usuid = $usun->usuid;
-                        $uss->sucid = 213;
-                        $uss->save();
-
-                        $uss = new ussusuariossucursales;
-                        $uss->usuid = $usun->usuid;
-                        $uss->sucid = 221;
-                        $uss->save();
-                        
                         $data = [
                             "correo"     => $correo,
                             'nombre'     => $nombre." ".$apellPat." ".$apellMat,
