@@ -19,7 +19,7 @@ class TablaPromocionesController extends Controller
         $fecha           = $request['fecha'];
         $codigoPromocion = $request['codigoPromocion'];
         $sucid           = $request['sucid'];
-        $catid           = $request['catid'];
+        $catsid          = $request['catsid'];
         $canid           = $request['canid'];
 
         // DATA
@@ -71,20 +71,21 @@ class TablaPromocionesController extends Controller
 
                                                     if($request['codigoPromocion'] != '' && $request['codigoPromocion'] != null) {
                 
-                                                        $query->where('prmcodigo', $request['codigoPromocion']);
+                                                        $query->where('prmcodigo', 'LIKE', "%".$request['codigoPromocion']."%");
                                                         
                                                     }
                 
-                                                    if($request['sucid'] != '' && $request['sucid'] != null) {
+                                                    if($request['sucnombre'] != '' && $request['sucnombre'] != null) {
                 
-                                                        $query->where('sca.sucid', $request['sucid']);
+                                                        $query->where('suc.sucnombre', 'LIKE', "%".$request['sucnombre']."%");
                                                         
                                                     }
 
-                                                    if($request['catid'] != '' && $request['catid'] != null) {
-                
-                                                        $query->where('sca.catid', $request['catid']);
+                                                    if($request['catsid'] != '' && $request['catsid'] != null && sizeof($request['catsid'] > 0)) {
                                                         
+                                                        for($i = 0; $i < sizeof($catsid); $i++){
+                                                            $query->orwhere('sca.catid', $request['catsid'][$i]);
+                                                        }
                                                     }
 
                                                     if($request['canid'] != '' && $request['canid'] != null) {
