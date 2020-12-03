@@ -51,7 +51,7 @@ class SucursalesMostrarController extends Controller
                                                                     ->join('usuusuarios as usu', 'usu.usuid', 'ussusuariossucursales.usuid')
                                                                     ->join('zonzonas as zon', 'zon.zonid', 'usu.zonid')
                                                                     ->where('usu.estid', 1)
-                                                                    ->distinct('suc.sucid')
+                                                                    ->distinct('suc.sucnombre')
                                                                     ->get([
                                                                         'ussusuariossucursales.ussid',
                                                                         'zon.zonid',
