@@ -18,6 +18,7 @@ class Sucsucursales extends Migration
             $table->unsignedInteger('treid')->nullable();
             $table->unsignedInteger('zonid')->nullable();
             $table->string('sucnombre');
+            $table->boolean('sucsucursales');
             $table->timestamps();
 
             $table->foreign('treid')->references('treid')->on('tretiposrebates');

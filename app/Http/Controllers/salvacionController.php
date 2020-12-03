@@ -90,6 +90,28 @@ class salvacionController extends Controller
         
         dd($array);
     }
+
+    public function cambiarEstadoSucursales()
+    {
+        $ussusuariossucursales = ussusuariossucursales::join('sucsucursales as suc', 'suc.sucid', 'ussusuariossucursales.sucid')
+                                                    ->join('usuusuarios as usu', 'usu.usuid', 'ussusuariossucursales.usuid')
+                                                    ->join('zonzonas as zon', 'zon.zonid', 'usu.zonid')
+                                                    ->where('usu.estid', 1)
+                                                    ->get([
+                                                        'ussusuariossucursales.ussid',
+                                                        'zon.zonid',
+                                                        'zon.zonnombre',
+                                                        'suc.sucid',
+                                                        'suc.sucnombre'
+                                                    ]);
+
+
+        foreach($ussusuariossucursales as $ussusuariossucursale){
+            $suce = sucsucursales::find($ussusuariossucursale->sucid);
+            $suce->sucestado = 1;
+            $suce->update();
+        }
+    }
 }
 
 
