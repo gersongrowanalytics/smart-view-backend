@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\usuusuarios;
 use App\ussusuariossucursales;
 use App\tuptiposusuariospermisos;
+use App\sucsucursales;
 
 class SucursalesMostrarController extends Controller
 {
