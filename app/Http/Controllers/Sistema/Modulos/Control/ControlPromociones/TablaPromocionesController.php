@@ -81,7 +81,7 @@ class TablaPromocionesController extends Controller
                                                         
                                                     }
 
-                                                    if($request['catsid'] != '' && $request['catsid'] != null && sizeof($request['catsid'] > 0)) {
+                                                    if($request['catsid'] != '' && $request['catsid'] != null && sizeof($request['catsid']) > 0) {
                                                         
                                                         for($i = 0; $i < sizeof($catsid); $i++){
                                                             $query->orwhere('sca.catid', $request['catsid'][$i]);
