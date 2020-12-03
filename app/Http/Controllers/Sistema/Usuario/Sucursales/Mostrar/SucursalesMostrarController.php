@@ -47,18 +47,28 @@ class SucursalesMostrarController extends Controller
                                                         'zon.zonnombre',
                                                     ]);
 
-                    $ussusuariossucursales = ussusuariossucursales::join('sucsucursales as suc', 'suc.sucid', 'ussusuariossucursales.sucid')
-                                                                    ->join('usuusuarios as usu', 'usu.usuid', 'ussusuariossucursales.usuid')
-                                                                    ->join('zonzonas as zon', 'zon.zonid', 'usu.zonid')
-                                                                    ->where('usu.estid', 1)
-                                                                    ->distinct('suc.sucnombre')
-                                                                    ->get([
-                                                                        'ussusuariossucursales.ussid',
-                                                                        'zon.zonid',
-                                                                        'zon.zonnombre',
-                                                                        'suc.sucid',
-                                                                        'suc.sucnombre'
-                                                                    ]);
+                    // $ussusuariossucursales = ussusuariossucursales::join('sucsucursales as suc', 'suc.sucid', 'ussusuariossucursales.sucid')
+                    //                                                 ->join('usuusuarios as usu', 'usu.usuid', 'ussusuariossucursales.usuid')
+                    //                                                 ->join('zonzonas as zon', 'zon.zonid', 'usu.zonid')
+                    //                                                 ->where('usu.estid', 1)
+                    //                                                 ->distinct('suc.sucnombre')
+                    //                                                 ->get([
+                    //                                                     'ussusuariossucursales.ussid',
+                    //                                                     'zon.zonid',
+                    //                                                     'zon.zonnombre',
+                    //                                                     'suc.sucid',
+                    //                                                     'suc.sucnombre'
+                    //                                                 ]);
+
+
+                    $ussusuariossucursales = sucsucursales::join('zonzonas as zon', 'zon.zonid', 'sucsucursales.zonid')
+                                                            ->where('sucestado', 1)
+                                                            ->get([
+                                                                'sucsucursales.sucid',
+                                                                'zon.zonid',
+                                                                'zon.zonnombre',
+                                                                'sucsucursales.sucnombre'
+                                                            ]);
                 }else{
                     $zonas = ussusuariossucursales::join('sucsucursales as suc', 'suc.sucid', 'ussusuariossucursales.sucid')
                                                     ->join('zonzonas as zon', 'zon.zonid', 'suc.zonid')
