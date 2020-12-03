@@ -18,7 +18,7 @@ class TablaPromocionesController extends Controller
 
         $fecha           = $request['fecha'];
         $codigoPromocion = $request['codigoPromocion'];
-        $sucid           = $request['sucid'];
+        $sucnombre       = $request['sucnombre'];
         $catsid          = $request['catsid'];
         $canid           = $request['canid'];
 
