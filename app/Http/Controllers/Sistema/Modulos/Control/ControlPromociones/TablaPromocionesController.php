@@ -111,10 +111,10 @@ class TablaPromocionesController extends Controller
                                              ]);
             if($prb){
                 $csps[$posicionCsp]['prbimagen'] = $prb->prbimagen;
-                $csps[$posicionCsp]['prbid']     = $prb->prbid;
+                $csps[$posicionCsp]['prbidex']     = $prb->prbid;
             }else{
                 $csps[$posicionCsp]['prbimagen'] = "";
-                $csps[$posicionCsp]['prbid']     = 0;
+                $csps[$posicionCsp]['prbidex']     = 0;
             }
 
             $prp = prppromocionesproductos::where('prmid', $csp->prmid)
@@ -125,10 +125,10 @@ class TablaPromocionesController extends Controller
 
             if($prp){
                 $csps[$posicionCsp]['prpimagen'] = $prp->prpimagen;
-                $csps[$posicionCsp]['prpid']     = $prp->prpid;
+                $csps[$posicionCsp]['prpidex']     = $prp->prpid;
             }else{
                 $csps[$posicionCsp]['prpimagen'] = "";
-                $csps[$posicionCsp]['prpid']     = 0;
+                $csps[$posicionCsp]['prpidex']     = 0;
             }
 
             $csps[$posicionCsp]['prpimageneditar']     = 0;
