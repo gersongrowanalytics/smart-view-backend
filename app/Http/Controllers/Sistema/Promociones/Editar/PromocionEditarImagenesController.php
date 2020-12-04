@@ -49,9 +49,9 @@ class PromocionEditarImagenesController extends Controller
                     
                     $archivo = base64_decode($base64);
 
-                    $prb = prbpromocionesbonificaciones::find($prbid);
+                    $prp = prppromocionesproductos::find($prpid);
 
-                    if($prb){
+                    if($prp){
                         $nombre  = $prpm->fecid."-".$prp->prmid."-".$prp->proid."-".$prp->prpproductoppt."-".$prp->prpcomprappt.".png";
                         $nombre  = str_replace("/", "-", $nombre);
                         // Str::random(10).'.png';
