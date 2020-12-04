@@ -108,15 +108,15 @@ class PromocionEditarImagenesController extends Controller
                 if($prbm){
                     list(, $base64) = explode(',', $imagenBonificado);
                     $fichero = '/Sistema/promociones/IMAGENES/BONIFICADOS/';
-                    
-                    $archivo = base64_decode($base64);
-                    $nombre  = $prbm->fecid."-".$prb->prmid."-".$prb->proid."-".$prb->prbproductoppt."-".$prb->prbcomprappt.".png";
-                    $nombre  = str_replace("/", "-", $nombre);
-                    // Str::random(10).'.png';
 
                     $prb = prbpromocionesbonificaciones::find($prbid);
 
                     if($prb){
+                        $archivo = base64_decode($base64);
+                        $nombre  = $prbm->fecid."-".$prb->prmid."-".$prb->proid."-".$prb->prbproductoppt."-".$prb->prbcomprappt.".png";
+                        $nombre  = str_replace("/", "-", $nombre);
+                        // Str::random(10).'.png';
+
                         file_put_contents(base_path().'/public'.$fichero.$nombre, $archivo);
                         $prb->prbimagen = env('APP_URL').$fichero.$nombre;
                         $prb->prbestadoimagen = 1;
