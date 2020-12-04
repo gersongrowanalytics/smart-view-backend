@@ -110,7 +110,7 @@ class PromocionEditarImagenesController extends Controller
                     $fichero = '/Sistema/promociones/IMAGENES/BONIFICADOS/';
                     
                     $archivo = base64_decode($base64);
-                    $nombre  = $fecid."-".$prb->prmid."-".$prb->proid."-".$prb->prbproductoppt."-".$prb->prbcomprappt.".png";
+                    $nombre  = $prbm->fecid."-".$prb->prmid."-".$prb->proid."-".$prb->prbproductoppt."-".$prb->prbcomprappt.".png";
                     $nombre  = str_replace("/", "-", $nombre);
                     // Str::random(10).'.png';
 
