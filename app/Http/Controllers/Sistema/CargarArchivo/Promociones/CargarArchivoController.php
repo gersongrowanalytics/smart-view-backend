@@ -82,7 +82,8 @@ class CargarArchivoController extends Controller
             "NUEVO_PRB_CREADO" => [],
             "NUEVO_PROMOCION_CREADO" => [],
             "NUEVO_CANAL_ASIGNADO" => [],
-            "NUEVO_CATEGORIA_ASIGNADO" => []
+            "NUEVO_CATEGORIA_ASIGNADO" => [],
+            "NUEVA_SUCURSAL" => []
         );
 
         $fecActual = new \DateTime(date("Y-m-d", strtotime("2020-10-20")));
@@ -327,7 +328,9 @@ class CargarArchivoController extends Controller
                                     $nuevaSucursal->sucnombre = $cliente;
                                     if($nuevaSucursal->save()){
                                         $sucursalClienteId = $nuevaSucursal->sucid;
-    
+                                        
+                                        $log["NUEVA_SUCURSAL"][] = $cliente;
+
                                         $sucursalUsuario = new ussusuariossucursales;
                                         $sucursalUsuario->usuid  = $clienteusuid;
                                         $sucursalUsuario->sucid  = $sucursalClienteId;
@@ -358,7 +361,7 @@ class CargarArchivoController extends Controller
                                     $nuevaSucursal->sucnombre = $cliente;
                                     if($nuevaSucursal->save()){
                                         $sucursalClienteId = $nuevaSucursal->sucid;
-    
+                                        $log["NUEVA_SUCURSAL"][] = $cliente;
                                         $sucursalUsuario = new ussusuariossucursales;
                                         $sucursalUsuario->usuid = $clienteusuid;
                                         $sucursalUsuario->sucid = $sucursalClienteId;
