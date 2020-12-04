@@ -130,6 +130,9 @@ class TablaPromocionesController extends Controller
                 $csps[$posicionCsp]['prpimagen'] = "";
                 $csps[$posicionCsp]['prpid']     = 0;
             }
+
+            $csps[$posicionCsp]['prpimageneditar']     = 0;
+            $csps[$posicionCsp]['prbimageneditar']     = 0;
         }
 
         $datos = $csps;
