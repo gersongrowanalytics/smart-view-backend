@@ -17,7 +17,7 @@ class PromocionEditarImagenesController extends Controller
     {
         $usutoken   = $request->header('api_token');
         $prpid              = $request['prpid'];
-        $fecid              = $request['fecid'];
+        // $fecid              = $request['fecid'];
         $imagenProducto     = $request['imagenProducto'];
         $prbid              = $request['prbid'];
         $imagenBonificado   = $request['imagenBonificado'];
@@ -32,56 +32,63 @@ class PromocionEditarImagenesController extends Controller
         $pkidprp = 0;
         $pkidprb = 0;
 
-        if($fecid == null){
-            $fecid = 7;
-        }
-
         DB::beginTransaction();
 
         try{
             if($prpid != 0){
-                $prp = prppromocionesproductos::find($prpid);
+                $prpm = prppromocionesproductos::join('prmpromociones as prm', 'prm.prmid', 'prppromocionesproductos.prmid')
+                                                ->where('prppromocionesproductos.prpid', $prpid)
+                                                ->first([
+                                                    'prppromocionesproductos.prpid',
+                                                    'prm.fecid'
+                                                ]);
 
-                if($prp){
+                if($prpm){
                     list(, $base64) = explode(',', $imagenProducto);
                     $fichero = '/Sistema/promociones/IMAGENES/PRODUCTOS/';
                     
                     $archivo = base64_decode($base64);
 
-                    $nombre  = $fecid."-".$prp->prmid."-".$prp->proid."-".$prp->prpproductoppt."-".$prp->prpcomprappt.".png";
-                    $nombre  = str_replace("/", "-", $nombre);
-                    // Str::random(10).'.png';
+                    $prb = prbpromocionesbonificaciones::find($prbid);
 
-                    file_put_contents(base_path().'/public'.$fichero.$nombre, $archivo);
-                    $prp->prpimagen = env('APP_URL').$fichero.$nombre;
+                    if($prb){
+                        $nombre  = $prpm->fecid."-".$prp->prmid."-".$prp->proid."-".$prp->prpproductoppt."-".$prp->prpcomprappt.".png";
+                        $nombre  = str_replace("/", "-", $nombre);
+                        // Str::random(10).'.png';
 
-                    if($prp->update()){
-                        $pkidprp = "PRP-".$prp->prpid;
-                        $log[]   = "SE EDITO LA IMAGEN DEL PRODUCTO: ".$prp->prpimagen;
+                        file_put_contents(base_path().'/public'.$fichero.$nombre, $archivo);
+                        $prp->prpimagen = env('APP_URL').$fichero.$nombre;
+                        $prp->prpestadoimagen = 1;
+                        if($prp->update()){
+                            $pkidprp = "PRP-".$prp->prpid;
+                            $log[]   = "SE EDITO LA IMAGEN DEL PRODUCTO: ".$prp->prpimagen;
 
-                        $prm = prmpromociones::find($prp->prmid);
+                            $prm = prmpromociones::find($prp->prmid);
 
-                        $prmt = prmpromociones::where('fecid', $prm->fecid)
-                                            ->where('prmcodigo', $prm->prmcodigo)
-                                            ->get();
+                            $prmt = prmpromociones::where('fecid', $prm->fecid)
+                                                ->where('prmcodigo', $prm->prmcodigo)
+                                                ->get();
 
-                        foreach($prmt as $prma){
-                            $prpe = prppromocionesproductos::where('prmid', $prma->prmid)->where('prpid', '!=', $prpid)->first();
-                            if($prpe){
-                                $nuevoNombre  = $fecid."-".$prpe->prmid."-".$prpe->proid."-".$prpe->prpproductoppt."-".$prpe->prpcomprappt.".png";
-                                $nuevoNombre  = str_replace("/", "-", $nuevoNombre);
+                            foreach($prmt as $prma){
+                                $prpe = prppromocionesproductos::where('prmid', $prma->prmid)->where('prpid', '!=', $prpid)->first();
+                                if($prpe){
+                                    $nuevoNombre  = $fecid."-".$prpe->prmid."-".$prpe->proid."-".$prpe->prpproductoppt."-".$prpe->prpcomprappt.".png";
+                                    $nuevoNombre  = str_replace("/", "-", $nuevoNombre);
 
-                                file_put_contents(base_path().'/public'.$fichero.$nuevoNombre, $archivo);
-                                $prpe->prpimagen = env('APP_URL').$fichero.$nuevoNombre;
-                                $prpe->update();
+                                    file_put_contents(base_path().'/public'.$fichero.$nuevoNombre, $archivo);
+                                    $prpe->prpimagen = env('APP_URL').$fichero.$nuevoNombre;
+                                    $prpe->prpestadoimagen = 1;
+                                    $prpe->update();
+                                }
                             }
-                        }
 
-                    }else{
-                        $respuesta = false;
-                        $log[]   = "NO SE EDITO LA IMAGEN DEL PRODUCTO";
-                        $mensaje = 'Lo sentimos, ocurrio un error al momento de editar la imagen de producto';
+                        }else{
+                            $respuesta = false;
+                            $log[]   = "NO SE EDITO LA IMAGEN DEL PRODUCTO";
+                            $mensaje = 'Lo sentimos, ocurrio un error al momento de editar la imagen de producto';
+                        }
                     }
+                    
 
                 }else{
                     $respuesta = false;
@@ -90,9 +97,15 @@ class PromocionEditarImagenesController extends Controller
             }
 
             if($prbid != 0){
-                $prb = prbpromocionesbonificaciones::find($prbid);
+                
+                $prbm = prbpromocionesbonificaciones::join('prmpromociones as prm', 'prm.prmid', 'prbpromocionesbonificaciones.prmid')
+                                                ->where('prbpromocionesbonificaciones.prbid', $prbid)
+                                                ->first([
+                                                    'prbpromocionesbonificaciones.prbid',
+                                                    'prm.fecid'
+                                                ]);
 
-                if($prb){
+                if($prbm){
                     list(, $base64) = explode(',', $imagenBonificado);
                     $fichero = '/Sistema/promociones/IMAGENES/BONIFICADOS/';
                     
@@ -101,37 +114,43 @@ class PromocionEditarImagenesController extends Controller
                     $nombre  = str_replace("/", "-", $nombre);
                     // Str::random(10).'.png';
 
-                    file_put_contents(base_path().'/public'.$fichero.$nombre, $archivo);
-                    $prb->prbimagen = env('APP_URL').$fichero.$nombre;;
-                    if($prb->update()){
-                        $pkidprb = "PRB-".$prb->prpid;
-                        $log[]   = "SE EDITO LA IMAGEN DEL PRODUCTO BONIFICADO: ".$prb->prbimagen ;
+                    $prb = prbpromocionesbonificaciones::find($prbid);
 
-                        $prm = prmpromociones::find($prb->prmid);
+                    if($prb){
+                        file_put_contents(base_path().'/public'.$fichero.$nombre, $archivo);
+                        $prb->prbimagen = env('APP_URL').$fichero.$nombre;
+                        $prb->prbestadoimagen = 1;
+                        if($prb->update()){
+                            $pkidprb = "PRB-".$prb->prpid;
+                            $log[]   = "SE EDITO LA IMAGEN DEL PRODUCTO BONIFICADO: ".$prb->prbimagen ;
 
-                        $prmt = prmpromociones::where('fecid', $prm->fecid)
-                                            ->where('prmcodigo', $prm->prmcodigo)
-                                            ->get([
-                                                'prmid'
-                                            ]);
+                            $prm = prmpromociones::find($prb->prmid);
 
-                        foreach($prmt as $prma){
-                            $prbe = prbpromocionesbonificaciones::where('prmid', $prma->prmid)->where('prbid', '!=', $prbid)->first();
+                            $prmt = prmpromociones::where('fecid', $prm->fecid)
+                                                ->where('prmcodigo', $prm->prmcodigo)
+                                                ->get([
+                                                    'prmid'
+                                                ]);
 
-                            if($prbe){
-                                $nuevoNombre  = $fecid."-".$prbe->prmid."-".$prbe->proid."-".$prbe->prbproductoppt."-".$prbe->prbcomprappt.".png";
-                                $nuevoNombre  = str_replace("/", "-", $nuevoNombre);
-                                
-                                file_put_contents(base_path().'/public'.$fichero.$nuevoNombre, $archivo);
-                                $prbe->prbimagen = env('APP_URL').$fichero.$nuevoNombre;
-                                $prbe->update();
+                            foreach($prmt as $prma){
+                                $prbe = prbpromocionesbonificaciones::where('prmid', $prma->prmid)->where('prbid', '!=', $prbid)->first();
+
+                                if($prbe){
+                                    $nuevoNombre  = $fecid."-".$prbe->prmid."-".$prbe->proid."-".$prbe->prbproductoppt."-".$prbe->prbcomprappt.".png";
+                                    $nuevoNombre  = str_replace("/", "-", $nuevoNombre);
+                                    
+                                    file_put_contents(base_path().'/public'.$fichero.$nuevoNombre, $archivo);
+                                    $prbe->prbimagen = env('APP_URL').$fichero.$nuevoNombre;
+                                    $prbe->prbestadoimagen = 1;
+                                    $prbe->update();
+                                }
                             }
-                        }
 
-                    }else{
-                        $respuesta = false;
-                        $log[]   = "NO SE EDITO LA IMAGEN DEL PRODUCTO";
-                        $mensaje = 'Lo sentimos, ocurrio un error al momento de editar la imagen de bonificado';
+                        }else{
+                            $respuesta = false;
+                            $log[]   = "NO SE EDITO LA IMAGEN DEL PRODUCTO";
+                            $mensaje = 'Lo sentimos, ocurrio un error al momento de editar la imagen de bonificado';
+                        }
                     }
                 }else{
                     $respuesta = false;

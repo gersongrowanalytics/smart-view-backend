@@ -67,6 +67,7 @@ class TablaPromocionesController extends Controller
                                                 ->where('cspcantidadplancha', '!=', "0")
                                                 ->where('sca.tsuid', null)
                                                 ->where('sca.fecid', $fecid) //TODOS LOS JOINS COMPARTEN LA MISMA FECHA (FK)
+                                                ->orderBy('prm.prmid', 'DESC')
                                                 ->where(function ($query) use($request) {
 
                                                     if($request['codigoPromocion'] != '' && $request['codigoPromocion'] != null) {
@@ -111,11 +112,13 @@ class TablaPromocionesController extends Controller
                                              ]);
             if($prb){
                 $csps[$posicionCsp]['prbimagen'] = $prb->prbimagen;
-                $csps[$posicionCsp]['prbidex']     = $prb->prbid;
+                $csps[$posicionCsp]['prbidex']   = $prb->prbid;
             }else{
                 $csps[$posicionCsp]['prbimagen'] = "";
                 $csps[$posicionCsp]['prbidex']     = 0;
             }
+
+            $csps[$posicionCsp]['prbid']     = 0;
 
             $prp = prppromocionesproductos::where('prmid', $csp->prmid)
                                             ->first([
@@ -130,6 +133,8 @@ class TablaPromocionesController extends Controller
                 $csps[$posicionCsp]['prpimagen'] = "";
                 $csps[$posicionCsp]['prpidex']     = 0;
             }
+
+            $csps[$posicionCsp]['prpid'] = 0;
 
             $csps[$posicionCsp]['prpimageneditar']     = 0;
             $csps[$posicionCsp]['prbimageneditar']     = 0;
