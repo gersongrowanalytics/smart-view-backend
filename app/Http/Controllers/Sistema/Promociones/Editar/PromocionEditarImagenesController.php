@@ -72,7 +72,7 @@ class PromocionEditarImagenesController extends Controller
                             foreach($prmt as $prma){
                                 $prpe = prppromocionesproductos::where('prmid', $prma->prmid)->where('prpid', '!=', $prpid)->first();
                                 if($prpe){
-                                    $nuevoNombre  = $fecid."-".$prpe->prmid."-".$prpe->proid."-".$prpe->prpproductoppt."-".$prpe->prpcomprappt.".png";
+                                    $nuevoNombre  = $prm->fecid."-".$prpe->prmid."-".$prpe->proid."-".$prpe->prpproductoppt."-".$prpe->prpcomprappt.".png";
                                     $nuevoNombre  = str_replace("/", "-", $nuevoNombre);
 
                                     file_put_contents(base_path().'/public'.$fichero.$nuevoNombre, $archivo);
@@ -136,7 +136,7 @@ class PromocionEditarImagenesController extends Controller
                                 $prbe = prbpromocionesbonificaciones::where('prmid', $prma->prmid)->where('prbid', '!=', $prbid)->first();
 
                                 if($prbe){
-                                    $nuevoNombre  = $fecid."-".$prbe->prmid."-".$prbe->proid."-".$prbe->prbproductoppt."-".$prbe->prbcomprappt.".png";
+                                    $nuevoNombre  = $prm->fecid."-".$prbe->prmid."-".$prbe->proid."-".$prbe->prbproductoppt."-".$prbe->prbcomprappt.".png";
                                     $nuevoNombre  = str_replace("/", "-", $nuevoNombre);
                                     
                                     file_put_contents(base_path().'/public'.$fichero.$nuevoNombre, $archivo);
