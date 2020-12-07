@@ -362,7 +362,9 @@ class VentasMostrarController extends Controller
                             $dataarray[$posicionTpr]['tsuporcentajecumplimiento'] = $dataarray[$posicionTpr]['tsuporcentajecumplimiento'] + $tsu->tsuporcentajecumplimiento;
                             $dataarray[$posicionTpr]['tsuvalorizadorebate']       = $dataarray[$posicionTpr]['tsuvalorizadorebate']       + $tsu->tsuvalorizadorebate;
                             
-                            $categorias = catcategorias::where('catnombre', '!=', 'MultiCategoria')->orderBy('catid')->get(['catid', 'catnombre', 'catimagenfondo', 'catimagenfondoopaco', 'caticono']);
+                            $categorias = catcategorias::where('catnombre', '!=', 'MultiCategoria')
+                                                        ->where('catid', '<', 6)
+                                                        ->orderBy('catid')->get(['catid', 'catnombre', 'catimagenfondo', 'catimagenfondoopaco', 'caticono']);
 
                             if(sizeof($categorias) > 0){
 
@@ -408,7 +410,9 @@ class VentasMostrarController extends Controller
                             $dataarray[$posicionTpr]['tsuporcentajecumplimiento'] = $dataarray[$posicionTpr]['tsuporcentajecumplimiento'] + 0;
                             $dataarray[$posicionTpr]['tsuvalorizadorebate']       = $dataarray[$posicionTpr]['tsuvalorizadorebate']       + 0;
 
-                            $categorias = catcategorias::where('catnombre', '!=', 'MultiCategoria')->orderBy('catid')->get(['catid', 'catnombre', 'catimagenfondo', 'catimagenfondoopaco', 'caticono']);
+                            $categorias = catcategorias::where('catnombre', '!=', 'MultiCategoria')
+                                                        ->where('catid', '<', 6)
+                                                        ->orderBy('catid')->get(['catid', 'catnombre', 'catimagenfondo', 'catimagenfondoopaco', 'caticono']);
 
                             if(sizeof($categorias) > 0){
 
