@@ -82,7 +82,7 @@ class VentasMostrarController extends Controller
 
                     $scasucursalescategorias = scasucursalescategorias::join('catcategorias as cat', 'cat.catid', 'scasucursalescategorias.catid')
                                                                     ->where('scasucursalescategorias.tsuid', $tsutipopromocionsucursal->tsuid)
-                                                                    ->where('cat.catid', '!=', 8)
+                                                                    ->where('cat.catid', '<', 6)
                                                                     ->orderBy('cat.catid')
                                                                     ->get([
                                                                         'cat.catnombre',
@@ -153,7 +153,7 @@ class VentasMostrarController extends Controller
 
                 $dataVacia = array(array());
 
-                $categorias = catcategorias::where('catnombre', '!=', 'MultiCategoria')->get();
+                $categorias = catcategorias::where('catnombre', '!=', 'MultiCategoria')->where('catid', '<', 6)->get();
                 $tprtipospromociones = tprtipospromociones::all();
 
                 $trrs = array(
