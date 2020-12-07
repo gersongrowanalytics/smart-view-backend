@@ -107,9 +107,9 @@ class CrearUsuarioController extends Controller
                         $pos = strpos($correo, "@gmail.com");
                         
                         if($pos){
-                            // Mail::to($correo)->send(new MailCrearUsuario($data));
+                            Mail::to($correo)->send(new MailCrearUsuario($data));
                         }else{
-                            // Mail::to($correo)->send(new MailCrearUsuarioOutlook($data));
+                            Mail::to($correo)->send(new MailCrearUsuarioOutlook($data));
                         }
                     }
 
