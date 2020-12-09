@@ -875,7 +875,7 @@ class ObjetivoCargarController extends Controller
                                         $nuevosca->fecid                 = $fecid;
                                         $nuevosca->tsuid                 = $tsuid;
                                         $nuevosca->scavalorizadoobjetivo = $objetivo;
-                                        $nuevosca->scaiconocategoria     = env('APP_URL').'/Sistema/categorias-tiposPromociones/img/iconos/'.$categoriaNombre.'-Sell In.png';
+                                        $nuevosca->scaiconocategoria     = env('APP_URL').'/Sistema/categorias-tiposPromociones/img/iconos/'.$categoriaNombre.'-Sell Out.png';
                                         $nuevosca->scavalorizadoreal     = 0;
                                         $nuevosca->scavalorizadotogo     = 0;
                                         if($nuevosca->save()){
@@ -890,7 +890,7 @@ class ObjetivoCargarController extends Controller
                                         $nuevosca->fecid                 = $fecid;
                                         $nuevosca->tsuid                 = $tsuid;
                                         $nuevosca->scavalorizadoobjetivo = 0;
-                                        $nuevosca->scaiconocategoria     = env('APP_URL').'/Sistema/categorias-tiposPromociones/img/iconos/'.$categoria->catnombre.'-Sell In.png';
+                                        $nuevosca->scaiconocategoria     = env('APP_URL').'/Sistema/categorias-tiposPromociones/img/iconos/'.$categoria->catnombre.'-Sell Out.png';
                                         $nuevosca->scavalorizadoreal     = 0;
                                         $nuevosca->scavalorizadotogo     = 0;
                                         if($nuevosca->save()){

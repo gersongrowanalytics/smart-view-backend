@@ -8,6 +8,7 @@ use App\prbpromocionesbonificaciones;
 use App\prppromocionesproductos;
 use App\ussusuariossucursales;
 use App\sucsucursales;
+use App\scasucursalescategorias;
 
 class salvacionController extends Controller
 {
@@ -111,6 +112,41 @@ class salvacionController extends Controller
             $suce->sucestado = 1;
             $suce->update();
         }
+    }
+
+    public function CambiarImagenSellOut()
+    {
+        $log = [];
+
+        $scas = scasucursalescategorias::join('tsutipospromocionessucursales as tsu', 'tsu.tsuid', 'scasucursalescategorias.tsuid')
+                                        ->join('catcategorias as cat', 'cat.catid', 'scasucursalescategorias.catid')
+                                        // ->where('tsu.tprid', 2)
+                                        ->get([
+                                            'scasucursalescategorias.scaid',
+                                            'scasucursalescategorias.scaiconocategoria',
+                                            'cat.catnombre',
+                                            'tsu.tprid'
+                                        ]);
+
+
+        foreach($scas as $sca){
+            $scae = scasucursalescategorias::find($sca->scaid);
+            
+            if($sca->tprid == 1){
+                $scae->scaiconocategoria = env('APP_URL').'/Sistema/categorias-tiposPromociones/img/iconos/'.$sca->catnombre.'-Sell In.png';
+            }else{
+                $scae->scaiconocategoria = env('APP_URL').'/Sistema/categorias-tiposPromociones/img/iconos/'.$sca->catnombre.'-Sell Out.png';
+            }
+
+            if($scae->update()){
+                $log['CORRECTO'][] = "Se actualizo correctamente la imagen sell: ".$sca->scaid;
+            }else{
+                $log['INCORRECTO'][] = "No se pudo actualizar la imagen sell: ".$sca->scaid;
+            }
+        }
+
+
+        dd($log);
     }
 }
 
