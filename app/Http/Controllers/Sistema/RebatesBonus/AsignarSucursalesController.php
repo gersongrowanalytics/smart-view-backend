@@ -81,10 +81,11 @@ class AsignarSucursalesController extends Controller
                 if($rbscumplimiento >= $rbb->rbbcumplimiento){
                     $tsu = tsutipospromocionessucursales::where('tprid', 1)
                                                         ->where('sucid', $suc->sucid)
+                                                        ->where('fecid', $rbb->fecid)
                                                         ->first();
 
                     if($tsu){
-                        $rbsrebate = ($tsu->tsuvalorizadoreal*0.5)/100;
+                        $rbsrebate = ($tsu->tsuvalorizadoreal*$rbb->rbbporcentaje)/100;
                         
                         if($rbb->fecid == 3){
                             $logs['oct'][] = "Entra en el rango la sucursal: ".$suc->sucid." con un porcentaje de :".$rbscumplimiento." y un rebate de: ".$rbsrebate;
