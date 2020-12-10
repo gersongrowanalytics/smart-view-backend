@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\sucsucursales;
 use App\rbbrebatesbonus;
 use App\rbsrebatesbonussucursales;
+use App\rscrbsscategorias;
 use App\scasucursalescategorias;
 use App\tsutipospromocionessucursales;
 
@@ -29,6 +30,14 @@ class AsignarSucursalesController extends Controller
 
             if(sizeof($rbss) > 0){
                 foreach($rbss as $rbs){
+
+                    $rscs = rscrbsscategorias::where('rbsid', $rbs->rbsid)->get();
+
+                    foreach($rscs as $rsc){
+                        $rscd = rscrbsscategorias::find($rsc->rscid);
+                        $rscd->delete();
+                    }
+
                     $rbbd = rbsrebatesbonussucursales::find($rbs->rbsid);
                     $rbbd->delete();
                 }

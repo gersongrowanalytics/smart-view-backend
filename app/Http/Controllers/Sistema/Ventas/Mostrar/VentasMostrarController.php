@@ -11,6 +11,8 @@ use App\catcategorias;
 use App\carcargasarchivos;
 use App\usuusuarios;
 use App\trrtiposrebatesrebates;
+use App\rbbrebatesbonus;
+use App\rbsrebatesbonussucursales;
 
 class VentasMostrarController extends Controller
 {
@@ -32,7 +34,59 @@ class VentasMostrarController extends Controller
         $mensajeDetalle = '';
         $mensajedev     = null;
 
+        $rebatesBonus = array(
+            "categorias"   => [],
+            "objetivo"     => "",
+            "real"         => "",
+            "cumplimiento" => "",
+            "rebate"       => ""
+        );
+
         try{
+
+
+            // OBTENER EL REBATE BONUS
+            $rbbs = rbbrebatesbonus::join('fecfechas as fec', 'rbbrebatesbonus.fecid', 'fec.fecid')
+                                    ->where('fec.fecano', $ano)
+                                    ->where('fec.fecmes', $mes)
+                                    ->where('fec.fecdia', $dia)
+                                    ->get();
+
+            if(sizeof($rbbs) > 0){
+                foreach($rbbs as $rbb){
+                    $rbs = rbsrebatesbonussucursales::where('rbbid', $rbb->rbbid)
+                                                    ->where('sucid', $sucid)
+                                                    ->first();
+
+                    if($rbs){
+                        $rebatesBonus['objetivo']     = $rbs->rbsobjetivo;
+                        $rebatesBonus['real']         = $rbs->rbsreal;
+                        $rebatesBonus['cumplimiento'] = $rbs->rbscumplimiento;
+                        $rebatesBonus['rebate']       = $rbs->rbsrebate;
+                    }
+
+                    $cats = catcategorias::where('catid', 1)->get();
+                    
+                    foreach($cats as $posicionCat => $cat){
+                        if($rbb->fecid == 3){
+                            if($cat->catid == 4){
+                                $cats[$posicionCat]['estado'] = 0;
+                            }else{
+                                $cats[$posicionCat]['estado'] = 1;
+                            }
+                        }else{
+                            if($cat->catid == 1){
+                                $cats[$posicionCat]['estado'] = 1;
+                            }else{
+                                $cats[$posicionCat]['estado'] = 0;
+                            }
+                        }
+                    }
+
+                    $rebatesBonus['categorias'] = $cats;
+                }
+            }
+
             $tsutipospromocionessucursales = tsutipospromocionessucursales::join('fecfechas as fec', 'tsutipospromocionessucursales.fecid', 'fec.fecid')
                                                                         ->join('tprtipospromociones as tpr', 'tpr.tprid', 'tsutipospromocionessucursales.tprid')
                                                                         ->join('tretiposrebates as tre', 'tre.treid', 'tsutipospromocionessucursales.treid')
@@ -220,6 +274,7 @@ class VentasMostrarController extends Controller
             "respuesta"      => $respuesta,
             "mensaje"        => $mensaje,
             "datos"          => $datos,
+            "rebatebonus"    => $rebatesBonus,
             "linea"          => $linea,
             "mensajeDetalle" => $mensajeDetalle,
             "mensajedev"     => $mensajedev
@@ -242,6 +297,14 @@ class VentasMostrarController extends Controller
         $linea          = __LINE__;
         $mensajeDetalle = '';
         $mensajedev     = null;
+
+        $rebatesBonus = array(
+            "categorias"   => [],
+            "objetivo"     => "",
+            "real"         => "",
+            "cumplimiento" => "",
+            "rebate"       => ""
+        );
 
         try{
             
@@ -453,6 +516,7 @@ class VentasMostrarController extends Controller
             "respuesta"      => $respuesta,
             "mensaje"        => $mensaje,
             "datos"          => $datos,
+            "rebatebonus"    => $rebatesBonus,
             "linea"          => $linea,
             "mensajeDetalle" => $mensajeDetalle,
             "mensajedev"     => $mensajedev
