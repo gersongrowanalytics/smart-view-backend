@@ -65,7 +65,9 @@ class AsignarSucursalesController extends Controller
                     $rbsreal         = $rbsreal + $sca->scavalorizadoreal;
                 }
 
-                $rbscumplimiento = (100*$rbsreal)/$rbsobjetivo;
+                if($rbsobjetivo > 1){
+                    $rbscumplimiento = (100*$rbsreal)/$rbsobjetivo;
+                }
 
                 if($rbscumplimiento >= $rbb->rbbcumplimiento){
                     $tsu = tsutipospromocionessucursales::where('tprid', 1)
