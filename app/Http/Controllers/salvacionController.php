@@ -149,6 +149,11 @@ class salvacionController extends Controller
 
         dd($log);
     }
+
+    public function CalcularRebateBonus()
+    {
+            
+    }
 }
 
 

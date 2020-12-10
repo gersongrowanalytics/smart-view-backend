@@ -83,3 +83,6 @@ $router->group(['middleware' => ['permisos']], function() use($router) {
     $router->post('/control/promociones/lista', 'Sistema\Modulos\Control\ControlPromociones\TablaPromocionesController@MostrarPromociones');
 
 });
+
+
+$router->get('/armarRebateBonus', 'Sistema\RebatesBonus\AsignarSucursalesController@AsiganarSucursales');
