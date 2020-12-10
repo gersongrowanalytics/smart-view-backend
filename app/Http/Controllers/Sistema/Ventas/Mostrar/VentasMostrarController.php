@@ -65,12 +65,13 @@ class VentasMostrarController extends Controller
                         $rebatesBonus['rebate']       = $rbs->rbsrebate;
                     }
 
-                    $cats = catcategorias::where('catid', 1)->get();
+                    $cats = catcategorias::where('catid', '!=', 6)->get();
                     
                     foreach($cats as $posicionCat => $cat){
                         if($rbb->fecid == 3){
                             if($cat->catid == 4){
                                 $cats[$posicionCat]['estado'] = 0;
+                                $cats[$posicionCat]['caticono'] = "http://backend.leadsmartview.com/Sistema/categorias/img/iconos/iconosDesactivados/".$cat->catnombre.".png";
                             }else{
                                 $cats[$posicionCat]['estado'] = 1;
                             }
@@ -79,6 +80,7 @@ class VentasMostrarController extends Controller
                                 $cats[$posicionCat]['estado'] = 1;
                             }else{
                                 $cats[$posicionCat]['estado'] = 0;
+                                $cats[$posicionCat]['caticono'] = "http://backend.leadsmartview.com/Sistema/categorias/img/iconos/iconosDesactivados/".$cat->catnombre.".png";
                             }
                         }
                     }
