@@ -49,7 +49,7 @@ class AsignarSucursalesController extends Controller
                     $scas = scasucursalescategorias::join('tsutipospromocionessucursales as tsu', 'tsu.tsuid', 'scasucursalescategorias.tsuid')
                                             ->where('scasucursalescategorias.fecid', $rbb->fecid )
                                             ->where('tsu.tprid', 1)
-                                            ->where('scasucursalescatgorias.sucid', $suc->sucid)
+                                            ->where('scasucursalescategorias.sucid', $suc->sucid)
                                             ->where('catid', 1)
                                             ->get();
                 }
