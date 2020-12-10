@@ -84,7 +84,7 @@ class AsignarSucursalesController extends Controller
                                                         ->first();
 
                     if($tsu){
-                        $rbsrebate = ($tsu->tsuvalorizadoreal*$rbb->rbbporcentaje)/100;
+                        $rbsrebate = ($tsu->tsuvalorizadoreal*0.5)/100;
                         
                         if($rbb->fecid == 3){
                             $logs['oct'][] = "Entra en el rango la sucursal: ".$suc->sucid." con un porcentaje de :".$rbscumplimiento." y un rebate de: ".$rbsrebate;
