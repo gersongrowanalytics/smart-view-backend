@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Sistema\Fechas\Mostrar;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\fecfechas;
+use App\usuusuarios;
+use App\tuptiposusuariospermisos;
 
 class FechasMostrarController extends Controller
 {
@@ -20,7 +22,13 @@ class FechasMostrarController extends Controller
         $mensajedev     = null;
         
         try{
-            $fecfechas = fecfechas::OrderBy('fecfecha', 'DESC')
+
+            $usuusuario = usuusuarios::join('tputiposusuarios as tpu', 'tpu.tpuid', 'usuusuarios.tpuid')
+                                ->where('usuusuarios.usutoken', $request->header('api_token'))
+                                ->first(['usuusuarios.usuid', 'tpu.tpuid', 'tpu.tpuprivilegio']);
+            
+            if($usuusuario->tpuprivilegio == 'todo'){
+                $fecfechas = fecfechas::OrderBy('fecfecha', 'DESC')
                                     ->get([
                                         'fecid',
                                         'fecfecha',
@@ -28,6 +36,58 @@ class FechasMostrarController extends Controller
                                         'fecmes',
                                         'fecano'
                                     ]);
+            }else{
+
+                $permisosTodosMeses = tuptiposusuariospermisos::join('pempermisos as pem', 'pem.pemid', 'tuptiposusuariospermisos.pemid')
+                                                            ->where('tuptiposusuariospermisos.tpuid', $usuusuario->tpuid )
+                                                            ->where('pem.pemslug', 'fechas.mostrar.todas')
+                                                            ->first([
+                                                                'pem.pemslug',
+                                                                'pem.pemruta'
+                                                            ]);
+
+                if($permisosTodosMeses){
+                    $fecfechas = fecfechas::OrderBy('fecfecha', 'DESC')
+                                    ->get([
+                                        'fecid',
+                                        'fecfecha',
+                                        'fecdia',
+                                        'fecmes',
+                                        'fecano'
+                                    ]);
+                }else{
+                    $tuptiposusuariospermisos = tuptiposusuariospermisos::join('pempermisos as pem', 'pem.pemid', 'tuptiposusuariospermisos.pemid')
+                                                                        ->where('tuptiposusuariospermisos.tpuid', $usuusuario->tpuid )
+                                                                        ->where('pem.pemslug', 'LIKE', 'fechas.mostrar.%')
+                                                                        ->get([
+                                                                            'pem.pemslug',
+                                                                            'pem.pemruta'
+                                                                        ]);
+
+                    $fecfechas = fecfechas::OrderBy('fecfecha', 'DESC')
+                                        ->where(function ($query) use($tuptiposusuariospermisos) {
+                                            if(sizeof($tuptiposusuariospermisos) > 0){
+                                                foreach($tuptiposusuariospermisos as $tuptiposusuariospermiso){
+                                                    $query->orwhere('fecmes', $tuptiposusuariospermiso->pemruta);
+                                                }
+                                            }else{
+                                                $query->where('fecmes', 'noacceso');
+                                            }
+
+                                        })
+                                        ->get([
+                                            'fecid',
+                                            'fecfecha',
+                                            'fecdia',
+                                            'fecmes',
+                                            'fecano'
+                                        ]);
+                }
+                
+            }
+
+
+            
     
             if(sizeof($fecfechas) > 0){
                 $fechas = array();
