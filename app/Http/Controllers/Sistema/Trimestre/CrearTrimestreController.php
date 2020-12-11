@@ -43,32 +43,33 @@ class CrearTrimestreController extends Controller
 
         DB::beginTransaction();
         try{
-            $fecha = new \DateTime(date("Y-m-d", strtotime($fecha)));
+            // $fecha = new \DateTime(date("Y-m-d", strtotime($fecha)));
 
-            $fecfecha = fecfechas::where('fecfecha', $fecha)->first(['fecid']);
-            $fecid = 0;
-            if($fecfecha){
-                $fecid = $fecfecha->fecid;
-                $log["fechas"][] = "Existe la fecha";
-            }else{
-                $log["fechas"][] = "No existe la fecha";
-                $nuevafecha = new fecfechas;
-                $nuevafecha->fecfecha = $fecha;
-                $nuevafecha->fecdia   = '';
-                $nuevafecha->fecmes   = '';
-                $nuevafecha->fecano   = '';
-                if($nuevafecha->save()){
-                    $fecid = $nuevafecha->fecid;
+            // $fecfecha = fecfechas::where('fecfecha', $fecha)->first(['fecid']);
+            // $fecid = 0;
+            // if($fecfecha){
+            //     $fecid = $fecfecha->fecid;
+            //     $log["fechas"][] = "Existe la fecha";
+            // }else{
+            //     $log["fechas"][] = "No existe la fecha";
+            //     $nuevafecha = new fecfechas;
+            //     $nuevafecha->fecfecha = $fecha;
+            //     $nuevafecha->fecdia   = '';
+            //     $nuevafecha->fecmes   = '';
+            //     $nuevafecha->fecano   = '';
+            //     if($nuevafecha->save()){
+            //         $fecid = $nuevafecha->fecid;
 
-                    $pkid = "FEC-".$fecid." ";
-                    $log["fechas"][] = "Se agrego la fecha";
-                }else{
-                    $pkid = "";
-                    $log["fechas"][] = "No se pudo agregar la fecha";
-                }
-            }
+            //         $pkid = "FEC-".$fecid." ";
+            //         $log["fechas"][] = "Se agrego la fecha";
+            //     }else{
+            //         $pkid = "";
+            //         $log["fechas"][] = "No se pudo agregar la fecha";
+            //     }
+            // }
 
-
+            $fecid = $fecha;
+            // ELIMINAR SI YA EXISTEN EN ESE TIPO DE PROMOCION Y EN ESE TRIMESTRE
             $ttrs = ttrtritre::where('fecid', $fecid)
                             ->where('triid', $triid)
                             ->where('tprid', $tprid)
