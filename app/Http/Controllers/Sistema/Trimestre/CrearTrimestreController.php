@@ -143,7 +143,7 @@ class CrearTrimestreController extends Controller
             "datos"          => $datos,
             "mensajeDetalle" => $mensajeDetalle,
             "mensajedev"     => $mensajedev,
-            "fecid"          => $fecid
+            "fecid"          => $fecid,
             "log"            => $log
         ]);
 
