@@ -18,8 +18,10 @@ class CrearTrimestreController extends Controller
 
         $pkid = 0;
         $log = array(
-            "fechas" => [],
-            "servidor" => []
+            "fechas"           => [],
+            "servidor"         => [],
+            "eliminados"       => [],
+            "numeroEliminados" => 0
         );
         $respuesta      = true;
         $mensaje        = "El rebate trimestral fue agregado satisfactoriamente";
@@ -63,6 +65,22 @@ class CrearTrimestreController extends Controller
                 }else{
                     $pkid = "";
                     $log["fechas"][] = "No se pudo agregar la fecha";
+                }
+            }
+
+
+            $ttrs = ttrtritre::where('fecid', $fecid)
+                            ->where('triid', $triid)
+                            ->where('tprid', $tprid)
+                            ->get(['ttrid']);
+
+            if(sizeof($ttrs) > 0){
+                foreach($ttrs as $ttr){
+                    $log["eliminados"][] = $ttr->ttrid;
+                    $log["numeroEliminados"] = $log["numeroEliminados"]+1;
+
+                    $ttrd = ttrtritre::find($ttr->ttrid);
+                    $ttrd->delete();
                 }
             }
 
@@ -149,6 +167,6 @@ class CrearTrimestreController extends Controller
         }
         
         return $requestsalida;
-        
+
     }
 }

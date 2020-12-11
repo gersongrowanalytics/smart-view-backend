@@ -17,6 +17,7 @@ class Tritrimestres extends Migration
             $table->increments('triid');
             $table->string('trinombre');
             $table->boolean('triestado');
+            $table->string('triano');
             $table->timestamps();
 
         });
