@@ -144,6 +144,7 @@ class CrearTrimestreController extends Controller
             "mensajeDetalle" => $mensajeDetalle,
             "mensajedev"     => $mensajedev,
             "fecid"          => $fecid
+            "log"            => $log
         ]);
 
         $AuditoriaController = new AuditoriaController;
