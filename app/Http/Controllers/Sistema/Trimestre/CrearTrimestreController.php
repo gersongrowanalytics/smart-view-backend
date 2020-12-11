@@ -70,20 +70,21 @@ class CrearTrimestreController extends Controller
 
             $fecid = $fecha;
             // ELIMINAR SI YA EXISTEN EN ESE TIPO DE PROMOCION Y EN ESE TRIMESTRE
-            $ttrs = ttrtritre::where('fecid', $fecid)
-                            ->where('triid', $triid)
-                            ->where('tprid', $tprid)
-                            ->get(['ttrid']);
+            
+            // $ttrs = ttrtritre::where('fecid', $fecid)
+            //                 ->where('triid', $triid)
+            //                 ->where('tprid', $tprid)
+            //                 ->get(['ttrid']);
 
-            if(sizeof($ttrs) > 0){
-                foreach($ttrs as $ttr){
-                    $log["eliminados"][] = $ttr->ttrid;
-                    $log["numeroEliminados"] = $log["numeroEliminados"]+1;
+            // if(sizeof($ttrs) > 0){
+            //     foreach($ttrs as $ttr){
+            //         $log["eliminados"][] = $ttr->ttrid;
+            //         $log["numeroEliminados"] = $log["numeroEliminados"]+1;
 
-                    $ttrd = ttrtritre::find($ttr->ttrid);
-                    $ttrd->delete();
-                }
-            }
+            //         $ttrd = ttrtritre::find($ttr->ttrid);
+            //         $ttrd->delete();
+            //     }
+            // }
 
             if($todasCategorias == true){
 
