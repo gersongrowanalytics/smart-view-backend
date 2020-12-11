@@ -24,6 +24,11 @@ class Tsutipospromocionessucursales extends Migration
             $table->string('tsuvalorizadotogo');
             $table->string('tsuporcentajecumplimiento');
             $table->string('tsuvalorizadorebate');
+            $table->string('tsuobjetivotrimestral')->nullable();
+            $table->string('tsurealtrimestral')->nullable();
+            $table->string('tsufacturartrimestral')->nullable();
+            $table->string('tsucumplimientotrimestral')->nullable();
+            $table->string('tsurebatetrimestral')->nullable();
             $table->timestamps();
 
             $table->foreign('tprid')->references('tprid')->on('tprtipospromociones');
