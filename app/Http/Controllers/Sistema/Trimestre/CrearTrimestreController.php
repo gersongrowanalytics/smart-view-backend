@@ -141,7 +141,6 @@ class CrearTrimestreController extends Controller
             "respuesta"      => $respuesta,
             "mensaje"        => $mensaje,
             "datos"          => $datos,
-            "linea"          => $linea,
             "mensajeDetalle" => $mensajeDetalle,
             "mensajedev"     => $mensajedev,
             "fecid"          => $fecid
