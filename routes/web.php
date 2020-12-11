@@ -82,6 +82,7 @@ $router->group(['middleware' => ['permisos']], function() use($router) {
 
     $router->post('/control/promociones/lista', 'Sistema\Modulos\Control\ControlPromociones\TablaPromocionesController@MostrarPromociones');
 
+    $router->post('/configuracion/crear/rebateTrimestral', 'Sistema\Trimestre\CrearTrimestreController@CrearTrimestre');
 });
 
 

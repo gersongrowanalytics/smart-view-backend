@@ -16,7 +16,7 @@ class Ttrtritre extends Migration
         Schema::create('ttrtritre', function (Blueprint $table) {
             $table->increments('ttrid');
             $table->unsignedInteger('fecid');
-            $table->unsignedInteger('trrid');
+            $table->unsignedInteger('triid');
             $table->unsignedInteger('treid');
             $table->unsignedInteger('catid');
             $table->unsignedInteger('tprid');
@@ -26,7 +26,7 @@ class Ttrtritre extends Migration
             $table->timestamps();
 
             $table->foreign('fecid')->references('fecid')->on('fecfechas');
-            $table->foreign('trrid')->references('trrid')->on('tritrimestres');
+            $table->foreign('triid')->references('triid')->on('tritrimestres');
             $table->foreign('treid')->references('treid')->on('tretiposrebates');
             $table->foreign('catid')->references('catid')->on('catcategorias');
             $table->foreign('tprid')->references('tprid')->on('tprtipospromociones');
