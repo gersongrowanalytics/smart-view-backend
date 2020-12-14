@@ -399,6 +399,7 @@ class VentasMostrarController extends Controller
                                     ->where('fec.fecano', $ano)
                                     ->where('fec.fecmes', $mes)
                                     ->where('fec.fecdia', $dia)
+                                    ->where('triestado', 1)
                                     ->first();
 
                 if($tri){
