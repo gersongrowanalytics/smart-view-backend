@@ -66,7 +66,7 @@ class VentasMostrarController extends Controller
                         $rebatesBonus['rebate']       = $rbs->rbsrebate;
                     }
 
-                    $cats = catcategorias::where('catid', '!=', 6)->get();
+                    $cats = catcategorias::get();
                     
                     foreach($cats as $posicionCat => $cat){
                         if($rbb->fecid == 3){
