@@ -13,6 +13,7 @@ use App\usuusuarios;
 use App\trrtiposrebatesrebates;
 use App\rbbrebatesbonus;
 use App\rbsrebatesbonussucursales;
+use App\tritrimestres;
 
 class VentasMostrarController extends Controller
 {
@@ -89,6 +90,18 @@ class VentasMostrarController extends Controller
                 }
             }
 
+            // SABER SI ESTE MES TIENE REBATE TRIMESTRAL
+            $tieneRebateTrimestral = false;
+            $tri = tritrimestres::join('fecfechas as fec', 'tritrimestres.fecid', 'fec.fecid')
+                                ->where('fec.fecano', $ano)
+                                ->where('fec.fecmes', $mes)
+                                ->where('fec.fecdia', $dia)
+                                ->first();
+
+            if($tri){
+                $tieneRebateTrimestral = true;
+            }
+
             $tsutipospromocionessucursales = tsutipospromocionessucursales::join('fecfechas as fec', 'tsutipospromocionessucursales.fecid', 'fec.fecid')
                                                                         ->join('tprtipospromociones as tpr', 'tpr.tprid', 'tsutipospromocionessucursales.tprid')
                                                                         ->join('tretiposrebates as tre', 'tre.treid', 'tsutipospromocionessucursales.treid')
@@ -111,28 +124,36 @@ class VentasMostrarController extends Controller
                                                                             'tsutipospromocionessucursales.tsuvalorizadoreal',
                                                                             'tsutipospromocionessucursales.tsuvalorizadotogo',
                                                                             'tsutipospromocionessucursales.tsuporcentajecumplimiento',
-                                                                            'tsutipospromocionessucursales.tsuvalorizadorebate'
+                                                                            'tsutipospromocionessucursales.tsuvalorizadorebate',
+
+                                                                            'tsuobjetivotrimestral',
+                                                                            'tsurealtrimestral',
+                                                                            'tsufacturartrimestral',
+                                                                            'tsucumplimientotrimestral',
+                                                                            'tsurebatetrimestral'
                                                                         ]);
             if(sizeof($tsutipospromocionessucursales) > 0){
 
                 foreach($tsutipospromocionessucursales as $posicion => $tsutipopromocionsucursal){
 
-                    $car = carcargasarchivos::where('tcaid', 2)
-                                            ->OrderBy('carcargasarchivos.created_at', 'DESC')
-                                            ->first([
-                                                'carcargasarchivos.created_at'
-                                            ]);
+                    $tsutipospromocionessucursales[$posicion]["tieneRebateTrimestral"] = $tieneRebateTrimestral;
+
+                    // $car = carcargasarchivos::where('tcaid', 2)
+                    //                         ->OrderBy('carcargasarchivos.created_at', 'DESC')
+                    //                         ->first([
+                    //                             'carcargasarchivos.created_at'
+                    //                         ]);
                     
                     $fechaActualizacion = '';
-                    if($car){
-                        $meses = array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
-                        $diaActualizacion   = date("j", strtotime($car->created_at))." de ";
-                        $mesActualizacion   = $meses[date('n', strtotime($car->created_at))-1]." del ";
-                        $anioActualizacion  = date("Y", strtotime($car->created_at));
-                        $fechaActualizacion = $diaActualizacion.$mesActualizacion.$anioActualizacion;
-                    }else{
+                    // if($car){
+                    //     $meses = array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
+                    //     $diaActualizacion   = date("j", strtotime($car->created_at))." de ";
+                    //     $mesActualizacion   = $meses[date('n', strtotime($car->created_at))-1]." del ";
+                    //     $anioActualizacion  = date("Y", strtotime($car->created_at));
+                    //     $fechaActualizacion = $diaActualizacion.$mesActualizacion.$anioActualizacion;
+                    // }else{
 
-                    }
+                    // }
                     
                     $tsutipospromocionessucursales[$posicion]['fechaActualizacion'] = $fechaActualizacion;
 
@@ -195,8 +216,6 @@ class VentasMostrarController extends Controller
                     }
                     
                     $tsutipospromocionessucursales[$posicion]["trrs"] = $trrs;
-
-
                 }
 
 
@@ -247,6 +266,16 @@ class VentasMostrarController extends Controller
                     $dataVacia[$posicionTpr]['tsuporcentajecumplimiento'] = 0;
                     $dataVacia[$posicionTpr]['tsuvalorizadorebate']       = 0;
                     $dataVacia[$posicionTpr]["trrs"] = $trrs;
+                    
+                    
+                    $dataVacia[$posicionTpr]["tieneRebateTrimestral"]     = $tieneRebateTrimestral;
+                    $dataVacia[$posicionTpr]["tsuobjetivotrimestral"]     = 0;
+                    $dataVacia[$posicionTpr]["tsurealtrimestral"]         = 0;
+                    $dataVacia[$posicionTpr]["tsufacturartrimestral"]     = 0;
+                    $dataVacia[$posicionTpr]["tsucumplimientotrimestral"] = 0;
+                    $dataVacia[$posicionTpr]["tsurebatetrimestral"]       = 0;
+                    
+                    
                     $dataVacia[$posicionTpr]['categorias'] = array(array());
                     foreach($categorias as $posicion => $categoria){     
                         $dataVacia[$posicionTpr]['categorias'][$posicion]['catnombre']              = $categoria->catnombre;
@@ -357,6 +386,17 @@ class VentasMostrarController extends Controller
                 
                 $tprs = tprtipospromociones::get(['tprid', 'tprnombre', 'tpricono', 'tprcolorbarra', 'tprcolortooltip']);
                 
+                // SABER SI ESTE MES TIENE REBATE TRIMESTRAL
+                $tieneRebateTrimestral = false;
+                $tri = tritrimestres::join('fecfechas as fec', 'tritrimestres.fecid', 'fec.fecid')
+                                    ->where('fec.fecano', $ano)
+                                    ->where('fec.fecmes', $mes)
+                                    ->where('fec.fecdia', $dia)
+                                    ->first();
+
+                if($tri){
+                    $tieneRebateTrimestral = true;
+                }
 
                 foreach($tprs as $posicionTpr => $tpr){
                     $dataarray[$posicionTpr]['tsuid']                     = 0;
@@ -370,6 +410,13 @@ class VentasMostrarController extends Controller
                     $dataarray[$posicionTpr]['tsuvalorizadotogo']         = 0;
                     $dataarray[$posicionTpr]['tsuporcentajecumplimiento'] = 0;
                     $dataarray[$posicionTpr]['tsuvalorizadorebate']       = 0;
+
+                    $dataarray[$posicionTpr]["tieneRebateTrimestral"]     = $tieneRebateTrimestral;
+                    $dataarray[$posicionTpr]["tsuobjetivotrimestral"]     = 0;
+                    $dataarray[$posicionTpr]["tsurealtrimestral"]         = 0;
+                    $dataarray[$posicionTpr]["tsufacturartrimestral"]     = 0;
+                    $dataarray[$posicionTpr]["tsucumplimientotrimestral"] = 0;
+                    $dataarray[$posicionTpr]["tsurebatetrimestral"]       = 0;
 
                     $dataarray[$posicionTpr]['categorias'] = array(array());
 
@@ -419,7 +466,6 @@ class VentasMostrarController extends Controller
                                                                 'tsutipospromocionessucursales.tsuvalorizadorebate'
                                                             ]);
                         if($tsu){
-                            
                             
                             $dataarray[$posicionTpr]['tsuvalorizadoobjetivo']     = $dataarray[$posicionTpr]['tsuvalorizadoobjetivo']     + $tsu->tsuvalorizadoobjetivo;
                             $dataarray[$posicionTpr]['tsuvalorizadoreal']         = $dataarray[$posicionTpr]['tsuvalorizadoreal']         + $tsu->tsuvalorizadoreal;
