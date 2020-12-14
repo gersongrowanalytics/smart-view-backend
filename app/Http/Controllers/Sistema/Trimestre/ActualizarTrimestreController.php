@@ -91,7 +91,7 @@ class ActualizarTrimestreController extends Controller
     
                             $scafacturartrimestral = $scaobjetivotrimestral - $scarealtrimestral;
     
-                            if($tsuobjetivotrimestral > 0){
+                            if($scaobjetivotrimestral > 0){
                                 $scacumplimientotrimestral = ($scarealtrimestral*100)/$scaobjetivotrimestral;
                             }else{
                                 $scacumplimientotrimestral = 0;
