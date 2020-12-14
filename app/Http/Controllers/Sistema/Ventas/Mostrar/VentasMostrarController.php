@@ -92,14 +92,18 @@ class VentasMostrarController extends Controller
 
             // SABER SI ESTE MES TIENE REBATE TRIMESTRAL
             $tieneRebateTrimestral = false;
+            $nombreTrimestre = "";
+
             $tri = tritrimestres::join('fecfechas as fec', 'tritrimestres.fecid', 'fec.fecid')
                                 ->where('fec.fecano', $ano)
                                 ->where('fec.fecmes', $mes)
                                 ->where('fec.fecdia', $dia)
+                                ->where('triestado', 1)
                                 ->first();
 
             if($tri){
                 $tieneRebateTrimestral = true;
+                $nombreTrimestre = $tri->trinombre;
             }
 
             $tsutipospromocionessucursales = tsutipospromocionessucursales::join('fecfechas as fec', 'tsutipospromocionessucursales.fecid', 'fec.fecid')
@@ -137,6 +141,7 @@ class VentasMostrarController extends Controller
                 foreach($tsutipospromocionessucursales as $posicion => $tsutipopromocionsucursal){
 
                     $tsutipospromocionessucursales[$posicion]["tieneRebateTrimestral"] = $tieneRebateTrimestral;
+                    $tsutipospromocionessucursales[$posicion]["nombreTrimestre"] = $nombreTrimestre;
 
                     // $car = carcargasarchivos::where('tcaid', 2)
                     //                         ->OrderBy('carcargasarchivos.created_at', 'DESC')
@@ -274,6 +279,7 @@ class VentasMostrarController extends Controller
                     $dataVacia[$posicionTpr]["tsufacturartrimestral"]     = 0;
                     $dataVacia[$posicionTpr]["tsucumplimientotrimestral"] = 0;
                     $dataVacia[$posicionTpr]["tsurebatetrimestral"]       = 0;
+                    $dataVacia[$posicionTpr]["nombreTrimestre"] = $nombreTrimestre;
                     
                     
                     $dataVacia[$posicionTpr]['categorias'] = array(array());
@@ -388,6 +394,7 @@ class VentasMostrarController extends Controller
                 
                 // SABER SI ESTE MES TIENE REBATE TRIMESTRAL
                 $tieneRebateTrimestral = false;
+                $nombreTrimestre = "";
                 $tri = tritrimestres::join('fecfechas as fec', 'tritrimestres.fecid', 'fec.fecid')
                                     ->where('fec.fecano', $ano)
                                     ->where('fec.fecmes', $mes)
@@ -396,6 +403,7 @@ class VentasMostrarController extends Controller
 
                 if($tri){
                     $tieneRebateTrimestral = true;
+                    $nombreTrimestre = $tri->trinombre;
                 }
 
                 foreach($tprs as $posicionTpr => $tpr){
@@ -417,6 +425,7 @@ class VentasMostrarController extends Controller
                     $dataarray[$posicionTpr]["tsufacturartrimestral"]     = 0;
                     $dataarray[$posicionTpr]["tsucumplimientotrimestral"] = 0;
                     $dataarray[$posicionTpr]["tsurebatetrimestral"]       = 0;
+                    $dataVacia[$posicionTpr]["nombreTrimestre"] = $nombreTrimestre;
 
                     $dataarray[$posicionTpr]['categorias'] = array(array());
 
