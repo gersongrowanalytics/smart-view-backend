@@ -25,6 +25,12 @@ class Scasucursalescategorias extends Migration
             $table->string('scavalorizadorebate')->nullable();
             $table->string('scaporcentajecumplimiento')->nullable();
             $table->string('scaiconocategoria')->nullable();
+
+            $table->string('scaobjetivotrimestral')->nullable();
+            $table->string('scarealtrimestral')->nullable();
+            $table->string('scafacturartrimestral')->nullable();
+            $table->string('scacumplimientotrimestral')->nullable();
+            $table->string('scarebatetrimestral')->nullable();
             $table->timestamps();
 
             $table->foreign('tsuid')->references('tsuid')->on('tsutipospromocionessucursales');

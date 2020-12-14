@@ -15,11 +15,13 @@ class Tritrimestres extends Migration
     {
         Schema::create('tritrimestres', function (Blueprint $table) {
             $table->increments('triid');
+            $table->unsignedInteger('fecid');
             $table->string('trinombre');
             $table->boolean('triestado');
             $table->string('triano');
             $table->timestamps();
 
+            $table->foreign('fecid')->references('fecid')->on('fecfechas');
         });
     }
 
