@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Sistema\Trimestre;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\tritrimestres;
 use App\ttrtritre;
 use App\trftrimestresfechas;
 use App\tsutipospromocionessucursales;
