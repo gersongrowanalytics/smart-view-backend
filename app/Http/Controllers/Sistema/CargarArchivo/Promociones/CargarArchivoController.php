@@ -901,15 +901,14 @@ class CargarArchivoController extends Controller
 
         if($usuusuario){
             $fichero_subido = base_path().'/public/Sistema/cargaArchivos/promociones/planTrade/'.basename($_FILES['file']['name']);
-            move_uploaded_file($_FILES['file']['tmp_name'], $fichero_subido);
-            // if (move_uploaded_file($_FILES['file']['tmp_name'], $fichero_subido)) {
-            //     $respuesta  = true;
-            //     $cargarData = true;
-            // }else{
-            //     $respuesta  = false;
-            //     $mensaje    = 'Lo sentimos ocurrio un error el archivo no se pudo subir';
-            //     $cargarData = false;
-            // }
+            if (move_uploaded_file($_FILES['file']['tmp_name'], $fichero_subido)) {
+                $respuesta  = true;
+                $cargarData = true;
+            }else{
+                $respuesta  = false;
+                $mensaje    = 'Lo sentimos ocurrio un error el archivo no se pudo subir';
+                $cargarData = false;
+            }
 
             $nuevoCargaArchivo = new carcargasarchivos;
             $nuevoCargaArchivo->tcaid            = 10;
