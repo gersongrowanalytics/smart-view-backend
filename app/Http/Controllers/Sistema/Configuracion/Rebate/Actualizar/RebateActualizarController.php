@@ -245,7 +245,7 @@ class RebateActualizarController extends Controller
                     $log['escala']['noentra'][] = "No entra en la escala rebate: ".$tsu->tsuid." de la sucursal: ".$tsu->sucid;
                 }
             }
-        } catch (Exception $e) {   
+        } catch (Exception $e) {
             $mensajedev = $e->getMessage();
         }
 

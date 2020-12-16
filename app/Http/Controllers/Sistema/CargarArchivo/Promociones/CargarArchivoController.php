@@ -883,4 +883,78 @@ class CargarArchivoController extends Controller
         return $requestsalida;
 
     }
+
+    public function CargarPlanTrade(Request $request)
+    {
+        $log = [];
+
+        $respuesta  = true;
+        $mensaje    = 'El archivo se subio correctamente';
+        $archivo    = $_FILES['file']['name'];
+        $usutoken   = $request->header('api_token');
+        $usuusuario = usuusuarios::where('usutoken', $usutoken)
+                                ->first([
+                                    'usuid',
+                                ]);
+
+        $cargarData = true;
+
+        if($usuusuario){
+            $fichero_subido = base_path().'/public/Sistema/cargaArchivos/promociones/planTrade/'.basename($_FILES['file']['name']);
+            if (move_uploaded_file($_FILES['file']['tmp_name'], $fichero_subido)) {
+                $respuesta  = true;
+                $cargarData = true;
+            }else{
+                $respuesta  = false;
+                $mensaje    = 'Lo sentimos ocurrio el archivo no se pudo subir';
+                $cargarData = false;
+            }
+
+            $nuevoCargaArchivo = new carcargasarchivos;
+            $nuevoCargaArchivo->tcaid            = 10;
+            $nuevoCargaArchivo->fecid            = 8; //DIC
+            $nuevoCargaArchivo->usuid            = $usuusuario->usuid;
+            $nuevoCargaArchivo->carnombrearchivo = $archivo;
+            $nuevoCargaArchivo->carubicacion     = $fichero_subido;
+            $nuevoCargaArchivo->carexito         = $cargarData;
+            $nuevoCargaArchivo->carurl           = env('APP_URL').'/Sistema/cargaArchivos/promociones/planTrade/'.$archivo;
+            if($nuevoCargaArchivo->save()){
+                $pkid = "CAR-".$nuevoCargaArchivo->carid;
+            }else{
+
+            }
+        }
+
+        $requestsalida = response()->json([
+            "respuesta" => $respuesta,
+            "mensaje"   => $mensaje,
+            "log"       => $log,
+        ]);
+        
+        $descripcion = "CARGAR EXCEL DE PLAN DE TRADE DE UN EXCEL AL SISTEMA";
+
+        $AuditoriaController = new AuditoriaController;
+        $registrarAuditoria  = $AuditoriaController->registrarAuditoria(
+            $usutoken,
+            $usuusuario->usuid,
+            null,
+            $fichero_subido,
+            $requestsalida,
+            $descripcion,
+            'IMPORTAR',
+            '/cargarArchivo/promociones/planTrade', //ruta
+            $pkid,
+            $log
+        );
+
+        if($registrarAuditoria == true){
+
+        }else{
+            
+        }
+        
+        return $requestsalida;
+
+
+    }
 }
