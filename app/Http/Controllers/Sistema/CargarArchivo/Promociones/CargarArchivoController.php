@@ -77,13 +77,17 @@ class CargarArchivoController extends Controller
 
         $pkid = 0;
         $log  = array(
+            "NUEVA_PERSONA_EJECUTIVO"      => [],
+            "NUEVA_PERSONA_CLIENTE"        => [],
+            "NUEVO_USUARIO_EJECUTIVO"      => [],
+            "NUEVO_USUARIO_CLIENTE"        => [],
             "NUEVO_PROMOCIONES_ASIGNDADAS" => [],
-            "NUEVO_PRP_CREADO" => [],
-            "NUEVO_PRB_CREADO" => [],
-            "NUEVO_PROMOCION_CREADO" => [],
-            "NUEVO_CANAL_ASIGNADO" => [],
-            "NUEVO_CATEGORIA_ASIGNADO" => [],
-            "NUEVA_SUCURSAL" => []
+            "NUEVO_PRP_CREADO"             => [],
+            "NUEVO_PRB_CREADO"             => [],
+            "NUEVO_PROMOCION_CREADO"       => [],
+            "NUEVO_CANAL_ASIGNADO"         => [],
+            "NUEVO_CATEGORIA_ASIGNADO"     => [],
+            "NUEVA_SUCURSAL"               => []
         );
 
         $fecActual = new \DateTime(date("Y-m-d", strtotime("2020-10-20")));
@@ -145,7 +149,14 @@ class CargarArchivoController extends Controller
                         $precXcombo = $objPHPExcel->getActiveSheet()->getCell('AP'.$i)->getCalculatedValue();
                         $precXplanc = $objPHPExcel->getActiveSheet()->getCell('AQ'.$i)->getCalculatedValue();
                         $precXtodo  = $objPHPExcel->getActiveSheet()->getCell('AR'.$i)->getCalculatedValue();
-    
+                        $nuevoProm  = $objPHPExcel->getActiveSheet()->getCell('AS'.$i)->getCalculatedValue();
+                        
+                        if($nuevoProm == "x"){
+                            $nuevoProm = 1;
+                        }else{
+                            $nuevoProm = 0;
+                        }
+
                         if($tipoClien == "Puesto de mercado"){
                             $tipoClien = "PDM";
                         }else if($tipoClien == "Bodegas"){
@@ -233,6 +244,7 @@ class CargarArchivoController extends Controller
                                 $nuevaPersona->perapellidomaterno   = null;
                                 if($nuevaPersona->save()){
                                     $perid = $nuevaPersona->perid;
+                                    $log['NUEVA_PERSONA_EJECUTIVO'][] = $perid." - ".$ejecutivo;
                                 }else{
                 
                                 }
@@ -256,7 +268,7 @@ class CargarArchivoController extends Controller
                                 if($distribuidor->estid == 2 ){ //SI EL ESTADO ES 2 DE DESACTIVADO CAMBIARLO A 1 DE ACTIVADO
                                     $distribuidor->estid = 1;
                                     if($distribuidor->update()){
-    
+                                        
                                     }else{
     
                                     }
@@ -274,6 +286,7 @@ class CargarArchivoController extends Controller
                                 $nuevoUsuario->usutoken      = Str::random(60);
                                 if($nuevoUsuario->save()){
                                     $usuid = $nuevoUsuario->usuid;
+                                    $log['NUEVO_USUARIO_EJECUTIVO'][] = "USUID: ".$usuid." - PERID:".$perid;
                                 }else{
                 
                                 }
@@ -294,6 +307,7 @@ class CargarArchivoController extends Controller
                                 $clienteNuevaPersona->perapellidomaterno   = null;
                                 if($clienteNuevaPersona->save()){
                                     $clienteperid = $clienteNuevaPersona->perid;
+                                    $log['NUEVA_PERSONA_CLIENTE'][] = $clienteperid." - ".$cliente;
                                 }else{
                 
                                 }
@@ -357,6 +371,9 @@ class CargarArchivoController extends Controller
                                 $clienteNuevoUsuario->usutoken      = Str::random(60);
                                 if($clienteNuevoUsuario->save()){
                                     $clienteusuid = $clienteNuevoUsuario->usuid;
+
+                                    $log['NUEVO_USUARIO_CLIENTE'][] = $clienteusuid." - ".$soldTo;
+
                                     $nuevaSucursal = new sucsucursales;
                                     $nuevaSucursal->sucnombre = $cliente;
                                     if($nuevaSucursal->save()){
@@ -389,19 +406,21 @@ class CargarArchivoController extends Controller
                             if($catcategoria){
                                 $catid = $catcategoria->catid;
                             }else{
-                                $nuevacategoria                       = new catcategorias;
-                                $nuevacategoria->catnombre            = $categoria;
-                                $nuevacategoria->catimagenfondo       = env('APP_URL').'/Sistema/abs/img/nohay.png';
-                                $nuevacategoria->caticono             = env('APP_URL').'/Sistema/abs/img/nohay.png';
-                                $nuevacategoria->catcolorhover        = '';
-                                $nuevacategoria->catcolor             = '';
-                                $nuevacategoria->caticonoseleccionado = env('APP_URL').'/Sistema/abs/img/nohay.png';
-                                $nuevacategoria->caticonohover        = env('APP_URL').'/Sistema/abs/img/nohay.png';
-                                if($nuevacategoria->save()){
-                                    $catid = $nuevacategoria->catid;
-                                }else{
+
+                                $catid = 0;
+                                // $nuevacategoria                       = new catcategorias;
+                                // $nuevacategoria->catnombre            = $categoria;
+                                // $nuevacategoria->catimagenfondo       = env('APP_URL').'/Sistema/abs/img/nohay.png';
+                                // $nuevacategoria->caticono             = env('APP_URL').'/Sistema/abs/img/nohay.png';
+                                // $nuevacategoria->catcolorhover        = '';
+                                // $nuevacategoria->catcolor             = '';
+                                // $nuevacategoria->caticonoseleccionado = env('APP_URL').'/Sistema/abs/img/nohay.png';
+                                // $nuevacategoria->caticonohover        = env('APP_URL').'/Sistema/abs/img/nohay.png';
+                                // if($nuevacategoria->save()){
+                                //     $catid = $nuevacategoria->catid;
+                                // }else{
                 
-                                }
+                                // }
                             }
     
                             $scasucursalescategorias = scasucursalescategorias::where('fecid', $fecid)
@@ -712,6 +731,7 @@ class CargarArchivoController extends Controller
                                 $csp->csptotalcombo        = $precXcombo;
                                 $csp->csptotalplancha      = $precXplanc;
                                 $csp->csptotal             = $precXtodo;
+                                $nuevoCsp->cspnuevo        = $nuevoProm;
                                 
                                 if($combos != 'NA'){
                                     $csp->cspcantidadcombo   = $csp->cspcantidadcombo + $combos;
@@ -748,6 +768,7 @@ class CargarArchivoController extends Controller
                                 $nuevoCsp->csptotalcombo        = $precXcombo;
                                 $nuevoCsp->csptotalplancha      = $precXplanc;
                                 $nuevoCsp->csptotal             = $precXtodo;
+                                $nuevoCsp->cspnuevo             = $nuevoProm;
     
                                 if($nuevoCsp->save()){
                                     $cspid = $nuevoCsp->cspid;

@@ -61,10 +61,11 @@ class PromocionesMostrarController extends Controller
                                                                                             'cspcanalessucursalespromociones.csptotal',
                                                                                             'cspcanalessucursalespromociones.cspgratis',
                                                                                             'prm.prmaccion',
-                                                                                            'tpr.tprnombre'
+                                                                                            'tpr.tprnombre',
+                                                                                            'cspnuevo'
                                                                                         ]);
                     $numeroPromocionesTerminadas = 0;
-                                                                                       
+
                     if(sizeof($cspcanalessucursalespromociones) > 0){
                         foreach($cspcanalessucursalespromociones as $posicionPromociones => $cspcanalesucursalpromocion){
                             if($cspcanalesucursalpromocion->cspcompletado == true){
