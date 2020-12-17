@@ -498,6 +498,8 @@ class EliminarPromocionesController extends Controller
                                 
                                 $cspid = $csp->cspid;
                                 $csp->cspestado = 0;
+                                $csp->cspcantidadcombo = 0;
+                                $csp->cspcantidadplancha = 0;
                                 $csp->update();
 
                                 
