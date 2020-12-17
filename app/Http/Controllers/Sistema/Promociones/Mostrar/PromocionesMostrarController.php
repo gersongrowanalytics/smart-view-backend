@@ -47,7 +47,7 @@ class PromocionesMostrarController extends Controller
                     $cspcanalessucursalespromociones = cspcanalessucursalespromociones::join('prmpromociones as prm', 'prm.prmid', 'cspcanalessucursalespromociones.prmid')
                                                                                         ->join('tprtipospromociones as tpr', 'tpr.tprid', 'prm.tprid')
                                                                                         ->where('cscid', $csccanalesucursalcategoria->cscid)
-                                                                                        // ->where('csp.cspestado', 1)
+                                                                                        ->where('cspcanalessucursalespromociones.cspestado', 1)
                                                                                         ->get([
                                                                                             'cspcanalessucursalespromociones.cspid',
                                                                                             'prm.prmid',
