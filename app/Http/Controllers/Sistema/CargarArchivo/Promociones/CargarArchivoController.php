@@ -731,7 +731,7 @@ class CargarArchivoController extends Controller
                                 $csp->csptotalcombo        = $precXcombo;
                                 $csp->csptotalplancha      = $precXplanc;
                                 $csp->csptotal             = $precXtodo;
-                                $nuevoCsp->cspnuevo        = $nuevoProm;
+                                $csp->cspnuevo             = $nuevoProm;
                                 
                                 if($combos != 'NA'){
                                     $csp->cspcantidadcombo   = $csp->cspcantidadcombo + $combos;
