@@ -8,7 +8,7 @@ use App\tditiposdocumentosidentidades;
 
 class TdisMostrarController extends Controller
 {
-    public function MostrarTdis(Request $request)
+    public function MostrarTdis()
     {
         $respuesta  = true;
         $mensaje    = "Se cargaron todos los tdis satisfactoriamente";
