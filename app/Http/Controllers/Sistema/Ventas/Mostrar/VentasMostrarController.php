@@ -40,11 +40,11 @@ class VentasMostrarController extends Controller
             "objetivo"     => "",
             "real"         => "",
             "cumplimiento" => "",
-            "rebate"       => ""
+            "rebate"       => "",
+            "descripcion"  => ""
         );
 
         try{
-
 
             // OBTENER EL REBATE BONUS
             $rbbs = rbbrebatesbonus::join('fecfechas as fec', 'rbbrebatesbonus.fecid', 'fec.fecid')
@@ -64,6 +64,7 @@ class VentasMostrarController extends Controller
                         $rebatesBonus['real']         = $rbs->rbsreal;
                         $rebatesBonus['cumplimiento'] = $rbs->rbscumplimiento;
                         $rebatesBonus['rebate']       = $rbs->rbsrebate;
+                        $rebatesBonus['descripcion']  = $rbb->rbbdescripcion;
                     }
 
                     $cats = catcategorias::get();
