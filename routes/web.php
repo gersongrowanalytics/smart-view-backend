@@ -93,4 +93,8 @@ $router->group(['middleware' => ['permisos']], function() use($router) {
 $router->get('/armarRebateBonus', 'Sistema\RebatesBonus\AsignarSucursalesController@AsiganarSucursales');
 
 $router->get('/mostrar/tdis', 'Sistema\Tdi\Mostrar\TdisMostrarController@MostrarTdis');
-$router->get('/consumirApi', 'Sistema\SellOut\CargarSellOutController@CargarSellOut');
+$router->get('/consumirApi', 'Sistema\SellOut\CargarSellOutController@CargarSellOutTodo');
+
+$router->get('/obtenerSellOutTodo', 'Sistema\SellOut\CargarSellOutController@CargarSellOutTodo');
+$router->get('/obtenerSellOutDiario', 'Sistema\SellOut\CargarSellOutController@CargarSellOutDiario');
+$router->get('/obtenerSellOutEspecifico', 'Sistema\SellOut\CargarSellOutController@CargarSellOutEspecifico');

@@ -21,6 +21,8 @@ use App\proproductos;
 use App\catcategorias;
 use App\tretiposrebates;
 use App\tuptiposusuariospermisos;
+use App\osiobjetivosssi;
+use App\osoobjetivossso;
 use Illuminate\Support\Facades\DB;
 
 class ObjetivoCargarController extends Controller
@@ -234,6 +236,9 @@ class ObjetivoCargarController extends Controller
                                                                     ->update(['scavalorizadoobjetivo' => 0]);
                                 }
                             }
+
+                            osiobjetivosssi::where('fecid', $fecid)->update(['osivalorizado' => 0]);
+
                         }
 
                         // OBTENER EL GRUPO REBATE
@@ -302,6 +307,32 @@ class ObjetivoCargarController extends Controller
                                             ]);
 
                         if($pro){
+
+                            $osi = osiobjetivosssi::where('fecid', $fecid)
+                                                ->where('proid', $pro->proid)
+                                                ->where('sucid', $sucursalClienteId)
+                                                ->where('tpmid', 1)
+                                                ->first();
+
+                            if($osi){
+
+                                $osi->osivalorizado = $objetivo + $osi->osivalorizado;
+                                $osi->update();
+
+                            }else{
+                                $osin = new osiobjetivosssi;
+                                $osin->fecid         = $fecid;
+                                $osin->proid         = $pro->proid;
+                                $osin->sucid         = $sucursalClienteId;
+                                $osin->tpmid         = 1;
+                                $osin->osicantidad   = 0;
+                                $osin->osivalorizado = $objetivo;
+                                $osin->save();
+                            }
+
+
+
+
                             $sca = scasucursalescategorias::where('fecid', $fecid)
                                                     ->where('sucid', $sucursalClienteId)
                                                     ->where('tsuid', $tsuid)
@@ -773,6 +804,9 @@ class ObjetivoCargarController extends Controller
                                                                     ->update(['scavalorizadoobjetivo' => 0]);
                                 }
                             }
+
+                            osoobjetivossso::where('fecid', $fecid)->update(['osovalorizado' => 0]);
+
                         }
 
                         // OBTENER EL GRUPO REBATE
@@ -841,6 +875,29 @@ class ObjetivoCargarController extends Controller
                                             ]);
 
                         if($pro){
+
+                            $oso = osoobjetivossso::where('fecid', $fecid)
+                                                ->where('proid', $pro->proid)
+                                                ->where('sucid', $sucursalClienteId)
+                                                ->where('tpmid', 1)
+                                                ->first();
+
+                            if($oso){
+
+                                $oso->osovalorizado = $objetivo + $oso->osovalorizado;
+                                $oso->update();
+
+                            }else{
+                                $oson = new osoobjetivossso;
+                                $oson->fecid         = $fecid;
+                                $oson->proid         = $pro->proid;
+                                $oson->sucid         = $sucursalClienteId;
+                                $oson->tpmid         = 1;
+                                $oson->osocantidad   = 0;
+                                $oson->osovalorizado = $objetivo;
+                                $oson->save();
+                            }
+
                             $sca = scasucursalescategorias::where('fecid', $fecid)
                                                     ->where('sucid', $sucursalClienteId)
                                                     ->where('tsuid', $tsuid)

@@ -22,6 +22,7 @@ class Vsiventasssi extends Migration
             $table->unsignedInteger('tpmid');
             $table->string('vsicantidad');
             $table->string('vsivalorizado');
+            $table->string('vsiobjetivo');
             $table->timestamps();
 
             $table->foreign('fecid')->references('fecid')->on('fecfechas');

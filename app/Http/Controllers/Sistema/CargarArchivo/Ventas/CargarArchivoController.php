@@ -21,6 +21,8 @@ use App\rtprebatetipospromociones;
 use App\proproductos;
 use App\trrtiposrebatesrebates;
 use App\tuptiposusuariospermisos;
+use App\vsiventasssi;
+use App\vsoventassso;
 
 class CargarArchivoController extends Controller
 {
@@ -179,6 +181,8 @@ class CargarArchivoController extends Controller
                                 }
     
                             }
+
+                            vsiventasssi::where('fecid', $fecid)->update(['vsivalorizado' => 0]);
     
                         }
     
@@ -200,6 +204,30 @@ class CargarArchivoController extends Controller
                                             ]);
                             
                             if($pro){
+
+
+                                $vsi = vsiventasssi::where('fecid', $fecid)
+                                                    ->where('proid', $pro->proid)
+                                                    ->where('sucid', $sucid)
+                                                    ->where('tpmid', 1)
+                                                    ->first();
+
+                                if($vsi){
+
+                                    $vsi->vsivalorizado = $real + $vsi->vsivalorizado;
+                                    $vsi->update();
+
+                                }else{
+                                    $vsin = new vsiventasssi;
+                                    $vsin->fecid         = $fecid;
+                                    $vsin->proid         = $pro->proid;
+                                    $vsin->sucid         = $sucid;
+                                    $vsin->tpmid         = 1;
+                                    $vsin->vsicantidad   = 0;
+                                    $vsin->vsivalorizado = $real;
+                                    $vsin->save();
+                                }
+
                                 $categoriaid     = $pro->catid;
                                 $categoriaNombre = $pro->catnombre;
     
@@ -692,6 +720,8 @@ class CargarArchivoController extends Controller
                                 }
     
                             }
+
+                            vsoventassso::where('fecid', $fecid)->update(['vsovalorizado' => 0]);
     
                         }
     
@@ -708,10 +738,11 @@ class CargarArchivoController extends Controller
                             $pro = proproductos::join('catcategorias as cat', 'cat.catid', 'proproductos.catid')
                                             ->where('proproductos.prosku', 'LIKE', '%'.$sku)
                                             ->first([
+                                                'proproductos.proid',
                                                 'proproductos.catid',
                                                 'cat.catnombre'
                                             ]);
-                            
+
                             if($pro){
                                 $categoriaid     = $pro->catid;
                                 $categoriaNombre = $pro->catnombre;
@@ -803,6 +834,29 @@ class CargarArchivoController extends Controller
                     
                                     }
                                 }
+
+                                // 
+                                $vso = vsoventassso::where('fecid', $fecid)
+                                                    ->where('proid', $pro->proid)
+                                                    ->where('sucid', $sucursalClienteId)
+                                                    ->where('tpmid', 1)
+                                                    ->first();
+
+                                if($vso){
+
+                                    $vso->vsovalorizado = $real + $vso->vsovalorizado;
+                                    $vso->update();
+
+                                }else{
+                                    $vson = new vsoventassso;
+                                    $vson->fecid         = $fecid;
+                                    $vson->proid         = $pro->proid;
+                                    $vson->sucid         = $sucursalClienteId;
+                                    $vson->tpmid         = 1;
+                                    $vson->vsocantidad   = 0;
+                                    $vson->vsovalorizado = $real;
+                                    $vson->save();
+                                }
     
                                 $tsu = tsutipospromocionessucursales::where('fecid', $fecid)
                                                                     ->where('sucid', $sucursalClienteId)
@@ -841,7 +895,7 @@ class CargarArchivoController extends Controller
                                     // }
                                     
                                     $tsu->tsuvalorizadoreal         = $nuevoReal;
-                                    $tsu->tsuvalorizadotogo         = $tsu->tsuvalorizadoobjetivo + $nuevoReal;
+                                    $tsu->tsuvalorizadotogo         = $tsu->tsuvalorizadoobjetivo - $nuevoReal;
                                     $tsu->tsuporcentajecumplimiento = $porcentajeCumplimiento;
                                     $tsu->tsuvalorizadorebate       = $totalRebate;
                                     if($tsu->update()){
@@ -902,7 +956,7 @@ class CargarArchivoController extends Controller
     
                                     }
                                     
-                                }  
+                                }
                             }else{
                                 $skusNoExisten[] = $sku;
                             }  

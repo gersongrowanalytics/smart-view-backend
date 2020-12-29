@@ -22,6 +22,7 @@ class Vsoventassso extends Migration
             $table->unsignedInteger('tpmid');
             $table->string('vsocantidad');
             $table->string('vsovalorizado');
+            $table->string('vsoobjetivo');
             $table->timestamps();
 
             $table->foreign('fecid')->references('fecid')->on('fecfechas');
