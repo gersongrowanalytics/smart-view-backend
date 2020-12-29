@@ -25,6 +25,7 @@ class CargarSellOutController extends Controller
         $logs = array(
             "SKUS_FALTANTES" => [],
             "SUCS_FALTANTES" => [],
+            "SELL_FALTANTES" => [],
         );
 
         $pks = array(
@@ -149,7 +150,12 @@ class CargarSellOutController extends Controller
 
             $soldto    = $dato['COD_SOLD_TO'];
             $sku       = $dato['SKU'];
-            $real      = $dato['SELLS'];
+
+            if($dato['SELLS'] == null){
+                $real = 0;
+            }else{
+                $real = $dato['SELLS'];
+            }
 
             $dia       = $dato['DAY'];
             $mesNumero = "0";
