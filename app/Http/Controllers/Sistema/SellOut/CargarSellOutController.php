@@ -11,6 +11,7 @@ use App\tsutipospromocionessucursales;
 use App\scasucursalescategorias;
 use App\proproductos;
 use App\vsoventassso;
+use App\sucsucursales;
 
 class CargarSellOutController extends Controller
 {
@@ -125,7 +126,7 @@ class CargarSellOutController extends Controller
             )
         );
 
-        $datos = json_decode( file_get_contents('http://localhost/mostrar/tdis'), true );
+        $datos = json_decode( file_get_contents('http://backend-api.leadsmartview.com/ws/obtenerSellOutTodo'), true );
         foreach($datos as $posicion => $dato){
             $soldto    = $dato['COD_SOLD_TO'];
             $sku       = $dato['SKU'];
@@ -137,6 +138,7 @@ class CargarSellOutController extends Controller
 
         }
         
+        /*
         foreach($datos as $posicion => $dato){
 
             $soldto    = $dato['COD_SOLD_TO'];
@@ -326,7 +328,7 @@ class CargarSellOutController extends Controller
                 $mensaje = "Lo sentimos, hubieron algunos productos (skus) que no se encontraron";
             }
         }
-        
+        */
 
         // $requestsalida = response()->json([
         //     "respuesta" => $respuesta,
@@ -613,13 +615,13 @@ class CargarSellOutController extends Controller
             }else{
                 $nuevotsu = new tsutipospromocionessucursales;
                 $nuevotsu->fecid = $fecid;
-                $nuevotsu->sucid = $sucid;
+                $nuevotsu->sucid = $suc->sucid;
                 $nuevotsu->tprid = $tprid;
                 $nuevotsu->tsuporcentajecumplimiento = 0;
-                $nuevotsu->tsuvalorizadoobjetivo  = 0;
-                $nuevotsu->tsuvalorizadoreal      = $real;
-                $nuevotsu->tsuvalorizadorebate    = 0;
-                $nuevotsu->tsuvalorizadotogo      = 0;
+                $nuevotsu->tsuvalorizadoobjetivo     = 0;
+                $nuevotsu->tsuvalorizadoreal         = $real;
+                $nuevotsu->tsuvalorizadorebate       = 0;
+                $nuevotsu->tsuvalorizadotogo         = 0;
                 if($nuevotsu->save()){
                     $tsuid = $nuevotsu->tsuid;
                     $pks['PK_TSU']["NUEVOS"][] = "TSU-".$tsuid;

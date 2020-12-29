@@ -98,3 +98,13 @@ $router->get('/consumirApi', 'Sistema\SellOut\CargarSellOutController@CargarSell
 $router->get('/obtenerSellOutTodo', 'Sistema\SellOut\CargarSellOutController@CargarSellOutTodo');
 $router->get('/obtenerSellOutDiario', 'Sistema\SellOut\CargarSellOutController@CargarSellOutDiario');
 $router->get('/obtenerSellOutEspecifico', 'Sistema\SellOut\CargarSellOutController@CargarSellOutEspecifico');
+
+
+
+
+
+
+// SELL OUT
+$router->get('/ws/obtenerSellOutEspecifico/{anio}/{mes}/{dia}', 'Sistema\SellOut\ObtenerSellOutController@ObtenerSellOutEspecifico');
+$router->get('/ws/obtenerSellOutDiario', 'Sistema\SellOut\ObtenerSellOutController@ObtenerSellOutActual');
+$router->get('/ws/obtenerSellOutTodo', 'Sistema\SellOut\ObtenerSellOutController@ObtenerTodoSellOut');
