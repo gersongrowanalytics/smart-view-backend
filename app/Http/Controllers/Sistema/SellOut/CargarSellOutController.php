@@ -61,7 +61,7 @@ class CargarSellOutController extends Controller
                                         'tsuvalorizadorebate' => 0,
                                     ]);
                                     
-        // vsoventassso::update(['vsovalorizado' => 0]);
+        vsoventassso::update(['vsovalorizado' => 0]);
 
         $arrayMeses = array(
             array(
