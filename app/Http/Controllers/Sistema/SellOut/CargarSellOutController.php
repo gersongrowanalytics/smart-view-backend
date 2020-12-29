@@ -133,18 +133,18 @@ class CargarSellOutController extends Controller
         );
 
         $datos = json_decode( file_get_contents('http://backend-api.leadsmartview.com/ws/obtenerSellOutTodo'), true );
-        foreach($datos as $posicion => $dato){
-            $soldto    = $dato['COD_SOLD_TO'];
-            $sku       = $dato['SKU'];
-            $sell      = $dato['SELLS'];
+        // foreach($datos as $posicion => $dato){
+        //     $soldto    = $dato['COD_SOLD_TO'];
+        //     $sku       = $dato['SKU'];
+        //     $sell      = $dato['SELLS'];
 
-            echo $soldto.'<br>';
-            echo $sku.'<br>';
-            echo $sell.'<br>';
+        //     echo $soldto.'<br>';
+        //     echo $sku.'<br>';
+        //     echo $sell.'<br>';
 
-        }
+        // }
         
-        /*
+        
         foreach($datos as $posicion => $dato){
 
             $soldto    = $dato['COD_SOLD_TO'];
@@ -334,28 +334,30 @@ class CargarSellOutController extends Controller
                 $mensaje = "Lo sentimos, hubieron algunos productos (skus) que no se encontraron";
             }
         }
-        */
+        
 
-        // $requestsalida = response()->json([
-        //     "respuesta" => $respuesta,
-        //     "mensaje"   => $mensaje,
-        //     "logs"      => $logs,
-        // ]);
+        $requestsalida = response()->json([
+            "respuesta" => $respuesta,
+            "mensaje"   => $mensaje,
+            "logs"      => $logs,
+        ]);
 
 
-        // $AuditoriaController = new AuditoriaController;
-        // $registrarAuditoria  = $AuditoriaController->registrarAuditoria(
-        //     "ADMIN",
-        //     "1",
-        //     null,
-        //     $datos, //audjsonentrada
-        //     $requestsalida, //audjsonsalida
-        //     $mensaje, //auddescripcion
-        //     "ACTUALIZACION", //audaccion,
-        //     "/obtenerSellOutTodo", //audruta,
-        //     $pks, //audpk,
-        //     $logs
-        // );
+        $AuditoriaController = new AuditoriaController;
+        $registrarAuditoria  = $AuditoriaController->registrarAuditoria(
+            "ADMIN",
+            "1",
+            null,
+            $datos, //audjsonentrada
+            $requestsalida, //audjsonsalida
+            $mensaje, //auddescripcion
+            "ACTUALIZACION", //audaccion,
+            "/obtenerSellOutTodo", //audruta,
+            $pks, //audpk,
+            $logs
+        );
+
+        dd($requestsalida);
     }
 
     public function CargarSellOutDiario()
