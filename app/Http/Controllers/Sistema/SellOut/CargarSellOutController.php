@@ -46,20 +46,20 @@ class CargarSellOutController extends Controller
         );
 
         // REINICAR DATA A 0
-        // scasucursalescategorias::join('tsutipospromocionessucursales as tsu', 'tsu.tsuid', 'scasucursalescategorias.tsuid')
-        //                         ->where('tsu.tprid', $tprid)
-        //                         ->update([
-        //                             'scavalorizadoreal' => 0, 
-        //                             'scavalorizadotogo' => 0
-        //                         ]);
+        scasucursalescategorias::join('tsutipospromocionessucursales as tsu', 'tsu.tsuid', 'scasucursalescategorias.tsuid')
+                                ->where('tsu.tprid', $tprid)
+                                ->update([
+                                    'scavalorizadoreal' => 0, 
+                                    'scavalorizadotogo' => 0
+                                ]);
 
-        // tsutipospromocionessucursales::where('tprid', $tprid)
-        //                             ->update([
-        //                                 'tsuvalorizadoreal' => 0, 
-        //                                 'tsuvalorizadotogo' => 0,
-        //                                 'tsuporcentajecumplimiento' => 0,
-        //                                 'tsuvalorizadorebate' => 0,
-        //                             ]);
+        tsutipospromocionessucursales::where('tprid', $tprid)
+                                    ->update([
+                                        'tsuvalorizadoreal' => 0, 
+                                        'tsuvalorizadotogo' => 0,
+                                        'tsuporcentajecumplimiento' => 0,
+                                        'tsuvalorizadorebate' => 0,
+                                    ]);
                                     
         // vsoventassso::update(['vsovalorizado' => 0]);
 
