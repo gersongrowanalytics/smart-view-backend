@@ -48,12 +48,18 @@ class CargarSellOutController extends Controller
         // REINICAR DATA A 0
         scasucursalescategorias::join('tsutipospromocionessucursales as tsu', 'tsu.tsuid', 'scasucursalescategorias.tsuid')
                                 ->where('tsu.tprid', $tprid)
+                                ->where('scavalorizadoreal', 0)
+                                ->where('scavalorizadotogo', 0)
                                 ->update([
                                     'scavalorizadoreal' => 0, 
                                     'scavalorizadotogo' => 0
                                 ]);
 
         tsutipospromocionessucursales::where('tprid', $tprid)
+                                    ->where('tsuvalorizadoreal', '!=', 0)
+                                    ->where('tsuvalorizadotogo', '!=', 0)
+                                    ->where('tsuporcentajecumplimiento', '!=', 0)
+                                    ->where('tsuvalorizadorebate', '!=', 0)
                                     ->update([
                                         'tsuvalorizadoreal' => 0, 
                                         'tsuvalorizadotogo' => 0,
@@ -61,7 +67,7 @@ class CargarSellOutController extends Controller
                                         'tsuvalorizadorebate' => 0,
                                     ]);
                                     
-        vsoventassso::update(['vsovalorizado' => 0]);
+        vsoventassso::where('vsoid', '!=', 0)->update(['vsovalorizado' => 0]);
 
         $arrayMeses = array(
             array(
