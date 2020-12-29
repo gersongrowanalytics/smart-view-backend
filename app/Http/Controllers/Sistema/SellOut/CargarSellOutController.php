@@ -149,7 +149,7 @@ class CargarSellOutController extends Controller
 
             $soldto    = $dato['COD_SOLD_TO'];
             $sku       = $dato['SKU'];
-            $sell      = $dato['SELLS'];
+            $real      = $dato['SELLS'];
 
             $dia       = $dato['DAY'];
             $mesNumero = "0";
@@ -462,7 +462,7 @@ class CargarSellOutController extends Controller
 
             $soldto    = $dato['COD_SOLD_TO'];
             $sku       = $dato['SKU'];
-            $sell      = $dato['SELLS'];
+            $real      = $dato['SELLS'];
 
             $dia       = $dato['DAY'];
             $mesNumero = "0";
