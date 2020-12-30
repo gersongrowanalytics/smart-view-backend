@@ -1061,6 +1061,7 @@ class CargarSellOutController extends Controller
             "respuesta" => $respuesta,
             "mensaje"   => $mensaje,
             "logs"      => $logs,
+            "pks"       => $pks
         ]);
 
 

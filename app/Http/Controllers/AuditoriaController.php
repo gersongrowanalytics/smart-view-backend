@@ -24,6 +24,7 @@ class AuditoriaController extends Controller
 
         $audjsonentrada = json_encode($audjsonentrada);
         $audjsonsalida = json_encode($audjsonsalida);
+        $audpk = json_encode($audpk);
 
         $respuesta = false;
 
@@ -54,7 +55,13 @@ class AuditoriaController extends Controller
         $audauditorias->auddescripcion  = $auddescripcion;
         $audauditorias->audaccion       = $audaccion;
         $audauditorias->audruta         = $audruta;
-        $audauditorias->audpk           = $audpk;
+
+        if(strlen($audpk) < 100){
+            $audauditorias->audpk = $audpk;
+        }else{
+            $audauditorias->audpk = substr($audpk, 0, 100);
+        }
+        
         
         $log = json_encode($log);
         if(strlen($log) < 100){
