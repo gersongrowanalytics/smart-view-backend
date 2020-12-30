@@ -877,7 +877,7 @@ class CargarSellOutController extends Controller
 
                 $usu = ussusuariossucursales::join('usuusuarios as usu', 'usu.usuid', 'ussusuariossucursales.usuid')
                                             ->where('ususoldto', 'LIKE', '%'.$soldto)
-                                            ->first(['usuid', 'ussusuariossucursales.sucid']);
+                                            ->first(['ussusuariossucursales.usuid', 'ussusuariossucursales.sucid']);
 
                 $sucid = 0;
 
