@@ -1079,7 +1079,7 @@ class CargarSellOutController extends Controller
             $logs
         );
 
-        dd($requestsalida);
+        dd($logs);
     }
 
 
