@@ -205,29 +205,6 @@ class CargarArchivoController extends Controller
                             
                             if($pro){
 
-
-                                $vsi = vsiventasssi::where('fecid', $fecid)
-                                                    ->where('proid', $pro->proid)
-                                                    ->where('sucid', $sucid)
-                                                    ->where('tpmid', 1)
-                                                    ->first();
-
-                                if($vsi){
-
-                                    $vsi->vsivalorizado = $real + $vsi->vsivalorizado;
-                                    $vsi->update();
-
-                                }else{
-                                    $vsin = new vsiventasssi;
-                                    $vsin->fecid         = $fecid;
-                                    $vsin->proid         = $pro->proid;
-                                    $vsin->sucid         = $sucid;
-                                    $vsin->tpmid         = 1;
-                                    $vsin->vsicantidad   = 0;
-                                    $vsin->vsivalorizado = $real;
-                                    $vsin->save();
-                                }
-
                                 $categoriaid     = $pro->catid;
                                 $categoriaNombre = $pro->catnombre;
     
@@ -326,6 +303,29 @@ class CargarArchivoController extends Controller
                                     }else{
                     
                                     }
+                                }
+
+                                // 
+                                $vsi = vsiventasssi::where('fecid', $fecid)
+                                                    ->where('proid', $pro->proid)
+                                                    ->where('sucid', $sucursalClienteId)
+                                                    ->where('tpmid', 1)
+                                                    ->first();
+
+                                if($vsi){
+
+                                    $vsi->vsivalorizado = $real + $vsi->vsivalorizado;
+                                    $vsi->update();
+
+                                }else{
+                                    $vsin = new vsiventasssi;
+                                    $vsin->fecid         = $fecid;
+                                    $vsin->proid         = $pro->proid;
+                                    $vsin->sucid         = $sucursalClienteId;
+                                    $vsin->tpmid         = 1;
+                                    $vsin->vsicantidad   = 0;
+                                    $vsin->vsivalorizado = $real;
+                                    $vsin->save();
                                 }
     
                                 $tsu = tsutipospromocionessucursales::where('fecid', $fecid)
