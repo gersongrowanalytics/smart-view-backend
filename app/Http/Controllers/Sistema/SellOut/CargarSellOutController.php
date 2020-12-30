@@ -656,13 +656,35 @@ class CargarSellOutController extends Controller
 
     }
 
-    public function CargarSellOutEspecifico($anioSelec, $mesSelec)
+    public function CargarSellOutEspecifico($anioSelec, $mesSelec, $diaSelec)
     {
+        $tprid = 2;
+        $tprnombre = "Sell Out";
+        $respuesta = true;
+        $mensaje =  "El sell Out especifico se actualizo correctamente";
 
-        vsoventassso::join('fecfechas as fec', 'fec.fecid', 'vsoventassso.fecid')
-                    ->where('fec.fecano', $anioSelec)
-                    ->where('fec.fecmes', $mesSelec)
-                    ->update(['vsovalorizado' => 0]);
+        $logs = array(
+            "SKUS_FALTANTES" => [],
+            "SUCS_FALTANTES" => [],
+        );
+
+        $pks = array(
+            "PK_FECHAS" => array(
+                "NUEVOS" => [],
+            ),
+            "PK_VENTAS_SSO" => array(
+                "NUEVOS" => [],
+                "EDITADOS"
+            ),
+            "PK_TSU" => array(
+                "NUEVOS" => [],
+                "EDITADOS"
+            ),
+            "PK_SCA" => array(
+                "NUEVOS" => [],
+                "EDITADOS"
+            ),
+        );
 
         $arrayMeses = array(
             array(
@@ -735,6 +757,39 @@ class CargarSellOutController extends Controller
             }
         }
 
+        // REINICAR DATA A 0
+        scasucursalescategorias::join('tsutipospromocionessucursales as tsu', 'tsu.tsuid', 'scasucursalescategorias.tsuid')
+                                ->join('fecfechas as fec', 'fec.fecid', 'scasucursalescategorias.fecid')
+                                ->where('fec.fecano', $anioSelec)
+                                ->where('fec.fecmes', $mesTxtFec)
+                                ->where('tsu.tprid', $tprid)
+                                ->where('scavalorizadoreal', '!=',0)
+                                ->where('scavalorizadotogo', '!=',0)
+                                ->update([
+                                    'scavalorizadoreal' => 0, 
+                                    'scavalorizadotogo' => 0
+                                ]);
+
+        tsutipospromocionessucursales::join('fecfechas as fec', 'fec.fecid', 'tsutipospromocionessucursales.fecid')
+                                    ->where('tprid', $tprid)
+                                    ->where('fec.fecano', $anioSelec)
+                                    ->where('fec.fecmes', $mesTxtFec)
+                                    ->where('tsuvalorizadoreal', '!=', 0)
+                                    ->where('tsuvalorizadotogo', '!=', 0)
+                                    ->where('tsuporcentajecumplimiento', '!=', 0)
+                                    ->where('tsuvalorizadorebate', '!=', 0)
+                                    ->update([
+                                        'tsuvalorizadoreal' => 0, 
+                                        'tsuvalorizadotogo' => 0,
+                                        'tsuporcentajecumplimiento' => 0,
+                                        'tsuvalorizadorebate' => 0,
+                                    ]);
+
+        vsoventassso::join('fecfechas as fec', 'fec.fecid', 'vsoventassso.fecid')
+                    ->where('fec.fecano', $anioSelec)
+                    ->where('fec.fecmes', $mesTxtFec)
+                    ->update(['vsovalorizado' => 0]);
+
         $fecMes = fecfechas::where('fecdia', "01")
                         ->where('fecmes', $mesTxtFec)
                         ->where('fecano', $anioSelec)
@@ -756,38 +811,9 @@ class CargarSellOutController extends Controller
                 $pks["PK_FECHAS"]["NUEVOS"][] = "NUEVA FEC-".$fecid;
             }
         }
-
-        $tprid = 2;
-        $tprnombre = "Sell Out";
-        $respuesta = true;
-        $mensaje =  "El sell Out especifico se actualizo correctamente";
-
-        $logs = array(
-            "SKUS_FALTANTES" => [],
-            "SUCS_FALTANTES" => [],
-        );
-
-        $pks = array(
-            "PK_FECHAS" => array(
-                "NUEVOS" => [],
-            ),
-            "PK_VENTAS_SSO" => array(
-                "NUEVOS" => [],
-                "EDITADOS"
-            ),
-            "PK_TSU" => array(
-                "NUEVOS" => [],
-                "EDITADOS"
-            ),
-            "PK_SCA" => array(
-                "NUEVOS" => [],
-                "EDITADOS"
-            ),
-        );
-
         
 
-        $datos = json_decode( file_get_contents('http://backend-api.leadsmartview.com/obtenerSellOut'), true );
+        $datos = json_decode( file_get_contents('http://backend-api.leadsmartview.com/ws/obtenerSellOutEspecifico/'.$anioSelec.'/'.$mesSelec.'/'.$diaSelec), true );
 
         foreach($datos as $posicion => $dato){
 
@@ -904,7 +930,7 @@ class CargarSellOutController extends Controller
 
             $real = vsoventassso::join('fecfechas as fec', 'fec.fecid', 'vsoventassso.fecid')
                                 ->where('fec.fecano', $anioSelec)
-                                ->where('fec.fecmes', $mesSelec)
+                                ->where('fec.fecmes', $mesTxtFec)
                                 ->where('sucid', $suc->sucid)
                                 ->sum('vsovalorizado');
 
@@ -926,7 +952,7 @@ class CargarSellOutController extends Controller
 
                 if($tsu->tsuvalorizadoobjetivo == 0){
                     $porcentajeCumplimiento = $nuevoReal;
-                    $togo = $nuevoReal;
+                    $togo = 0;
                 }else{
                     $porcentajeCumplimiento = (100*$nuevoReal)/$tsu->tsuvalorizadoobjetivo;
                     $togo = $tsu->tsuvalorizadoobjetivo - $nuevoReal;
@@ -959,20 +985,23 @@ class CargarSellOutController extends Controller
                 }
             }
 
-
             $vsos = vsoventassso::join('fecfechas as fec', 'fec.fecid', 'vsoventassso.fecid')
                                 ->join('proproductos as pro', 'pro.proid', 'vsoventassso.proid')
                                 ->where('fec.fecano', $anioSelec)
                                 ->where('fec.fecmes', $mesSelec)
                                 ->where('sucid', $suc->sucid)
                                 ->get([
-                                    'pro.catid'
+                                    'pro.catid',
+                                    'vsovalorizado'
                                 ]);
 
             foreach ($vsos as $key => $vso) {
+
+                $real = $vso->vsovalorizado;
+
                 $sca = scasucursalescategorias::join('fecfechas as fec', 'fec.fecid', 'scasucursalescategorias.fecid')
                                             ->where('fec.fecano', $anioSelec)
-                                            ->where('fec.fecmes', $mesSelec)
+                                            ->where('fec.fecmes', $mesTxtFec)
                                             ->where('fec.fecdia', "01")
                                             ->where('sucid', $suc->sucid)
                                             ->where('catid', $vso->catid)
@@ -989,7 +1018,14 @@ class CargarSellOutController extends Controller
 
                     $nuevoRealSca = $real + $sca->scavalorizadoreal;
                     $sca->scavalorizadoreal = $nuevoRealSca;
-                    $sca->scavalorizadotogo = $sca->scavalorizadoobjetivo + $nuevoRealSca;
+
+                    if($sca->scavalorizadoobjetivo == 0){
+                        $sca->scavalorizadotogo = 0;
+                    }else{
+                        $sca->scavalorizadotogo = $sca->scavalorizadoobjetivo - $nuevoRealSca;
+                    }
+
+
                     $sca->scaiconocategoria = env('APP_URL').'/Sistema/categorias-tiposPromociones/img/iconos/'.$categoriaNombre.'-'.$tprnombre.'.png';
                     if($sca->update()){
                         $pks['PK_SCA']["EDITADOS"][] = "SCA-".$scaid;
