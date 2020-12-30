@@ -796,7 +796,7 @@ class CargarSellOutController extends Controller
                         ->first(['fecid']);
 
         if($fecMes){
-            $fecidFec = $fec->fecid;
+            $fecidFec = $fecMes->fecid;
 
         }else{
 
