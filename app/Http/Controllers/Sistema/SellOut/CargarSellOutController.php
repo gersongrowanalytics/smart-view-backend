@@ -821,6 +821,12 @@ class CargarSellOutController extends Controller
             $sku       = $dato['SKU'];
             $real      = $dato['SELLS'];
 
+            if($dato['SELLS'] == null){
+                $real = 0;
+            }else{
+                $real = $dato['SELLS'];
+            }
+
             $dia       = $dato['DAY'];
             if(strlen($dia) == 1){
                 $dia = "0$dia";
