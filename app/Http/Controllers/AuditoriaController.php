@@ -21,6 +21,10 @@ class AuditoriaController extends Controller
         $log
     )
     {
+
+        $audjsonentrada = json_encode($audjsonentrada);
+        $audjsonsalida = json_encode($audjsonsalida);
+
         $respuesta = false;
 
         if($usuid == null){
