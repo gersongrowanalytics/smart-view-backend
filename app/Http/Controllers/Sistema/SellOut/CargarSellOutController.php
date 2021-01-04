@@ -518,6 +518,34 @@ class CargarSellOutController extends Controller
                 $mesSelec  = $mesTxt;
                 $anioSelec = $anio;
 
+                // REINICAR DATA A 0
+                scasucursalescategorias::join('tsutipospromocionessucursales as tsu', 'tsu.tsuid', 'scasucursalescategorias.tsuid')
+                        ->join('fecfechas as fec', 'fec.fecid', 'scasucursalescategorias.fecid')
+                        ->where('fec.fecano', $anio)
+                        ->where('fec.fecmes', $mesTxt)
+                        ->where('tsu.tprid', $tprid)
+                        ->where('scavalorizadoreal', '!=',0)
+                        ->where('scavalorizadotogo', '!=',0)
+                        ->update([
+                            'scavalorizadoreal' => 0, 
+                            'scavalorizadotogo' => 0
+                        ]);
+
+                tsutipospromocionessucursales::join('fecfechas as fec', 'fec.fecid', 'tsutipospromocionessucursales.fecid')
+                            ->where('tprid', $tprid)
+                            ->where('fec.fecano', $anio)
+                            ->where('fec.fecmes', $mesTxt)
+                            ->where('tsuvalorizadoreal', '!=', 0)
+                            ->where('tsuvalorizadotogo', '!=', 0)
+                            ->where('tsuporcentajecumplimiento', '!=', 0)
+                            ->where('tsuvalorizadorebate', '!=', 0)
+                            ->update([
+                                'tsuvalorizadoreal' => 0, 
+                                'tsuvalorizadotogo' => 0,
+                                'tsuporcentajecumplimiento' => 0,
+                                'tsuvalorizadorebate' => 0,
+                            ]);
+
                 vsoventassso::where('fecid', $fecid)
                             ->update(['vsovalorizado' => 0]);
 
@@ -615,7 +643,7 @@ class CargarSellOutController extends Controller
 
                 if($tsu->tsuvalorizadoobjetivo == 0){
                     $porcentajeCumplimiento = $nuevoReal;
-                    $togo = $nuevoReal;
+                    $togo = 0;
                 }else{
                     $porcentajeCumplimiento = (100*$nuevoReal)/$tsu->tsuvalorizadoobjetivo;
                     $togo = $tsu->tsuvalorizadoobjetivo - $nuevoReal;
@@ -647,6 +675,74 @@ class CargarSellOutController extends Controller
                     $pks['PK_TSU']["NUEVOS"][] = "TSU-".$tsuid;
                 }
             }
+
+
+            $vsos = vsoventassso::join('fecfechas as fec', 'fec.fecid', 'vsoventassso.fecid')
+                                ->join('proproductos as pro', 'pro.proid', 'vsoventassso.proid')
+                                ->where('fec.fecano', $anioSelec)
+                                ->where('fec.fecmes', $mesSelec)
+                                ->where('sucid', $suc->sucid)
+                                ->get([
+                                    'pro.catid',
+                                    'vsovalorizado'
+                                ]);
+
+            foreach ($vsos as $key => $vso) {
+
+                $real = $vso->vsovalorizado;
+
+                $sca = scasucursalescategorias::join('fecfechas as fec', 'fec.fecid', 'scasucursalescategorias.fecid')
+                                            ->where('fec.fecano', $anioSelec)
+                                            ->where('fec.fecmes', $mesSelec)
+                                            ->where('fec.fecdia', "01")
+                                            ->where('sucid', $suc->sucid)
+                                            ->where('catid', $vso->catid)
+                                            ->where('tsuid', $tsuid)
+                                            ->first([
+                                                'scaid', 
+                                                'scavalorizadoreal', 
+                                                'scavalorizadoobjetivo'
+                                            ]);
+
+                $scaid = 0;
+                if($sca){
+                    $scaid = $sca->scaid;
+
+                    $nuevoRealSca = $real + $sca->scavalorizadoreal;
+                    $sca->scavalorizadoreal = $nuevoRealSca;
+
+                    if($sca->scavalorizadoobjetivo == 0){
+                        $sca->scavalorizadotogo = 0;
+                    }else{
+                        $sca->scavalorizadotogo = $sca->scavalorizadoobjetivo - $nuevoRealSca;
+                    }
+
+
+                    $sca->scaiconocategoria = env('APP_URL').'/Sistema/categorias-tiposPromociones/img/iconos/'.$categoriaNombre.'-'.$tprnombre.'.png';
+                    if($sca->update()){
+                        $pks['PK_SCA']["EDITADOS"][] = "SCA-".$scaid;
+                    }
+
+                }else{
+
+                    $nuevosca = new scasucursalescategorias;
+                    $nuevosca->sucid                 = $suc->sucid;
+                    $nuevosca->catid                 = $vso->catid;
+                    $nuevosca->fecid                 = $fecidFec;
+                    $nuevosca->tsuid                 = $tsuid;
+                    $nuevosca->scavalorizadoobjetivo = 0;
+                    $nuevosca->scaiconocategoria     = env('APP_URL').'/Sistema/categorias-tiposPromociones/img/iconos/'.$categoriaNombre.'-'.$tprnombre.'.png';
+                    $nuevosca->scavalorizadoreal     = $real;
+                    $nuevosca->scavalorizadotogo     = 0;
+                    if($nuevosca->save()){
+                        $scaid = $nuevosca->scaid;
+                        $pks['PK_SCA']["NUEVO"][] = "SCA-".$scaid;
+                    }
+
+                }
+            }
+
+
 
         }
 

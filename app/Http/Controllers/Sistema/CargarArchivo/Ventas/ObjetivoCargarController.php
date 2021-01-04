@@ -870,6 +870,7 @@ class ObjetivoCargarController extends Controller
                         $pro = proproductos::join('catcategorias as cat', 'cat.catid', 'proproductos.catid')
                                             ->where('proproductos.prosku', $sku)
                                             ->first([
+                                                'proproductos.proid',
                                                 'proproductos.catid',
                                                 'cat.catnombre'
                                             ]);
