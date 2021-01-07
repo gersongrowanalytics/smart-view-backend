@@ -408,19 +408,6 @@ class CargarArchivoController extends Controller
                             }else{
 
                                 $catid = 0;
-                                // $nuevacategoria                       = new catcategorias;
-                                // $nuevacategoria->catnombre            = $categoria;
-                                // $nuevacategoria->catimagenfondo       = env('APP_URL').'/Sistema/abs/img/nohay.png';
-                                // $nuevacategoria->caticono             = env('APP_URL').'/Sistema/abs/img/nohay.png';
-                                // $nuevacategoria->catcolorhover        = '';
-                                // $nuevacategoria->catcolor             = '';
-                                // $nuevacategoria->caticonoseleccionado = env('APP_URL').'/Sistema/abs/img/nohay.png';
-                                // $nuevacategoria->caticonohover        = env('APP_URL').'/Sistema/abs/img/nohay.png';
-                                // if($nuevacategoria->save()){
-                                //     $catid = $nuevacategoria->catid;
-                                // }else{
-                
-                                // }
                             }
     
                             $scasucursalescategorias = scasucursalescategorias::where('fecid', $fecid)
@@ -731,7 +718,8 @@ class CargarArchivoController extends Controller
                                 $csp->csptotalcombo        = $precXcombo;
                                 $csp->csptotalplancha      = $precXplanc;
                                 $csp->csptotal             = $precXtodo;
-                                $csp->cspestado            = $nuevoProm;
+                                // $csp->cspestado            = $nuevoProm;
+                                $csp->cspnuevo            = $nuevoProm;
                                 
                                 if($combos != 'NA'){
                                     $csp->cspcantidadcombo   = $csp->cspcantidadcombo + $combos;
