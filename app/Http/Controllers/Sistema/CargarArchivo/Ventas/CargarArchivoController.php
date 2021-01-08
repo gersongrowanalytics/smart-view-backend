@@ -28,7 +28,7 @@ class CargarArchivoController extends Controller
 {
     public function CargarArchivo(Request $request)
     {
-        $respuesta      = false;
+        $respuesta      = true;
         $mensaje        = '';
         $datos          = [];
         $linea          = __LINE__;
@@ -441,7 +441,15 @@ class CargarArchivoController extends Controller
                                         }  
                                     }else{
                                         $skusNoExisten[] = $sku;
+                                        $respuesta = false;
+                                        $mensaje   = "Hay algunos skus no identificados";
+                                        $linea     = __LINE__;
                                     }  
+                                }else{
+                                    $respuesta = false;
+                                    $mensaje   = "No hay un cliente";
+                                    $log[]     = "No hay cliente";
+                                    $linea     = __LINE__;
                                 }
                             }else{
                                 $respuesta = false;
