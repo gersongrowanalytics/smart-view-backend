@@ -595,7 +595,7 @@ class CargarArchivoController extends Controller
 
     public function cargarVentasSellOut(Request $request)
     {
-        $respuesta      = false;
+        $respuesta      = true;
         $mensaje        = '';
         $datos          = [];
         $linea          = __LINE__;
@@ -661,330 +661,353 @@ class CargarArchivoController extends Controller
                         $producto   = $objPHPExcel->getActiveSheet()->getCell('K'.$i)->getCalculatedValue();
                         $sector     = $objPHPExcel->getActiveSheet()->getCell('L'.$i)->getCalculatedValue();
                         $real       = $objPHPExcel->getActiveSheet()->getCell('O'.$i)->getCalculatedValue();
-    
-                        $fecfecha = fecfechas::where('fecdia', $dia)
-                                                ->where('fecmes', $mesTxt)
-                                                ->where('fecano', $ano)
-                                                ->first(['fecid']);
                         
-                        if($fecfecha){
-                            $fecid = $fecfecha->fecid;
-                        }else{
-                            $mes = "0";
-                            if($mesTxt == "ENE"){
-                                $mes = "01";
-                            }else if($mesTxt == "FEB"){
-                                $mes = "02";
-                            }else if($mesTxt == "MAR"){
-                                $mes = "03";
-                            }else if($mesTxt == "ABR"){
-                                $mes = "04";
-                            }else if($mesTxt == "MAY"){
-                                $mes = "05";
-                            }else if($mesTxt == "JUN"){
-                                $mes = "06";
-                            }else if($mesTxt == "JUL"){
-                                $mes = "07";
-                            }else if($mesTxt == "AGO"){
-                                $mes = "08";
-                            }else if($mesTxt == "SET"){
-                                $mes = "09";
-                            }else if($mesTxt == "OCT"){
-                                $mes = "10";
-                            }else if($mesTxt == "NOV"){
-                                $mes = "11";
-                            }else if($mesTxt == "DIC"){
-                                $mes = "12";
-                            }
-    
-                            $nuevaFecha = new fecfechas;
-                            $nuevaFecha->fecfecha = new \DateTime(date("Y-m-d", strtotime($ano.'-'.$mes.'-'.$dia)));
-                            $nuevaFecha->fecdia   = $dia;
-                            $nuevaFecha->fecmes   = $mesTxt;
-                            $nuevaFecha->fecmesnumero = $mes;
-                            $nuevaFecha->fecano   = $ano;
-                            if($nuevaFecha->save()){
-                                $fecid = $nuevaFecha->fecid;
-                            }else{
-            
-                            }
-                        }
-    
-                        if($i == 2){
-                            $scas = scasucursalescategorias::join('tsutipospromocionessucursales as tsu', 'tsu.tsuid', 'scasucursalescategorias.tsuid')
-                                                            ->where('tsu.fecid', $fecid)
-                                                            ->where('tsu.tprid', 2)
-                                                            ->get(['scasucursalescategorias.scaid']);
-    
-                            foreach($scas as $sca){
-                                $scae = scasucursalescategorias::find($sca->scaid);
-    
-                                $scae->scavalorizadoreal = 0;
-                                $scae->scavalorizadotogo = 0;
-                                if($scae->update()){
-    
-                                }else{
-                                    $log[] = "No se pudo editar el sca: ".$sca->scaid;
-                                }
-                            }
-    
-                            $tsus = tsutipospromocionessucursales::where('fecid', $fecid)
-                                                                ->where('tprid', 2)
-                                                                ->get(['tsuid']);
-    
-                            foreach($tsus as $tsu){
-                                $tsue = tsutipospromocionessucursales::find($tsu->tsuid);
-                                $tsue->tsuvalorizadoreal = 0;
-                                $tsue->tsuvalorizadotogo = 0;
-                                $tsue->tsuporcentajecumplimiento = 0;
-                                $tsue->tsuvalorizadorebate = 0;
-                                if($tsue->update()){
-    
-                                }else{
-                                    $log[] = "No se pudo editar el tsu: ".$tsu->tsuid;
-                                }
-    
-                            }
-
-                            vsoventassso::where('fecid', $fecid)->update(['vsovalorizado' => 0]);
-    
-                        }
-    
-                        if($cliente != null){
-    
-                            $separarsku = explode("0000000000", $sku);
-    
-                            if(sizeof($separarsku) > 1){
-                                $sku = $separarsku[1];
-                            }else{
-                                $sku = $separarsku[0];
-                            }
-    
-                            $pro = proproductos::join('catcategorias as cat', 'cat.catid', 'proproductos.catid')
-                                            ->where('proproductos.prosku', 'LIKE', '%'.$sku)
-                                            ->first([
-                                                'proproductos.proid',
-                                                'proproductos.catid',
-                                                'cat.catnombre'
-                                            ]);
-
-                            if($pro){
-                                $categoriaid     = $pro->catid;
-                                $categoriaNombre = $pro->catnombre;
-    
-                                // VERIFICAR SI EXISTE LA PERSONA PARA EL CLIENTE
-                                $clienteperpersona = perpersonas::where('pernombrecompleto', $cliente)->first(['perid']);
-                                $clienteperid = 0;
-                                if($clienteperpersona){
-                                    $clienteperid = $clienteperpersona->perid;
-                                }else{
-                                    $clienteNuevaPersona = new perpersonas;
-                                    $clienteNuevaPersona->tdiid                         = 2;
-                                    $clienteNuevaPersona->pernombrecompleto             = $cliente;
-                                    $clienteNuevaPersona->pernumerodocumentoidentidad   = null;
-                                    $clienteNuevaPersona->pernombre                     = null;
-                                    $clienteNuevaPersona->perapellidopaterno            = null;
-                                    $clienteNuevaPersona->perapellidomaterno            = null;
-                                    if($clienteNuevaPersona->save()){
-                                        $clienteperid = $clienteNuevaPersona->perid;
-                                    }else{
-                    
-                                    }
-                                }
+                        if(isset($mesTxt)){
+                            if(isset($ano)){
+                                $fecfecha = fecfechas::where('fecdia', $dia)
+                                                        ->where('fecmes', $mesTxt)
+                                                        ->where('fecano', $ano)
+                                                        ->first(['fecid']);
                                 
-                                $soldto = substr($soldto, 3);
-    
-                                // VERIFICAR SI EXISTE EL USUARIO
-                                $usuCliente = usuusuarios::where('tpuid', 2)
-                                                            // ->where('perid', $clienteperid)
-                                                            ->where('ususoldto', 'LIKE', '%'.$soldto)
-                                                            ->first(['usuid']);
-                                $clienteusuid = 0;
-                                $sucursalClienteId = 0;
-                                if($usuCliente){
-                                    $clienteusuid = $usuCliente->usuid;
-                                    
-                                    $sucursalesCliente = ussusuariossucursales::where('usuid', $clienteusuid)->first(['sucid']);
-                                    if($sucursalesCliente){
-                                        $sucursalClienteId = $sucursalesCliente->sucid;
-                                    }else{
-                                        $nuevaSucursal = new sucsucursales;
-                                        $nuevaSucursal->sucnombre = $cliente;
-                                        if($nuevaSucursal->save()){
-                                            $sucursalClienteId = $nuevaSucursal->sucid;
-    
-                                            $sucursalUsuario = new ussusuariossucursales;
-                                            $sucursalUsuario->usuid = $clienteusuid;
-                                            $sucursalUsuario->suci  = $sucursalClienteId;
-                                            if($sucursalUsuario->save()){
-    
-                                            }else{
-    
-                                            }
-    
-                                        }else{
-    
-                                        }
-                                    }
-    
+                                if($fecfecha){
+                                    $fecid = $fecfecha->fecid;
                                 }else{
-                                    $clienteNuevoUsuario = new usuusuarios;
-                                    $clienteNuevoUsuario->tpuid         = 2; // tipo de usuario (cliente)
-                                    $clienteNuevoUsuario->perid         = $clienteperid;
-                                    $clienteNuevoUsuario->ususoldto     = $soldto;
-                                    $clienteNuevoUsuario->usuusuario    = null;
-                                    $clienteNuevoUsuario->usucorreo     = null;
-                                    $clienteNuevoUsuario->usucontrasena = null;
-                                    $clienteNuevoUsuario->usutoken      = Str::random(60);
-                                    if($clienteNuevoUsuario->save()){
-                                        $clienteusuid = $clienteNuevoUsuario->usuid;
-                                        $nuevaSucursal = new sucsucursales;
-                                        $nuevaSucursal->sucnombre = $cliente;
-                                        if($nuevaSucursal->save()){
-                                            $sucursalClienteId = $nuevaSucursal->sucid;
-    
-                                            $sucursalUsuario = new ussusuariossucursales;
-                                            $sucursalUsuario->usuid = $clienteusuid;
-                                            $sucursalUsuario->sucid = $sucursalClienteId;
-                                            if($sucursalUsuario->save()){
-    
-                                            }else{
-    
-                                            }
-    
-                                        }else{
-    
-                                        }
+                                    $mes = "0";
+                                    if($mesTxt == "ENE"){
+                                        $mes = "01";
+                                    }else if($mesTxt == "FEB"){
+                                        $mes = "02";
+                                    }else if($mesTxt == "MAR"){
+                                        $mes = "03";
+                                    }else if($mesTxt == "ABR"){
+                                        $mes = "04";
+                                    }else if($mesTxt == "MAY"){
+                                        $mes = "05";
+                                    }else if($mesTxt == "JUN"){
+                                        $mes = "06";
+                                    }else if($mesTxt == "JUL"){
+                                        $mes = "07";
+                                    }else if($mesTxt == "AGO"){
+                                        $mes = "08";
+                                    }else if($mesTxt == "SET"){
+                                        $mes = "09";
+                                    }else if($mesTxt == "OCT"){
+                                        $mes = "10";
+                                    }else if($mesTxt == "NOV"){
+                                        $mes = "11";
+                                    }else if($mesTxt == "DIC"){
+                                        $mes = "12";
+                                    }
+            
+                                    $nuevaFecha = new fecfechas;
+                                    $nuevaFecha->fecfecha = new \DateTime(date("Y-m-d", strtotime($ano.'-'.$mes.'-'.$dia)));
+                                    $nuevaFecha->fecdia   = $dia;
+                                    $nuevaFecha->fecmes   = $mesTxt;
+                                    $nuevaFecha->fecmesnumero = $mes;
+                                    $nuevaFecha->fecano   = $ano;
+                                    if($nuevaFecha->save()){
+                                        $fecid = $nuevaFecha->fecid;
                                     }else{
                     
                                     }
                                 }
+            
+                                if($i == 2){
+                                    $scas = scasucursalescategorias::join('tsutipospromocionessucursales as tsu', 'tsu.tsuid', 'scasucursalescategorias.tsuid')
+                                                                    ->where('tsu.fecid', $fecid)
+                                                                    ->where('tsu.tprid', 2)
+                                                                    ->get(['scasucursalescategorias.scaid']);
+            
+                                    foreach($scas as $sca){
+                                        $scae = scasucursalescategorias::find($sca->scaid);
+            
+                                        $scae->scavalorizadoreal = 0;
+                                        $scae->scavalorizadotogo = 0;
+                                        if($scae->update()){
+            
+                                        }else{
+                                            $log[] = "No se pudo editar el sca: ".$sca->scaid;
+                                        }
+                                    }
+            
+                                    $tsus = tsutipospromocionessucursales::where('fecid', $fecid)
+                                                                        ->where('tprid', 2)
+                                                                        ->get(['tsuid']);
+            
+                                    foreach($tsus as $tsu){
+                                        $tsue = tsutipospromocionessucursales::find($tsu->tsuid);
+                                        $tsue->tsuvalorizadoreal = 0;
+                                        $tsue->tsuvalorizadotogo = 0;
+                                        $tsue->tsuporcentajecumplimiento = 0;
+                                        $tsue->tsuvalorizadorebate = 0;
+                                        if($tsue->update()){
+            
+                                        }else{
+                                            $log[] = "No se pudo editar el tsu: ".$tsu->tsuid;
+                                        }
+            
+                                    }
 
-                                // 
-                                $vso = vsoventassso::where('fecid', $fecid)
-                                                    ->where('proid', $pro->proid)
-                                                    ->where('sucid', $sucursalClienteId)
-                                                    ->where('tpmid', 1)
-                                                    ->first();
-
-                                if($vso){
-
-                                    $vso->vsovalorizado = $real + $vso->vsovalorizado;
-                                    $vso->update();
-
-                                }else{
-                                    $vson = new vsoventassso;
-                                    $vson->fecid         = $fecid;
-                                    $vson->proid         = $pro->proid;
-                                    $vson->sucid         = $sucursalClienteId;
-                                    $vson->tpmid         = 1;
-                                    $vson->vsocantidad   = 0;
-                                    $vson->vsovalorizado = $real;
-                                    $vson->save();
+                                    vsoventassso::where('fecid', $fecid)->update(['vsovalorizado' => 0]);
+            
                                 }
-    
-                                $tsu = tsutipospromocionessucursales::where('fecid', $fecid)
-                                                                    ->where('sucid', $sucursalClienteId)
-                                                                    ->where('tprid', 2)
-                                                                    ->first(['tsuid', 'tsuvalorizadoreal', 'tsuvalorizadoobjetivo', 'treid']);
-                                $tsuid = 0;
-                                if($tsu){
-                                    $tsuid = $tsu->tsuid;
-                                    $nuevoReal = $tsu->tsuvalorizadoreal+$real;
-    
-                                    if($tsu->tsuvalorizadoobjetivo == 0){
-                                        $porcentajeCumplimiento = $nuevoReal;
+            
+                                if($cliente != null){
+            
+                                    $separarsku = explode("0000000000", $sku);
+            
+                                    if(sizeof($separarsku) > 1){
+                                        $sku = $separarsku[1];
                                     }else{
-                                        $porcentajeCumplimiento = (100*$nuevoReal)/$tsu->tsuvalorizadoobjetivo;
+                                        $sku = $separarsku[0];
                                     }
-                                    
-                                    
-                                    // OBTENER INFORMACION DEL REBATE
-                                    // $rtp = trrtiposrebatesrebates::join('rtprebatetipospromociones as rtp', 'rtp.rtpid', 'trrtiposrebatesrebates.rtpid')
-                                    //                             ->where('trrtiposrebatesrebates.treid', $tsu->treid)
-                                    //                             ->where('rtp.fecid', $fecid)
-                                    //                             ->where('rtp.tprid', $tsu->tprid) // TIPO DE PROMOCION SELL OUT
-                                    //                             ->where('rtp.rtpporcentajedesde', '<=', round($porcentajeCumplimiento))
-                                    //                             ->where('rtp.rtpporcentajehasta', '>=', round($porcentajeCumplimiento))
-                                    //                             ->first([
-                                    //                                 'rtp.rtpporcentajedesde',
-                                    //                                 'rtp.rtpporcentajehasta',
-                                    //                                 'rtp.rtpporcentajerebate'
-                                    //                             ]);
-    
-                                    $totalRebate = 0;
-                                    // if($rtp){
-                                    //     $totalRebate = $nuevoReal*$rtp->rtpporcentajerebate;
-                                    // }else{
-                                    //     $log[] = "No existe el grupo rebate: ".$tsu->treid;
-                                    // }
-                                    
-                                    $tsu->tsuvalorizadoreal         = $nuevoReal;
-                                    $tsu->tsuvalorizadotogo         = $tsu->tsuvalorizadoobjetivo - $nuevoReal;
-                                    $tsu->tsuporcentajecumplimiento = $porcentajeCumplimiento;
-                                    $tsu->tsuvalorizadorebate       = $totalRebate;
-                                    if($tsu->update()){
-    
-                                    }else{
-    
-                                    }
-                                }else{
-                                    $nuevotsu = new tsutipospromocionessucursales;
-                                    $nuevotsu->fecid = $fecid;
-                                    $nuevotsu->sucid = $sucursalClienteId;
-                                    $nuevotsu->tprid = 2;
-                                    $nuevotsu->tsuporcentajecumplimiento = 0;
-                                    $nuevotsu->tsuvalorizadoobjetivo  = 0;
-                                    $nuevotsu->tsuvalorizadoreal      = $real;
-                                    $nuevotsu->tsuvalorizadorebate    = 0;
-                                    $nuevotsu->tsuvalorizadotogo      = 0;
-                                    if($nuevotsu->save()){
-                                        $tsuid = $nuevotsu->tsuid;
-                                    }else{
-    
-                                    }
-                                }
-    
-                                $sca = scasucursalescategorias::where('fecid', $fecid)
+            
+                                    $pro = proproductos::join('catcategorias as cat', 'cat.catid', 'proproductos.catid')
+                                                    ->where('proproductos.prosku', 'LIKE', '%'.$sku)
+                                                    ->first([
+                                                        'proproductos.proid',
+                                                        'proproductos.catid',
+                                                        'cat.catnombre'
+                                                    ]);
+
+                                    if($pro){
+                                        $categoriaid     = $pro->catid;
+                                        $categoriaNombre = $pro->catnombre;
+            
+                                        // VERIFICAR SI EXISTE LA PERSONA PARA EL CLIENTE
+                                        $clienteperpersona = perpersonas::where('pernombrecompleto', $cliente)->first(['perid']);
+                                        $clienteperid = 0;
+                                        if($clienteperpersona){
+                                            $clienteperid = $clienteperpersona->perid;
+                                        }else{
+                                            $clienteNuevaPersona = new perpersonas;
+                                            $clienteNuevaPersona->tdiid                         = 2;
+                                            $clienteNuevaPersona->pernombrecompleto             = $cliente;
+                                            $clienteNuevaPersona->pernumerodocumentoidentidad   = null;
+                                            $clienteNuevaPersona->pernombre                     = null;
+                                            $clienteNuevaPersona->perapellidopaterno            = null;
+                                            $clienteNuevaPersona->perapellidomaterno            = null;
+                                            if($clienteNuevaPersona->save()){
+                                                $clienteperid = $clienteNuevaPersona->perid;
+                                            }else{
+                            
+                                            }
+                                        }
+                                        
+                                        $soldto = substr($soldto, 3);
+            
+                                        // VERIFICAR SI EXISTE EL USUARIO
+                                        $usuCliente = usuusuarios::where('tpuid', 2)
+                                                                    // ->where('perid', $clienteperid)
+                                                                    ->where('ususoldto', 'LIKE', '%'.$soldto)
+                                                                    ->first(['usuid']);
+                                        $clienteusuid = 0;
+                                        $sucursalClienteId = 0;
+                                        if($usuCliente){
+                                            $clienteusuid = $usuCliente->usuid;
+                                            
+                                            $sucursalesCliente = ussusuariossucursales::where('usuid', $clienteusuid)->first(['sucid']);
+                                            if($sucursalesCliente){
+                                                $sucursalClienteId = $sucursalesCliente->sucid;
+                                            }else{
+                                                $nuevaSucursal = new sucsucursales;
+                                                $nuevaSucursal->sucnombre = $cliente;
+                                                if($nuevaSucursal->save()){
+                                                    $sucursalClienteId = $nuevaSucursal->sucid;
+            
+                                                    $sucursalUsuario = new ussusuariossucursales;
+                                                    $sucursalUsuario->usuid = $clienteusuid;
+                                                    $sucursalUsuario->suci  = $sucursalClienteId;
+                                                    if($sucursalUsuario->save()){
+            
+                                                    }else{
+            
+                                                    }
+            
+                                                }else{
+            
+                                                }
+                                            }
+            
+                                        }else{
+                                            $clienteNuevoUsuario = new usuusuarios;
+                                            $clienteNuevoUsuario->tpuid         = 2; // tipo de usuario (cliente)
+                                            $clienteNuevoUsuario->perid         = $clienteperid;
+                                            $clienteNuevoUsuario->ususoldto     = $soldto;
+                                            $clienteNuevoUsuario->usuusuario    = null;
+                                            $clienteNuevoUsuario->usucorreo     = null;
+                                            $clienteNuevoUsuario->usucontrasena = null;
+                                            $clienteNuevoUsuario->usutoken      = Str::random(60);
+                                            if($clienteNuevoUsuario->save()){
+                                                $clienteusuid = $clienteNuevoUsuario->usuid;
+                                                $nuevaSucursal = new sucsucursales;
+                                                $nuevaSucursal->sucnombre = $cliente;
+                                                if($nuevaSucursal->save()){
+                                                    $sucursalClienteId = $nuevaSucursal->sucid;
+            
+                                                    $sucursalUsuario = new ussusuariossucursales;
+                                                    $sucursalUsuario->usuid = $clienteusuid;
+                                                    $sucursalUsuario->sucid = $sucursalClienteId;
+                                                    if($sucursalUsuario->save()){
+            
+                                                    }else{
+            
+                                                    }
+            
+                                                }else{
+            
+                                                }
+                                            }else{
+                            
+                                            }
+                                        }
+
+                                        // 
+                                        $vso = vsoventassso::where('fecid', $fecid)
+                                                            ->where('proid', $pro->proid)
                                                             ->where('sucid', $sucursalClienteId)
-                                                            ->where('catid', $categoriaid)
-                                                            ->where('tsuid', $tsuid)
-                                                            ->first(['scaid', 'scavalorizadoreal', 'scavalorizadoobjetivo']);
-    
-                                $scaid = 0;
-                                if($sca){
-                                    $scaid = $sca->scaid;
-    
-                                    $nuevoRealSca = $real + $sca->scavalorizadoreal;
-                                    $sca->scavalorizadoreal = $nuevoRealSca;
-                                    $sca->scavalorizadotogo = $sca->scavalorizadoobjetivo + $nuevoRealSca;
-                                    $sca->scaiconocategoria = env('APP_URL').'/Sistema/categorias-tiposPromociones/img/iconos/'.$categoriaNombre.'-Sell Out.png';
-                                    if($sca->update()){
-    
+                                                            ->where('tpmid', 1)
+                                                            ->first();
+
+                                        if($vso){
+
+                                            $vso->vsovalorizado = $real + $vso->vsovalorizado;
+                                            $vso->update();
+
+                                        }else{
+                                            $vson = new vsoventassso;
+                                            $vson->fecid         = $fecid;
+                                            $vson->proid         = $pro->proid;
+                                            $vson->sucid         = $sucursalClienteId;
+                                            $vson->tpmid         = 1;
+                                            $vson->vsocantidad   = 0;
+                                            $vson->vsovalorizado = $real;
+                                            $vson->save();
+                                        }
+            
+                                        $tsu = tsutipospromocionessucursales::where('fecid', $fecid)
+                                                                            ->where('sucid', $sucursalClienteId)
+                                                                            ->where('tprid', 2)
+                                                                            ->first(['tsuid', 'tsuvalorizadoreal', 'tsuvalorizadoobjetivo', 'treid']);
+                                        $tsuid = 0;
+                                        if($tsu){
+                                            $tsuid = $tsu->tsuid;
+                                            $nuevoReal = $tsu->tsuvalorizadoreal+$real;
+            
+                                            if($tsu->tsuvalorizadoobjetivo == 0){
+                                                $porcentajeCumplimiento = $nuevoReal;
+                                            }else{
+                                                $porcentajeCumplimiento = (100*$nuevoReal)/$tsu->tsuvalorizadoobjetivo;
+                                            }
+                                            
+                                            
+                                            // OBTENER INFORMACION DEL REBATE
+                                            // $rtp = trrtiposrebatesrebates::join('rtprebatetipospromociones as rtp', 'rtp.rtpid', 'trrtiposrebatesrebates.rtpid')
+                                            //                             ->where('trrtiposrebatesrebates.treid', $tsu->treid)
+                                            //                             ->where('rtp.fecid', $fecid)
+                                            //                             ->where('rtp.tprid', $tsu->tprid) // TIPO DE PROMOCION SELL OUT
+                                            //                             ->where('rtp.rtpporcentajedesde', '<=', round($porcentajeCumplimiento))
+                                            //                             ->where('rtp.rtpporcentajehasta', '>=', round($porcentajeCumplimiento))
+                                            //                             ->first([
+                                            //                                 'rtp.rtpporcentajedesde',
+                                            //                                 'rtp.rtpporcentajehasta',
+                                            //                                 'rtp.rtpporcentajerebate'
+                                            //                             ]);
+            
+                                            $totalRebate = 0;
+                                            // if($rtp){
+                                            //     $totalRebate = $nuevoReal*$rtp->rtpporcentajerebate;
+                                            // }else{
+                                            //     $log[] = "No existe el grupo rebate: ".$tsu->treid;
+                                            // }
+                                            
+                                            $tsu->tsuvalorizadoreal         = $nuevoReal;
+                                            $tsu->tsuvalorizadotogo         = $tsu->tsuvalorizadoobjetivo - $nuevoReal;
+                                            $tsu->tsuporcentajecumplimiento = $porcentajeCumplimiento;
+                                            $tsu->tsuvalorizadorebate       = $totalRebate;
+                                            if($tsu->update()){
+            
+                                            }else{
+            
+                                            }
+                                        }else{
+                                            $nuevotsu = new tsutipospromocionessucursales;
+                                            $nuevotsu->fecid = $fecid;
+                                            $nuevotsu->sucid = $sucursalClienteId;
+                                            $nuevotsu->tprid = 2;
+                                            $nuevotsu->tsuporcentajecumplimiento = 0;
+                                            $nuevotsu->tsuvalorizadoobjetivo  = 0;
+                                            $nuevotsu->tsuvalorizadoreal      = $real;
+                                            $nuevotsu->tsuvalorizadorebate    = 0;
+                                            $nuevotsu->tsuvalorizadotogo      = 0;
+                                            if($nuevotsu->save()){
+                                                $tsuid = $nuevotsu->tsuid;
+                                            }else{
+            
+                                            }
+                                        }
+            
+                                        $sca = scasucursalescategorias::where('fecid', $fecid)
+                                                                    ->where('sucid', $sucursalClienteId)
+                                                                    ->where('catid', $categoriaid)
+                                                                    ->where('tsuid', $tsuid)
+                                                                    ->first(['scaid', 'scavalorizadoreal', 'scavalorizadoobjetivo']);
+            
+                                        $scaid = 0;
+                                        if($sca){
+                                            $scaid = $sca->scaid;
+            
+                                            $nuevoRealSca = $real + $sca->scavalorizadoreal;
+                                            $sca->scavalorizadoreal = $nuevoRealSca;
+                                            $sca->scavalorizadotogo = $sca->scavalorizadoobjetivo + $nuevoRealSca;
+                                            $sca->scaiconocategoria = env('APP_URL').'/Sistema/categorias-tiposPromociones/img/iconos/'.$categoriaNombre.'-Sell Out.png';
+                                            if($sca->update()){
+            
+                                            }else{
+            
+                                            }
+                                        }else{
+            
+                                            $nuevosca = new scasucursalescategorias;
+                                            $nuevosca->sucid                 = $sucursalClienteId;
+                                            $nuevosca->catid                 = $categoriaid;
+                                            $nuevosca->fecid                 = $fecid;
+                                            $nuevosca->tsuid                 = $tsuid;
+                                            $nuevosca->scavalorizadoobjetivo = 0;
+                                            $nuevosca->scaiconocategoria     = env('APP_URL').'/Sistema/categorias-tiposPromociones/img/iconos/'.$categoriaNombre.'-Sell Out.png';
+                                            $nuevosca->scavalorizadoreal     = $real;
+                                            $nuevosca->scavalorizadotogo     = 0;
+                                            if($nuevosca->save()){
+                                                $scaid = $nuevosca->scaid;
+                                            }else{
+            
+                                            }
+                                            
+                                        }
                                     }else{
-    
-                                    }
+                                        $skusNoExisten[] = $sku;
+                                        $respuesta = false;
+                                        $mensaje   = "Hay algunos skus no identificados";
+                                        $linea     = __LINE__;
+                                    }  
                                 }else{
-    
-                                    $nuevosca = new scasucursalescategorias;
-                                    $nuevosca->sucid                 = $sucursalClienteId;
-                                    $nuevosca->catid                 = $categoriaid;
-                                    $nuevosca->fecid                 = $fecid;
-                                    $nuevosca->tsuid                 = $tsuid;
-                                    $nuevosca->scavalorizadoobjetivo = 0;
-                                    $nuevosca->scaiconocategoria     = env('APP_URL').'/Sistema/categorias-tiposPromociones/img/iconos/'.$categoriaNombre.'-Sell Out.png';
-                                    $nuevosca->scavalorizadoreal     = $real;
-                                    $nuevosca->scavalorizadotogo     = 0;
-                                    if($nuevosca->save()){
-                                        $scaid = $nuevosca->scaid;
-                                    }else{
-    
-                                    }
-                                    
+                                    $respuesta = false;
+                                    $mensaje   = "No hay un cliente";
+                                    $log[]     = "No hay cliente";
+                                    $linea     = __LINE__;
                                 }
+
                             }else{
-                                $skusNoExisten[] = $sku;
-                            }  
+                                $respuesta = false;
+                                $mensaje   = "No se encontro el año en el excel";
+                                $log[]     = "No hay año";
+                                $linea     = __LINE__;
+                            }
+                        }else{
+                            $respuesta = false;
+                            $mensaje   = "No se encontro el mes en el excel";
+                            $log[]     = "No hay mes";
+                            $linea     = __LINE__;
                         }
                     }
                 }else{
