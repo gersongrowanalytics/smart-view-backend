@@ -109,7 +109,7 @@ class VentasMostrarController extends Controller
 
             $tsutipospromocionessucursales = tsutipospromocionessucursales::join('fecfechas as fec', 'tsutipospromocionessucursales.fecid', 'fec.fecid')
                                                                         ->join('tprtipospromociones as tpr', 'tpr.tprid', 'tsutipospromocionessucursales.tprid')
-                                                                        ->join('tretiposrebates as tre', 'tre.treid', 'tsutipospromocionessucursales.treid')
+                                                                        ->leftjoin('tretiposrebates as tre', 'tre.treid', 'tsutipospromocionessucursales.treid')
                                                                         ->where('tsutipospromocionessucursales.sucid', $sucid)
                                                                         ->where('fec.fecano', $ano)
                                                                         ->where('fec.fecmes', $mes)
