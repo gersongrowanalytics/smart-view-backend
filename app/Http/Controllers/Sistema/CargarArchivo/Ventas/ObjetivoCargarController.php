@@ -354,6 +354,11 @@ class ObjetivoCargarController extends Controller
                                 $categoriaid     = $pro->catid;
                                 $categoriaNombre = $pro->catnombre;
 
+                                $scas = scasucursalescategorias::where('fecid', $fecid)
+                                                    ->where('sucid', $sucursalClienteId)
+                                                    ->where('tsuid', $tsuid)
+                                                    ->get(['scaid', 'scavalorizadoobjetivo', 'catid']);
+                                                    
                                 $categorias = catcategorias::where('catid', '!=', 6)
                                                     ->get([
                                                         'catid',
@@ -377,19 +382,30 @@ class ObjetivoCargarController extends Controller
 
                                         }
                                     }else{
-                                        $nuevosca = new scasucursalescategorias;
-                                        $nuevosca->sucid                 = $sucursalClienteId;
-                                        $nuevosca->catid                 = $categoria->catid;
-                                        $nuevosca->fecid                 = $fecid;
-                                        $nuevosca->tsuid                 = $tsuid;
-                                        $nuevosca->scavalorizadoobjetivo = 0;
-                                        $nuevosca->scaiconocategoria     = env('APP_URL').'/Sistema/categorias-tiposPromociones/img/iconos/'.$categoria->catnombre.'-Sell In.png';
-                                        $nuevosca->scavalorizadoreal     = 0;
-                                        $nuevosca->scavalorizadotogo     = 0;
-                                        if($nuevosca->save()){
-                                            $scaid = $nuevosca->scaid;
-                                        }else{
 
+                                        $agregar = true;
+
+                                        foreach ($scas as $key => $sca) {
+                                            if($sca->catid == $categoria->catid){
+                                                $agregar = false;
+                                            }
+                                        }
+
+                                        if($agregar == true){
+                                            $nuevosca = new scasucursalescategorias;
+                                            $nuevosca->sucid                 = $sucursalClienteId;
+                                            $nuevosca->catid                 = $categoria->catid;
+                                            $nuevosca->fecid                 = $fecid;
+                                            $nuevosca->tsuid                 = $tsuid;
+                                            $nuevosca->scavalorizadoobjetivo = 0;
+                                            $nuevosca->scaiconocategoria     = env('APP_URL').'/Sistema/categorias-tiposPromociones/img/iconos/'.$categoria->catnombre.'-Sell In.png';
+                                            $nuevosca->scavalorizadoreal     = 0;
+                                            $nuevosca->scavalorizadotogo     = 0;
+                                            if($nuevosca->save()){
+                                                $scaid = $nuevosca->scaid;
+                                            }else{
+
+                                            }
                                         }
                                     }
                                 }
