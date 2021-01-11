@@ -178,7 +178,7 @@ class RebateActualizarController extends Controller
         $datos          = [];
         $mensajeDetalle = '';
         $mensajedev     = null;
-        $log            = ["escala" => ["entra" => [], "noentra" => []]];
+        $log            = ["escala" => ["entra" => [], "noentra" => [], "notienegrupoasignado" => [] ]];
 
         try{
             $tsus = tsutipospromocionessucursales::leftjoin('tretiposrebates as tre', 'tre.treid', 'tsutipospromocionessucursales.treid')
@@ -277,6 +277,25 @@ class RebateActualizarController extends Controller
                     $log['escala']['noentra'][] = "No entra en la escala rebate: ".$tsu->tsuid." de la sucursal: ".$tsu->sucnombre."(".$tsu->sucid.") con el grupo: ".$trenombre;
                 }
             }
+
+            $tsusnull = tsutipospromocionessucursales::leftjoin('tretiposrebates as tre', 'tre.treid', 'tsutipospromocionessucursales.treid')
+                                            ->join('sucsucursales as suc', 'suc.sucid', 'tsutipospromocionessucursales.sucid')
+                                            ->where('fecid', $fecid)
+                                            ->where('tsutipospromocionessucursales.treid', null)
+                                            ->get([
+                                                'tsuid',
+                                                'tre.treid',
+                                                'tre.trenombre',
+                                                'tprid',
+                                                'tsuporcentajecumplimiento',
+                                                'suc.sucid',
+                                                'suc.sucnombre'
+                                            ]);
+
+            foreach($tsusnull as $tsunull){
+                $log['escala']['notienegrupoasignado'][] = "No tiene grupo asignado: ".$tsunull->tsuid." de la sucursal: ".$tsunull->sucnombre."(".$tsunull->sucid.") con el grupo: ".$tsunull->trenombre;
+            }
+
         } catch (Exception $e) {
             $mensajedev = $e->getMessage();
         }
