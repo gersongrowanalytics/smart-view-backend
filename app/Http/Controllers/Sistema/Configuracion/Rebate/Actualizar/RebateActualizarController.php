@@ -178,17 +178,19 @@ class RebateActualizarController extends Controller
         $datos          = [];
         $mensajeDetalle = '';
         $mensajedev     = null;
-        $log            = ["escala" => ["entra" => [], "noentra" => [], "notienegrupoasignado" => [] ]];
+        $log            = ["escala" => ["entra" => [], "noentra" => [], "notienegrupoasignado" => [], "notieneescalas" => [] ]];
 
         try{
             $tsus = tsutipospromocionessucursales::leftjoin('tretiposrebates as tre', 'tre.treid', 'tsutipospromocionessucursales.treid')
                                             ->join('sucsucursales as suc', 'suc.sucid', 'tsutipospromocionessucursales.sucid')
+                                            ->join('tprtipospromociones as tpr', 'tpr.tprid', 'tsutipospromocionessucursales.tprid')
                                             ->where('fecid', $fecid)
                                             ->get([
                                                 'tsuid',
                                                 'tre.treid',
                                                 'tre.trenombre',
-                                                'tprid',
+                                                'tpr.tprid',
+                                                'tpr.tprnombre',
                                                 'tsuporcentajecumplimiento',
                                                 'suc.sucid',
                                                 'suc.sucnombre'
@@ -276,6 +278,22 @@ class RebateActualizarController extends Controller
                 }else{
                     $log['escala']['noentra'][] = "No entra en la escala rebate: ".$tsu->tsuid." de la sucursal: ".$tsu->sucnombre."(".$tsu->sucid.") con el grupo: ".$trenombre;
                 }
+
+                $trr = trrtiposrebatesrebates::join('rtprebatetipospromociones as rtp', 'rtp.rtpid', 'trrtiposrebatesrebates.rtpid')
+                                                ->where('trrtiposrebatesrebates.treid', $treidSeleccionado)
+                                                ->where('rtp.fecid', $fecid)
+                                                ->where('rtp.tprid', $tsu->tprid)
+                                                ->first([
+                                                    'trrtiposrebatesrebates.trrid',
+                                                    'rtp.rtpporcentajedesde',
+                                                    'rtp.rtpporcentajehasta',
+                                                    'rtp.rtpporcentajerebate',
+                                                    'trrtiposrebatesrebates.catid'
+                                                ]);
+
+                if(!$trr){
+                    $log['escala']['notieneescalas'][] = "No tiene escala asignada: ".$tsu->tsuid." de la sucursal: ".$tsu->sucnombre."(".$tsu->sucid.") con el grupo: ".$trenombre." en ".$tsu->tprnombre;
+                }
             }
 
             $tsusnull = tsutipospromocionessucursales::leftjoin('tretiposrebates as tre', 'tre.treid', 'tsutipospromocionessucursales.treid')
@@ -293,8 +311,11 @@ class RebateActualizarController extends Controller
                                             ]);
 
             foreach($tsusnull as $tsunull){
+
                 $log['escala']['notienegrupoasignado'][] = "No tiene grupo asignado: ".$tsunull->tsuid." de la sucursal: ".$tsunull->sucnombre."(".$tsunull->sucid.") con el grupo: ".$tsunull->trenombre;
             }
+
+
 
         } catch (Exception $e) {
             $mensajedev = $e->getMessage();
