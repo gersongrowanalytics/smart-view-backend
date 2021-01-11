@@ -393,7 +393,7 @@ class ClientesCargarController extends Controller
 
     public function ActualizarGrupoRebateOctubre(Request $request)
     {
-        $fecid = 3;
+        $fecid = 12;
         date_default_timezone_set("America/Lima");
         $fechaActual = date('Y-m-d H:i:s');
 
@@ -482,71 +482,71 @@ class ClientesCargarController extends Controller
                     }
                 }
 
-                $tsus = tsutipospromocionessucursales::where('fecid', $fecid)
-                                                ->get([
-                                                    'tsuid',
-                                                    'treid',
-                                                    'tprid',
-                                                    'tsuporcentajecumplimiento',
-                                                    'sucid'
-                                                ]);
+                // $tsus = tsutipospromocionessucursales::where('fecid', $fecid)
+                //                                 ->get([
+                //                                     'tsuid',
+                //                                     'treid',
+                //                                     'tprid',
+                //                                     'tsuporcentajecumplimiento',
+                //                                     'sucid'
+                //                                 ]);
 
-                foreach($tsus as $tsu){
+                // foreach($tsus as $tsu){
 
-                    $trrs = trrtiposrebatesrebates::join('rtprebatetipospromociones as rtp', 'rtp.rtpid', 'trrtiposrebatesrebates.rtpid')
-                                                    ->where('trrtiposrebatesrebates.treid', $tsu->treid)
-                                                    ->where('rtp.fecid', $fecid)
-                                                    ->where('rtp.tprid', $tsu->tprid)
-                                                    ->where('rtp.rtpporcentajedesde', '<=', round($tsu->tsuporcentajecumplimiento))
-                                                    ->where('rtp.rtpporcentajehasta', '>=', round($tsu->tsuporcentajecumplimiento))
-                                                    ->get([
-                                                        'trrtiposrebatesrebates.trrid',
-                                                        'rtp.rtpporcentajedesde',
-                                                        'rtp.rtpporcentajehasta',
-                                                        'rtp.rtpporcentajerebate',
-                                                        'trrtiposrebatesrebates.catid'
-                                                    ]);
+                //     $trrs = trrtiposrebatesrebates::join('rtprebatetipospromociones as rtp', 'rtp.rtpid', 'trrtiposrebatesrebates.rtpid')
+                //                                     ->where('trrtiposrebatesrebates.treid', $tsu->treid)
+                //                                     ->where('rtp.fecid', $fecid)
+                //                                     ->where('rtp.tprid', $tsu->tprid)
+                //                                     ->where('rtp.rtpporcentajedesde', '<=', round($tsu->tsuporcentajecumplimiento))
+                //                                     ->where('rtp.rtpporcentajehasta', '>=', round($tsu->tsuporcentajecumplimiento))
+                //                                     ->get([
+                //                                         'trrtiposrebatesrebates.trrid',
+                //                                         'rtp.rtpporcentajedesde',
+                //                                         'rtp.rtpporcentajehasta',
+                //                                         'rtp.rtpporcentajerebate',
+                //                                         'trrtiposrebatesrebates.catid'
+                //                                     ]);
 
-                    if(sizeof($trrs) > 0){
+                //     if(sizeof($trrs) > 0){
                         
-                        if(sizeof($trrs) <= 5){
-                            $totalRebate = 0;
-                            foreach($trrs as $posicion => $trr){
-                                if($posicion == 0){
-                                    $log['escala']['entra'][] = "Si entra en la escala rebate: ".$tsu->tsuid." de la sucursal: ".$tsu->sucid." con un cumplimiento de: ".round($tsu->tsuporcentajecumplimiento)." y escalas desde: ".$trr->rtpporcentajedesde." y hasta: ".$trr->rtpporcentajehasta;
-                                }
-                                $sca = scasucursalescategorias::where('tsuid', $tsu->tsuid)
-                                                            ->where('fecid', $fecid)
-                                                            ->where('catid', $trr->catid)
-                                                            ->first([
-                                                                'scaid',
-                                                                'scavalorizadoreal'
-                                                            ]);
+                //         if(sizeof($trrs) <= 5){
+                //             $totalRebate = 0;
+                //             foreach($trrs as $posicion => $trr){
+                //                 if($posicion == 0){
+                //                     $log['escala']['entra'][] = "Si entra en la escala rebate: ".$tsu->tsuid." de la sucursal: ".$tsu->sucid." con un cumplimiento de: ".round($tsu->tsuporcentajecumplimiento)." y escalas desde: ".$trr->rtpporcentajedesde." y hasta: ".$trr->rtpporcentajehasta;
+                //                 }
+                //                 $sca = scasucursalescategorias::where('tsuid', $tsu->tsuid)
+                //                                             ->where('fecid', $fecid)
+                //                                             ->where('catid', $trr->catid)
+                //                                             ->first([
+                //                                                 'scaid',
+                //                                                 'scavalorizadoreal'
+                //                                             ]);
 
-                                if($sca){
-                                    $nuevoRebate = ($sca->scavalorizadoreal*$trr->rtpporcentajerebate)/100;
-                                    $totalRebate = $totalRebate + $nuevoRebate;
-                                }else{
+                //                 if($sca){
+                //                     $nuevoRebate = ($sca->scavalorizadoreal*$trr->rtpporcentajerebate)/100;
+                //                     $totalRebate = $totalRebate + $nuevoRebate;
+                //                 }else{
 
-                                }
+                //                 }
 
-                            }
+                //             }
 
-                            $tsuu = tsutipospromocionessucursales::find($tsu->tsuid);
-                            $tsuu->tsuvalorizadorebate = $totalRebate;
-                            $tsuu->update();
+                //             $tsuu = tsutipospromocionessucursales::find($tsu->tsuid);
+                //             $tsuu->tsuvalorizadorebate = $totalRebate;
+                //             $tsuu->update();
 
 
-                        }else{
-                            echo "Hay mas de 5 datos: ";
-                            foreach($trrs as $trr){
-                                echo $trr->trrid;
-                            }
-                        }
-                    }else{
-                        $log['escala']['noentra'][] = "No entra en la escala rebate: ".$tsu->tsuid." de la sucursal: ".$tsu->sucid;
-                    }
-                }
+                //         }else{
+                //             echo "Hay mas de 5 datos: ";
+                //             foreach($trrs as $trr){
+                //                 echo $trr->trrid;
+                //             }
+                //         }
+                //     }else{
+                //         $log['escala']['noentra'][] = "No entra en la escala rebate: ".$tsu->tsuid." de la sucursal: ".$tsu->sucid;
+                //     }
+                // }
             }
 
             $nuevoCargaArchivo = new carcargasarchivos;
