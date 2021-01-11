@@ -939,7 +939,7 @@ class ObjetivoCargarController extends Controller
                                 $scas = scasucursalescategorias::where('fecid', $fecid)
                                                     ->where('sucid', $sucursalClienteId)
                                                     ->where('tsuid', $tsuid)
-                                                    ->first(['scaid', 'scavalorizadoobjetivo', 'catid']);
+                                                    ->get(['scaid', 'scavalorizadoobjetivo', 'catid']);
 
                                 $categorias = catcategorias::where('catid', '!=', 6)
                                                     ->get([
