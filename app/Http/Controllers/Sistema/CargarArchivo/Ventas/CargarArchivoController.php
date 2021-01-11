@@ -386,8 +386,17 @@ class CargarArchivoController extends Controller
             
                                             }
                                         }else{
+
+                                            $suc = sucsucursales::find($sucursalClienteId);
+                                            $treid = 0;
+                                            if($suc){
+                                                $treid = $suc->treid;
+                                            }
+
+
                                             $nuevotsu = new tsutipospromocionessucursales;
                                             $nuevotsu->fecid = $fecid;
+                                            $nuevotsu->treid = $treid;
                                             $nuevotsu->sucid = $sucursalClienteId;
                                             $nuevotsu->tprid = 1;
                                             $nuevotsu->tsuporcentajecumplimiento = 0;
@@ -931,8 +940,16 @@ class CargarArchivoController extends Controller
             
                                             }
                                         }else{
+
+                                            $suc = sucsucursales::find($sucursalClienteId);
+                                            $treid = 0;
+                                            if($suc){
+                                                $treid = $suc->treid;
+                                            }
+
                                             $nuevotsu = new tsutipospromocionessucursales;
                                             $nuevotsu->fecid = $fecid;
+                                            $nuevotsu->treid = $treid;
                                             $nuevotsu->sucid = $sucursalClienteId;
                                             $nuevotsu->tprid = 2;
                                             $nuevotsu->tsuporcentajecumplimiento = 0;
