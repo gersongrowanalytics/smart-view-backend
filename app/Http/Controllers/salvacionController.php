@@ -9,6 +9,7 @@ use App\prppromocionesproductos;
 use App\ussusuariossucursales;
 use App\sucsucursales;
 use App\scasucursalescategorias;
+use App\tsutipospromocionessucursales;
 
 class salvacionController extends Controller
 {
@@ -166,7 +167,7 @@ class salvacionController extends Controller
             $tsu->update();
         }
 
-        
+
     }
 }
 
