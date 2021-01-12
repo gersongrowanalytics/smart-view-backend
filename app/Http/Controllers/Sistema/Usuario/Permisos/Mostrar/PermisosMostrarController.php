@@ -12,7 +12,7 @@ class PermisosMostrarController extends Controller
     // Muestra los permisos de usuario 
     public function mostrarPermisosUsuario(Request $request)
     {
-        $usutoken = $request->header('api_token');
+        $usutoken = $request['api_token'];
         $usuusuario = usuusuarios::where('usutoken', $usutoken)->first(['tpuid']);
 
         $respuesta = false;
