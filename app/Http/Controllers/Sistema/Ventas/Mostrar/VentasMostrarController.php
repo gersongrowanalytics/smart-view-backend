@@ -595,7 +595,7 @@ class VentasMostrarController extends Controller
                         }
                     }
 
-                    $dataarray[$posicionTpr]['trrs'] = $plantillaTrrs;
+                    // $dataarray[$posicionTpr]['trrs'] = $plantillaTrrs;
                 }
             }else{
 
