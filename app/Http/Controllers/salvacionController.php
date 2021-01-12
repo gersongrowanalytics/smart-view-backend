@@ -154,6 +154,20 @@ class salvacionController extends Controller
     {
             
     }
+
+    public function ActualizarToGo($fecid)
+    {
+        $tsus = tsutipospromocionessucursales::where('fecid', $fecid)
+                                            ->get();
+
+        foreach($tsus as $tsu){
+            $tsu = tsutipospromocionessucursales::find($tsu->tsuid);
+            $tsu->tsuvalorizadotogo = $tsu->tsuvalorizadoobjetivo - $tsu->tsuvalorizadoreal;
+            $tsu->update();
+        }
+
+        
+    }
 }
 
 

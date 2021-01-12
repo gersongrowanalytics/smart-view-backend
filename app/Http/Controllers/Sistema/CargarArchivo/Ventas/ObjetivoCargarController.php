@@ -290,7 +290,7 @@ class ObjetivoCargarController extends Controller
                             $nuevotsu->tsuvalorizadoobjetivo     = $objetivo;
                             $nuevotsu->tsuvalorizadoreal         = 0;
                             $nuevotsu->tsuvalorizadorebate       = 0;
-                            $nuevotsu->tsuvalorizadotogo         = 0;
+                            $nuevotsu->tsuvalorizadotogo         = $objetivo;
                             if($nuevotsu->save()){
                                 $tsuid = $nuevotsu->tsuid;
                             }else{
@@ -875,7 +875,7 @@ class ObjetivoCargarController extends Controller
                             $nuevotsu->tsuvalorizadoobjetivo     = $objetivo;
                             $nuevotsu->tsuvalorizadoreal         = 0;
                             $nuevotsu->tsuvalorizadorebate       = 0;
-                            $nuevotsu->tsuvalorizadotogo         = 0;
+                            $nuevotsu->tsuvalorizadotogo         = $objetivo;
                             if($nuevotsu->save()){
                                 $tsuid = $nuevotsu->tsuid;
                             }else{
