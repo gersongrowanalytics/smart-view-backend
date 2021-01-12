@@ -346,6 +346,30 @@ class VentasMostrarController extends Controller
 
         try{
             
+            $plantillaTrrs = array(
+                array(
+                    "rtpid" => 0,
+                    "rtpporcentajedesde" => "95",
+                    "rtpporcentajehasta" => "99",
+                    "rtpporcentajerebate" => "0",
+                    "realTotal" => "0"
+                ),
+                array(
+                    "rtpid" => 0,
+                    "rtpporcentajedesde" => "100",
+                    "rtpporcentajehasta" => "104",
+                    "rtpporcentajerebate" => "0",
+                    "realTotal" => "0"
+                ),
+                array(
+                    "rtpid" => 0,
+                    "rtpporcentajedesde" => "105",
+                    "rtpporcentajehasta" => "10000",
+                    "rtpporcentajerebate" => "0",
+                    "realTotal" => "0"
+                ),
+            );
+
             $dataarray = array(
                 array(
 
@@ -431,28 +455,6 @@ class VentasMostrarController extends Controller
 
                     $dataarray[$posicionTpr]['categorias'] = array(array());
 
-                    $trrs = array(
-                        array(
-                            "rtpid" => 0,
-                            "rtpporcentajedesde" => "95",
-                            "rtpporcentajehasta" => "99",
-                            "rtpporcentajerebate" => "0"
-                        ),
-                        array(
-                            "rtpid" => 0,
-                            "rtpporcentajedesde" => "100",
-                            "rtpporcentajehasta" => "104",
-                            "rtpporcentajerebate" => "0"
-                        ),
-                        array(
-                            "rtpid" => 0,
-                            "rtpporcentajedesde" => "105",
-                            "rtpporcentajehasta" => "10000",
-                            "rtpporcentajerebate" => "0"
-                        ),
-                    );
-
-                    $dataarray[$posicionTpr]['trrs'] = $trrs;
                     $dataarray[$posicionTpr]['fecid'] = "";
                     $dataarray[$posicionTpr]['treid'] = "";
                     $dataarray[$posicionTpr]['trenombre'] = "";
@@ -469,6 +471,7 @@ class VentasMostrarController extends Controller
                                                                 'fec.fecid',
                                                                 'tre.treid',
                                                                 'tre.trenombre',
+                                                                'tsutipospromocionessucursales.tprid',
                                                                 'tsutipospromocionessucursales.tsuid',
                                                                 'tsutipospromocionessucursales.tsuvalorizadoobjetivo',
                                                                 'tsutipospromocionessucursales.tsuvalorizadoreal',
@@ -506,7 +509,13 @@ class VentasMostrarController extends Controller
 
                                     $scas = scasucursalescategorias::where('tsuid', $tsu->tsuid )
                                                                     ->where('catid', $categoria->catid)
-                                                                    ->get(['scavalorizadoobjetivo', 'scavalorizadoreal', 'scavalorizadotogo', 'scaiconocategoria']);
+                                                                    ->get([
+                                                                        'catid',
+                                                                        'scavalorizadoobjetivo', 
+                                                                        'scavalorizadoreal', 
+                                                                        'scavalorizadotogo', 
+                                                                        'scaiconocategoria'
+                                                                    ]);
 
                                     if(sizeof($scas) > 0){
 
@@ -515,6 +524,30 @@ class VentasMostrarController extends Controller
                                             $dataarray[$posicionTpr]['categorias'][$posicionCat]['scavalorizadoreal']     = $dataarray[$posicionTpr]['categorias'][$posicionCat]['scavalorizadoreal']     + $sca->scavalorizadoreal;
                                             $dataarray[$posicionTpr]['categorias'][$posicionCat]['scavalorizadotogo']     = $dataarray[$posicionTpr]['categorias'][$posicionCat]['scavalorizadotogo']     + $sca->scavalorizadotogo;
                                             $dataarray[$posicionTpr]['categorias'][$posicionCat]['scaiconocategoria']     = $sca->scaiconocategoria;
+
+                                            foreach($plantillaTrrs as $posPlantillaTrr => $plantillaTrr){
+                                                $trrEsp = trrtiposrebatesrebates::join('rtprebatetipospromociones as rtp', 'rtp.rtpid', 'trrtiposrebatesrebates.rtpid')
+                                                                                ->where('treid', $tsu->treid)
+                                                                                ->where('rtp.tprid', $tsu->tprid)
+                                                                                ->where('rtp.fecid', $tsu->fecid)
+                                                                                ->where('trrtiposrebatesrebates.catid', $sca->catid)
+                                                                                ->where('rtp.rtpporcentajedesde', $plantillaTrr['rtpporcentajedesde'])
+                                                                                ->where('rtp.rtpporcentajehasta', $plantillaTrr['rtpporcentajehasta'])
+                                                                                // ->distinct('rtpid')
+                                                                                ->first([
+                                                                                    'rtp.rtpid',
+                                                                                    'rtpporcentajedesde',
+                                                                                    'rtpporcentajehasta',
+                                                                                    'rtpporcentajerebate'
+                                                                                ]);
+
+                                                if($trrEsp){
+                                                    $realRebate = ($sca->scavalorizadoobjetivo * $trrEsp->rtpporcentajerebate)/100;
+                                                    $plantillaTrr[$posPlantillaTrr]['realTotal'] = $plantillaTrr[$posPlantillaTrr]['realTotal'] + $realRebate;
+                                                }
+                                            }
+
+
                                         }
 
                                     }else{
@@ -525,6 +558,9 @@ class VentasMostrarController extends Controller
                             }else{
 
                             }
+
+
+
                         }else{
                             $dataarray[$posicionTpr]['tsuvalorizadoobjetivo']     = $dataarray[$posicionTpr]['tsuvalorizadoobjetivo']     + 0;
                             $dataarray[$posicionTpr]['tsuvalorizadoreal']         = $dataarray[$posicionTpr]['tsuvalorizadoreal']         + 0;
@@ -558,6 +594,8 @@ class VentasMostrarController extends Controller
                             }
                         }
                     }
+
+                    $dataarray[$posicionTpr]['trrs'] = $plantillaTrrs;
                 }
             }else{
 
