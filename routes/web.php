@@ -102,7 +102,7 @@ $router->get('/obtenerSellOutEspecifico/{anioSelec}/{mesSelec}/{diaSelec}', 'Sis
 $router->get('/obtenerSellOutEspecificoWeb/{anioSelec}/{mesSelec}/{diaSelec}', 'Sistema\SellOut\CargarSellOutController@CargarSellOutEspecificoWeb');
 
 
-$router->get('/actualizarTogo', 'salvacionController@ActualizarToGo');
+$router->get('/actualizarTogo/{fecid}', 'salvacionController@ActualizarToGo');
 
 
 
