@@ -464,6 +464,7 @@ class VentasMostrarController extends Controller
                                                             ->join('tretiposrebates as tre', 'tre.treid', 'tsutipospromocionessucursales.treid')
                                                             ->join('sucsucursales as suc', 'suc.sucid', 'tsutipospromocionessucursales.sucid')
                                                             ->where('tsutipospromocionessucursales.sucid', $usu->sucid)
+                                                            ->where('suc.sucestado', 1)
                                                             ->where('tsutipospromocionessucursales.tprid', $tpr->tprid)
                                                             ->where('fec.fecano', $ano)
                                                             ->where('fec.fecmes', $mes)
@@ -478,8 +479,7 @@ class VentasMostrarController extends Controller
                                                                 'tsutipospromocionessucursales.tsuvalorizadoreal',
                                                                 'tsutipospromocionessucursales.tsuvalorizadotogo',
                                                                 'tsutipospromocionessucursales.tsuporcentajecumplimiento',
-                                                                'tsutipospromocionessucursales.tsuvalorizadorebate',
-                                                                'suc.sucnombre'
+                                                                'tsutipospromocionessucursales.tsuvalorizadorebate'
                                                             ]);
                         if($tsu){
                             
@@ -554,7 +554,7 @@ class VentasMostrarController extends Controller
                                                         // $realRebate = ($sca->scavalorizadoobjetivo * $trrEsp->rtpporcentajerebate)/100;
                                                     }
 
-                                                    $plantillaTrrs[$posPlantillaTrr]['reales'][]  = $tsu->sucnombre." - ".$tsu->trenombre." ".$realRebate;
+                                                    $plantillaTrrs[$posPlantillaTrr]['reales'][]  = $tsu->trenombre." ".$realRebate;
                                                     $plantillaTrrs[$posPlantillaTrr]['realTotal'] = $plantillaTrrs[$posPlantillaTrr]['realTotal'] + $realRebate;
                                                 }
                                             }
