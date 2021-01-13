@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\usuusuarios;
 use App\perpersonas;
+use App\ussusuariossucursales;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
 use App\Mail\MailCrearUsuario;
@@ -32,6 +33,8 @@ class UsuarioCrearController extends Controller
         $usuario    = $request['usuario'];
         $contrasena = $request['contrasena'];
         $correo     = $request['correo'];
+
+        $sucs     = $request['sucs'];
         
         $respuesta      = true;
         $mensaje        = '';
@@ -72,7 +75,7 @@ class UsuarioCrearController extends Controller
             if($perid != 0){
                 
                 $pkid = 'PER-'.$perid;
-
+                
                 $usu = usuusuarios::where('ususoldto', $soldto)->first();
                 if($usu){
                     $respuesta = false;
@@ -105,6 +108,19 @@ class UsuarioCrearController extends Controller
                         $mensaje = "El usuario se creo satisfactoriamente";
                         $log[] = "El usuario se registro correctamente usuid: ".$usun->usuid;
                         $pkid = $pkid.' || USU-'.$usun->usuid;
+
+
+                        foreach($sucs as $suc){
+                            foreach($suc['sucs'] as $sucSeleccionada){
+                                if($sucSeleccionada['seleccionado'] == true){
+                                    $ussn = new ussusuariossucursales;
+                                    $ussn->usuid = $usun->usuid;
+                                    $ussn->sucid = $sucSeleccionada['sucid'];
+                                    $ussn->save();
+                                }
+                            }
+                        }
+
                     }else{
                         $mensaje = "Lo sentimos, ocurrio un error al momento de crear el usuario";
                         $mensajeDetalle = "Porfavor verifique los campos como correo, usuario";

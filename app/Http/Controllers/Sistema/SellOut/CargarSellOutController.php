@@ -12,6 +12,7 @@ use App\scasucursalescategorias;
 use App\proproductos;
 use App\vsoventassso;
 use App\sucsucursales;
+use App\catcategorias;
 
 class CargarSellOutController extends Controller
 {
@@ -904,7 +905,7 @@ class CargarSellOutController extends Controller
             $fecn->fecano       = $anioSelec;
             if($fecn->save()){
                 $fecidFec = $fecn->fecid;
-                $pks["PK_FECHAS"]["NUEVOS"][] = "NUEVA FEC-".$fecid;
+                $pks["PK_FECHAS"]["NUEVOS"][] = "NUEVA FEC-".$fecidFec;
             }
         }
         
@@ -995,7 +996,8 @@ class CargarSellOutController extends Controller
 
                     if($vso){
 
-                        $vso->vsovalorizado = $real + $vso->vsovalorizado;
+                        // $vso->vsovalorizado = $real + $vso->vsovalorizado;
+                        $vso->vsovalorizado = $real;
                         if($vso->update()){
                             $pks['PK_VENTAS_SSO']["EDITADOS"][] = "VSO-".$vso->vsoid;
                         }
@@ -1036,10 +1038,7 @@ class CargarSellOutController extends Controller
                                 ->where('sucid', $suc->sucid)
                                 ->sum('vsovalorizado');
 
-            $tsu = tsutipospromocionessucursales::join('fecfechas as fec', 'fec.fecid', 'tsutipospromocionessucursales.fecid')
-                                                ->where('fec.fecano', $anioSelec)
-                                                ->where('fec.fecmes', $mesSelec)
-                                                ->where('fec.fecdia', "01")
+            $tsu = tsutipospromocionessucursales::where('fecid', $fecidFec)
                                                 ->where('sucid', $suc->sucid)
                                                 ->where('tprid', $tprid)
                                                 ->first([
@@ -1087,26 +1086,21 @@ class CargarSellOutController extends Controller
                 }
             }
 
-            $vsos = vsoventassso::join('fecfechas as fec', 'fec.fecid', 'vsoventassso.fecid')
+            $cats = catcategorias::where('catid', '!=', 6)->get();
+
+            foreach($cats as $cat){
+                
+                $nuevoRealSca = vsoventassso::join('fecfechas as fec', 'fec.fecid', 'vsoventassso.fecid')
                                 ->join('proproductos as pro', 'pro.proid', 'vsoventassso.proid')
                                 ->where('fec.fecano', $anioSelec)
-                                ->where('fec.fecmes', $mesSelec)
+                                ->where('fec.fecmes', $mesTxtFec)
+                                ->where('pro.catid', $cat->catid)
                                 ->where('sucid', $suc->sucid)
-                                ->get([
-                                    'pro.catid',
-                                    'vsovalorizado'
-                                ]);
+                                ->sum('vsovalorizado');
 
-            foreach ($vsos as $key => $vso) {
-
-                $real = $vso->vsovalorizado;
-
-                $sca = scasucursalescategorias::join('fecfechas as fec', 'fec.fecid', 'scasucursalescategorias.fecid')
-                                            ->where('fec.fecano', $anioSelec)
-                                            ->where('fec.fecmes', $mesTxtFec)
-                                            ->where('fec.fecdia', "01")
+                $sca = scasucursalescategorias::where('fecid', $fecidFec)
                                             ->where('sucid', $suc->sucid)
-                                            ->where('catid', $vso->catid)
+                                            ->where('catid', $cat->catid)
                                             ->where('tsuid', $tsuid)
                                             ->first([
                                                 'scaid', 
@@ -1117,8 +1111,6 @@ class CargarSellOutController extends Controller
                 $scaid = 0;
                 if($sca){
                     $scaid = $sca->scaid;
-
-                    $nuevoRealSca = $real + $sca->scavalorizadoreal;
                     $sca->scavalorizadoreal = $nuevoRealSca;
 
                     if($sca->scavalorizadoobjetivo == 0){
@@ -1128,7 +1120,7 @@ class CargarSellOutController extends Controller
                     }
 
 
-                    $sca->scaiconocategoria = env('APP_URL').'/Sistema/categorias-tiposPromociones/img/iconos/'.$categoriaNombre.'-'.$tprnombre.'.png';
+                    $sca->scaiconocategoria = env('APP_URL').'/Sistema/categorias-tiposPromociones/img/iconos/'.$cat->catnombre.'-'.$tprnombre.'.png';
                     if($sca->update()){
                         $pks['PK_SCA']["EDITADOS"][] = "SCA-".$scaid;
                     }
@@ -1137,12 +1129,12 @@ class CargarSellOutController extends Controller
 
                     $nuevosca = new scasucursalescategorias;
                     $nuevosca->sucid                 = $suc->sucid;
-                    $nuevosca->catid                 = $vso->catid;
+                    $nuevosca->catid                 = $cat->catid;
                     $nuevosca->fecid                 = $fecidFec;
                     $nuevosca->tsuid                 = $tsuid;
                     $nuevosca->scavalorizadoobjetivo = 0;
-                    $nuevosca->scaiconocategoria     = env('APP_URL').'/Sistema/categorias-tiposPromociones/img/iconos/'.$categoriaNombre.'-'.$tprnombre.'.png';
-                    $nuevosca->scavalorizadoreal     = $real;
+                    $nuevosca->scaiconocategoria     = env('APP_URL').'/Sistema/categorias-tiposPromociones/img/iconos/'.$cat->catnombre.'-'.$tprnombre.'.png';
+                    $nuevosca->scavalorizadoreal     = $nuevoRealSca;
                     $nuevosca->scavalorizadotogo     = 0;
                     if($nuevosca->save()){
                         $scaid = $nuevosca->scaid;
@@ -1150,6 +1142,9 @@ class CargarSellOutController extends Controller
                     }
 
                 }
+
+
+
             }
         }
 
