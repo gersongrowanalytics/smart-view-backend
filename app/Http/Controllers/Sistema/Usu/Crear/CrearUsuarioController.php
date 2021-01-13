@@ -96,11 +96,13 @@ class CrearUsuarioController extends Controller
 
                     foreach($sucs as $suc){
                         foreach($suc['sucs'] as $sucSeleccionada){
-                            if($sucSeleccionada['seleccionado'] == true){
-                                $ussn = new ussusuariossucursales;
-                                $ussn->usuid = $usun->usuid;
-                                $ussn->sucid = $sucSeleccionada['sucid'];
-                                $ussn->save();
+                            if(isset($sucSeleccionada['seleccionado'])){
+                                if($sucSeleccionada['seleccionado'] == true){
+                                    $ussn = new ussusuariossucursales;
+                                    $ussn->usuid = $usun->usuid;
+                                    $ussn->sucid = $sucSeleccionada['sucid'];
+                                    $ussn->save();
+                                }
                             }
                         }
                     }
