@@ -45,6 +45,7 @@ class CrearUsuarioController extends Controller
         $zonid      = $request['zonid'];
         $sucursales = $request['sucursales'];
 
+        $sucs     = $request['sucs'];
 
         DB::beginTransaction();
 
@@ -93,24 +94,30 @@ class CrearUsuarioController extends Controller
                 if($usun->save()){
                     $pkid = $pkid." ".$usun->usuid;
 
-                    $uss = new ussusuariossucursales;
-                    $uss->usuid = $usun->usuid;
-                    $uss->sucid = $sucursales[1];
-                    if($uss->save()){
-                        $data = [
-                            "correo"     => $correo,
-                            'nombre'     => $nombre." ".$apellPat." ".$apellMat,
-                            "usuario"    => $usuario,
-                            "contrasena" => $pass
-                        ];
-    
-                        $pos = strpos($correo, "@gmail.com");
-                        
-                        if($pos){
-                            // Mail::to($correo)->send(new MailCrearUsuario($data));
-                        }else{
-                            // Mail::to($correo)->send(new MailCrearUsuarioOutlook($data));
+                    foreach($sucs as $suc){
+                        foreach($suc['sucs'] as $sucSeleccionada){
+                            if($sucSeleccionada['seleccionado'] == true){
+                                $ussn = new ussusuariossucursales;
+                                $ussn->usuid = $usun->usuid;
+                                $ussn->sucid = $sucSeleccionada['sucid'];
+                                $ussn->save();
+                            }
                         }
+                    }
+
+                    $data = [
+                        "correo"     => $correo,
+                        'nombre'     => $nombre." ".$apellPat." ".$apellMat,
+                        "usuario"    => $usuario,
+                        "contrasena" => $pass
+                    ];
+
+                    $pos = strpos($correo, "@gmail.com");
+                    
+                    if($pos){
+                        // Mail::to($correo)->send(new MailCrearUsuario($data));
+                    }else{
+                        // Mail::to($correo)->send(new MailCrearUsuarioOutlook($data));
                     }
 
                 }else{
