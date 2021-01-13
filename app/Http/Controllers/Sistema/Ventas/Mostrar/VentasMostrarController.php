@@ -525,27 +525,27 @@ class VentasMostrarController extends Controller
                                             $dataarray[$posicionTpr]['categorias'][$posicionCat]['scavalorizadotogo']     = $dataarray[$posicionTpr]['categorias'][$posicionCat]['scavalorizadotogo']     + $sca->scavalorizadotogo;
                                             $dataarray[$posicionTpr]['categorias'][$posicionCat]['scaiconocategoria']     = $sca->scaiconocategoria;
 
-                                            // foreach($plantillaTrrs as $posPlantillaTrr => $plantillaTrr){
-                                            //     $trrEsp = trrtiposrebatesrebates::join('rtprebatetipospromociones as rtp', 'rtp.rtpid', 'trrtiposrebatesrebates.rtpid')
-                                            //                                     ->where('treid', $tsu->treid)
-                                            //                                     ->where('rtp.tprid', $tsu->tprid)
-                                            //                                     ->where('rtp.fecid', $tsu->fecid)
-                                            //                                     ->where('trrtiposrebatesrebates.catid', $sca->catid)
-                                            //                                     ->where('rtp.rtpporcentajedesde', $plantillaTrr['rtpporcentajedesde'])
-                                            //                                     ->where('rtp.rtpporcentajehasta', $plantillaTrr['rtpporcentajehasta'])
-                                            //                                     // ->distinct('rtpid')
-                                            //                                     ->first([
-                                            //                                         'rtp.rtpid',
-                                            //                                         'rtpporcentajedesde',
-                                            //                                         'rtpporcentajehasta',
-                                            //                                         'rtpporcentajerebate'
-                                            //                                     ]);
+                                            foreach($plantillaTrrs as $posPlantillaTrr => $plantillaTrr){
+                                                $trrEsp = trrtiposrebatesrebates::join('rtprebatetipospromociones as rtp', 'rtp.rtpid', 'trrtiposrebatesrebates.rtpid')
+                                                                                ->where('treid', $tsu->treid)
+                                                                                ->where('rtp.tprid', $tsu->tprid)
+                                                                                ->where('rtp.fecid', $tsu->fecid)
+                                                                                ->where('trrtiposrebatesrebates.catid', $sca->catid)
+                                                                                ->where('rtp.rtpporcentajedesde', $plantillaTrr['rtpporcentajedesde'])
+                                                                                ->where('rtp.rtpporcentajehasta', $plantillaTrr['rtpporcentajehasta'])
+                                                                                // ->distinct('rtpid')
+                                                                                ->first([
+                                                                                    'rtp.rtpid',
+                                                                                    'rtpporcentajedesde',
+                                                                                    'rtpporcentajehasta',
+                                                                                    'rtpporcentajerebate'
+                                                                                ]);
 
-                                            //     if($trrEsp){
-                                            //         $realRebate = ($sca->scavalorizadoobjetivo * $trrEsp->rtpporcentajerebate)/100;
-                                            //         $plantillaTrr[$posPlantillaTrr]['realTotal'] = $plantillaTrr[$posPlantillaTrr]['realTotal'] + $realRebate;
-                                            //     }
-                                            // }
+                                                if($trrEsp){
+                                                    $realRebate = ($sca->scavalorizadoobjetivo * $trrEsp->rtpporcentajerebate)/100;
+                                                    $plantillaTrrs[$posPlantillaTrr]['realTotal'] = $plantillaTrrs[$posPlantillaTrr]['realTotal'] + $realRebate;
+                                                }
+                                            }
 
 
                                         }
