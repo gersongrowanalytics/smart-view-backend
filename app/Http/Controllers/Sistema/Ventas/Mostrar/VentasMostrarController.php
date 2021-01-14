@@ -325,7 +325,8 @@ class VentasMostrarController extends Controller
     {
         $usutoken   = $request['usutoken'];
         $zonid      = $request['zonid'];
-        $dia        = $request['dia'];
+        // $dia        = $request['dia'];
+        $dia        = "01";
         $mes        = $request['mes'];
         $ano        = $request['ano'];
 
