@@ -22,6 +22,7 @@ class UsuariosMostrarController extends Controller
         try{
             $usuarios = usuusuarios::join('perpersonas as per', 'per.perid', 'usuusuarios.perid')
                                 ->join('tputiposusuarios as tpu', 'tpu.tpuid', 'usuusuarios.tpuid')
+                                ->orderBy('usuusuarios.created_at', 'DESC')
                                 ->get([
                                     'usuusuarios.usuid',
                                     'tpu.tpuid',
