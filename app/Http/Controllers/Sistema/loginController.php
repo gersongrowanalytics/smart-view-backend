@@ -40,7 +40,11 @@ class loginController extends Controller
                                             'tpu.tpunombre',
                                             'tpu.tpuprivilegio',
                                             'per.pernombre',
-                                            'per.pernombrecompleto'
+                                            'per.pernombrecompleto',
+                                            'per.perdireccion',
+                                            'per.perfechanacimiento',
+                                            'per.percelular',
+                                            'usuusuarios.usuorganizacion'
                                         ]);
 
             if($usuusaurio){
