@@ -88,6 +88,9 @@ $router->group(['middleware' => ['permisos']], function() use($router) {
 
     $router->post('/configuracion/crear/rebateTrimestral', 'Sistema\Trimestre\CrearTrimestreController@CrearTrimestre');
     $router->post('/configuracion/actualizar/rebateTrimestral', 'Sistema\Trimestre\ActualizarTrimestreController@ActualizarTrimestre');
+
+    $router->post('/perfil/editar/editarPerfil', 'Sistema\Perfil\Editar\EditarPerfilController@EditarPerfil');
+
 });
 
 
