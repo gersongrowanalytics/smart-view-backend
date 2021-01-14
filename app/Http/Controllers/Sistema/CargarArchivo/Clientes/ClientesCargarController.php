@@ -397,8 +397,8 @@ class ClientesCargarController extends Controller
         date_default_timezone_set("America/Lima");
         $fechaActual = date('Y-m-d H:i:s');
 
-        $respuesta      = false;
-        $mensaje        = '';
+        $respuesta      = true;
+        $mensaje        = 'Los clientes se actualizaron correctamente!';
         $datos          = [];
         $linea          = __LINE__;
         $mensajeDetalle = '';

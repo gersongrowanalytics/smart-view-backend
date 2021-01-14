@@ -15,7 +15,7 @@ class CategoriasController extends Controller
     {
         $usutoken   = $request['usutoken'];
         $sucid      = $request['sucid'];
-        $dia        = $request['dia'];
+        $dia        = "01";
         $mes        = $request['mes'];
         $ano        = $request['ano'];
         
