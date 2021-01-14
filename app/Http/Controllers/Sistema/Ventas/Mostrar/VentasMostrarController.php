@@ -407,8 +407,8 @@ class VentasMostrarController extends Controller
             );
             
             $usus = usuusuarios::join('ussusuariossucursales as uss', 'uss.usuid', 'usuusuarios.usuid')
-                        ->join('sucsucursales as suc', 'suc.sucid', 'uss.sucid')
-                        ->where('suc.sucestado', 1)
+                        // ->join('sucsucursales as suc', 'suc.sucid', 'uss.sucid')
+                        // ->where('suc.sucestado', 1)
                         ->where('usuusuarios.tpuid', 2) 
                         ->where('usuusuarios.zonid', $zonid)
                         ->where('usuusuarios.estid', 1)
@@ -464,9 +464,9 @@ class VentasMostrarController extends Controller
                     foreach($usus as $usu){
                         $tsu = tsutipospromocionessucursales::join('fecfechas as fec', 'tsutipospromocionessucursales.fecid', 'fec.fecid')
                                                             ->join('tretiposrebates as tre', 'tre.treid', 'tsutipospromocionessucursales.treid')
-                                                            // ->join('sucsucursales as suc', 'suc.sucid', 'tsutipospromocionessucursales.sucid')
+                                                            ->join('sucsucursales as suc', 'suc.sucid', 'tsutipospromocionessucursales.sucid')
                                                             ->where('tsutipospromocionessucursales.sucid', $usu->sucid)
-                                                            // ->where('suc.sucestado', 1)
+                                                            ->where('suc.sucestado', 1)
                                                             ->where('tsutipospromocionessucursales.tprid', $tpr->tprid)
                                                             ->where('fec.fecano', $ano)
                                                             ->where('fec.fecmes', $mes)
