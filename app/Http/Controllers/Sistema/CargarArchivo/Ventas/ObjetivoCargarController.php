@@ -696,7 +696,21 @@ class ObjetivoCargarController extends Controller
                             $fecid = $fecfecha->fecid;
                         }else{
                             $mes = "0";
-                            if($mesTxt == "AGO"){
+                            if($mesTxt == "ENE"){
+                                $mes = "01";
+                            }else if($mesTxt == "FEB"){
+                                $mes = "02";
+                            }else if($mesTxt == "MAR"){
+                                $mes = "03";
+                            }else if($mesTxt == "ABR"){
+                                $mes = "04";
+                            }else if($mesTxt == "MAY"){
+                                $mes = "05";
+                            }else if($mesTxt == "JUN"){
+                                $mes = "06";
+                            }else if($mesTxt == "JUL"){
+                                $mes = "07";
+                            }else if($mesTxt == "AGO"){
                                 $mes = "08";
                             }else if($mesTxt == "SET"){
                                 $mes = "09";
@@ -704,7 +718,10 @@ class ObjetivoCargarController extends Controller
                                 $mes = "10";
                             }else if($mesTxt == "NOV"){
                                 $mes = "11";
+                            }else if($mesTxt == "DIC"){
+                                $mes = "12";
                             }
+    
 
                             $nuevaFecha = new fecfechas;
                             $nuevaFecha->fecfecha = new \DateTime(date("Y-m-d", strtotime($ano.'-'.$mes.'-'.$dia)));
@@ -855,11 +872,21 @@ class ObjetivoCargarController extends Controller
                         $tsu = tsutipospromocionessucursales::where('fecid', $fecid)
                                                             ->where('sucid', $sucursalClienteId)
                                                             ->where('tprid', 2)
-                                                            ->first(['tsuid', 'tsuvalorizadoobjetivo']);
+                                                            ->first([
+                                                                'tsuid', 
+                                                                'tsuvalorizadoobjetivo',
+                                                                'tsuvalorizadoreal'
+                                                            ]);
                         $tsuid = 0;
                         if($tsu){
                             $tsuid = $tsu->tsuid;
-                            $tsu->tsuvalorizadoobjetivo = $tsu->tsuvalorizadoobjetivo+$objetivo;
+
+                            $porcentajeCumplimiento = (100 * $tsu->tsuvalorizadoreal)/$tsu->tsuvalorizadoobjetivo;
+                            $nuevoObjetivo = $tsu->tsuvalorizadoobjetivo+$objetivo;
+
+                            $tsu->tsuvalorizadoobjetivo = $nuevoObjetivo;
+                            $tsu->tsuvalorizadotogo = $nuevoObjetivo - $tsu->tsuvalorizadoreal;
+                            $tsu->tsuporcentajecumplimiento = $porcentajeCumplimiento;
                             if($tsu->update()){
 
                             }else{
@@ -920,13 +947,16 @@ class ObjetivoCargarController extends Controller
                                                     ->where('sucid', $sucursalClienteId)
                                                     ->where('tsuid', $tsuid)
                                                     ->where('catid', $pro->catid)
-                                                    ->first(['scaid', 'scavalorizadoobjetivo']);
+                                                    ->first(['scaid', 'scavalorizadoobjetivo', 'scavalorizadoreal']);
 
                             $scaid = 0;
                             if($sca){
                                 $scaid = $sca->scaid;
+                                $nuevoObjetivoSca = $sca->scavalorizadoobjetivo+$objetivo;
 
-                                $sca->scavalorizadoobjetivo = $sca->scavalorizadoobjetivo+$objetivo;
+                                $sca->scavalorizadoobjetivo = $nuevoObjetivoSca;
+                                $sca->scavalorizadotogo = $nuevoObjetivoSca - $sca->scavalorizadoreal;
+
                                 if($sca->update()){
 
                                 }else{
@@ -957,7 +987,7 @@ class ObjetivoCargarController extends Controller
                                         $nuevosca->scavalorizadoobjetivo = $objetivo;
                                         $nuevosca->scaiconocategoria     = env('APP_URL').'/Sistema/categorias-tiposPromociones/img/iconos/'.$categoriaNombre.'-Sell Out.png';
                                         $nuevosca->scavalorizadoreal     = 0;
-                                        $nuevosca->scavalorizadotogo     = 0;
+                                        $nuevosca->scavalorizadotogo     = $objetivo;
                                         if($nuevosca->save()){
                                             $scaid = $nuevosca->scaid;
                                         }else{
