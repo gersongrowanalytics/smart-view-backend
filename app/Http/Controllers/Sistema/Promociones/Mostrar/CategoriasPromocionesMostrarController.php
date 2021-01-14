@@ -500,6 +500,7 @@ class CategoriasPromocionesMostrarController extends Controller
 
                     $respuesta = true;
                     $datos     = $nuevoArray;
+                    $archivo   = $car->carnombrearchivo;
                 }else{
                     $respuesta = false;
                     $mensaje = "Lo sentimos, no pudimos encontrar un registro de excel subido a este mes seleccionado";
@@ -523,7 +524,8 @@ class CategoriasPromocionesMostrarController extends Controller
             'datos'          => $datos,
             'linea'          => $linea,
             'mensajeDetalle' => $mensajeDetalle,
-            'mensajedev'     => $mensajedev
+            'mensajedev'     => $mensajedev,
+            'archivo'        => $archivo
         ]);
 
         return $requestsalida;
