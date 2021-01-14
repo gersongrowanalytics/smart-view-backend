@@ -1391,7 +1391,7 @@ class CargarSellOutController extends Controller
                 }
             }
 
-            if($sku == "-99"){
+            if($sku != "-99"){
                 $pro = proproductos::join('catcategorias as cat', 'cat.catid', 'proproductos.catid')
                                     ->where('proproductos.prosku', 'LIKE', '%'.$sku)
                                     ->first([
