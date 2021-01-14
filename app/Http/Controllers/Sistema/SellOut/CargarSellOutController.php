@@ -1574,7 +1574,9 @@ class CargarSellOutController extends Controller
             "respuesta" => $respuesta,
             "mensaje"   => $mensaje,
             "logs"      => $logs,
-            "pks"       => $pks
+            "pks"       => $pks,
+            "datos"     => $datos,
+            "fecha"     => $anioSelec.'/'.$mesSelec.'/'.$diaSelec
         ]);
 
 
