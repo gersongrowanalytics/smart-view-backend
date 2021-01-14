@@ -1276,6 +1276,7 @@ class CargarSellOutController extends Controller
             if($value['numero'] == $mesSelec){
                 $mesNumeroFec = $value['numero'];
                 $mesTxtFec    = $value['espaniol'];
+                $mesTxtIngles = $value['mes'];
                 break;
             }
         }
@@ -1336,7 +1337,7 @@ class CargarSellOutController extends Controller
         }
         
 
-        $datos = json_decode( file_get_contents('http://backend-api.leadsmartview.com/ws/obtenerSellOutEspecifico/'.$anioSelec.'/'.$mesSelec.'/'.$diaSelec), true );
+        $datos = json_decode( file_get_contents('http://backend-api.leadsmartview.com/ws/obtenerSellOutEspecifico/'.$anioSelec.'/'.$mesTxtIngles.'/'.$diaSelec), true );
 
         foreach($datos as $posicion => $dato){
 
