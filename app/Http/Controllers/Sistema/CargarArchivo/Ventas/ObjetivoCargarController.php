@@ -883,7 +883,11 @@ class ObjetivoCargarController extends Controller
 
                             $nuevoObjetivo = $tsu->tsuvalorizadoobjetivo+$objetivo;
 
-                            $porcentajeCumplimiento = (100 * $tsu->tsuvalorizadoreal)/$nuevoObjetivo;
+                            if($nuevoObjetivo < 1){
+                                $porcentajeCumplimiento = (100 * $tsu->tsuvalorizadoreal)/$nuevoObjetivo;
+                            }else{
+                                $porcentajeCumplimiento = $tsu->tsuvalorizadoreal;
+                            }
 
                             $tsu->tsuvalorizadoobjetivo = $nuevoObjetivo;
                             $tsu->tsuvalorizadotogo = $nuevoObjetivo - $tsu->tsuvalorizadoreal;
