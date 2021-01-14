@@ -33,6 +33,7 @@ class loginController extends Controller
                                         ->first([
                                             'usuusuarios.usuid',
                                             'usuusuarios.usuusuario',
+                                            'usuusuarios.usucorreo',
                                             'usuusuarios.usutoken',
                                             'usuusuarios.usucontrasena',
                                             'usuusuarios.tpuid',
