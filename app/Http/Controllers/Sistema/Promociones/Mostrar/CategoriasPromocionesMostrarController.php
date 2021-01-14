@@ -386,7 +386,7 @@ class CategoriasPromocionesMostrarController extends Controller
                             ->first(['fecid']);
 
             if($fec){
-                $car = carcargasarchivos::where('fecid', $fec->fecid)
+                $car = carcargasarchivos::where('fecid', 12)
                                     ->where('tcaid', 1)
                                     ->first(['carid', 'carnombrearchivo']);
 
