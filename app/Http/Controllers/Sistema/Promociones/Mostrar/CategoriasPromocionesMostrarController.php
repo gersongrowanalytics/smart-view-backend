@@ -288,7 +288,7 @@ class CategoriasPromocionesMostrarController extends Controller
 
         $usutoken   = $request['usutoken'];
         $sucid      = $request['sucid'];
-        $dia        = $request['dia'];
+        $dia        = "01";
         $mes        = $request['mes'];
         $anio       = $request['ano'];
         
