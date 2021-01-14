@@ -64,7 +64,7 @@ class SucursalesMostrarController extends Controller
 
                     $ussusuariossucursales = sucsucursales::join('zonzonas as zon', 'zon.zonid', 'sucsucursales.zonid')
                                                             ->where('sucestado', 1)
-                                                            ->orderBy('sucsucursales.sucnombre', 'ASC')
+                                                            ->orderBy('sucsucursales.sucid', 'ASC')
                                                             ->get([
                                                                 'sucsucursales.sucid',
                                                                 'zon.zonid',
