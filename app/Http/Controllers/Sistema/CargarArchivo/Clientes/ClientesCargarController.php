@@ -393,7 +393,7 @@ class ClientesCargarController extends Controller
 
     public function ActualizarGrupoRebateOctubre(Request $request)
     {
-        $fecid = 12;
+        $fecid = 8;
         date_default_timezone_set("America/Lima");
         $fechaActual = date('Y-m-d H:i:s');
 
