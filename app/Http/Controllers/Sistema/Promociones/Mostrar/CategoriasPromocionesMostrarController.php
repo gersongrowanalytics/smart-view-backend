@@ -391,8 +391,8 @@ class CategoriasPromocionesMostrarController extends Controller
                                     ->first(['carid', 'carnombrearchivo']);
 
                 if($car){
-                    // $fichero_subido = base_path().'/public/Sistema/cargaArchivos/promociones/'.$car->carnombrearchivo;
-                    $fichero_subido = base_path().'/public/Sistema/cargaArchivos/promociones/Promociones 2021 Enero.xlsx';
+                    $fichero_subido = base_path().'/public/Sistema/cargaArchivos/promociones/'.$car->carnombrearchivo;
+                    // $fichero_subido = base_path().'/public/Sistema/cargaArchivos/promociones/Promociones 2021 Enero.xlsx';
 
                     $objPHPExcel    = IOFactory::load($fichero_subido);
                     $objPHPExcel->setActiveSheetIndex(0);
