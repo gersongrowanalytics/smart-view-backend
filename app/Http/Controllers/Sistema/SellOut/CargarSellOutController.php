@@ -1308,10 +1308,15 @@ class CargarSellOutController extends Controller
                                         'tsuporcentajecumplimiento' => 0,
                                         'tsuvalorizadorebate' => 0,
                                     ]);
-
+    
+        $diaTmp = $diaSelec;
+        if(strlen($diaTmp) == 1){
+            $diaTmp = "0$diaTmp";
+        }
         vsoventassso::join('fecfechas as fec', 'fec.fecid', 'vsoventassso.fecid')
                     ->where('fec.fecano', $anioSelec)
                     ->where('fec.fecmes', $mesTxtFec)
+                    ->where('fec.fecdia', $diaTmp)
                     ->update(['vsovalorizado' => 0]);
 
         $fecMes = fecfechas::where('fecdia', "01")
