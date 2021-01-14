@@ -1391,67 +1391,70 @@ class CargarSellOutController extends Controller
                 }
             }
 
+            if($sku == "-99"){
+                $pro = proproductos::join('catcategorias as cat', 'cat.catid', 'proproductos.catid')
+                                    ->where('proproductos.prosku', 'LIKE', '%'.$sku)
+                                    ->first([
+                                        'proproductos.proid',
+                                        'proproductos.catid',
+                                        'cat.catnombre'
+                                    ]);
 
-            $pro = proproductos::join('catcategorias as cat', 'cat.catid', 'proproductos.catid')
-                                ->where('proproductos.prosku', 'LIKE', '%'.$sku)
-                                ->first([
-                                    'proproductos.proid',
-                                    'proproductos.catid',
-                                    'cat.catnombre'
-                                ]);
+                if($pro){
 
-            if($pro){
+                    $categoriaid     = $pro->catid;
+                    $categoriaNombre = $pro->catnombre;
 
-                $categoriaid     = $pro->catid;
-                $categoriaNombre = $pro->catnombre;
+                    $usu = ussusuariossucursales::join('usuusuarios as usu', 'usu.usuid', 'ussusuariossucursales.usuid')
+                                                ->where('ususoldto', 'LIKE', '%'.$soldto)
+                                                ->first(['ussusuariossucursales.usuid', 'ussusuariossucursales.sucid']);
 
-                $usu = ussusuariossucursales::join('usuusuarios as usu', 'usu.usuid', 'ussusuariossucursales.usuid')
-                                            ->where('ususoldto', 'LIKE', '%'.$soldto)
-                                            ->first(['ussusuariossucursales.usuid', 'ussusuariossucursales.sucid']);
+                    $sucid = 0;
 
-                $sucid = 0;
+                    if($usu){
+                        
+                        $sucid = $usu->sucid;
 
-                if($usu){
-                    
-                    $sucid = $usu->sucid;
+                        $vso = vsoventassso::where('fecid', $fecid)
+                                            ->where('proid', $pro->proid)
+                                            ->where('sucid', $sucid)
+                                            ->where('tpmid', 1)
+                                            ->first();
 
-                    $vso = vsoventassso::where('fecid', $fecid)
-                                        ->where('proid', $pro->proid)
-                                        ->where('sucid', $sucid)
-                                        ->where('tpmid', 1)
-                                        ->first();
+                        if($vso){
 
-                    if($vso){
-
-                        // $vso->vsovalorizado = $real + $vso->vsovalorizado;
-                        $vso->vsovalorizado = $real;
-                        if($vso->update()){
-                            $pks['PK_VENTAS_SSO']["EDITADOS"][] = "VSO-".$vso->vsoid;
+                            // $vso->vsovalorizado = $real + $vso->vsovalorizado;
+                            $vso->vsovalorizado = $real;
+                            if($vso->update()){
+                                $pks['PK_VENTAS_SSO']["EDITADOS"][] = "VSO-".$vso->vsoid;
+                            }
+                            
+                        }else{
+                            $vson = new vsoventassso;
+                            $vson->fecid         = $fecid;
+                            $vson->proid         = $pro->proid;
+                            $vson->sucid         = $sucid;
+                            $vson->tpmid         = 1;
+                            $vson->vsocantidad   = 0;
+                            $vson->vsovalorizado = $real;
+                            if($vson->save()){
+                                $pks['PK_VENTAS_SSO']["NUEVO"][] = "VSO-".$vson->vsoid;
+                            }
                         }
                         
                     }else{
-                        $vson = new vsoventassso;
-                        $vson->fecid         = $fecid;
-                        $vson->proid         = $pro->proid;
-                        $vson->sucid         = $sucid;
-                        $vson->tpmid         = 1;
-                        $vson->vsocantidad   = 0;
-                        $vson->vsovalorizado = $real;
-                        if($vson->save()){
-                            $pks['PK_VENTAS_SSO']["NUEVO"][] = "VSO-".$vson->vsoid;
-                        }
+                        $logs['SUCS_FALTANTES'][] = $soldto;
+                        $respuesta = false;
+                        $mensaje = "Lo sentimos, hubieron algunas sucursales (soldto) que no se encontraron";
                     }
-                    
-                }else{
-                    $logs['SUCS_FALTANTES'][] = $soldto;
-                    $respuesta = false;
-                    $mensaje = "Lo sentimos, hubieron algunas sucursales (soldto) que no se encontraron";
-                }
 
+                }else{
+                    $logs['SKUS_FALTANTES'][] = $sku;
+                    $respuesta = false;
+                    $mensaje = "Lo sentimos, hubieron algunos productos (skus) que no se encontraron";
+                }
             }else{
-                $logs['SKUS_FALTANTES'][] = $sku;
-                $respuesta = false;
-                $mensaje = "Lo sentimos, hubieron algunos productos (skus) que no se encontraron";
+                $logs['SKUS_99'][] = $sku." SOLDTO: ".$soldto." CON: ".$real;
             }
         }
 
