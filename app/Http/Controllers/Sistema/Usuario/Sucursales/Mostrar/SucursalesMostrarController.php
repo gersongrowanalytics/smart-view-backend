@@ -47,6 +47,7 @@ class SucursalesMostrarController extends Controller
                                                     ->get([
                                                         'zon.zonid',
                                                         'zon.zonnombre',
+                                                        'zon.casid'
                                                     ]);
 
                     $gsus = sucsucursales::join('gsugrupossucursales as gsu', 'gsu.gsuid', 'sucsucursales.gsuid')
@@ -85,7 +86,8 @@ class SucursalesMostrarController extends Controller
                                                     ->distinct('zon.zonid')
                                                     ->get([
                                                         'zon.zonid',
-                                                        'zon.zonnombre'
+                                                        'zon.zonnombre',
+                                                        'zon.casid'
                                                     ]);
 
                     $gsus = ussusuariossucursales::join('sucsucursales as suc', 'suc.sucid', 'ussusuariossucursales.sucid')
