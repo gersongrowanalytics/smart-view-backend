@@ -22,6 +22,7 @@ use App\tsutipospromocionessucursales;
 use App\tretiposrebates;
 use App\trrtiposrebatesrebates;
 use App\scasucursalescategorias;
+use App\cascanalessucursales;
 
 class ClientesCargarController extends Controller
 {
@@ -411,7 +412,18 @@ class ClientesCargarController extends Controller
         $fichero_subido = '';
 
         $pkid = 0;
-        $log  = [];
+        $log  = array(
+            "NO_EXISTE_SUCURSAL"          => [],
+            "NO_EXISTE_SUCURSAL_ASIGNADA" => [],
+            "NUEVO_TRE_CREADO"            => [],
+            "TSU_ACTUALIZADO"             => [],
+            "NUEVO_CANAL"                 => [],
+            "ZONA_ACTUALIZADA"            => [],
+            "NUEVA_ZONA"                  => [],
+            "ACTUALIZANDO_TRE_SUCURSAL"   => [],
+            "ACTUALIZANDO_CAS_SUCURSAL"   => [],
+            "ACTUALIZANDO_ZON_SUCURSAL"   => [],
+        );
 
         try{
 
@@ -429,6 +441,8 @@ class ClientesCargarController extends Controller
                     $codSoldTo        = $objPHPExcel->getActiveSheet()->getCell('C'.$i)->getCalculatedValue();
                     $soldTo           = $objPHPExcel->getActiveSheet()->getCell('D'.$i)->getCalculatedValue();
                     $codEjecutivo     = $objPHPExcel->getActiveSheet()->getCell('H'.$i)->getCalculatedValue();
+                    $zona             = $objPHPExcel->getActiveSheet()->getCell('K'.$i)->getCalculatedValue();
+                    $canal            = $objPHPExcel->getActiveSheet()->getCell('L'.$i)->getCalculatedValue();
 
 
                     // VERIFICAR SI EXISTE EL USUARIO
@@ -453,100 +467,95 @@ class ClientesCargarController extends Controller
                             }else{
                                 $tren = new tretiposrebates;
                                 $tren->trenombre = $codEjecutivo;
-                                $tren->save();
-
-                                $treid = $tren->treid;
+                                if($tren->save()){
+                                    $treid = $tren->treid;
+                                    $log["NUEVO_TRE_CREADO"][] = "CodigoSoldTo: ".$codSoldTo." - ClienteId: ".$clienteusuid." - TRE: ".$codEjecutivo;
+                                }
                             }
-
-                            $suc = sucsucursales::find($sucursalClienteId);
-                            $suc->treid = $treid;
-                            $suc->update();
 
                             $tsus = tsutipospromocionessucursales::where('sucid', $sucursalClienteId)
                                                                 ->where('fecid', $fecid)
-                                                                ->get(['tsuid']);
+                                                                ->get(['tsuid', 'treid']);
 
                                                                 
                             foreach($tsus as $tsu){
-                                $tsue = tsutipospromocionessucursales::find($tsu->tsuid);
-                                $tsue->treid = $treid;
-                                $tsue->update();
+                                if($tsu->treid != $treid){
+                                    $tsue = tsutipospromocionessucursales::find($tsu->tsuid);
+                                    $tsue->treid = $treid;
+                                    $tsue->update();
+                                    
+                                    $log["TSU_ACTUALIZADO"][] = "TSU: ".$tsu->tsuid." CodigoSoldTo: ".$codSoldTo." - ClienteId: ".$clienteusuid." - TRE: ".$codEjecutivo;
+                                }
                             }
 
+                            $cas = cascanalessucursales::where('casnombre', $canal)
+                                                        ->first();
+
+                            $casid = 0;
+                            if($cas){
+                                $casid = $cas->casid;
+                            }else{
+                                $casn = new cascanalessucursales;
+                                $casn->casnombre = $canal;
+                                if($casn->save()){
+                                    $casid = $casn->casid;
+                                    $log["NUEVO_CANAL"][] = $canal;
+                                }
+                            }
+
+                            $zon = zonzonas::where('zonnombre', $zona)
+                                            ->first();
+
+                            $zonid = 0;
+                            if($zon){
+                                $zonid = $zon->zonid;
+
+                                if($zon->casid != $casid){
+                                    $zon->casid = $casid;
+                                    $zon->update();
+
+                                    $log["ZONA_ACTUALIZADA"][] = "ZONA: ".$zona." CANAL ASIGNADO: ".$canal;
+                                }
+
+                            }else{
+                                $zonn = new zonzonas;
+                                $zonn->zonnombre = $zona;
+                                $zonn->casid = $casid;
+                                if($zonn->save()){
+                                    $zonn = $zon->zonid;
+                                    $log["NUEVA_ZONA"][] = $zona;
+                                }
+                            }
+
+                            $suc = sucsucursales::find($sucursalClienteId);
+                            if($suc->treid != $treid){
+                                $suc->treid = $treid;
+
+                                $log["ACTUALIZANDO_TRE_SUCURSAL"][] = "TRE: ".$codEjecutivo."CodigoSoldTo: ".$codSoldTo." - SUCID: ".$sucursalClienteId." SUCURSAL: ".$suc->sucnombre;
+                            }
+
+                            if($suc->casid != $casid){
+                                $suc->casid = $casid;
+                                $log["ACTUALIZANDO_CAS_SUCURSAL"][] = "CAS: ".$canal."CodigoSoldTo: ".$codSoldTo." - SUCID: ".$sucursalClienteId." SUCURSAL: ".$suc->sucnombre;
+                            }
+
+                            if($suc->zonid != $zonid){
+                                $suc->zonid = $zonid;
+                                $log["ACTUALIZANDO_ZON_SUCURSAL"][] = "ZON: ".$zona."CodigoSoldTo: ".$codSoldTo." - SUCID: ".$sucursalClienteId." SUCURSAL: ".$suc->sucnombre;
+                            }
+
+                            $suc->update();
+
                         }else{
-                           
+                            $log["NO_EXISTE_SUCURSAL_ASIGNADA"][] = "CodigoSoldTo: ".$codSoldTo." - ClienteId: ".$clienteusuid;
                         }
 
                     }else{
-                       
+                        $log["NO_EXISTE_SUCURSAL"][] = $codSoldTo;
                     }
                 }
 
-                // $tsus = tsutipospromocionessucursales::where('fecid', $fecid)
-                //                                 ->get([
-                //                                     'tsuid',
-                //                                     'treid',
-                //                                     'tprid',
-                //                                     'tsuporcentajecumplimiento',
-                //                                     'sucid'
-                //                                 ]);
-
-                // foreach($tsus as $tsu){
-
-                //     $trrs = trrtiposrebatesrebates::join('rtprebatetipospromociones as rtp', 'rtp.rtpid', 'trrtiposrebatesrebates.rtpid')
-                //                                     ->where('trrtiposrebatesrebates.treid', $tsu->treid)
-                //                                     ->where('rtp.fecid', $fecid)
-                //                                     ->where('rtp.tprid', $tsu->tprid)
-                //                                     ->where('rtp.rtpporcentajedesde', '<=', round($tsu->tsuporcentajecumplimiento))
-                //                                     ->where('rtp.rtpporcentajehasta', '>=', round($tsu->tsuporcentajecumplimiento))
-                //                                     ->get([
-                //                                         'trrtiposrebatesrebates.trrid',
-                //                                         'rtp.rtpporcentajedesde',
-                //                                         'rtp.rtpporcentajehasta',
-                //                                         'rtp.rtpporcentajerebate',
-                //                                         'trrtiposrebatesrebates.catid'
-                //                                     ]);
-
-                //     if(sizeof($trrs) > 0){
-                        
-                //         if(sizeof($trrs) <= 5){
-                //             $totalRebate = 0;
-                //             foreach($trrs as $posicion => $trr){
-                //                 if($posicion == 0){
-                //                     $log['escala']['entra'][] = "Si entra en la escala rebate: ".$tsu->tsuid." de la sucursal: ".$tsu->sucid." con un cumplimiento de: ".round($tsu->tsuporcentajecumplimiento)." y escalas desde: ".$trr->rtpporcentajedesde." y hasta: ".$trr->rtpporcentajehasta;
-                //                 }
-                //                 $sca = scasucursalescategorias::where('tsuid', $tsu->tsuid)
-                //                                             ->where('fecid', $fecid)
-                //                                             ->where('catid', $trr->catid)
-                //                                             ->first([
-                //                                                 'scaid',
-                //                                                 'scavalorizadoreal'
-                //                                             ]);
-
-                //                 if($sca){
-                //                     $nuevoRebate = ($sca->scavalorizadoreal*$trr->rtpporcentajerebate)/100;
-                //                     $totalRebate = $totalRebate + $nuevoRebate;
-                //                 }else{
-
-                //                 }
-
-                //             }
-
-                //             $tsuu = tsutipospromocionessucursales::find($tsu->tsuid);
-                //             $tsuu->tsuvalorizadorebate = $totalRebate;
-                //             $tsuu->update();
-
-
-                //         }else{
-                //             echo "Hay mas de 5 datos: ";
-                //             foreach($trrs as $trr){
-                //                 echo $trr->trrid;
-                //             }
-                //         }
-                //     }else{
-                //         $log['escala']['noentra'][] = "No entra en la escala rebate: ".$tsu->tsuid." de la sucursal: ".$tsu->sucid;
-                //     }
-                // }
+                
             }
 
             $nuevoCargaArchivo = new carcargasarchivos;

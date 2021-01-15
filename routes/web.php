@@ -77,6 +77,9 @@ $router->group(['middleware' => ['permisos']], function() use($router) {
     $router->post('/cargarArchivo/clientes/acutalizarzonas', 'Sistema\CargarArchivo\Clientes\ClientesCargarController@ActualizarZonaClientes');
     $router->post('/cargarArchivo/clientes/actualizargruporebate', 'Sistema\CargarArchivo\Clientes\ClientesCargarController@ActualizarGrupoRebateOctubre');
 
+    $router->post('/cargarArchivo/clientes/actualizarGrupoSucursal', 'Sistema\CargarArchivo\Clientes\ClientesCargarController@ActualizarGrupoRebateOctubre');
+    $router->post('/cargarArchivo/promociones/actualizarCanalSucursal', 'Sistema\CargarArchivo\Clientes\ClientesCargarController@ActualizarGrupoRebateOctubre');
+
     $router->post('/cargarArchivo/productos', 'Sistema\CargarArchivo\Productos\ProductosCargarController@CargarProductos');
     $router->post('/fechas/mostrar/fechas', 'Sistema\Fechas\Mostrar\FechasMostrarController@mostrarFechas');
 
