@@ -10,6 +10,7 @@ use App\carcargasarchivos;
 use App\usuusuarios;
 use App\gsugrupossucursales;
 use App\ussusuariossucursales;
+use App\sucsucursales;
 
 class ActualizarGrupoSucursalController extends Controller
 {

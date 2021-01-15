@@ -540,17 +540,17 @@ class ClientesCargarController extends Controller
                                 if($suc->treid != $treid){
                                     $suc->treid = $treid;
 
-                                    $log["ACTUALIZANDO_TRE_SUCURSAL"][] = "TRE: ".$codEjecutivo."CodigoSoldTo: ".$codSoldTo." - SUCID: ".$sucursalClienteId." SUCURSAL: ".$suc->sucnombre;
+                                    $log["ACTUALIZANDO_TRE_SUCURSAL"][] = "TRE: ".$codEjecutivo." CodigoSoldTo: ".$codSoldTo." - SUCID: ".$sucursalClienteId." SUCURSAL: ".$suc->sucnombre;
                                 }
 
                                 if($suc->casid != $casid){
                                     $suc->casid = $casid;
-                                    $log["ACTUALIZANDO_CAS_SUCURSAL"][] = "CAS: ".$canal."CodigoSoldTo: ".$codSoldTo." - SUCID: ".$sucursalClienteId." SUCURSAL: ".$suc->sucnombre;
+                                    $log["ACTUALIZANDO_CAS_SUCURSAL"][] = "CAS: ".$canal." CodigoSoldTo: ".$codSoldTo." - SUCID: ".$sucursalClienteId." SUCURSAL: ".$suc->sucnombre;
                                 }
 
                                 if($suc->zonid != $zonid){
                                     $suc->zonid = $zonid;
-                                    $log["ACTUALIZANDO_ZON_SUCURSAL"][] = "ZON: ".$zona."CodigoSoldTo: ".$codSoldTo." - SUCID: ".$sucursalClienteId." SUCURSAL: ".$suc->sucnombre;
+                                    $log["ACTUALIZANDO_ZON_SUCURSAL"][] = "ZON: ".$zona." CodigoSoldTo: ".$codSoldTo." - SUCID: ".$sucursalClienteId." SUCURSAL: ".$suc->sucnombre;
                                 }
 
                                 $suc->update();
