@@ -453,6 +453,7 @@ class ClientesCargarController extends Controller
                                     ->first();
 
                     if($fec){
+                        $fecid = $fec->fecid;
                         // VERIFICAR SI EXISTE EL USUARIO
                         $usuCliente = usuusuarios::where('tpuid', 2)
                                                 ->where('ususoldto', $codSoldTo)
