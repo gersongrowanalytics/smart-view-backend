@@ -22,6 +22,8 @@ class SucursalesMostrarController extends Controller
         $mensajeDetalle = '';
         $mensajedev     = null;
         $zonas = [];
+        $gsus  = [];
+        $cass  = [];
 
         try{
             
@@ -35,7 +37,6 @@ class SucursalesMostrarController extends Controller
                                                     'pem.pemid'
                                                 ]);
                                                 
-                // if($usuusuario->tpuid == 1){
                 if($tup || $usuusuario->tpuid == 1){
 
                     $zonas = ussusuariossucursales::join('sucsucursales as suc', 'suc.sucid', 'ussusuariossucursales.sucid')
@@ -48,26 +49,34 @@ class SucursalesMostrarController extends Controller
                                                         'zon.zonnombre',
                                                     ]);
 
-                    // $ussusuariossucursales = ussusuariossucursales::join('sucsucursales as suc', 'suc.sucid', 'ussusuariossucursales.sucid')
-                    //                                                 ->join('usuusuarios as usu', 'usu.usuid', 'ussusuariossucursales.usuid')
-                    //                                                 ->join('zonzonas as zon', 'zon.zonid', 'usu.zonid')
-                    //                                                 ->where('usu.estid', 1)
-                    //                                                 ->distinct('suc.sucnombre')
-                    //                                                 ->get([
-                    //                                                     'ussusuariossucursales.ussid',
-                    //                                                     'zon.zonid',
-                    //                                                     'zon.zonnombre',
-                    //                                                     'suc.sucid',
-                    //                                                     'suc.sucnombre'
-                    //                                                 ]);
+                    $gsus = sucsucursales::join('gsugrupossucursales as gsu', 'gsu.gsuid', 'sucsucursales.gsuid')
+                                        ->where('sucestado', 1)
+                                        ->orderBy('sucsucursales.sucorden', 'DESC')
+                                        ->distinct('gsu.gsuid')
+                                        ->get([
+                                            'gsu.gsuid',
+                                            'gsunombre'
+                                        ]);
 
+                    $cass = sucsucursales::join('cascanalessucursales as cas', 'cas.casid', 'sucsucursales.casid')
+                                        ->where('sucestado', 1)
+                                        ->orderBy('sucsucursales.sucorden', 'DESC')
+                                        ->distinct('cas.casid')
+                                        ->get([
+                                            'cas.casid',
+                                            'casnombre'
+                                        ]);
+                    
 
+                                                    
                     $ussusuariossucursales = sucsucursales::join('zonzonas as zon', 'zon.zonid', 'sucsucursales.zonid')
                                                             ->where('sucestado', 1)
                                                             ->orderBy('sucsucursales.sucorden', 'DESC')
                                                             ->get([
                                                                 'sucsucursales.sucid',
                                                                 'zon.zonid',
+                                                                'gsuid',
+                                                                'casid',
                                                                 'zon.zonnombre',
                                                                 'sucsucursales.sucnombre'
                                                             ]);
@@ -80,6 +89,26 @@ class SucursalesMostrarController extends Controller
                                                         'zon.zonid',
                                                         'zon.zonnombre'
                                                     ]);
+
+                    $gsus = ussusuariossucursales::join('sucsucursales as suc', 'suc.sucid', 'ussusuariossucursales.sucid')
+                                                ->join('gsugrupossucursales as gsu', 'gsu.gsuid', 'suc.gsuid')
+                                                ->where('sucestado', 1)
+                                                ->orderBy('suc.sucorden', 'DESC')
+                                                ->distinct('gsu.gsuid')
+                                                ->get([
+                                                    'gsu.gsuid',
+                                                    'gsunombre'
+                                                ]);
+
+                    $cass = ussusuariossucursales::join('sucsucursales as suc', 'suc.sucid', 'ussusuariossucursales.sucid')
+                                                ->join('cascanalessucursales as cas', 'cas.casid', 'suc.casid')
+                                                ->where('sucestado', 1)
+                                                ->orderBy('suc.sucorden', 'DESC')
+                                                ->distinct('cas.casid')
+                                                ->get([
+                                                    'cas.casid',
+                                                    'casnombre'
+                                                ]);
 
                     $ussusuariossucursales = ussusuariossucursales::join('sucsucursales as suc', 'suc.sucid', 'ussusuariossucursales.sucid')
                                                             ->join('usuusuarios as usu', 'usu.usuid', 'ussusuariossucursales.usuid')
@@ -126,7 +155,9 @@ class SucursalesMostrarController extends Controller
             'linea'          => $linea,
             'mensajeDetalle' => $mensajeDetalle,
             'mensajedev'     => $mensajedev,
-            'zonas'          => $zonas
+            'zonas'          => $zonas,
+            'gsus'           => $gsus,
+            'cass'           => $cass
         ]);
         
         return $requestsalida;
