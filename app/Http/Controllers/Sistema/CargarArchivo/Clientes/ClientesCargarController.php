@@ -428,7 +428,7 @@ class ClientesCargarController extends Controller
 
         try{
 
-            $fichero_subido = base_path().'/public/Sistema/cargaArchivos/clientes/'.basename($usuusuario->usuid.'-'.$usuusuario->usuusuario.'-'.$fechaActual.'-'.$_FILES['file']['name']);
+            $fichero_subido = base_path().'/public/Sistema/cargaArchivos/clientes/actualizar/'.basename($usuusuario->usuid.'-'.$usuusuario->usuusuario.'-'.$fechaActual.'-'.$_FILES['file']['name']);
             if (move_uploaded_file($_FILES['file']['tmp_name'], $fichero_subido)) {
                 $objPHPExcel    = IOFactory::load($fichero_subido);
                 $objPHPExcel->setActiveSheetIndex(0);
@@ -570,11 +570,11 @@ class ClientesCargarController extends Controller
                         $respuesta = false;
                         $mensaje = "Lo sentimos la fecha ingresa no existe";
                     }
-
-                    
                 }
-
                 
+            }else{
+                $respuesta = false;
+                $mensaje   = "Lo sentimos el archivo no se puede leer";
             }
 
             $nuevoCargaArchivo = new carcargasarchivos;
@@ -614,9 +614,9 @@ class ClientesCargarController extends Controller
             null,
             $fichero_subido,
             $requestsalida,
-            'CARGAR LA ACTUALIZACION DE GRUPOS REBATES PARA CLIENTES ',
+            'CARGAR LA ACTUALIZACION CLIENTES ',
             'IMPORTAR',
-            '/cargarArchivo/clientes', //ruta
+            '/cargarArchivo/clientes/actualizargruporebate', //ruta
             $pkid,
             $log
         );
