@@ -119,7 +119,9 @@ class SucursalesMostrarController extends Controller
                                                                 'zon.zonid',
                                                                 'zon.zonnombre',
                                                                 'suc.sucid',
-                                                                'suc.sucnombre'
+                                                                'suc.sucnombre',
+                                                                'sucsucursales.casid',
+                                                                'gsuid'
                                                             ]);
                 }
                                                             
