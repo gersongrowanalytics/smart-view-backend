@@ -394,7 +394,7 @@ class ClientesCargarController extends Controller
 
     public function ActualizarGrupoRebateOctubre(Request $request)
     {
-        $fecid = 8;
+        // $fecid = 8;
         date_default_timezone_set("America/Lima");
         $fechaActual = date('Y-m-d H:i:s');
 
@@ -413,6 +413,7 @@ class ClientesCargarController extends Controller
 
         $pkid = 0;
         $log  = array(
+            "NO_EXISTE_FECHA"             => [],
             "NO_EXISTE_SUCURSAL"          => [],
             "NO_EXISTE_SUCURSAL_ASIGNADA" => [],
             "NUEVO_TRE_CREADO"            => [],
@@ -443,116 +444,134 @@ class ClientesCargarController extends Controller
                     $codEjecutivo     = $objPHPExcel->getActiveSheet()->getCell('H'.$i)->getCalculatedValue();
                     $zona             = $objPHPExcel->getActiveSheet()->getCell('K'.$i)->getCalculatedValue();
                     $canal            = $objPHPExcel->getActiveSheet()->getCell('L'.$i)->getCalculatedValue();
+                    $anio             = $objPHPExcel->getActiveSheet()->getCell('Q'.$i)->getCalculatedValue();
+                    $mes              = $objPHPExcel->getActiveSheet()->getCell('R'.$i)->getCalculatedValue();
 
+                    $fec =  fecfechas::where('fecmes', $mes)
+                                    ->where('fecano', $anio)
+                                    ->where('fecdia', '01')
+                                    ->first();
 
-                    // VERIFICAR SI EXISTE EL USUARIO
-                    $usuCliente = usuusuarios::where('tpuid', 2)
-                                            ->where('ususoldto', $codSoldTo)
-                                            ->first(['usuid']);
+                    if($fec){
+                        // VERIFICAR SI EXISTE EL USUARIO
+                        $usuCliente = usuusuarios::where('tpuid', 2)
+                                                ->where('ususoldto', $codSoldTo)
+                                                ->first(['usuid']);
 
-                    $clienteusuid = 0;
-                    $sucursalClienteId = 0;
-                    if($usuCliente){
-                        $clienteusuid = $usuCliente->usuid;
-                        
-                        $sucursalesCliente = ussusuariossucursales::where('usuid', $clienteusuid)->first(['sucid']);
-                        if($sucursalesCliente){
-                            $sucursalClienteId = $sucursalesCliente->sucid;
-
-                            $tre = tretiposrebates::where('trenombre', $codEjecutivo)->first(['treid']);
+                        $clienteusuid = 0;
+                        $sucursalClienteId = 0;
+                        if($usuCliente){
+                            $clienteusuid = $usuCliente->usuid;
                             
-                            $treid = 0;
-                            if($tre){
-                                $treid = $tre->treid;
+                            $sucursalesCliente = ussusuariossucursales::where('usuid', $clienteusuid)->first(['sucid']);
+                            if($sucursalesCliente){
+                                $sucursalClienteId = $sucursalesCliente->sucid;
+
+                                $tre = tretiposrebates::where('trenombre', $codEjecutivo)->first(['treid']);
+                                
+                                $treid = 0;
+                                if($tre){
+                                    $treid = $tre->treid;
+                                }else{
+                                    $tren = new tretiposrebates;
+                                    $tren->trenombre = $codEjecutivo;
+                                    if($tren->save()){
+                                        $treid = $tren->treid;
+                                        $log["NUEVO_TRE_CREADO"][] = "CodigoSoldTo: ".$codSoldTo." - ClienteId: ".$clienteusuid." - TRE: ".$codEjecutivo;
+                                    }
+                                }
+
+                                $tsus = tsutipospromocionessucursales::where('sucid', $sucursalClienteId)
+                                                                    ->where('fecid', $fecid)
+                                                                    ->get(['tsuid', 'treid']);
+
+                                                                    
+                                foreach($tsus as $tsu){
+                                    if($tsu->treid != $treid){
+                                        $tsue = tsutipospromocionessucursales::find($tsu->tsuid);
+                                        $tsue->treid = $treid;
+                                        $tsue->update();
+                                        
+                                        $log["TSU_ACTUALIZADO"][] = "TSU: ".$tsu->tsuid." CodigoSoldTo: ".$codSoldTo." - ClienteId: ".$clienteusuid." - TRE: ".$codEjecutivo;
+                                    }
+                                }
+
+                                $cas = cascanalessucursales::where('casnombre', $canal)
+                                                            ->first();
+
+                                $casid = 0;
+                                if($cas){
+                                    $casid = $cas->casid;
+                                }else{
+                                    $casn = new cascanalessucursales;
+                                    $casn->casnombre = $canal;
+                                    if($casn->save()){
+                                        $casid = $casn->casid;
+                                        $log["NUEVO_CANAL"][] = $canal;
+                                    }
+                                }
+
+                                $zon = zonzonas::where('zonnombre', $zona)
+                                                ->first();
+
+                                $zonid = 0;
+                                if($zon){
+                                    $zonid = $zon->zonid;
+
+                                    if($zon->casid != $casid){
+                                        $zon->casid = $casid;
+                                        $zon->update();
+
+                                        $log["ZONA_ACTUALIZADA"][] = "ZONA: ".$zona." CANAL ASIGNADO: ".$canal;
+                                    }
+
+                                }else{
+                                    $zonn = new zonzonas;
+                                    $zonn->zonnombre = $zona;
+                                    $zonn->casid = $casid;
+                                    if($zonn->save()){
+                                        $zonn = $zon->zonid;
+                                        $log["NUEVA_ZONA"][] = $zona;
+                                    }
+                                }
+
+                                $suc = sucsucursales::find($sucursalClienteId);
+                                if($suc->treid != $treid){
+                                    $suc->treid = $treid;
+
+                                    $log["ACTUALIZANDO_TRE_SUCURSAL"][] = "TRE: ".$codEjecutivo."CodigoSoldTo: ".$codSoldTo." - SUCID: ".$sucursalClienteId." SUCURSAL: ".$suc->sucnombre;
+                                }
+
+                                if($suc->casid != $casid){
+                                    $suc->casid = $casid;
+                                    $log["ACTUALIZANDO_CAS_SUCURSAL"][] = "CAS: ".$canal."CodigoSoldTo: ".$codSoldTo." - SUCID: ".$sucursalClienteId." SUCURSAL: ".$suc->sucnombre;
+                                }
+
+                                if($suc->zonid != $zonid){
+                                    $suc->zonid = $zonid;
+                                    $log["ACTUALIZANDO_ZON_SUCURSAL"][] = "ZON: ".$zona."CodigoSoldTo: ".$codSoldTo." - SUCID: ".$sucursalClienteId." SUCURSAL: ".$suc->sucnombre;
+                                }
+
+                                $suc->update();
+
                             }else{
-                                $tren = new tretiposrebates;
-                                $tren->trenombre = $codEjecutivo;
-                                if($tren->save()){
-                                    $treid = $tren->treid;
-                                    $log["NUEVO_TRE_CREADO"][] = "CodigoSoldTo: ".$codSoldTo." - ClienteId: ".$clienteusuid." - TRE: ".$codEjecutivo;
-                                }
+                                $log["NO_EXISTE_SUCURSAL_ASIGNADA"][] = "CodigoSoldTo: ".$codSoldTo." - ClienteId: ".$clienteusuid;
+                                $respuesta = false;
+                                $mensaje = "Lo sentimos ocurrio un error al momento de actualizar los clientes";
                             }
-
-                            $tsus = tsutipospromocionessucursales::where('sucid', $sucursalClienteId)
-                                                                ->where('fecid', $fecid)
-                                                                ->get(['tsuid', 'treid']);
-
-                                                                
-                            foreach($tsus as $tsu){
-                                if($tsu->treid != $treid){
-                                    $tsue = tsutipospromocionessucursales::find($tsu->tsuid);
-                                    $tsue->treid = $treid;
-                                    $tsue->update();
-                                    
-                                    $log["TSU_ACTUALIZADO"][] = "TSU: ".$tsu->tsuid." CodigoSoldTo: ".$codSoldTo." - ClienteId: ".$clienteusuid." - TRE: ".$codEjecutivo;
-                                }
-                            }
-
-                            $cas = cascanalessucursales::where('casnombre', $canal)
-                                                        ->first();
-
-                            $casid = 0;
-                            if($cas){
-                                $casid = $cas->casid;
-                            }else{
-                                $casn = new cascanalessucursales;
-                                $casn->casnombre = $canal;
-                                if($casn->save()){
-                                    $casid = $casn->casid;
-                                    $log["NUEVO_CANAL"][] = $canal;
-                                }
-                            }
-
-                            $zon = zonzonas::where('zonnombre', $zona)
-                                            ->first();
-
-                            $zonid = 0;
-                            if($zon){
-                                $zonid = $zon->zonid;
-
-                                if($zon->casid != $casid){
-                                    $zon->casid = $casid;
-                                    $zon->update();
-
-                                    $log["ZONA_ACTUALIZADA"][] = "ZONA: ".$zona." CANAL ASIGNADO: ".$canal;
-                                }
-
-                            }else{
-                                $zonn = new zonzonas;
-                                $zonn->zonnombre = $zona;
-                                $zonn->casid = $casid;
-                                if($zonn->save()){
-                                    $zonn = $zon->zonid;
-                                    $log["NUEVA_ZONA"][] = $zona;
-                                }
-                            }
-
-                            $suc = sucsucursales::find($sucursalClienteId);
-                            if($suc->treid != $treid){
-                                $suc->treid = $treid;
-
-                                $log["ACTUALIZANDO_TRE_SUCURSAL"][] = "TRE: ".$codEjecutivo."CodigoSoldTo: ".$codSoldTo." - SUCID: ".$sucursalClienteId." SUCURSAL: ".$suc->sucnombre;
-                            }
-
-                            if($suc->casid != $casid){
-                                $suc->casid = $casid;
-                                $log["ACTUALIZANDO_CAS_SUCURSAL"][] = "CAS: ".$canal."CodigoSoldTo: ".$codSoldTo." - SUCID: ".$sucursalClienteId." SUCURSAL: ".$suc->sucnombre;
-                            }
-
-                            if($suc->zonid != $zonid){
-                                $suc->zonid = $zonid;
-                                $log["ACTUALIZANDO_ZON_SUCURSAL"][] = "ZON: ".$zona."CodigoSoldTo: ".$codSoldTo." - SUCID: ".$sucursalClienteId." SUCURSAL: ".$suc->sucnombre;
-                            }
-
-                            $suc->update();
 
                         }else{
-                            $log["NO_EXISTE_SUCURSAL_ASIGNADA"][] = "CodigoSoldTo: ".$codSoldTo." - ClienteId: ".$clienteusuid;
+                            $log["NO_EXISTE_SUCURSAL"][] = $codSoldTo;
+                            $respuesta = false;
+                            $mensaje = "Lo sentimos el soldto de la linea: ".$i." no existe";
                         }
-
                     }else{
-                        $log["NO_EXISTE_SUCURSAL"][] = $codSoldTo;
+                        $log["NO_EXISTE_FECHA"][] = $anio." - ".$mes;
+                        $respuesta = false;
+                        $mensaje = "Lo sentimos la fecha ingresa no existe";
                     }
+
+                    
                 }
 
                 
