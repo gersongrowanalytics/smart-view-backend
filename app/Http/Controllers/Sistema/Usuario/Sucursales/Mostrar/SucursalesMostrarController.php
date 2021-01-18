@@ -127,10 +127,9 @@ class SucursalesMostrarController extends Controller
                                                 ]);
 
                     $ussusuariossucursales = ussusuariossucursales::join('sucsucursales as suc', 'suc.sucid', 'ussusuariossucursales.sucid')
-                                                            ->join('usuusuarios as usu', 'usu.usuid', 'ussusuariossucursales.usuid')
                                                             ->join('zonzonas as zon', 'zon.zonid', 'suc.zonid')
                                                             ->where('ussusuariossucursales.usuid', $usuusuario->usuid )
-                                                            ->where('usu.estid', 1)
+                                                            ->where('suc.sucestado', 1)
                                                             ->distinct('suc.sucid')
                                                             ->get([
                                                                 'ussusuariossucursales.ussid',
@@ -138,7 +137,7 @@ class SucursalesMostrarController extends Controller
                                                                 'zon.zonnombre',
                                                                 'suc.sucid',
                                                                 'suc.sucnombre',
-                                                                'sucsucursales.casid',
+                                                                'suc.casid',
                                                                 'gsuid'
                                                             ]);
                 }
