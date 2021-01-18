@@ -84,7 +84,8 @@ class SucursalesMostrarController extends Controller
                                                 ->join('sucsucursales as suc', 'suc.sucid', 'ussusuariossucursales.sucid')
                                                 ->join('zonzonas as zon', 'zon.zonid', 'suc.zonid')
                                                 ->where('usu.estid', 1)
-                                                ->orderBy('suc.sucorden', 'DESC')
+                                                ->distinct('suc.sucid')
+                                                // ->orderBy('suc.sucorden', 'DESC')
                                                 ->get([
                                                     'suc.sucid',
                                                     'zon.zonid',
