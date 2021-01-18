@@ -80,7 +80,7 @@ class SucursalesMostrarController extends Controller
                     //                                             'sucsucursales.sucnombre'
                     //                                         ]);
 
-                    $usss = ussusuariossucursales::join('usuusuarios as usu', 'usu.usuid', 'ussusuariossucursales.usuid')
+                    $ussusuariossucursales = ussusuariossucursales::join('usuusuarios as usu', 'usu.usuid', 'ussusuariossucursales.usuid')
                                                 ->join('sucsucursales as suc', 'suc.sucid', 'ussusuariossucursales.sucid')
                                                 ->join('zonzonas as zon', 'zon.zonid', 'suc.zonid')
                                                 ->where('usu.estid', 1)
