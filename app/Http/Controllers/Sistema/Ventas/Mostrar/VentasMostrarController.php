@@ -420,8 +420,8 @@ class VentasMostrarController extends Controller
 
             $usus = usuusuarios::join('ussusuariossucursales as uss', 'uss.usuid', 'usuusuarios.usuid')
                         ->join('sucsucursales as suc', 'suc.sucid', 'uss.sucid')
-                        ->where('suc.sucestado', 1)
-                        ->where('usuusuarios.tpuid', 2) 
+                        // ->where('suc.sucestado', 1)
+                        // ->where('usuusuarios.tpuid', 2) 
                         ->where('suc.zonid', $zonid)
                         ->where('usuusuarios.estid', 1)
                         ->distinct('uss.sucid')
