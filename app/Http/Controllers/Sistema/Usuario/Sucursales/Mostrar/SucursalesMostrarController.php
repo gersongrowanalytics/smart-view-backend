@@ -92,7 +92,8 @@ class SucursalesMostrarController extends Controller
                                                     'gsuid',
                                                     'suc.casid',
                                                     'zon.zonnombre',
-                                                    'suc.sucnombre'
+                                                    'suc.sucnombre',
+                                                    'usu.ususoldto'
                                                 ]);
 
 
