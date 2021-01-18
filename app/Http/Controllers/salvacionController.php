@@ -169,6 +169,26 @@ class salvacionController extends Controller
 
 
     }
+
+    public function ActualizarSucursales()
+    {
+        $usss = ussusuariossucursales::join('usuusuarios as usu', 'usu.usuid', 'ussusuariossucursales.usuid')
+                                    ->get([
+                                        'usu.ususoldto',
+                                        'ussusuariossucursales.sucid',
+                                        'usu.estid'
+                                    ]);
+
+        foreach($usss as $uss){
+            $suce = sucsucursales::find($uss->sucid);
+            $suce->sucsoldto = $uss->ususoldto;
+            $suce->sucestado = $uss->estid;
+            $suce->update();
+
+        }
+
+
+    }
 }
 
 

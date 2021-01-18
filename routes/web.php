@@ -108,6 +108,7 @@ $router->get('/obtenerSellOutEspecificoWeb/{anioSelec}/{mesSelec}/{diaSelec}', '
 
 
 $router->get('/actualizarTogo/{fecid}', 'salvacionController@ActualizarToGo');
+$router->get('/ActualizarSucursales', 'salvacionController@ActualizarSucursales');
 
 
 

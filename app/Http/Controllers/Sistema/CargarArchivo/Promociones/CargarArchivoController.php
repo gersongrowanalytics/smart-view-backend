@@ -163,7 +163,16 @@ class CargarArchivoController extends Controller
                             $tipoClien = "Bodega";
                         }
     
-    
+                        $suce = sucsucursales::where('sucsoldto', $soldTo)
+                                            ->where('sucestado', 0)
+                                            ->first();
+                        
+                        if($suce){
+                            $suce->sucestado = 1;
+                            $suce->update();
+
+                        }
+
     
                         if($mesTxt != null){
                             $fecfecha = fecfechas::where('fecdia', $dia)
@@ -340,6 +349,8 @@ class CargarArchivoController extends Controller
                                 }else{
                                     $nuevaSucursal = new sucsucursales;
                                     $nuevaSucursal->sucnombre = $cliente;
+                                    $nuevaSucursal->sucestado = 1;
+                                    $nuevaSucursal->sucsoldto = $soldTo;
                                     if($nuevaSucursal->save()){
                                         $sucursalClienteId = $nuevaSucursal->sucid;
                                         
@@ -376,6 +387,8 @@ class CargarArchivoController extends Controller
 
                                     $nuevaSucursal = new sucsucursales;
                                     $nuevaSucursal->sucnombre = $cliente;
+                                    $nuevaSucursal->sucestado = 1;
+                                    $nuevaSucursal->sucsoldto = $soldTo;
                                     if($nuevaSucursal->save()){
                                         $sucursalClienteId = $nuevaSucursal->sucid;
                                         $log["NUEVA_SUCURSAL"][] = $cliente;
