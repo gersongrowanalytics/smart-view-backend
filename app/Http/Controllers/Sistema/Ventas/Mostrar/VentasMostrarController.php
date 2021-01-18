@@ -409,8 +409,8 @@ class VentasMostrarController extends Controller
             );
             
             $usus = usuusuarios::join('ussusuariossucursales as uss', 'uss.usuid', 'usuusuarios.usuid')
-                        // ->join('sucsucursales as suc', 'suc.sucid', 'uss.sucid')
-                        // ->where('suc.sucestado', 1)
+                        ->join('sucsucursales as suc', 'suc.sucid', 'uss.sucid')
+                        ->where('suc.sucestado', 1)
                         ->where('usuusuarios.tpuid', 2) 
                         ->where('usuusuarios.zonid', $zonid)
                         ->where('usuusuarios.estid', 1)
@@ -631,6 +631,116 @@ class VentasMostrarController extends Controller
             "datos"          => $datos,
             "rebatebonus"    => $rebatesBonus,
             "linea"          => $linea,
+            "mensajeDetalle" => $mensajeDetalle,
+            "mensajedev"     => $mensajedev
+        ]);
+        
+        return $requestsalida;
+
+    }
+
+    public function MostrarVentasXGrupo(Request $request)
+    {
+        $usutoken   = $request['usutoken'];
+        $zonid      = $request['zonid'];
+        // $dia        = $request['dia'];
+        $dia        = "01";
+        $mes        = $request['mes'];
+        $ano        = $request['ano'];
+
+        $respuesta      = false;
+        $mensaje        = '';
+        $datos          = [];
+        $mensajeDetalle = '';
+        $mensajedev     = null;
+
+        $rebatesBonus = array(
+            "categorias"   => [],
+            "objetivo"     => "",
+            "real"         => "",
+            "cumplimiento" => "",
+            "rebate"       => ""
+        );
+        try{
+
+            $plantillaTrrs = array(
+                array(
+                    "rtpid" => 0,
+                    "rtpporcentajedesde" => "95",
+                    "rtpporcentajehasta" => "99",
+                    "rtpporcentajerebate" => "0",
+                    "realTotal" => "0"
+                ),
+                array(
+                    "rtpid" => 0,
+                    "rtpporcentajedesde" => "100",
+                    "rtpporcentajehasta" => "104",
+                    "rtpporcentajerebate" => "0",
+                    "realTotal" => "0"
+                ),
+                array(
+                    "rtpid" => 0,
+                    "rtpporcentajedesde" => "105",
+                    "rtpporcentajehasta" => "10000",
+                    "rtpporcentajerebate" => "0",
+                    "realTotal" => "0"
+                ),
+            );
+
+            $dataarray = array(
+                array(
+
+                    'fecid' => "",
+                    'treid' => "",
+                    'trenombre' => "",
+                    "tsuid"                     => "",
+                    "tprid"                     => "",
+                    "tprnombre"                 => "",
+                    "tpricono"                  => "",
+                    "tprcolorbarra"             => "",
+                    "tprcolortooltip"           => "",
+
+                    "tsuvalorizadoobjetivo"     => "",
+                    "tsuvalorizadoreal"         => "",
+                    "tsuvalorizadotogo"         => "",
+                    "tsuporcentajecumplimiento" => "",
+                    "tsuvalorizadorebate"       => "",
+
+                    "fechaActualizacion"        => "",
+
+                    "categorias"                => array(
+                        array(
+                            "catnombre"             => "",
+                            "catimagenfondo"        => "",
+                            "catimagenfondoopaco"   => "",
+                            "caticono"              => "",
+                            "scavalorizadoobjetivo" => "",
+                            "scavalorizadoreal"     => "",
+                            "scavalorizadotogo"     => "",
+                            "scaiconocategoria"     => ""
+                        )
+                    )
+                )
+            );
+            
+            $usus = usuusuarios::join('ussusuariossucursales as uss', 'uss.usuid', 'usuusuarios.usuid')
+                        ->where('usuusuarios.tpuid', 2) 
+                        ->where('usuusuarios.zonid', $zonid)
+                        ->where('usuusuarios.estid', 1)
+                        ->distinct('uss.sucid')
+                        ->get(['usuusuarios.usuid', 'uss.ussid', 'uss.sucid']);
+
+
+
+        }catch (Exception $e) {
+            $mensajedev = $e->getMessage();
+        }
+
+        $requestsalida = response()->json([
+            "respuesta"      => $respuesta,
+            "mensaje"        => $mensaje,
+            "datos"          => $datos,
+            "rebatebonus"    => $rebatesBonus,
             "mensajeDetalle" => $mensajeDetalle,
             "mensajedev"     => $mensajedev
         ]);
