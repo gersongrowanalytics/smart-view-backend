@@ -85,7 +85,6 @@ class SucursalesMostrarController extends Controller
                                                 ->join('zonzonas as zon', 'zon.zonid', 'suc.zonid')
                                                 ->where('usu.estid', 1)
                                                 ->distinct('suc.sucid')
-                                                ->distinct('usu.usuid')
                                                 // ->orderBy('suc.sucorden', 'DESC')
                                                 ->get([
                                                     'suc.sucid',
@@ -93,8 +92,7 @@ class SucursalesMostrarController extends Controller
                                                     'gsuid',
                                                     'suc.casid',
                                                     'zon.zonnombre',
-                                                    'suc.sucnombre',
-                                                    'usu.ususoldto'
+                                                    'suc.sucnombre'
                                                 ]);
 
 
