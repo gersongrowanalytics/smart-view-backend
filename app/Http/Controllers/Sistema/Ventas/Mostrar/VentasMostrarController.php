@@ -408,15 +408,20 @@ class VentasMostrarController extends Controller
                 )
             );
             
+            $usus = sucsucursales::where('sucestado', 1)
+                                ->where('zonid', $zonid)
+                                ->get([
+                                    'sucid'
+                                ]);
 
-            $usus = usuusuarios::join('ussusuariossucursales as uss', 'uss.usuid', 'usuusuarios.usuid')
-                        ->join('sucsucursales as suc', 'suc.sucid', 'uss.sucid')
-                        ->where('suc.sucestado', 1)
-                        ->where('usuusuarios.tpuid', 2) 
-                        ->where('usuusuarios.zonid', $zonid)
-                        ->where('usuusuarios.estid', 1)
-                        ->distinct('uss.sucid')
-                        ->get(['usuusuarios.usuid', 'uss.ussid', 'uss.sucid']);
+            // $usus = usuusuarios::join('ussusuariossucursales as uss', 'uss.usuid', 'usuusuarios.usuid')
+            //             ->join('sucsucursales as suc', 'suc.sucid', 'uss.sucid')
+            //             ->where('suc.sucestado', 1)
+            //             ->where('usuusuarios.tpuid', 2) 
+            //             ->where('usuusuarios.zonid', $zonid)
+            //             ->where('usuusuarios.estid', 1)
+            //             ->distinct('uss.sucid')
+            //             ->get(['usuusuarios.usuid', 'uss.ussid', 'uss.sucid']);
             
             if(sizeof($usus) > 0){
                 
