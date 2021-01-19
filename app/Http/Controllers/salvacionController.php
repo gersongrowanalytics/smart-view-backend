@@ -188,7 +188,7 @@ class salvacionController extends Controller
 
             $zone = zonzonas::find($suce->zonid);
             if($zone){
-                $zone->zonestado = 1;
+                $zone->zonestado = $uss->estid;
                 $zone->update();
             }
         }
