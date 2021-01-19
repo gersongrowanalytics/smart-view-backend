@@ -168,9 +168,18 @@ class CargarArchivoController extends Controller
                                             ->first();
                         
                         if($suce){
-                            $suce->sucestado = 1;
-                            $suce->update();
+                            if($suce->sucestado != 1){
+                                $suce->sucestado = 1;
+                                $suce->update();
+                            }
 
+                            $zone = zonzonas::find($suce->zonid);
+                            if($zone){
+                                if($zone->zonestado != 1){
+                                    $zone->zonestado = 1;
+                                    $zone->update();
+                                }
+                            }
                         }
 
     

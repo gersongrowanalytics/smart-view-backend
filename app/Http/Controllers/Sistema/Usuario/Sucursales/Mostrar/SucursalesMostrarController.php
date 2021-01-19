@@ -8,6 +8,7 @@ use App\usuusuarios;
 use App\ussusuariossucursales;
 use App\tuptiposusuariospermisos;
 use App\sucsucursales;
+use App\zonzonas;
 
 class SucursalesMostrarController extends Controller
 {
@@ -39,16 +40,22 @@ class SucursalesMostrarController extends Controller
                                                 
                 if($tup || $usuusuario->tpuid == 1){
 
-                    $zonas = ussusuariossucursales::join('sucsucursales as suc', 'suc.sucid', 'ussusuariossucursales.sucid')
-                                                    ->join('usuusuarios as usu', 'usu.usuid', 'ussusuariossucursales.usuid')
-                                                    ->join('zonzonas as zon', 'zon.zonid', 'usu.zonid')
-                                                    ->where('usu.estid', 1)
-                                                    ->distinct('zon.zonid')
-                                                    ->get([
-                                                        'zon.zonid',
-                                                        'zon.zonnombre',
-                                                        'zon.casid'
-                                                    ]);
+                    $zonas = zonzonas::where('zonestado', 1)
+                                        ->get([
+                                            'zon.zonid',
+                                            'zon.zonnombre',
+                                            'zon.casid'
+                                        ]);
+                    // $zonas = ussusuariossucursales::join('sucsucursales as suc', 'suc.sucid', 'ussusuariossucursales.sucid')
+                    //                                 ->join('usuusuarios as usu', 'usu.usuid', 'ussusuariossucursales.usuid')
+                    //                                 ->join('zonzonas as zon', 'zon.zonid', 'usu.zonid')
+                    //                                 ->where('usu.estid', 1)
+                    //                                 ->distinct('zon.zonid')
+                    //                                 ->get([
+                    //                                     'zon.zonid',
+                    //                                     'zon.zonnombre',
+                    //                                     'zon.casid'
+                    //                                 ]);
 
                     $gsus = sucsucursales::join('gsugrupossucursales as gsu', 'gsu.gsuid', 'sucsucursales.gsuid')
                                         ->where('sucestado', 1)
@@ -110,6 +117,7 @@ class SucursalesMostrarController extends Controller
 
                     $gsus = ussusuariossucursales::join('sucsucursales as suc', 'suc.sucid', 'ussusuariossucursales.sucid')
                                                 ->join('gsugrupossucursales as gsu', 'gsu.gsuid', 'suc.gsuid')
+                                                ->where('ussusuariossucursales.usuid', $usuusuario->usuid )
                                                 ->where('sucestado', 1)
                                                 ->distinct('gsu.gsuid')
                                                 ->get([
@@ -119,6 +127,7 @@ class SucursalesMostrarController extends Controller
 
                     $cass = ussusuariossucursales::join('sucsucursales as suc', 'suc.sucid', 'ussusuariossucursales.sucid')
                                                 ->join('cascanalessucursales as cas', 'cas.casid', 'suc.casid')
+                                                ->where('ussusuariossucursales.usuid', $usuusuario->usuid )
                                                 ->where('sucestado', 1)
                                                 ->distinct('cas.casid')
                                                 ->get([

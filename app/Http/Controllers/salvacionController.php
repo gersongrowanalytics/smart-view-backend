@@ -10,6 +10,7 @@ use App\ussusuariossucursales;
 use App\sucsucursales;
 use App\scasucursalescategorias;
 use App\tsutipospromocionessucursales;
+use App\zonzonas;
 
 class salvacionController extends Controller
 {
@@ -185,6 +186,9 @@ class salvacionController extends Controller
             $suce->sucestado = $uss->estid;
             $suce->update();
 
+            $zone = zonzonas::find($suce->zonid);
+            $zone->zonestado = 1;
+            $zone->update();
         }
 
 
