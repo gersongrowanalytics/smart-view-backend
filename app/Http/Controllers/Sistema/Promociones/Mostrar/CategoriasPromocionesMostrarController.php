@@ -16,6 +16,7 @@ use App\usuusuarios;
 use App\ussusuariossucursales;
 use App\fecfechas;
 use App\carcargasarchivos;
+use App\sucsucursales;
 
 class CategoriasPromocionesMostrarController extends Controller
 {
