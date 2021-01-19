@@ -532,4 +532,264 @@ class CategoriasPromocionesMostrarController extends Controller
 
 
     }
+
+    public function MostrarSucursalesDescargarPromocionesExcel(Request $request)
+    {
+
+        $usutoken   = $request['usutoken'];
+        $sucs       = $request['sucs'];
+        $dia        = "01";
+        $mes        = $request['mes'];
+        $anio       = $request['ano'];
+        
+        $usuusuario = usuusuarios::where('usutoken', $usutoken)->first(['ususoldto']);
+
+        $respuesta      = false;
+        $mensaje        = '';
+        $datos          = [];
+        $linea          = __LINE__;
+        $mensajeDetalle = '';
+        $mensajedev     = null;
+
+
+        $columnasExcel = [
+            "A",
+            "B",
+            "C",
+            "D",
+            "E",
+            "F",
+            "G",
+            "H",
+            "I",
+            "J",
+            "K",
+            "L",
+            "M",
+            "N",
+            "O",
+            "P",
+            "Q",
+            "R",
+            "S",
+            "T",
+            "U",
+            "V",
+            "W",
+            // "X",
+            // "Y",
+            "Z",
+            "AA",
+            // "AB",
+            // "AC",
+            "AD",
+            "AE",
+            // "AF",
+            // "AG",
+            "AH",
+            "AI",
+            "AJ",
+            "AK",
+            "AL",
+            "AM",
+            "AN",
+            "AO",
+            "AP",
+            "AQ",
+            "AR",
+            // "AS",
+            // "AT",
+            // "AU",
+            // "AV"
+        ];
+
+        $colorPlomo         = "FF595959";
+        $colorBlanco        = "FFFFFFFF";
+        $colorAzul          = "FF002060";
+        $colorVerdeClaro    = "FF66FF33";
+        $colorRosa          = "FFFF9999";
+        $colorNaranjaClaro  = "FFFFC000";
+        $colorPiel          = "FFFFF2CC";
+        $colorVerdeLimon    = "FFCCFFCC";        
+
+        try{
+
+            $uss = sucsucursales::where(function ($query) use($sucs) {
+                                        foreach($sucs as $suc){
+                                            $query->orwhere('sucid', $suc['sucpromociondescarga']);
+                                        }
+                                    })
+                                ->get(['sucsoldto']);
+
+
+            // $uss = ussusuariossucursales::join('usuusuarios as usu', 'usu.usuid', 'ussusuariossucursales.usuid' )
+            //                             ->where(function ($query) use($request) {
+            //                             })
+            //                             ->where('ussusuariossucursales.sucid', $sucid)
+            //                             ->get([
+            //                                 'ussusuariossucursales.ussid',
+            //                                 'ussusuariossucursales.usuid',
+            //                                 'ussusuariossucursales.sucid',
+            //                                 'usu.ususoldto'
+            //                             ]);
+
+            $nuevoArray = array(
+                array(
+                    "columns" => [],
+                    "data"    => []
+                )
+            );
+
+            $fec = fecfechas::where('fecdia', 'LIKE', "%".$dia."%")
+                            ->where('fecmes', 'LIKE', "%".$mes."%")
+                            ->where('fecano', 'LIKE', "%".$anio."%")
+                            ->first(['fecid']);
+
+            if($fec){
+                $car = carcargasarchivos::where('fecid', $fec->fecid)
+                                    ->where('tcaid', 1)
+                                    ->first(['carid', 'carnombrearchivo']);
+
+                if($car){
+                    $fichero_subido = base_path().'/public/Sistema/cargaArchivos/promociones/'.$car->carnombrearchivo;
+                    // $fichero_subido = base_path().'/public/Sistema/cargaArchivos/promociones/Promociones 2021 Enero.xlsx';
+
+                    $objPHPExcel    = IOFactory::load($fichero_subido);
+                    $objPHPExcel->setActiveSheetIndex(0);
+                    $numRows        = $objPHPExcel->setActiveSheetIndex(0)->getHighestRow();
+                    $ultimaColumna  = $objPHPExcel->setActiveSheetIndex(0)->getHighestColumn();
+
+                    for ($i=1; $i <= $numRows ; $i++) {
+
+                        if($i == 1){
+
+                            $arrayTitulos = array(
+                                array(
+                                    "title" => ""
+                                )
+                            );
+
+                            $contadorTitulos = 0;
+                            foreach($columnasExcel as $abc) {  
+                                $columnasFilas = $objPHPExcel->getActiveSheet()->getCell($abc.$i)->getCalculatedValue();
+                                
+                                $arrayTitulos[$contadorTitulos]['title'] = $columnasFilas;
+                                $arrayTitulos[$contadorTitulos]['style']['fill']['patternType'] = 'solid';
+                                if($abc == "A" || $abc == "B" || $abc == "J" || $abc == "K" || $abc == "M" || $abc == "N" || $abc == "Q" || $abc == "T" || $abc == "U" || $abc == "V" || $abc == "Z" || $abc == "AD" || $abc == "AG" || $abc == "AI" || $abc == "AK" || $abc == "AM" || $abc == "AN" || $abc == "AQ" || $abc == "AR" || $abc == "AS" || $abc == "AT"){
+                                    $arrayTitulos[$contadorTitulos]['style']['fill']['fgColor']['rgb'] = $colorPlomo;
+                                    $arrayTitulos[$contadorTitulos]['style']['font']['color']['rgb'] = $colorBlanco;
+                                }else if($abc == "C" || $abc == "D" || $abc == "E" || $abc == "F" || $abc == "G" || $abc == "H" || $abc == "I" || $abc == "L" || $abc == "O" || $abc == "P" || $abc == "Y" || $abc == "AC" || $abc == "AH" || $abc == "AL" || $abc == "AU"){
+                                    $arrayTitulos[$contadorTitulos]['style']['fill']['fgColor']['rgb'] = $colorAzul;
+                                    $arrayTitulos[$contadorTitulos]['style']['font']['color']['rgb'] = $colorBlanco;
+                                }else if($abc == "R" || $abc == "S" || $abc == "AO" || $abc == "AP"){
+                                    $arrayTitulos[$contadorTitulos]['style']['fill']['fgColor']['rgb'] = $colorNaranjaClaro;
+                                    $arrayTitulos[$contadorTitulos]['style']['font']['color']['rgb'] = $colorBlanco;
+                                }else if($abc == "W" || $abc == "X" || $abc == "AA" || $abc == "AB" || $abc == "AE" || $abc == "AF" || $abc == "R" ){
+                                    $arrayTitulos[$contadorTitulos]['style']['fill']['fgColor']['rgb'] = $colorVerdeClaro;
+                                }else if($abc == "AJ"){
+                                    $arrayTitulos[$contadorTitulos]['style']['fill']['fgColor']['rgb'] = $colorRosa;
+                                    $arrayTitulos[$contadorTitulos]['style']['font']['color']['rgb'] = $colorBlanco;
+                                }
+                                $contadorTitulos = $contadorTitulos+1;
+                            }
+
+                            $nuevoArray[0]['columns'] = $arrayTitulos;
+
+                        }else{
+                            $nombreTituloSoldTo = $objPHPExcel->getActiveSheet()->getCell('O2')->getCalculatedValue();
+                            $soldto = "";
+                            if($nombreTituloSoldTo == "SOLD TO"){
+                                $soldto = $objPHPExcel->getActiveSheet()->getCell('O'.$i)->getCalculatedValue();    
+                            }else{
+                                $soldto = $objPHPExcel->getActiveSheet()->getCell('P'.$i)->getCalculatedValue();
+                            }
+
+                            $pertenecedata = false;
+                            foreach($uss as $u){
+                                if($u->sucsoldto == $soldto ){
+                                    $pertenecedata = true;
+                                    break;
+                                }else{
+                                    $pertenecedata = false;
+                                }
+                            }
+
+                            if($pertenecedata == true){
+                                $arrayFilaExcel = array(
+                                    array(
+                                        "value" => ""
+                                    )
+                                );
+                                $contadorColumna = 0;
+
+                                foreach($columnasExcel as $abc) {
+                                    $columnasFilas = $objPHPExcel->getActiveSheet()->getCell($abc.$i)->getCalculatedValue();
+                                    
+                                    if($columnasFilas == null || $columnasFilas == " " ){
+                                        $columnasFilas = "";
+                                    }else if($columnasFilas == "-"){
+                                        $columnasFilas = "0";
+                                    }
+
+                                    if($abc != "A"){
+                                        if(is_numeric($columnasFilas)){
+                                            $columnasFilas = number_format($columnasFilas, 2);
+                                        }
+                                    }
+
+                                    $arrayFilaExcel[$contadorColumna]['value'] = $columnasFilas;
+
+                                    if($abc == "L" || $abc == "O" || $abc == "P" || $abc == "R" || $abc == "S" || $abc == "Y" || $abc == "AC" || $abc == "AL" || $abc == "AU"){
+                                        $arrayFilaExcel[$contadorColumna]['style']['fill']['patternType']    = 'solid';
+                                        $arrayFilaExcel[$contadorColumna]['style']['fill']['fgColor']['rgb'] = $colorPiel;
+                                    }else if($abc == "W" || $abc == "X" ){
+                                        $arrayFilaExcel[$contadorColumna]['style']['fill']['patternType']    = 'solid';
+                                        $arrayFilaExcel[$contadorColumna]['style']['fill']['fgColor']['rgb'] = $colorVerdeLimon;
+                                    }else if($abc == "AH" || $abc == "AR"){
+                                        $arrayFilaExcel[$contadorColumna]['style']['fill']['patternType']    = 'solid';
+                                        $arrayFilaExcel[$contadorColumna]['style']['fill']['fgColor']['rgb'] = $colorNaranjaClaro;
+                                    }
+
+                                    $contadorColumna = $contadorColumna+1;
+                                }
+
+                                $nuevoArray[0]['data'][] = $arrayFilaExcel;
+                            }
+                        }
+                    }
+
+                    $respuesta = true;
+                    $datos     = $nuevoArray;
+                    $archivo   = $car->carnombrearchivo;
+                }else{
+                    $respuesta = false;
+                    $mensaje = "Lo sentimos, no pudimos encontrar un registro de excel subido a este mes seleccionado";
+                    $mensajeDetalle = "Vuelve a seleccionar la fecha o comunicate con soporte";
+                }         
+            }else{
+                $respuesta = false;
+                $mensaje = "Lo sentimos, no pudimos encontrar la fecha seleccionada";
+                $mensajeDetalle = "Vuelve a seleccionar la fecha o comunicate con soporte";
+            }
+
+
+        } catch (Exception $e) {
+            $mensajedev = $e->getMessage();
+            $linea      = __LINE__;
+        }
+
+        $requestsalida = response()->json([
+            'respuesta'      => $respuesta,
+            'mensaje'        => $mensaje,
+            'datos'          => $datos,
+            'linea'          => $linea,
+            'mensajeDetalle' => $mensajeDetalle,
+            'mensajedev'     => $mensajedev,
+            'archivo'        => $archivo
+        ]);
+
+        return $requestsalida;
+
+
+    }
 }
