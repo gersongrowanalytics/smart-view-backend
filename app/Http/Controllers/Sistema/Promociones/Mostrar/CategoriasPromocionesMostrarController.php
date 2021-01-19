@@ -617,7 +617,11 @@ class CategoriasPromocionesMostrarController extends Controller
 
             $uss = sucsucursales::where(function ($query) use($sucs) {
                                         foreach($sucs as $suc){
-                                            $query->orwhere('sucid', $suc['sucpromociondescarga']);
+                                            if(isset($suc['sucpromociondescarga'])){
+                                                if($suc['sucpromociondescarga'] == true){
+                                                    $query->orwhere('sucid', $suc['sucid']);
+                                                }
+                                            }
                                         }
                                     })
                                 ->get(['sucsoldto']);
