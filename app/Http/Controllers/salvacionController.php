@@ -173,23 +173,31 @@ class salvacionController extends Controller
 
     public function ActualizarSucursales()
     {
-        $usss = ussusuariossucursales::join('usuusuarios as usu', 'usu.usuid', 'ussusuariossucursales.usuid')
-                                    ->get([
+
+        $sucs = sucsucursales::all();
+
+        foreach($sucs as $suc){
+
+            $uss = ussusuariossucursales::join('usuusuarios as usu', 'usu.usuid', 'ussusuariossucursales.usuid')
+                                    ->where('ussusuariossucursales.sucid', $suc->sucid)
+                                    ->first([
                                         'usu.ususoldto',
                                         'ussusuariossucursales.sucid',
                                         'usu.estid'
                                     ]);
 
-        foreach($usss as $uss){
-            $suce = sucsucursales::find($uss->sucid);
-            $suce->sucsoldto = $uss->ususoldto;
-            $suce->sucestado = $uss->estid;
-            $suce->update();
+            if($uss){
 
-            $zone = zonzonas::find($suce->zonid);
-            if($zone){
-                $zone->zonestado = $uss->estid;
-                $zone->update();
+                $suce = sucsucursales::find($suc->sucid);
+                $suce->sucsoldto = $uss->ususoldto;
+                $suce->sucestado = $uss->estid;
+                $suce->update();
+
+                $zone = zonzonas::find($suce->zonid);
+                if($zone){
+                    $zone->zonestado = $uss->estid;
+                    $zone->update();
+                }   
             }
         }
 
