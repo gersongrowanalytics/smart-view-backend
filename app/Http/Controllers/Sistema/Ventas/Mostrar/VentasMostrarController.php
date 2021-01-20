@@ -328,6 +328,7 @@ class VentasMostrarController extends Controller
         $usutoken   = $request['usutoken'];
         $zonid      = $request['zonid'];
         $gsuid      = $request['gsuid'];
+        $casid      = $request['casid'];
         // $dia        = $request['dia'];
         $dia        = "01";
         $mes        = $request['mes'];
@@ -411,13 +412,17 @@ class VentasMostrarController extends Controller
             );
             
             $usus = sucsucursales::where('sucestado', 1)
-                                ->where(function ($query) use($zonid, $gsuid) {
+                                ->where(function ($query) use($zonid, $gsuid, $casid) {
                                     if( $zonid != 0 ){
                                         $query->where('zonid', $zonid);
                                     }
 
                                     if($gsuid != 0){
                                         $query->where('gsuid', $gsuid);
+                                    }
+                                    
+                                    if($casid != 0){
+                                        $query->where('casid', $casid);
                                     }
                                 })
                                 ->get([
