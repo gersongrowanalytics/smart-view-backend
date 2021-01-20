@@ -68,12 +68,14 @@ class SucursalesMostrarController extends Controller
                                         ]);
 
                     foreach($gsus as $posicionGsu => $gsu){
-                        $gsus[$posicionGsu]['zonas'] = [];
-                        // foreach($zgss as $zgs){
-                        //     if($gsu->gsuid == $zgs->gsuid){
-                        //         $gsus[$posicionGsu]['zonas'][] = $zgs->zonid;
-                        //     }
-                        // }
+                        $zonas = [];
+                        foreach($zgss as $zgs){
+                            if($gsu->gsuid == $zgs->gsuid){
+                                $zonas[] = $zgs->zonid;
+                            }
+                        }
+
+                        $gsus[$posicionGsu]['zonas'] = $zonas;
                     }
 
                     $cass = sucsucursales::join('cascanalessucursales as cas', 'cas.casid', 'sucsucursales.casid')
