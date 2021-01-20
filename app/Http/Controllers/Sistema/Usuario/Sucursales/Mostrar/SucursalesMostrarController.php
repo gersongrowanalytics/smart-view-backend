@@ -40,22 +40,23 @@ class SucursalesMostrarController extends Controller
                                                 
                 if($tup || $usuusuario->tpuid == 1){
 
+                    $zgss = zgszonasgrupossucursales::all();
+
                     $zonas = zonzonas::where('zonestado', 1)
                                         ->get([
                                             'zonid',
                                             'zonnombre',
                                             'casid'
                                         ]);
-                    // $zonas = ussusuariossucursales::join('sucsucursales as suc', 'suc.sucid', 'ussusuariossucursales.sucid')
-                    //                                 ->join('usuusuarios as usu', 'usu.usuid', 'ussusuariossucursales.usuid')
-                    //                                 ->join('zonzonas as zon', 'zon.zonid', 'usu.zonid')
-                    //                                 ->where('usu.estid', 1)
-                    //                                 ->distinct('zon.zonid')
-                    //                                 ->get([
-                    //                                     'zon.zonid',
-                    //                                     'zon.zonnombre',
-                    //                                     'zon.casid'
-                    //                                 ]);
+
+                    foreach($zonas as $posicionZona => $zona){
+                        $zonas[$posicionZona]['gsus'] = [];
+                        foreach($zgss as $zgs){
+                            if($zona->zonid == $zgs->zonid){
+                                $zonas[$posicionZona]['gsus'][] = $zgs->gsuid;
+                            }
+                        }
+                    }
 
                     $gsus = sucsucursales::join('gsugrupossucursales as gsu', 'gsu.gsuid', 'sucsucursales.gsuid')
                                         ->where('sucestado', 1)
@@ -64,6 +65,15 @@ class SucursalesMostrarController extends Controller
                                             'gsu.gsuid',
                                             'gsunombre'
                                         ]);
+
+                    foreach($gsus as $posicionGsu => $gsu){
+                        $gsus[$posicionGsu]['zonas'] = [];
+                        foreach($zgss as $zgs){
+                            if($gsu->gsuid == $zgs->gsuid){
+                                $gsus[$posicionGsu]['zonas'][] = $zgs->zonid;
+                            }
+                        }
+                    }
 
                     $cass = sucsucursales::join('cascanalessucursales as cas', 'cas.casid', 'sucsucursales.casid')
                                         ->where('sucestado', 1)
@@ -86,22 +96,7 @@ class SucursalesMostrarController extends Controller
                                                                 'zon.zonnombre',
                                                                 'sucsucursales.sucnombre',
                                                                 'sucsucursales.sucsoldto'
-                                                            ]);
-
-                    // $ussusuariossucursales = ussusuariossucursales::join('usuusuarios as usu', 'usu.usuid', 'ussusuariossucursales.usuid')
-                    //                             ->join('sucsucursales as suc', 'suc.sucid', 'ussusuariossucursales.sucid')
-                    //                             ->join('zonzonas as zon', 'zon.zonid', 'suc.zonid')
-                    //                             ->where('usu.estid', 1)
-                    //                             ->distinct('suc.sucid')
-                    //                             // ->orderBy('suc.sucorden', 'DESC')
-                    //                             ->get([
-                    //                                 'suc.sucid',
-                    //                                 'zon.zonid',
-                    //                                 'gsuid',
-                    //                                 'suc.casid',
-                    //                                 'zon.zonnombre',
-                    //                                 'suc.sucnombre'
-                    //                             ]);
+                                                            ]);                
 
 
                 }else{
