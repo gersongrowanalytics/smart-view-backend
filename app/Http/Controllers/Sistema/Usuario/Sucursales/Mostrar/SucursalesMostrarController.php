@@ -83,13 +83,7 @@ class SucursalesMostrarController extends Controller
                             if($gsu->gsuid == $zgs->gsuid){
                                 $zonasGsu[] = $zgs->zonid;
 
-                                if(sizeof($canalesGsu) > 0){
-                                    foreach($canalesGsu as $canalGsu){
-                                        if($canalGsu != $zgs->casid  ){
-                                            $canalesGsu[] = $zgs->casid;
-                                        }
-                                    }
-                                }else{
+                                if (!in_array($zgs->zonid, $canalesGsu)) {
                                     $canalesGsu[] = $zgs->casid;
                                 }
                             }
