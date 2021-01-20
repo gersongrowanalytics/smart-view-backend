@@ -634,11 +634,80 @@ class VentasMostrarController extends Controller
 
                     $dataarray[$posicionTpr]['trrs'] = $plantillaTrrs;
                 }
+
+                $datos = $dataarray;
             }else{
-                $respuesta  = false;
+                
+                $dataVacia = array(array());
+
+                $categorias = catcategorias::where('catnombre', '!=', 'MultiCategoria')
+                                            ->where('catid', '<', 6)->get();
+                $tprtipospromociones = tprtipospromociones::all();
+
+                $trrs = array(
+                    array(
+                        "rtpid" => 0,
+                        "rtpporcentajedesde" => "95",
+                        "rtpporcentajehasta" => "99",
+                        "rtpporcentajerebate" => "0"
+                    ),
+                    array(
+                        "rtpid" => 0,
+                        "rtpporcentajedesde" => "100",
+                        "rtpporcentajehasta" => "104",
+                        "rtpporcentajerebate" => "0"
+                    ),
+                    array(
+                        "rtpid" => 0,
+                        "rtpporcentajedesde" => "105",
+                        "rtpporcentajehasta" => "10000",
+                        "rtpporcentajerebate" => "0"
+                    ),
+                );
+
+                foreach($tprtipospromociones as $posicionTpr => $tpr){
+                    
+                    $dataVacia[$posicionTpr]['tsuid']                     = 0;
+                    $dataVacia[$posicionTpr]['tprid']                     = $tpr->tprid;
+                    $dataVacia[$posicionTpr]['tprnombre']                 = $tpr->tprnombre;
+                    $dataVacia[$posicionTpr]['tpricono']                  = $tpr->tpricono;
+                    $dataVacia[$posicionTpr]['tprcolorbarra']             = $tpr->tprcolorbarra;
+                    $dataVacia[$posicionTpr]['tprcolortooltip']           = $tpr->tprcolortooltip;
+                    $dataVacia[$posicionTpr]['tsuvalorizadoobjetivo']     = 0;
+                    $dataVacia[$posicionTpr]['tsuvalorizadoreal']         = 0;
+                    $dataVacia[$posicionTpr]['tsuvalorizadotogo']         = 0;
+                    $dataVacia[$posicionTpr]['tsuporcentajecumplimiento'] = 0;
+                    $dataVacia[$posicionTpr]['tsuvalorizadorebate']       = 0;
+                    $dataVacia[$posicionTpr]["trrs"] = $trrs;
+                    
+                    
+                    $dataVacia[$posicionTpr]["tieneRebateTrimestral"]     = $tieneRebateTrimestral;
+                    $dataVacia[$posicionTpr]["tsuobjetivotrimestral"]     = 0;
+                    $dataVacia[$posicionTpr]["tsurealtrimestral"]         = 0;
+                    $dataVacia[$posicionTpr]["tsufacturartrimestral"]     = 0;
+                    $dataVacia[$posicionTpr]["tsucumplimientotrimestral"] = 0;
+                    $dataVacia[$posicionTpr]["tsurebatetrimestral"]       = 0;
+                    $dataVacia[$posicionTpr]["nombreTrimestre"] = $nombreTrimestre;
+                    
+                    
+                    $dataVacia[$posicionTpr]['categorias'] = array(array());
+                    foreach($categorias as $posicion => $categoria){     
+                        $dataVacia[$posicionTpr]['categorias'][$posicion]['catnombre']              = $categoria->catnombre;
+                        $dataVacia[$posicionTpr]['categorias'][$posicion]['catimagenfondo']         = $categoria->catimagenfondo;
+                        $dataVacia[$posicionTpr]['categorias'][$posicion]['catimagenfondoopaco']    = $categoria->catimagenfondoopaco;
+                        $dataVacia[$posicionTpr]['categorias'][$posicion]['caticono']               = $categoria->caticono;
+                        $dataVacia[$posicionTpr]['categorias'][$posicion]['scavalorizadoobjetivo']  = 0;
+                        $dataVacia[$posicionTpr]['categorias'][$posicion]['scavalorizadoreal']      = 0;
+                        $dataVacia[$posicionTpr]['categorias'][$posicion]['scavalorizadotogo']      = 0;
+                        $dataVacia[$posicionTpr]['categorias'][$posicion]['scaiconocategoria']      = env('APP_URL').'/Sistema/categorias-tiposPromociones/img/iconos/'.$categoria->catnombre.'-'.$tpr->tprnombre.'.png';
+                    }
+                }
+
+                $datos = $dataVacia;
+                $mensaje        = 'Lo sentimos no encontramos tipos de promociones registradas a este filtro.';
+                $mensajeDetalle = sizeof($usus).' registros encontrados.';
+                $respuesta      = true;
             }
-            
-            $datos = $dataarray;
 
 
         } catch (Exception $e) {
