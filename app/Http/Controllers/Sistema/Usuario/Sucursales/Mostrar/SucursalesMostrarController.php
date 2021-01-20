@@ -70,14 +70,14 @@ class SucursalesMostrarController extends Controller
                                         ]);
 
                     foreach($gsus as $posicionGsu => $gsu){
-                        $zonas = [];
+                        $zonasGsu = [];
                         foreach($zgss as $zgs){
                             if($gsu->gsuid == $zgs->gsuid){
-                                $zonas[] = $zgs->zonid;
+                                $zonasGsu[] = $zgs->zonid;
                             }
                         }
 
-                        $gsus[$posicionGsu]['zonas'] = $zonas;
+                        $gsus[$posicionGsu]['zonas'] = $zonasGsu;
                     }
 
                     $cass = sucsucursales::join('cascanalessucursales as cas', 'cas.casid', 'sucsucursales.casid')
