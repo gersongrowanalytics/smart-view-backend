@@ -100,6 +100,28 @@ class SucursalesMostrarController extends Controller
                                             'cas.casid',
                                             'casnombre'
                                         ]);
+
+                    foreach($cass as $posicionCas => $cas){
+
+                        $zonasCas  = [];
+                        $gruposCas = [];
+
+                        foreach($zonas as $zona){
+                            if($zona->casid == $cas->casid){
+                                $zonasCas[] = $zona->zonid;
+                            }
+                        }
+
+                        foreach($zgss as $zgs){
+                            if($zgs->casid == $cas->casid){
+                                $gruposCas[] = $zgs->gsuid;
+                            }
+                        }
+
+
+                        $cass[$posicionCas]['zonas']  = $zonasCas;
+                        $cass[$posicionCas]['grupos'] = $gruposCas;
+                    }
                     
 
                                                     
