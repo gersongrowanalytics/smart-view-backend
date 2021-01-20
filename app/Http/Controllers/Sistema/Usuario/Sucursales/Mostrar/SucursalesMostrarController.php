@@ -50,14 +50,14 @@ class SucursalesMostrarController extends Controller
                                             'casid'
                                         ]);
 
-                    foreach($zonas as $posicionZona => $zona){
-                        $zonas[$posicionZona]['gsus'] = [];
-                        foreach($zgss as $zgs){
-                            if($zona->zonid == $zgs->zonid){
-                                $zonas[$posicionZona]['gsus'][] = $zgs->gsuid;
-                            }
-                        }
-                    }
+                    // foreach($zonas as $posicionZona => $zona){
+                    //     $zonas[$posicionZona]['gsus'] = [];
+                    //     foreach($zgss as $zgs){
+                    //         if($zona->zonid == $zgs->zonid){
+                    //             $zonas[$posicionZona]['gsus'][] = $zgs->gsuid;
+                    //         }
+                    //     }
+                    // }
 
                     $gsus = sucsucursales::join('gsugrupossucursales as gsu', 'gsu.gsuid', 'sucsucursales.gsuid')
                                         ->where('sucestado', 1)
