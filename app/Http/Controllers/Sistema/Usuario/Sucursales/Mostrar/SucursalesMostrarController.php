@@ -114,7 +114,9 @@ class SucursalesMostrarController extends Controller
 
                         foreach($zgss as $zgs){
                             if($zgs->casid == $cas->casid){
-                                $gruposCas[] = $zgs->gsuid;
+                                if (!in_array($zgs->gsuid, $gruposCas)) {
+                                    $gruposCas[] = $zgs->gsuid;
+                                }
                             }
                         }
 
