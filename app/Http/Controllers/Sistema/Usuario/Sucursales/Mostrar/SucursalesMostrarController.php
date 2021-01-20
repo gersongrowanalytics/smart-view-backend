@@ -41,7 +41,7 @@ class SucursalesMostrarController extends Controller
                                                 
                 if($tup || $usuusuario->tpuid == 1){
 
-                    $zgss = zgszonasgrupossucursales::join('zonzonas as zon', 'zonid', 'zgszonasgrupossucursales.zonid')
+                    $zgss = zgszonasgrupossucursales::join('zonzonas as zon', 'zon.zonid', 'zgszonasgrupossucursales.zonid')
                                                     ->get([
                                                         'zgszonasgrupossucursales.gsuid',
                                                         'zgszonasgrupossucursales.zonid',
