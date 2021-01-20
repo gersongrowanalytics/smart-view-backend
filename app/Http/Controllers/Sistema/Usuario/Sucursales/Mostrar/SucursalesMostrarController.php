@@ -41,7 +41,12 @@ class SucursalesMostrarController extends Controller
                                                 
                 if($tup || $usuusuario->tpuid == 1){
 
-                    $zgss = zgszonasgrupossucursales::all();
+                    $zgss = zgszonasgrupossucursales::join('zonzonas as zon', 'zonid', 'zgszonasgrupossucursales.zonid')
+                                                    ->get([
+                                                        'zgszonasgrupossucursales.gsuid',
+                                                        'zgszonasgrupossucursales.zonid',
+                                                        'zon.casid'
+                                                    ]);
 
                     $zonas = zonzonas::where('zonestado', 1)
                                         ->get([
@@ -71,13 +76,23 @@ class SucursalesMostrarController extends Controller
 
                     foreach($gsus as $posicionGsu => $gsu){
                         $zonasGsu = [];
+                        $canalesGsu = [];
+
+
                         foreach($zgss as $zgs){
                             if($gsu->gsuid == $zgs->gsuid){
                                 $zonasGsu[] = $zgs->zonid;
+
+                                foreach($canalesGsu as $canaleGsu){
+                                    if($canaleGsu != $zgs->casid  ){
+                                        $canalesGsu[] = $zgs->casid;
+                                    }
+                                }
                             }
                         }
 
                         $gsus[$posicionGsu]['zonas'] = $zonasGsu;
+                        $gsus[$posicionGsu]['canales'] = $canalesGsu;
                     }
 
                     $cass = sucsucursales::join('cascanalessucursales as cas', 'cas.casid', 'sucsucursales.casid')
