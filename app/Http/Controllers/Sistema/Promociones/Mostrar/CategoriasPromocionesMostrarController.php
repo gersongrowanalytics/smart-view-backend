@@ -736,7 +736,7 @@ class CategoriasPromocionesMostrarController extends Controller
                                         $columnasFilas = "0";
                                     }
 
-                                    if($abc == "AA"){
+                                    if($abc == "AD"){
                                         $columnasFilas = strval("a$columnasFilas");
                                     }
 
