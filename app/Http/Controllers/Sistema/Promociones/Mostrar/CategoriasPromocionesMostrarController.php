@@ -736,11 +736,11 @@ class CategoriasPromocionesMostrarController extends Controller
                                         $columnasFilas = "0";
                                     }
 
-                                    if($abc == "Z"){
+                                    if($abc == "AB"){
                                         $columnasFilas = strval("a$columnasFilas");
                                     }
 
-                                    if($abc != "A" && $abc != "P" && $abc != "X" && $abc != "Z"){
+                                    if($abc != "A" && $abc != "P" && $abc != "Z"){
                                         if(is_numeric($columnasFilas)){
                                             $columnasFilas = number_format($columnasFilas, 2);
                                         }
