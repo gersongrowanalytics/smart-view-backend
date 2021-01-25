@@ -379,7 +379,7 @@ class VentasMostrarController extends Controller
                 $rbsObjetivo = 0;
                 $rbsReal     = 0;
                 $rbsRebate   = 0;
-                
+
                 $cats = catcategorias::where('catid', '!=', 6)->get();
 
                 foreach($rbbs as $rbb){
@@ -429,7 +429,7 @@ class VentasMostrarController extends Controller
 
                     $rbsRebate   = $rbsRebate + $rbsRebateActual;
                     $rbsObjetivo = $rbsObjetivo + $rbsSumaObjetivosActual;
-                    $rbsReal     = $rbsSumaRealActual + $rbsSumaRealActual;
+                    $rbsReal     = $rbsReal + $rbsSumaRealActual;
 
                     if($rbsObjetivo > 0){
                         $rbsCumplimiento = ($rbsReal * 100 ) / $rbsObjetivo;
