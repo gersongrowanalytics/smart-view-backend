@@ -123,7 +123,7 @@ class AsignarSucursalesController extends Controller
             "NO_SE_ENCONTRO_RBS" => []
         );
 
-        $cateogiras = [];
+        $cateogiras = [1, 2, 3, 5];
 
         $sucs = sucsucursales::where('sucestado', 1)->get();
 
