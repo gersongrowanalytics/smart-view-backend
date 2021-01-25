@@ -31,12 +31,12 @@ class AsignarSucursalesController extends Controller
             if(sizeof($rbss) > 0){
                 foreach($rbss as $rbs){
 
-                    $rscs = rscrbsscategorias::where('rbsid', $rbs->rbsid)->get();
+                    // $rscs = rscrbsscategorias::where('rbsid', $rbs->rbsid)->get();
 
-                    foreach($rscs as $rsc){
-                        $rscd = rscrbsscategorias::find($rsc->rscid);
-                        $rscd->delete();
-                    }
+                    // foreach($rscs as $rsc){
+                    //     $rscd = rscrbsscategorias::find($rsc->rscid);
+                    //     $rscd->delete();
+                    // }
 
                     $rbbd = rbsrebatesbonussucursales::find($rbs->rbsid);
                     $rbbd->delete();
@@ -113,5 +113,47 @@ class AsignarSucursalesController extends Controller
         }
 
         dd($logs);
+    }
+
+    public function ActualizarCategoriasBonus($fecid, $rbbid)
+    {
+
+        $log = array(
+            "NO_SE_AGREGO_RSC_CATEGORIAS" => [],
+            "NO_SE_ENCONTRO_RBS" => []
+        );
+
+        $cateogiras = [];
+
+        $sucs = sucsucursales::where('sucestado', 1)->get();
+
+        foreach($sucs as $suc){
+            $rbs = rbsrebatesbonussucursales::where('sucid', $suc->sucid)
+                                            ->where('fecid', $fecid)
+                                            ->where('rbbid', $rbbid)
+                                            ->first();
+
+            if($rbs){
+                foreach($cateogiras as $catid){
+                    $rscn = new rscrbsscategorias;
+                    $rscn->fecid = $fecid;
+                    $rscn->rbbid = $rbbid;
+                    $rscn->sucid = $suc->sucid;
+                    $rscn->rbsid = $rbs->rbsid;
+                    $rscn->catid = $catid;
+                    $rscn->rscestado = 1;
+                    if($rscn->save()){
+
+                    }else{
+                        $log["NO_SE_AGREGO_RSC_CATEGORIAS"][] = "SUC: ".$suc->sucid." FEC: ".$fecid." RBB: ".$rbbid;
+                    }
+                }
+            }else{
+                $log["NO_SE_ENCONTRO_RBS"][] = "SUC: ".$suc->sucid." FEC: ".$fecid." RBB: ".$rbbid;
+            }
+
+        }
+
+        dd($log);
     }
 }

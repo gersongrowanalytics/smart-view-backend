@@ -367,6 +367,104 @@ class VentasMostrarController extends Controller
 
         try{
             
+            // OBTENER EL REBATE BONUS
+            // $rbbs = rbbrebatesbonus::join('fecfechas as fec', 'rbbrebatesbonus.fecid', 'fec.fecid')
+            //                         ->where('fec.fecano', $ano)
+            //                         ->where('fec.fecmes', $mes)
+            //                         ->where('fec.fecdia', $dia)
+            //                         ->get();
+
+            // if(sizeof($rbbs) > 0){
+
+            //     $rbsObjetivo = 0;
+            //     $rbsReal     = 0;
+            //     $rbsRebate   = 0;
+
+            //     foreach($rbbs as $rbb){
+            //         $rbsSumaObjetivosActual = rbsrebatesbonussucursales::join('sucsucursales as suc', 'suc.sucid', 'rbsrebatesbonussucursales.sucid')
+            //                                         ->where('rbbid', $rbb->rbbid)
+            //                                         ->where(function ($query) use($zonid, $gsuid, $casid) {
+            //                                             if( $zonid != 0 ){
+            //                                                 $query->where('suc.zonid', $zonid);
+            //                                             }
+                    
+            //                                             if($gsuid != 0){
+            //                                                 $query->where('suc.gsuid', $gsuid);
+            //                                             }
+                                                        
+            //                                             if($casid != 0){
+            //                                                 $query->where('suc.casid', $casid);
+            //                                             }
+            //                                         })
+            //                                         ->sum('rbsobjetivo');
+
+            //         $rbsSumaRealActual = rbsrebatesbonussucursales::join('sucsucursales as suc', 'suc.sucid', 'rbsrebatesbonussucursales.sucid')
+            //                                         ->where('rbbid', $rbb->rbbid)
+            //                                         ->where(function ($query) use($zonid, $gsuid, $casid) {
+            //                                             if( $zonid != 0 ){
+            //                                                 $query->where('suc.zonid', $zonid);
+            //                                             }
+                    
+            //                                             if($gsuid != 0){
+            //                                                 $query->where('suc.gsuid', $gsuid);
+            //                                             }
+                                                        
+            //                                             if($casid != 0){
+            //                                                 $query->where('suc.casid', $casid);
+            //                                             }
+            //                                         })
+            //                                         ->sum('rbsreal');
+                    
+            //         $rbsCumplimientoActual = ($rbsSumaRealActual * 100 ) / $rbsSumaObjetivosActual;
+
+            //         if($rbb->rbbcumplimiento <= $rbsCumplimientoActual){
+            //             $rbsRebateActual = ($rbsSumaObjetivosActual * $rbb->rbbporcentaje) / 100;
+            //         }else{
+            //             $rbsRebateActual = 0;
+            //         }
+
+
+
+            //         $rbsRebate   = $rbsRebate + $rbsRebateActual;
+            //         $rbsObjetivo = $rbsObjetivo + $rbsSumaObjetivosActual;
+            //         $rbsReal     = $rbsSumaRealActual + $rbsSumaRealActual;
+
+            //         if($rbsObjetivo > 0){
+            //             $rbsCumplimiento = ($rbsReal * 100 ) / $rbsObjetivo;
+            //         }else{
+            //             $rbsCumplimiento = $rbsReal;
+            //         }
+
+            //         $rebatesBonus['objetivo']     = $rbsObjetivo;
+            //         $rebatesBonus['real']         = $rbsReal;
+            //         $rebatesBonus['cumplimiento'] = $rbsCumplimiento;
+            //         $rebatesBonus['rebate']       = $rbsRebate;
+            //         $rebatesBonus['descripcion']  = $rbb->rbbdescripcion;
+
+            //         $cats = catcategorias::where('catid', '!=', 6)->get();
+                    
+            //         foreach($cats as $posicionCat => $cat){
+            //             if($rbb->fecid == 3){
+            //                 if($cat->catid == 4){
+            //                     $cats[$posicionCat]['estado'] = 0;
+            //                     $cats[$posicionCat]['caticono'] = "http://backend.leadsmartview.com/Sistema/categorias/img/iconos/iconosDesactivados/".$cat->catnombre.".png";
+            //                 }else{
+            //                     $cats[$posicionCat]['estado'] = 1;
+            //                 }
+            //             }else{
+            //                 if($cat->catid == 1){
+            //                     $cats[$posicionCat]['estado'] = 1;
+            //                 }else{
+            //                     $cats[$posicionCat]['estado'] = 0;
+            //                     $cats[$posicionCat]['caticono'] = "http://backend.leadsmartview.com/Sistema/categorias/img/iconos/iconosDesactivados/".$cat->catnombre.".png";
+            //                 }
+            //             }
+            //         }
+
+            //         $rebatesBonus['categorias'] = $cats;
+            //     }
+            // }
+
             $plantillaTrrs = array(
                 array(
                     "rtpid" => 0,

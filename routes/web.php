@@ -98,6 +98,7 @@ $router->group(['middleware' => ['permisos']], function() use($router) {
 
 
 $router->get('/armarRebateBonus', 'Sistema\RebatesBonus\AsignarSucursalesController@AsiganarSucursales');
+$router->get('/armarCategoriasRebateBonus/{fecid}/{rbbid}', 'Sistema\RebatesBonus\AsignarSucursalesController@ActualizarCategoriasBonus');
 
 $router->get('/mostrar/tdis', 'Sistema\Tdi\Mostrar\TdisMostrarController@MostrarTdis');
 $router->get('/consumirApi', 'Sistema\SellOut\CargarSellOutController@CargarSellOutTodo');

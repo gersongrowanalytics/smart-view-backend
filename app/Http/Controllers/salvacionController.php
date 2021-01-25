@@ -11,6 +11,7 @@ use App\sucsucursales;
 use App\scasucursalescategorias;
 use App\tsutipospromocionessucursales;
 use App\zonzonas;
+use App\rscrbsscategorias;
 
 class salvacionController extends Controller
 {
