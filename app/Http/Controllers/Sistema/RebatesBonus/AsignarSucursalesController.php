@@ -25,43 +25,42 @@ class AsignarSucursalesController extends Controller
         $sucs = sucsucursales::where('sucestado', 1)->get(['sucid']);
 
         foreach($rbbs as $rbb){
-            $rbss = rbsrebatesbonussucursales::where('rbbid', $rbb->rbbid)
-                                            ->get(['rbsid']);
-
-            if(sizeof($rbss) > 0){
-                foreach($rbss as $rbs){
-
-                    // $rscs = rscrbsscategorias::where('rbsid', $rbs->rbsid)->get();
-
-                    // foreach($rscs as $rsc){
-                    //     $rscd = rscrbsscategorias::find($rsc->rscid);
-                    //     $rscd->delete();
-                    // }
-
-                    $rbbd = rbsrebatesbonussucursales::find($rbs->rbsid);
-                    $rbbd->delete();
-                }
-            }
-
-
 
             foreach($sucs as $suc){
 
-                if($rbb->fecid == 3){
-                    $scas = scasucursalescategorias::join('tsutipospromocionessucursales as tsu', 'tsu.tsuid', 'scasucursalescategorias.tsuid')
+                $rscs = rscrbsscategorias::where('rbbid', $rbb->rbbid)
+                                        ->where('sucid', $suc->sucid)
+                                        ->where('rscestado', 1)
+                                        ->get();
+
+                $scas = scasucursalescategorias::join('tsutipospromocionessucursales as tsu', 'tsu.tsuid', 'scasucursalescategorias.tsuid')
                                             ->where('scasucursalescategorias.fecid', $rbb->fecid )
                                             ->where('tsu.tprid', 1)
                                             ->where('scasucursalescategorias.sucid', $suc->sucid)
-                                            ->where('catid', '!=', 4)
+                                            ->where(function ($query) use($rscs) {
+
+                                                foreach($rscs as $rsc){
+                                                    $query->orwhere('catid', $rsc->catid);
+                                                }
+
+                                            })
                                             ->get();
-                }else{
-                    $scas = scasucursalescategorias::join('tsutipospromocionessucursales as tsu', 'tsu.tsuid', 'scasucursalescategorias.tsuid')
-                                            ->where('scasucursalescategorias.fecid', $rbb->fecid )
-                                            ->where('tsu.tprid', 1)
-                                            ->where('scasucursalescategorias.sucid', $suc->sucid)
-                                            ->where('catid', 1)
-                                            ->get();
-                }
+
+                // if($rbb->fecid == 3){
+                //     $scas = scasucursalescategorias::join('tsutipospromocionessucursales as tsu', 'tsu.tsuid', 'scasucursalescategorias.tsuid')
+                //                             ->where('scasucursalescategorias.fecid', $rbb->fecid )
+                //                             ->where('tsu.tprid', 1)
+                //                             ->where('scasucursalescategorias.sucid', $suc->sucid)
+                //                             ->where('catid', '!=', 4)
+                //                             ->get();
+                // }else{
+                //     $scas = scasucursalescategorias::join('tsutipospromocionessucursales as tsu', 'tsu.tsuid', 'scasucursalescategorias.tsuid')
+                //                             ->where('scasucursalescategorias.fecid', $rbb->fecid )
+                //                             ->where('tsu.tprid', 1)
+                //                             ->where('scasucursalescategorias.sucid', $suc->sucid)
+                //                             ->where('catid', 1)
+                //                             ->get();
+                // }
                 
 
                 $rbsobjetivo = 0;
@@ -87,25 +86,42 @@ class AsignarSucursalesController extends Controller
                     if($tsu){
                         $rbsrebate = ($tsu->tsuvalorizadoreal*$rbb->rbbporcentaje)/100;
                         
-                        if($rbb->fecid == 3){
-                            $logs['oct'][] = "Entra en el rango la sucursal: ".$suc->sucid." con un porcentaje de :".$rbscumplimiento." y un rebate de: ".$rbsrebate;
-                        }else{
-                            $logs['novydic'][] = "Entra en el rango la sucursal: ".$suc->sucid." con un porcentaje de :".$rbscumplimiento." y un rebate de: ".$rbsrebate;
-                        }
+                        $logs[$rbb->fecid][] = "Entra en el rango la sucursal: ".$suc->sucid." con un porcentaje de :".$rbscumplimiento." y un rebate de: ".$rbsrebate;
+
+                        // if($rbb->fecid == 3){
+                        //     $logs['oct'][] = "Entra en el rango la sucursal: ".$suc->sucid." con un porcentaje de :".$rbscumplimiento." y un rebate de: ".$rbsrebate;
+                        // }else{
+                        //     $logs['novydic'][] = "Entra en el rango la sucursal: ".$suc->sucid." con un porcentaje de :".$rbscumplimiento." y un rebate de: ".$rbsrebate;
+                        // }
                         
                     }
                     
                 }
 
-                $rbsn = new rbsrebatesbonussucursales;
-                $rbsn->fecid           = $rbb->fecid;
-                $rbsn->rbbid           = $rbb->rbbid;
-                $rbsn->sucid           = $suc->sucid;
-                $rbsn->rbsobjetivo     = $rbsobjetivo;
-                $rbsn->rbsreal         = $rbsreal;
-                $rbsn->rbscumplimiento = $rbscumplimiento;
-                $rbsn->rbsrebate       = $rbsrebate;
-                $rbsn->save();
+                $rbs = rbsrebatesbonussucursales::where('sucid', $suc->sucid)
+                                                ->where('rbbid', $rbb->rbbid)
+                                                ->where('fecid', $rbb->fecid)
+                                                ->first();
+
+                if($rbs){
+
+                    $rbs->rbsobjetivo     = $rbsobjetivo;
+                    $rbs->rbsreal         = $rbsreal;
+                    $rbs->rbscumplimiento = $rbscumplimiento;
+                    $rbs->rbsrebate       = $rbsrebate;
+                    $rbs->update();
+
+                }else{
+                    $rbsn = new rbsrebatesbonussucursales;
+                    $rbsn->fecid           = $rbb->fecid;
+                    $rbsn->rbbid           = $rbb->rbbid;
+                    $rbsn->sucid           = $suc->sucid;
+                    $rbsn->rbsobjetivo     = $rbsobjetivo;
+                    $rbsn->rbsreal         = $rbsreal;
+                    $rbsn->rbscumplimiento = $rbscumplimiento;
+                    $rbsn->rbsrebate       = $rbsrebate;
+                    $rbsn->save();
+                }
 
             }
 
