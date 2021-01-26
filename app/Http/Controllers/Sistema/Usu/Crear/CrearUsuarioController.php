@@ -32,7 +32,7 @@ class CrearUsuarioController extends Controller
         $mensajeDetalle = '';
         $mensajedev     = null;
 
-        $usutoken   = $request->header('api_token');
+        $usutoken   = $request->header('api-token');
 
         $nombre     = $request['pernom'];
         $apellPat   = $request['perapellpat'];

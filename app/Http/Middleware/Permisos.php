@@ -21,7 +21,7 @@ class Permisos
         $ruta = $ruta[1];
 
         $usuusuario = usuusuarios::join('tputiposusuarios as tpu', 'tpu.tpuid', 'usuusuarios.tpuid')
-                                ->where('usuusuarios.usutoken', $request->header('api_token'))
+                                ->where('usuusuarios.usutoken', $request->header('api-token'))
                                 ->first(['usuusuarios.usuid', 'tpu.tpuid', 'tpu.tpuprivilegio']);
         if($usuusuario){
             if($usuusuario->tpuprivilegio == 'todo'){

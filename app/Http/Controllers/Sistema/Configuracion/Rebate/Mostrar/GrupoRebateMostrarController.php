@@ -11,7 +11,7 @@ class GrupoRebateMostrarController extends Controller
     public function GrupoRebateMostrar(Request $request)
     {
 
-        $usutoken = $request->header('api_token');
+        $usutoken = $request->header('api-token');
 
         $respuesta      = false;
         $mensaje        = '';

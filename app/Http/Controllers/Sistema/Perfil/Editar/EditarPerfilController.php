@@ -20,7 +20,7 @@ class EditarPerfilController extends Controller
         $mensajedev     = null;
         $log            = [];
 
-        $usutoken           = $request->header('api_token');
+        $usutoken           = $request->header('api-token');
         $usuorganizacion    = $request['usuorganizacion'];
         $perfechanacimiento = $request['perfechanacimiento'];
         $editarCont         = $request['editarCont'];

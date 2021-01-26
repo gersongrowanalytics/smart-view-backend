@@ -43,7 +43,7 @@ class CargarArchivoController extends Controller
         $mensajeDetalle = '';
         $mensajedev     = null;
         $numeroCelda    = 0;
-        $usutoken       = $request->header('api_token');
+        $usutoken       = $request->header('api-token');
         $archivo        = $_FILES['file']['name'];
 
         $cargarData = false;
@@ -922,7 +922,7 @@ class CargarArchivoController extends Controller
         $respuesta  = true;
         $mensaje    = 'El archivo se subio correctamente';
         $archivo    = $_FILES['file']['name'];
-        $usutoken   = $request->header('api_token');
+        $usutoken   = $request->header('api-token');
         $usuusuario = usuusuarios::where('usutoken', $usutoken)
                                 ->first([
                                     'usuid',

@@ -10,7 +10,7 @@ class TiposUsuariosController extends Controller
 {
     public function mostrarTiposUsuarios(Request $request)
     {
-        $usutoken = $request->header('api_token');
+        $usutoken = $request->header('api-token');
         
         $respuesta      = false;
         $mensaje        = '';

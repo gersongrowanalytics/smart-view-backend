@@ -29,7 +29,7 @@ class ActualizarGrupoSucursalController extends Controller
         );
 
         $archivo  = $_FILES['file']['name'];
-        $usutoken = $request->header('api_token');
+        $usutoken = $request->header('api-token');
 
         $usuusuario = usuusuarios::where('usutoken', $usutoken)->first(['usuid', 'usuusuario']);
 

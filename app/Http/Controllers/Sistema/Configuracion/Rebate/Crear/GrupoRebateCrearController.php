@@ -13,7 +13,7 @@ class GrupoRebateCrearController extends Controller
     {
 
         $nombreGrupoRebate = $request['nombreGrupoRebate'];
-        $usutoken       = $request->header('api_token');
+        $usutoken       = $request->header('api-token');
         $respuesta      = false;
         $mensaje        = '';
         $datos          = [];

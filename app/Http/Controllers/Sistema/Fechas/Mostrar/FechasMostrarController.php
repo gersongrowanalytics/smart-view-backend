@@ -12,7 +12,7 @@ class FechasMostrarController extends Controller
 {
     public function mostrarFechas(Request $request)
     {
-        $usutoken = $request->header('api_token');
+        $usutoken = $request->header('api-token');
 
         $respuesta      = false;
         $mensaje        = '';
@@ -24,7 +24,7 @@ class FechasMostrarController extends Controller
         try{
 
             $usuusuario = usuusuarios::join('tputiposusuarios as tpu', 'tpu.tpuid', 'usuusuarios.tpuid')
-                                ->where('usuusuarios.usutoken', $request->header('api_token'))
+                                ->where('usuusuarios.usutoken', $request->header('api-token'))
                                 ->first(['usuusuarios.usuid', 'tpu.tpuid', 'tpu.tpuprivilegio']);
             
             if($usuusuario->tpuprivilegio == 'todo'){

@@ -11,7 +11,7 @@ class RebateMostrarController extends Controller
     public function RebateMostrar(Request $request )
     {
 
-        $usutoken = $request->header('api_token');
+        $usutoken = $request->header('api-token');
 
         $respuesta      = false;
         $mensaje        = '';

@@ -11,7 +11,7 @@ class PromocionEditarController extends Controller
 {
     public function editarPromocion(Request $request)
     {
-        $usutoken   = $request->header('api_token');
+        $usutoken   = $request->header('api-token');
         $cspid      = $request['cspid'];
         $valorizado = $request['valorizado'];
         $planchas   = $request['planchas'];

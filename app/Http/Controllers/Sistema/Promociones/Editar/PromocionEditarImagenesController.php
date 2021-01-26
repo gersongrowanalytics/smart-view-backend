@@ -15,7 +15,7 @@ class PromocionEditarImagenesController extends Controller
 {
     public function EditarImagenesPromocion(Request $request)
     {
-        $usutoken   = $request->header('api_token');
+        $usutoken   = $request->header('api-token');
         $prpid              = $request['prpid'];
         // $fecid              = $request['fecid'];
         $imagenProducto     = $request['imagenProducto'];

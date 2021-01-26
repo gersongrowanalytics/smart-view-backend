@@ -14,7 +14,7 @@ class CrearTrimestreController extends Controller
 {
     public function CrearTrimestre(Request $request)
     {
-        $usutoken   = $request->header('api_token');
+        $usutoken   = $request->header('api-token');
 
         $pkid = 0;
         $log = array(

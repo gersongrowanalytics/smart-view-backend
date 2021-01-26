@@ -15,7 +15,7 @@ class SucursalesMostrarController extends Controller
 {
     public function mostrarSucursales(Request $request)
     {
-        $usutoken = $request->header('api_token');
+        $usutoken = $request->header('api-token');
         
         $respuesta      = false;
         $mensaje        = '';
@@ -29,7 +29,7 @@ class SucursalesMostrarController extends Controller
 
         try{
             
-            $usuusuario = usuusuarios::where('usutoken', $request->header('api_token'))->first(['usuid', 'tpuid']);
+            $usuusuario = usuusuarios::where('usutoken', $request->header('api-token'))->first(['usuid', 'tpuid']);
 
             if($usuusuario){
                 $tup = tuptiposusuariospermisos::join('pempermisos as pem', 'pem.pemid', 'tuptiposusuariospermisos.pemid')

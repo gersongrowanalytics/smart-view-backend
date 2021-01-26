@@ -14,7 +14,7 @@ class MostrarNovedadesController extends Controller
         date_default_timezone_set("America/Lima");
         $fechaActual = date('Y-m-d');
 
-        $usutoken = $request->header('api_token');
+        $usutoken = $request->header('api-token');
 
         $datos = array(
             "audsPersonales" => [],

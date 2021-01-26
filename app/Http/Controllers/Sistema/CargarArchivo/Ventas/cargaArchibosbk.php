@@ -32,7 +32,7 @@ class CargarArchivoController extends Controller
         $mensajeDetalle = '';
         $mensajedev     = null;
         $numeroCelda    = 0;
-        $usutoken       = $request->header('api_token');
+        $usutoken       = $request->header('api-token');
         $archivo        = $_FILES['file']['name'];
         $skusNoExisten  = [];
         $log            = [];
@@ -398,7 +398,7 @@ class CargarArchivoController extends Controller
         $mensajeDetalle = '';
         $mensajedev     = null;
         $numeroCelda    = 0;
-        $usutoken       = $request->header('api_token');
+        $usutoken       = $request->header('api-token');
         $archivo        = $_FILES['file']['name'];
         $skusNoExisten  = [];
         $log            = [];
@@ -764,7 +764,7 @@ class CargarArchivoController extends Controller
         $mensajeDetalle = '';
         $mensajedev     = null;
         $numeroCelda    = 0;
-        $usutoken       = $request->header('api_token');
+        $usutoken       = $request->header('api-token');
         $archivo        = $_FILES['file']['name'];
         $skusNoExisten  = [];
         $log            = [];

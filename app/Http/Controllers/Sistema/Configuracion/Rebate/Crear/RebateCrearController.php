@@ -15,7 +15,7 @@ class RebateCrearController extends Controller
 {
     public function CrearRebate(Request $request )
     {
-        $usutoken   = $request->header('api_token');
+        $usutoken   = $request->header('api-token');
 
         $fecha            = $request['fecha'];
         $tipoPromocion    = $request['tipoPromocion'];

@@ -15,7 +15,7 @@ class UsuariosEditarController extends Controller
      */
     public function editarUsuario(Request $request)
     {
-        $usutoken   = $request->header('api_token');
+        $usutoken   = $request->header('api-token');
         $nuevTpuid  = $request['nuevTpuid'];
         $usuid      = $request['usuid'];
         $nuevUsua   = $request['nuevUsua'];

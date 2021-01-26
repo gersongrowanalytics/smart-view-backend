@@ -18,7 +18,7 @@ class UsuarioCrearController extends Controller
 {
     public function CrearUsuario(Request $request)
     {
-        $usutoken   = $request->header('api_token');
+        $usutoken   = $request->header('api-token');
 
         $tdiid       = $request['tdiid'];
         $pernum      = $request['pernum'];

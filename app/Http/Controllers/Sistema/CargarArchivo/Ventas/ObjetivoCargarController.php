@@ -40,7 +40,7 @@ class ObjetivoCargarController extends Controller
         $mensajeDetalle = '';
         $mensajedev     = null;
         $numeroCelda    = 0;
-        $usutoken       = $request->header('api_token');
+        $usutoken       = $request->header('api-token');
         $archivo        = $_FILES['file']['name'];
 
         $fichero_subido = '';
@@ -660,7 +660,7 @@ class ObjetivoCargarController extends Controller
         $mensajeDetalle = '';
         $mensajedev     = null;
         $numeroCelda    = 0;
-        $usutoken       = $request->header('api_token');
+        $usutoken       = $request->header('api-token');
         $archivo        = $_FILES['file']['name'];
 
         $fichero_subido = '';

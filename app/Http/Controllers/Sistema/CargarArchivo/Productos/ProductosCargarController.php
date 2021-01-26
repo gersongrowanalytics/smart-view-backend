@@ -28,7 +28,7 @@ class ProductosCargarController extends Controller
         $mensajeDetalle = '';
         $mensajedev     = null;
         $numeroCelda    = 0;
-        $usutoken       = $request->header('api_token');
+        $usutoken       = $request->header('api-token');
         $archivo        = $_FILES['file']['name'];
 
         $usuusuario = usuusuarios::where('usutoken', $usutoken)->first(['usuid', 'usuusuario']);

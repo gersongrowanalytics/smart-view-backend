@@ -20,7 +20,7 @@ class RebateActualizarController extends Controller
     public function ActualizarValorizadoRebateFechabk(Request $request)
     {
         $fecid      = $request['fecha']; 
-        $usutoken   = $request->header('api_token');
+        $usutoken   = $request->header('api-token');
 
         $respuesta      = true;
         $mensaje        = '';
@@ -171,7 +171,7 @@ class RebateActualizarController extends Controller
     public function ActualizarValorizadoRebateFecha(Request $request)
     {
         $fecid      = $request['fecha']; 
-        $usutoken   = $request->header('api_token');
+        $usutoken   = $request->header('api-token');
 
         $respuesta      = true;
         $mensaje        = '';
