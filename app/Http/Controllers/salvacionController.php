@@ -17,33 +17,52 @@ class salvacionController extends Controller
 {
     public function salvacion()
     {
-        // $pros = proproductos::where('proimagen', 'LIKE', '%http://backs.gavsistemas.co%')->get();
+        // $linkAnterior = "http://backs.gavsistemas.com/";
+        // $linkNuevo    = "http://backend.leadsmartview.com/";
 
-        // foreach($pros as $pro){
-        //     $proe = proproductos::find($pro->proid);
-        //     // http://backs.gavsistemas.com/Sistema/promociones/IMAGENES/PRODUCTOS/7-493-1253-HTP%20talla%20M-31%20a%20mas%20planchas.png
-        //     $ruta = explode("http://backs.gavsistemas.com/", $pro->proimagen);
+        $linkAnterior = "http://backend.leadsmartview.com/";
+        $linkNuevo    = "https://pre-back.leadsmartview.com/";
 
-        //     if(sizeof($ruta) > 0){
-        //         $proe->proimagen = "http://backend.leadsmartview.com/".$ruta[1];
-        //         $proe->update();
-        //     }else{
-        //         echo "<br>no tiene: ".$pro->proid.' y nombre: '.$pro->proimagen.'<br>';
+        $scas = scasucursalescategorias::where('scaiconocategoria', 'LIKE', '%'.$linkAnterior.'%')
+                                        ->get();
 
-        //     }
-            
+        foreach($scas as $sca){
+            $ruta = explode($linkAnterior, $sca->scaiconocategoria);
 
-        // }
+            if(sizeof($ruta) > 0){
+                $scae = scasucursalescategorias::find($sca->scaid);
+                $scae->scaiconocategoria = $linkNuevo.$ruta[1];
+                $scae->update();
+            }else{
+                echo "<br>no tiene: ".$sca->scaid.' y nombre: '.$sca->scaiconocategoria.'<br>';
 
+            }
+        }
 
-        $prbs = prbpromocionesbonificaciones::where('prbimagen', 'LIKE', '%http://backs.gavsistemas.co%')->get();
+        $pros = proproductos::where('proimagen', 'LIKE', '%'.$linkAnterior.'%')->get();
+
+        foreach($pros as $pro){
+            $proe = proproductos::find($pro->proid);
+            // http://backs.gavsistemas.com/Sistema/promociones/IMAGENES/PRODUCTOS/7-493-1253-HTP%20talla%20M-31%20a%20mas%20planchas.png
+            $ruta = explode($linkAnterior, $pro->proimagen);
+
+            if(sizeof($ruta) > 0){
+                $proe->proimagen = $linkNuevo.$ruta[1];
+                $proe->update();
+            }else{
+                echo "<br>no tiene: ".$pro->proid.' y nombre: '.$pro->proimagen.'<br>';
+
+            }
+        }
+
+        $prbs = prbpromocionesbonificaciones::where('prbimagen', 'LIKE', '%'.$linkAnterior.'%')->get();
 
         foreach($prbs as $prb){
             $prbe = prbpromocionesbonificaciones::find($prb->prbid);
-            $ruta = explode("http://backs.gavsistemas.com/", $prb->prbimagen);
+            $ruta = explode($linkAnterior, $prb->prbimagen);
 
             if(sizeof($ruta) > 0){
-                $prbe->prbimagen = "http://backend.leadsmartview.com/".$ruta[1];
+                $prbe->prbimagen = $linkNuevo.$ruta[1];
                 $prbe->update();
             }else{
                 echo "<br>no tiene: ".$prbe->prbid.' y nombre: '.$prb->prbimagen.'<br>';
@@ -53,14 +72,14 @@ class salvacionController extends Controller
 
         }
 
-        $prps = prppromocionesproductos::where('prpimagen', 'LIKE', '%http://backs.gavsistemas.co%')->get();
+        $prps = prppromocionesproductos::where('prpimagen', 'LIKE', '%'.$linkAnterior.'%')->get();
 
             foreach($prps as $prp){
                 $prpe = prppromocionesproductos::find($prp->prpid);
-                $ruta = explode("http://backs.gavsistemas.com/", $prp->prpimagen);
+                $ruta = explode($linkAnterior, $prp->prpimagen);
     
                 if(sizeof($ruta) > 0){
-                    $prpe->prpimagen = "http://backend.leadsmartview.com/".$ruta[1];
+                    $prpe->prpimagen = $linkNuevo.$ruta[1];
                     $prpe->update();
                 }else{
                     echo "<br>no tiene: ".$prp->prpid.' y nombre: '.$prp->prpimagen.'<br>';
