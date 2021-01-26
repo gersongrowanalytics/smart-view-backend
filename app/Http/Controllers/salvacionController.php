@@ -11,6 +11,7 @@ use App\sucsucursales;
 use App\scasucursalescategorias;
 use App\tsutipospromocionessucursales;
 use App\zonzonas;
+use App\catcategorias;
 use App\rscrbsscategorias;
 
 class salvacionController extends Controller
@@ -22,6 +23,44 @@ class salvacionController extends Controller
 
         $linkAnterior = "http://backend.leadsmartview.com/";
         $linkNuevo    = "https://pre-back.leadsmartview.com/";
+
+
+        $cats = catcategorias::all();
+
+        foreach($cats as $cat){
+            $cate = catcategorias::find($cat->catid);
+
+            $rutaUno    = explode($linkAnterior, $cat->catimagenfondo);
+            $rutaDos    = explode($linkAnterior, $cat->caticono);
+            $rutaTres   = explode($linkAnterior, $cat->caticonoseleccionado);
+            $rutaCuatro = explode($linkAnterior, $cat->caticonohover);
+            $rutaCinco  = explode($linkAnterior, $cat->catimagenfondoseleccionado);
+            $rutaSeis   = explode($linkAnterior, $cat->catimagenfondoopaco);
+            $rutaSiete  = explode($linkAnterior, $cat->caticononaranja);
+
+            if(sizeof($rutaUno) > 0){
+                $cate->catimagenfondo = $linkNuevo.$rutaUno[1];
+            }
+            if(sizeof($rutaDos) > 0){
+                $cate->caticono = $linkNuevo.$rutaDos[1];
+            }
+            if(sizeof($rutaTres) > 0){
+                $cate->caticonoseleccionado = $linkNuevo.$rutaTres[1];
+            }
+            if(sizeof($rutaCuatro) > 0){
+                $cate->caticonohover = $linkNuevo.$rutaCuatro[1];
+            }
+            if(sizeof($rutaCinco) > 0){
+                $cate->catimagenfondoseleccionado = $linkNuevo.$rutaCinco[1];
+            }
+            if(sizeof($rutaSeis) > 0){
+                $cate->catimagenfondoopaco = $linkNuevo.$rutaSeis[1];
+            }
+            if(sizeof($rutaSiete) > 0){
+                $cate->caticononaranja = $linkNuevo.$rutaSiete[1];
+            }
+            $cate->update();
+        }
 
         $scas = scasucursalescategorias::where('scaiconocategoria', 'LIKE', '%'.$linkAnterior.'%')
                                         ->get();
