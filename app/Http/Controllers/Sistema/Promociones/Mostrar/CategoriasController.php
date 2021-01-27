@@ -146,4 +146,90 @@ class CategoriasController extends Controller
             'fechaActualiza' => $fechaActualizacion
         ]);
     }
+
+    public function mostrarCategoriasXZona(Request $request)
+    {
+        $usutoken   = $request['usutoken'];
+        $sucid      = $request['sucid'];
+        $zonid      = $request['zonid'];
+        $dia        = "01";
+        $mes        = $request['mes'];
+        $ano        = $request['ano'];
+        
+        $respuesta      = false;
+        $mensaje        = '';
+        $datos          = [];
+        $linea          = __LINE__;
+        $mensajeDetalle = '';
+        $mensajedev     = null;
+
+        try{
+
+            $categorias = catcategorias::all();
+
+            foreach($categorias as $cat){
+                $scasucursalescategorias = scasucursalescategorias::join('fecfechas as fec', 'scasucursalescategorias.fecid', 'fec.fecid')
+                                                                ->join('sucsucursales as suc', 'suc.sucid', 'scasucursalescategorias.sucid')
+                                                                ->where('suc.zonid', $zonid)
+                                                                ->where('fec.fecano', $ano)
+                                                                ->where('fec.fecmes', $mes)
+                                                                ->where('fec.fecdia', $dia)
+                                                                ->where('scasucursalescategorias.tsuid', null)
+                                                                ->where('scasucursalescategorias.catid', $cat->catid)
+                                                                ->get();
+                $numeroPromociones = 0;
+
+                foreach($scasucursalescategorias as $sca){
+                    $countCsc = csccanalessucursalescategorias::join('cspcanalessucursalespromociones as csp', 'csp.cscid', 'csccanalessucursalescategorias.cscid')
+                                                            ->where('csccanalessucursalescategorias.scaid', $sca->scaid)
+                                                            // ->where('csp.cspcantidadcombo', "!=", 0)
+                                                            ->where('csp.cspcantidadplancha', "!=", "0")
+                                                            ->where('csp.cspestado', 1)
+                                                            ->count();
+
+                    $numeroPromociones = $numeroPromociones + $countCsc;
+                }
+
+                
+
+
+                $nuevoArray = array(
+                    "scaid"                      => 1,
+                    "catid"                      => $cat->catid,
+                    "catnombre"                  => $cat->catnombre,
+                    "catimagenfondo"             => $cat->catimagenfondo,
+                    "catimagenfondoseleccionado" => $cat->catimagenfondoseleccionado,
+                    "catimagenfondoopaco"        => $cat->catimagenfondoopaco,
+                    "caticono"                   => $cat->caticono,
+                    "caticonohover"              => $cat->caticonohover,
+                    "catcolorhover"              => $cat->catcolorhover,
+                    "catcolor"                   => $cat->catcolor,
+                    "caticonoseleccionado"       => $cat->caticonoseleccionado,
+                    "fecfecha"                   => "",
+                    "cantidadPromociones"        => $numeroPromociones
+                );
+
+                $datos[] = $nuevoArray;
+            }
+
+            $linea          = __LINE__;
+            $respuesta      = true;
+            $mensaje        = 'Las categorias fueron cargadas satisfactoriamente.';
+            $mensajeDetalle = sizeof($datos).' registros encontrados.';
+            
+        } catch (Exception $e) {
+            $mensajedev = $e->getMessage();
+            $linea      = __LINE__;
+        }
+
+        return response()->json([
+            'respuesta'      => $respuesta,
+            'mensaje'        => $mensaje,
+            'datos'          => $datos,
+            'linea'          => $linea,
+            'mensajeDetalle' => $mensajeDetalle,
+            'mensajedev'     => $mensajedev,
+            'fechaActualiza' => ""
+        ]);
+    }
 }
