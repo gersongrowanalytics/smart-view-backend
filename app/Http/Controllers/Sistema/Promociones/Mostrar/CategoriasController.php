@@ -152,6 +152,8 @@ class CategoriasController extends Controller
         $usutoken   = $request['usutoken'];
         $sucid      = $request['sucid'];
         $zonid      = $request['zonid'];
+        $gsuid      = $request['gsuid'];
+        $casid      = $request['casid'];
         $dia        = "01";
         $mes        = $request['mes'];
         $ano        = $request['ano'];
@@ -170,7 +172,19 @@ class CategoriasController extends Controller
             foreach($categorias as $cat){
                 $scasucursalescategorias = scasucursalescategorias::join('fecfechas as fec', 'scasucursalescategorias.fecid', 'fec.fecid')
                                                                 ->join('sucsucursales as suc', 'suc.sucid', 'scasucursalescategorias.sucid')
-                                                                ->where('suc.zonid', $zonid)
+                                                                ->where(function ($query) use($zonid, $gsuid, $casid) {
+                                                                    if( $zonid != 0 ){
+                                                                        $query->where('suc.zonid', $zonid);
+                                                                    }
+                                
+                                                                    if($gsuid != 0){
+                                                                        $query->where('suc.gsuid', $gsuid);
+                                                                    }
+                                                                    
+                                                                    if($casid != 0){
+                                                                        $query->where('suc.casid', $casid);
+                                                                    }
+                                                                })
                                                                 ->where('fec.fecano', $ano)
                                                                 ->where('fec.fecmes', $mes)
                                                                 ->where('fec.fecdia', $dia)
