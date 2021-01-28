@@ -148,4 +148,149 @@ class PromocionesMostrarController extends Controller
         
         return $requestsalida;
     }
+
+    public function mostrarPromocionesXZona(Request $request)
+    {
+        $usutoken   = $request['usutoken'];
+        // $scaid      = $request['scaid']; //id de la cateogira de una sucursal 
+
+        $scas = $request['scas'];
+
+        $respuesta      = false;
+        $mensaje        = '';
+        $datos          = [];
+        $linea          = __LINE__;
+        $mensajeDetalle = '';
+        $mensajedev     = null;
+
+        try{
+
+            $csccanalessucursalescategorias = csccanalessucursalescategorias::join('cancanales as can', 'can.canid', 'csccanalessucursalescategorias.canid')
+                                                                        ->join('cspcanalessucursalespromociones as csp', 'csp.cscid', 'csccanalessucursalescategorias.cscid')
+                                                                        ->where('csccanalessucursalescategorias.scaid', $scaid)
+                                                                        ->where(function ($query) use($scas) {
+
+                                                                            foreach($scas as $sca){
+                                                                                $query->orwhere('csccanalessucursalescategorias.scaid', $sca->scaid);
+                                                                            }
+
+                                                                        })
+                                                                        // ->where('csp.cspcantidadcombo', '!=', "0")
+                                                                        ->where('csp.cspcantidadplancha', '!=', "0")
+                                                                        ->where('csp.cspestado', 1)
+                                                                        ->distinct('can.canid')
+                                                                        ->get([
+                                                                            'csccanalessucursalescategorias.cscid',
+                                                                            'csccanalessucursalescategorias.scaid',
+                                                                            'can.canid',
+                                                                            'can.cannombre'
+                                                                        ]);
+                                                    
+            if(sizeof($csccanalessucursalescategorias) > 0){
+                
+                foreach($csccanalessucursalescategorias as $posicion => $csccanalesucursalcategoria){
+                    $cspcanalessucursalespromociones = cspcanalessucursalespromociones::join('prmpromociones as prm', 'prm.prmid', 'cspcanalessucursalespromociones.prmid')
+                                                                                        ->join('tprtipospromociones as tpr', 'tpr.tprid', 'prm.tprid')
+                                                                                        ->where('cscid', $csccanalesucursalcategoria->cscid)
+                                                                                        ->where('cspcanalessucursalespromociones.cspestado', 1)
+                                                                                        ->get([
+                                                                                            'cspcanalessucursalespromociones.cspid',
+                                                                                            'prm.prmid',
+                                                                                            'prm.prmcodigo',
+                                                                                            'cspcanalessucursalespromociones.cspvalorizado',
+                                                                                            'cspcanalessucursalespromociones.cspplanchas',
+                                                                                            'cspcanalessucursalespromociones.cspcompletado',
+                                                                                            'cspcanalessucursalespromociones.cspcantidadcombo',
+                                                                                            'prm.prmmecanica',
+                                                                                            'cspcanalessucursalespromociones.cspcantidadplancha',
+                                                                                            'cspcanalessucursalespromociones.csptotalcombo',
+                                                                                            'cspcanalessucursalespromociones.csptotalplancha',
+                                                                                            'cspcanalessucursalespromociones.csptotal',
+                                                                                            'cspcanalessucursalespromociones.cspgratis',
+                                                                                            'prm.prmaccion',
+                                                                                            'tpr.tprnombre',
+                                                                                            'cspnuevo'
+                                                                                        ]);
+                    $numeroPromocionesTerminadas = 0;
+
+                    if(sizeof($cspcanalessucursalespromociones) > 0){
+                        foreach($cspcanalessucursalespromociones as $posicionPromociones => $cspcanalesucursalpromocion){
+                            if($cspcanalesucursalpromocion->cspcompletado == true){
+                                $numeroPromocionesTerminadas = $numeroPromocionesTerminadas+1;
+                            }
+                            $prppromocionesproductos = prppromocionesproductos::join('proproductos as pro', 'pro.proid', 'prppromocionesproductos.proid')
+                                                                                ->where('prppromocionesproductos.prmid', $cspcanalesucursalpromocion->prmid )
+                                                                                ->get([
+                                                                                    'prppromocionesproductos.prpid',
+                                                                                    'pro.proid',
+                                                                                    'pro.prosku',
+                                                                                    'pro.pronombre',
+                                                                                    'pro.proimagen',
+                                                                                    'prpproductoppt',
+                                                                                    'prpcomprappt',
+                                                                                    'prpimagen'
+                                                                                ]);
+
+                            if(sizeof($prppromocionesproductos) > 0){
+                                $cspcanalessucursalespromociones[$posicionPromociones]['productos'] = $prppromocionesproductos;
+                            }else{
+                                $cspcanalessucursalespromociones[$posicionPromociones]['productos'] = [];
+                            }
+
+    
+                            $prbpromocionesbonificaciones = prbpromocionesbonificaciones::join('proproductos as pro', 'pro.proid', 'prbpromocionesbonificaciones.proid')
+                                                                                        ->where('prbpromocionesbonificaciones.prmid', $cspcanalesucursalpromocion->prmid )
+                                                                                        ->get([
+                                                                                            'prbpromocionesbonificaciones.prbid',
+                                                                                            'pro.proid',
+                                                                                            'pro.prosku',
+                                                                                            'pro.pronombre',
+                                                                                            'pro.proimagen',
+                                                                                            'prbproductoppt',
+                                                                                            'prbcomprappt',
+                                                                                            'prbimagen'
+                                                                                        ]);
+                            
+                            if(sizeof($prbpromocionesbonificaciones) > 0){
+                                $cspcanalessucursalespromociones[$posicionPromociones]['productosbonificados'] = $prbpromocionesbonificaciones;
+                            }else{
+                                $cspcanalessucursalespromociones[$posicionPromociones]['productosbonificados'] = [];
+                            }
+                        }
+                    }else{
+                        $cspcanalessucursalespromociones = [];
+                    }
+                    
+                    $csccanalessucursalescategorias[$posicion]['porcentaje'] = (sizeof($cspcanalessucursalespromociones)*$numeroPromocionesTerminadas)/100;
+                    $csccanalessucursalescategorias[$posicion]['promociones'] = $cspcanalessucursalespromociones;
+                }
+
+                $linea          = __LINE__;
+                $respuesta      = true;
+                $datos          = $csccanalessucursalescategorias;
+                $mensaje        = 'Las promociones se cargaron satisfactoriamente';
+
+            }else{
+                $respuesta      = false;
+                $linea          = __LINE__;
+                $mensaje        = 'Lo sentimos, no se contramos canales registradas a este filtro.';
+                $mensajeDetalle = sizeof($csccanalessucursalescategorias).' registros encontrados.';
+            }
+
+        } catch (Exception $e) {
+            $mensajedev = $e->getMessage();
+            $linea      = __LINE__;
+        }
+
+        $requestsalida = response()->json([
+            'respuesta'      => $respuesta,
+            'mensaje'        => $mensaje,
+            'datos'          => $datos,
+            'linea'          => $linea,
+            'mensajeDetalle' => $mensajeDetalle,
+            'mensajedev'     => $mensajedev
+        ]);
+        
+        return $requestsalida;
+    }
 }
