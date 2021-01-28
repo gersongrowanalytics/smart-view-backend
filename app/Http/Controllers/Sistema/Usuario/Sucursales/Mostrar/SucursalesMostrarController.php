@@ -142,6 +142,14 @@ class SucursalesMostrarController extends Controller
 
 
                 }else{
+
+                    $zgss = zgszonasgrupossucursales::join('zonzonas as zon', 'zon.zonid', 'zgszonasgrupossucursales.zonid')
+                                                    ->get([
+                                                        'zgszonasgrupossucursales.gsuid',
+                                                        'zgszonasgrupossucursales.zonid',
+                                                        'zon.casid'
+                                                    ]);
+
                     $zonas = ussusuariossucursales::join('sucsucursales as suc', 'suc.sucid', 'ussusuariossucursales.sucid')
                                                     ->join('zonzonas as zon', 'zon.zonid', 'suc.zonid')
                                                     ->where('ussusuariossucursales.usuid', $usuusuario->usuid )
@@ -151,6 +159,17 @@ class SucursalesMostrarController extends Controller
                                                         'zon.zonnombre',
                                                         'zon.casid'
                                                     ]);
+
+                    foreach($zonas as $posicionZona => $zona){
+                        $gsus = [];
+                        foreach($zgss as $zgs){
+                            if($zona->zonid == $zgs->zonid){
+                                $gsus[] = $zgs->gsuid;
+                            }
+                        }
+
+                        $zonas[$posicionZona]['gsus'] = $gsus;
+                    }                                
 
                     $gsus = ussusuariossucursales::join('sucsucursales as suc', 'suc.sucid', 'ussusuariossucursales.sucid')
                                                 ->join('gsugrupossucursales as gsu', 'gsu.gsuid', 'suc.gsuid')
@@ -162,6 +181,25 @@ class SucursalesMostrarController extends Controller
                                                     'gsunombre'
                                                 ]);
 
+                    foreach($gsus as $posicionGsu => $gsu){
+                        $zonasGsu = [];
+                        $canalesGsu = [];
+
+
+                        foreach($zgss as $zgs){
+                            if($gsu->gsuid == $zgs->gsuid){
+                                $zonasGsu[] = $zgs->zonid;
+
+                                if (!in_array($zgs->casid, $canalesGsu)) {
+                                    $canalesGsu[] = $zgs->casid;
+                                }
+                            }
+                        }
+
+                        $gsus[$posicionGsu]['zonas'] = $zonasGsu;
+                        $gsus[$posicionGsu]['canales'] = $canalesGsu;
+                    }
+
                     $cass = ussusuariossucursales::join('sucsucursales as suc', 'suc.sucid', 'ussusuariossucursales.sucid')
                                                 ->join('cascanalessucursales as cas', 'cas.casid', 'suc.casid')
                                                 ->where('ussusuariossucursales.usuid', $usuusuario->usuid )
@@ -171,6 +209,30 @@ class SucursalesMostrarController extends Controller
                                                     'cas.casid',
                                                     'casnombre'
                                                 ]);
+
+                    foreach($cass as $posicionCas => $cas){
+
+                        $zonasCas  = [];
+                        $gruposCas = [];
+
+                        foreach($zonas as $zona){
+                            if($zona->casid == $cas->casid){
+                                $zonasCas[] = $zona->zonid;
+                            }
+                        }
+
+                        foreach($zgss as $zgs){
+                            if($zgs->casid == $cas->casid){
+                                if (!in_array($zgs->gsuid, $gruposCas)) {
+                                    $gruposCas[] = $zgs->gsuid;
+                                }
+                            }
+                        }
+
+
+                        $cass[$posicionCas]['zonas']  = $zonasCas;
+                        $cass[$posicionCas]['grupos'] = $gruposCas;
+                    }
 
                     $ussusuariossucursales = ussusuariossucursales::join('sucsucursales as suc', 'suc.sucid', 'ussusuariossucursales.sucid')
                                                             ->join('zonzonas as zon', 'zon.zonid', 'suc.zonid')
