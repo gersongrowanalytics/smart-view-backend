@@ -722,7 +722,7 @@ class CargarArchivoController extends Controller
                             if($i == 2){
                                 cspcanalessucursalespromociones::join('prmpromociones as prm', 'prm.prmid', 'cspcanalessucursalespromociones.prmid')
                                                                 ->where('cspcanalessucursalespromociones.fecid', $fecid)
-                                                                >update([
+                                                                ->update([
                                                                     'cspestado' => 0, 
                                                                     'cspcantidadcombo' => 0,
                                                                     'cspcantidadplancha' => 0,
