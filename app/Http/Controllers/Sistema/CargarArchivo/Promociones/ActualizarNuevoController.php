@@ -849,7 +849,7 @@ class ActualizarNuevoController extends Controller
             }
 
             $nuevoCargaArchivo = new carcargasarchivos;
-            $nuevoCargaArchivo->tcaid            = 1;
+            $nuevoCargaArchivo->tcaid            = 13;
             $nuevoCargaArchivo->fecid            = $fecid;
             $nuevoCargaArchivo->usuid            = $usuusuario->usuid;
             $nuevoCargaArchivo->carnombrearchivo = $archivo;
