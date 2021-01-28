@@ -74,6 +74,9 @@ class ActualizarNuevoController extends Controller
 
         $pkid = 0;
         $log  = array(
+            "SCA_ACTUALIZADO"      => [],
+            "SCA_NO_SE_ACTUALIZO"      => [],
+            "SCA_NO_SE_ECONTRO"      => [],
             "NUEVA_PERSONA_EJECUTIVO"      => [],
             "NUEVA_PERSONA_CLIENTE"        => [],
             "NUEVO_USUARIO_EJECUTIVO"      => [],
@@ -91,7 +94,7 @@ class ActualizarNuevoController extends Controller
 
         try{
             // file_put_contents(base_path().'/public/'.$archivo, $_FILES['file']['tmp_name']);
-            $fichero_subido = base_path().'/public/Sistema/cargaArchivos/promociones/'.basename($_FILES['file']['name']);
+            $fichero_subido = base_path().'/public/Sistema/cargaArchivos/promociones/eliminados/'.basename($_FILES['file']['name']);
             if (move_uploaded_file($_FILES['file']['tmp_name'], $fichero_subido)) {
                 $fecid = 0;
 
@@ -189,60 +192,10 @@ class ActualizarNuevoController extends Controller
                             if($fecfecha){
                                 $fecid = $fecfecha->fecid;
                             }else{
-                                $mes = "0";
-                                if($mesTxt == "ENE"){
-                                    $mes = "01";
-                                }else if($mesTxt == "FEB"){
-                                    $mes = "02";
-                                }else if($mesTxt == "MAR"){
-                                    $mes = "03";
-                                }else if($mesTxt == "ABR"){
-                                    $mes = "04";
-                                }else if($mesTxt == "MAY"){
-                                    $mes = "05";
-                                }else if($mesTxt == "JUN"){
-                                    $mes = "06";
-                                }else if($mesTxt == "JUL"){
-                                    $mes = "07";
-                                }else if($mesTxt == "AGO"){
-                                    $mes = "08";
-                                }else if($mesTxt == "SET"){
-                                    $mes = "09";
-                                }else if($mesTxt == "OCT"){
-                                    $mes = "10";
-                                }else if($mesTxt == "NOV"){
-                                    $mes = "11";
-                                }else if($mesTxt == "DIC"){
-                                    $mes = "12";
-                                }
-    
-                                $nuevaFecha = new fecfechas;
-                                $nuevaFecha->fecfecha = new \DateTime(date("Y-m-d", strtotime($ano.'-'.$mes.'-'.$dia)));
-                                $nuevaFecha->fecdia   = $dia;
-                                $nuevaFecha->fecmes   = $mesTxt;
-                                $nuevaFecha->fecmesnumero = $mes;
-                                $nuevaFecha->fecano   = $ano;
-                                if($nuevaFecha->save()){
-                                    $fecid = $nuevaFecha->fecid;
-                                }else{
-                
-                                }
+                                
                             }
                 
-                            // $tipoUsuario = tputiposusuarios::where('tpunombre', $subCanal)->first(['tpuid']);
-                            // $tpuid = 0;
-                            // if($tipoUsuario){
-                            //     $tpuid = $tipoUsuario->tpuid;
-                            // }else{
-                            //     $nuevoTipoUsuario = new tputiposusuarios;
-                            //     $nuevoTipoUsuario->tpunombre     = $subCanal;
-                            //     $nuevoTipoUsuario->tpuprivilegio = null;
-                            //     if($nuevoTipoUsuario->save()){
-                            //         $tpuid = $nuevoTipoUsuario->tpuid;
-                            //     }else{
-                
-                            //     }
-                            // }
+                          
                 
                             // VERIFICAR SI EXISTE LA PERSONA
                             $perpersona = perpersonas::where('pernombrecompleto', $ejecutivo)->first(['perid']);
@@ -250,29 +203,14 @@ class ActualizarNuevoController extends Controller
                             if($perpersona){
                                 $perid = $perpersona->perid;
                             }else{
-                                $nuevaPersona = new perpersonas;
-                                $nuevaPersona->tdiid    = 2;
-                                $nuevaPersona->pernombrecompleto = $ejecutivo;
-                                $nuevaPersona->pernumerodocumentoidentidad = null;
-                                $nuevaPersona->pernombre = null;
-                                $nuevaPersona->perapellidopaterno   = null;
-                                $nuevaPersona->perapellidomaterno   = null;
-                                if($nuevaPersona->save()){
-                                    $perid = $nuevaPersona->perid;
-                                    $log['NUEVA_PERSONA_EJECUTIVO'][] = $perid." - ".$ejecutivo;
-                                }else{
-                
-                                }
+                               
                             }
                             
                             if($planchas == null){
                                 $planchas = 0;
                             }
     
-                            // // VERIFICAR SI EXISTE EL USUARIO
-                            // $distribuidor = usuusuarios::where('tpuid', $tpuid)
-                            //                             ->where('perid', $perid)
-                            //                             ->first(['usuid', 'estid']);
+
     
                             $distribuidor = usuusuarios::where('perid', $perid)
                                                         ->first(['usuid', 'estid']);
@@ -290,21 +228,7 @@ class ActualizarNuevoController extends Controller
                                 }
     
                             }else{
-                                $nuevoUsuario = new usuusuarios;
-                                $nuevoUsuario->tpuid         = 2;
-                                $nuevoUsuario->perid         = $perid;
-                                $nuevoUsuario->estid         = 1;
-                                $nuevoUsuario->ususoldto     = null;
-                                $nuevoUsuario->usuusuario    = null;
-                                $nuevoUsuario->usucorreo     = null;
-                                $nuevoUsuario->usucontrasena = null;
-                                $nuevoUsuario->usutoken      = Str::random(60);
-                                if($nuevoUsuario->save()){
-                                    $usuid = $nuevoUsuario->usuid;
-                                    $log['NUEVO_USUARIO_EJECUTIVO'][] = "USUID: ".$usuid." - PERID:".$perid;
-                                }else{
-                
-                                }
+                               
                             }
                 
                             // VERIFICAR SI EXISTE LA PERSONA PARA EL CLIENTE
@@ -313,19 +237,7 @@ class ActualizarNuevoController extends Controller
                             if($clienteperpersona){
                                 $clienteperid = $clienteperpersona->perid;
                             }else{
-                                $clienteNuevaPersona = new perpersonas;
-                                $clienteNuevaPersona->tdiid    = 2;
-                                $clienteNuevaPersona->pernombrecompleto = $cliente;
-                                $clienteNuevaPersona->pernumerodocumentoidentidad = null;
-                                $clienteNuevaPersona->pernombre = null;
-                                $clienteNuevaPersona->perapellidopaterno   = null;
-                                $clienteNuevaPersona->perapellidomaterno   = null;
-                                if($clienteNuevaPersona->save()){
-                                    $clienteperid = $clienteNuevaPersona->perid;
-                                    $log['NUEVA_PERSONA_CLIENTE'][] = $clienteperid." - ".$cliente;
-                                }else{
-                
-                                }
+                               
                             }
                 
                             // VERIFICAR SI EXISTE EL USUARIO
@@ -353,66 +265,11 @@ class ActualizarNuevoController extends Controller
                                 if($sucursalesCliente){
                                     $sucursalClienteId = $sucursalesCliente->sucid;
                                 }else{
-                                    $nuevaSucursal = new sucsucursales;
-                                    $nuevaSucursal->sucnombre = $cliente;
-                                    $nuevaSucursal->sucestado = 1;
-                                    $nuevaSucursal->sucsoldto = $soldTo;
-                                    if($nuevaSucursal->save()){
-                                        $sucursalClienteId = $nuevaSucursal->sucid;
-                                        
-                                        $log["NUEVA_SUCURSAL"][] = $cliente;
-
-                                        $sucursalUsuario = new ussusuariossucursales;
-                                        $sucursalUsuario->usuid  = $clienteusuid;
-                                        $sucursalUsuario->sucid  = $sucursalClienteId;
-                                        if($sucursalUsuario->save()){
-    
-                                        }else{
-    
-                                        }
-    
-                                    }else{
-    
-                                    }
+                                    
                                 }
     
                             }else{
-                                $clienteNuevoUsuario = new usuusuarios;
-                                $clienteNuevoUsuario->tpuid         = 2; // tipo de usuario (cliente)
-                                $clienteNuevoUsuario->perid         = $clienteperid;
-                                $clienteNuevoUsuario->estid         = 1;
-                                $clienteNuevoUsuario->ususoldto     = $soldTo;
-                                $clienteNuevoUsuario->usuusuario    = null;
-                                $clienteNuevoUsuario->usucorreo     = null;
-                                $clienteNuevoUsuario->usucontrasena = null;
-                                $clienteNuevoUsuario->usutoken      = Str::random(60);
-                                if($clienteNuevoUsuario->save()){
-                                    $clienteusuid = $clienteNuevoUsuario->usuid;
-
-                                    $log['NUEVO_USUARIO_CLIENTE'][] = $clienteusuid." - ".$soldTo;
-
-                                    $nuevaSucursal = new sucsucursales;
-                                    $nuevaSucursal->sucnombre = $cliente;
-                                    $nuevaSucursal->sucestado = 1;
-                                    $nuevaSucursal->sucsoldto = $soldTo;
-                                    if($nuevaSucursal->save()){
-                                        $sucursalClienteId = $nuevaSucursal->sucid;
-                                        $log["NUEVA_SUCURSAL"][] = $cliente;
-                                        $sucursalUsuario = new ussusuariossucursales;
-                                        $sucursalUsuario->usuid = $clienteusuid;
-                                        $sucursalUsuario->sucid = $sucursalClienteId;
-                                        if($sucursalUsuario->save()){
-    
-                                        }else{
-    
-                                        }
-    
-                                    }else{
-    
-                                    }
-                                }else{
-                
-                                }
+                               
                             }
                             
     
@@ -438,351 +295,18 @@ class ActualizarNuevoController extends Controller
                             $scaid = 0;
                             if($scasucursalescategorias){
                                 $scaid = $scasucursalescategorias->scaid;
-                            }else{
-                                $nuevoSca = new scasucursalescategorias;
-                                $nuevoSca->sucid    = $sucursalClienteId;
-                                $nuevoSca->catid    = $catid;
-                                $nuevoSca->fecid    = $fecid;
-                                $nuevoSca->tsuid    = null;
-                                $nuevoSca->scavalorizadoobjetivo = null;
-                                $nuevoSca->scavalorizadoreal     = null;
-                                $nuevoSca->scavalorizadotogo     = null;
-                                if($nuevoSca->save()){
-                                    $scaid = $nuevoSca->scaid;
-                                    $log["NUEVO_CATEGORIA_ASIGNADO"][] = $i."-".$scaid;
+                                $scasucursalescategorias->catid = 4;
+                                if($scasucursalescategorias->update()){
+                                    $log["SCA_ACTUALIZADO"][] = "EL SCA SE ACTUALIZO CORRECTAMENTE: ".$fecid." - ".$catid." - ".$sucursalClienteId;
                                 }else{
-    
+                                    $log["SCA_NO_SE_ACTUALIZO"][] = "EL SCA SE ACTUALIZO CORRECTAMENTE: ".$fecid." - ".$catid." - ".$sucursalClienteId;
                                 }
-                            }
-    
-                            // Sacando los espacios del ultimo digito y limpiando caracteres
-                            $catEspa = substr($categoria, -1, 1);
-                            $nuevonombrecategoria = "";
-                            if($catEspa == " "){
-                                $nuevonombrecategoria = substr($categoria, 0, strlen($categoria)-1);
                             }else{
-                                $nuevonombrecategoria = $categoria;
-                            }
-    
-                            // 
-                            $tpclEspa = substr($tipoClien, -1, 1);
-                            $nuevonombretipocliente = "";
-                            if($tpclEspa == " "){
-                                $nuevonombretipocliente = substr($tipoClien, 0, strlen($tipoClien)-1);
-                            }else{
-                                $nuevonombretipocliente = $tipoClien;
-                            }
-    
-                            // 
-                            $codprEspa = substr($codPromoc, -1, 1);
-                            $nuevonombrecodpromoc = "";
-                            if($codprEspa == " "){
-                                $nuevonombrecodpromoc = substr($codPromoc, 0, strlen($codPromoc)-1);
-                            }else{
-                                $nuevonombrecodpromoc = $codPromoc;
-                            }
-    
-                            $nuevonombrecodpromoc = str_replace("/", "", $nuevonombrecodpromoc);
-    
-                            // 
-                            $productopptEspa = substr($productoPpt, -1, 1);
-                            $nuevonombreproductoppt = "";
-                            if($productopptEspa == " "){
-                                $nuevonombreproductoppt = substr($productoPpt, 0, strlen($productoPpt)-1);
-                            }else{
-                                $nuevonombreproductoppt = $productoPpt;
-                            }
-    
-                            $nuevonombreproductoppt = str_replace("/", "", $nuevonombreproductoppt);
-    
-                            // 
-                            $productobonipptEspa = substr($proBoniPpt, -1, 1);
-                            $nuevonombreprobonippt = "";
-                            if($productobonipptEspa == " "){
-                                $nuevonombreprobonippt = substr($proBoniPpt, 0, strlen($proBoniPpt)-1);
-                            }else{
-                                $nuevonombreprobonippt = $proBoniPpt;
-                            }
-    
-                            $nuevonombreprobonippt = str_replace("/", "", $nuevonombreprobonippt);
-    
-                            // Sacando los espacios del ultimo digito y limpiando caracteres
-    
-                
-                            // VERIFICAR SI EL PRODUCTO ESTA REGISTRADO
-                            $proproducto = proproductos::where('prosku', $sku)
-                                                        ->first(['proid', 'proimagen']);
-                            
-                            $proid = 0;
-                            if($proproducto){
-                                $proid = $proproducto->proid;
-    
-    
-                                // if($proproducto->proimagen == env('APP_URL').'/Sistema/promociones/'.strtoupper($nuevonombrecategoria).'/'.strtoupper($nuevonombretipocliente).'/'.strtoupper($nuevonombrecodpromoc).'/'.$nuevonombreproductoppt.'.png'){
-                                    
-                                // }else{
-                                //     $proproducto->proimagen = env('APP_URL').'/Sistema/promociones/'.strtoupper($nuevonombrecategoria).'/'.strtoupper($nuevonombretipocliente).'/'.strtoupper($nuevonombrecodpromoc).'/'.$nuevonombreproductoppt.'.png';
-                                //     if($proproducto->update()){
-    
-                                //     }
-                                // }
-    
-                            }else{
-                                $nuevoProducto = new proproductos;
-                                $nuevoProducto->catid     = $catid;
-                                $nuevoProducto->prosku    = $sku;
-                                $nuevoProducto->pronombre = $producto;
-    
-                                // ARMAR UBICACION DE LA IMAGEN
-    
-                                $nuevoProducto->proimagen = env('APP_URL').'/Sistema/promociones/'.strtoupper($nuevonombrecategoria).'/'.strtoupper($nuevonombretipocliente).'/'.strtoupper($nuevonombrecodpromoc).'/'.$nuevonombreproductoppt.'.png';
-    
-                                /*************************** */
-                                if($nuevoProducto->save()){
-                                    $proid = $nuevoProducto->proid;
-                                }else{
-                
-                                }
-                            }
-                
-                            // VERIFICAR SI EL PRODUCTO BONIFICADO ESTA REGISTRADO
-                            $proproductoBonificado = proproductos::where('prosku', $skuBonifi)
-                                                                ->first(['proid', 'proimagen']);
-                            
-                            $bonificadoproid = 0;
-                            if($proproductoBonificado){
-                                $bonificadoproid = $proproductoBonificado->proid;
-    
-                                // if($proproductoBonificado->proimagen == env('APP_URL').'/Sistema/promociones/'.strtoupper($nuevonombrecategoria).'/'.strtoupper($nuevonombretipocliente).'/'.strtoupper($nuevonombrecodpromoc).'/'.$nuevonombreprobonippt.' - Gratis.png' ){
-    
-                                // }else{
-                                //     $proproductoBonificado->proimagen = env('APP_URL').'/Sistema/promociones/'.strtoupper($nuevonombrecategoria).'/'.strtoupper($nuevonombretipocliente).'/'.strtoupper($nuevonombrecodpromoc).'/'.$nuevonombreprobonippt.' - Gratis.png';
-                                //     if($proproductoBonificado->update()){
-    
-                                //     }else{
-                                        
-                                //     }
-                                // }
-    
-                            }else{
-                                $nuevoProductoBonificado = new proproductos;
-                                $nuevoProductoBonificado->catid     = $catid;
-                                $nuevoProductoBonificado->prosku    = $skuBonifi;
-                                $nuevoProductoBonificado->pronombre = $productoBo;
-                                $nuevoProductoBonificado->proimagen = env('APP_URL').'/Sistema/promociones/'.strtoupper($nuevonombrecategoria).'/'.strtoupper($nuevonombretipocliente).'/'.strtoupper($nuevonombrecodpromoc).'/'.$nuevonombreprobonippt.' - Gratis.png';
-                                if($nuevoProductoBonificado->save()){
-                                    $bonificadoproid = $nuevoProductoBonificado->proid;
-                                }else{
-                
-                                }
-                            }
-                
-                            // VERIFICAR SI EXISTE EL TIPO DE PROMOCION
-                            $tprtipopromocion = tprtipospromociones::where('tprnombre', $tipoPromo)->first(['tprid']);
-                            $tprid = 0;
-                            if($tprtipopromocion){
-                                $tprid = $tprtipopromocion->tprid;
-                            }else{
-                                $nuevoTipoPromocion = new tprtipospromociones;
-                                $nuevoTipoPromocion->tprnombre  = $tipoPromo;
-                                $nuevoTipoPromocion->tpricono   = null;
-                                if($nuevoTipoPromocion->save()){
-                                    $tprid = $nuevoTipoPromocion->tprid;
-                                }else{
-                
-                                }
-                            }
-                
-                            // VERIFICAR SI EXISTE EL CANAL O TIPO DE CLIENTE
-                            $cancanal = cancanales::where('cannombre', $tipoClien)->first(['canid']);
-                
-                            $canid = 0;
-                            if($cancanal){
-                                $canid = $cancanal->canid;
-                            }else{
-                                $nuevoCanal = new cancanales;
-                                $nuevoCanal->cannombre = $tipoClien;
-                                if($nuevoCanal->save()){
-                                    $canid = $nuevoCanal->canid;
-                                }else{
-                
-                                }
-                            }
-    
-                            $csc = csccanalessucursalescategorias::where('canid', $canid)
-                                                            ->where('scaid', $scaid)
-                                                            ->where('fecid', $fecid)
-                                                            ->first(['cscid']);
-                            $cscid = 0;
-                            if($csc){
-                                $cscid = $csc->cscid;
-                            }else{
-                                $nuevoCsc = new csccanalessucursalescategorias;
-                                $nuevoCsc->canid = $canid;
-                                $nuevoCsc->scaid = $scaid;
-                                $nuevoCsc->fecid = $fecid;
-                                if($nuevoCsc->save()){
-                                    $cscid = $nuevoCsc->cscid;
-                                    $log["NUEVO_CANAL_ASIGNADO"][] = $i."-".$cscid;
-                                }else{
-    
-                                }
-                            }
-    
-                            $prm = prmpromociones::where('tprid', $tprid)
-                                            ->where('prmcodigo', $codPromoc)
-                                            ->where('prmmecanica', $mecanica)
-                                            ->where('prmaccion', $accion)
-                                            ->where('fecid', $fecid)
-                                            ->where('prmcodigoprincipal', $codPrinci)
-                                            ->first(['prmid']);
-    
-                            $prmid = 0;
-                            if($prm){
-                                $prmid = $prm->prmid;
-    
-                            }else{
-                                $nuevoPrm = new prmpromociones;
-                                $nuevoPrm->tprid                = $tprid;
-                                $nuevoPrm->fecid                = $fecid;
-                                $nuevoPrm->prmcodigoprincipal   = $codPrinci;
-                                $nuevoPrm->prmcodigo            = $codPromoc;
-                                $nuevoPrm->prmmecanica          = $mecanica;
-                                $nuevoPrm->prmaccion            = $accion;
-                                if($nuevoPrm->save()){
-                                    $prmid = $nuevoPrm->prmid;
-                                    $log["NUEVO_PROMOCION_CREADO"][] = $i."-".$prmid;
-                                }else{
-    
-                                }
-                            }
-    
-                            $prb = prbpromocionesbonificaciones::where('prmid', $prmid)
-                                                            ->where('proid', $bonificadoproid) 
-                                                            ->where('prbcodigoprincipal', $codPrinci) 
-                                                            ->where('prbcomprappt', $compBonPpt) 
-                                                            ->where('prbproductoppt', $proBoniPpt) 
-                                                            ->where('prbcantidad', $cantBonifi) 
-                                                            ->first(['prbid']);
-    
-                            $prbid = 0;
-                            if($prb){
-                                $prbid = $prb->prbid;
-                            }else{
-                                $nuevoPrb = new prbpromocionesbonificaciones;
-                                $nuevoPrb->prmid                = $prmid;
-                                $nuevoPrb->proid                = $bonificadoproid;
-                                $nuevoPrb->prbcantidad          = $cantBonifi;
-                                $nuevoPrb->prbproductoppt       = $proBoniPpt;
-                                $nuevoPrb->prbcomprappt         = $compBonPpt;
-                                $nuevoPrb->prbcodigoprincipal   = $codPrinci;
-                                // $nuevoPrb->prbimagen            = env('APP_URL').'/Sistema/promociones/'.strtoupper($nuevonombrecategoria).'/'.strtoupper($nuevonombretipocliente).'/'.strtoupper($nuevonombrecodpromoc).'/'.$nuevonombreprobonippt.' - Gratis.png';
-                                $nuevoPrb->prbimagen            = env('APP_URL')."/Sistema/promociones/IMAGENES/BONIFICADOS/".$fecid."-".$prmid."-".$bonificadoproid."-".$proBoniPpt."-".$compBonPpt.".png";
-    
-                                if($nuevoPrb->save()){
-                                    $prbid = $nuevoPrb->prbid;
-                                    $log["NUEVO_PRB_CREADO"][] = $i."-".$prbid;
-                                }else{
-    
-                                }
+                                $log["SCA_NO_SE_ECONTRO"][] = "EL SCA SE ACTUALIZO CORRECTAMENTE: ".$fecid." - ".$catid." - ".$sucursalClienteId;
                             }
     
                             
-                            $prp = prppromocionesproductos::where('prmid', $prmid)
-                                                            ->where('proid', $proid)
-                                                            ->where('prpcodigoprincipal', $codPrinci)
-                                                            ->where('prpcomprappt', $compraPpt)
-                                                            ->where('prpproductoppt', $productoPpt)
-                                                            ->where('prpcantidad', $cantCompra)
-                                                            ->first(['prpid']);
-                            $prpid = 0;
-                            if($prp){
-                                $prpid = $prp->prpid;
-                            }else{
-                                $nuevoPrp = new prppromocionesproductos;
-                                $nuevoPrp->prmid                = $prmid;
-                                $nuevoPrp->proid                = $proid;
-                                $nuevoPrp->prpcantidad          = $cantCompra;
-                                $nuevoPrp->prpproductoppt       = $productoPpt;
-                                $nuevoPrp->prpcomprappt         = $compraPpt;
-                                $nuevoPrp->prpcodigoprincipal   = $codPrinci;
-                                // $nuevoPrp->prpimagen            = env('APP_URL').'/Sistema/promociones/'.strtoupper($nuevonombrecategoria).'/'.strtoupper($nuevonombretipocliente).'/'.strtoupper($nuevonombrecodpromoc).'/'.$nuevonombreproductoppt.'.png';
-                                $nuevoPrp->prpimagen            = env('APP_URL').'/Sistema/promociones/IMAGENES/PRODUCTOS/'.$fecid."-".$prmid."-".$proid."-".$productoPpt."-".$compraPpt.".png";
-                                if($nuevoPrp->save()){
-                                    $prpid = $nuevoPrp->prpid;
-                                    $log["NUEVO_PRP_CREADO"][] = $i."-".$prpid;
-                                }else{
-    
-                                }
-                            }
-    
-                            $csp = cspcanalessucursalespromociones::join('prmpromociones as prm', 'prm.prmid', 'cspcanalessucursalespromociones.prmid')
-                                                            ->where('cspcanalessucursalespromociones.cscid', $cscid)
-                                                            ->where('cspcanalessucursalespromociones.fecid', $fecid)
-                                                            // ->where('cspcanalessucursalespromociones.prmid', $prmid)
-                                                            ->where('prm.prmcodigo', $codPromoc)
-                                                            ->first([
-                                                                'cspcanalessucursalespromociones.cspid', 
-                                                                'cspcanalessucursalespromociones.cspcantidadcombo', 
-                                                                'cspcanalessucursalespromociones.cspcantidadplancha', 
-                                                                'cspcanalessucursalespromociones.created_at'
-                                                            ]);
-    
-                            $cspid = 0;
-                            if($csp){
-                                
-                                $cspid = $csp->cspid;
-                                // SI EL CODIGO DE LA PROMOCION SE REPITE SUMAR LA CANTIDAD DE COMBOS Y PLANCHAS
-    
-                                $csp->csptotalcombo        = $precXcombo;
-                                $csp->csptotalplancha      = $precXplanc;
-                                $csp->csptotal             = $precXtodo;
-                                $csp->cspnuevo             = $nuevoProm;
-                                
-                                // if($combos != 'NA'){
-                                //     $csp->cspcantidadcombo   = $csp->cspcantidadcombo + $combos;
-                                // }else{
-                                //     $csp->cspcantidadcombo   = $combos;
-                                // }
-
-                                // if($planchas != 'NA'){
-                                //     $csp->cspcantidadplancha = $csp->cspcantidadplancha + $planchas;
-                                // }else{
-                                //     $csp->cspcantidadplancha   = $planchas;
-                                // }
-                                
-                                
-                                if($csp->update()){
-    
-                                }else{
-                                    
-                                }
-                                
-    
-                            }else{
-                                $nuevoCsp = new cspcanalessucursalespromociones;
-                                $nuevoCsp->cscid                = $cscid;
-                                $nuevoCsp->fecid                = $fecid;
-                                $nuevoCsp->prmid                = $prmid;
-                                // $nuevoCsp->cspcodigoprincipal   = $codPrinci;
-                                $nuevoCsp->cspvalorizado        = 0;
-                                $nuevoCsp->cspplanchas          = 0;
-                                $nuevoCsp->cspcompletado        = 0;
-    
-                                $nuevoCsp->cspcantidadcombo     = $combos;
-                                $nuevoCsp->cspcantidadplancha   = $planchas;
-                                $nuevoCsp->csptotalcombo        = $precXcombo;
-                                $nuevoCsp->csptotalplancha      = $precXplanc;
-                                $nuevoCsp->csptotal             = $precXtodo;
-                                $nuevoCsp->cspnuevo             = $nuevoProm;
-    
-                                if($nuevoCsp->save()){
-                                    $cspid = $nuevoCsp->cspid;
-                                    $log["NUEVO_PROMOCIONES_ASIGNDADAS"][] = $i."-".$cspid;
-                                }else{
-                                    
-                                }
-                            }
+                            
                         }
             
                         
@@ -848,19 +372,7 @@ class ActualizarNuevoController extends Controller
                 
             }
 
-            $nuevoCargaArchivo = new carcargasarchivos;
-            $nuevoCargaArchivo->tcaid            = 13;
-            $nuevoCargaArchivo->fecid            = $fecid;
-            $nuevoCargaArchivo->usuid            = $usuusuario->usuid;
-            $nuevoCargaArchivo->carnombrearchivo = $archivo;
-            $nuevoCargaArchivo->carubicacion     = $fichero_subido;
-            $nuevoCargaArchivo->carexito         = $cargarData;
-            $nuevoCargaArchivo->carurl           = env('APP_URL').'/Sistema/cargaArchivos/promociones/'.$archivo;
-            if($nuevoCargaArchivo->save()){
-                $pkid = "CAR-".$nuevoCargaArchivo->carid;
-            }else{
-
-            }
+           
             
             
 
@@ -880,32 +392,8 @@ class ActualizarNuevoController extends Controller
             "numeroCelda"    => $numeroCelda,
             "log"    => $log,
         ]);
+       
         
-        $descripcion = "CARGAR ACTUALIZACION DE NEW EN LA DATA DE PROMOCIONES DE UN EXCEL AL SISTEMA";
-
-        if($cargarData == false){
-            $descripcion = "SUBIR EXCEL PARA REVISAR Y POSTERIORMENTE ACTUALIZAR EL NEW EN LA DATA DE PROMOCIONES";
-        }
-
-        $AuditoriaController = new AuditoriaController;
-        $registrarAuditoria  = $AuditoriaController->registrarAuditoria(
-            $usutoken,
-            $usuusuario->usuid,
-            null,
-            $fichero_subido,
-            $requestsalida,
-            $descripcion,
-            'IMPORTAR',
-            '/cargarArchivo/promociones/actualizarNew', //ruta
-            $pkid,
-            $log
-        );
-
-        if($registrarAuditoria == true){
-
-        }else{
-            
-        }
         
         return $requestsalida;
 
