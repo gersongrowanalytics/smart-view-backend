@@ -170,7 +170,7 @@ class PromocionesMostrarController extends Controller
         $mensajedev     = null;
 
         $fec = fecfechas::where('fecdia', $dia)
-                        ->where('fecmes', $mesTxt)
+                        ->where('fecmes', $mes)
                         ->where('fecano', $ano)
                         ->first(['fecid']);
 
