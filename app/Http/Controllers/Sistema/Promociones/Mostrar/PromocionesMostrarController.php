@@ -197,7 +197,9 @@ class PromocionesMostrarController extends Controller
                                             ]);
 
         foreach($cscs as $posicionCsc => $csc){
-            $csps = cspcanalessucursalespromociones::join('csccanalessucursalescategorias as csc', 'csc.cscid', 'cspcanalessucursalespromociones.cscid')
+            $csps = cspcanalessucursalespromociones::join('prmpromociones as prm', 'prm.prmid', 'cspcanalessucursalespromociones.prmid')
+                                                ->join('tprtipospromociones as tpr', 'tpr.tprid', 'prm.tprid')
+                                                ->join('csccanalessucursalescategorias as csc', 'csc.cscid', 'cspcanalessucursalespromociones.cscid')
                                                 ->join('scasucursalescategorias as sca', 'sca.scaid', 'csc.scaid')
                                                 ->join('sucsucursales as suc', 'suc.sucid', 'sca.sucid')
                                                 ->where('cspcantidadplancha', '!=', "0")
