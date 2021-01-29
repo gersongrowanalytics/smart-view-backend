@@ -8,6 +8,7 @@ use App\csccanalessucursalescategorias;
 use App\cspcanalessucursalespromociones;
 use App\prppromocionesproductos;
 use App\prbpromocionesbonificaciones;
+use App\fecfechas;
 
 class PromocionesMostrarController extends Controller
 {
