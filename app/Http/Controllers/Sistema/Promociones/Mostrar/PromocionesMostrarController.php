@@ -337,7 +337,7 @@ class PromocionesMostrarController extends Controller
 
         $linea          = __LINE__;
         $respuesta      = true;
-        $datos          = $csccanalessucursalescategorias;
+        $datos          = $cscs;
         $mensaje        = 'Las promociones se cargaron satisfactoriamente';
         
         $requestsalida = response()->json([
