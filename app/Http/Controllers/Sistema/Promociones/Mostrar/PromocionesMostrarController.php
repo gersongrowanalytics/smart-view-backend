@@ -213,7 +213,8 @@ class PromocionesMostrarController extends Controller
                                                 ->where('cspestado', 1)
                                                 ->where('csc.canid', $csc->canid)
                                                 ->where('csc.fecid', $fec->fecid)
-                                                ->distinct('cspcanalessucursalespromociones.prmid')
+                                                ->distinct('prm.prmcodigo')
+                                                // ->distinct('cspcanalessucursalespromociones.prmid')
                                                 ->where(function ($query) use($zonid, $gsuid, $casid) {
                                                     if( $zonid != 0 ){
                                                         $query->where('suc.zonid', $zonid);
@@ -255,6 +256,7 @@ class PromocionesMostrarController extends Controller
                                                             ->where('cspestado', 1)
                                                             ->where('csc.canid', $csc->canid)
                                                             ->where('cspcanalessucursalespromociones.prmid', $csp->prmid)
+                                                            ->where('csc.fecid', $fec->fecid)
                                                             ->where(function ($query) use($zonid, $gsuid, $casid) {
                                                                 if( $zonid != 0 ){
                                                                     $query->where('suc.zonid', $zonid);
@@ -277,6 +279,7 @@ class PromocionesMostrarController extends Controller
                                                             ->where('cspestado', 1)
                                                             ->where('csc.canid', $csc->canid)
                                                             ->where('cspcanalessucursalespromociones.prmid', $csp->prmid)
+                                                            ->where('csc.fecid', $fec->fecid)
                                                             ->where(function ($query) use($zonid, $gsuid, $casid) {
                                                                 if( $zonid != 0 ){
                                                                     $query->where('suc.zonid', $zonid);
