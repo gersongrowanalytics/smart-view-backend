@@ -323,10 +323,10 @@ class PromocionesMostrarController extends Controller
                     $csps[$posicionCsp]['productosbonificados'] = [];
                 }
 
-                $csp[$posicionCsp]["cspcantidadcombo"]   = $cspsumacombo;
-                $csp[$posicionCsp]["cspcantidadplancha"] = $cspsumaplancha;
-                $csp[$posicionCsp]["cspcompletado"] = 0;
-                $csp[$posicionCsp]["cspid"] = 0;
+                $csps[$posicionCsp]["cspcantidadcombo"]   = $cspsumacombo;
+                $csps[$posicionCsp]["cspcantidadplancha"] = $cspsumaplancha;
+                $csps[$posicionCsp]["cspcompletado"] = 0;
+                $csps[$posicionCsp]["cspid"] = 0;
 
             }
 
