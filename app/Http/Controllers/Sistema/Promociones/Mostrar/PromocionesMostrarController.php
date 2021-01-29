@@ -212,7 +212,7 @@ class PromocionesMostrarController extends Controller
                                                 ->where('cspcantidadplancha', '!=', "0")
                                                 ->where('cspestado', 1)
                                                 ->where('csc.canid', $csc->canid)
-                                                ->where('csc.fecid', $fec->fecid)
+                                                ->where('prm.fecid', $fec->fecid)
                                                 ->distinct('prm.prmcodigo')
                                                 // ->distinct('cspcanalessucursalespromociones.prmid')
                                                 ->where(function ($query) use($zonid, $gsuid, $casid) {
