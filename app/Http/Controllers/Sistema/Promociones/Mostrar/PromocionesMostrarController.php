@@ -168,11 +168,17 @@ class PromocionesMostrarController extends Controller
         $mensajeDetalle = '';
         $mensajedev     = null;
 
+        $fec = fecfechas::where('fecdia', $dia)
+                        ->where('fecmes', $mesTxt)
+                        ->where('fecano', $ano)
+                        ->first(['fecid']);
+
         $cscs = csccanalessucursalescategorias::join('cancanales as can', 'can.canid', 'csccanalessucursalescategorias.canid')
                                             ->join('cspcanalessucursalespromociones as csp', 'csp.cscid', 'csccanalessucursalescategorias.cscid')
                                             ->join('scasucursalescategorias as sca', 'sca.scaid', 'csccanalessucursalescategorias.scaid')
                                             ->join('sucsucursales as suc', 'suc.sucid', 'sca.sucid')
                                             ->where('sca.catid', $catid)
+                                            ->where('csccanalessucursalescategorias.fecid', $fec->fecid)
                                             ->where(function ($query) use($zonid, $gsuid, $casid) {
                                                 if( $zonid != 0 ){
                                                     $query->where('suc.zonid', $zonid);
