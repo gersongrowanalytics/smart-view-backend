@@ -247,105 +247,105 @@ class PromocionesMostrarController extends Controller
                                                     // 'cspnuevo'
                                                 ]);
 
-            foreach($csps as $posicionCsp => $csp){
+            // foreach($csps as $posicionCsp => $csp){
 
-                $cspsumacombo = cspcanalessucursalespromociones::join('csccanalessucursalescategorias as csc', 'csc.cscid', 'cspcanalessucursalespromociones.cscid')
-                                                            ->join('scasucursalescategorias as sca', 'sca.scaid', 'csc.scaid')
-                                                            ->join('sucsucursales as suc', 'suc.sucid', 'sca.sucid')
-                                                            ->where('cspcantidadplancha', '!=', "0")
-                                                            ->where('cspestado', 1)
-                                                            ->where('csc.canid', $csc->canid)
-                                                            ->where('cspcanalessucursalespromociones.prmid', $csp->prmid)
-                                                            ->where('csc.fecid', $fec->fecid)
-                                                            ->where(function ($query) use($zonid, $gsuid, $casid) {
-                                                                if( $zonid != 0 ){
-                                                                    $query->where('suc.zonid', $zonid);
-                                                                }
+            //     $cspsumacombo = cspcanalessucursalespromociones::join('csccanalessucursalescategorias as csc', 'csc.cscid', 'cspcanalessucursalespromociones.cscid')
+            //                                                 ->join('scasucursalescategorias as sca', 'sca.scaid', 'csc.scaid')
+            //                                                 ->join('sucsucursales as suc', 'suc.sucid', 'sca.sucid')
+            //                                                 ->where('cspcantidadplancha', '!=', "0")
+            //                                                 ->where('cspestado', 1)
+            //                                                 ->where('csc.canid', $csc->canid)
+            //                                                 ->where('cspcanalessucursalespromociones.prmid', $csp->prmid)
+            //                                                 ->where('csc.fecid', $fec->fecid)
+            //                                                 ->where(function ($query) use($zonid, $gsuid, $casid) {
+            //                                                     if( $zonid != 0 ){
+            //                                                         $query->where('suc.zonid', $zonid);
+            //                                                     }
                             
-                                                                if($gsuid != 0){
-                                                                    $query->where('suc.gsuid', $gsuid);
-                                                                }
+            //                                                     if($gsuid != 0){
+            //                                                         $query->where('suc.gsuid', $gsuid);
+            //                                                     }
                                                                 
-                                                                if($casid != 0){
-                                                                    $query->where('suc.casid', $casid);
-                                                                }
-                                                            })
-                                                            ->sum('cspcantidadcombo');
+            //                                                     if($casid != 0){
+            //                                                         $query->where('suc.casid', $casid);
+            //                                                     }
+            //                                                 })
+            //                                                 ->sum('cspcantidadcombo');
 
-                $cspsumaplancha = cspcanalessucursalespromociones::join('csccanalessucursalescategorias as csc', 'csc.cscid', 'cspcanalessucursalespromociones.cscid')
-                                                            ->join('scasucursalescategorias as sca', 'sca.scaid', 'csc.scaid')
-                                                            ->join('sucsucursales as suc', 'suc.sucid', 'sca.sucid')
-                                                            ->where('cspcantidadplancha', '!=', "0")
-                                                            ->where('cspestado', 1)
-                                                            ->where('csc.canid', $csc->canid)
-                                                            ->where('cspcanalessucursalespromociones.prmid', $csp->prmid)
-                                                            ->where('csc.fecid', $fec->fecid)
-                                                            ->where(function ($query) use($zonid, $gsuid, $casid) {
-                                                                if( $zonid != 0 ){
-                                                                    $query->where('suc.zonid', $zonid);
-                                                                }
+            //     $cspsumaplancha = cspcanalessucursalespromociones::join('csccanalessucursalescategorias as csc', 'csc.cscid', 'cspcanalessucursalespromociones.cscid')
+            //                                                 ->join('scasucursalescategorias as sca', 'sca.scaid', 'csc.scaid')
+            //                                                 ->join('sucsucursales as suc', 'suc.sucid', 'sca.sucid')
+            //                                                 ->where('cspcantidadplancha', '!=', "0")
+            //                                                 ->where('cspestado', 1)
+            //                                                 ->where('csc.canid', $csc->canid)
+            //                                                 ->where('cspcanalessucursalespromociones.prmid', $csp->prmid)
+            //                                                 ->where('csc.fecid', $fec->fecid)
+            //                                                 ->where(function ($query) use($zonid, $gsuid, $casid) {
+            //                                                     if( $zonid != 0 ){
+            //                                                         $query->where('suc.zonid', $zonid);
+            //                                                     }
                             
-                                                                if($gsuid != 0){
-                                                                    $query->where('suc.gsuid', $gsuid);
-                                                                }
+            //                                                     if($gsuid != 0){
+            //                                                         $query->where('suc.gsuid', $gsuid);
+            //                                                     }
                                                                 
-                                                                if($casid != 0){
-                                                                    $query->where('suc.casid', $casid);
-                                                                }
-                                                            })
-                                                            ->sum('cspcantidadplancha');
+            //                                                     if($casid != 0){
+            //                                                         $query->where('suc.casid', $casid);
+            //                                                     }
+            //                                                 })
+            //                                                 ->sum('cspcantidadplancha');
                 
-                $prppromocionesproductos = prppromocionesproductos::join('proproductos as pro', 'pro.proid', 'prppromocionesproductos.proid')
-                                                                    ->where('prppromocionesproductos.prmid', $csp->prmid )
-                                                                    ->get([
-                                                                        'prppromocionesproductos.prpid',
-                                                                        'pro.proid',
-                                                                        'pro.prosku',
-                                                                        'pro.pronombre',
-                                                                        'pro.proimagen',
-                                                                        'prpproductoppt',
-                                                                        'prpcomprappt',
-                                                                        'prpimagen'
-                                                                    ]);
+            //     $prppromocionesproductos = prppromocionesproductos::join('proproductos as pro', 'pro.proid', 'prppromocionesproductos.proid')
+            //                                                         ->where('prppromocionesproductos.prmid', $csp->prmid )
+            //                                                         ->get([
+            //                                                             'prppromocionesproductos.prpid',
+            //                                                             'pro.proid',
+            //                                                             'pro.prosku',
+            //                                                             'pro.pronombre',
+            //                                                             'pro.proimagen',
+            //                                                             'prpproductoppt',
+            //                                                             'prpcomprappt',
+            //                                                             'prpimagen'
+            //                                                         ]);
 
-                if(sizeof($prppromocionesproductos) > 0){
-                    $csps[$posicionCsp]['productos'] = $prppromocionesproductos;
-                }else{
-                    $csps[$posicionCsp]['productos'] = [];
-                }
+            //     if(sizeof($prppromocionesproductos) > 0){
+            //         $csps[$posicionCsp]['productos'] = $prppromocionesproductos;
+            //     }else{
+            //         $csps[$posicionCsp]['productos'] = [];
+            //     }
 
 
-                $prbpromocionesbonificaciones = prbpromocionesbonificaciones::join('proproductos as pro', 'pro.proid', 'prbpromocionesbonificaciones.proid')
-                                                                            ->where('prbpromocionesbonificaciones.prmid', $csp->prmid )
-                                                                            ->get([
-                                                                                'prbpromocionesbonificaciones.prbid',
-                                                                                'pro.proid',
-                                                                                'pro.prosku',
-                                                                                'pro.pronombre',
-                                                                                'pro.proimagen',
-                                                                                'prbproductoppt',
-                                                                                'prbcomprappt',
-                                                                                'prbimagen'
-                                                                            ]);
+            //     $prbpromocionesbonificaciones = prbpromocionesbonificaciones::join('proproductos as pro', 'pro.proid', 'prbpromocionesbonificaciones.proid')
+            //                                                                 ->where('prbpromocionesbonificaciones.prmid', $csp->prmid )
+            //                                                                 ->get([
+            //                                                                     'prbpromocionesbonificaciones.prbid',
+            //                                                                     'pro.proid',
+            //                                                                     'pro.prosku',
+            //                                                                     'pro.pronombre',
+            //                                                                     'pro.proimagen',
+            //                                                                     'prbproductoppt',
+            //                                                                     'prbcomprappt',
+            //                                                                     'prbimagen'
+            //                                                                 ]);
                 
-                if(sizeof($prbpromocionesbonificaciones) > 0){
-                    $csps[$posicionCsp]['productosbonificados'] = $prbpromocionesbonificaciones;
-                }else{
-                    $csps[$posicionCsp]['productosbonificados'] = [];
-                }
+            //     if(sizeof($prbpromocionesbonificaciones) > 0){
+            //         $csps[$posicionCsp]['productosbonificados'] = $prbpromocionesbonificaciones;
+            //     }else{
+            //         $csps[$posicionCsp]['productosbonificados'] = [];
+            //     }
 
-                $csps[$posicionCsp]["cspcantidadcombo"]   = $cspsumacombo;
-                $csps[$posicionCsp]["cspcantidadplancha"] = $cspsumaplancha;
-                $csps[$posicionCsp]["cspcompletado"] = 0;
-                $csps[$posicionCsp]["cspvalorizado"] = 0;
-                $csps[$posicionCsp]["cspplanchas"] = 0;
-                $csps[$posicionCsp]["csptotalcombo"] = 0;
-                $csps[$posicionCsp]["csptotalplancha"] = 0;
-                $csps[$posicionCsp]["csptotal"] = 0;
-                $csps[$posicionCsp]["cspgratis"] = 0;
-                $csps[$posicionCsp]["cspnuevo"] = 0;
+            //     $csps[$posicionCsp]["cspcantidadcombo"]   = $cspsumacombo;
+            //     $csps[$posicionCsp]["cspcantidadplancha"] = $cspsumaplancha;
+            //     $csps[$posicionCsp]["cspcompletado"] = 0;
+            //     $csps[$posicionCsp]["cspvalorizado"] = 0;
+            //     $csps[$posicionCsp]["cspplanchas"] = 0;
+            //     $csps[$posicionCsp]["csptotalcombo"] = 0;
+            //     $csps[$posicionCsp]["csptotalplancha"] = 0;
+            //     $csps[$posicionCsp]["csptotal"] = 0;
+            //     $csps[$posicionCsp]["cspgratis"] = 0;
+            //     $csps[$posicionCsp]["cspnuevo"] = 0;
 
-            }
+            // }
 
             $cscs[$posicionCsc]["cscid"] = 0;
             $cscs[$posicionCsc]["porcentaje"] = 0;
