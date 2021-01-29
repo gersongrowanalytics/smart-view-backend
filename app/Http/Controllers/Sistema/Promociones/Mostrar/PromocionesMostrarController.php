@@ -170,7 +170,7 @@ class PromocionesMostrarController extends Controller
 
         $cscs = csccanalessucursalescategorias::join('cancanales as can', 'can.canid', 'csccanalessucursalescategorias.canid')
                                             ->join('cspcanalessucursalespromociones as csp', 'csp.cscid', 'csccanalessucursalescategorias.cscid')
-                                            ->join('scasucursalescategorias as sca', 'sca.scaid', 'csc.scaid')
+                                            ->join('scasucursalescategorias as sca', 'sca.scaid', 'csccanalessucursalescategorias.scaid')
                                             ->join('sucsucursales as suc', 'suc.sucid', 'sca.sucid')
                                             ->where('sca.catid', $catid)
                                             ->where(function ($query) use($zonid, $gsuid, $casid) {
