@@ -279,7 +279,46 @@ class PromocionesMostrarController extends Controller
                                 $csps[$cont]['prmid']           = $cspsc->prmid;
                                 $csps[$cont]['prmmecanica']     = $cspsc->prmmecanica;
                                 $csps[$cont]['tprnombre']       = $cspsc->tprnombre;
-                                $contadorEspecificoCsps = $cont;
+
+                                $prppromocionesproductos = prppromocionesproductos::join('proproductos as pro', 'pro.proid', 'prppromocionesproductos.proid')
+                                                                                    ->where('prppromocionesproductos.prmid', $cspsc->prmid )
+                                                                                    ->get([
+                                                                                        'prppromocionesproductos.prpid',
+                                                                                        'pro.proid',
+                                                                                        'pro.prosku',
+                                                                                        'pro.pronombre',
+                                                                                        'pro.proimagen',
+                                                                                        'prpproductoppt',
+                                                                                        'prpcomprappt',
+                                                                                        'prpimagen'
+                                                                                    ]);
+
+                                if(sizeof($prppromocionesproductos) > 0){
+                                    $csps[$cont]['productos'] = $prppromocionesproductos;
+                                }else{
+                                    $csps[$cont]['productos'] = [];
+                                }
+
+
+                                $prbpromocionesbonificaciones = prbpromocionesbonificaciones::join('proproductos as pro', 'pro.proid', 'prbpromocionesbonificaciones.proid')
+                                                                                            ->where('prbpromocionesbonificaciones.prmid', $cspsc->prmid )
+                                                                                            ->get([
+                                                                                                'prbpromocionesbonificaciones.prbid',
+                                                                                                'pro.proid',
+                                                                                                'pro.prosku',
+                                                                                                'pro.pronombre',
+                                                                                                'pro.proimagen',
+                                                                                                'prbproductoppt',
+                                                                                                'prbcomprappt',
+                                                                                                'prbimagen'
+                                                                                            ]);
+                                
+                                if(sizeof($prbpromocionesbonificaciones) > 0){
+                                    $csps[$cont]['productosbonificados'] = $prbpromocionesbonificaciones;
+                                }else{
+                                    $csps[$cont]['productosbonificados'] = [];
+                                }
+                                
                                 $cont = $cont + 1;
                             }
                         }
@@ -302,50 +341,50 @@ class PromocionesMostrarController extends Controller
                         $csps[$cont]['prmid']           = $cspsc->prmid;
                         $csps[$cont]['prmmecanica']     = $cspsc->prmmecanica;
                         $csps[$cont]['tprnombre']       = $cspsc->tprnombre;
-                        $contadorEspecificoCsps = $cont;
-                        $cont = $cont + 1;
 
-                        
-                    }
-                }
-
-                $prppromocionesproductos = prppromocionesproductos::join('proproductos as pro', 'pro.proid', 'prppromocionesproductos.proid')
-                                                                    ->where('prppromocionesproductos.prmid', $cspsc->prmid )
-                                                                    ->get([
-                                                                        'prppromocionesproductos.prpid',
-                                                                        'pro.proid',
-                                                                        'pro.prosku',
-                                                                        'pro.pronombre',
-                                                                        'pro.proimagen',
-                                                                        'prpproductoppt',
-                                                                        'prpcomprappt',
-                                                                        'prpimagen'
-                                                                    ]);
-
-                if(sizeof($prppromocionesproductos) > 0){
-                    $csps[$posicionCsp]['productos'] = $prppromocionesproductos;
-                }else{
-                    $csps[$posicionCsp]['productos'] = [];
-                }
-
-
-                $prbpromocionesbonificaciones = prbpromocionesbonificaciones::join('proproductos as pro', 'pro.proid', 'prbpromocionesbonificaciones.proid')
-                                                                            ->where('prbpromocionesbonificaciones.prmid', $cspsc->prmid )
+                        $prppromocionesproductos = prppromocionesproductos::join('proproductos as pro', 'pro.proid', 'prppromocionesproductos.proid')
+                                                                            ->where('prppromocionesproductos.prmid', $cspsc->prmid )
                                                                             ->get([
-                                                                                'prbpromocionesbonificaciones.prbid',
+                                                                                'prppromocionesproductos.prpid',
                                                                                 'pro.proid',
                                                                                 'pro.prosku',
                                                                                 'pro.pronombre',
                                                                                 'pro.proimagen',
-                                                                                'prbproductoppt',
-                                                                                'prbcomprappt',
-                                                                                'prbimagen'
+                                                                                'prpproductoppt',
+                                                                                'prpcomprappt',
+                                                                                'prpimagen'
                                                                             ]);
-                
-                if(sizeof($prbpromocionesbonificaciones) > 0){
-                    $csps[$posicionCsp]['productosbonificados'] = $prbpromocionesbonificaciones;
-                }else{
-                    $csps[$posicionCsp]['productosbonificados'] = [];
+
+                        if(sizeof($prppromocionesproductos) > 0){
+                            $csps[$cont]['productos'] = $prppromocionesproductos;
+                        }else{
+                            $csps[$cont]['productos'] = [];
+                        }
+
+
+                        $prbpromocionesbonificaciones = prbpromocionesbonificaciones::join('proproductos as pro', 'pro.proid', 'prbpromocionesbonificaciones.proid')
+                                                                                    ->where('prbpromocionesbonificaciones.prmid', $cspsc->prmid )
+                                                                                    ->get([
+                                                                                        'prbpromocionesbonificaciones.prbid',
+                                                                                        'pro.proid',
+                                                                                        'pro.prosku',
+                                                                                        'pro.pronombre',
+                                                                                        'pro.proimagen',
+                                                                                        'prbproductoppt',
+                                                                                        'prbcomprappt',
+                                                                                        'prbimagen'
+                                                                                    ]);
+                        
+                        if(sizeof($prbpromocionesbonificaciones) > 0){
+                            $csps[$cont]['productosbonificados'] = $prbpromocionesbonificaciones;
+                        }else{
+                            $csps[$cont]['productosbonificados'] = [];
+                        }
+
+                        $cont = $cont + 1;
+
+                        
+                    }
                 }
             }
 
