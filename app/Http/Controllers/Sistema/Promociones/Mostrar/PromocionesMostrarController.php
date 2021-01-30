@@ -250,8 +250,8 @@ class PromocionesMostrarController extends Controller
                     if(sizeof($csps) > 0){
                         foreach($csps as $csp){
                             if($csp['prmcodigo'] == $cspsc->prmcodigo){
-                                $csps[$cont]['cspcantidadcombo']   = $csps[$cont]['cspcantidadcombo'] + $cspsc->cspcantidadcombo;
-                                $csps[$cont]['cspcantidadplancha'] = $csps[$cont]['cspcantidadplancha'] + $cspsc->cspcantidadplancha;
+                                $csps[$cont]['cspcantidadcombo']   = $csps[$cont - 1]['cspcantidadcombo'] + $cspsc->cspcantidadcombo;
+                                $csps[$cont]['cspcantidadplancha'] = $csps[$cont - 1]['cspcantidadplancha'] + $cspsc->cspcantidadplancha;
                             }else{
                                 $csps[$cont]['prmcodigo'] = $cspsc->prmcodigo;
                                 $csps[$cont]['cspcantidadcombo']   = $cspsc->cspcantidadcombo;
