@@ -230,7 +230,7 @@ class PromocionesMostrarController extends Controller
                 $cspscs = cspcanalessucursalespromociones::join('prmpromociones as prm', 'prm.prmid', 'cspcanalessucursalespromociones.prmid')
                                                     ->join('csccanalessucursalescategorias as csc', 'csc.cscid', 'cspcanalessucursalespromociones.cscid')
                                                     ->join('scasucursalescategorias as sca', 'sca.scaid', 'csc.scaid')
-                                                    ->where('cspcanalessucursalespromociones.fecid', $fecid)
+                                                    ->where('cspcanalessucursalespromociones.fecid', $fec->fecid)
                                                     ->where('sca.catid', $catid)
                                                     ->where('sca.sucid', $suc->sucid)
                                                     ->where('csc.canid', $csc->canid)
