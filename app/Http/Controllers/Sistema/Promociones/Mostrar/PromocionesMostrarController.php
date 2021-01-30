@@ -9,6 +9,7 @@ use App\cspcanalessucursalespromociones;
 use App\prppromocionesproductos;
 use App\prbpromocionesbonificaciones;
 use App\fecfechas;
+use App\sucsucursales;
 
 class PromocionesMostrarController extends Controller
 {
@@ -169,6 +170,23 @@ class PromocionesMostrarController extends Controller
         $mensajeDetalle = '';
         $mensajedev     = null;
 
+
+        $sucs = sucsucursales::where(function ($query) use($zonid, $gsuid, $casid) {
+                                    if( $zonid != 0 ){
+                                        $query->where('suc.zonid', $zonid);
+                                    }
+
+                                    if($gsuid != 0){
+                                        $query->where('suc.gsuid', $gsuid);
+                                    }
+                                    
+                                    if($casid != 0){
+                                        $query->where('suc.casid', $casid);
+                                    }
+                                })
+                                ->get();
+
+
         $fec = fecfechas::where('fecdia', $dia)
                         ->where('fecmes', $mes)
                         ->where('fecano', $ano)
@@ -204,48 +222,129 @@ class PromocionesMostrarController extends Controller
                                             ]);
 
         foreach($cscs as $posicionCsc => $csc){
-            $csps = cspcanalessucursalespromociones::join('prmpromociones as prm', 'prm.prmid', 'cspcanalessucursalespromociones.prmid')
-                                                ->join('tprtipospromociones as tpr', 'tpr.tprid', 'prm.tprid')
-                                                ->join('csccanalessucursalescategorias as csc', 'csc.cscid', 'cspcanalessucursalespromociones.cscid')
-                                                ->join('scasucursalescategorias as sca', 'sca.scaid', 'csc.scaid')
-                                                ->join('sucsucursales as suc', 'suc.sucid', 'sca.sucid')
-                                                ->where('cspcantidadplancha', '!=', "0")
-                                                ->where('cspestado', 1)
-                                                ->where('csc.canid', $csc->canid)
-                                                ->where('prm.fecid', $fec->fecid)
-                                                ->distinct('prm.prmcodigo')
-                                                // ->distinct('cspcanalessucursalespromociones.prmid')
-                                                ->where(function ($query) use($zonid, $gsuid, $casid) {
-                                                    if( $zonid != 0 ){
-                                                        $query->where('suc.zonid', $zonid);
-                                                    }
+
+            $csps = array();
+            $cont = 0;
+
+            foreach($sucs as $suc){
+                $cspscs = cspcanalessucursalespromociones::join('prmpromociones as prm', 'prm.prmid', 'cspcanalessucursalespromociones.prmid')
+                                                    ->join('csccanalessucursalescategorias as csc', 'csc.cscid', 'cspcanalessucursalespromociones.cscid')
+                                                    ->join('scasucursalescategorias as sca', 'sca.scaid', 'csc.scaid')
+                                                    ->where('cspcanalessucursalespromociones.fecid', $fecid)
+                                                    ->where('sca.catid', $catid)
+                                                    ->where('sca.sucid', $suc->sucid)
+                                                    ->where('csc.canid', $csc->canid)
+                                                    ->where('cspcantidadplancha', '!=', "0")
+                                                    ->where('cspestado', 1)
+                                                    ->get([
+                                                        'prmcodigo',
+                                                        'prmaccion',
+                                                        'prm.prmid',
+                                                        'prmmecanica',
+                                                        'cspcantidadcombo',
+                                                        'cspcantidadplancha'
+                                                    ]);
+
+                foreach($cspscs as $cspsc){
+
+                    if(sizeof($csps) > 0){
+                        foreach($csps as $csp){
+                            if($csp['prmcodigo'] == $cspsc->prmcodigo){
+                                $csps[$cont]['cspcantidadcombo']   = $csps[$cont]['cspcantidadcombo'] + $cspsc->cspcantidadcombo;
+                                $csps[$cont]['cspcantidadplancha'] = $csps[$cont]['cspcantidadplancha'] + $cspsc->cspcantidadplancha;
+                            }else{
+                                $csps[$cont]['prmcodigo'] = $cspsc->prmcodigo;
+                                $csps[$cont]['cspcantidadcombo']   = $cspsc->cspcantidadcombo;
+                                $csps[$cont]['cspcantidadplancha'] = $cspsc->cspcantidadplancha;
+                                $csps[$cont]['cspcompletado']      = 0;
+                                $csps[$cont]['cspgratis']          = 0;
+                                $csps[$cont]['cspid']              = 0;
+                                $csps[$cont]['cspnuevo']           = 0;
+                                $csps[$cont]['cspplanchas']        = 0;
+                                $csps[$cont]['csptotal']           = 0;
+                                $csps[$cont]['csptotalcombo']      = 0;
+                                $csps[$cont]['csptotalplancha']    = 0;
+                                $csps[$cont]['cspvalorizado']      = 0;
+
+                                $csps[$cont]['prmaccion']       = $cspsc->prmaccion;
+                                $csps[$cont]['prmid']           = $cspsc->prmid;
+                                $csps[$cont]['prmmecanica']     = $cspsc->prmmecanica;
+                                $cont = $cont + 1;
+                            }
+                        }
+                    }else{
+                        $csps[$cont]['prmcodigo'] = $cspsc->prmcodigo;
+                        $csps[$cont]['cspcantidadcombo']   = $cspsc->cspcantidadcombo;
+                        $csps[$cont]['cspcantidadplancha'] = $cspsc->cspcantidadplancha;
+                        $csps[$cont]['cspcompletado']      = 0;
+                        $csps[$cont]['cspgratis']          = 0;
+                        $csps[$cont]['cspid']              = 0;
+                        $csps[$cont]['cspnuevo']           = 0;
+                        $csps[$cont]['cspplanchas']        = 0;
+                        $csps[$cont]['csptotal']           = 0;
+                        $csps[$cont]['csptotalcombo']      = 0;
+                        $csps[$cont]['csptotalplancha']    = 0;
+                        $csps[$cont]['cspvalorizado']      = 0;
+
+                        $csps[$cont]['prmaccion']       = $cspsc->prmaccion;
+                        $csps[$cont]['prmid']           = $cspsc->prmid;
+                        $csps[$cont]['prmmecanica']     = $cspsc->prmmecanica;
+                        $cont = $cont + 1;
+                    }
+                }
+            }
+
+            $cscs[$posicionCsc]["cscid"] = 0;
+            $cscs[$posicionCsc]["porcentaje"] = 0;
+            $cscs[$posicionCsc]["promociones"] = $csps;
+
+
+
+
+
+
+            // $csps = cspcanalessucursalespromociones::join('prmpromociones as prm', 'prm.prmid', 'cspcanalessucursalespromociones.prmid')
+            //                                     ->join('tprtipospromociones as tpr', 'tpr.tprid', 'prm.tprid')
+            //                                     ->join('csccanalessucursalescategorias as csc', 'csc.cscid', 'cspcanalessucursalespromociones.cscid')
+            //                                     ->join('scasucursalescategorias as sca', 'sca.scaid', 'csc.scaid')
+            //                                     ->join('sucsucursales as suc', 'suc.sucid', 'sca.sucid')
+            //                                     ->where('cspcantidadplancha', '!=', "0")
+            //                                     ->where('cspestado', 1)
+            //                                     ->where('csc.canid', $csc->canid)
+            //                                     ->where('prm.fecid', $fec->fecid)
+            //                                     ->distinct('prm.prmcodigo')
+            //                                     // ->distinct('cspcanalessucursalespromociones.prmid')
+            //                                     ->where(function ($query) use($zonid, $gsuid, $casid) {
+            //                                         if( $zonid != 0 ){
+            //                                             $query->where('suc.zonid', $zonid);
+            //                                         }
                 
-                                                    if($gsuid != 0){
-                                                        $query->where('suc.gsuid', $gsuid);
-                                                    }
+            //                                         if($gsuid != 0){
+            //                                             $query->where('suc.gsuid', $gsuid);
+            //                                         }
                                                     
-                                                    if($casid != 0){
-                                                        $query->where('suc.casid', $casid);
-                                                    }
-                                                })
-                                                ->get([
-                                                    // 'cspcanalessucursalespromociones.cspid',
-                                                    'prm.prmid',
-                                                    'prm.prmcodigo',
-                                                    // 'cspcanalessucursalespromociones.cspvalorizado',
-                                                    // 'cspcanalessucursalespromociones.cspplanchas',
-                                                    // 'cspcanalessucursalespromociones.cspcompletado',
-                                                    // 'cspcanalessucursalespromociones.cspcantidadcombo',
-                                                    'prm.prmmecanica',
-                                                    // 'cspcanalessucursalespromociones.cspcantidadplancha',
-                                                    // 'cspcanalessucursalespromociones.csptotalcombo',
-                                                    // 'cspcanalessucursalespromociones.csptotalplancha',
-                                                    // 'cspcanalessucursalespromociones.csptotal',
-                                                    // 'cspcanalessucursalespromociones.cspgratis',
-                                                    'prm.prmaccion',
-                                                    'tpr.tprnombre',
-                                                    // 'cspnuevo'
-                                                ]);
+            //                                         if($casid != 0){
+            //                                             $query->where('suc.casid', $casid);
+            //                                         }
+            //                                     })
+            //                                     ->get([
+            //                                         // 'cspcanalessucursalespromociones.cspid',
+            //                                         'prm.prmid',
+            //                                         'prm.prmcodigo',
+            //                                         // 'cspcanalessucursalespromociones.cspvalorizado',
+            //                                         // 'cspcanalessucursalespromociones.cspplanchas',
+            //                                         // 'cspcanalessucursalespromociones.cspcompletado',
+            //                                         // 'cspcanalessucursalespromociones.cspcantidadcombo',
+            //                                         'prm.prmmecanica',
+            //                                         // 'cspcanalessucursalespromociones.cspcantidadplancha',
+            //                                         // 'cspcanalessucursalespromociones.csptotalcombo',
+            //                                         // 'cspcanalessucursalespromociones.csptotalplancha',
+            //                                         // 'cspcanalessucursalespromociones.csptotal',
+            //                                         // 'cspcanalessucursalespromociones.cspgratis',
+            //                                         'prm.prmaccion',
+            //                                         'tpr.tprnombre',
+            //                                         // 'cspnuevo'
+            //                                     ]);
 
             // foreach($csps as $posicionCsp => $csp){
 
@@ -261,7 +360,7 @@ class PromocionesMostrarController extends Controller
             //                                                     if( $zonid != 0 ){
             //                                                         $query->where('suc.zonid', $zonid);
             //                                                     }
-                            
+
             //                                                     if($gsuid != 0){
             //                                                         $query->where('suc.gsuid', $gsuid);
             //                                                     }
@@ -347,9 +446,9 @@ class PromocionesMostrarController extends Controller
 
             // }
 
-            $cscs[$posicionCsc]["cscid"] = 0;
-            $cscs[$posicionCsc]["porcentaje"] = 0;
-            $cscs[$posicionCsc]["promociones"] = $csps;
+            // $cscs[$posicionCsc]["cscid"] = 0;
+            // $cscs[$posicionCsc]["porcentaje"] = 0;
+            // $cscs[$posicionCsc]["promociones"] = $csps;
         }
 
         $linea          = __LINE__;
