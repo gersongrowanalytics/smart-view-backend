@@ -230,6 +230,7 @@ class PromocionesMostrarController extends Controller
                 $cspscs = cspcanalessucursalespromociones::join('prmpromociones as prm', 'prm.prmid', 'cspcanalessucursalespromociones.prmid')
                                                     ->join('csccanalessucursalescategorias as csc', 'csc.cscid', 'cspcanalessucursalespromociones.cscid')
                                                     ->join('scasucursalescategorias as sca', 'sca.scaid', 'csc.scaid')
+                                                    ->join('tprtipospromociones as tpr', 'tpr.tprid', 'prm.tprid')
                                                     ->where('cspcanalessucursalespromociones.fecid', $fec->fecid)
                                                     ->where('sca.catid', $catid)
                                                     ->where('sca.sucid', $suc->sucid)
@@ -242,7 +243,8 @@ class PromocionesMostrarController extends Controller
                                                         'prm.prmid',
                                                         'prmmecanica',
                                                         'cspcantidadcombo',
-                                                        'cspcantidadplancha'
+                                                        'cspcantidadplancha',
+                                                        'tprnombre',
                                                     ]);
 
                 foreach($cspscs as $cspsc){
@@ -272,6 +274,7 @@ class PromocionesMostrarController extends Controller
                                 $csps[$cont]['prmaccion']       = $cspsc->prmaccion;
                                 $csps[$cont]['prmid']           = $cspsc->prmid;
                                 $csps[$cont]['prmmecanica']     = $cspsc->prmmecanica;
+                                $csps[$cont]['tprnombre']       = $cspsc->tprnombre;
                                 $cont = $cont + 1;
                             }
                         }
@@ -292,6 +295,7 @@ class PromocionesMostrarController extends Controller
                         $csps[$cont]['prmaccion']       = $cspsc->prmaccion;
                         $csps[$cont]['prmid']           = $cspsc->prmid;
                         $csps[$cont]['prmmecanica']     = $cspsc->prmmecanica;
+                        $csps[$cont]['tprnombre']       = $cspsc->tprnombre;
                         $cont = $cont + 1;
                     }
                 }
