@@ -173,15 +173,15 @@ class PromocionesMostrarController extends Controller
 
         $sucs = sucsucursales::where(function ($query) use($zonid, $gsuid, $casid) {
                                     if( $zonid != 0 ){
-                                        $query->where('suc.zonid', $zonid);
+                                        $query->where('zonid', $zonid);
                                     }
 
                                     if($gsuid != 0){
-                                        $query->where('suc.gsuid', $gsuid);
+                                        $query->where('gsuid', $gsuid);
                                     }
                                     
                                     if($casid != 0){
-                                        $query->where('suc.casid', $casid);
+                                        $query->where('casid', $casid);
                                     }
                                 })
                                 ->get();
