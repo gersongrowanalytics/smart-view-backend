@@ -310,7 +310,7 @@ class PromocionesMostrarController extends Controller
                 }
 
                 $prppromocionesproductos = prppromocionesproductos::join('proproductos as pro', 'pro.proid', 'prppromocionesproductos.proid')
-                                                                    ->where('prppromocionesproductos.prmid', $cspcanalesucursalpromocion->prmid )
+                                                                    ->where('prppromocionesproductos.prmid', $cspsc->prmid )
                                                                     ->get([
                                                                         'prppromocionesproductos.prpid',
                                                                         'pro.proid',
@@ -330,7 +330,7 @@ class PromocionesMostrarController extends Controller
 
 
                 $prbpromocionesbonificaciones = prbpromocionesbonificaciones::join('proproductos as pro', 'pro.proid', 'prbpromocionesbonificaciones.proid')
-                                                                            ->where('prbpromocionesbonificaciones.prmid', $cspcanalesucursalpromocion->prmid )
+                                                                            ->where('prbpromocionesbonificaciones.prmid', $cspsc->prmid )
                                                                             ->get([
                                                                                 'prbpromocionesbonificaciones.prbid',
                                                                                 'pro.proid',
