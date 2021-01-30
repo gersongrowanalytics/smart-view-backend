@@ -252,8 +252,8 @@ class PromocionesMostrarController extends Controller
                     if(sizeof($csps) > 0){
                         foreach($csps as $posicionCsp => $csp){
                             if($csp['prmcodigo'] == $cspsc->prmcodigo){
-                                $csps[$cont]['cspcantidadcombo']   = $csps[$posicionCsp]['cspcantidadcombo'] + $cspsc->cspcantidadcombo;
-                                $csps[$cont]['cspcantidadplancha'] = $csps[$posicionCsp]['cspcantidadplancha'] + $cspsc->cspcantidadplancha;
+                                $csps[$posicionCsp]['cspcantidadcombo']   = $csps[$posicionCsp]['cspcantidadcombo'] + $cspsc->cspcantidadcombo;
+                                $csps[$posicionCsp]['cspcantidadplancha'] = $csps[$posicionCsp]['cspcantidadplancha'] + $cspsc->cspcantidadplancha;
                                 break;
                             }
                             
@@ -278,6 +278,7 @@ class PromocionesMostrarController extends Controller
                                 $cont = $cont + 1;
                             }
                         }
+                        
                     }else{
                         $csps[$cont]['prmcodigo'] = $cspsc->prmcodigo;
                         $csps[$cont]['cspcantidadcombo']   = $cspsc->cspcantidadcombo;
@@ -297,8 +298,47 @@ class PromocionesMostrarController extends Controller
                         $csps[$cont]['prmmecanica']     = $cspsc->prmmecanica;
                         $csps[$cont]['tprnombre']       = $cspsc->tprnombre;
                         $cont = $cont + 1;
-                    }
+                    }                    
                 }
+
+                // $prppromocionesproductos = prppromocionesproductos::join('proproductos as pro', 'pro.proid', 'prppromocionesproductos.proid')
+                //                                                     ->where('prppromocionesproductos.prmid', $cspcanalesucursalpromocion->prmid )
+                //                                                     ->get([
+                //                                                         'prppromocionesproductos.prpid',
+                //                                                         'pro.proid',
+                //                                                         'pro.prosku',
+                //                                                         'pro.pronombre',
+                //                                                         'pro.proimagen',
+                //                                                         'prpproductoppt',
+                //                                                         'prpcomprappt',
+                //                                                         'prpimagen'
+                //                                                     ]);
+
+                // if(sizeof($prppromocionesproductos) > 0){
+                //     $cspcanalessucursalespromociones[$posicionPromociones]['productos'] = $prppromocionesproductos;
+                // }else{
+                //     $cspcanalessucursalespromociones[$posicionPromociones]['productos'] = [];
+                // }
+
+
+                // $prbpromocionesbonificaciones = prbpromocionesbonificaciones::join('proproductos as pro', 'pro.proid', 'prbpromocionesbonificaciones.proid')
+                //                                                             ->where('prbpromocionesbonificaciones.prmid', $cspcanalesucursalpromocion->prmid )
+                //                                                             ->get([
+                //                                                                 'prbpromocionesbonificaciones.prbid',
+                //                                                                 'pro.proid',
+                //                                                                 'pro.prosku',
+                //                                                                 'pro.pronombre',
+                //                                                                 'pro.proimagen',
+                //                                                                 'prbproductoppt',
+                //                                                                 'prbcomprappt',
+                //                                                                 'prbimagen'
+                //                                                             ]);
+                
+                // if(sizeof($prbpromocionesbonificaciones) > 0){
+                //     $cspcanalessucursalespromociones[$posicionPromociones]['productosbonificados'] = $prbpromocionesbonificaciones;
+                // }else{
+                //     $cspcanalessucursalespromociones[$posicionPromociones]['productosbonificados'] = [];
+                // }
             }
 
             $cscs[$posicionCsc]["cscid"] = 0;
