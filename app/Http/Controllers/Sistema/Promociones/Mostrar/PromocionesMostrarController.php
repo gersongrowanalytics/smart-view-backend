@@ -255,16 +255,42 @@ class PromocionesMostrarController extends Controller
                     if(sizeof($csps) > 0){
                         foreach($csps as $posicionCsp => $csp){
                             if($csp['prmcodigo'] == $cspsc->prmcodigo){
-                                $csps[$posicionCsp]['cspcantidadcombo']   = $csps[$posicionCsp]['cspcantidadcombo'] + $cspsc->cspcantidadcombo;
-                                $csps[$posicionCsp]['cspcantidadplancha'] = $csps[$posicionCsp]['cspcantidadplancha'] + $cspsc->cspcantidadplancha;
+
+                                if(is_numeric ( $cspsc->cspcantidadcombo )){
+                                    $cantidadComboNuevo = $cspsc->cspcantidadcombo;
+                                }else{
+                                    $cantidadComboNuevo = 0;
+                                }
+        
+                                if(is_numeric ( $cspsc->cspcantidadplancha )){
+                                    $cantidadPlanchaNuevo = $cspsc->cspcantidadplancha;
+                                }else{
+                                    $cantidadPlanchaNuevo = 0;
+                                }
+
+                                $csps[$posicionCsp]['cspcantidadcombo']   = $csps[$posicionCsp]['cspcantidadcombo'] + $cantidadComboNuevo;
+                                $csps[$posicionCsp]['cspcantidadplancha'] = $csps[$posicionCsp]['cspcantidadplancha'] + $cantidadPlanchaNuevo;
                                 $contadorEspecificoCsps = $posicionCsp;
                                 break;
                             }
                             
                             if($posicionCsp+1 == sizeof($csps)){
+
+                                if(is_numeric ( $cspsc->cspcantidadcombo )){
+                                    $cantidadComboNuevo = $cspsc->cspcantidadcombo;
+                                }else{
+                                    $cantidadComboNuevo = 0;
+                                }
+        
+                                if(is_numeric ( $cspsc->cspcantidadplancha )){
+                                    $cantidadPlanchaNuevo = $cspsc->cspcantidadplancha;
+                                }else{
+                                    $cantidadPlanchaNuevo = 0;
+                                }
+                                
                                 $csps[$cont]['prmcodigo'] = $cspsc->prmcodigo;
-                                $csps[$cont]['cspcantidadcombo']   = $cspsc->cspcantidadcombo;
-                                $csps[$cont]['cspcantidadplancha'] = $cspsc->cspcantidadplancha;
+                                $csps[$cont]['cspcantidadcombo']   = $cantidadComboNuevo;
+                                $csps[$cont]['cspcantidadplancha'] = $cantidadPlanchaNuevo;
                                 $csps[$cont]['cspcompletado']      = 0;
                                 $csps[$cont]['cspgratis']          = 0;
                                 $csps[$cont]['cspid']              = 0;
@@ -325,8 +351,21 @@ class PromocionesMostrarController extends Controller
 
                     }else{
                         $csps[$cont]['prmcodigo'] = $cspsc->prmcodigo;
-                        $csps[$cont]['cspcantidadcombo']   = $cspsc->cspcantidadcombo;
-                        $csps[$cont]['cspcantidadplancha'] = $cspsc->cspcantidadplancha;
+
+                        if(is_numeric ( $cspsc->cspcantidadcombo )){
+                            $cantidadComboNuevo = $cspsc->cspcantidadcombo;
+                        }else{
+                            $cantidadComboNuevo = 0;
+                        }
+
+                        if(is_numeric ( $cspsc->cspcantidadplancha )){
+                            $cantidadPlanchaNuevo = $cspsc->cspcantidadplancha;
+                        }else{
+                            $cantidadPlanchaNuevo = 0;
+                        }
+
+                        $csps[$cont]['cspcantidadcombo']   = $cantidadComboNuevo;
+                        $csps[$cont]['cspcantidadplancha'] = $cantidadPlanchaNuevo;
                         $csps[$cont]['cspcompletado']      = 0;
                         $csps[$cont]['cspgratis']          = 0;
                         $csps[$cont]['cspid']              = 0;
