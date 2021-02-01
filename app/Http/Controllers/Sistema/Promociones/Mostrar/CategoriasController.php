@@ -208,7 +208,7 @@ class CategoriasController extends Controller
 
 
                 $nuevoArray = array(
-                    "scaid"                      => 1,
+                    "scaid"                      => $cat->catid,
                     "catid"                      => $cat->catid,
                     "catnombre"                  => $cat->catnombre,
                     "catimagenfondo"             => $cat->catimagenfondo,
