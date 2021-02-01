@@ -191,17 +191,48 @@ class CategoriasController extends Controller
                                                                 ->where('scasucursalescategorias.tsuid', null)
                                                                 ->where('scasucursalescategorias.catid', $cat->catid)
                                                                 ->get();
+
                 $numeroPromociones = 0;
+                
+                $promociones = [];
 
                 foreach($scasucursalescategorias as $sca){
-                    $countCsc = csccanalessucursalescategorias::join('cspcanalessucursalespromociones as csp', 'csp.cscid', 'csccanalessucursalescategorias.cscid')
+                    $cscs = csccanalessucursalescategorias::join('cspcanalessucursalespromociones as csp', 'csp.cscid', 'csccanalessucursalescategorias.cscid')
+                                                            ->join('prmpromociones as prm', 'prm.prmid', 'csp.prmid')
                                                             ->where('csccanalessucursalescategorias.scaid', $sca->scaid)
                                                             // ->where('csp.cspcantidadcombo', "!=", 0)
                                                             ->where('csp.cspcantidadplancha', "!=", "0")
                                                             ->where('csp.cspestado', 1)
-                                                            ->count();
+                                                            ->get([
+                                                                'prmcodigo'
+                                                            ]);
 
-                    $numeroPromociones = $numeroPromociones + $countCsc;
+                    foreach($cscs as $csc){
+                        if(sizeof($promociones) > 0){
+                            foreach($promociones as $posicionPromocion => $promocion){
+                                if($promocion == $csc->prmcodigo){
+                                    break;
+                                }
+
+                                if($posicionPromocion+1 == sizeof($promociones)){
+                                    $promociones[] = $csc->prmcodigo;
+                                    $numeroPromociones = $numeroPromociones+1;
+                                }
+                            }
+                        }else{
+                            $promociones[] = $csc->prmcodigo;
+                            $numeroPromociones = $numeroPromociones+1;
+                        }
+                    }
+
+                    // $countCsc = csccanalessucursalescategorias::join('cspcanalessucursalespromociones as csp', 'csp.cscid', 'csccanalessucursalescategorias.cscid')
+                    //                                         ->where('csccanalessucursalescategorias.scaid', $sca->scaid)
+                    //                                         // ->where('csp.cspcantidadcombo', "!=", 0)
+                    //                                         ->where('csp.cspcantidadplancha', "!=", "0")
+                    //                                         ->where('csp.cspestado', 1)
+                    //                                         ->count();
+
+                    // $numeroPromociones = $numeroPromociones + $countCsc;
                 }
 
                 
