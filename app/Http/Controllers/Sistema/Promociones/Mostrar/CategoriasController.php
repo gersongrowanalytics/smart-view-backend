@@ -193,37 +193,59 @@ class CategoriasController extends Controller
                                                                 ->get();
 
                 $numeroPromociones = 0;
+                $numeroCodigosPromociones = 0;
+                $numeroCanales = 0;
                 
                 $promociones = [];
+                $canales = [];
 
                 foreach($scasucursalescategorias as $sca){
-                    // $cscs = csccanalessucursalescategorias::join('cspcanalessucursalespromociones as csp', 'csp.cscid', 'csccanalessucursalescategorias.cscid')
-                    //                                         ->join('prmpromociones as prm', 'prm.prmid', 'csp.prmid')
-                    //                                         ->where('csccanalessucursalescategorias.scaid', $sca->scaid)
-                    //                                         // ->where('csp.cspcantidadcombo', "!=", 0)
-                    //                                         ->where('csp.cspcantidadplancha', "!=", "0")
-                    //                                         ->where('csp.cspestado', 1)
-                    //                                         ->get([
-                    //                                             'prmcodigo'
-                    //                                         ]);
+                    $cscs = csccanalessucursalescategorias::join('cspcanalessucursalespromociones as csp', 'csp.cscid', 'csccanalessucursalescategorias.cscid')
+                                                            ->join('prmpromociones as prm', 'prm.prmid', 'csp.prmid')
+                                                            ->join('cancanales as can', 'can.canid', 'csccanalessucursalescategorias.canid')
+                                                            ->where('csccanalessucursalescategorias.scaid', $sca->scaid)
+                                                            // ->where('csp.cspcantidadcombo', "!=", 0)
+                                                            ->where('csp.cspcantidadplancha', "!=", "0")
+                                                            ->where('csp.cspestado', 1)
+                                                            ->get([
+                                                                'prmcodigo',
+                                                                'can.cannombre'
+                                                            ]);
 
-                    // foreach($cscs as $csc){
-                    //     if(sizeof($promociones) > 0){
-                    //         foreach($promociones as $posicionPromocion => $promocion){
-                    //             if($promocion == $csc->prmcodigo){
-                    //                 break;
-                    //             }
+                    foreach($cscs as $csc){
+                        if(sizeof($promociones) > 0){
+                            foreach($promociones as $posicionPromocion => $promocion){
+                                if($promocion == $csc->prmcodigo){
+                                    break;
+                                }
 
-                    //             if($posicionPromocion+1 == sizeof($promociones)){
-                    //                 $promociones[] = $csc->prmcodigo;
-                    //                 $numeroPromociones = $numeroPromociones+1;
-                    //             }
-                    //         }
-                    //     }else{
-                    //         $promociones[] = $csc->prmcodigo;
-                    //         $numeroPromociones = $numeroPromociones+1;
-                    //     }
-                    // }
+                                if($posicionPromocion+1 == sizeof($promociones)){
+                                    $promociones[] = $csc->prmcodigo;
+                                    $numeroCodigosPromociones = $numeroCodigosPromociones+1;
+                                }
+                            }
+                        }else{
+                            $promociones[] = $csc->prmcodigo;
+                            $numeroCodigosPromociones = $numeroCodigosPromociones+1;
+                        }
+
+                        if(sizeof($canales) > 0){
+                            foreach($canales as $posicionCanal => $canal){
+                                if($canal == $csc->cannombre){
+                                    break;
+                                }
+
+                                if($posicionCanal+1 == sizeof($canales)){
+                                    $canales[] = $csc->cannombre;
+                                    $numeroCanales = $numeroCanales+1;
+                                }
+                            }
+                        }else{
+                            $canales[] = $csc->cannombre;
+                            $numeroCanales = $numeroCanales+1;
+                        }
+
+                    }
 
                     $countCsc = csccanalessucursalescategorias::join('cspcanalessucursalespromociones as csp', 'csp.cscid', 'csccanalessucursalescategorias.cscid')
                                                             ->where('csccanalessucursalescategorias.scaid', $sca->scaid)
@@ -251,7 +273,9 @@ class CategoriasController extends Controller
                     "catcolor"                   => $cat->catcolor,
                     "caticonoseleccionado"       => $cat->caticonoseleccionado,
                     "fecfecha"                   => "",
-                    "cantidadPromociones"        => $numeroPromociones
+                    "cantidadPromociones"        => $numeroPromociones,
+                    "cantidadCodigosPromocion"   => $numeroCodigosPromociones,
+                    "cantidadCanales"            => $numeroCanales,
                 );
 
                 $datos[] = $nuevoArray;
