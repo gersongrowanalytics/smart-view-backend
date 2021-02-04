@@ -1084,19 +1084,19 @@ class CargarArchivoController extends Controller
                     }
                 }
 
-                $nuevoCargaArchivo = new carcargasarchivos;
-                $nuevoCargaArchivo->tcaid             = 3;
-                $nuevoCargaArchivo->fecid             = $fecid;
-                $nuevoCargaArchivo->usuid             = $usuusuario->usuid;
-                $nuevoCargaArchivo->carnombrearchivo  = $archivo;
-                $nuevoCargaArchivo->carubicacion      = $fichero_subido;
-                $nuevoCargaArchivo->carexito          = $cargarData;
-                $nuevoCargaArchivo->carurl            = env('APP_URL').'/Sistema/cargaArchivos/ventas/sellout/'.$archivo;
-                if($nuevoCargaArchivo->save()){
-                    $pkid = "CAR-".$nuevoCargaArchivo->carid;
-                }else{
+                // $nuevoCargaArchivo = new carcargasarchivos;
+                // $nuevoCargaArchivo->tcaid             = 3;
+                // $nuevoCargaArchivo->fecid             = $fecid;
+                // $nuevoCargaArchivo->usuid             = $usuusuario->usuid;
+                // $nuevoCargaArchivo->carnombrearchivo  = $archivo;
+                // $nuevoCargaArchivo->carubicacion      = $fichero_subido;
+                // $nuevoCargaArchivo->carexito          = $cargarData;
+                // $nuevoCargaArchivo->carurl            = env('APP_URL').'/Sistema/cargaArchivos/ventas/sellout/'.$archivo;
+                // if($nuevoCargaArchivo->save()){
+                //     $pkid = "CAR-".$nuevoCargaArchivo->carid;
+                // }else{
 
-                }
+                // }
             }
 
         } catch (Exception $e) {
