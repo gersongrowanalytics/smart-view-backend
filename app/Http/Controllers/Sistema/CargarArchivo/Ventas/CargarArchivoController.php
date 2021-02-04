@@ -722,51 +722,51 @@ class CargarArchivoController extends Controller
                                 //     }
                                 // }
             
-                                // if($i == 2){
-                                //     $scas = scasucursalescategorias::join('tsutipospromocionessucursales as tsu', 'tsu.tsuid', 'scasucursalescategorias.tsuid')
-                                //                                     ->where('tsu.fecid', $fecid)
-                                //                                     ->where('tsu.tprid', 2)
-                                //                                     ->get(['scasucursalescategorias.scaid']);
+                                if($i == 2){
+                                    $scas = scasucursalescategorias::join('tsutipospromocionessucursales as tsu', 'tsu.tsuid', 'scasucursalescategorias.tsuid')
+                                                                    ->where('tsu.fecid', $fecid)
+                                                                    ->where('tsu.tprid', 2)
+                                                                    ->get(['scasucursalescategorias.scaid']);
             
-                                //     foreach($scas as $sca){
-                                //         $scae = scasucursalescategorias::find($sca->scaid);
+                                    foreach($scas as $sca){
+                                        $scae = scasucursalescategorias::find($sca->scaid);
             
-                                //         $scae->scavalorizadoreal = 0;
-                                //         $scae->scavalorizadotogo = 0;
-                                //         if($scae->update()){
+                                        $scae->scavalorizadoreal = 0;
+                                        $scae->scavalorizadotogo = 0;
+                                        if($scae->update()){
             
-                                //         }else{
-                                //             $log[] = "No se pudo editar el sca: ".$sca->scaid;
-                                //         }
-                                //     }
+                                        }else{
+                                            $log[] = "No se pudo editar el sca: ".$sca->scaid;
+                                        }
+                                    }
             
-                                //     $tsus = tsutipospromocionessucursales::where('fecid', $fecid)
-                                //                                         ->where('tprid', 2)
-                                //                                         ->get(['tsuid']);
+                                    $tsus = tsutipospromocionessucursales::where('fecid', $fecid)
+                                                                        ->where('tprid', 2)
+                                                                        ->get(['tsuid']);
             
-                                //     foreach($tsus as $tsu){
-                                //         $tsue = tsutipospromocionessucursales::find($tsu->tsuid);
-                                //         $tsue->tsuvalorizadoreal = 0;
-                                //         $tsue->tsuvalorizadotogo = 0;
-                                //         $tsue->tsuporcentajecumplimiento = 0;
-                                //         $tsue->tsuvalorizadorebate = 0;
-                                //         if($tsue->update()){
+                                    foreach($tsus as $tsu){
+                                        $tsue = tsutipospromocionessucursales::find($tsu->tsuid);
+                                        $tsue->tsuvalorizadoreal = 0;
+                                        $tsue->tsuvalorizadotogo = 0;
+                                        $tsue->tsuporcentajecumplimiento = 0;
+                                        $tsue->tsuvalorizadorebate = 0;
+                                        if($tsue->update()){
             
-                                //         }else{
-                                //             $log[] = "No se pudo editar el tsu: ".$tsu->tsuid;
-                                //         }
+                                        }else{
+                                            $log[] = "No se pudo editar el tsu: ".$tsu->tsuid;
+                                        }
             
-                                //     }
+                                    }
 
-                                //     // vsoventassso::join('fecfechas as fec', 'fec.fecid', 'vsoventassso.fecid')
-                                //     //             ->where('fec.fecano', $ano)
-                                //     //             ->where('fec.fecmes', $mesTxt)
-                                //     //             // ->where('fec.fecdia', $diaTmp)
-                                //     //             ->update(['vsovalorizado' => 0]);
+                                    // vsoventassso::join('fecfechas as fec', 'fec.fecid', 'vsoventassso.fecid')
+                                    //             ->where('fec.fecano', $ano)
+                                    //             ->where('fec.fecmes', $mesTxt)
+                                    //             // ->where('fec.fecdia', $diaTmp)
+                                    //             ->update(['vsovalorizado' => 0]);
 
-                                //     // vsoventassso::where('fecid', $fecid)->update(['vsovalorizado' => 0]);
+                                    // vsoventassso::where('fecid', $fecid)->update(['vsovalorizado' => 0]);
             
-                                // }
+                                }
             
                                 if($cliente != null){
             
