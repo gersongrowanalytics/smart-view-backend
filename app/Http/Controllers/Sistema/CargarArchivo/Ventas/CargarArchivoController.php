@@ -1488,6 +1488,7 @@ class CargarArchivoController extends Controller
             "mensajedev"     => $mensajedev,
             "numeroCelda"    => $numeroCelda,
             "logs"           => $log,
+            "fecid"           => $fecid,
         ]);
 
         $AuditoriaController = new AuditoriaController;
