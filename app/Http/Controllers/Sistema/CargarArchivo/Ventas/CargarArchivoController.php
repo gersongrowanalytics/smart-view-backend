@@ -673,53 +673,54 @@ class CargarArchivoController extends Controller
                         
                         if(isset($mesTxt)){
                             if(isset($ano)){
-                                $fecfecha = fecfechas::where('fecdia', $dia)
-                                                        ->where('fecmes', $mesTxt)
-                                                        ->where('fecano', $ano)
-                                                        ->first(['fecid']);
+                                $fecid = 12;
+                                // $fecfecha = fecfechas::where('fecdia', $dia)
+                                //                         ->where('fecmes', $mesTxt)
+                                //                         ->where('fecano', $ano)
+                                //                         ->first(['fecid']);
                                 
-                                if($fecfecha){
-                                    $fecid = $fecfecha->fecid;
-                                }else{
-                                    $mes = "0";
-                                    if($mesTxt == "ENE"){
-                                        $mes = "01";
-                                    }else if($mesTxt == "FEB"){
-                                        $mes = "02";
-                                    }else if($mesTxt == "MAR"){
-                                        $mes = "03";
-                                    }else if($mesTxt == "ABR"){
-                                        $mes = "04";
-                                    }else if($mesTxt == "MAY"){
-                                        $mes = "05";
-                                    }else if($mesTxt == "JUN"){
-                                        $mes = "06";
-                                    }else if($mesTxt == "JUL"){
-                                        $mes = "07";
-                                    }else if($mesTxt == "AGO"){
-                                        $mes = "08";
-                                    }else if($mesTxt == "SET"){
-                                        $mes = "09";
-                                    }else if($mesTxt == "OCT"){
-                                        $mes = "10";
-                                    }else if($mesTxt == "NOV"){
-                                        $mes = "11";
-                                    }else if($mesTxt == "DIC"){
-                                        $mes = "12";
-                                    }
+                                // if($fecfecha){
+                                //     $fecid = $fecfecha->fecid;
+                                // }else{
+                                //     $mes = "0";
+                                //     if($mesTxt == "ENE"){
+                                //         $mes = "01";
+                                //     }else if($mesTxt == "FEB"){
+                                //         $mes = "02";
+                                //     }else if($mesTxt == "MAR"){
+                                //         $mes = "03";
+                                //     }else if($mesTxt == "ABR"){
+                                //         $mes = "04";
+                                //     }else if($mesTxt == "MAY"){
+                                //         $mes = "05";
+                                //     }else if($mesTxt == "JUN"){
+                                //         $mes = "06";
+                                //     }else if($mesTxt == "JUL"){
+                                //         $mes = "07";
+                                //     }else if($mesTxt == "AGO"){
+                                //         $mes = "08";
+                                //     }else if($mesTxt == "SET"){
+                                //         $mes = "09";
+                                //     }else if($mesTxt == "OCT"){
+                                //         $mes = "10";
+                                //     }else if($mesTxt == "NOV"){
+                                //         $mes = "11";
+                                //     }else if($mesTxt == "DIC"){
+                                //         $mes = "12";
+                                //     }
             
-                                    $nuevaFecha = new fecfechas;
-                                    $nuevaFecha->fecfecha = new \DateTime(date("Y-m-d", strtotime($ano.'-'.$mes.'-'.$dia)));
-                                    $nuevaFecha->fecdia   = $dia;
-                                    $nuevaFecha->fecmes   = $mesTxt;
-                                    $nuevaFecha->fecmesnumero = $mes;
-                                    $nuevaFecha->fecano   = $ano;
-                                    if($nuevaFecha->save()){
-                                        $fecid = $nuevaFecha->fecid;
-                                    }else{
+                                //     $nuevaFecha = new fecfechas;
+                                //     $nuevaFecha->fecfecha = new \DateTime(date("Y-m-d", strtotime($ano.'-'.$mes.'-'.$dia)));
+                                //     $nuevaFecha->fecdia   = $dia;
+                                //     $nuevaFecha->fecmes   = $mesTxt;
+                                //     $nuevaFecha->fecmesnumero = $mes;
+                                //     $nuevaFecha->fecano   = $ano;
+                                //     if($nuevaFecha->save()){
+                                //         $fecid = $nuevaFecha->fecid;
+                                //     }else{
                     
-                                    }
-                                }
+                                //     }
+                                // }
             
                                 if($i == 2){
                                     $scas = scasucursalescategorias::join('tsutipospromocionessucursales as tsu', 'tsu.tsuid', 'scasucursalescategorias.tsuid')
@@ -757,11 +758,11 @@ class CargarArchivoController extends Controller
             
                                     }
 
-                                    vsoventassso::join('fecfechas as fec', 'fec.fecid', 'vsoventassso.fecid')
-                                                ->where('fec.fecano', $ano)
-                                                ->where('fec.fecmes', $mesTxt)
-                                                // ->where('fec.fecdia', $diaTmp)
-                                                ->update(['vsovalorizado' => 0]);
+                                    // vsoventassso::join('fecfechas as fec', 'fec.fecid', 'vsoventassso.fecid')
+                                    //             ->where('fec.fecano', $ano)
+                                    //             ->where('fec.fecmes', $mesTxt)
+                                    //             // ->where('fec.fecdia', $diaTmp)
+                                    //             ->update(['vsovalorizado' => 0]);
 
                                     // vsoventassso::where('fecid', $fecid)->update(['vsovalorizado' => 0]);
             
@@ -878,27 +879,27 @@ class CargarArchivoController extends Controller
                                         }
 
                                         // 
-                                        $vso = vsoventassso::where('fecid', $fecid)
-                                                            ->where('proid', $pro->proid)
-                                                            ->where('sucid', $sucursalClienteId)
-                                                            ->where('tpmid', 1)
-                                                            ->first();
+                                        // $vso = vsoventassso::where('fecid', $fecid)
+                                        //                     ->where('proid', $pro->proid)
+                                        //                     ->where('sucid', $sucursalClienteId)
+                                        //                     ->where('tpmid', 1)
+                                        //                     ->first();
 
-                                        if($vso){
+                                        // if($vso){
 
-                                            $vso->vsovalorizado = $real + $vso->vsovalorizado;
-                                            $vso->update();
+                                        //     $vso->vsovalorizado = $real + $vso->vsovalorizado;
+                                        //     $vso->update();
 
-                                        }else{
-                                            $vson = new vsoventassso;
-                                            $vson->fecid         = $fecid;
-                                            $vson->proid         = $pro->proid;
-                                            $vson->sucid         = $sucursalClienteId;
-                                            $vson->tpmid         = 1;
-                                            $vson->vsocantidad   = 0;
-                                            $vson->vsovalorizado = $real;
-                                            $vson->save();
-                                        }
+                                        // }else{
+                                        //     $vson = new vsoventassso;
+                                        //     $vson->fecid         = $fecid;
+                                        //     $vson->proid         = $pro->proid;
+                                        //     $vson->sucid         = $sucursalClienteId;
+                                        //     $vson->tpmid         = 1;
+                                        //     $vson->vsocantidad   = 0;
+                                        //     $vson->vsovalorizado = $real;
+                                        //     $vson->save();
+                                        // }
             
                                         $tsu = tsutipospromocionessucursales::where('fecid', $fecid)
                                                                             ->where('sucid', $sucursalClienteId)
