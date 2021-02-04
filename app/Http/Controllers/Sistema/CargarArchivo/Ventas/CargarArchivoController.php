@@ -757,7 +757,13 @@ class CargarArchivoController extends Controller
             
                                     }
 
-                                    vsoventassso::where('fecid', $fecid)->update(['vsovalorizado' => 0]);
+                                    vsoventassso::join('fecfechas as fec', 'fec.fecid', 'vsoventassso.fecid')
+                                                ->where('fec.fecano', $ano)
+                                                ->where('fec.fecmes', $mesTxt)
+                                                // ->where('fec.fecdia', $diaTmp)
+                                                ->update(['vsovalorizado' => 0]);
+
+                                    // vsoventassso::where('fecid', $fecid)->update(['vsovalorizado' => 0]);
             
                                 }
             
