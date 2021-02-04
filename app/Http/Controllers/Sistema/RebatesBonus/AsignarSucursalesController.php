@@ -165,6 +165,34 @@ class AsignarSucursalesController extends Controller
                     }
                 }
             }else{
+                $rbsn = new rbsrebatesbonussucursales;
+                $rbsn->fecid           = $fecid;
+                $rbsn->rbbid           = $rbbid;
+                $rbsn->sucid           = $suc->sucid;
+                $rbsn->rbsobjetivo     = 0;
+                $rbsn->rbsreal         = 0;
+                $rbsn->rbscumplimiento = 0;
+                $rbsn->rbsrebate       = 0;
+                if($rbsn->save()){
+                    foreach($cateogiras as $catid){
+                        $rscn = new rscrbsscategorias;
+                        $rscn->fecid = $fecid;
+                        $rscn->rbbid = $rbbid;
+                        $rscn->sucid = $suc->sucid;
+                        $rscn->rbsid = $rbsn->rbsid;
+                        $rscn->catid = $catid;
+                        $rscn->rscestado = 1;
+                        if($rscn->save()){
+    
+                        }else{
+                            $log["NO_SE_AGREGO_RSC_CATEGORIAS"][] = "SUC: ".$suc->sucid." FEC: ".$fecid." RBB: ".$rbbid;
+                        }
+                    }
+                }else{
+                    $log["NO_SE_CREO_RBS"][] = "SUC: ".$suc->sucid." FEC: ".$fecid." RBB: ".$rbbid;    
+                }
+
+
                 $log["NO_SE_ENCONTRO_RBS"][] = "SUC: ".$suc->sucid." FEC: ".$fecid." RBB: ".$rbbid;
             }
 
