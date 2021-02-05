@@ -128,14 +128,18 @@ class SucursalesMostrarController extends Controller
 
                                                     
                     $ussusuariossucursales = sucsucursales::join('zonzonas as zon', 'zon.zonid', 'sucsucursales.zonid')
+                                                            ->join('gsugrupossucursales as gsu', 'gsu.gsuid', 'sucsucursales.gsuid')
+                                                            ->join('cascanalessucursales as cas', 'cas.casid', 'sucsucursales.casid')
                                                             ->where('sucestado', 1)
                                                             ->orderBy('sucsucursales.sucorden', 'DESC')
                                                             ->get([
                                                                 'sucsucursales.sucid',
                                                                 'zon.zonid',
-                                                                'gsuid',
+                                                                'sucsucursales.gsuid',
                                                                 'sucsucursales.casid',
                                                                 'zon.zonnombre',
+                                                                'cas.casnombre',
+                                                                'gsu.gsunombre',
                                                                 'sucsucursales.sucnombre',
                                                                 'sucsucursales.sucsoldto'
                                                             ]);                
