@@ -746,6 +746,14 @@ class CategoriasPromocionesMostrarController extends Controller
                                         }
                                     }
 
+                                    if($abc == "AR"){
+                                        $columnasFilas = floatval($columnasFilas);
+
+                                        if(is_numeric ( $columnasFilas )){
+                                            $columnasFilas = number_format($columnasFilas, 2);
+                                        }
+                                    }
+
                                     $arrayFilaExcel[$contadorColumna]['value'] = $columnasFilas;
 
                                     if($abc == "L" || $abc == "O" || $abc == "P" || $abc == "R" || $abc == "S" || $abc == "Y" || $abc == "AC" || $abc == "AL" || $abc == "AU"){
