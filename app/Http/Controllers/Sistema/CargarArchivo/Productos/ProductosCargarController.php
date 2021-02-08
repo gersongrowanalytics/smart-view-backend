@@ -22,7 +22,7 @@ class ProductosCargarController extends Controller
         date_default_timezone_set("America/Lima");
         $fechaActual = date('Y-m-d H:i:s');
 
-        $respuesta      = false;
+        $respuesta      = true;
         $mensaje        = '';
         $datos          = [];
         $linea          = __LINE__;
@@ -133,8 +133,12 @@ class ProductosCargarController extends Controller
                                 }
                             }
                         }else{
+                            DB::rollBack();
                             $log["CATEGORIA_NO_ENCONTRADA"][] = "En la linea: ".$i." categoria: ".$categoria." sku: ".$codigoMaterial;
+                            $respuesta = false;
                         }
+                    }else{
+                        $respuesta = false;
                     }
                 }
 
@@ -167,6 +171,7 @@ class ProductosCargarController extends Controller
 
 
         } catch (Exception $e) {
+            $respuesta = false;
             DB::rollBack();
             $mensajedev = $e->getMessage();
             $linea      = __LINE__;
