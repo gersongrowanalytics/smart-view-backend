@@ -36,7 +36,10 @@ class ProductosCargarController extends Controller
         $fichero_subido = '';
 
         $pkid = 0;
-        $log  = [];
+        $log  = array(
+            "NUEVO_PRODUCTO"  => [],
+            "EDITAR_PRODUCTO" => []
+        );
 
         $exitoSubirExcel = false;
         try{
@@ -51,7 +54,7 @@ class ProductosCargarController extends Controller
                 $ultimaColumna  = $objPHPExcel->setActiveSheetIndex(0)->getHighestColumn();
                 
                 for ($i=2; $i <= $numRows ; $i++) {
-                    $ano = '2020';
+                    // $ano = '2021';
                     $dia = '01';
 
                     $codigoMaterial = $objPHPExcel->getActiveSheet()->getCell('A'.$i)->getCalculatedValue();
@@ -59,7 +62,9 @@ class ProductosCargarController extends Controller
                     $categoria      = $objPHPExcel->getActiveSheet()->getCell('C'.$i)->getCalculatedValue();
                     $subCategoria   = $objPHPExcel->getActiveSheet()->getCell('D'.$i)->getCalculatedValue();
                     $formato        = $objPHPExcel->getActiveSheet()->getCell('E'.$i)->getCalculatedValue();
-                    $mes = 'AGO';
+                    $ano            = $objPHPExcel->getActiveSheet()->getCell('H'.$i)->getCalculatedValue();
+                    $mes            = $objPHPExcel->getActiveSheet()->getCell('I'.$i)->getCalculatedValue();
+                    // $mes = 'FEB';
 
                     if($material != null){
                         $fecfecha = fecfechas::where('fecdia', $dia)
@@ -97,10 +102,15 @@ class ProductosCargarController extends Controller
                         }
 
                         $pro = proproductos::where('prosku', $codigoMaterial)
-                                            ->first(['proid']);
+                                            ->first(['proid', 'catid']);
 
                         if($pro){
-
+                            $anterior = $pro->catid;
+                            if($pro->catid != $categoriaid){
+                                $pro->catid = $categoriaid;
+                                $pro->update();
+                                $log["EDITAR_PRODUCTO"][] = $anterior." - ".$codigoMaterial;
+                            }
                         }else{
                             $nuevopro = new proproductos;
                             $nuevopro->catid     = $categoriaid;
@@ -108,7 +118,7 @@ class ProductosCargarController extends Controller
                             $nuevopro->pronombre = $material;
                             $nuevopro->proimagen = env('APP_URL').'/Sistema/abs/img/nohay.png';
                             if($nuevopro->save()){
-                                $log[] = "Nuevo producto: ".$codigoMaterial;
+                                $log["NUEVO_PRODUCTO"][] = $codigoMaterial;
                             }else{
 
                             }
