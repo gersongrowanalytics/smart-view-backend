@@ -13,6 +13,7 @@ use App\fecfechas;
 use App\proproductos;
 use App\catcategorias;
 use App\usuusuarios;
+use Illuminate\Support\Facades\DB;
 
 class ProductosCargarController extends Controller
 {
@@ -38,10 +39,13 @@ class ProductosCargarController extends Controller
         $pkid = 0;
         $log  = array(
             "NUEVO_PRODUCTO"  => [],
-            "EDITAR_PRODUCTO" => []
+            "EDITAR_PRODUCTO" => [],
+            "CATEGORIA_NO_ENCONTRADA" => [],
         );
 
         $exitoSubirExcel = false;
+
+        DB::beginTransaction();
         try{
             
             $fichero_subido = base_path().'/public/Sistema/cargaArchivos/productos/'.basename($usuusuario->usuid.'-'.$usuusuario->usuusuario.'-'.$fechaActual.'-'.$_FILES['file']['name']);
@@ -87,6 +91,8 @@ class ProductosCargarController extends Controller
             
                             }
                         }
+                        
+                        $categoriaEncontrada = true;
 
                         $categoriaid = 0;
                         if($categoria == 'Family'){
@@ -99,33 +105,40 @@ class ProductosCargarController extends Controller
                             $categoriaid = 5;
                         }else if($categoria == 'Infant + Child'){
                             $categoriaid = 2;
+                        }else{
+                            $categoriaEncontrada = false;
                         }
 
-                        $pro = proproductos::where('prosku', $codigoMaterial)
-                                            ->first(['proid', 'catid']);
+                        if($categoriaEncontrada == true){
+                            $pro = proproductos::where('prosku', $codigoMaterial)
+                                                ->first(['proid', 'catid']);
 
-                        if($pro){
-                            $anterior = $pro->catid;
-                            if($pro->catid != $categoriaid){
-                                $pro->catid = $categoriaid;
-                                $pro->update();
-                                $log["EDITAR_PRODUCTO"][] = $anterior." - ".$codigoMaterial;
+                            if($pro){
+                                $anterior = $pro->catid;
+                                if($pro->catid != $categoriaid){
+                                    $pro->catid = $categoriaid;
+                                    $pro->update();
+                                    $log["EDITAR_PRODUCTO"][] = $anterior." - ".$codigoMaterial;
+                                }
+                            }else{
+                                $nuevopro = new proproductos;
+                                $nuevopro->catid     = $categoriaid;
+                                $nuevopro->prosku    = $codigoMaterial;
+                                $nuevopro->pronombre = $material;
+                                $nuevopro->proimagen = env('APP_URL').'/Sistema/abs/img/nohay.png';
+                                if($nuevopro->save()){
+                                    $log["NUEVO_PRODUCTO"][] = $codigoMaterial;
+                                }else{
+
+                                }
                             }
                         }else{
-                            $nuevopro = new proproductos;
-                            $nuevopro->catid     = $categoriaid;
-                            $nuevopro->prosku    = $codigoMaterial;
-                            $nuevopro->pronombre = $material;
-                            $nuevopro->proimagen = env('APP_URL').'/Sistema/abs/img/nohay.png';
-                            if($nuevopro->save()){
-                                $log["NUEVO_PRODUCTO"][] = $codigoMaterial;
-                            }else{
-
-                            }
+                            $log["CATEGORIA_NO_ENCONTRADA"][] = "En la linea: ".$i." categoria: ".$categoria." sku: ".$codigoMaterial;
                         }
                     }
                 }
 
+                
                 $exitoSubirExcel = true;
 
             }else{
@@ -150,9 +163,11 @@ class ProductosCargarController extends Controller
 
             }
 
+            DB::commit();
 
 
         } catch (Exception $e) {
+            DB::rollBack();
             $mensajedev = $e->getMessage();
             $linea      = __LINE__;
             $log[]      = $mensajedev;
