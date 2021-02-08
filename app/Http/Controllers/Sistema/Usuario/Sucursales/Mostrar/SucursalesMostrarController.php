@@ -67,7 +67,7 @@ class SucursalesMostrarController extends Controller
                     }
 
                     $gsus = sucsucursales::join('gsugrupossucursales as gsu', 'gsu.gsuid', 'sucsucursales.gsuid')
-                                        ->where('sucestado', 1)
+                                        // ->where('sucestado', 1)
                                         ->distinct('gsu.gsuid')
                                         ->get([
                                             'gsu.gsuid',
@@ -94,7 +94,7 @@ class SucursalesMostrarController extends Controller
                     }
 
                     $cass = sucsucursales::join('cascanalessucursales as cas', 'cas.casid', 'sucsucursales.casid')
-                                        ->where('sucestado', 1)
+                                        // ->where('sucestado', 1)
                                         ->distinct('cas.casid')
                                         ->get([
                                             'cas.casid',
@@ -130,7 +130,7 @@ class SucursalesMostrarController extends Controller
                     $ussusuariossucursales = sucsucursales::join('zonzonas as zon', 'zon.zonid', 'sucsucursales.zonid')
                                                             ->join('gsugrupossucursales as gsu', 'gsu.gsuid', 'sucsucursales.gsuid')
                                                             ->join('cascanalessucursales as cas', 'cas.casid', 'sucsucursales.casid')
-                                                            ->where('sucestado', 1)
+                                                            // ->where('sucestado', 1)
                                                             ->orderBy('sucsucursales.sucorden', 'DESC')
                                                             ->get([
                                                                 'sucsucursales.sucid',
@@ -178,7 +178,7 @@ class SucursalesMostrarController extends Controller
                     $gsus = ussusuariossucursales::join('sucsucursales as suc', 'suc.sucid', 'ussusuariossucursales.sucid')
                                                 ->join('gsugrupossucursales as gsu', 'gsu.gsuid', 'suc.gsuid')
                                                 ->where('ussusuariossucursales.usuid', $usuusuario->usuid )
-                                                ->where('sucestado', 1)
+                                                // ->where('sucestado', 1)
                                                 ->distinct('gsu.gsuid')
                                                 ->get([
                                                     'gsu.gsuid',
@@ -207,7 +207,7 @@ class SucursalesMostrarController extends Controller
                     $cass = ussusuariossucursales::join('sucsucursales as suc', 'suc.sucid', 'ussusuariossucursales.sucid')
                                                 ->join('cascanalessucursales as cas', 'cas.casid', 'suc.casid')
                                                 ->where('ussusuariossucursales.usuid', $usuusuario->usuid )
-                                                ->where('sucestado', 1)
+                                                // ->where('sucestado', 1)
                                                 ->distinct('cas.casid')
                                                 ->get([
                                                     'cas.casid',
@@ -241,7 +241,7 @@ class SucursalesMostrarController extends Controller
                     $ussusuariossucursales = ussusuariossucursales::join('sucsucursales as suc', 'suc.sucid', 'ussusuariossucursales.sucid')
                                                             ->join('zonzonas as zon', 'zon.zonid', 'suc.zonid')
                                                             ->where('ussusuariossucursales.usuid', $usuusuario->usuid )
-                                                            ->where('suc.sucestado', 1)
+                                                            // ->where('suc.sucestado', 1)
                                                             ->distinct('suc.sucid')
                                                             ->get([
                                                                 'ussusuariossucursales.ussid',
