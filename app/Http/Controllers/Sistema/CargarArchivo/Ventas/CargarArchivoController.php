@@ -673,7 +673,7 @@ class CargarArchivoController extends Controller
                         
                         if(isset($mesTxt)){
                             if(isset($ano)){
-                                $fecid = 12;
+                                $fecid = 45;
                                 // $fecfecha = fecfechas::where('fecdia', $dia)
                                 //                         ->where('fecmes', $mesTxt)
                                 //                         ->where('fecano', $ano)
