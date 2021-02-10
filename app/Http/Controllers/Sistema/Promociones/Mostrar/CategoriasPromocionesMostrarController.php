@@ -740,7 +740,7 @@ class CategoriasPromocionesMostrarController extends Controller
                                     //     $columnasFilas = strval("a$columnasFilas");
                                     // }
 
-                                    if($abc != "A" && $abc != "P" && $abc != "Z" && $abc != "AD"){
+                                    if($abc != "A" && $abc != "P" && $abc != "Z" && $abc != "AD" && $abc != "AR"){
                                         if(is_numeric($columnasFilas)){
                                             $columnasFilas = number_format($columnasFilas, 2);
                                             $columnasFilas = floatval($columnasFilas);
