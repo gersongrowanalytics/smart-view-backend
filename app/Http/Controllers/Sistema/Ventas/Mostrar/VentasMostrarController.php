@@ -526,9 +526,9 @@ class VentasMostrarController extends Controller
             );
             
             $usus = sucsucursales::
-                                // where('sucestado', 1)
-                                // ->where(function ($query) use($zonid, $gsuid, $casid) {
-                                where(function ($query) use($zonid, $gsuid, $casid) {
+                                where('sucestado', 1)
+                                ->where(function ($query) use($zonid, $gsuid, $casid) {
+                                // where(function ($query) use($zonid, $gsuid, $casid) {
                                     if( $zonid != 0 ){
                                         $query->where('zonid', $zonid);
                                     }
@@ -605,7 +605,7 @@ class VentasMostrarController extends Controller
                                                             ->join('tretiposrebates as tre', 'tre.treid', 'tsutipospromocionessucursales.treid')
                                                             ->join('sucsucursales as suc', 'suc.sucid', 'tsutipospromocionessucursales.sucid')
                                                             ->where('tsutipospromocionessucursales.sucid', $usu->sucid)
-                                                            // ->where('suc.sucestado', 1)
+                                                            ->where('suc.sucestado', 1)
                                                             ->where('tsutipospromocionessucursales.tprid', $tpr->tprid)
                                                             ->where('fec.fecano', $ano)
                                                             ->where('fec.fecmes', $mes)
