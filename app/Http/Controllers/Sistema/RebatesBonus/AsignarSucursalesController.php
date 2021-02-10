@@ -13,15 +13,25 @@ use App\tsutipospromocionessucursales;
 
 class AsignarSucursalesController extends Controller
 {
-    public function AsiganarSucursales()
+    public function AsiganarSucursales($fecid)
     {
+
+
+        // LIMPIAR REBATE BONNUS
+        rbsrebatesbonussucursales::where('fecid', $fecid)
+                                ->update([
+                                    'rbsobjetivo'     => 0,
+                                    'rbsreal'         => 0,
+                                    'rbscumplimiento' => 0,
+                                    'rbsrebate'       => 0,
+                                ]);
 
         $logs = array(
             "oct" => [],
             "novydic" => []
         );
 
-        $rbbs = rbbrebatesbonus::all();
+        $rbbs = rbbrebatesbonus::where('fecid', $fecid)->get();
         $sucs = sucsucursales::where('sucestado', 1)->get(['sucid']);
 
         foreach($rbbs as $rbb){
@@ -45,24 +55,6 @@ class AsignarSucursalesController extends Controller
 
                                             })
                                             ->get();
-
-                // if($rbb->fecid == 3){
-                //     $scas = scasucursalescategorias::join('tsutipospromocionessucursales as tsu', 'tsu.tsuid', 'scasucursalescategorias.tsuid')
-                //                             ->where('scasucursalescategorias.fecid', $rbb->fecid )
-                //                             ->where('tsu.tprid', 1)
-                //                             ->where('scasucursalescategorias.sucid', $suc->sucid)
-                //                             ->where('catid', '!=', 4)
-                //                             ->get();
-                // }else{
-                //     $scas = scasucursalescategorias::join('tsutipospromocionessucursales as tsu', 'tsu.tsuid', 'scasucursalescategorias.tsuid')
-                //                             ->where('scasucursalescategorias.fecid', $rbb->fecid )
-                //                             ->where('tsu.tprid', 1)
-                //                             ->where('scasucursalescategorias.sucid', $suc->sucid)
-                //                             ->where('catid', 1)
-                //                             ->get();
-                // }
-                
-
                 $rbsobjetivo = 0;
                 $rbsreal = 0;
                 $rbscumplimiento = 0;
@@ -87,12 +79,6 @@ class AsignarSucursalesController extends Controller
                         $rbsrebate = ($tsu->tsuvalorizadoreal*$rbb->rbbporcentaje)/100;
                         
                         $logs[$rbb->fecid][] = "Entra en el rango la sucursal: ".$suc->sucid." con un porcentaje de :".$rbscumplimiento." y un rebate de: ".$rbsrebate;
-
-                        // if($rbb->fecid == 3){
-                        //     $logs['oct'][] = "Entra en el rango la sucursal: ".$suc->sucid." con un porcentaje de :".$rbscumplimiento." y un rebate de: ".$rbsrebate;
-                        // }else{
-                        //     $logs['novydic'][] = "Entra en el rango la sucursal: ".$suc->sucid." con un porcentaje de :".$rbscumplimiento." y un rebate de: ".$rbsrebate;
-                        // }
                         
                     }
                     
