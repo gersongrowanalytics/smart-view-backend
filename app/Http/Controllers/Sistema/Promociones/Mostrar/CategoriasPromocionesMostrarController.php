@@ -709,6 +709,9 @@ class CategoriasPromocionesMostrarController extends Controller
                                 $soldto = $objPHPExcel->getActiveSheet()->getCell('P'.$i)->getCalculatedValue();
                             }
 
+                            $soldto = trim($soldto);
+
+
                             $pertenecedata = false;
                             foreach($uss as $u){
                                 if($u->sucsoldto == $soldto ){
