@@ -181,6 +181,13 @@ class RebateActualizarController extends Controller
         $log            = ["escala" => ["entra" => [], "noentra" => [], "notienegrupoasignado" => [], "notieneescalas" => [] ]];
 
         try{
+
+            // LIMPIAR REBATE 
+            $tsuu = tsutipospromocionessucursales::where('fecid', $fecid)
+                                                ->update([
+                                                    'tsuvalorizadorebate' => 0,
+                                                ]);
+
             $tsus = tsutipospromocionessucursales::leftjoin('tretiposrebates as tre', 'tre.treid', 'tsutipospromocionessucursales.treid')
                                             ->join('sucsucursales as suc', 'suc.sucid', 'tsutipospromocionessucursales.sucid')
                                             ->join('tprtipospromociones as tpr', 'tpr.tprid', 'tsutipospromocionessucursales.tprid')
