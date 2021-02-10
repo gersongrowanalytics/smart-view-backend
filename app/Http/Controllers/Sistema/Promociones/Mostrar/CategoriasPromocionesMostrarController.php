@@ -739,14 +739,6 @@ class CategoriasPromocionesMostrarController extends Controller
                                     // if($abc == "AD"){
                                     //     $columnasFilas = strval("a$columnasFilas");
                                     // }
-
-                                    if($abc != "A" && $abc != "P" && $abc != "Z" && $abc != "AD" && $abc != "AR"){
-                                        if(is_numeric($columnasFilas)){
-                                            $columnasFilas = number_format($columnasFilas, 2);
-                                            $columnasFilas = floatval($columnasFilas);
-                                        }
-                                    }
-
                                     if($abc == "AR"){
                                         $columnasFilas = floatval($columnasFilas);
 
@@ -756,6 +748,15 @@ class CategoriasPromocionesMostrarController extends Controller
 
                                         $columnasFilas = floatval($columnasFilas);
                                     }
+                                    
+                                    if($abc != "A" && $abc != "P" && $abc != "Z" && $abc != "AD" && $abc != "AR"){
+                                        if(is_numeric($columnasFilas)){
+                                            $columnasFilas = number_format($columnasFilas, 2);
+                                            $columnasFilas = floatval($columnasFilas);
+                                        }
+                                    }
+
+                                    
 
                                     $arrayFilaExcel[$contadorColumna]['value'] = $columnasFilas;
 
