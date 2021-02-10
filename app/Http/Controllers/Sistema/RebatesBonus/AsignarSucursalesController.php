@@ -32,7 +32,9 @@ class AsignarSucursalesController extends Controller
         );
 
         $rbbs = rbbrebatesbonus::where('fecid', $fecid)->get();
-        $sucs = sucsucursales::where('sucestado', 1)->get(['sucid']);
+        $sucs = sucsucursales::get(['sucid']);
+                                // where('sucestado', 1)
+                                // ->get(['sucid']);
 
         foreach($rbbs as $rbb){
 
