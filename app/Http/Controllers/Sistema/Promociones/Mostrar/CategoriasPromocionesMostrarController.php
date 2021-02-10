@@ -714,11 +714,14 @@ class CategoriasPromocionesMostrarController extends Controller
 
                             $pertenecedata = false;
                             foreach($uss as $u){
-                                if($u->sucsoldto == $soldto ){
-                                    $pertenecedata = true;
-                                    break;
-                                }else{
+
+                                $pos = strpos($soldto, $u->sucsoldto);
+                                // if($u->sucsoldto == $soldto ){
+                                if($pos === false ){
                                     $pertenecedata = false;
+                                }else{
+                                    $pertenecedata = true;
+                                    break;                                    
                                 }
                             }
 
