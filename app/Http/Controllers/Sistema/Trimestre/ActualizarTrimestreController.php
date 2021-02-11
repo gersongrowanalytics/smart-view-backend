@@ -181,7 +181,7 @@ class ActualizarTrimestreController extends Controller
     
     
                             }else{
-                                
+                                $logs[$tri->fecid]["NO_ACTUALIZA"][] = "No actualizo ".$tsue->tsuid;
                             }
                         }
                     }

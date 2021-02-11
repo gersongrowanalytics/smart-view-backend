@@ -164,7 +164,7 @@ class CargarArchivoController extends Controller
                         }
     
                         $suce = sucsucursales::where('sucsoldto', $soldTo)
-                                            ->where('sucestado', 0)
+                                            ->where('sucestado', "!=", 1)
                                             ->first();
                         
                         if($suce){
