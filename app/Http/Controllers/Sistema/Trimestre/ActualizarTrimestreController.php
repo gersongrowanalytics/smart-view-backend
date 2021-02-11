@@ -173,6 +173,7 @@ class ActualizarTrimestreController extends Controller
                                     }
                                 }else{
                                     $logs[$tri->fecid]["noentra"][] = "No entra en la escala rebate: ".$tsue->tsuid." de la sucursal: ".$suc->sucid." con un cumplimiento de: ".round($tsucumplimientotrimestral)."";
+                                    $logs[$tri->fecid]["extras_noentra"][] = "fecid: ". $tri->fecid." triid: ".$tri->triid." treid: ".$suc->treid." ttrporcentajedesde <= ".round($tsucumplimientotrimestral)." ttrporcentajehasta >= ".round($tsucumplimientotrimestral);
                                 }
     
                                 $tsuu = tsutipospromocionessucursales::find($tsue->tsuid);
