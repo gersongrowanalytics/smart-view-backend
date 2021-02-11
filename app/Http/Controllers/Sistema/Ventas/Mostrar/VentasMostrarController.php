@@ -623,7 +623,8 @@ class VentasMostrarController extends Controller
                                                                 'tsutipospromocionessucursales.tsuvalorizadorebate',
                                                                 'tsurealtrimestral',
                                                                 'tsuobjetivotrimestral',
-                                                                'tsufacturartrimestral'
+                                                                'tsufacturartrimestral',
+                                                                'tsurebatetrimestral'
                                                             ]);
                         if($tsu){
                             
@@ -632,6 +633,7 @@ class VentasMostrarController extends Controller
                                 $dataarray[$posicionTpr]["tsurealtrimestral"] = $dataarray[$posicionTpr]["tsurealtrimestral"] + $tsu->tsurealtrimestral;
                                 $dataarray[$posicionTpr]["tsuobjetivotrimestral"] = $dataarray[$posicionTpr]["tsuobjetivotrimestral"] + $tsu->tsuobjetivotrimestral;
                                 $dataarray[$posicionTpr]["tsufacturartrimestral"] = $dataarray[$posicionTpr]["tsuobjetivotrimestral"] - $dataarray[$posicionTpr]["tsurealtrimestral"];
+                                $dataarray[$posicionTpr]["tsurebatetrimestral"] = $dataarray[$posicionTpr]["tsurebatetrimestral"] +  $tsu->tsurebatetrimestral;
 
                                 $dataarray[$posicionTpr]["tsucumplimientotrimestral"] = ($dataarray[$posicionTpr]["tsurealtrimestral"] * 100 ) / $dataarray[$posicionTpr]["tsuobjetivotrimestral"];
                             }
