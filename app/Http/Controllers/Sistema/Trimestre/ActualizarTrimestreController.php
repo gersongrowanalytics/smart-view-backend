@@ -133,14 +133,16 @@ class ActualizarTrimestreController extends Controller
                             $tsue->tsufacturartrimestral     = $tsufacturartrimestral;
                             $tsue->tsucumplimientotrimestral = $tsucumplimientotrimestral;
                             if($tsue->update()){
-    
+                                
+                                $tsucumplimientotrimestral = intval(round($tsucumplimientotrimestral));
+
                                 $ttrs = ttrtritre::where('fecid', $tri->fecid)
                                                 ->where('triid', $tri->triid)
                                                 ->where('treid', $suc->treid)
                                                 // ->where('ttrporcentajedesde', '<=', round($tsucumplimientotrimestral))
                                                 // ->where('ttrporcentajehasta', '>=', round($tsucumplimientotrimestral))
-                                                ->where('ttrporcentajedesde', '<=', round($tsucumplimientotrimestral))
-                                                ->where('ttrporcentajehasta', '>=', round($tsucumplimientotrimestral))
+                                                ->where('ttrporcentajedesde', '<=', $tsucumplimientotrimestral)
+                                                ->where('ttrporcentajehasta', '>=', $tsucumplimientotrimestral)
                                                 ->get([
                                                     'ttrid',
                                                     'ttrporcentajedesde',
