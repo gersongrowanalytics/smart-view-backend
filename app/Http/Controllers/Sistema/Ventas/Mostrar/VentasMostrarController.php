@@ -620,10 +620,22 @@ class VentasMostrarController extends Controller
                                                                 'tsutipospromocionessucursales.tsuvalorizadoreal',
                                                                 'tsutipospromocionessucursales.tsuvalorizadotogo',
                                                                 'tsutipospromocionessucursales.tsuporcentajecumplimiento',
-                                                                'tsutipospromocionessucursales.tsuvalorizadorebate'
+                                                                'tsutipospromocionessucursales.tsuvalorizadorebate',
+                                                                'tsurealtrimestral',
+                                                                'tsuobjetivotrimestral',
+                                                                'tsufacturartrimestral'
                                                             ]);
                         if($tsu){
                             
+                            // SUMAR REBATE TRIMESTRAL
+                            if($tieneRebateTrimestral == true){
+                                $dataarray[$posicionTpr]["tsurealtrimestral"] = $dataarray[$posicionTpr]["tsurealtrimestral"] + $tsu->tsurealtrimestral;
+                                $dataarray[$posicionTpr]["tsuobjetivotrimestral"] = $dataarray[$posicionTpr]["tsuobjetivotrimestral"] + $tsu->tsuobjetivotrimestral;
+                                $dataarray[$posicionTpr]["tsufacturartrimestral"] = $dataarray[$posicionTpr]["tsuobjetivotrimestral"] - $dataarray[$posicionTpr]["tsurealtrimestral"];
+
+                                $dataarray[$posicionTpr]["tsucumplimientotrimestral"] = ($dataarray[$posicionTpr]["tsurealtrimestral"] * 100 ) / $dataarray[$posicionTpr]["tsuobjetivotrimestral"];
+                            }
+
                             $dataarray[$posicionTpr]['tsuvalorizadoobjetivo']     = $dataarray[$posicionTpr]['tsuvalorizadoobjetivo']     + $tsu->tsuvalorizadoobjetivo;
                             $dataarray[$posicionTpr]['tsuvalorizadoreal']         = $dataarray[$posicionTpr]['tsuvalorizadoreal']         + $tsu->tsuvalorizadoreal;
                             $dataarray[$posicionTpr]['tsuvalorizadotogo']         = $dataarray[$posicionTpr]['tsuvalorizadotogo']         + $tsu->tsuvalorizadotogo;
