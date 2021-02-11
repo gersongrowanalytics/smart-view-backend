@@ -140,7 +140,7 @@ class ActualizarTrimestreController extends Controller
                                                 // ->where('ttrporcentajedesde', '<=', round($tsucumplimientotrimestral))
                                                 // ->where('ttrporcentajehasta', '>=', round($tsucumplimientotrimestral))
                                                 ->where('ttrporcentajedesde', '<=', round($tsucumplimientotrimestral))
-                                                ->where('ttrporcentajehasta', '<=', round($tsucumplimientotrimestral))
+                                                ->where('ttrporcentajehasta', '>=', round($tsucumplimientotrimestral))
                                                 ->get([
                                                     'ttrid',
                                                     'ttrporcentajedesde',
