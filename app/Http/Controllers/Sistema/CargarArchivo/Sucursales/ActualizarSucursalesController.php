@@ -152,6 +152,7 @@ class ActualizarSucursalesController extends Controller
             "mensaje"        => $mensaje,
             "datos"          => $datos,
             "mensajedev"     => $mensajedev,
+            "logs" => $logs
         ]);
 
         $AuditoriaController = new AuditoriaController;
