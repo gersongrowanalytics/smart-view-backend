@@ -95,7 +95,7 @@ class PruebaController extends Controller
                         // }
 
                         if($pos === false){
-                            
+                            $log["NO_ES_PROVINCIA"][] = "SUCNOMBRE: ".$cliente." soldto: ".$soldto." linea: ".$i;
                         }else{
                             $suc = sucsucursales::where('sucsoldto', 'LIKE', "%".$soldto)
                                             ->first();
