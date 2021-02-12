@@ -635,7 +635,11 @@ class VentasMostrarController extends Controller
                                 $dataarray[$posicionTpr]["tsufacturartrimestral"] = $dataarray[$posicionTpr]["tsuobjetivotrimestral"] - $dataarray[$posicionTpr]["tsurealtrimestral"];
                                 $dataarray[$posicionTpr]["tsurebatetrimestral"] = $dataarray[$posicionTpr]["tsurebatetrimestral"] +  $tsu->tsurebatetrimestral;
 
-                                $dataarray[$posicionTpr]["tsucumplimientotrimestral"] = ($dataarray[$posicionTpr]["tsurealtrimestral"] * 100 ) / $dataarray[$posicionTpr]["tsuobjetivotrimestral"];
+                                if($dataarray[$posicionTpr]["tsuobjetivotrimestral"] > 0){
+                                    $dataarray[$posicionTpr]["tsucumplimientotrimestral"] = ($dataarray[$posicionTpr]["tsurealtrimestral"] * 100 ) / $dataarray[$posicionTpr]["tsuobjetivotrimestral"];
+                                }else{
+                                    $dataarray[$posicionTpr]["tsucumplimientotrimestral"] = $dataarray[$posicionTpr]["tsurealtrimestral"];
+                                }
                             }
 
                             $dataarray[$posicionTpr]['tsuvalorizadoobjetivo']     = $dataarray[$posicionTpr]['tsuvalorizadoobjetivo']     + $tsu->tsuvalorizadoobjetivo;
