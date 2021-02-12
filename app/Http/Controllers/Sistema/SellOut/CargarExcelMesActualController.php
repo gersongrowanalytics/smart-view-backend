@@ -142,6 +142,7 @@ class CargarExcelMesActualController extends Controller
         }
 
         $nuevoArray[0]['data'][] = $arrayFilaExcel;
+        $datos = $nuevoArray;
 
         $requestsalida = response()->json([
             'datos' => $datos,
