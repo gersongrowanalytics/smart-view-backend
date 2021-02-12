@@ -78,7 +78,7 @@ class CargarExcelMesActualController extends Controller
         $contadorColumna = 0;
 
         for($cont = 1; $cont <= 31; $cont++){
-            $datos = json_decode( file_get_contents('http://backend-api.leadsmartview.com/ws/obtenerSellOutEspecifico/'.$anio.'/'.$mes.'/'.$cont), true );
+            $datos = json_decode( file_get_contents('http://backend-api.leadsmartview.com/ws/obtenerSellOutEspecifico/'.$anio.'/'.$mes.'/12'), true );
 
             foreach($datos as $posicion => $dato){
 
