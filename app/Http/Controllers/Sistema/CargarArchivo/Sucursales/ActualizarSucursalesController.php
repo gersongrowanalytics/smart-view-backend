@@ -165,7 +165,7 @@ class ActualizarSucursalesController extends Controller
             'IMPORTAR',
             '/cargarArchivo/sucursales', //ruta
             0,
-            $log
+            $logs
         );
 
         if($registrarAuditoria == true){
