@@ -132,16 +132,14 @@ class CargarExcelMesActualController extends Controller
                     }else{
                         $arrayFilaExcel[$contadorColumna]['value'] = " - ";
                     }
+
+                    $contadorColumna = $contadorColumna + 1;
                 }
-
-
-                $contadorColumna = $contadorColumna + 1;
-
+                $nuevoArray[0]['data'][] = $arrayFilaExcel;
             }
 
         }
 
-        $nuevoArray[0]['data'][] = $arrayFilaExcel;
         $datos = $nuevoArray;
 
         $requestsalida = response()->json([
