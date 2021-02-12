@@ -33,6 +33,7 @@ class ActualizarSucursalesController extends Controller
             "NO_EXISTE_CANAL"   => [],
             "NO_EXISTE_ZONA"    => [],
             "NUEVAS_SUCURSALES" => [],
+            "NUEVO_TRE" => [],
             "EDITAR_SUCNOMBRE"  => [],
             "EDITAR_TREID"      => [],
             "EDITAR_ZONID"      => [],
@@ -76,17 +77,30 @@ class ActualizarSucursalesController extends Controller
 
                             $tre = tretiposrebates::where('trenombre', $customerGroup)->first();
                             $treid = 0;
+                            $trenombre = "";
                             if($tre){
                                 $treid = $tre->treid;
+                                $trenombre = $tre->trenombre;
                             }else{
                                 $tren = new tretiposrebates;
                                 $tren->trenombre = $customerGroup;
                                 $tren->save();
 
                                 $treid = $tren->treid;
+
+                                $logs["NUEVO_TRE"][] = $treid."  ".$tren->trenombre;
                             }
 
-                            $suc = sucsucursales::where('sucsoldto', $soldto)->first();
+                            $suc = sucsucursales::join('tretiposrebates as tre', 'tre.treid', 'sucsucursales.treid' )
+                                                 ->where('sucsoldto', $soldto)
+                                                 ->first([
+                                                     'sucid',
+                                                     'sucnombre',
+                                                     'zonid',
+                                                     'casid',
+                                                     'tre.treid',
+                                                     'trenombre',
+                                                 ]);
                             if($suc){
                                 $sucnombre = $suc->sucnombre;
                                 if($suc->sucnombre != $sucursal){
@@ -95,7 +109,7 @@ class ActualizarSucursalesController extends Controller
                                 }
 
                                 if($suc->treid != $treid){
-                                    $logs["EDITAR_TREID"][] = "SOLDTO: ".$soldto." SUCNOMBRE: ".$sucnombre." ANTERIOR: ".$suc->treid." NUEVA: ".$treid;
+                                    $logs["EDITAR_TREID"][] = "SOLDTO: ".$soldto." SUCNOMBRE: ".$sucnombre." ANTERIOR: ".$suc->trenombre." (".$suc->treid.") "." NUEVA: ".$trenombre." (".$treid.")";
                                     $suc->treid = $treid;
                                 }
 
