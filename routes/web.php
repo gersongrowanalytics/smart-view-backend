@@ -99,6 +99,9 @@ $router->group(['middleware' => ['permisos']], function() use($router) {
     $router->post('/perfil/editar/editarPerfil', 'Sistema\Perfil\Editar\EditarPerfilController@EditarPerfil');
     $router->post('/perfil/mostrar/novedades', 'Sistema\Perfil\Mostrar\MostrarNovedadesController@MostrarNovedades');
 
+    // CONTROL SELL OUT
+    $router->post('/obtenerSellOutExcelMesAcutal', 'Sistema\SellOut\CargarExcelMesActualController@CargarExcelMesActual');
+
 });
 
 
