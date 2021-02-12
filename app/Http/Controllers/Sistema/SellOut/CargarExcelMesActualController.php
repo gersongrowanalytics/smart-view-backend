@@ -43,22 +43,22 @@ class CargarExcelMesActualController extends Controller
         $arrayTitulos = array(
             array(
                  "title" => "RH1 Business Unit",
-                 "title" => "RH3 Region",
-                 "title" => "RH5 Area",
-                 "title" => "Año",
-                 "title" => "Mes",
-                 "title" => "PL",
-                 "title" => "Sales Office Sold",
-                 "title" => "SoldTo",
-                 "title" => "name SoldTo",
-                 "title" => "Material Number",
-                 "title" => "name material",
-                 "title" => "Sector Profit Center",
-                 "title" => "Business Category|Vision",
-                 "title" => "DOMESTIC",
-                 "title" => "Result",
-                 "title" => "Categoria NIV",
-            )
+            ),
+            array("title" => "RH3 Region"),
+            array("title" => "RH5 Area"),
+            array("title" => "Año"),
+            array("title" => "Mes"),
+            array("title" => "PL"),
+            array("title" => "Sales Office Sold"),
+            array("title" => "SoldTo"),
+            array("title" => "name SoldTo"),
+            array("title" => "Material Number"),
+            array("title" => "name material"),
+            array("title" => "Sector Profit Center"),
+            array("title" => "Business Category|Vision"),
+            array("title" => "DOMESTIC"),
+            array("title" => "Result"),
+            array("title" => "Categoria NIV"),
         );
 
         $nuevoArray[0]['columns'] = $arrayTitulos;
@@ -76,8 +76,8 @@ class CargarExcelMesActualController extends Controller
         $anio = date("Y", strtotime($fechaActual));
 
 
-        // for($cont = 1; $cont <= 31; $cont++){
-            $datos = json_decode( file_get_contents('http://backend-api.leadsmartview.com/ws/obtenerSellOutEspecifico/'.$anio.'/'.$mes.'/12'), true );
+        for($cont = 1; $cont <= 31; $cont++){
+            $datos = json_decode( file_get_contents('http://backend-api.leadsmartview.com/ws/obtenerSellOutEspecifico/'.$anio.'/'.$mes.'/'.$cont), true );
 
             foreach($datos as $posicion => $dato){
 
@@ -98,7 +98,7 @@ class CargarExcelMesActualController extends Controller
                 }
 
                 $contadorColumna = 0;
-                
+
                 foreach($columnasExcel as $abc) {
                     if($abc == "D"){
                         $arrayFilaExcel[$contadorColumna]['value'] = $anio;
@@ -139,7 +139,7 @@ class CargarExcelMesActualController extends Controller
                 $nuevoArray[0]['data'][] = $arrayFilaExcel;
             }
 
-        // }
+        }
 
         $datos = $nuevoArray;
 
