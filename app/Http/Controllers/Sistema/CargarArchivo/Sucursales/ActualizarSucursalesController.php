@@ -164,7 +164,7 @@ class ActualizarSucursalesController extends Controller
             'CARGAR DATA DE SUCURSALES AL SISTEMA ',
             'IMPORTAR',
             '/cargarArchivo/sucursales', //ruta
-            $pkid,
+            0,
             $log
         );
 
