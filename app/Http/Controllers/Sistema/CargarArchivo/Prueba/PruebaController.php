@@ -98,7 +98,7 @@ class PruebaController extends Controller
 
                
             }else{
-
+                $log["NO_SE_SUBIO"][] = "NO SE SUBIO EL ARCHIVO";
             }
 
         } catch (Exception $e) {
