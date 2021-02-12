@@ -25,7 +25,7 @@ use App\cascanalessucursales;
 
 class ActualizarSucursalesController extends Controller
 {
-    public function ActualizarSucursales()
+    public function ActualizarSucursales(Request $request)
     {
         $logs = array(
             "ERRORES"   => "",
