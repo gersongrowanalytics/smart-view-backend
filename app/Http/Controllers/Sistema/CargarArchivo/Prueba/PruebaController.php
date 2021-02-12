@@ -26,7 +26,7 @@ use App\vsoventassso;
 
 class PruebaController extends Controller
 {
-    public function CargarArchivo(Request $request)
+    public function prueba(Request $request)
     {
         $respuesta      = true;
         $mensaje        = '';
