@@ -76,8 +76,8 @@ class CargarExcelMesActualController extends Controller
         $anio = date("Y", strtotime($fechaActual));
 
 
-        for($cont = 1; $cont <= 31; $cont++){
-            $datos = json_decode( file_get_contents('http://backend-api.leadsmartview.com/ws/obtenerSellOutEspecifico/'.$anio.'/'.$mes.'/'.$cont), true );
+        // for($cont = 1; $cont <= 31; $cont++){
+            $datos = json_decode( file_get_contents('http://backend-api.leadsmartview.com/ws/obtenerSellOutEspecifico/'.$anio.'/'.$mes.'/0'), true );
 
             foreach($datos as $posicion => $dato){
 
@@ -139,7 +139,7 @@ class CargarExcelMesActualController extends Controller
                 $nuevoArray[0]['data'][] = $arrayFilaExcel;
             }
 
-        }
+        // }
 
         $datos = $nuevoArray;
 
