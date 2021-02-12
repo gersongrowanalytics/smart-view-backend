@@ -39,7 +39,13 @@ class PruebaController extends Controller
         $archivo        = $_FILES['file']['name'];
         $skusNoExisten  = [];
         $soldtosNoExis  = [];
-        $log            = array();
+        $log            = array(
+            "ESTA_EN_CAS" => [],
+            "NO_ESTA_EN_CAS" => [],
+            "NO_EXISTE" => [],
+            "NO_SE_SUBIO" => [],
+            "error" => ""
+        );
         $pkid           = 0;
 
         $cargarData = false;
@@ -76,7 +82,21 @@ class PruebaController extends Controller
                         $soldto = substr($soldto, 3);
             
                         // VERIFICAR SI EXISTE EL USUARIO
-                        if($zona == "DTT2 PROVINCIAS"){
+
+                        $pos = strpos($zona, "DTT2 PROVINCIAS");
+
+                        // echo $pos;
+
+                        // if($pos === false){
+                            
+                        //     echo "no hay";
+                        // }else{
+                        //     echo "si hay";
+                        // }
+
+                        if($pos === false){
+                            
+                        }else{
                             $suc = sucsucursales::where('sucsoldto', 'LIKE', "%".$soldto)
                                             ->first();
 
@@ -104,7 +124,7 @@ class PruebaController extends Controller
         } catch (Exception $e) {
             $mensajedev = $e->getMessage();
             $linea      = __LINE__;
-            // $log[]      = $mensajedev;
+            $log["error"]      = $mensajedev;
         }
 
         dd($log);
