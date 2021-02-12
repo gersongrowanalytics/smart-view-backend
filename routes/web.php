@@ -83,7 +83,7 @@ $router->group(['middleware' => ['permisos']], function() use($router) {
     $router->post('/cargarArchivo/clientes/actualizarGrupoSucursal', 'Sistema\CargarArchivo\Clientes\ActualizarGrupoSucursalController@ActualizarGrupoSucursal');
 
     $router->post('/cargarArchivo/productos', 'Sistema\CargarArchivo\Productos\ProductosCargarController@CargarProductos');
-    $router->post('/cargarArchivo/prueba', 'Sistema\CargarArchivo\Prueba\PruebaController@prueba');
+    $router->post('/cargarArchivo/prueba/soldto', 'Sistema\CargarArchivo\Prueba\PruebaController@prueba');
     $router->post('/fechas/mostrar/fechas', 'Sistema\Fechas\Mostrar\FechasMostrarController@mostrarFechas');
 
     $router->post('/mostrar/controlArchivos', 'Sistema\ControlArchivos\Mostrar\ControlArchivosMostrarController@MostrarControlArchivos');
