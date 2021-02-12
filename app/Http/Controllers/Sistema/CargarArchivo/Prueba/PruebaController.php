@@ -55,7 +55,7 @@ class PruebaController extends Controller
         
         try{
 
-            $fichero_subido = base_path().'/public/Sistema/cargaArchivos/pruebas/'.basename($_FILES['file']['name']);
+            $fichero_subido = base_path().'/public/Sistema/cargaArchivos/ventas/sellin/'.basename($_FILES['file']['name']);
             if (move_uploaded_file($_FILES['file']['tmp_name'], $fichero_subido)) {
                 $fecid = 0;
 
