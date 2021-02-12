@@ -85,26 +85,36 @@ class PruebaController extends Controller
 
                         $pos = strpos($zona, "DTT2 PROVINCIAS");
 
-                        // echo $pos;
-
-                        // if($pos === false){
-                            
-                        //     echo "no hay";
-                        // }else{
-                        //     echo "si hay";
-                        // }
-
                         if($pos === false){
-                            $log["NO_ES_PROVINCIA"][] = "SUCNOMBRE: ".$cliente." soldto: ".$soldto." linea: ".$i;
+                            // $log["NO_ES_PROVINCIA"][] = "SUCNOMBRE: ".$cliente." soldto: ".$soldto." linea: ".$i;
                         }else{
                             $suc = sucsucursales::where('sucsoldto', 'LIKE', "%".$soldto)
                                             ->first();
 
                             if($suc){
                                 if($suc->casid == 2){
-                                    $log["ESTA_EN_CAS"][] = "sucid: ". $suc->sucid." soldto: ".$suc->sucsoldto." nombre: ".$suc->sucnombre." linea: ".$i;
+                                    // $log["ESTA_EN_CAS"][] = "sucid: ". $suc->sucid." soldto: ".$suc->sucsoldto." nombre: ".$suc->sucnombre." linea: ".$i;
                                 }else{
                                     $log["NO_ESTA_EN_CAS"][] = "sucid: ". $suc->sucid." soldto: ".$suc->sucsoldto." nombre: ".$suc->sucnombre." linea: ".$i;
+                                }
+                            }else{
+                                $log["NO_EXISTE"][] = "soldto: ".$soldto." linea: ".$i;
+                            }
+                        }
+
+                        $pos = strpos($zona, "DTT1 LIMA");
+
+                        if($pos === false){
+                            // $log["NO_ES_LIMA"][] = "SUCNOMBRE: ".$cliente." soldto: ".$soldto." linea: ".$i;
+                        }else{
+                            $suc = sucsucursales::where('sucsoldto', 'LIKE', "%".$soldto)
+                                            ->first();
+
+                            if($suc){
+                                if($suc->casid == 1){
+                                    // $log["ESTA_EN_CAS"][] = "sucid: ". $suc->sucid." soldto: ".$suc->sucsoldto." nombre: ".$suc->sucnombre." linea: ".$i;
+                                }else{
+                                    $log["NO_ESTA_EN_CAS_LIMA"][] = "sucid: ". $suc->sucid." soldto: ".$suc->sucsoldto." nombre: ".$suc->sucnombre." linea: ".$i;
                                 }
                             }else{
                                 $log["NO_EXISTE"][] = "soldto: ".$soldto." linea: ".$i;
