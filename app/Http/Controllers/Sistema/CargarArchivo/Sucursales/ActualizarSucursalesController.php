@@ -41,7 +41,7 @@ class ActualizarSucursalesController extends Controller
 
         date_default_timezone_set("America/Lima");
         $fechaActual = date('Y-m-d H:i:s');
-
+        $mensajedev = "";
         $respuesta      = true;
         $mensaje        = '';
         $datos          = [];
