@@ -64,7 +64,8 @@ class ActualizarSucursalesController extends Controller
 
                 for ($i=2; $i <= $numRows ; $i++) {
                     $soldto        = $objPHPExcel->getActiveSheet()->getCell('C'.$i)->getCalculatedValue();
-                    $sucursal      = $objPHPExcel->getActiveSheet()->getCell('E'.$i)->getCalculatedValue();
+                    // $sucursal      = $objPHPExcel->getActiveSheet()->getCell('E'.$i)->getCalculatedValue();
+                    $sucursal      = $objPHPExcel->getActiveSheet()->getCell('F'.$i)->getCalculatedValue();
                     $customerGroup = $objPHPExcel->getActiveSheet()->getCell('H'.$i)->getCalculatedValue();
                     $zona          = $objPHPExcel->getActiveSheet()->getCell('K'.$i)->getCalculatedValue();
                     $canal         = $objPHPExcel->getActiveSheet()->getCell('L'.$i)->getCalculatedValue();
