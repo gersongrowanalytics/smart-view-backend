@@ -245,6 +245,7 @@ class PromocionesMostrarController extends Controller
                                                         'cspcantidadcombo',
                                                         'cspcantidadplancha',
                                                         'tprnombre',
+                                                        'cspgratis'
                                                     ]);
 
                 foreach($cspscs as $cspsc){
