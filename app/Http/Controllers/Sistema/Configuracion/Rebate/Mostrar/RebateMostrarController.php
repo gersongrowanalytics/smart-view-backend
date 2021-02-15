@@ -95,66 +95,67 @@ class RebateMostrarController extends Controller
         $fec = fecfechas::where('fecfecha', $fecha)->first(['fecid']);
 
         if($fec){
-            $tprs = tprtipospromociones::all();
+            // $tprs = tprtipospromociones::all();
 
-            foreach($tprs as $posicionTpr => $tpr){
+            // foreach($tprs as $posicionTpr => $tpr){
                 
-                $rtps = rtprebatetipospromociones::where('fecid', $fec->fecid)
-                                                ->where('tprid', $tpr->tprid)
-                                                ->get();
+            $rtps = rtprebatetipospromociones::join('tprtipospromociones as tpr', 'tpr.tprid', 'rtprebatetipospromociones.tprid')
+                                            ->where('fecid', $fec->fecid)
+                                            // ->where('tpr.tprid', $tpr->tprid)
+                                            ->get();
 
 
-                $cats = [];
-                $tres = [];
+            $cats = [];
+            $tres = [];
 
-                foreach($rtps as $posicionRtp => $rtp){
-                    $trrs = trrtiposrebatesrebates::join('catcategorias as cat', 'cat.catid', 'trrtiposrebatesrebates.catid')
-                                                    ->join('tretiposrebates as tre', 'tre.treid', 'trrtiposrebatesrebates.treid')
-                                                    ->where('rtpid', $rtp->rtpid)
-                                                    ->get([
-                                                        'cat.catnombre',
-                                                        'tre.trenombre'
-                                                    ]);
+            foreach($rtps as $posicionRtp => $rtp){
+                $trrs = trrtiposrebatesrebates::join('catcategorias as cat', 'cat.catid', 'trrtiposrebatesrebates.catid')
+                                                ->join('tretiposrebates as tre', 'tre.treid', 'trrtiposrebatesrebates.treid')
+                                                ->where('rtpid', $rtp->rtpid)
+                                                ->get([
+                                                    'cat.catnombre',
+                                                    'tre.trenombre'
+                                                ]);
 
-                    foreach($trrs as $trr){
-                        if(sizeof($cats) > 0){
-                            foreach($cats as $posicionCat => $cat){
-                                if($cat == $trr->catnombre){
-                                    break;
-                                }
-
-                                if(sizeof($cats) == $posicionCat+1){
-                                    $cats[] = $trr->catnombre;        
-                                }
-
+                foreach($trrs as $trr){
+                    if(sizeof($cats) > 0){
+                        foreach($cats as $posicionCat => $cat){
+                            if($cat == $trr->catnombre){
+                                break;
                             }
-                        }else{
-                            $cats[] = $trr->catnombre;
-                        }
 
-                        if(sizeof($tres) > 0){
-                            foreach($tres as $posicionTre => $tre){
-                                if($tre == $trr->trenombre){
-                                    break;
-                                }
-
-                                if(sizeof($tres) == $posicionTre+1){
-                                    $tres[] = $trr->trenombre;        
-                                }
-
+                            if(sizeof($cats) == $posicionCat+1){
+                                $cats[] = $trr->catnombre;        
                             }
-                        }else{
-                            $tres[] = $trr->trenombre;
+
                         }
-
-
+                    }else{
+                        $cats[] = $trr->catnombre;
                     }
-                    
 
-                    $rtps[$posicionRtp]["cats"] = $cats;
-                    $rtps[$posicionRtp]["tres"] = $tres;
-                    $rtps[$posicionRtp]["tprnombre"] = $tpr->tprnombre;
+                    if(sizeof($tres) > 0){
+                        foreach($tres as $posicionTre => $tre){
+                            if($tre == $trr->trenombre){
+                                break;
+                            }
+
+                            if(sizeof($tres) == $posicionTre+1){
+                                $tres[] = $trr->trenombre;        
+                            }
+
+                        }
+                    }else{
+                        $tres[] = $trr->trenombre;
+                    }
+
+
                 }
+                
+
+                $rtps[$posicionRtp]["cats"] = $cats;
+                $rtps[$posicionRtp]["tres"] = $tres;
+                // $rtps[$posicionRtp]["tprnombre"] = $tpr->tprnombre;
+                // }
 
                 $tprs[$posicionTpr]['rtps'] = $rtps;
 
