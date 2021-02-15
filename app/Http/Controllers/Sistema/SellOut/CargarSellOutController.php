@@ -1612,7 +1612,7 @@ class CargarSellOutController extends Controller
         // dd($logs);
     }
 
-    public function CargarSellOutMesEspecificoWeb($anioSelec, $mesSelec, $diaSelec)
+    public function CargarSellOutMesEspecificoWeb($anioSelec, $mesSelec)
     {
         if(strlen($mesSelec) == 1){
             $mesSelec = "0$mesSelec";
