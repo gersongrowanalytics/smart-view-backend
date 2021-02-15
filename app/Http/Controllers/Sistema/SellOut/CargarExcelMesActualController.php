@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\sucsucursales;
 use App\proproductos;
+use App\catcategorias;
 
 class CargarExcelMesActualController extends Controller
 {
@@ -65,117 +66,116 @@ class CargarExcelMesActualController extends Controller
 
         $datosSucursales = [];
 
-        // for($cont = 1; $cont <= 31; $cont++){
-            $datos = json_decode( file_get_contents('http://backend-api.leadsmartview.com/ws/obtenerSellOutEspecifico/'.$anio.'/'.$mes.'/0'), true );
+        $cats = catcategorias::all();
 
-            foreach($datos as $posicion => $dato){
+        $datos = json_decode( file_get_contents('http://backend-api.leadsmartview.com/ws/obtenerSellOutEspecifico/'.$anio.'/'.$mes.'/0'), true );
 
-                $anio      = $dato['YEAR'];
-                $soldto    = $dato['COD_SOLD_TO'];
-                $sku       = $dato['SKU'];
-                $real      = $dato['SELLS'];
+        foreach($datos as $posicion => $dato){
 
-                if($dato['SELLS'] == null){
-                    $real = 0;
-                }else{
-                    $real = $dato['SELLS'];
-                }
+            $anio      = $dato['YEAR'];
+            $soldto    = $dato['COD_SOLD_TO'];
+            $sku       = $dato['SKU'];
+            $real      = $dato['SELLS'];
 
-                $dia       = $dato['DAY'];
-                if(strlen($dia) == 1){
-                    $dia = "0$dia";
-                }
+            if($dato['SELLS'] == null){
+                $real = 0;
+            }else{
+                $real = $dato['SELLS'];
+            }
 
-                $contadorColumna = 0;
+            $dia       = $dato['DAY'];
+            if(strlen($dia) == 1){
+                $dia = "0$dia";
+            }
 
-                if(sizeof($datosSucursales) > 0){
+            $contadorColumna = 0;
 
-                    foreach($datosSucursales as $datoSucursal){
+            if(sizeof($datosSucursales) > 0){
 
-                        if($datoSucursal['SOLDTO'] == $soldto){
-                            $pro = proproductos::join('catcategorias as cat', 'cat.catid', 'proproductos.catid')
-                                        ->where('prosku', $sku)
-                                        ->first(['cat.catnombre']);
-                                
-                            if($pro){
-                                if($datoSucursal['CATEGORIA'] == $pro->catnombre){
-                                    $datoSucursal['REAL'] = $datoSucursal['REAL'] + $real;
-                                }else{
-                                    $datoSucursal['REAL'] = $real;
-                                }
+                foreach($datosSucursales as $datoSucursal){
+
+                    if($datoSucursal['SOLDTO'] == $soldto){
+                        $pro = proproductos::join('catcategorias as cat', 'cat.catid', 'proproductos.catid')
+                                    ->where('prosku', $sku)
+                                    ->first(['cat.catnombre']);
+                            
+                        if($pro){
+                            if($datoSucursal['CATEGORIA'] == $pro->catnombre){
+                                $datoSucursal['REAL'] = $datoSucursal['REAL'] + $real;
                             }else{
-
+                                $datoSucursal['REAL'] = $real;
                             }
-                        }
+                        }else{
 
+                        }
                     }
 
+                }
+
+            }else{
+                $datosSucursales[0]["SOLDTO"] = $soldto;
+
+                $suc = sucsucursales::where('sucsoldto', $soldto)->first();
+                if($suc){
+                    $datosSucursales[0]["SUCURSAL"] = $suc->sucnombre;
                 }else{
-                    $datosSucursales[0]["SOLDTO"] = $soldto;
+                    $datosSucursales[0]["SUCURSAL"] = "NO EXISTE";
+                }
+
+                $pro = proproductos::join('catcategorias as cat', 'cat.catid', 'proproductos.catid')
+                                        ->where('prosku', $sku)
+                                        ->first(['cat.catnombre']);
+                if($pro){
+                    $datosSucursales[0]["CATEGORIA"] = $pro->catnombre;
+                }else{
+                    $datosSucursales[0]["CATEGORIA"] = "NO EXISTE";
+                }
+                
+                $datosSucursales[0]["REAL"] = $real;
+                $datosSucursales[0]["AÑO"] = $anio;
+                $datosSucursales[0]["MES"] = $mes;
+                
+            }
+
+            foreach($columnasExcel as $abc) {
+                if($abc == "D"){
+                    $arrayFilaExcel[$contadorColumna]['value'] = $anio;
+                }else if($abc == "E"){
+                    $arrayFilaExcel[$contadorColumna]['value'] = $mes;
+                }else if($abc == "H"){
+                    $arrayFilaExcel[$contadorColumna]['value'] = $soldto;
+                }else if($abc == "I"){
 
                     $suc = sucsucursales::where('sucsoldto', $soldto)->first();
                     if($suc){
-                        $datosSucursales[0]["SUCURSAL"] = $suc->sucnombre;
+                        $arrayFilaExcel[$contadorColumna]['value'] = $suc->sucnombre;
                     }else{
-                        $datosSucursales[0]["SUCURSAL"] = "NO EXISTE";
+                        $arrayFilaExcel[$contadorColumna]['value'] = "NO EXISTE";
                     }
+                }else if($abc == "J"){
+                    $arrayFilaExcel[$contadorColumna]['value'] = $sku;
+                }else if($abc == "M"){
 
                     $pro = proproductos::join('catcategorias as cat', 'cat.catid', 'proproductos.catid')
-                                            ->where('prosku', $sku)
-                                            ->first(['cat.catnombre']);
+                                        ->where('prosku', $sku)
+                                        ->first(['cat.catnombre']);
                     if($pro){
-                        $datosSucursales[0]["CATEGORIA"] = $pro->catnombre;
+                        $arrayFilaExcel[$contadorColumna]['value'] = $pro->catnombre;
                     }else{
-                        $datosSucursales[0]["CATEGORIA"] = "NO EXISTE";
+                        $arrayFilaExcel[$contadorColumna]['value'] = "NO EXISTE";   
                     }
-                    
-                    $datosSucursales[0]["REAL"] = $real;
-                    $datosSucursales[0]["AÑO"] = $anio;
-                    $datosSucursales[0]["MES"] = $mes;
-                    
+                }else if($abc == "N"){
+                    $arrayFilaExcel[$contadorColumna]['value'] = $real;
+                }else if($abc == "O"){
+                    $arrayFilaExcel[$contadorColumna]['value'] = $real;
+                }else{
+                    $arrayFilaExcel[$contadorColumna]['value'] = " - ";
                 }
 
-                foreach($columnasExcel as $abc) {
-                    if($abc == "D"){
-                        $arrayFilaExcel[$contadorColumna]['value'] = $anio;
-                    }else if($abc == "E"){
-                        $arrayFilaExcel[$contadorColumna]['value'] = $mes;
-                    }else if($abc == "H"){
-                        $arrayFilaExcel[$contadorColumna]['value'] = $soldto;
-                    }else if($abc == "I"){
-
-                        $suc = sucsucursales::where('sucsoldto', $soldto)->first();
-                        if($suc){
-                            $arrayFilaExcel[$contadorColumna]['value'] = $suc->sucnombre;
-                        }else{
-                            $arrayFilaExcel[$contadorColumna]['value'] = "NO EXISTE";
-                        }
-                    }else if($abc == "J"){
-                        $arrayFilaExcel[$contadorColumna]['value'] = $sku;
-                    }else if($abc == "M"){
-
-                        $pro = proproductos::join('catcategorias as cat', 'cat.catid', 'proproductos.catid')
-                                            ->where('prosku', $sku)
-                                            ->first(['cat.catnombre']);
-                        if($pro){
-                            $arrayFilaExcel[$contadorColumna]['value'] = $pro->catnombre;
-                        }else{
-                            $arrayFilaExcel[$contadorColumna]['value'] = "NO EXISTE";   
-                        }
-                    }else if($abc == "N"){
-                        $arrayFilaExcel[$contadorColumna]['value'] = $real;
-                    }else if($abc == "O"){
-                        $arrayFilaExcel[$contadorColumna]['value'] = $real;
-                    }else{
-                        $arrayFilaExcel[$contadorColumna]['value'] = " - ";
-                    }
-
-                    $contadorColumna = $contadorColumna + 1;
-                }
-                $nuevoArray[0]['data'][] = $arrayFilaExcel;
+                $contadorColumna = $contadorColumna + 1;
             }
-
-        // }
+            $nuevoArray[0]['data'][] = $arrayFilaExcel;
+        }
 
         $datos = $nuevoArray;
 

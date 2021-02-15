@@ -103,6 +103,7 @@ $router->group(['middleware' => ['permisos']], function() use($router) {
 
     // CONTROL SELL OUT
     $router->post('/obtenerSellOutExcelMesAcutal', 'Sistema\SellOut\CargarExcelMesActualController@CargarExcelMesActual');
+    $router->get('/obtenerSellOutMesEspecificoWeb/{anioSelec}/{mesSelec}', 'Sistema\SellOut\CargarSellOutController@CargarSellOutMesEspecificoWeb');
 
 });
 
@@ -117,6 +118,7 @@ $router->get('/obtenerSellOutTodo', 'Sistema\SellOut\CargarSellOutController@Car
 $router->get('/obtenerSellOutDiario', 'Sistema\SellOut\CargarSellOutController@CargarSellOutDiario');
 $router->get('/obtenerSellOutEspecifico/{anioSelec}/{mesSelec}/{diaSelec}', 'Sistema\SellOut\CargarSellOutController@CargarSellOutEspecifico');
 $router->get('/obtenerSellOutEspecificoWeb/{anioSelec}/{mesSelec}/{diaSelec}', 'Sistema\SellOut\CargarSellOutController@CargarSellOutEspecificoWeb');
+
 
 
 $router->get('/actualizarTogo/{fecid}', 'salvacionController@ActualizarToGo');
