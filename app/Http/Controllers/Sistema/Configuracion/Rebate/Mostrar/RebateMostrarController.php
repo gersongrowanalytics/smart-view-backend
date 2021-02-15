@@ -105,10 +105,13 @@ class RebateMostrarController extends Controller
                                             ->get();
 
 
-            $cats = [];
-            $tres = [];
+            
 
             foreach($rtps as $posicionRtp => $rtp){
+                
+                $cats = [];
+                $tres = [];
+                
                 $trrs = trrtiposrebatesrebates::join('catcategorias as cat', 'cat.catid', 'trrtiposrebatesrebates.catid')
                                                 ->join('tretiposrebates as tre', 'tre.treid', 'trrtiposrebatesrebates.treid')
                                                 ->where('rtpid', $rtp->rtpid)
