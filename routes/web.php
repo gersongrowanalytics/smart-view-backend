@@ -105,6 +105,8 @@ $router->group(['middleware' => ['permisos']], function() use($router) {
     $router->post('/obtenerSellOutExcelMesAcutal', 'Sistema\SellOut\CargarExcelMesActualController@CargarExcelMesActual');
     $router->get('/obtenerSellOutMesEspecificoWeb/{anioSelec}/{mesSelec}', 'Sistema\SellOut\CargarSellOutController@CargarSellOutMesEspecificoWeb');
 
+    // PROMOCIONES
+    $router->post('/quitarGratisPromociones/{fecid}', 'Sistema\Promociones\Editar\PromocionEditarGratisController@QuitarGratisPromociones');
 });
 
 

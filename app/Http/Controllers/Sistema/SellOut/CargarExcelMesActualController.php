@@ -86,9 +86,7 @@ class CargarExcelMesActualController extends Controller
             $dia       = $dato['DAY'];
             if(strlen($dia) == 1){
                 $dia = "0$dia";
-            }
-
-            $contadorColumna = 0;
+            }            
 
             if(sizeof($datosSucursales) > 0){
 
@@ -137,6 +135,8 @@ class CargarExcelMesActualController extends Controller
                 
             }
 
+            $contadorColumna = 0;
+            
             foreach($columnasExcel as $abc) {
                 if($abc == "D"){
                     $arrayFilaExcel[$contadorColumna]['value'] = $anio;
