@@ -153,6 +153,7 @@ class RebateMostrarController extends Controller
 
                     $rtps[$posicionRtp]["cats"] = $cats;
                     $rtps[$posicionRtp]["tres"] = $tres;
+                    $rtps[$posicionRtp]["tprnombre"] = $tpr->tprnombre;
                 }
 
                 $tprs[$posicionTpr]['rtps'] = $rtps;
@@ -160,7 +161,8 @@ class RebateMostrarController extends Controller
 
             }
 
-            $datos = $tprs;
+            // $datos = $tprs;
+            $datos = $rtps;
         }else{
             $respuesta = false;
             $mensaje = "No existe la fecha seleccionada";
