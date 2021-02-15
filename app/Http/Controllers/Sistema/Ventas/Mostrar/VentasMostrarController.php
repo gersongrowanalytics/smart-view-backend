@@ -713,7 +713,7 @@ class VentasMostrarController extends Controller
                                                         // $realRebate = ($sca->scavalorizadoobjetivo * $trrEsp->rtpporcentajerebate)/100;
                                                     }
 
-                                                    $plantillaTrrs[$posPlantillaTrr]['reales'][]  = $tsu->trenombre." ".$realRebate;
+                                                    $plantillaTrrs[$posPlantillaTrr]['reales'][]  = "TRENOMBRE: ".$tsu->trenombre." REALREBATE: ".$realRebate." %REBATE: ".$trrEsp->rtpporcentajerebate;
                                                     $plantillaTrrs[$posPlantillaTrr]['realTotal'] = $plantillaTrrs[$posPlantillaTrr]['realTotal'] + $realRebate;
                                                 }
                                             }
