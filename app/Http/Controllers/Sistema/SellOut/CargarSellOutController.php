@@ -1212,47 +1212,47 @@ class CargarSellOutController extends Controller
         $arrayMeses = array(
             array(
                 "mes" => "Jan",
-                "numero" => "1",
+                "numero" => "01",
                 "espaniol" => "ENE"
             ),
             array(
                 "mes" => "Feb",
-                "numero" => "2",
+                "numero" => "02",
                 "espaniol" => "FEB"
             ),
             array(
                 "mes" => "Mar",
-                "numero" => "3",
+                "numero" => "03",
                 "espaniol" => "MAR"
             ),
             array(
                 "mes" => "Apr",
-                "numero" => "4",
+                "numero" => "04",
                 "espaniol" => "ABR"
             ),
             array(
                 "mes" => "May",
-                "numero" => "5",
+                "numero" => "05",
                 "espaniol" => "MAY"
             ),
             array(
                 "mes" => "Jun",
-                "numero" => "6",
+                "numero" => "06",
                 "espaniol" => "JUN"
             ),
             array(
                 "mes" => "Jul",
-                "numero" => "7",
+                "numero" => "07",
                 "espaniol" => "JUL"
             ),
             array(
                 "mes" => "Aug",
-                "numero" => "8",
+                "numero" => "08",
                 "espaniol" => "AGO"
             ),
             array(
                 "mes" => "Sep",
-                "numero" => "9",
+                "numero" => "09",
                 "espaniol" => "SET"
             ),
             array(
@@ -1649,47 +1649,47 @@ class CargarSellOutController extends Controller
         $arrayMeses = array(
             array(
                 "mes" => "Jan",
-                "numero" => "1",
+                "numero" => "01",
                 "espaniol" => "ENE"
             ),
             array(
                 "mes" => "Feb",
-                "numero" => "2",
+                "numero" => "02",
                 "espaniol" => "FEB"
             ),
             array(
                 "mes" => "Mar",
-                "numero" => "3",
+                "numero" => "03",
                 "espaniol" => "MAR"
             ),
             array(
                 "mes" => "Apr",
-                "numero" => "4",
+                "numero" => "04",
                 "espaniol" => "ABR"
             ),
             array(
                 "mes" => "May",
-                "numero" => "5",
+                "numero" => "05",
                 "espaniol" => "MAY"
             ),
             array(
                 "mes" => "Jun",
-                "numero" => "6",
+                "numero" => "06",
                 "espaniol" => "JUN"
             ),
             array(
                 "mes" => "Jul",
-                "numero" => "7",
+                "numero" => "07",
                 "espaniol" => "JUL"
             ),
             array(
                 "mes" => "Aug",
-                "numero" => "8",
+                "numero" => "08",
                 "espaniol" => "AGO"
             ),
             array(
                 "mes" => "Sep",
-                "numero" => "9",
+                "numero" => "09",
                 "espaniol" => "SET"
             ),
             array(
