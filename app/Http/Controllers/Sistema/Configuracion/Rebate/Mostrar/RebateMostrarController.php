@@ -151,8 +151,8 @@ class RebateMostrarController extends Controller
                     }
                     
 
-                    $rtps[$posicionRtp]["cats"][] = $cats;
-                    $rtps[$posicionRtp]["tres"][] = $tres;
+                    $rtps[$posicionRtp]["cats"] = $cats;
+                    $rtps[$posicionRtp]["tres"] = $tres;
                 }
 
                 $tprs[$posicionTpr]['rtps'] = $rtps;
