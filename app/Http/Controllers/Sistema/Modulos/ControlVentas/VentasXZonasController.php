@@ -99,7 +99,8 @@ class VentasXZonasController extends Controller
         $categorias      = $request['categorias'];
 
         $respuesta = true;
-
+        $mensaje = "";
+        
         $datos = array(
             array(
                 "titulo"   => "",
