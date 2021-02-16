@@ -95,7 +95,7 @@ class VentasXZonasController extends Controller
         $grupos         = $request['grupos'];
         
         $filCategoria    = $request['filCategoria']; //bool true; false
-        $todasCateogiras = $request['todasCateogiras'];
+        $todasCategorias = $request['todasCategorias'];
         $categorias      = $request['categorias'];
 
         $respuesta = true;
@@ -120,7 +120,7 @@ class VentasXZonasController extends Controller
             foreach($cass as $posicionCas => $cas){
                 $datos[$posicionCas]['titulo'] = $cas->casnombre;
 
-                if($todasCateogiras == true ){
+                if($todasCategorias == true ){
                     $sumReal = tsutipospromocionessucursales::join('fecfechas as fec', 'fec.fecid', 'tsutipospromocionessucursales.fecid')
                                                             ->join('sucsucursales as suc', 'suc.sucid', 'tsutipospromocionessucursales.sucid')
                                                             ->where('suc.casid', $cas->casid)
@@ -219,7 +219,7 @@ class VentasXZonasController extends Controller
             foreach($zons as $posicionZon => $zon){
                 $datos[$posicionZon]['titulo'] = $zon->zonnombre;
 
-                if($todasCateogiras == true ){
+                if($todasCategorias == true ){
                     $sumReal = tsutipospromocionessucursales::join('fecfechas as fec', 'fec.fecid', 'tsutipospromocionessucursales.fecid')
                                                             ->join('sucsucursales as suc', 'suc.sucid', 'tsutipospromocionessucursales.sucid')
                                                             ->where('suc.zonid', $zon->zonid)
@@ -318,7 +318,7 @@ class VentasXZonasController extends Controller
             foreach($gsus as $posicionGsu => $gsu){
                 $datos[$posicionGsu]['titulo'] = $gsu->gsunombre;
 
-                if($todasCateogiras == true ){
+                if($todasCategorias == true ){
                     $sumReal = tsutipospromocionessucursales::join('fecfechas as fec', 'fec.fecid', 'tsutipospromocionessucursales.fecid')
                                                             ->join('sucsucursales as suc', 'suc.sucid', 'tsutipospromocionessucursales.sucid')
                                                             ->where('suc.gsuid', $gsu->gsuid)
