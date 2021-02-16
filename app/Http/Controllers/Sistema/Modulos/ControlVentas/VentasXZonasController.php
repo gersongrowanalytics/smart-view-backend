@@ -416,7 +416,7 @@ class VentasXZonasController extends Controller
                 $sumReal = scasucursalescategorias::join('fecfechas as fec', 'fec.fecid', 'scasucursalescategorias.fecid')
                                                     ->join('sucsucursales as suc', 'suc.sucid', 'scasucursalescategorias.sucid')
                                                     ->join('tsutipospromocionessucursales as tsu', 'tsu.tsuid', 'scasucursalescategorias.tsuid')
-                                                    ->where(function ($query) use($anios, $meses, $regiones, $zonas, $grupos) {
+                                                    ->where(function ($query) use($anios, $meses, $regiones, $zonas, $grupos, $cat, $tprid) {
      
                                                         foreach($anios as $anio){
                                                             $query->orwhere('fecano', $anio)
