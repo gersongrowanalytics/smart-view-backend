@@ -450,28 +450,32 @@ class VentasXZonasController extends Controller
                 $sumObj = scasucursalescategorias::join('fecfechas as fec', 'fec.fecid', 'scasucursalescategorias.fecid')
                                                     ->join('sucsucursales as suc', 'suc.sucid', 'scasucursalescategorias.sucid')
                                                     ->join('tsutipospromocionessucursales as tsu', 'tsu.tsuid', 'scasucursalescategorias.tsuid')
-                                                    ->where('catid', $cat->catid)
-                                                    ->where('tsu.tprid', $tprid)
-                                                    ->where(function ($query) use($anios, $meses, $regiones, $zonas, $grupos) {
-                                                                
+                                                    ->where(function ($query) use($anios, $meses, $regiones, $zonas, $grupos, $cat, $tprid) {
+     
                                                         foreach($anios as $anio){
-                                                            $query->orwhere('fecano', $anio);
-                                                        }
-
-                                                        foreach($meses as $mes){
-                                                            $query->orwhere('fecmes', $mes);
-                                                        }
-                                                        
-                                                        foreach($regiones as $region){
-                                                            $query->orwhere('suc.casid', $region);
-                                                        }
-
-                                                        foreach($zonas as $zona){
-                                                            $query->orwhere('suc.zonid', $zona);
-                                                        }
-
-                                                        foreach($grupos as $grupo){
-                                                            $query->orwhere('suc.gsuid', $grupo);
+                                                            $query->orwhere('fecano', $anio)
+                                                                ->where(function ($query) use($meses) {
+                                                                    foreach($meses as $mes){
+                                                                        $query->where('fecmes', $mes);
+                                                                    }
+                                                                })
+                                                                ->where(function ($query) use($regiones) {
+                                                                    foreach($regiones as $region){
+                                                                        $query->where('suc.casid', $region);
+                                                                    }
+                                                                })
+                                                                ->where(function ($query) use($zonas) {
+                                                                    foreach($zonas as $zona){
+                                                                        $query->where('suc.zonid', $zona);
+                                                                    }
+                                                                })
+                                                                ->where(function ($query) use($grupos) {
+                                                                    foreach($grupos as $grupo){
+                                                                        $query->orwhere('suc.gsuid', $grupo);
+                                                                    }
+                                                                })
+                                                                ->where('catid', $cat->catid)
+                                                                ->where('tsu.tprid', $tprid);
                                                         }
 
                                                     })
