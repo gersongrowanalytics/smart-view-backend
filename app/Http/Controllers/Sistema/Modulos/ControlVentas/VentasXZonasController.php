@@ -442,16 +442,48 @@ class VentasXZonasController extends Controller
                                                     })
                                                     ->sum('scavalorizadoreal');
 
+                $sumObj = scasucursalescategorias::join('fecfechas as fec', 'fec.fecid', 'scasucursalescategorias.fecid')
+                                                    ->join('sucsucursales as suc', 'suc.sucid', 'scasucursalescategorias.sucid')
+                                                    ->join('tsutipospromocionessucursales as tsu', 'tsu.tsuid', 'scasucursalescategorias.tsuid')
+                                                    ->where('catid', $cat->catid)
+                                                    ->where('tsu.tprid', $tprid)
+                                                    ->where(function ($query) use($anios, $meses, $regiones, $zonas, $grupos) {
+                                                                
+                                                        foreach($anios as $anio){
+                                                            $query->orwhere('fecano', $anio);
+                                                        }
+
+                                                        foreach($meses as $mes){
+                                                            $query->orwhere('fecmes', $mes);
+                                                        }
+                                                        
+                                                        foreach($regiones as $region){
+                                                            $query->orwhere('suc.casid', $region);
+                                                        }
+
+                                                        foreach($zonas as $zona){
+                                                            $query->orwhere('suc.zonid', $zona);
+                                                        }
+
+                                                        foreach($grupos as $grupo){
+                                                            $query->orwhere('suc.gsuid', $grupo);
+                                                        }
+
+                                                    })
+                                                    ->sum('scavalorizadoobjetivo');
+
                 $datos[$posicionCat]['real']     = $sumReal;
                 $datos[$posicionCat]['objetivo'] = $sumObj;
             }
         }else{
             $respuesta = false;
+            $mensaje = "Lo sentimos no encontramos información relacionada a este filtro";
         }
 
         return response()->json([
             "datos"     => $datos,
             "respuesta" => $respuesta,
+            "mensaje" => $mensaje
         ]);
     }
 }
