@@ -1103,7 +1103,7 @@ class VentasMostrarController extends Controller
                                                     ->where('fec.fecdia', $dia)
                                                     ->where('tprid', $tpr->tprid)
                                                     ->distinct('rtpporcentajedesde')
-                                                    // ->orderBy('rtpporcentajedesde')
+                                                    ->orderBy('rtpporcentajedesde')
                                                     ->get([
                                                         'rtpporcentajedesde',
                                                         'rtpporcentajehasta'
