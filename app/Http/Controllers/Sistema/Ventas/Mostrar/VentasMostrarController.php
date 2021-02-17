@@ -1110,7 +1110,7 @@ class VentasMostrarController extends Controller
 
                     if(sizeof($rtps) > 0){
                         foreach($rtps as $posicionRtp => $rtp){
-                            $plantillaTrrs[$posicionRtp][] = array(
+                            $plantillaTrrs[$posicionRtp] = array(
                                 "rtpid" => 0,
                                 "rtpporcentajedesde" => $rtp->rtpporcentajedesde,
                                 "rtpporcentajehasta" => $rtp->rtpporcentajehasta,
