@@ -15,6 +15,7 @@ use App\rbbrebatesbonus;
 use App\rbsrebatesbonussucursales;
 use App\tritrimestres;
 use App\sucsucursales;
+use App\rtprebatetipospromociones;
 
 class VentasMostrarController extends Controller
 {
