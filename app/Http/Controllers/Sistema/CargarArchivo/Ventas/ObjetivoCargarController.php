@@ -48,6 +48,7 @@ class ObjetivoCargarController extends Controller
 
         $pkid = 0;
         $log  = [];
+        $observaciones  = [];
 
         $cargarData = false;
         
@@ -93,6 +94,7 @@ class ObjetivoCargarController extends Controller
 
                         $ano         = $objPHPExcel->getActiveSheet()->getCell('A'.$i)->getCalculatedValue();
                         $mesTxt      = $objPHPExcel->getActiveSheet()->getCell('B'.$i)->getCalculatedValue();
+                        $regionExcel      = $objPHPExcel->getActiveSheet()->getCell('C'.$i)->getCalculatedValue();
 
                         $soldto      = $objPHPExcel->getActiveSheet()->getCell('D'.$i)->getCalculatedValue();
                         $cliente     = $objPHPExcel->getActiveSheet()->getCell('E'.$i)->getCalculatedValue();
@@ -263,8 +265,19 @@ class ObjetivoCargarController extends Controller
                             $sucursalClienteId = $suc->sucid;
                             // OBTENER EL GRUPO REBATE
                             $treid = $suc->treid;
-    
-    
+                            
+                            if($suc->casid == 1){
+                                if($regionExcel != "DTT1 LIMA"){
+                                    $observaciones[] = "La sucursal: ".$suc->sucnombre." (".$soldto.") no coincide su región. La región del excel es: ".$regionExcel." la región de BD es: DTT1 LIMA";
+                                }
+                            }else if($suc->casid == 2){
+                                if($regionExcel != "DTT2 PROVINCIAS"){
+                                    $observaciones[] = "La sucursal: ".$suc->sucnombre." (".$soldto.") no coincide su región. La región del excel es: ".$regionExcel." la región de BD es: DTT2 PROVINCIAS";
+                                }
+                            }else{
+                                $observaciones[] = "La sucursal: ".$suc->sucnombre." (".$soldto.") no coincide su región. La región del excel es: ".$regionExcel." la región de BD es: ".$suc->casid;
+                            }
+                            
                             $tsu = tsutipospromocionessucursales::where('fecid', $fecid)
                                                                 ->where('sucid', $sucursalClienteId)
                                                                 ->where('tprid', 1)
@@ -608,6 +621,7 @@ class ObjetivoCargarController extends Controller
             "numeroCelda"    => $numeroCelda,
             "skusNoExisten"  => $skusNoExisten,
             "soldtosNoExisten"  => $soldtosNoExisten,
+            "observaciones"  => $observaciones,
         ]);
 
         if($respuesta == true){
@@ -656,6 +670,7 @@ class ObjetivoCargarController extends Controller
 
         $pkid = 0;
         $log  = [];
+        $observaciones  = [];
 
         $cargarData = false;
         
@@ -700,6 +715,7 @@ class ObjetivoCargarController extends Controller
 
                         $ano         = $objPHPExcel->getActiveSheet()->getCell('A'.$i)->getCalculatedValue();
                         $mesTxt      = $objPHPExcel->getActiveSheet()->getCell('B'.$i)->getCalculatedValue();
+                        $regionExcel = $objPHPExcel->getActiveSheet()->getCell('C'.$i)->getCalculatedValue();
 
                         $soldto      = $objPHPExcel->getActiveSheet()->getCell('D'.$i)->getCalculatedValue();
                         $cliente     = $objPHPExcel->getActiveSheet()->getCell('E'.$i)->getCalculatedValue();
@@ -869,6 +885,19 @@ class ObjetivoCargarController extends Controller
                         $suc = sucsucursales::where('sucsoldto', $soldto)->first();
                         
                         if($suc){
+
+                            if($suc->casid == 1){
+                                if($regionExcel != "DTT1 LIMA"){
+                                    $observaciones[] = "La sucursal: ".$suc->sucnombre." (".$soldto.") no coincide su región. La región del excel es: ".$regionExcel." la región de BD es: DTT1 LIMA";
+                                }
+                            }else if($suc->casid == 2){
+                                if($regionExcel != "DTT2 PROVINCIAS"){
+                                    $observaciones[] = "La sucursal: ".$suc->sucnombre." (".$soldto.") no coincide su región. La región del excel es: ".$regionExcel." la región de BD es: DTT2 PROVINCIAS";
+                                }
+                            }else{
+                                $observaciones[] = "La sucursal: ".$suc->sucnombre." (".$soldto.") no coincide su región. La región del excel es: ".$regionExcel." la región de BD es: ".$suc->casid;
+                            }
+
                             $sucursalClienteId = $suc->sucid;
                             // OBTENER EL GRUPO REBATE
                             $treid = $suc->treid;
@@ -1202,7 +1231,8 @@ class ObjetivoCargarController extends Controller
             "mensajedev"     => $mensajedev,
             "numeroCelda"    => $numeroCelda,
             "skusNoExisten"  => $skusNoExisten,
-            "soldtosNoExisten" => $soldtosNoExisten
+            "soldtosNoExisten" => $soldtosNoExisten,
+            "observaciones" => $observaciones
         ]);
 
         if($respuesta == true){
