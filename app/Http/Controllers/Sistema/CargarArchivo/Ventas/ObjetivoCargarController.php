@@ -330,11 +330,18 @@ class ObjetivoCargarController extends Controller
                                                 ->first([
                                                     'proproductos.proid',
                                                     'proproductos.catid',
+                                                    'proproductos.pronombre',
                                                     'cat.catnombre'
                                                 ]);
     
                             if($pro){
-    
+                                
+                                $pos = strpos($pro->catnombre, $sector);
+
+                                if($pos === false){
+                                    $observaciones[] = "El producto: ".$pro->pronombre." (".$sku.") del excel no coincide con el de la BD. El excel tiene una categoria: ".$sector." y en la BD tiene una categoria: ".$pro->catnombre;
+                                }
+
                                 $osi = osiobjetivosssi::where('fecid', $fecid)
                                                     ->where('proid', $pro->proid)
                                                     ->where('sucid', $sucursalClienteId)
@@ -953,10 +960,17 @@ class ObjetivoCargarController extends Controller
                                                 ->first([
                                                     'proproductos.proid',
                                                     'proproductos.catid',
+                                                    'proproductos.pronombre',
                                                     'cat.catnombre'
                                                 ]);
 
                             if($pro){
+
+                                $pos = strpos($pro->catnombre, $sector);
+
+                                if($pos === false){
+                                    $observaciones[] = "El producto: ".$pro->pronombre." (".$sku.") del excel no coincide con el de la BD. El excel tiene una categoria: ".$sector." y en la BD tiene una categoria: ".$pro->catnombre;
+                                }
 
                                 $oso = osoobjetivossso::where('fecid', $fecid)
                                                     ->where('proid', $pro->proid)
