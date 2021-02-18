@@ -575,6 +575,29 @@ class VentasMostrarController extends Controller
                 }
 
                 foreach($tprs as $posicionTpr => $tpr){
+                    $plantillaTrrs = array(
+                        array(
+                            "rtpid" => 0,
+                            "rtpporcentajedesde" => "95",
+                            "rtpporcentajehasta" => "99",
+                            "rtpporcentajerebate" => "0",
+                            "realTotal" => "0"
+                        ),
+                        array(
+                            "rtpid" => 0,
+                            "rtpporcentajedesde" => "100",
+                            "rtpporcentajehasta" => "104",
+                            "rtpporcentajerebate" => "0",
+                            "realTotal" => "0"
+                        ),
+                        array(
+                            "rtpid" => 0,
+                            "rtpporcentajedesde" => "105",
+                            "rtpporcentajehasta" => "10000",
+                            "rtpporcentajerebate" => "0",
+                            "realTotal" => "0"
+                        ),
+                    );
                     $dataarray[$posicionTpr]['tsuid']                     = 0;
                     $dataarray[$posicionTpr]['tprid']                     = $tpr->tprid;
                     $dataarray[$posicionTpr]['tprnombre']                 = $tpr->tprnombre;
