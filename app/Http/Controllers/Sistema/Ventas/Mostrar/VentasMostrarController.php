@@ -342,6 +342,8 @@ class VentasMostrarController extends Controller
         $mensajeDetalle = '';
         $mensajedev     = null;
 
+        $observaciones     = [];
+
         $rebatesBonus = array(
             "categorias"   => [],
             "objetivo"     => "",
@@ -625,6 +627,11 @@ class VentasMostrarController extends Controller
                     $dataarray[$posicionTpr]['trenombre'] = "";
 
                     foreach($usus as $usu){
+
+                        if($usu->sucid  == 309){
+                            $observaciones[] = "Se encontro la sucursal 309";
+                        }
+
                         $tsu = tsutipospromocionessucursales::join('fecfechas as fec', 'tsutipospromocionessucursales.fecid', 'fec.fecid')
                                                             ->join('tretiposrebates as tre', 'tre.treid', 'tsutipospromocionessucursales.treid')
                                                             ->join('sucsucursales as suc', 'suc.sucid', 'tsutipospromocionessucursales.sucid')
@@ -652,6 +659,10 @@ class VentasMostrarController extends Controller
                                                             ]);
                         if($tsu){
                             
+                            if($usu->sucid  == 309){
+                                $observaciones[] = "La sucursal 309 si tiene TSU ".$tsu->tsuvalorizadoobjetivo;
+                            }
+
                             // SUMAR REBATE TRIMESTRAL
                             if($tieneRebateTrimestral == true){
                                 $dataarray[$posicionTpr]["tsurealtrimestral"] = $dataarray[$posicionTpr]["tsurealtrimestral"] + $tsu->tsurealtrimestral;
@@ -757,6 +768,11 @@ class VentasMostrarController extends Controller
 
 
                         }else{
+
+                            if($usu->sucid  == 309){
+                                $observaciones[] = "La sucursal 309 no tiene TSU";
+                            }
+
                             $dataarray[$posicionTpr]['tsuvalorizadoobjetivo']     = $dataarray[$posicionTpr]['tsuvalorizadoobjetivo']     + 0;
                             $dataarray[$posicionTpr]['tsuvalorizadoreal']         = $dataarray[$posicionTpr]['tsuvalorizadoreal']         + 0;
                             $dataarray[$posicionTpr]['tsuvalorizadotogo']         = $dataarray[$posicionTpr]['tsuvalorizadotogo']         + 0;
