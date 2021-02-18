@@ -897,7 +897,8 @@ class VentasMostrarController extends Controller
             "rebatebonus"    => $rebatesBonus,
             "linea"          => $linea,
             "mensajeDetalle" => $mensajeDetalle,
-            "mensajedev"     => $mensajedev
+            "mensajedev"     => $mensajedev,
+            "observaciones"     => $observaciones,
         ]);
         
         return $requestsalida;
@@ -1469,8 +1470,7 @@ class VentasMostrarController extends Controller
             "rebatebonus"    => $rebatesBonus,
             "linea"          => $linea,
             "mensajeDetalle" => $mensajeDetalle,
-            "mensajedev"     => $mensajedev,
-            "observaciones"     => $observaciones,
+            "mensajedev"     => $mensajedev
         ]);
         
         return $requestsalida;
