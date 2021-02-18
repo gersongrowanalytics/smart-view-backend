@@ -41,6 +41,7 @@ class ObjetivoCargarController extends Controller
         $mensajeDetalle = '';
         $mensajedev     = null;
         $numeroCelda    = 0;
+        $numRows    = 0;
         $usutoken       = $request->header('api_token');
         $archivo        = $_FILES['file']['name'];
 
@@ -629,6 +630,7 @@ class ObjetivoCargarController extends Controller
             "skusNoExisten"  => $skusNoExisten,
             "soldtosNoExisten"  => $soldtosNoExisten,
             "observaciones"  => $observaciones,
+            "numRows"  => $numRows,
         ]);
 
         if($respuesta == true){
