@@ -1469,7 +1469,8 @@ class VentasMostrarController extends Controller
             "rebatebonus"    => $rebatesBonus,
             "linea"          => $linea,
             "mensajeDetalle" => $mensajeDetalle,
-            "mensajedev"     => $mensajedev
+            "mensajedev"     => $mensajedev,
+            "observaciones"     => $observaciones,
         ]);
         
         return $requestsalida;
