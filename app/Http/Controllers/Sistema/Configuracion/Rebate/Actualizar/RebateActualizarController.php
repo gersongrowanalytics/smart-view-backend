@@ -43,7 +43,7 @@ class RebateActualizarController extends Controller
                                             ->join('sucsucursales as suc', 'suc.sucid', 'tsutipospromocionessucursales.sucid')
                                             ->join('tprtipospromociones as tpr', 'tpr.tprid', 'tsutipospromocionessucursales.tprid')
                                             ->where('fecid', $fecid)
-                                            ->where('tprid', 1)
+                                            ->where('tpr.tprid', 1)
                                             ->get([
                                                 'tsuid',
                                                 'tre.treid',
@@ -162,7 +162,7 @@ class RebateActualizarController extends Controller
                                             ->join('sucsucursales as suc', 'suc.sucid', 'tsutipospromocionessucursales.sucid')
                                             ->join('tprtipospromociones as tpr', 'tpr.tprid', 'tsutipospromocionessucursales.tprid')
                                             ->where('fecid', $fecid)
-                                            ->where('tprid', 2)
+                                            ->where('tpr.tprid', 2)
                                             ->get([
                                                 'tsuid',
                                                 'tre.treid',
