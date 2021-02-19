@@ -12,38 +12,108 @@ use App\scasucursalescategorias;
 use App\tsutipospromocionessucursales;
 use App\zonzonas;
 use App\rscrbsscategorias;
+use App\catcategorias;
 
 class salvacionController extends Controller
 {
     public function salvacion()
     {
-        // $pros = proproductos::where('proimagen', 'LIKE', '%http://backs.gavsistemas.co%')->get();
+
+        // $linkAntiguo = "http://backs.gavsistemas.com/";
+        // $linkNuevo   = "http://backend.leadsmartview.com/";
+
+        $linkAntiguo = "http://backend.leadsmartview.com/";
+        $linkNuevo   = "https://pre-back.leadsmartview.com/";
+
+
+        // CAMBIAR IMAGEN DE PRODUCTOS
+        // $pros = proproductos::where('proimagen', 'LIKE', '%'.$linkAntiguo.'%')->get();
 
         // foreach($pros as $pro){
         //     $proe = proproductos::find($pro->proid);
-        //     // http://backs.gavsistemas.com/Sistema/promociones/IMAGENES/PRODUCTOS/7-493-1253-HTP%20talla%20M-31%20a%20mas%20planchas.png
-        //     $ruta = explode("http://backs.gavsistemas.com/", $pro->proimagen);
+        //     $ruta = explode($linkAntiguo, $pro->proimagen);
 
         //     if(sizeof($ruta) > 0){
-        //         $proe->proimagen = "http://backend.leadsmartview.com/".$ruta[1];
+        //         $proe->proimagen = $linkNuevo.$ruta[1];
         //         $proe->update();
         //     }else{
         //         echo "<br>no tiene: ".$pro->proid.' y nombre: '.$pro->proimagen.'<br>';
 
         //     }
             
-
         // }
 
 
-        $prbs = prbpromocionesbonificaciones::where('prbimagen', 'LIKE', '%http://backs.gavsistemas.co%')->get();
+        // CAMBIAR IMAGEN DE CATEGORIAS
+        $cats = catcategorias::all();
+
+        foreach($cats as $cat){
+            $cate = catcategorias::find($cat->catid);
+            $ruta1 = explode($linkAntiguo, $cat->catimagenfondo);
+
+            if(sizeof($ruta1) > 0){
+                $cate->catimagenfondo = $linkNuevo.$ruta1[1];
+            }else{
+                echo "<br>no tiene: ".$cat->catid.' y nombre: '.$cat->catimagenfondo.'<br>';
+            }
+
+            $ruta2 = explode($linkAntiguo, $cat->caticono);
+
+            if(sizeof($ruta2) > 0){
+                $cate->caticono = $linkNuevo.$ruta2[1];
+            }else{
+                echo "<br>no tiene: ".$cat->catid.' y nombre: '.$cat->caticono.'<br>';
+            }   
+
+            $ruta3 = explode($linkAntiguo, $cat->caticonoseleccionado);
+
+            if(sizeof($ruta3) > 0){
+                $cate->caticonoseleccionado = $linkNuevo.$ruta3[1];
+            }else{
+                echo "<br>no tiene: ".$cat->catid.' y nombre: '.$cat->caticonoseleccionado.'<br>';
+            }
+
+            $ruta4 = explode($linkAntiguo, $cat->caticonohover);
+
+            if(sizeof($ruta4) > 0){
+                $cate->caticonohover = $linkNuevo.$ruta4[1];
+            }else{
+                echo "<br>no tiene: ".$cat->catid.' y nombre: '.$cat->caticonohover.'<br>';
+            }
+
+            $ruta5 = explode($linkAntiguo, $cat->catimagenfondoseleccionado);
+            if(sizeof($ruta5) > 0){
+                $cate->catimagenfondoseleccionado = $linkNuevo.$ruta5[1];
+            }else{
+                echo "<br>no tiene: ".$cat->catid.' y nombre: '.$cat->catimagenfondoseleccionado.'<br>';
+            }
+
+            $ruta6 = explode($linkAntiguo, $cat->catimagenfondoopaco);
+            if(sizeof($ruta6) > 0){
+                $cate->catimagenfondoopaco = $linkNuevo.$ruta6[1];
+            }else{
+                
+            }
+
+            $ruta7 = explode($linkAntiguo, $cat->caticononaranja);
+            if(sizeof($ruta7) > 0){
+                $cate->caticononaranja = $linkNuevo.$ruta7[1];
+            }else{
+                
+            }
+
+            $cate->update();
+        }
+
+        // CAMBIAR IMAGENES DE PRODUCTOS EN PROMOCIONES
+        $prbs = prbpromocionesbonificaciones::where('prbimagen', 'LIKE', '%'.$linkAntiguo.'%')->get();
 
         foreach($prbs as $prb){
             $prbe = prbpromocionesbonificaciones::find($prb->prbid);
-            $ruta = explode("http://backs.gavsistemas.com/", $prb->prbimagen);
+            $ruta = explode($linkAntiguo, $prb->prbimagen);
 
             if(sizeof($ruta) > 0){
-                $prbe->prbimagen = "http://backend.leadsmartview.com/".$ruta[1];
+                $prbe->prbimagen = $linkNuevo.$ruta[1];
                 $prbe->update();
             }else{
                 echo "<br>no tiene: ".$prbe->prbid.' y nombre: '.$prb->prbimagen.'<br>';
@@ -53,22 +123,40 @@ class salvacionController extends Controller
 
         }
 
-        $prps = prppromocionesproductos::where('prpimagen', 'LIKE', '%http://backs.gavsistemas.co%')->get();
+        $prps = prppromocionesproductos::where('prpimagen', 'LIKE', '%'.$linkAntiguo.'%')->get();
 
-            foreach($prps as $prp){
-                $prpe = prppromocionesproductos::find($prp->prpid);
-                $ruta = explode("http://backs.gavsistemas.com/", $prp->prpimagen);
-    
-                if(sizeof($ruta) > 0){
-                    $prpe->prpimagen = "http://backend.leadsmartview.com/".$ruta[1];
-                    $prpe->update();
-                }else{
-                    echo "<br>no tiene: ".$prp->prpid.' y nombre: '.$prp->prpimagen.'<br>';
-    
-                }
-                
-    
+        foreach($prps as $prp){
+            $prpe = prppromocionesproductos::find($prp->prpid);
+            $ruta = explode($linkAntiguo, $prp->prpimagen);
+
+            if(sizeof($ruta) > 0){
+                $prpe->prpimagen = $linkNuevo.$ruta[1];
+                $prpe->update();
+            }else{
+                echo "<br>no tiene: ".$prp->prpid.' y nombre: '.$prp->prpimagen.'<br>';
+
             }
+        }
+
+        // $scas = scasucursalescategorias::all('scaiconocategoria', 'LIKE', '%'.$linkAntiguo.'%')->get();
+
+        // foreach($scas as $sca){
+        //     $scae = scasucursalescategorias::find($sca->scaid);
+
+        //     $ruta = explode($linkAntiguo, $sca->scaiconocategoria);
+
+        //     if(sizeof($ruta) > 0){
+        //         $scae->scaiconocategoria = $linkNuevo.$ruta[1];
+                
+        //     }else{
+        //         echo "<br>no tiene: ".$sca->scaid.' y nombre: '.$sca->scaiconocategoria.'<br>';
+
+        //     }
+
+        //     $scae->update();
+        // }
+
+
     }
 
     public function asignarzonassucursales()
