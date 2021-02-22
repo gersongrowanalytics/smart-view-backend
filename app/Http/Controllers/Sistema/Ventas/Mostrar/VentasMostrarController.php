@@ -2005,9 +2005,9 @@ class VentasMostrarController extends Controller
 
                                                     if($trrEsp->rtpporcentajehasta > 300){
                                                         // $realRebate = (() / 100) ($sca->scavalorizadoobjetivo * $trrEsp->rtpporcentajerebate)/100;
-                                                        $realRebate = ( ( ( $sca->scavalorizadoobjetivo * $plantillaTrr['rtpporcentajedesde'] ) / 100 ) * $trrEsp->rtpporcentajerebate ) / 100;
+                                                        $realRebate = ( ( ( $scasSO->scavalorizadoobjetivo * $plantillaTrr['rtpporcentajedesde'] ) / 100 ) * $trrEsp->rtpporcentajerebate ) / 100;
                                                     }else{
-                                                        $realRebate = ( ( ( $sca->scavalorizadoobjetivo * $plantillaTrr['rtpporcentajehasta'] ) / 100 ) * $trrEsp->rtpporcentajerebate ) / 100;
+                                                        $realRebate = ( ( ( $scasSO->scavalorizadoobjetivo * $plantillaTrr['rtpporcentajehasta'] ) / 100 ) * $trrEsp->rtpporcentajerebate ) / 100;
                                                         // $realRebate = ($sca->scavalorizadoobjetivo * $trrEsp->rtpporcentajerebate)/100;
                                                     }
 
