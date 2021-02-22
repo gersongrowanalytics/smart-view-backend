@@ -45,116 +45,117 @@ class salvacionController extends Controller
 
 
         // CAMBIAR IMAGEN DE CATEGORIAS
-        $cats = catcategorias::all();
+        // $cats = catcategorias::all();
 
-        foreach($cats as $cat){
-            $cate = catcategorias::find($cat->catid);
-            $ruta1 = explode($linkAntiguo, $cat->catimagenfondo);
+        // foreach($cats as $cat){
+        //     $cate = catcategorias::find($cat->catid);
+        //     $ruta1 = explode($linkAntiguo, $cat->catimagenfondo);
 
-            if(sizeof($ruta1) > 1){
-                $cate->catimagenfondo = $linkNuevo.$ruta1[1];
-            }else{
-                echo "<br>no tiene: ".$cat->catid.' y nombre: '.$cat->catimagenfondo.'<br>';
-            }
-
-            $ruta2 = explode($linkAntiguo, $cat->caticono);
-
-            if(sizeof($ruta2) > 1){
-                $cate->caticono = $linkNuevo.$ruta2[1];
-            }else{
-                echo "<br>no tiene: ".$cat->catid.' y nombre: '.$cat->caticono.'<br>';
-            }   
-
-            $ruta3 = explode($linkAntiguo, $cat->caticonoseleccionado);
-
-            if(sizeof($ruta3) > 1){
-                $cate->caticonoseleccionado = $linkNuevo.$ruta3[1];
-            }else{
-                echo "<br>no tiene: ".$cat->catid.' y nombre: '.$cat->caticonoseleccionado.'<br>';
-            }
-
-            $ruta4 = explode($linkAntiguo, $cat->caticonohover);
-
-            if(sizeof($ruta4) > 1){
-                $cate->caticonohover = $linkNuevo.$ruta4[1];
-            }else{
-                echo "<br>no tiene: ".$cat->catid.' y nombre: '.$cat->caticonohover.'<br>';
-            }
-
-            $ruta5 = explode($linkAntiguo, $cat->catimagenfondoseleccionado);
-            if(sizeof($ruta5) > 1){
-                $cate->catimagenfondoseleccionado = $linkNuevo.$ruta5[1];
-            }else{
-                echo "<br>no tiene: ".$cat->catid.' y nombre: '.$cat->catimagenfondoseleccionado.'<br>';
-            }
-
-            $ruta6 = explode($linkAntiguo, $cat->catimagenfondoopaco);
-            if(sizeof($ruta6) > 1){
-                $cate->catimagenfondoopaco = $linkNuevo.$ruta6[1];
-            }else{
-                
-            }
-
-            $ruta7 = explode($linkAntiguo, $cat->caticononaranja);
-            if(sizeof($ruta7) > 1){
-                $cate->caticononaranja = $linkNuevo.$ruta7[1];
-            }else{
-                
-            }
-
-            $cate->update();
-        }
-
-        // CAMBIAR IMAGENES DE PRODUCTOS EN PROMOCIONES
-        $prbs = prbpromocionesbonificaciones::where('prbimagen', 'LIKE', '%'.$linkAntiguo.'%')->get();
-
-        foreach($prbs as $prb){
-            $prbe = prbpromocionesbonificaciones::find($prb->prbid);
-            $ruta = explode($linkAntiguo, $prb->prbimagen);
-
-            if(sizeof($ruta) > 1){
-                $prbe->prbimagen = $linkNuevo.$ruta[1];
-                $prbe->update();
-            }else{
-                echo "<br>no tiene: ".$prbe->prbid.' y nombre: '.$prb->prbimagen.'<br>';
-
-            }
-            
-
-        }
-
-        $prps = prppromocionesproductos::where('prpimagen', 'LIKE', '%'.$linkAntiguo.'%')->get();
-
-        foreach($prps as $prp){
-            $prpe = prppromocionesproductos::find($prp->prpid);
-            $ruta = explode($linkAntiguo, $prp->prpimagen);
-
-            if(sizeof($ruta) > 1){
-                $prpe->prpimagen = $linkNuevo.$ruta[1];
-                $prpe->update();
-            }else{
-                echo "<br>no tiene: ".$prp->prpid.' y nombre: '.$prp->prpimagen.'<br>';
-
-            }
-        }
-
-        // $scas = scasucursalescategorias::all('scaiconocategoria', 'LIKE', '%'.$linkAntiguo.'%')->get();
-
-        // foreach($scas as $sca){
-        //     $scae = scasucursalescategorias::find($sca->scaid);
-
-        //     $ruta = explode($linkAntiguo, $sca->scaiconocategoria);
-
-        //     if(sizeof($ruta) > 1){
-        //         $scae->scaiconocategoria = $linkNuevo.$ruta[1];
-                
+        //     if(sizeof($ruta1) > 1){
+        //         $cate->catimagenfondo = $linkNuevo.$ruta1[1];
         //     }else{
-        //         echo "<br>no tiene: ".$sca->scaid.' y nombre: '.$sca->scaiconocategoria.'<br>';
-
+        //         echo "<br>no tiene: ".$cat->catid.' y nombre: '.$cat->catimagenfondo.'<br>';
         //     }
 
-        //     $scae->update();
+        //     $ruta2 = explode($linkAntiguo, $cat->caticono);
+
+        //     if(sizeof($ruta2) > 1){
+        //         $cate->caticono = $linkNuevo.$ruta2[1];
+        //     }else{
+        //         echo "<br>no tiene: ".$cat->catid.' y nombre: '.$cat->caticono.'<br>';
+        //     }   
+
+        //     $ruta3 = explode($linkAntiguo, $cat->caticonoseleccionado);
+
+        //     if(sizeof($ruta3) > 1){
+        //         $cate->caticonoseleccionado = $linkNuevo.$ruta3[1];
+        //     }else{
+        //         echo "<br>no tiene: ".$cat->catid.' y nombre: '.$cat->caticonoseleccionado.'<br>';
+        //     }
+
+        //     $ruta4 = explode($linkAntiguo, $cat->caticonohover);
+
+        //     if(sizeof($ruta4) > 1){
+        //         $cate->caticonohover = $linkNuevo.$ruta4[1];
+        //     }else{
+        //         echo "<br>no tiene: ".$cat->catid.' y nombre: '.$cat->caticonohover.'<br>';
+        //     }
+
+        //     $ruta5 = explode($linkAntiguo, $cat->catimagenfondoseleccionado);
+        //     if(sizeof($ruta5) > 1){
+        //         $cate->catimagenfondoseleccionado = $linkNuevo.$ruta5[1];
+        //     }else{
+        //         echo "<br>no tiene: ".$cat->catid.' y nombre: '.$cat->catimagenfondoseleccionado.'<br>';
+        //     }
+
+        //     $ruta6 = explode($linkAntiguo, $cat->catimagenfondoopaco);
+        //     if(sizeof($ruta6) > 1){
+        //         $cate->catimagenfondoopaco = $linkNuevo.$ruta6[1];
+        //     }else{
+                
+        //     }
+
+        //     $ruta7 = explode($linkAntiguo, $cat->caticononaranja);
+        //     if(sizeof($ruta7) > 1){
+        //         $cate->caticononaranja = $linkNuevo.$ruta7[1];
+        //     }else{
+                
+        //     }
+
+        //     $cate->update();
         // }
+
+        // // CAMBIAR IMAGENES DE PRODUCTOS EN PROMOCIONES
+        // $prbs = prbpromocionesbonificaciones::where('prbimagen', 'LIKE', '%'.$linkAntiguo.'%')->get();
+
+        // foreach($prbs as $prb){
+        //     $prbe = prbpromocionesbonificaciones::find($prb->prbid);
+        //     $ruta = explode($linkAntiguo, $prb->prbimagen);
+
+        //     if(sizeof($ruta) > 1){
+        //         $prbe->prbimagen = $linkNuevo.$ruta[1];
+        //         $prbe->update();
+        //     }else{
+        //         echo "<br>no tiene: ".$prbe->prbid.' y nombre: '.$prb->prbimagen.'<br>';
+
+        //     }
+            
+
+        // }
+
+        // $prps = prppromocionesproductos::where('prpimagen', 'LIKE', '%'.$linkAntiguo.'%')->get();
+
+        // foreach($prps as $prp){
+        //     $prpe = prppromocionesproductos::find($prp->prpid);
+        //     $ruta = explode($linkAntiguo, $prp->prpimagen);
+
+        //     if(sizeof($ruta) > 1){
+        //         $prpe->prpimagen = $linkNuevo.$ruta[1];
+        //         $prpe->update();
+        //     }else{
+        //         echo "<br>no tiene: ".$prp->prpid.' y nombre: '.$prp->prpimagen.'<br>';
+
+        //     }
+        // }
+        
+        // CAMBIAR SCAS
+        $scas = scasucursalescategorias::all('scaiconocategoria', 'LIKE', '%'.$linkAntiguo.'%')->get();
+
+        foreach($scas as $sca){
+            $scae = scasucursalescategorias::find($sca->scaid);
+
+            $ruta = explode($linkAntiguo, $sca->scaiconocategoria);
+
+            if(sizeof($ruta) > 1){
+                $scae->scaiconocategoria = $linkNuevo.$ruta[1];
+                
+            }else{
+                echo "<br>no tiene: ".$sca->scaid.' y nombre: '.$sca->scaiconocategoria.'<br>';
+
+            }
+
+            $scae->update();
+        }
 
 
     }
