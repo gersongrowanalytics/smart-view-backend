@@ -1785,7 +1785,7 @@ class VentasMostrarController extends Controller
                             $observaciones[] = "Se encontro la sucursal 309";
                         }
 
-                        $tsuSO = null;
+                        $tsuSI = null;
 
                         if($tpr->tprid == 1){
                             $tsu = tsutipospromocionessucursales::join('fecfechas as fec', 'tsutipospromocionessucursales.fecid', 'fec.fecid')
@@ -1840,12 +1840,12 @@ class VentasMostrarController extends Controller
                                                                 'tsurebatetrimestral'
                                                             ]);
 
-                            $tsuSO = tsutipospromocionessucursales::join('fecfechas as fec', 'tsutipospromocionessucursales.fecid', 'fec.fecid')
+                            $tsuSI = tsutipospromocionessucursales::join('fecfechas as fec', 'tsutipospromocionessucursales.fecid', 'fec.fecid')
                                                             ->join('tretiposrebates as tre', 'tre.treid', 'tsutipospromocionessucursales.treid')
                                                             ->join('sucsucursales as suc', 'suc.sucid', 'tsutipospromocionessucursales.sucid')
                                                             ->where('tsutipospromocionessucursales.sucid', $usu->sucid)
                                                             // ->where('suc.sucestado', 1)
-                                                            ->where('tsutipospromocionessucursales.tprid', 2)
+                                                            ->where('tsutipospromocionessucursales.tprid', 1)
                                                             ->where('fec.fecano', $ano)
                                                             ->where('fec.fecmes', $mes)
                                                             ->where('fec.fecdia', $dia)
@@ -1972,8 +1972,8 @@ class VentasMostrarController extends Controller
 
                                     }
 
-                                    if($tsuSO){
-                                        $scasSOs = scasucursalescategorias::where('tsuid', $tsuSO->tsuid )
+                                    if($tsuSI){
+                                        $scasSIs = scasucursalescategorias::where('tsuid', $tsuSI->tsuid )
                                                                     ->where('catid', $categoria->catid)
                                                                     ->get([
                                                                         'catid',
@@ -1983,13 +1983,13 @@ class VentasMostrarController extends Controller
                                                                         'scaiconocategoria'
                                                                     ]);
 
-                                        foreach($scasSOs as $scasSO){
+                                        foreach($scasSIs as $scasSI){
                                             foreach($plantillaTrrs as $posPlantillaTrr => $plantillaTrr){
                                                 $trrEsp = trrtiposrebatesrebates::join('rtprebatetipospromociones as rtp', 'rtp.rtpid', 'trrtiposrebatesrebates.rtpid')
-                                                                                ->where('treid', $tsuSO->treid)
-                                                                                ->where('rtp.tprid', $tsuSO->tprid)
-                                                                                ->where('rtp.fecid', $tsuSO->fecid)
-                                                                                ->where('trrtiposrebatesrebates.catid', $scasSO->catid)
+                                                                                ->where('treid', $tsu->treid)
+                                                                                ->where('rtp.tprid', $tsu->tprid)
+                                                                                ->where('rtp.fecid', $tsu->fecid)
+                                                                                ->where('trrtiposrebatesrebates.catid', $scasSI->catid)
                                                                                 ->where('rtp.rtpporcentajedesde', $plantillaTrr['rtpporcentajedesde'])
                                                                                 ->where('rtp.rtpporcentajehasta', $plantillaTrr['rtpporcentajehasta'])
                                                                                 // ->distinct('rtpid')
@@ -2005,15 +2005,14 @@ class VentasMostrarController extends Controller
 
                                                     if($trrEsp->rtpporcentajehasta > 300){
                                                         // $realRebate = (() / 100) ($sca->scavalorizadoobjetivo * $trrEsp->rtpporcentajerebate)/100;
-                                                        $realRebate = ( ( ( $scasSO->scavalorizadoobjetivo * $plantillaTrr['rtpporcentajedesde'] ) / 100 ) * $trrEsp->rtpporcentajerebate ) / 100;
+                                                        $realRebate = ( ( ( $scasSI->scavalorizadoobjetivo * $plantillaTrr['rtpporcentajedesde'] ) / 100 ) * $trrEsp->rtpporcentajerebate ) / 100;
                                                     }else{
-                                                        $realRebate = ( ( ( $scasSO->scavalorizadoobjetivo * $plantillaTrr['rtpporcentajehasta'] ) / 100 ) * $trrEsp->rtpporcentajerebate ) / 100;
+                                                        $realRebate = ( ( ( $scasSI->scavalorizadoobjetivo * $plantillaTrr['rtpporcentajehasta'] ) / 100 ) * $trrEsp->rtpporcentajerebate ) / 100;
                                                         // $realRebate = ($sca->scavalorizadoobjetivo * $trrEsp->rtpporcentajerebate)/100;
                                                     }
 
-                                                    $plantillaTrrs[$posPlantillaTrr]['reales'][]  = "TRENOMBRE: ".$tsuSO->trenombre." REALREBATE: ".$realRebate." %REBATE: ".$trrEsp->rtpporcentajerebate;
+                                                    $plantillaTrrs[$posPlantillaTrr]['reales'][]  = "TRENOMBRE: ".$tsuSI->trenombre." REALREBATE: ".$realRebate." %REBATE: ".$trrEsp->rtpporcentajerebate;
                                                     $plantillaTrrs[$posPlantillaTrr]['realTotal'] = $plantillaTrrs[$posPlantillaTrr]['realTotal'] + $realRebate;
-                                                    $observaciones[] = "SE APLICA SO";
                                                 }
                                             }
                                         }
