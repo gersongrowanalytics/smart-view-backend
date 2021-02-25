@@ -130,7 +130,10 @@ class AsignarSucursalesController extends Controller
 
         $cateogiras = [1];
 
-        $sucs = sucsucursales::where('sucestado', 1)->get();
+        $sucs = sucsucursales::
+                            // where('sucestado', 1)
+                            // ->get();
+                            get();
 
         foreach($sucs as $suc){
             $rbs = rbsrebatesbonussucursales::where('sucid', $suc->sucid)
@@ -140,18 +143,35 @@ class AsignarSucursalesController extends Controller
 
             if($rbs){
                 foreach($cateogiras as $catid){
-                    $rscn = new rscrbsscategorias;
-                    $rscn->fecid = $fecid;
-                    $rscn->rbbid = $rbbid;
-                    $rscn->sucid = $suc->sucid;
-                    $rscn->rbsid = $rbs->rbsid;
-                    $rscn->catid = $catid;
-                    $rscn->rscestado = 1;
-                    if($rscn->save()){
 
+                    $rsc = rscrbsscategorias::where('catid', $catid)
+                                            ->where('fecid', $fecid)
+                                            ->where('rbbid', $rbbid)
+                                            ->where('sucid', $suc->sucid)
+                                            ->where('rbsid', $rbs->rbsid)
+                                            ->first();
+
+                    if($rsc){
+                        if($rsc->rscestado != 1){
+                            $rsc->rscestado = 1;
+                            $rsc->update();
+                        }
                     }else{
-                        $log["NO_SE_AGREGO_RSC_CATEGORIAS"][] = "SUC: ".$suc->sucid." FEC: ".$fecid." RBB: ".$rbbid;
+                        $rscn = new rscrbsscategorias;
+                        $rscn->fecid = $fecid;
+                        $rscn->rbbid = $rbbid;
+                        $rscn->sucid = $suc->sucid;
+                        $rscn->rbsid = $rbs->rbsid;
+                        $rscn->catid = $catid;
+                        $rscn->rscestado = 1;
+                        if($rscn->save()){
+
+                        }else{
+                            $log["NO_SE_AGREGO_RSC_CATEGORIAS"][] = "SUC: ".$suc->sucid." FEC: ".$fecid." RBB: ".$rbbid;
+                        }
                     }
+
+                    
                 }
             }else{
                 $rbsn = new rbsrebatesbonussucursales;
