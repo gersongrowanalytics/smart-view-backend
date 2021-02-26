@@ -66,7 +66,7 @@ class FechasMostrarController extends Controller
 
                     $tupAnios = tuptiposusuariospermisos::join('pempermisos as pem', 'pem.pemid', 'tuptiposusuariospermisos.pemid')
                                                             ->where('tuptiposusuariospermisos.tpuid', $usuusuario->tpuid )
-                                                            ->where('pem.pemslug', 'LIKE', 'fechas.mostrar.anios.%')
+                                                            ->where('pem.pemslug', 'LIKE', 'fechas.anios.mostrar.%')
                                                             ->get([
                                                                 'pem.pemslug',
                                                                 'pem.pemruta'
@@ -75,7 +75,7 @@ class FechasMostrarController extends Controller
                     $fecfechas = fecfechas::OrderBy('fecfecha', 'DESC')
                                         ->where(function ($query) use($tuptiposusuariospermisos, $tupAnios) {
 
-                                            if(sizeof($tuptiposusuariospermisos) > 0){
+                                            if(sizeof($tupAnios) > 0){
                                                 foreach($tupAnios as $tupAnio){
                                                     $query->orwhere('fecano', $tupAnio->pemruta);
                                                 }
