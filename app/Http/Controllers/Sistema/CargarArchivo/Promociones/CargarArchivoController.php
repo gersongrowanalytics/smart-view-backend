@@ -36,7 +36,7 @@ class CargarArchivoController extends Controller
     public function CargarArchivo(Request $request)
     {
 
-        $respuesta      = false;
+        $respuesta      = true;
         $mensaje        = '';
         $datos          = [];
         $linea          = __LINE__;
@@ -781,12 +781,15 @@ class CargarArchivoController extends Controller
                                         }
                                     }
                                 }else{
-
                                     $log['CATEGORIAS_NO_IDENTIFICADAS'][] = "CATEGORIA: ".$categoria." LINEA: ".$i;
+                                    $respuesta = false;
+                                    $mensaje   = "Hay categorias que no existen (".$categoria.")";
                                 }
         
                             }else{
                                 $log['SUCURSALES_NO_IDENTIFICADAS'][] = "SOLDTO: ".$soldTo." LINEA: ".$i;
+                                $respuesta = false;
+                                $mensaje   = "Hay algunas sucursales que no existen (".$soldTo.")";
                             }
     
     
@@ -854,7 +857,8 @@ class CargarArchivoController extends Controller
                 }
             
             } else {
-                
+                $respuesta = false;
+                $mensaje   = "El excel no se pudo guardar en el servidor";
             }
 
             $nuevoCargaArchivo = new carcargasarchivos;

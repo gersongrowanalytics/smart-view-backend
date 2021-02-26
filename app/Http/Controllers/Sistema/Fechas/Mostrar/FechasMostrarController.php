@@ -64,16 +64,34 @@ class FechasMostrarController extends Controller
                                                                             'pem.pemruta'
                                                                         ]);
 
+                    $tupAnios = tuptiposusuariospermisos::join('pempermisos as pem', 'pem.pemid', 'tuptiposusuariospermisos.pemid')
+                                                            ->where('tuptiposusuariospermisos.tpuid', $usuusuario->tpuid )
+                                                            ->where('pem.pemslug', 'LIKE', 'fechas.mostrar.anios.%')
+                                                            ->get([
+                                                                'pem.pemslug',
+                                                                'pem.pemruta'
+                                                            ]);
+
                     $fecfechas = fecfechas::OrderBy('fecfecha', 'DESC')
-                                        ->where(function ($query) use($tuptiposusuariospermisos) {
+                                        ->where(function ($query) use($tuptiposusuariospermisos, $tupAnios) {
+
                                             if(sizeof($tuptiposusuariospermisos) > 0){
-                                                foreach($tuptiposusuariospermisos as $tuptiposusuariospermiso){
+                                                foreach($tupAnios as $tupAnio){
+                                                    $query->orwhere('fecano', $tupAnio->pemruta);
+                                                }
+                                            }else{
+                                                $query->where('fecano', 'noacceso');
+                                            }
+                                            
+                                        })
+                                        ->where(function ($query) use($tuptiposusuariospermisos, $tupAnios) {
+                                            if(sizeof($tuptiposusuariospermisos) > 0){
+                                                foreach($tuptiposusuariospermisos as $contadorTup => $tuptiposusuariospermiso){
                                                     $query->orwhere('fecmes', $tuptiposusuariospermiso->pemruta);
                                                 }
                                             }else{
                                                 $query->where('fecmes', 'noacceso');
                                             }
-
                                         })
                                         ->get([
                                             'fecid',
