@@ -401,7 +401,7 @@ class CargarArchivoController extends Controller
                             // }
                             
                             // VERIFICAR SI EXISTE EL USUARIO
-                            $usuCliente = sucsucursales::where('sucsoldto', $soldto) 
+                            $usuCliente = sucsucursales::where('sucsoldto', $soldTo) 
                                                         ->first();
 
                             if($usuCliente){
@@ -786,7 +786,7 @@ class CargarArchivoController extends Controller
                                 }
         
                             }else{
-                                $log['SUCURSALES_NO_IDENTIFICADAS'][] = "SOLDTO: ".$soldto." LINEA: ".$i;
+                                $log['SUCURSALES_NO_IDENTIFICADAS'][] = "SOLDTO: ".$soldTo." LINEA: ".$i;
                             }
     
     
