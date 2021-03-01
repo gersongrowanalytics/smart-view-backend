@@ -16,7 +16,7 @@ use App\scasucursalescategorias;
 
 class ActualizarTrimestreController extends Controller
 {
-    public function ActualizarTrimestre(Request $request)
+    public function ActualizarTrimestre($fecid)
     {
 
         $logs = array();
@@ -27,10 +27,15 @@ class ActualizarTrimestreController extends Controller
         $mensajedev     = null;
 
         $tris = tritrimestres::where('triestado', 1)
+                                ->where('fecid', $fecid)
                                 ->get(['triid', 'fecid']);
 
 
-        $sucs = sucsucursales::where('sucestado', 1)->get(['sucid', 'treid']);
+        $sucs = sucsucursales::
+                            // where('sucestado', 1)
+                            // ->get(['sucid', 'treid']);
+                            get(['sucid', 'treid']);
+
         $tprs = tprtipospromociones::all();
         $cats = catcategorias::all();
 
