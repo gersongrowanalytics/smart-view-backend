@@ -256,7 +256,7 @@ class CargarSOXCategoriaController extends Controller
                         if($sca->scavalorizadoobjetivo < 0){
                             $sca->scavalorizadotogo = 0;
                         }else{
-                            $sca->scavalorizadotogo = $sca->scavalorizadoobjetivo - $nuevoRealSca;
+                            $sca->scavalorizadotogo = $sca->scavalorizadoobjetivo - $real;
                         }
 
 
