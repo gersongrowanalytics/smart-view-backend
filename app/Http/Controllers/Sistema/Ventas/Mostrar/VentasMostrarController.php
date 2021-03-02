@@ -108,8 +108,13 @@ class VentasMostrarController extends Controller
                                 ->first();
 
             if($tri){
-                $tieneRebateTrimestral = true;
-                $nombreTrimestre = $tri->trinombre;
+                $suca = sucsucursales::find($sucid);
+                if($ano == "2021"){
+                    if($suca->treid != 24){
+                        $tieneRebateTrimestral = true;
+                        $nombreTrimestre = $tri->trinombre;
+                    }
+                }
             }
 
             $tsutipospromocionessucursales = tsutipospromocionessucursales::join('fecfechas as fec', 'tsutipospromocionessucursales.fecid', 'fec.fecid')
