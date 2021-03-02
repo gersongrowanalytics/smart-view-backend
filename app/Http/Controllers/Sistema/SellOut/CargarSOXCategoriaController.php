@@ -206,7 +206,7 @@ class CargarSOXCategoriaController extends Controller
                         $tsuid = $tsu->tsuid;
                         $nuevoReal = $tsu->tsuvalorizadoreal + $real;
 
-                        if($tsu->tsuvalorizadoobjetivo > 0){
+                        if($tsu->tsuvalorizadoobjetivo < 0){
                             $porcentajeCumplimiento = $nuevoReal;
                             $togo = 0;
                         }else{
@@ -253,7 +253,7 @@ class CargarSOXCategoriaController extends Controller
                         $scaid = $sca->scaid;
                         $sca->scavalorizadoreal = $real;
 
-                        if($sca->scavalorizadoobjetivo > 0){
+                        if($sca->scavalorizadoobjetivo < 0){
                             $sca->scavalorizadotogo = 0;
                         }else{
                             $sca->scavalorizadotogo = $sca->scavalorizadoobjetivo - $nuevoRealSca;
