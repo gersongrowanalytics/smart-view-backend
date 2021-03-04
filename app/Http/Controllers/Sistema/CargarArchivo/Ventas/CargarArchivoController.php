@@ -553,6 +553,7 @@ class CargarArchivoController extends Controller
             "mensajedev"     => $mensajedev,
             "numeroCelda"    => $numeroCelda,
             "logs"           => $log,
+            "soldtosNoExis"  => $soldtosNoExis,
         ]);
         
         $descripcion = "CARGAR DATA DE UN EXCEL AL SISTEMA DE VENTAS SELL IN";
