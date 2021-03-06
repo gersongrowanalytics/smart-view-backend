@@ -32,6 +32,9 @@ class PromocionEditarImagenesController extends Controller
         $pkidprp = 0;
         $pkidprb = 0;
 
+        $nuevImgBoni = "";
+        $nuevaImgPro = "";
+
         DB::beginTransaction();
 
         try{
@@ -60,6 +63,7 @@ class PromocionEditarImagenesController extends Controller
                         $prp->prpimagen = env('APP_URL').$fichero.$nombre;
                         $prp->prpestadoimagen = 1;
                         if($prp->update()){
+                            $nuevaImgPro = env('APP_URL').$fichero.$nombre;
                             $pkidprp = "PRP-".$prp->prpid;
                             $log[]   = "SE EDITO LA IMAGEN DEL PRODUCTO: ".$prp->prpimagen;
 
@@ -121,6 +125,7 @@ class PromocionEditarImagenesController extends Controller
                         $prb->prbimagen = env('APP_URL').$fichero.$nombre;
                         $prb->prbestadoimagen = 1;
                         if($prb->update()){
+                            $nuevImgBoni = env('APP_URL').$fichero.$nombre;
                             $pkidprb = "PRB-".$prb->prpid;
                             $log[]   = "SE EDITO LA IMAGEN DEL PRODUCTO BONIFICADO: ".$prb->prbimagen ;
 
@@ -172,6 +177,8 @@ class PromocionEditarImagenesController extends Controller
             "respuesta"      => $respuesta,
             "mensaje"        => $mensaje,
             "datos"          => $datos,
+            "nuevImgBoni"    => $nuevImgBoni,
+            "nuevaImgPro"    => $nuevaImgPro,
             "linea"          => $linea,
             "mensajeDetalle" => $mensajeDetalle,
             "mensajedev"     => $mensajedev
