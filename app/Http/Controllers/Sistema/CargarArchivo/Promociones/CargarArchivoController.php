@@ -152,16 +152,8 @@ class CargarArchivoController extends Controller
                         $nuevoProm  = $objPHPExcel->getActiveSheet()->getCell('AS'.$i)->getCalculatedValue();
                         
 
-                        if($i == 2){
-                            cspcanalessucursalespromociones::join('prmpromociones as prm', 'prm.prmid', 'cspcanalessucursalespromociones.prmid')
-                                                            ->where('cspcanalessucursalespromociones.fecid', $fecid)
-                                                            ->update([
-                                                                'cspestado' => 0, 
-                                                                'cspcantidadcombo' => 0,
-                                                                'cspcantidadplancha' => 0,
-                                                            ]);
-                        }
                         
+
                         if($nuevoProm == "x"){
                             $nuevoProm = 1;
                         }else{
@@ -241,6 +233,16 @@ class CargarArchivoController extends Controller
                                 }else{
                 
                                 }
+                            }
+
+                            if($i == 2){
+                                cspcanalessucursalespromociones::join('prmpromociones as prm', 'prm.prmid', 'cspcanalessucursalespromociones.prmid')
+                                                                ->where('cspcanalessucursalespromociones.fecid', $fecid)
+                                                                ->update([
+                                                                    'cspestado' => 0, 
+                                                                    'cspcantidadcombo' => 0,
+                                                                    'cspcantidadplancha' => 0,
+                                                                ]);
                             }
                 
                             // VERIFICAR SI EXISTE LA PERSONA
