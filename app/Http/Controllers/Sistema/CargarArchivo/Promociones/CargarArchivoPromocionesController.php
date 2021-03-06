@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Sistema\CargarArchivo\Promociones;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Http\Request;
 use App\Http\Controllers\AuditoriaController;
 // use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\IOFactory;
