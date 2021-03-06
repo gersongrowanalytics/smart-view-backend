@@ -37,7 +37,7 @@ class CargarArchivoController extends Controller
     {
 
         $respuesta      = true;
-        $mensaje        = '';
+        $mensaje        = 'asd';
         $datos          = [];
         $linea          = __LINE__;
         $mensajeDetalle = '';
