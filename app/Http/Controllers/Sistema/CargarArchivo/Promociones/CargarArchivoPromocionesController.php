@@ -934,7 +934,7 @@ class CargarArchivoPromocionesController extends Controller
         $mensajeDetalle = '';
         $mensajedev     = null;
         $numeroCelda    = 0;
-        $usutoken       = "ADMIN PRUEBA";
+        $usutoken       = "HJ0t4xbw7zmQdZnpAyhffbMORIn8RpD9cUyRihQmXejkIOgmym6fuDOyWag0";
         $archivo        = $nombreArchivo;
 
         $cargarData = false;
