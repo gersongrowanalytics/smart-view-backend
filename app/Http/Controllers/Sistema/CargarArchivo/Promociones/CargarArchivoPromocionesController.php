@@ -924,7 +924,7 @@ class CargarArchivoPromocionesController extends Controller
 
     }
 
-    public function LeerCargarArchivo(Request $request)
+    public function LeerCargarArchivo($nombreArchivo)
     {
 
         $respuesta      = true;
@@ -934,8 +934,8 @@ class CargarArchivoPromocionesController extends Controller
         $mensajeDetalle = '';
         $mensajedev     = null;
         $numeroCelda    = 0;
-        $usutoken       = $request->header('api_token');
-        $archivo        = $request['nombreArchivo'];
+        $usutoken       = "ADMIN PRUEBA";
+        $archivo        = $nombreArchivo;
 
         $cargarData = false;
         

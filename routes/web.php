@@ -71,7 +71,7 @@ $router->group(['middleware' => ['permisos']], function() use($router) {
 
     // $router->post('/cargarArchivo/promociones', 'Sistema\CargarArchivo\Promociones\CargarArchivoController@CargarArchivo');
     $router->post('/cargarArchivo/promociones', 'Sistema\CargarArchivo\Promociones\CargarArchivoPromocionesController@CargarArchivo');
-    $router->post('/cargarArchivo/leerpromociones', 'Sistema\CargarArchivo\Promociones\CargarArchivoPromocionesController@LeerCargarArchivo');
+    
     $router->post('/cargarArchivo/promociones/actualizarNew', 'Sistema\CargarArchivo\Promociones\ActualizarNuevoController@ActualizarPromociones');
     $router->post('/cargarArchivo/promociones/planTrade', 'Sistema\CargarArchivo\Promociones\CargarArchivoController@CargarPlanTrade');
     $router->post('/cargarArchivo/promociones/desactivar', 'Sistema\CargarArchivo\Promociones\EliminarPromocionesController@CargarArchivoEliminarPromociones');
@@ -113,6 +113,7 @@ $router->group(['middleware' => ['permisos']], function() use($router) {
     $router->get('/quitarGratisPromociones/{fecid}', 'Sistema\Promociones\Editar\PromocionEditarGratisController@QuitarGratisPromociones');
 });
 
+$router->get('/cargarArchivo/leerpromociones/{nombreArchivo}', 'Sistema\CargarArchivo\Promociones\CargarArchivoPromocionesController@LeerCargarArchivo');
 
 $router->get('/armarRebateBonus/{fecid}', 'Sistema\RebatesBonus\AsignarSucursalesController@AsiganarSucursales');
 $router->get('/armarCategoriasRebateBonus/{fecid}/{rbbid}', 'Sistema\RebatesBonus\AsignarSucursalesController@ActualizarCategoriasBonus');
