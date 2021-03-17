@@ -1125,11 +1125,11 @@ class CargarArchivoPromocionesController extends Controller
         //     $log
         // );
 
-        if($registrarAuditoria == true){
+        // if($registrarAuditoria == true){
 
-        }else{
+        // }else{
             
-        }
+        // }
         
         return $requestsalida;
 
