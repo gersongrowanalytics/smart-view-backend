@@ -984,7 +984,7 @@ class CargarArchivoPromocionesController extends Controller
         $fecActual = new \DateTime(date("Y-m-d", strtotime("2020-10-20")));
 
         try{
-            $fichero_subido = base_path().'/public/Sistema/cargaArchivos/promociones/'.basename("Promociones marzo (SUR).xlsx");
+            $fichero_subido = base_path().'/public/Sistema/cargaArchivos/promociones/'.basename($archivo);
                 $fecid = 0;
 
                 $objPHPExcel    = IOFactory::load($fichero_subido);
