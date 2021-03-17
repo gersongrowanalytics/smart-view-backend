@@ -935,7 +935,7 @@ class CargarArchivoPromocionesController extends Controller
         $mensajedev     = null;
         $numeroCelda    = 0;
         $usutoken       = "HJ0t4xbw7zmQdZnpAyhffbMORIn8RpD9cUyRihQmXejkIOgmym6fuDOyWag0";
-        $archivo        = "Promociones marzo (SUR).xlsx";
+        $archivo        = "promocionesmarzosur.xlsx";
 
         $cargarData = false;
         
