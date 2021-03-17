@@ -1056,35 +1056,35 @@ class CargarArchivoPromocionesController extends Controller
                             $mesTxt = "DIC";
                         }
 
-                        $nuevaFecha = new fecfechas;
-                        $nuevaFecha->fecfecha     = new \DateTime(date("Y-m-d", strtotime($anioActual.'-'.$mesActual.'-'.$diaActual)));
-                        $nuevaFecha->fecdia       = $diaActual;
-                        $nuevaFecha->fecmes       = $mesTxt;
-                        $nuevaFecha->fecmesnumero = $mesActual;
-                        $nuevaFecha->fecano       = $anioActual;
-                        if($nuevaFecha->save()){
-                            $fecid = $nuevaFecha->fecid;
-                        }else{
+                        // $nuevaFecha = new fecfechas;
+                        // $nuevaFecha->fecfecha     = new \DateTime(date("Y-m-d", strtotime($anioActual.'-'.$mesActual.'-'.$diaActual)));
+                        // $nuevaFecha->fecdia       = $diaActual;
+                        // $nuevaFecha->fecmes       = $mesTxt;
+                        // $nuevaFecha->fecmesnumero = $mesActual;
+                        // $nuevaFecha->fecano       = $anioActual;
+                        // if($nuevaFecha->save()){
+                        //     $fecid = $nuevaFecha->fecid;
+                        // }else{
         
-                        }
+                        // }
                     }
                 }
             
             
 
-            $nuevoCargaArchivo = new carcargasarchivos;
-            $nuevoCargaArchivo->tcaid            = 1;
-            $nuevoCargaArchivo->fecid            = $fecid;
-            $nuevoCargaArchivo->usuid            = $usuusuario->usuid;
-            $nuevoCargaArchivo->carnombrearchivo = $archivo;
-            $nuevoCargaArchivo->carubicacion     = $fichero_subido;
-            $nuevoCargaArchivo->carexito         = $cargarData;
-            $nuevoCargaArchivo->carurl           = env('APP_URL').'/Sistema/cargaArchivos/promociones/'.$archivo;
-            if($nuevoCargaArchivo->save()){
-                $pkid = "CAR-".$nuevoCargaArchivo->carid;
-            }else{
+            // $nuevoCargaArchivo = new carcargasarchivos;
+            // $nuevoCargaArchivo->tcaid            = 1;
+            // $nuevoCargaArchivo->fecid            = $fecid;
+            // $nuevoCargaArchivo->usuid            = $usuusuario->usuid;
+            // $nuevoCargaArchivo->carnombrearchivo = $archivo;
+            // $nuevoCargaArchivo->carubicacion     = $fichero_subido;
+            // $nuevoCargaArchivo->carexito         = $cargarData;
+            // $nuevoCargaArchivo->carurl           = env('APP_URL').'/Sistema/cargaArchivos/promociones/'.$archivo;
+            // if($nuevoCargaArchivo->save()){
+            //     $pkid = "CAR-".$nuevoCargaArchivo->carid;
+            // }else{
 
-            }
+            // }
             
             
 
@@ -1111,19 +1111,19 @@ class CargarArchivoPromocionesController extends Controller
             $descripcion = "SUBIR EXCEL PARA REVISAR Y POSTERIORMENTE CARGAR DICHA DATA EN PROMOCIONES";
         }
 
-        $AuditoriaController = new AuditoriaController;
-        $registrarAuditoria  = $AuditoriaController->registrarAuditoria(
-            $usutoken,
-            $usuusuario->usuid,
-            null,
-            $fichero_subido,
-            $requestsalida,
-            $descripcion,
-            'IMPORTAR',
-            '/cargarArchivo/promociones', //ruta
-            $pkid,
-            $log
-        );
+        // $AuditoriaController = new AuditoriaController;
+        // $registrarAuditoria  = $AuditoriaController->registrarAuditoria(
+        //     $usutoken,
+        //     $usuusuario->usuid,
+        //     null,
+        //     $fichero_subido,
+        //     $requestsalida,
+        //     $descripcion,
+        //     'IMPORTAR',
+        //     '/cargarArchivo/promociones', //ruta
+        //     $pkid,
+        //     $log
+        // );
 
         if($registrarAuditoria == true){
 
