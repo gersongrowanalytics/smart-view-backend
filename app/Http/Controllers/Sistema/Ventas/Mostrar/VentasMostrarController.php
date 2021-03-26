@@ -245,7 +245,7 @@ class VentasMostrarController extends Controller
                 $dataVacia = array(array());
 
                 $categorias = catcategorias::where('catnombre', '!=', 'MultiCategoria')->where('catid', '<', 6)->get();
-                $tprtipospromociones = tprtipospromociones::all();
+                $tprtipospromociones = tprtipospromociones::where('tprid', '<', 3)->get();;
 
                 $trrs = array(
                     array(
@@ -568,7 +568,7 @@ class VentasMostrarController extends Controller
             
             if(sizeof($usus) > 0){
                 
-                $tprs = tprtipospromociones::get(['tprid', 'tprnombre', 'tpricono', 'tprcolorbarra', 'tprcolortooltip']);
+                $tprs = tprtipospromociones::where('tprid', '<', 3)->get(['tprid', 'tprnombre', 'tpricono', 'tprcolorbarra', 'tprcolortooltip']);
                 
                 // SABER SI ESTE MES TIENE REBATE TRIMESTRAL
                 $tieneRebateTrimestral = false;
@@ -932,7 +932,7 @@ class VentasMostrarController extends Controller
 
                 $categorias = catcategorias::where('catnombre', '!=', 'MultiCategoria')
                                             ->where('catid', '<', 6)->get();
-                $tprtipospromociones = tprtipospromociones::all();
+                $tprtipospromociones = tprtipospromociones::where('tprid', '<', 3)->get();
 
                 $trrs = array(
                     array(
@@ -1232,7 +1232,7 @@ class VentasMostrarController extends Controller
             
             if(sizeof($usus) > 0){
                 
-                $tprs = tprtipospromociones::get(['tprid', 'tprnombre', 'tpricono', 'tprcolorbarra', 'tprcolortooltip']);
+                $tprs = tprtipospromociones::where('tprid', '<', 3)->get(['tprid', 'tprnombre', 'tpricono', 'tprcolorbarra', 'tprcolortooltip']);
                 
                 // SABER SI ESTE MES TIENE REBATE TRIMESTRAL
                 $tieneRebateTrimestral = false;
@@ -1507,7 +1507,7 @@ class VentasMostrarController extends Controller
 
                 $categorias = catcategorias::where('catnombre', '!=', 'MultiCategoria')
                                             ->where('catid', '<', 6)->get();
-                $tprtipospromociones = tprtipospromociones::all();
+                $tprtipospromociones = tprtipospromociones::where('tprid', '<', 3)->get();
 
                 $trrs = array(
                     array(
