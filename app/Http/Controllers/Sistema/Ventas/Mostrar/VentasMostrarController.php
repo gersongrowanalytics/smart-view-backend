@@ -427,7 +427,12 @@ class VentasMostrarController extends Controller
                                                     })
                                                     ->sum('rbsreal');
                     
-                    $rbsCumplimientoActual = ($rbsSumaRealActual * 100 ) / $rbsSumaObjetivosActual;
+                    if($rbsSumaObjetivosActual > 0){
+                        $rbsCumplimientoActual = ($rbsSumaRealActual * 100 ) / $rbsSumaObjetivosActual;
+                    }else{
+                        $rbsCumplimientoActual = $rbsSumaRealActual;
+                    }
+                    
 
                     if($rbb->rbbcumplimiento <= $rbsCumplimientoActual){
                         $rbsRebateActual = ($rbsSumaObjetivosActual * $rbb->rbbporcentaje) / 100;
