@@ -12,6 +12,7 @@ use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 
 use Illuminate\Support\Str;
+use App\zonzonas;
 use App\fecfechas;
 use App\tputiposusuarios;
 use App\perpersonas;

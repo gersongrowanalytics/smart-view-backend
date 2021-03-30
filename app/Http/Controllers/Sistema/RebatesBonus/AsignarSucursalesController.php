@@ -128,7 +128,7 @@ class AsignarSucursalesController extends Controller
             "NO_SE_ENCONTRO_RBS" => []
         );
 
-        $cateogiras = [1];
+        $cateogiras = [2];
 
         $sucs = sucsucursales::
                             // where('sucestado', 1)
