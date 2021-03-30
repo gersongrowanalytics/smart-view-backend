@@ -81,6 +81,13 @@ class VentasMostrarController extends Controller
                             }else{
                                 $cats[$posicionCat]['estado'] = 1;
                             }
+                        }else if($rbb->fecid == 55){
+                            if($cat->catid == 2){
+                                $cats[$posicionCat]['estado'] = 1;
+                            }else{
+                                $cats[$posicionCat]['estado'] = 0;
+                                $cats[$posicionCat]['caticono'] = env('APP_URL')."/Sistema/categorias/img/iconos/iconosDesactivados/".$cat->catnombre.".png";
+                            }
                         }else{
                             if($cat->catid == 1){
                                 $cats[$posicionCat]['estado'] = 1;
@@ -432,7 +439,6 @@ class VentasMostrarController extends Controller
                     }else{
                         $rbsCumplimientoActual = $rbsSumaRealActual;
                     }
-                    
 
                     if($rbb->rbbcumplimiento <= $rbsCumplimientoActual){
                         $rbsRebateActual = ($rbsSumaObjetivosActual * $rbb->rbbporcentaje) / 100;
@@ -466,6 +472,13 @@ class VentasMostrarController extends Controller
                                 $cats[$posicionCat]['caticono'] = env('APP_URL')."/Sistema/categorias/img/iconos/iconosDesactivados/".$cat->catnombre.".png";
                             }else{
                                 $cats[$posicionCat]['estado'] = 1;
+                            }
+                        }else if($rbb->fecid == 55){
+                            if($cat->catid == 2){
+                                $cats[$posicionCat]['estado'] = 1;
+                            }else{
+                                $cats[$posicionCat]['estado'] = 0;
+                                $cats[$posicionCat]['caticono'] = env('APP_URL')."/Sistema/categorias/img/iconos/iconosDesactivados/".$cat->catnombre.".png";
                             }
                         }else{
                             if($cat->catid == 1){
