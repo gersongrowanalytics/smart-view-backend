@@ -80,7 +80,7 @@ class MostrarDescargaSiSoController extends Controller
 
             if($fec){
 
-                $osis = osiobjetivosssi::where('fecid', $fec->fecid)->where('osivalorizado', '!=', 0)->limit(100)->get();
+                $osis = osiobjetivosssi::where('fecid', $fec->fecid)->where('osivalorizado', '!=', 0)->get();
 
                 foreach($osis as $posicionOsi => $osi){
                     $respuesta = true;
