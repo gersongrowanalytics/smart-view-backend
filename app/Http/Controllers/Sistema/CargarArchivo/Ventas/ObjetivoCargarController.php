@@ -106,12 +106,6 @@ class ObjetivoCargarController extends Controller
                         $producto    = $objPHPExcel->getActiveSheet()->getCell('K'.$i)->getCalculatedValue();
                         $objetivo    = $objPHPExcel->getActiveSheet()->getCell('L'.$i)->getCalculatedValue();
 
-                        if(is_numeric ( $objetivo )){
-                            
-                        }else{
-                            $observaciones[] = "NO ES NUMERO :C ".$i." objetivo real: ".$objetivo;
-                        }
-
                         $totalObjetivo = $totalObjetivo + $objetivo;
 
                         $fecfecha = fecfechas::where('fecdia', $dia)
@@ -263,12 +257,6 @@ class ObjetivoCargarController extends Controller
                                     $observaciones[] = "El producto: ".$pro->pronombre." (".$sku.") del excel no coincide con el de la BD. El excel tiene una categoria: ".$sector." y en la BD tiene una categoria: ".$pro->catnombre;
                                 }
 
-                                if($i  == 3053){
-                                    $observaciones[] = "categoria: ".$pro->catid." objetivo: ".$objetivo." sku: ".$sku;
-                                }else{
-                                    
-                                }
-
                                 $osi = osiobjetivosssi::where('fecid', $fecid)
                                                     ->where('proid', $pro->proid)
                                                     ->where('sucid', $sucursalClienteId)
@@ -276,11 +264,6 @@ class ObjetivoCargarController extends Controller
                                                     ->first();
     
                                 if($osi){
-                                    if($i  == 3053){
-                                        $observaciones[] = "ANTES OSI: ".$osi->osivalorizado." AHORA:".$osi->osivalorizado+$objetivo;
-                                    }else{
-                                        
-                                    }
                                     $osi->osivalorizado = $osi->osivalorizado+$objetivo;
                                     if($osi->update()){
 
@@ -608,7 +591,7 @@ class ObjetivoCargarController extends Controller
         $respuesta      = true;
         $mensaje        = '';
         $datos          = [];
-        $skusNoExisten  = [];
+        $skusNoExisten  = [0];
         $soldtosNoExisten  = [];
         $linea          = __LINE__;
         $mensajeDetalle = '';
@@ -650,7 +633,7 @@ class ObjetivoCargarController extends Controller
             }
         }
 
-        DB::beginTransaction();
+        // DB::beginTransaction();
         try{
 
             $fichero_subido = base_path().'/public/Sistema/cargaArchivos/objetivos/sellout/'.basename($usuusuario->usuid.'-'.$usuusuario->usuusuario.'-'.$fechaActual.'-'.$_FILES['file']['name']);
@@ -1162,9 +1145,9 @@ class ObjetivoCargarController extends Controller
 
                     }
 
-                    DB::commit();
+                    // DB::commit();
                 }else{
-                    DB::rollBack();
+                    // DB::rollBack();
                 }
                 
             }else{
@@ -1173,7 +1156,7 @@ class ObjetivoCargarController extends Controller
             }
 
         } catch (Exception $e) {
-            DB::rollBack();
+            // DB::rollBack();
             $mensajedev = $e->getMessage();
             $linea      = __LINE__;
             $log[]      = $mensajedev;
@@ -1226,7 +1209,7 @@ class ObjetivoCargarController extends Controller
         $respuesta      = true;
         $mensaje        = '';
         $datos          = [];
-        $skusNoExisten  = [];
+        $skusNoExisten  = [0];
         $soldtosNoExisten  = [];
         $linea          = __LINE__;
         $mensajeDetalle = '';
@@ -1268,7 +1251,7 @@ class ObjetivoCargarController extends Controller
             }
         }
 
-        DB::beginTransaction();
+        // DB::beginTransaction();
         try{
 
             $fichero_subido = base_path().'/public/Sistema/cargaArchivos/objetivos/sellout/'.basename($usuusuario->usuid.'-'.$usuusuario->usuusuario.'-'.$fechaActual.'-'.$_FILES['file']['name']);
@@ -1780,9 +1763,9 @@ class ObjetivoCargarController extends Controller
 
                     }
 
-                    DB::commit();
+                    // DB::commit();
                 }else{
-                    DB::rollBack();
+                    // DB::rollBack();
                 }
                 
             }else{
@@ -1791,7 +1774,7 @@ class ObjetivoCargarController extends Controller
             }
 
         } catch (Exception $e) {
-            DB::rollBack();
+            // DB::rollBack();
             $mensajedev = $e->getMessage();
             $linea      = __LINE__;
             $log[]      = $mensajedev;
