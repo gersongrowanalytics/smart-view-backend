@@ -23,7 +23,7 @@ use App\tretiposrebates;
 use App\tuptiposusuariospermisos;
 use App\osiobjetivosssi;
 use App\osoobjetivossso;
-use Illuminate\Support\Facades\DB;
+// use Illuminate\Support\Facades\DB;
 
 class ObjetivoCargarController extends Controller
 {
@@ -79,7 +79,7 @@ class ObjetivoCargarController extends Controller
             }
         }
 
-        DB::beginTransaction();
+        // DB::beginTransaction();
         try{
 
             $fichero_subido = base_path().'/public/Sistema/cargaArchivos/objetivos/sellin/'.basename($usuusuario->usuid.'-'.$usuusuario->usuusuario.'-'.$fechaActual.'-'.$_FILES['file']['name']);
@@ -276,7 +276,11 @@ class ObjetivoCargarController extends Controller
                                                     ->first();
     
                                 if($osi){
-    
+                                    if($i  == 3053){
+                                        $observaciones[] = "ANTES OSI: ".$osi->osivalorizado;
+                                    }else{
+                                        
+                                    }
                                     $osi->osivalorizado = $osi->osivalorizado+$objetivo;
                                     if($osi->update()){
 
@@ -535,9 +539,9 @@ class ObjetivoCargarController extends Controller
 
                     }
 
-                    DB::commit();
+                    // DB::commit();
                 }else{
-                    DB::rollBack();
+                    // DB::rollBack();
                 }
                 
             }else{
@@ -549,7 +553,7 @@ class ObjetivoCargarController extends Controller
 
 
         } catch (Exception $e) {
-            DB::rollBack();
+            // DB::rollBack();
             $mensajedev = $e->getMessage();
             $linea      = __LINE__;
             $log[]      = $mensajedev;
