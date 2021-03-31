@@ -115,9 +115,9 @@ class MostrarDescargaSiSoController extends Controller
                             array("value" => $osi->osivalorizado),
                             array("value" => "0"),
                         );
-                    }
 
-                    $nuevoArray[0]['data'][] = $arrayFilaExcel;
+                        $nuevoArray[0]['data'][] = $arrayFilaExcel;
+                    }
                 }
 
                 $datos     = $nuevoArray;
