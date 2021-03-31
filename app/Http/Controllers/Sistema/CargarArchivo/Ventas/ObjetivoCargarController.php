@@ -30,7 +30,7 @@ class ObjetivoCargarController extends Controller
     public function CargarObjetivo(Request $request)
     {
         date_default_timezone_set("America/Lima");
-        $fechaActual = date('Y-m-d H:i:s');
+        $fechaActual = date('Y-m-d');
 
         $respuesta      = true;
         $mensaje        = '';
@@ -42,6 +42,7 @@ class ObjetivoCargarController extends Controller
         $mensajedev     = null;
         $numeroCelda    = 0;
         $numRows    = 0;
+        $totalObjetivo = 0;
         $usutoken       = $request->header('api_token');
         $archivo        = $_FILES['file']['name'];
 
@@ -104,7 +105,9 @@ class ObjetivoCargarController extends Controller
                         $sku         = $objPHPExcel->getActiveSheet()->getCell('J'.$i)->getCalculatedValue();
                         $producto    = $objPHPExcel->getActiveSheet()->getCell('K'.$i)->getCalculatedValue();
                         $objetivo    = $objPHPExcel->getActiveSheet()->getCell('L'.$i)->getCalculatedValue();
-            
+
+                        $totalObjetivo = $totalObjetivo + $objetivo;
+
                         $fecfecha = fecfechas::where('fecdia', $dia)
                                             ->where('fecmes', $mesTxt)
                                             ->where('fecano', $ano)
@@ -542,6 +545,7 @@ class ObjetivoCargarController extends Controller
             "soldtosNoExisten"  => $soldtosNoExisten,
             "observaciones"  => $observaciones,
             "numRows"  => $numRows,
+            "totalObjetivo"  => $totalObjetivo,
         ]);
 
         if($respuesta == true){
