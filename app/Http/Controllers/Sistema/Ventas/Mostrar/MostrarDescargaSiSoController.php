@@ -139,7 +139,7 @@ class MostrarDescargaSiSoController extends Controller
                         $catnombre = $osi->catnombre;
                         $prosku    = $osi->prosku;
 
-                        if($casnombree == null || $casnombre == " " ){
+                        if($casnombre == null || $casnombre == " " ){
                             $casnombre = "0";
                         }else if($casnombre == "-"){
                             $casnombre = "0";
