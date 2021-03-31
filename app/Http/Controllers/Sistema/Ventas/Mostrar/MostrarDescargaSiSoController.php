@@ -83,6 +83,8 @@ class MostrarDescargaSiSoController extends Controller
                 $osis = osiobjetivosssi::where('fecid', $fec->fecid)->get();
 
                 foreach($osis as $posicionOsi => $osi){
+                    $respuesta = true;
+                    
                     if($posicionOsi == 0){
                         $arrayTitulos = array(
                             array("title" => "AÑO"),
