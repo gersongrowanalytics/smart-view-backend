@@ -282,7 +282,6 @@ class MostrarDescargaSiSoController extends Controller
             'linea'          => $linea,
             'mensajeDetalle' => $mensajeDetalle,
             'mensajedev'     => $mensajedev,
-            'archivo'        => $archivo
         ]);
 
         return $requestsalida;
