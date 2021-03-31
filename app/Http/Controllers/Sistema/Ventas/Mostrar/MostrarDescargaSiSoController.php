@@ -8,6 +8,7 @@ use App\osiobjetivosssi;
 use App\fecfechas;
 use App\sucsucursales;
 use App\usuusuarios;
+use App\vsiventasssi;
 
 class MostrarDescargaSiSoController extends Controller
 {
@@ -102,10 +103,10 @@ class MostrarDescargaSiSoController extends Controller
                                             'casnombre',
                                             'zonnombre',
                                             'gsunombre',
-                                            'sucid',
+                                            'suc.sucid',
                                             'sucsoldto',
                                             'sucnombre',
-                                            'proid',
+                                            'pro.proid',
                                             'pronombre',
                                             'catnombre',
                                             'prosku',
