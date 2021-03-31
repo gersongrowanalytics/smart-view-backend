@@ -80,7 +80,34 @@ class MostrarDescargaSiSoController extends Controller
 
             if($fec){
 
-                $osis = osiobjetivosssi::where('fecid', $fec->fecid)->where('osivalorizado', '!=', 0)->get();
+                $osis = osiobjetivosssi::join('sucsucursales as suc', 'suc.sucid', 'osiobjetivosssi.sucid')
+                                        ->leftjoin('cascanalessucursales as cas', 'cas.casid', 'suc.casid')
+                                        ->leftjoin('zonzonas as zon', 'zon.zonid', 'suc.zonid')
+                                        ->leftjoin('gsugrupossucursales as gsu', 'gsu.gsuid', 'suc.gsuid')
+                                        ->join('proproductos as pro', 'pro.proid', 'osiobjetivosssi.proid')
+                                        ->join('catcategorias as cat', 'cat.catid', 'pro.catid')
+                                        ->where('osiobjetivosssi.fecid', $fec->fecid)
+                                        ->where('osiobjetivosssi.osivalorizado', '!=', 0)
+                                        ->where(function ($query) use($sucs) {
+                                            foreach($sucs as $suc){
+                                                if(isset($suc['sucpromociondescarga'])){
+                                                    if($suc['sucpromociondescarga'] == true){
+                                                        $query->orwhere('sucid', $suc['sucid']);
+                                                    }
+                                                }
+                                            }
+                                        })
+                                        ->get([
+                                            'osivalorizado',
+                                            'casnombre',
+                                            'zonnombre',
+                                            'gsunombre',
+                                            'sucsoldto',
+                                            'sucnombre',
+                                            'pronombre',
+                                            'catnombre',
+                                            'prosku',
+                                        ]);
 
                 foreach($osis as $posicionOsi => $osi){
                     $respuesta = true;
@@ -103,17 +130,74 @@ class MostrarDescargaSiSoController extends Controller
                         $nuevoArray[0]['columns'] = $arrayTitulos;
                     }else{
 
+                        $casnombre = $osi->casnombre;
+                        $zonnombre = $osi->zonnombre;
+                        $gsunombre = $osi->gsunombre;
+                        $sucsoldto = $osi->sucsoldto;
+                        $sucnombre = $osi->sucnombre;
+                        $pronombre = $osi->pronombre;
+                        $catnombre = $osi->catnombre;
+                        $prosku    = $osi->prosku;
+
+                        if($casnombree == null || $casnombre == " " ){
+                            $casnombre = "0";
+                        }else if($casnombre == "-"){
+                            $casnombre = "0";
+                        }
+
+                        if($zonnombre == null || $zonnombre == " " ){
+                            $zonnombre = "0";
+                        }else if($zonnombre == "-"){
+                            $zonnombre = "0";
+                        }
+
+                        if($gsunombre == null || $gsunombre == " " ){
+                            $gsunombre = "0";
+                        }else if($gsunombre == "-"){
+                            $gsunombre = "0";
+                        }
+                        
+                        if($sucsoldto == null || $sucsoldto == " " ){
+                            $sucsoldto = "0";
+                        }else if($sucsoldto == "-"){
+                            $sucsoldto = "0";
+                        }
+
+                        if($sucnombre == null || $sucnombre == " " ){
+                            $sucnombre = "0";
+                        }else if($sucnombre == "-"){
+                            $sucnombre = "0";
+                        }
+
+                        if($pronombre == null || $pronombre == " " ){
+                            $pronombre = "0";
+                        }else if($pronombre == "-"){
+                            $pronombre = "0";
+                        }
+
+                        if($catnombre == null || $catnombre == " " ){
+                            $catnombre = "0";
+                        }else if($catnombre == "-"){
+                            $catnombre = "0";
+                        }
+
+                        if($prosku == null || $prosku == " " ){
+                            $prosku = "0";
+                        }else if($prosku == "-"){
+                            $prosku = "0";
+                        }
+
                         $arrayFilaExcel = array(
-                            array("value" => "0"),
-                            array("value" => "0"),
-                            array("value" => "0"),
-                            array("value" => "0"),
-                            array("value" => "0"),
-                            array("value" => "0"),
-                            array("value" => "0"),
-                            array("value" => "0"),
-                            array("value" => "0"),
-                            array("value" => "0"),
+                            array("value" => $anio),
+                            array("value" => $mes),
+                            array("value" => $casnombre),
+                            array("value" => $zonnombre),
+                            array("value" => $gsunombre),
+                            array("value" => $sucsoldto),
+                            array("value" => $sucnombre),
+                            array("value" => $pronombre),
+                            array("value" => $catnombre),
+                            array("value" => $prosku),
                             array("value" => $osi->osivalorizado),
                             array("value" => "0"),
                         );
