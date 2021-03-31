@@ -87,7 +87,7 @@ class MostrarDescargaSiSoController extends Controller
                                         ->join('proproductos as pro', 'pro.proid', 'osiobjetivosssi.proid')
                                         ->join('catcategorias as cat', 'cat.catid', 'pro.catid')
                                         ->where('osiobjetivosssi.fecid', $fec->fecid)
-                                        ->where('osiobjetivosssi.osivalorizado', '!=', 0)
+                                        // ->where('osiobjetivosssi.osivalorizado', '!=', 0)
                                         ->where(function ($query) use($sucs) {
                                             foreach($sucs as $suc){
                                                 if(isset($suc['sucpromociondescarga'])){
