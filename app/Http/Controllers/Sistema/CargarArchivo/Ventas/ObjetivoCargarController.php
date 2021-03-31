@@ -106,6 +106,12 @@ class ObjetivoCargarController extends Controller
                         $producto    = $objPHPExcel->getActiveSheet()->getCell('K'.$i)->getCalculatedValue();
                         $objetivo    = $objPHPExcel->getActiveSheet()->getCell('L'.$i)->getCalculatedValue();
 
+                        if(is_numeric ( $objetivo )){
+                            
+                        }else{
+                            $observaciones[] = "NO ES NUMERO :C ".$i." objetivo real: ".$objetivo;
+                        }
+
                         $totalObjetivo = $totalObjetivo + $objetivo;
 
                         $fecfecha = fecfechas::where('fecdia', $dia)
@@ -257,6 +263,12 @@ class ObjetivoCargarController extends Controller
                                     $observaciones[] = "El producto: ".$pro->pronombre." (".$sku.") del excel no coincide con el de la BD. El excel tiene una categoria: ".$sector." y en la BD tiene una categoria: ".$pro->catnombre;
                                 }
 
+                                if(is_numeric ( $objetivo )){
+                            
+                                }else{
+                                    $observaciones[] = "NO ES NUMERO :C ".$i." objetivo real: ".$objetivo;
+                                }
+
                                 $osi = osiobjetivosssi::where('fecid', $fecid)
                                                     ->where('proid', $pro->proid)
                                                     ->where('sucid', $sucursalClienteId)
@@ -373,18 +385,18 @@ class ObjetivoCargarController extends Controller
                             }else{
                                 // $skusNoExisten[] = $sku;
     
-                                // foreach($skusNoExisten as $posicion => $skuNoExisten){
-                                //     if($skuNoExisten == $sku){
-                                //         break;
-                                //     }
+                                foreach($skusNoExisten as $posicion => $skuNoExisten){
+                                    if($skuNoExisten == $sku){
+                                        break;
+                                    }
     
-                                //     if($posicion+1 == sizeof($skusNoExisten)){
-                                //         $skusNoExisten[] = $sku;
-                                //         $respuesta = false;
-                                //         break;
-                                //     }
+                                    if($posicion+1 == sizeof($skusNoExisten)){
+                                        $skusNoExisten[] = $sku;
+                                        $respuesta = false;
+                                        break;
+                                    }
                                 
-                                // }
+                                }
 
                                 $respuesta  = false;
                                 $mensaje    = 'Lo sentimos hay algunos skus que no existen en nuestra maestra: '.$sku;
