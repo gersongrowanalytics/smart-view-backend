@@ -277,7 +277,7 @@ class ObjetivoCargarController extends Controller
     
                                 if($osi){
                                     if($i  == 3053){
-                                        $observaciones[] = "ANTES OSI: ".$osi->osivalorizado;
+                                        $observaciones[] = "ANTES OSI: ".$osi->osivalorizado." AHORA:".$osi->osivalorizado+$objetivo;
                                     }else{
                                         
                                     }
