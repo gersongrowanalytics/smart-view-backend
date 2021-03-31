@@ -32,7 +32,7 @@ $router->group(['middleware' => ['permisos']], function() use($router) {
 
     // DESCARGAR SI Y SO
     $router->post('/ventas/descargar/especificos/si', 'Sistema\Ventas\Mostrar\MostrarDescargaSiSoController@MostrarSucursalesDescargarVentasSiExcel');
-    $router->post('/ventas/descargar/especificos/so', 'Sistema\Ventas\Mostrar\MostrarDescargaSiSoController@MostrarSucursalesDescargarVentasSoxxExcel');
+    $router->post('/ventas/descargar/especificos/so', 'Sistema\Ventas\Mostrar\MostrarDescargaSiSoController@MostrarSucursalesDescargarVentasSoExcel');
 
 
     $router->post('/promociones/mostrar/categorias', 'Sistema\Promociones\Mostrar\CategoriasController@mostrarCategorias');
