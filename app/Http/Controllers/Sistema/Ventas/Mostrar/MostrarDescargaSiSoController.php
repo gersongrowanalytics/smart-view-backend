@@ -92,7 +92,7 @@ class MostrarDescargaSiSoController extends Controller
                                             foreach($sucs as $suc){
                                                 if(isset($suc['sucpromociondescarga'])){
                                                     if($suc['sucpromociondescarga'] == true){
-                                                        $query->orwhere('sucid', $suc['sucid']);
+                                                        $query->orwhere('osiobjetivosssi.sucid', $suc['sucid']);
                                                     }
                                                 }
                                             }
