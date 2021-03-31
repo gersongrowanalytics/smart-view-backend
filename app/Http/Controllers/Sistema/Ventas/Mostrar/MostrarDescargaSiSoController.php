@@ -120,6 +120,8 @@ class MostrarDescargaSiSoController extends Controller
                     $nuevoArray[0]['data'][] = $arrayFilaExcel;
                 }
 
+                $datos     = $nuevoArray;
+
 
                 // $car = carcargasarchivos::where('fecid', $fec->fecid)
                 //                     ->where('tcaid', 1)
