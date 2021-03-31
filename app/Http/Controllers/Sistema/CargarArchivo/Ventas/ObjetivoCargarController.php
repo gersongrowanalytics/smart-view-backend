@@ -266,7 +266,11 @@ class ObjetivoCargarController extends Controller
                                 if($osi){
     
                                     $osi->osivalorizado = $objetivo + $osi->osivalorizado;
-                                    $osi->update();
+                                    if($osi->update()){
+
+                                    }else{
+                                        $log[] = "El objetivo de ssi no se pudo actualizar: ".$objetivo." del producto: ".$sku." del soldto: ".$soldto;
+                                    }
     
                                 }else{
                                     $osin = new osiobjetivosssi;
@@ -276,7 +280,11 @@ class ObjetivoCargarController extends Controller
                                     $osin->tpmid         = 1;
                                     $osin->osicantidad   = 0;
                                     $osin->osivalorizado = $objetivo;
-                                    $osin->save();
+                                    if($osin->save()){
+
+                                    }else{
+                                        $log[] = "El objetivo de ssi no se pudo crear: ".$objetivo." del producto: ".$sku." del soldto: ".$soldto;
+                                    }
                                 }
     
     
@@ -377,6 +385,9 @@ class ObjetivoCargarController extends Controller
                                     }
                                 
                                 }
+
+                                $respuesta  = false;
+                                $mensaje    = 'Lo sentimos hay algunos skus que no existen en nuestra maestra: '.$sku;
                             }
     
     
