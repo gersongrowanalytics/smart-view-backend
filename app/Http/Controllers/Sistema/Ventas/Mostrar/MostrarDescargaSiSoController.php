@@ -117,7 +117,7 @@ class MostrarDescargaSiSoController extends Controller
 
                     if($posicionOsi == 0){
                         $arrayTitulos = array(
-                            array("title" => "INCADOR"),
+                            array("title" => "INDICADOR"),
                             array("title" => "AÑO"),
                             array("title" => "MES"),
                             array("title" => "REGIÓN"),
@@ -140,7 +140,7 @@ class MostrarDescargaSiSoController extends Controller
                                     ->first();
 
                         if($vsi){
-                            $real = $vsi->vsivalorizado;
+                            $real = floatval($vsi->vsivalorizado);
                         }else{
                             $real = 0;
                         }
@@ -214,7 +214,7 @@ class MostrarDescargaSiSoController extends Controller
                             array("value" => $catnombre),
                             array("value" => $prosku),
                             array("value" => $pronombre),
-                            array("value" => $osi->osivalorizado),
+                            array("value" => floatval($osi->osivalorizado)),
                             array("value" => $real),
                         );
 
