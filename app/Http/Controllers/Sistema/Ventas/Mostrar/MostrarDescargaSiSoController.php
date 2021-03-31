@@ -132,94 +132,93 @@ class MostrarDescargaSiSoController extends Controller
                             array("title" => "REAL"),
                         );
                         $nuevoArray[0]['columns'] = $arrayTitulos;
-                    }else{
+                    }
 
-                        $vsi = vsiventasssi::where('fecid', $fec->fecid)
+                    $vsi = vsiventasssi::where('fecid', $fec->fecid)
                                     ->where('proid', $osi->proid)
                                     ->where('sucid', $osi->sucid)
                                     ->first();
 
-                        if($vsi){
-                            $real = floatval($vsi->vsivalorizado);
-                        }else{
-                            $real = 0;
-                        }
-                        
-                        $casnombre = $osi->casnombre;
-                        $zonnombre = $osi->zonnombre;
-                        $gsunombre = $osi->gsunombre;
-                        $sucsoldto = $osi->sucsoldto;
-                        $sucnombre = $osi->sucnombre;
-                        $pronombre = $osi->pronombre;
-                        $catnombre = $osi->catnombre;
-                        $prosku    = $osi->prosku;
-
-                        if($casnombre == null || $casnombre == " " ){
-                            $casnombre = "0";
-                        }else if($casnombre == "-"){
-                            $casnombre = "0";
-                        }
-
-                        if($zonnombre == null || $zonnombre == " " ){
-                            $zonnombre = "0";
-                        }else if($zonnombre == "-"){
-                            $zonnombre = "0";
-                        }
-
-                        if($gsunombre == null || $gsunombre == " " ){
-                            $gsunombre = "0";
-                        }else if($gsunombre == "-"){
-                            $gsunombre = "0";
-                        }
-                        
-                        if($sucsoldto == null || $sucsoldto == " " ){
-                            $sucsoldto = "0";
-                        }else if($sucsoldto == "-"){
-                            $sucsoldto = "0";
-                        }
-
-                        if($sucnombre == null || $sucnombre == " " ){
-                            $sucnombre = "0";
-                        }else if($sucnombre == "-"){
-                            $sucnombre = "0";
-                        }
-
-                        if($pronombre == null || $pronombre == " " ){
-                            $pronombre = "0";
-                        }else if($pronombre == "-"){
-                            $pronombre = "0";
-                        }
-
-                        if($catnombre == null || $catnombre == " " ){
-                            $catnombre = "0";
-                        }else if($catnombre == "-"){
-                            $catnombre = "0";
-                        }
-
-                        if($prosku == null || $prosku == " " ){
-                            $prosku = "0";
-                        }else if($prosku == "-"){
-                            $prosku = "0";
-                        }
-
-                        $arrayFilaExcel = array(
-                            array("value" => "Sell In"),
-                            array("value" => $anio),
-                            array("value" => $mes),
-                            array("value" => $casnombre),
-                            array("value" => $zonnombre),
-                            array("value" => $gsunombre),
-                            array("value" => $sucsoldto),
-                            array("value" => $sucnombre),
-                            array("value" => $catnombre),
-                            array("value" => $prosku),
-                            array("value" => $pronombre),
-                            array("value" => floatval($osi->osivalorizado)),
-                            array("value" => $real),
-                        );
-
-                        $nuevoArray[0]['data'][] = $arrayFilaExcel;
+                    if($vsi){
+                        $real = floatval($vsi->vsivalorizado);
+                    }else{
+                        $real = 0;
                     }
+                    
+                    $casnombre = $osi->casnombre;
+                    $zonnombre = $osi->zonnombre;
+                    $gsunombre = $osi->gsunombre;
+                    $sucsoldto = $osi->sucsoldto;
+                    $sucnombre = $osi->sucnombre;
+                    $pronombre = $osi->pronombre;
+                    $catnombre = $osi->catnombre;
+                    $prosku    = $osi->prosku;
+
+                    if($casnombre == null || $casnombre == " " ){
+                        $casnombre = "0";
+                    }else if($casnombre == "-"){
+                        $casnombre = "0";
+                    }
+
+                    if($zonnombre == null || $zonnombre == " " ){
+                        $zonnombre = "0";
+                    }else if($zonnombre == "-"){
+                        $zonnombre = "0";
+                    }
+
+                    if($gsunombre == null || $gsunombre == " " ){
+                        $gsunombre = "0";
+                    }else if($gsunombre == "-"){
+                        $gsunombre = "0";
+                    }
+                    
+                    if($sucsoldto == null || $sucsoldto == " " ){
+                        $sucsoldto = "0";
+                    }else if($sucsoldto == "-"){
+                        $sucsoldto = "0";
+                    }
+
+                    if($sucnombre == null || $sucnombre == " " ){
+                        $sucnombre = "0";
+                    }else if($sucnombre == "-"){
+                        $sucnombre = "0";
+                    }
+
+                    if($pronombre == null || $pronombre == " " ){
+                        $pronombre = "0";
+                    }else if($pronombre == "-"){
+                        $pronombre = "0";
+                    }
+
+                    if($catnombre == null || $catnombre == " " ){
+                        $catnombre = "0";
+                    }else if($catnombre == "-"){
+                        $catnombre = "0";
+                    }
+
+                    if($prosku == null || $prosku == " " ){
+                        $prosku = "0";
+                    }else if($prosku == "-"){
+                        $prosku = "0";
+                    }
+
+                    $arrayFilaExcel = array(
+                        array("value" => "Sell In"),
+                        array("value" => $anio),
+                        array("value" => $mes),
+                        array("value" => $casnombre),
+                        array("value" => $zonnombre),
+                        array("value" => $gsunombre),
+                        array("value" => $sucsoldto),
+                        array("value" => $sucnombre),
+                        array("value" => $catnombre),
+                        array("value" => $prosku),
+                        array("value" => $pronombre),
+                        array("value" => floatval($osi->osivalorizado)),
+                        array("value" => $real),
+                    );
+
+                    $nuevoArray[0]['data'][] = $arrayFilaExcel;
                 }
 
                 $datos     = $nuevoArray;
