@@ -373,18 +373,18 @@ class ObjetivoCargarController extends Controller
                             }else{
                                 // $skusNoExisten[] = $sku;
     
-                                foreach($skusNoExisten as $posicion => $skuNoExisten){
-                                    if($skuNoExisten == $sku){
-                                        break;
-                                    }
+                                // foreach($skusNoExisten as $posicion => $skuNoExisten){
+                                //     if($skuNoExisten == $sku){
+                                //         break;
+                                //     }
     
-                                    if($posicion+1 == sizeof($skusNoExisten)){
-                                        $skusNoExisten[] = $sku;
-                                        $respuesta = false;
-                                        break;
-                                    }
+                                //     if($posicion+1 == sizeof($skusNoExisten)){
+                                //         $skusNoExisten[] = $sku;
+                                //         $respuesta = false;
+                                //         break;
+                                //     }
                                 
-                                }
+                                // }
 
                                 $respuesta  = false;
                                 $mensaje    = 'Lo sentimos hay algunos skus que no existen en nuestra maestra: '.$sku;
