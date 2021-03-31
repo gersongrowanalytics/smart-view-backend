@@ -102,8 +102,10 @@ class MostrarDescargaSiSoController extends Controller
                                             'casnombre',
                                             'zonnombre',
                                             'gsunombre',
+                                            'sucid',
                                             'sucsoldto',
                                             'sucnombre',
+                                            'proid',
                                             'pronombre',
                                             'catnombre',
                                             'prosku',
@@ -131,6 +133,17 @@ class MostrarDescargaSiSoController extends Controller
                         $nuevoArray[0]['columns'] = $arrayTitulos;
                     }else{
 
+                        $vsi = vsiventasssi::where('fecid', $fec->fecid)
+                                    ->where('proid', $osi->proid)
+                                    ->where('sucid', $osi->sucid)
+                                    ->first();
+
+                        if($vsi){
+                            $real = $vsi->vsivalorizado;
+                        }else{
+                            $real = 0;
+                        }
+                        
                         $casnombre = $osi->casnombre;
                         $zonnombre = $osi->zonnombre;
                         $gsunombre = $osi->gsunombre;
@@ -201,7 +214,7 @@ class MostrarDescargaSiSoController extends Controller
                             array("value" => $prosku),
                             array("value" => $pronombre),
                             array("value" => $osi->osivalorizado),
-                            array("value" => "0"),
+                            array("value" => $real),
                         );
 
                         $nuevoArray[0]['data'][] = $arrayFilaExcel;
