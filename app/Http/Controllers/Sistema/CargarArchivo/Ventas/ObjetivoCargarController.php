@@ -265,7 +265,7 @@ class ObjetivoCargarController extends Controller
     
                                 if($osi){
     
-                                    $osi->osivalorizado = $objetivo + $osi->osivalorizado;
+                                    $osi->osivalorizado = $osi->osivalorizado+$objetivo;
                                     if($osi->update()){
 
                                     }else{
