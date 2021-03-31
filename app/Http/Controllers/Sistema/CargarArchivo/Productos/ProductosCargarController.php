@@ -270,7 +270,7 @@ class ProductosCargarController extends Controller
                     if($material != null){
                         $fecfecha = fecfechas::where('fecfecha', $fechaActual)->first();
                                         
-                        $fecid = 0;
+                        $fecid = null;
                         if($fecfecha){
                             $fecid = $fecfecha->fecid;
                         }else{
