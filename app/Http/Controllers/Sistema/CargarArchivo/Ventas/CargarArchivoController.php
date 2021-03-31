@@ -23,6 +23,7 @@ use App\trrtiposrebatesrebates;
 use App\tuptiposusuariospermisos;
 use App\vsiventasssi;
 use App\vsoventassso;
+use App\osiobjetivosssi;
 
 class CargarArchivoController extends Controller
 {
@@ -244,6 +245,23 @@ class CargarArchivoController extends Controller
                                                 $vsin->vsicantidad   = 0;
                                                 $vsin->vsivalorizado = $real;
                                                 $vsin->save();
+                                            }
+
+                                            // VALIDAR SI EL SKU TIENE OBJETIVO
+                                            $osi = osiobjetivosssi::where('fecid', $fecid)
+                                                            ->where('proid', $pro->proid)
+                                                            ->where('sucid', $sucursalClienteId)
+                                                            ->first();
+
+                                            if(!$osi){
+                                                $osin = new osiobjetivosssi;
+                                                $osin->fecid         = $fecid;
+                                                $osin->proid         = $pro->proid;
+                                                $osin->sucid         = $sucursalClienteId;
+                                                $osin->tpmid         = 1;
+                                                $osin->osicantidad   = 0;
+                                                $osin->osivalorizado = 0;
+                                                $osin->save();
                                             }
 
                                             $tsu = tsutipospromocionessucursales::where('fecid', $fecid)

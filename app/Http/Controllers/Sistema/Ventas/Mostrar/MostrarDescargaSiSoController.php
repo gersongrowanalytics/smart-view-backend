@@ -114,6 +114,7 @@ class MostrarDescargaSiSoController extends Controller
 
                     if($posicionOsi == 0){
                         $arrayTitulos = array(
+                            array("title" => "INCADOR"),
                             array("title" => "AÑO"),
                             array("title" => "MES"),
                             array("title" => "REGIÓN"),
@@ -188,6 +189,7 @@ class MostrarDescargaSiSoController extends Controller
                         }
 
                         $arrayFilaExcel = array(
+                            array("value" => "Sell In"),
                             array("value" => $anio),
                             array("value" => $mes),
                             array("value" => $casnombre),
@@ -195,9 +197,9 @@ class MostrarDescargaSiSoController extends Controller
                             array("value" => $gsunombre),
                             array("value" => $sucsoldto),
                             array("value" => $sucnombre),
-                            array("value" => $pronombre),
                             array("value" => $catnombre),
                             array("value" => $prosku),
+                            array("value" => $pronombre),
                             array("value" => $osi->osivalorizado),
                             array("value" => "0"),
                         );
