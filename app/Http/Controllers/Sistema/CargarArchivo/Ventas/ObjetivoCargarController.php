@@ -263,10 +263,10 @@ class ObjetivoCargarController extends Controller
                                     $observaciones[] = "El producto: ".$pro->pronombre." (".$sku.") del excel no coincide con el de la BD. El excel tiene una categoria: ".$sector." y en la BD tiene una categoria: ".$pro->catnombre;
                                 }
 
-                                if(is_numeric ( $objetivo )){
-                            
+                                if($i  == 3053){
+                                    $observaciones[] = "categoria: ".$pro->catid." objetivo: ".$objetivo." sku: ".$sku;
                                 }else{
-                                    $observaciones[] = "NO ES NUMERO :C ".$i." objetivo real: ".$objetivo;
+                                    
                                 }
 
                                 $osi = osiobjetivosssi::where('fecid', $fecid)
