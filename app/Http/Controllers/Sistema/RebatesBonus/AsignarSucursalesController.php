@@ -122,7 +122,11 @@ class AsignarSucursalesController extends Controller
 
     public function ActualizarCategoriasBonus($fecid, $rbbid)
     {
- 
+        
+       rscrbsscategorias::where('fecid', $fecid)
+                        ->where('rbbid', $rbbid)
+                        ->delete();
+
         $log = array(
             "NO_SE_AGREGO_RSC_CATEGORIAS" => [],
             "NO_SE_ENCONTRO_RBS" => []
