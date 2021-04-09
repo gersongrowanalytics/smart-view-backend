@@ -11,6 +11,8 @@ use App\sucsucursales;
 use App\usuusuarios;
 use App\vsiventasssi;
 use App\vsoventassso;
+use App\rbbrebatesbonus;
+use App\rbsrebatesbonussucursales;
 
 class MostrarDescargaSiSoController extends Controller
 {
@@ -68,7 +70,7 @@ class MostrarDescargaSiSoController extends Controller
                                             }
                                         }
                                     })
-                                ->get(['sucsoldto']);
+                                ->get(['sucsoldto', 'sucnombre']);
 
             $nuevoArray = array(
                 array(
@@ -227,7 +229,88 @@ class MostrarDescargaSiSoController extends Controller
                 $datos     = $nuevoArray;
 
 
+
                 // REBATE BONUS ------------------
+
+                // OBTENER EL REBATE BONUS
+                $rbsObjetivo = 0;
+                $rbsReal     = 0;
+                $rbsRebate   = 0;
+                $rbbdescripcion = "";
+
+                $rbbs = rbbrebatesbonus::join('fecfechas as fec', 'rbbrebatesbonus.fecid', 'fec.fecid')
+                                        ->where('fec.fecano', $ano)
+                                        ->where('fec.fecmes', $mes)
+                                        ->where('fec.fecdia', $dia)
+                                        ->get();
+
+                if(sizeof($rbbs) > 0){
+
+                    $rbsObjetivo = 0;
+                    $rbsReal     = 0;
+                    $rbsRebate   = 0;
+                    $rbbdescripcion   = "";
+
+                    foreach($rbbs as $rbb){
+                        $rbbdescripcion   = $rbb->rbbdescripcion;
+                        $rbsSumaObjetivosActual = rbsrebatesbonussucursales::where('rbbid', $rbb->rbbid)
+                                                                        ->where(function ($query) use($sucs) {
+                                                                            foreach($sucs as $suc){
+                                                                                if(isset($suc['sucpromociondescarga'])){
+                                                                                    if($suc['sucpromociondescarga'] == true){
+                                                                                        $query->orwhere('sucid', $suc['sucid']);
+                                                                                    }
+                                                                                }
+                                                                            }
+                                                                        })
+                                                                        ->sum('rbsobjetivo');
+
+                        $rbsSumaRealActual = rbsrebatesbonussucursales::join('sucsucursales as suc', 'suc.sucid', 'rbsrebatesbonussucursales.sucid')
+                                                        ->where('rbbid', $rbb->rbbid)
+                                                        ->where(function ($query) use($sucs) {
+                                                            foreach($sucs as $suc){
+                                                                if(isset($suc['sucpromociondescarga'])){
+                                                                    if($suc['sucpromociondescarga'] == true){
+                                                                        $query->orwhere('sucid', $suc['sucid']);
+                                                                    }
+                                                                }
+                                                            }
+                                                        })
+                                                        ->sum('rbsreal');
+                        
+                        if($rbsSumaObjetivosActual > 0){
+                            $rbsCumplimientoActual = ($rbsSumaRealActual * 100 ) / $rbsSumaObjetivosActual;
+                        }else{
+                            $rbsCumplimientoActual = $rbsSumaRealActual;
+                        }
+
+                        if($rbb->rbbcumplimiento <= $rbsCumplimientoActual){
+                            $rbsRebateActual = ($rbsSumaObjetivosActual * $rbb->rbbporcentaje) / 100;
+                        }else{
+                            $rbsRebateActual = 0;
+                        }
+
+
+
+                        $rbsRebate   = $rbsRebate + $rbsRebateActual;
+                        $rbsObjetivo = $rbsObjetivo + $rbsSumaObjetivosActual;
+                        $rbsReal     = $rbsReal + $rbsSumaRealActual;
+
+                        if($rbsObjetivo > 0){
+                            $rbsCumplimiento = ($rbsReal * 100 ) / $rbsObjetivo;
+                        }else{
+                            $rbsCumplimiento = $rbsReal;
+                        }
+
+                        $rebatesBonus['objetivo']     = $rbsObjetivo;
+                        $rebatesBonus['real']         = $rbsReal;
+                        $rebatesBonus['cumplimiento'] = $rbsCumplimiento;
+                        $rebatesBonus['rebate']       = $rbsRebate;
+                        $rebatesBonus['descripcion']  = $rbb->rbbdescripcion;
+                        
+                    }
+                }
+
                 $rebateBonus = array(
                     array(
                         "columns" => [
@@ -287,7 +370,7 @@ class MostrarDescargaSiSoController extends Controller
                             ],
                             [
                                 array(
-                                    "value" => "Cumpliendo la cuota NIV de la categoría de Pañales para Bebes al 100% en el mes correspondiente:",
+                                    "value" => $rbbdescripcion,
                                     "style" => array(
                                         "font" => array(
                                             "sz" => "14",
@@ -355,7 +438,7 @@ class MostrarDescargaSiSoController extends Controller
                                     ),
                                 ),
                                 array(
-                                    "value" => "1184847",
+                                    "value" => $rbsObjetivo,
                                     "style" => array(
                                         "font" => array(
                                             "sz" => "14",
@@ -364,7 +447,7 @@ class MostrarDescargaSiSoController extends Controller
                                     ),
                                 ),
                                 array(
-                                    "value" => "0",
+                                    "value" => $rbsReal,
                                     "style" => array(
                                         "font" => array(
                                             "sz" => "14",
@@ -373,7 +456,7 @@ class MostrarDescargaSiSoController extends Controller
                                     ),
                                 ),
                                 array(
-                                    "value" => "0%",
+                                    "value" => ($rbsReal * 100)/$rbsObjetivo."%",
                                     "style" => array(
                                         "font" => array(
                                             "sz" => "14",
@@ -382,7 +465,7 @@ class MostrarDescargaSiSoController extends Controller
                                     ),
                                 ),
                                 array(
-                                    "value" => "0",
+                                    "value" => $rbsRebate,
                                     "style" => array(
                                         "font" => array(
                                             "sz" => "14",
@@ -415,6 +498,33 @@ class MostrarDescargaSiSoController extends Controller
                         ]
                     ),
                 );
+
+                foreach ($usss as $uss) {
+                    $sucursal = [
+                        array(
+                            "value" => $uss->sucsoldto,
+                            "style" => array(
+                                "font" => array(
+                                    "sz" => "14",
+                                    "bold" => false
+                                ),
+                            ),
+                        ),
+                        array(
+                            "value" => $uss->sucnombre,
+                            "style" => array(
+                                "font" => array(
+                                    "sz" => "14",
+                                    "bold" => false
+                                ),
+                            ),
+                        ),
+                    ];
+
+                    $rebateBonus[0]["data"].push($sucursal);
+                }
+
+
 
                 // $car = carcargasarchivos::where('fecid', $fec->fecid)
                 //                     ->where('tcaid', 1)
@@ -629,16 +739,16 @@ class MostrarDescargaSiSoController extends Controller
 
         try{
 
-            $uss = sucsucursales::where(function ($query) use($sucs) {
-                                        foreach($sucs as $suc){
-                                            if(isset($suc['sucpromociondescarga'])){
-                                                if($suc['sucpromociondescarga'] == true){
-                                                    $query->orwhere('sucid', $suc['sucid']);
-                                                }
-                                            }
-                                        }
-                                    })
-                                ->get(['sucsoldto']);
+            // $uss = sucsucursales::where(function ($query) use($sucs) {
+            //                             foreach($sucs as $suc){
+            //                                 if(isset($suc['sucpromociondescarga'])){
+            //                                     if($suc['sucpromociondescarga'] == true){
+            //                                         $query->orwhere('sucid', $suc['sucid']);
+            //                                     }
+            //                                 }
+            //                             }
+            //                         })
+            //                     ->get(['sucsoldto']);
 
             $nuevoArray = array(
                 array(
