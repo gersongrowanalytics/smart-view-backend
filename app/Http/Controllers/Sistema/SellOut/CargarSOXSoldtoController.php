@@ -9,6 +9,7 @@ use App\vsoventassso;
 use App\fecfechas;
 use App\proproductos;
 use App\sucsucursales;
+use App\osoobjetivossso;
 
 class CargarSOXSoldtoController extends Controller
 {
@@ -174,7 +175,7 @@ class CargarSOXSoldtoController extends Controller
     
                     if($suc){
                         $sucid = $suc->sucid;
-    
+                        
                         $vso = vsoventassso::where('fecid', $fecidFec)
                                             ->where('proid', $proid)
                                             ->where('sucid', $sucid)
@@ -196,7 +197,23 @@ class CargarSOXSoldtoController extends Controller
                             $vson->vsovalorizado = $real;
                             $vson->save();
                         }
-    
+
+                        $oso = osoobjetivossso::where('fecid', $fecidFec)
+                                            ->where('proid', $proid)
+                                            ->where('sucid', $sucid)
+                                            ->where('tpmid', 1)
+                                            ->first();
+
+                        if(!$oso){
+                            $oson = new osoobjetivossso;
+                            $oson->fecid         = $fecidFec;
+                            $oson->proid         = $proid;
+                            $oson->sucid         = $sucid;
+                            $oson->tpmid         = 1;
+                            $oson->osocantidad   = 0;
+                            $oson->osovalorizado = 0;
+                            $oson->save();
+                        }
     
                     }else{
                         $logs['SUCS_FALTANTES'][] = $soldto;
