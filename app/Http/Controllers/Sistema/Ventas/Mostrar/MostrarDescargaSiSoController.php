@@ -61,7 +61,7 @@ class MostrarDescargaSiSoController extends Controller
 
         try{
 
-            $uss = sucsucursales::where(function ($query) use($sucs) {
+            $usss = sucsucursales::where(function ($query) use($sucs) {
                                         foreach($sucs as $suc){
                                             if(isset($suc['sucpromociondescarga'])){
                                                 if($suc['sucpromociondescarga'] == true){
