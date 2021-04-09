@@ -131,7 +131,10 @@ $router->get('/obtenerSellOutTodo', 'Sistema\SellOut\CargarSellOutController@Car
 $router->get('/obtenerSellOutDiario', 'Sistema\SellOut\CargarSellOutController@CargarSellOutDiario');
 $router->get('/obtenerSellOutEspecifico/{anioSelec}/{mesSelec}/{diaSelec}', 'Sistema\SellOut\CargarSellOutController@CargarSellOutEspecifico');
 $router->get('/obtenerSellOutEspecificoWeb/{anioSelec}/{mesSelec}/{diaSelec}', 'Sistema\SellOut\CargarSellOutController@CargarSellOutEspecificoWeb');
+
+// SELL OUT CONSOLIDADO
 $router->get('/obtenerSOXCategoria/{anioSelec}/{mesSelec}', 'Sistema\SellOut\CargarSOXCategoriaController@CargarSOXCategoria');
+$router->get('/obtenerSOXSoldTo/{anioSelec}/{mesSelec}', 'Sistema\SellOut\CargarSOXSoldtoController@CargarSOXSoldTo');
 
 
 
