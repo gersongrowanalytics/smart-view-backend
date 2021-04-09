@@ -28,6 +28,7 @@ class MostrarDescargaSiSoController extends Controller
         $respuesta      = false;
         $mensaje        = '';
         $datos          = [];
+        $rebateBonus    = [];
         $linea          = __LINE__;
         $mensajeDetalle = '';
         $mensajedev     = null;
@@ -226,6 +227,195 @@ class MostrarDescargaSiSoController extends Controller
                 $datos     = $nuevoArray;
 
 
+                // REBATE BONUS ------------------
+                $rebateBonus = array(
+                    array(
+                        "columns" => [
+                            array(
+                                "title" => "",
+                                "width" => array(
+                                    "wch" => 40
+                                ),
+                            ),
+                            array(
+                                "title" => "",
+                                "width" => array(
+                                    "wpx" => 100
+                                ),
+                            ),
+                            array(
+                                "title" => "",
+                                "width" => array(
+                                    "wpx" => 100
+                                ),
+                            ),
+                            array(
+                                "title" => "",
+                                "width" => array(
+                                    "wpx" => 150
+                                ),
+                            ),
+                            array(
+                                "title" => "",
+                                "width" => array(
+                                    "wpx" => 150
+                                ),
+                            ),
+                        ],
+                        "data" => [
+                            [
+                                array(
+                                    "value" => "REBATE BONUS",
+                                    "style" => array(
+                                        "font" => array(
+                                            "sz" => "18",
+                                            "bold" => true
+                                        ),
+                                    ),
+                                ),
+                            ],
+                            [
+                                array(
+                                    "value" => "El cliente podrá acceder a un rebate denominado “Bonus” de 0.5 %, siempre que cumpla con lo siguiente:",
+                                    "style" => array(
+                                        "font" => array(
+                                            "sz" => "14",
+                                            "bold" => false
+                                        ),
+                                    ),
+                                ),
+                            ],
+                            [
+                                array(
+                                    "value" => "Cumpliendo la cuota NIV de la categoría de Pañales para Bebes al 100% en el mes correspondiente:",
+                                    "style" => array(
+                                        "font" => array(
+                                            "sz" => "14",
+                                            "bold" => false
+                                        ),
+                                    ),
+                                ),
+                            ],
+                            [],
+                            [
+                                array(
+                                    "value" => "Categoria",
+                                    "style" => array(
+                                        "font" => array(
+                                            "sz" => "18",
+                                            "bold" => true
+                                        ),
+                                    ),
+                                ),
+                                array(
+                                    "value" => "Objetivo",
+                                    "style" => array(
+                                        "font" => array(
+                                            "sz" => "18",
+                                            "bold" => true
+                                        ),
+                                    ),
+                                ),
+                                array(
+                                    "value" => "Real",
+                                    "style" => array(
+                                        "font" => array(
+                                            "sz" => "18",
+                                            "bold" => true
+                                        ),
+                                    ),
+                                ),
+                                array(
+                                    "value" => "Cumplimiento",
+                                    "style" => array(
+                                        "font" => array(
+                                            "sz" => "18",
+                                            "bold" => true
+                                        ),
+                                    ),
+                                ),
+                                array(
+                                    "value" => "Rebate Bonus",
+                                    "style" => array(
+                                        "font" => array(
+                                            "sz" => "18",
+                                            "bold" => true
+                                        ),
+                                    ),
+                                ),
+                            ],
+                            [
+                                array(
+                                    "value" => "Infant Care",
+                                    "style" => array(
+                                        "font" => array(
+                                            "sz" => "14",
+                                            "bold" => false
+                                        ),
+                                    ),
+                                ),
+                                array(
+                                    "value" => "1184847",
+                                    "style" => array(
+                                        "font" => array(
+                                            "sz" => "14",
+                                            "bold" => false
+                                        ),
+                                    ),
+                                ),
+                                array(
+                                    "value" => "0",
+                                    "style" => array(
+                                        "font" => array(
+                                            "sz" => "14",
+                                            "bold" => false
+                                        ),
+                                    ),
+                                ),
+                                array(
+                                    "value" => "0%",
+                                    "style" => array(
+                                        "font" => array(
+                                            "sz" => "14",
+                                            "bold" => false
+                                        ),
+                                    ),
+                                ),
+                                array(
+                                    "value" => "0",
+                                    "style" => array(
+                                        "font" => array(
+                                            "sz" => "14",
+                                            "bold" => false
+                                        ),
+                                    ),
+                                ),
+                            ],
+                            [],
+                            [
+                                array(
+                                    "value" => "Sold To",
+                                    "style" => array(
+                                        "font" => array(
+                                            "sz" => "18",
+                                            "bold" => true
+                                        ),
+                                    ),
+                                ),
+                                array(
+                                    "value" => "Cliente",
+                                    "style" => array(
+                                        "font" => array(
+                                            "sz" => "18",
+                                            "bold" => true
+                                        ),
+                                    ),
+                                ),
+                            ]
+                        ]
+                    ),
+                );
+
                 // $car = carcargasarchivos::where('fecid', $fec->fecid)
                 //                     ->where('tcaid', 1)
                 //                     ->first(['carid', 'carnombrearchivo']);
@@ -384,6 +574,7 @@ class MostrarDescargaSiSoController extends Controller
             'respuesta'      => $respuesta,
             'mensaje'        => $mensaje,
             'datos'          => $datos,
+            'rebateBonus'    => $rebateBonus,
             'linea'          => $linea,
             'mensajeDetalle' => $mensajeDetalle,
             'mensajedev'     => $mensajedev,
