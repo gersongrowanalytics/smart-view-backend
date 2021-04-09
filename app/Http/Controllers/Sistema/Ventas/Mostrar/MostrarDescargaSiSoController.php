@@ -520,7 +520,7 @@ class MostrarDescargaSiSoController extends Controller
                         ),
                     ];
 
-                    $rebateBonus[0]["data"].push($sucursal);
+                    $rebateBonus[0]["data"][] = $sucursal;
                 }
 
 
