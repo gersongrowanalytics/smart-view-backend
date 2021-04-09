@@ -265,8 +265,7 @@ class MostrarDescargaSiSoController extends Controller
                                                                         })
                                                                         ->sum('rbsobjetivo');
 
-                        $rbsSumaRealActual = rbsrebatesbonussucursales::join('sucsucursales as suc', 'suc.sucid', 'rbsrebatesbonussucursales.sucid')
-                                                        ->where('rbbid', $rbb->rbbid)
+                        $rbsSumaRealActual = rbsrebatesbonussucursales::where('rbbid', $rbb->rbbid)
                                                         ->where(function ($query) use($sucs) {
                                                             foreach($sucs as $suc){
                                                                 if(isset($suc['sucpromociondescarga'])){
