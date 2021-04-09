@@ -239,7 +239,7 @@ class MostrarDescargaSiSoController extends Controller
                 $rbbdescripcion = "";
 
                 $rbbs = rbbrebatesbonus::join('fecfechas as fec', 'rbbrebatesbonus.fecid', 'fec.fecid')
-                                        ->where('fec.fecano', $ano)
+                                        ->where('fec.fecano', $anio)
                                         ->where('fec.fecmes', $mes)
                                         ->where('fec.fecdia', $dia)
                                         ->get();
