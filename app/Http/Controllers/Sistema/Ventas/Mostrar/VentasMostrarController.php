@@ -14,6 +14,7 @@ use App\trrtiposrebatesrebates;
 use App\rbbrebatesbonus;
 use App\rbsrebatesbonussucursales;
 use App\tritrimestres;
+use App\trftrimestresfechas;
 use App\sucsucursales;
 use App\rtprebatetipospromociones;
 
@@ -110,26 +111,54 @@ class VentasMostrarController extends Controller
                 }
             }
 
-            // SABER SI ESTE MES TIENE REBATE TRIMESTRAL
-            $tieneRebateTrimestral = false;
+            
+            // QUE APAREZCA EL REBATE TRISMESTRAL EN TODOS LOS MESES
+            $tieneRebateTrimestral = true;
             $nombreTrimestre = "";
 
-            $tri = tritrimestres::join('fecfechas as fec', 'tritrimestres.fecid', 'fec.fecid')
+            $tri = trftrimestresfechas::join('fecfechas as fec', 'tritrimestres.fecid', 'fec.fecid')
+                                ->join('tritrimestres as tri', 'tri.triid', 'trftrimestresfechas.triid')
                                 ->where('fec.fecano', $ano)
                                 ->where('fec.fecmes', $mes)
                                 ->where('fec.fecdia', $dia)
-                                ->where('triestado', 1)
-                                ->first();
+                                ->where('tri.triestado', 1)
+                                ->first([
+                                    'tri.trinombre'
+                                ]);
 
             if($tri){
                 $suca = sucsucursales::find($sucid);
-                if($ano == "2021"){
+                // if($ano == "2021"){
                     if($suca->treid != 24){
                         $tieneRebateTrimestral = true;
                         $nombreTrimestre = $tri->trinombre;
                     }
-                }
+                // }
             }
+
+
+
+            // SABER SI ESTE MES TIENE REBATE TRIMESTRAL
+            // QUE SOLO APAREZCA EL REBATE TRISMESTRAL CADA TRES MESES
+            // $tieneRebateTrimestral = false;
+            // $nombreTrimestre = "";
+
+            // $tri = tritrimestres::join('fecfechas as fec', 'tritrimestres.fecid', 'fec.fecid')
+            //                     ->where('fec.fecano', $ano)
+            //                     ->where('fec.fecmes', $mes)
+            //                     ->where('fec.fecdia', $dia)
+            //                     ->where('triestado', 1)
+            //                     ->first();
+
+            // if($tri){
+            //     $suca = sucsucursales::find($sucid);
+            //     if($ano == "2021"){
+            //         if($suca->treid != 24){
+            //             $tieneRebateTrimestral = true;
+            //             $nombreTrimestre = $tri->trinombre;
+            //         }
+            //     }
+            // }
 
             $tsutipospromocionessucursales = tsutipospromocionessucursales::join('fecfechas as fec', 'tsutipospromocionessucursales.fecid', 'fec.fecid')
                                                                         ->join('tprtipospromociones as tpr', 'tpr.tprid', 'tsutipospromocionessucursales.tprid')
