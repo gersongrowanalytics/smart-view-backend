@@ -107,6 +107,7 @@ $router->group(['middleware' => ['permisos']], function() use($router) {
 
     $router->post('/configuracion/crear/rebateTrimestral', 'Sistema\Trimestre\CrearTrimestreController@CrearTrimestre');
     $router->get('/configuracion/actualizar/rebateTrimestral/{fecid}', 'Sistema\Trimestre\ActualizarTrimestreController@ActualizarTrimestre');
+    $router->post('/configuracion/actualizar/rebateTrimestral/todosmeses', 'Sistema\Trimestre\ActualizarTrimestreTodosMesesController@ActualizarTrimestreTodosMeses');
 
     $router->post('/perfil/editar/editarPerfil', 'Sistema\Perfil\Editar\EditarPerfilController@EditarPerfil');
     $router->post('/perfil/mostrar/novedades', 'Sistema\Perfil\Mostrar\MostrarNovedadesController@MostrarNovedades');
