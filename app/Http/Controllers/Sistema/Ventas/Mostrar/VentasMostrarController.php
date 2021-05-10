@@ -116,7 +116,7 @@ class VentasMostrarController extends Controller
             $tieneRebateTrimestral = true;
             $nombreTrimestre = "";
 
-            $tri = trftrimestresfechas::join('fecfechas as fec', 'tritrimestres.fecid', 'fec.fecid')
+            $tri = trftrimestresfechas::join('fecfechas as fec', 'trftrimestresfechas.fecid', 'fec.fecid')
                                 ->join('tritrimestres as tri', 'tri.triid', 'trftrimestresfechas.triid')
                                 ->where('fec.fecano', $ano)
                                 ->where('fec.fecmes', $mes)
