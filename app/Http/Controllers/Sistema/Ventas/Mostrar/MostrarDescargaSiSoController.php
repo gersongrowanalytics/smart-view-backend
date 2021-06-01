@@ -455,7 +455,7 @@ class MostrarDescargaSiSoController extends Controller
                                     ),
                                 ),
                                 array(
-                                    "value" => ($rbsReal * 100)/$rbsObjetivo."%",
+                                    "value" => if($rbsObjetivo > 0) ($rbsReal * 100)/$rbsObjetivo."%" else "0%",
                                     "style" => array(
                                         "font" => array(
                                             "sz" => "14",
