@@ -310,6 +310,13 @@ class MostrarDescargaSiSoController extends Controller
                     }
                 }
 
+
+                if($rbsObjetivo > 0){
+                    $cumplimientoSi =  ($rbsReal * 100)/$rbsObjetivo."%";
+                }else{
+                    $cumplimientoSi =  "0%";
+                }
+
                 $rebateBonus = array(
                     array(
                         "columns" => [
@@ -455,7 +462,8 @@ class MostrarDescargaSiSoController extends Controller
                                     ),
                                 ),
                                 array(
-                                    "value" => if($rbsObjetivo > 0) ($rbsReal * 100)/$rbsObjetivo."%" else "0%",
+                                    // "value" =>  ($rbsReal * 100)/$rbsObjetivo."%",
+                                    "value" =>  $cumplimientoSi,
                                     "style" => array(
                                         "font" => array(
                                             "sz" => "14",
