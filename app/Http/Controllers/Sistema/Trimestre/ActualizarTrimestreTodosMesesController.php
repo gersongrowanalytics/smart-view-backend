@@ -44,7 +44,7 @@ class ActualizarTrimestreTodosMesesController extends Controller
         $tprs = tprtipospromociones::all();
         $cats = catcategorias::all();
 
-        DB::beginTransaction();
+        // DB::beginTransaction();
         try{
             foreach($tris as $tri){
                 $trfs = trftrimestresfechas::where('triid', $tri->triid)
@@ -202,10 +202,10 @@ class ActualizarTrimestreTodosMesesController extends Controller
                 }
             }
 
-            DB::commit();
+            // DB::commit();
 
         } catch (Exception $e) {
-            DB::rollBack();
+            // DB::rollBack();
             $mensajedev = $e->getMessage();
             $respuesta  = false;
             $mensaje    = 'Lo sentimos ocurrio un error al momento de actualizar el rebate trimestral';
