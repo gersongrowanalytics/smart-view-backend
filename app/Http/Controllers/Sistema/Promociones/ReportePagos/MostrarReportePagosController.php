@@ -100,18 +100,6 @@ class MostrarReportePagosController extends Controller
                             array("title" => "", "width" => array("wpx" => 150))
                         );
                         $nuevoArray[0]['columns'] = $arrayTitulos;
-                        $arrayTitulos = array(
-                            array("title" => "", "width" => array("wpx" => 100)),
-                            array("title" => "Sold To", "width" => array("wpx" => 100)),
-                            array("title" => "Clientes", "width" => array("wpx" => 150)),
-                            array("title" => "Concepto", "width" => array("wpx" => 150)),
-                            array("title" => "Tipo Doc.", "width" => array("wpx" => 150)),
-                            array("title" => "Nro. Doc.", "width" => array("wpx" => 150)),
-                            array("title" => "Fecha Doc.", "width" => array("wpx" => 150)),
-                            array("title" => "Categoría", "width" => array("wpx" => 150)),
-                            array("title" => "Importe (sin igv)", "width" => array("wpx" => 150))
-                        );
-                        $nuevoArray[0]['columns'] = $arrayTitulos;
                     }
 
                     $arrayFilaExcel = array(
