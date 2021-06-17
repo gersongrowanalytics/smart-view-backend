@@ -82,8 +82,10 @@ class MostrarReportePagosController extends Controller
                                                     'repcategoria',
                                                     'repimporte'
                                                 ]);
-
+                $totalImporte = 0;
                 foreach($reps as $posicionRep => $rep){
+                    
+                    $totalImporte = $totalImporte + $rep->repimporte;
 
                     if($posicionRep == 0){
                         $arrayTitulos = array(
@@ -108,10 +110,40 @@ class MostrarReportePagosController extends Controller
                         array("value" => $rep->reptipodocumento),
                         array("value" => $rep->repnumerodocumento),
                         array("value" => $rep->repfechadocumento),
+                        array("value" => $rep->repcategoria),
                         array("value" => floatval($rep->repimporte))
                     );
 
                     $nuevoArray[0]['data'][] = $arrayFilaExcel;
+
+                    if($posicionRep+1 == sizeof($reps)){
+                        $arrayFilaExcel = array(
+                            array("value" => ""),
+                            array("value" => ""),
+                            array("value" => ""),
+                            array("value" => ""),
+                            array("value" => ""),
+                            array("value" => ""),
+                            array("value" => ""),
+                            array("value" => ""),
+                            array("value" => "")
+                        );
+                        $nuevoArray[0]['data'][] = $arrayFilaExcel;
+
+                        $arrayFilaExcel = array(
+                            array("value" => ""),
+                            array("value" => ""),
+                            array("value" => ""),
+                            array("value" => ""),
+                            array("value" => ""),
+                            array("value" => ""),
+                            array("value" => ""),
+                            array("value" => ""),
+                            array("value" => floatval($totalImporte))
+                        );
+                    }
+
+                    
                 }
 
                 $datos     = $nuevoArray;
