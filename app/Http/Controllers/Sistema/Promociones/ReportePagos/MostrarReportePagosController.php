@@ -26,6 +26,7 @@ class MostrarReportePagosController extends Controller
         $respuesta      = true;
         $mensaje        = '';
         $datos          = []; 
+        $datosReconocimiento = [];
         $mensajeDetalle = '';
         $mensajedev     = null;
 
@@ -43,6 +44,13 @@ class MostrarReportePagosController extends Controller
                                 ->get(['sucsoldto', 'sucnombre']);
 
             $nuevoArray = array(
+                array(
+                    "columns" => [],
+                    "data"    => []
+                )
+            );
+
+            $nuevoArrayReconocimiento = array(
                 array(
                     "columns" => [],
                     "data"    => []
@@ -415,6 +423,264 @@ class MostrarReportePagosController extends Controller
                 
 
                 $datos     = $nuevoArray;
+
+
+                // PLANTILLA PARA DESCARGAR RECONOCIMIENTO
+                foreach($reps as $posicionRep => $rep){
+
+                    if($posicionRep == 0){
+                        $arrayTitulos = array(
+                            array("title" => "", "width" => array("wpx" => 100)),
+                            array("title" => "", "width" => array("wpx" => 100)),
+                            array("title" => "", "width" => array("wpx" => 150)),
+                            array("title" => "", "width" => array("wpx" => 150)),
+                            array("title" => "", "width" => array("wpx" => 150)),
+                            array("title" => "", "width" => array("wpx" => 150)),
+                            array("title" => "", "width" => array("wpx" => 100)),
+                            array("title" => "", "width" => array("wpx" => 100)),
+                            array("title" => "", "width" => array("wpx" => 100)),
+                            array("title" => "", "width" => array("wpx" => 100)),
+                            array("title" => "", "width" => array("wpx" => 100)),
+                            array("title" => "", "width" => array("wpx" => 100)),
+                            array("title" => "", "width" => array("wpx" => 100)),
+                            array("title" => "", "width" => array("wpx" => 100)),
+                        );
+                        $nuevoArrayReconocimiento[0]['columns'] = $arrayTitulos;
+
+                        $arrayFilaExcel = array(
+                            array("value" => ""),
+                            array(
+                                "value" => "Detalle de reconocimiento", 
+                                "style" => array(
+                                    "font" => array(
+                                        "sz" => "22",
+                                        "color" => array(
+                                            "rgb" => "FF31859B"
+                                        )
+                                    ), 
+                                    
+                                )
+                            ),
+                        );
+                        
+                        $nuevoArrayReconocimiento[0]['data'][] = $arrayFilaExcel;
+
+                        $arrayFilaExcel = array(
+                            array("value" => ""),
+                            array("value" => ""),
+                            array("value" => ""),
+                            array("value" => ""),
+                            array("value" => ""),
+                            array("value" => ""),
+                            array("value" => ""),
+                            array("value" => ""),
+                            array("value" => "")
+                        );
+                        
+                        $nuevoArrayReconocimiento[0]['data'][] = $arrayFilaExcel;
+
+
+                        $arrayFilaExcel = array(
+                            array("value" => ""),
+                            array(
+                                "value" => "GBA", 
+                                "style" => array(
+                                    "font" => array(
+                                        "sz" => "11", 
+                                        "bold" => true
+                                    ),
+                                    "fill" => array(
+                                        "patternType" => 'solid',
+                                        "fgColor" => array(
+                                            "rgb" => "FFD0EAF0"
+                                        )
+                                    )
+                                )
+                            ),
+                            array(
+                                "value" => "Año promoción", 
+                                "style" => array(
+                                    "font" => array(
+                                        "sz" => "11",
+                                        "bold" => true
+                                    ),
+                                    "fill" => array(
+                                        "patternType" => 'solid',
+                                        "fgColor" => array(
+                                            "rgb" => "FFD0EAF0"
+                                        )
+                                    )
+                                )
+                            ),
+                            array(
+                                "value" => "Concepto", 
+                                "style" => array(
+                                    "font" => array(
+                                        "sz" => "11",
+                                        "bold" => true
+                                    ),
+                                    "fill" => array(
+                                        "patternType" => 'solid',
+                                        "fgColor" => array(
+                                            "rgb" => "FFD0EAF0"
+                                        )
+                                    )
+                                )
+                            ),
+                            array(
+                                "value" => "Cliente", 
+                                "style" => array(
+                                    "font" => array(
+                                        "sz" => "11",
+                                        "bold" => true
+                                    ),
+                                    "fill" => array(
+                                        "patternType" => 'solid',
+                                        "fgColor" => array(
+                                            "rgb" => "FFD0EAF0"
+                                        )
+                                    )
+                                )
+                            ),
+                            array(
+                                "value" => "Tipo Doc.", 
+                                "style" => array(
+                                    "font" => array(
+                                        "sz" => "11",
+                                        "bold" => true
+                                    ),
+                                    "fill" => array(
+                                        "patternType" => 'solid',
+                                        "fgColor" => array(
+                                            "rgb" => "FFD0EAF0"
+                                        )
+                                    )
+                                )
+                            ),
+                            array(
+                                "value" => "Fecha Doc.", 
+                                "style" => array(
+                                    "font" => array(
+                                        "sz" => "11",
+                                        "bold" => true
+                                    ),
+                                    "fill" => array(
+                                        "patternType" => 'solid',
+                                        "fgColor" => array(
+                                            "rgb" => "FFD0EAF0"
+                                        )
+                                    )
+                                )
+                            ),
+                            array(
+                                "value" => "Nro. Doc.", 
+                                "style" => array(
+                                    "font" => array(
+                                        "sz" => "11",
+                                        "bold" => true
+                                    ),
+                                    "fill" => array(
+                                        "patternType" => 'solid',
+                                        "fgColor" => array(
+                                            "rgb" => "FFD0EAF0"
+                                        )
+                                    )
+                                )
+                            ),
+                            array(
+                                "value" => "Importe (sin igv)", 
+                                "style" => array(
+                                    "font" => array(
+                                        "sz" => "11",
+                                        "bold" => true
+                                    ),
+                                    "fill" => array(
+                                        "patternType" => 'solid',
+                                        "fgColor" => array(
+                                            "rgb" => "FFD0EAF0"
+                                        )
+                                    )
+                                )
+                            ),
+                            array(
+                                "value" => "Moneda local", 
+                                "style" => array(
+                                    "font" => array(
+                                        "sz" => "11",
+                                        "bold" => true
+                                    ),
+                                    "fill" => array(
+                                        "patternType" => 'solid',
+                                        "fgColor" => array(
+                                            "rgb" => "FFD0EAF0"
+                                        )
+                                    )
+                                )
+                            ),
+                            array(
+                                "value" => "Categoría", 
+                                "style" => array(
+                                    "font" => array(
+                                        "sz" => "11",
+                                        "bold" => true
+                                    ),
+                                    "fill" => array(
+                                        "patternType" => 'solid',
+                                        "fgColor" => array(
+                                            "rgb" => "FFD0EAF0"
+                                        )
+                                    )
+                                )
+                            ),
+                            array(
+                                "value" => "Texto", 
+                                "style" => array(
+                                    "font" => array(
+                                        "sz" => "11",
+                                        "bold" => true
+                                    ),
+                                    "fill" => array(
+                                        "patternType" => 'solid',
+                                        "fgColor" => array(
+                                            "rgb" => "FFD9D9D9"
+                                        )
+                                    )
+                                )
+                            ),
+                        );
+                        
+                        $nuevoArrayReconocimiento[0]['data'][] = $arrayFilaExcel;
+                    }
+
+
+                    $arrayFilaExcel = array(
+                        array("value" => ""),
+                        array("value" => ""),
+                        array("value" => $rep->fecano, "style" => array("font" => array("sz" => "10"))),
+                        array("value" => $rep->fecmes, "style" => array("font" => array("sz" => "10"))),
+                        array("value" => $rep->repconcepto, "style" => array("font" => array("sz" => "10"))),
+                        array("value" => $rep->sucsoldto, "style" => array("font" => array("sz" => "10"))),
+                        array("value" => $rep->sucnombre, "style" => array("font" => array("sz" => "10"))),
+                        array("value" => $rep->reptipodocumento, "style" => array("font" => array("sz" => "10"))),
+                        array("value" => $rep->repfechadocumento, "style" => array("font" => array("sz" => "10"))),
+                        array("value" => $rep->repnumerodocumento, "style" => array("font" => array("sz" => "10"))),
+                        array("value" => floatval($rep->repimporte), "style" => array("font" => array("sz" => "10"))),
+                        array("value" => "PEN", "style" => array("font" => array("sz" => "10"))),
+                        array("value" => $rep->repcategoria, "style" => array("font" => array("sz" => "10"))),
+                        array("value" => ""),
+                    );
+
+                    $nuevoArrayReconocimiento[0]['data'][] = $arrayFilaExcel;
+                    
+                }
+
+
+
+                $datosReconocimiento = $nuevoArrayReconocimiento;
+
+
+
+
             }else{
                 $respuesta = false;
                 $mensaje = "Lo sentimos, no pudimos encontrar la fecha seleccionada";
@@ -433,6 +699,7 @@ class MostrarReportePagosController extends Controller
             'respuesta'      => $respuesta,
             'mensaje'        => $mensaje,
             'datos'          => $datos,
+            'datosReconocimiento'          => $datosReconocimiento,
             'mensajeDetalle' => $mensajeDetalle,
             'mensajedev'     => $mensajedev,
         ]);
