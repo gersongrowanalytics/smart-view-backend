@@ -249,17 +249,137 @@ class MostrarReportePagosController extends Controller
 
                         $arrayFilaExcel = array(
                             array("value" => ""),
-                            array("value" => "Sold To", "style" => array("font" => array("sz" => "11", "bold" => true))),
-                            array("value" => "Clientes", "style" => array("font" => array("sz" => "11", "bold" => true))),
-                            array("value" => "Concepto", "style" => array("font" => array("sz" => "11", "bold" => true))),
-                            array("value" => "Tipo Doc", "style" => array("font" => array("sz" => "11", "bold" => true))),
-                            array("value" => "Nro. Doc", "style" => array("font" => array("sz" => "11", "bold" => true))),
-                            array("value" => "Fecha Doc.", "style" => array("font" => array("sz" => "11", "bold" => true))),
-                            array("value" => "Categoría", "style" => array("font" => array("sz" => "11", "bold" => true))),
-                            array("value" => "Importe (sin igv)", "style" => array("font" => array("sz" => "11", "bold" => true)))
+                            array(
+                                "value" => "Sold To", 
+                                "style" => array(
+                                    "font" => array(
+                                        "sz" => "11", 
+                                        "bold" => true
+                                    ),
+                                    "fill" => array(
+                                        "patternType" => 'solid',
+                                        "fgColor" => array(
+                                            "rgb" => "FFD0EAF0"
+                                        )
+                                    )
+                                )
+                            ),
+                            array(
+                                "value" => "Clientes", 
+                                "style" => array(
+                                    "font" => array(
+                                        "sz" => "11",
+                                        "bold" => true
+                                    ),
+                                    "fill" => array(
+                                        "patternType" => 'solid',
+                                        "fgColor" => array(
+                                            "rgb" => "FFD0EAF0"
+                                        )
+                                    )
+                                )
+                            ),
+                            array(
+                                "value" => "Concepto", 
+                                "style" => array(
+                                    "font" => array(
+                                        "sz" => "11",
+                                        "bold" => true
+                                    ),
+                                    "fill" => array(
+                                        "patternType" => 'solid',
+                                        "fgColor" => array(
+                                            "rgb" => "FFD0EAF0"
+                                        )
+                                    )
+                                )
+                            ),
+                            array(
+                                "value" => "Tipo Doc", 
+                                "style" => array(
+                                    "font" => array(
+                                        "sz" => "11",
+                                        "bold" => true
+                                    ),
+                                    "fill" => array(
+                                        "patternType" => 'solid',
+                                        "fgColor" => array(
+                                            "rgb" => "FFD0EAF0"
+                                        )
+                                    )
+                                )
+                            ),
+                            array(
+                                "value" => "Nro. Doc", 
+                                "style" => array(
+                                    "font" => array(
+                                        "sz" => "11",
+                                        "bold" => true
+                                    ),
+                                    "fill" => array(
+                                        "patternType" => 'solid',
+                                        "fgColor" => array(
+                                            "rgb" => "FFD0EAF0"
+                                        )
+                                    )
+                                )
+                            ),
+                            array(
+                                "value" => "Fecha Doc.", 
+                                "style" => array(
+                                    "font" => array(
+                                        "sz" => "11",
+                                        "bold" => true
+                                    ),
+                                    "fill" => array(
+                                        "patternType" => 'solid',
+                                        "fgColor" => array(
+                                            "rgb" => "FFD0EAF0"
+                                        )
+                                    )
+                                )
+                            ),
+                            array(
+                                "value" => "Categoría", 
+                                "style" => array(
+                                    "font" => array(
+                                        "sz" => "11",
+                                        "bold" => true
+                                    ),
+                                    "fill" => array(
+                                        "patternType" => 'solid',
+                                        "fgColor" => array(
+                                            "rgb" => "FFD0EAF0"
+                                        )
+                                    )
+                                )
+                            ),
+                            array(
+                                "value" => "Importe (sin igv)", 
+                                "style" => array(
+                                    "font" => array(
+                                        "sz" => "11",
+                                        "bold" => true
+                                    ),
+                                    "fill" => array(
+                                        "patternType" => 'solid',
+                                        "fgColor" => array(
+                                            "rgb" => "FFD0EAF0"
+                                        )
+                                    )
+                                )
+                            )
                         );
                         
                         $nuevoArray[0]['data'][] = $arrayFilaExcel;
+                    }
+
+                    $celdaPintada = array();
+
+                    if($posicionRep % 2 == 0){
+                        $celdaPintada = array();
+                    }else{
+
                     }
 
                     $arrayFilaExcel = array(
