@@ -65,6 +65,7 @@ class MostrarReportePagosController extends Controller
             if($fec){
                 
                 $reps = repreconocimientopago::join('sucsucursales as suc', 'suc.sucid', 'repreconocimientopago.sucid')
+                                                ->leftjoin('cascanalessucursales as cas', 'cas.casid', 'suc.casid')
                                                 ->join('fecfechas as fec', 'fec.fecid', 'repreconocimientopago.fecid')
                                                 ->where('fec.fecid', $fec->fecid)
                                                 ->where(function ($query) use($sucs) {
@@ -78,6 +79,7 @@ class MostrarReportePagosController extends Controller
                                                 })
                                                 ->get([
                                                     'repid',
+                                                    'cas.casnombre',
                                                     'fec.fecid',
                                                     'fec.fecmes',
                                                     'fec.fecano',
@@ -88,7 +90,9 @@ class MostrarReportePagosController extends Controller
                                                     'repnumerodocumento',
                                                     'repfechadocumento',
                                                     'repcategoria',
-                                                    'repimporte'
+                                                    'repimporte',
+                                                    'repmonedalocal',
+                                                    'reptexto'
                                                 ]);
                 $totalImporte = 0;
                 foreach($reps as $posicionRep => $rep){
@@ -513,7 +517,37 @@ class MostrarReportePagosController extends Controller
                                 )
                             ),
                             array(
+                                "value" => "Mes promoción", 
+                                "style" => array(
+                                    "font" => array(
+                                        "sz" => "11",
+                                        "bold" => true
+                                    ),
+                                    "fill" => array(
+                                        "patternType" => 'solid',
+                                        "fgColor" => array(
+                                            "rgb" => "FFD0EAF0"
+                                        )
+                                    )
+                                )
+                            ),
+                            array(
                                 "value" => "Concepto", 
+                                "style" => array(
+                                    "font" => array(
+                                        "sz" => "11",
+                                        "bold" => true
+                                    ),
+                                    "fill" => array(
+                                        "patternType" => 'solid',
+                                        "fgColor" => array(
+                                            "rgb" => "FFD0EAF0"
+                                        )
+                                    )
+                                )
+                            ),
+                            array(
+                                "value" => "Sold To",
                                 "style" => array(
                                     "font" => array(
                                         "sz" => "11",
@@ -655,7 +689,7 @@ class MostrarReportePagosController extends Controller
 
                     $arrayFilaExcel = array(
                         array("value" => ""),
-                        array("value" => ""),
+                        array("value" => $rep->casnombre, "style" => array("font" => array("sz" => "10"))),
                         array("value" => $rep->fecano, "style" => array("font" => array("sz" => "10"))),
                         array("value" => $rep->fecmes, "style" => array("font" => array("sz" => "10"))),
                         array("value" => $rep->repconcepto, "style" => array("font" => array("sz" => "10"))),
@@ -665,9 +699,9 @@ class MostrarReportePagosController extends Controller
                         array("value" => $rep->repfechadocumento, "style" => array("font" => array("sz" => "10"))),
                         array("value" => $rep->repnumerodocumento, "style" => array("font" => array("sz" => "10"))),
                         array("value" => floatval($rep->repimporte), "style" => array("font" => array("sz" => "10"))),
-                        array("value" => "PEN", "style" => array("font" => array("sz" => "10"))),
+                        array("value" => $rep->repmonedalocal, "style" => array("font" => array("sz" => "10"))),
                         array("value" => $rep->repcategoria, "style" => array("font" => array("sz" => "10"))),
-                        array("value" => ""),
+                        array("value" => $rep->reptexto, "style" => array("font" => array("sz" => "10"))),
                     );
 
                     $nuevoArrayReconocimiento[0]['data'][] = $arrayFilaExcel;

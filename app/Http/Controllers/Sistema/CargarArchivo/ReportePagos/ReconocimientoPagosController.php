@@ -62,6 +62,7 @@ class ReconocimientoPagosController extends Controller
 
                 for ($i=2; $i <= $numRows ; $i++) {
                     $dia = '01';
+
                     $gbaZona         = $objPHPExcel->getActiveSheet()->getCell('B'.$i)->getCalculatedValue();
                     $anioPromocion   = $objPHPExcel->getActiveSheet()->getCell('C'.$i)->getCalculatedValue();
                     $mesPromocion    = $objPHPExcel->getActiveSheet()->getCell('D'.$i)->getCalculatedValue();
@@ -71,7 +72,9 @@ class ReconocimientoPagosController extends Controller
                     $fechaDocumento  = $objPHPExcel->getActiveSheet()->getCell('I'.$i)->getCalculatedValue();
                     $numeroDocumento = $objPHPExcel->getActiveSheet()->getCell('J'.$i)->getCalculatedValue();
                     $importeSinIgv   = $objPHPExcel->getActiveSheet()->getCell('K'.$i)->getCalculatedValue();
+                    $monedaLocal     = $objPHPExcel->getActiveSheet()->getCell('L'.$i)->getCalculatedValue();
                     $categoria       = $objPHPExcel->getActiveSheet()->getCell('M'.$i)->getCalculatedValue();
+                    $texto           = $objPHPExcel->getActiveSheet()->getCell('N'.$i)->getCalculatedValue();
 
                     $fec = fecfechas::where('fecdia', $dia)
                                         ->where('fecmes', $mesPromocion)
@@ -96,6 +99,8 @@ class ReconocimientoPagosController extends Controller
                             $repn->repfechadocumento  = $fechaDocumento;
                             $repn->repcategoria       = $categoria;
                             $repn->repimporte         = $importeSinIgv;
+                            $repn->repmonedalocal     = $monedaLocal;
+                            $repn->reptexto           = $texto;
                             $repn->save();
 
                         }else{

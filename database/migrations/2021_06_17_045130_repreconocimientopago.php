@@ -23,6 +23,8 @@ class Repreconocimientopago extends Migration
             $table->string('repfechadocumento');
             $table->string('repcategoria');
             $table->string('repimporte');
+            $table->string('repmonedalocal');
+            $table->string('reptexto');
             $table->timestamps();
 
             $table->foreign('fecid')->references('fecid')->on('fecfechas');
