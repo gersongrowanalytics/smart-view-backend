@@ -89,15 +89,15 @@ class MostrarReportePagosController extends Controller
 
                     if($posicionRep == 0){
                         $arrayTitulos = array(
-                            array("title" => "", "width" => array("wpx" => 200)),
-                            array("title" => "Sold To", "width" => array("wpx" => 200)),
-                            array("title" => "Clientes", "width" => array("wpx" => 200)),
-                            array("title" => "Concepto", "width" => array("wpx" => 200)),
-                            array("title" => "Tipo Doc.", "width" => array("wpx" => 200)),
-                            array("title" => "Nro. Doc.", "width" => array("wpx" => 200)),
-                            array("title" => "Fecha Doc.", "width" => array("wpx" => 200)),
-                            array("title" => "Categoría", "width" => array("wpx" => 200)),
-                            array("title" => "Importe (sin igv)", "width" => array("wpx" => 200))
+                            array("title" => "", "width" => array("wpx" => 100)),
+                            array("title" => "Sold To", "width" => array("wpx" => 150)),
+                            array("title" => "Clientes", "width" => array("wpx" => 150)),
+                            array("title" => "Concepto", "width" => array("wpx" => 150)),
+                            array("title" => "Tipo Doc.", "width" => array("wpx" => 150)),
+                            array("title" => "Nro. Doc.", "width" => array("wpx" => 150)),
+                            array("title" => "Fecha Doc.", "width" => array("wpx" => 150)),
+                            array("title" => "Categoría", "width" => array("wpx" => 150)),
+                            array("title" => "Importe (sin igv)", "width" => array("wpx" => 150))
                         );
                         $nuevoArray[0]['columns'] = $arrayTitulos;
                     }
