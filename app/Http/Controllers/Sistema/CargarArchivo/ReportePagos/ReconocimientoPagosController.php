@@ -42,7 +42,7 @@ class ReconocimientoPagosController extends Controller
             "NO_SE_ENCONTRO_FECHA" => [],
             "NO_SE_ENCONTRO_SUCURSAL" => []
         );
-        
+
         $fecid = 1;
         $exitoSubirExcel = false;
 
@@ -118,19 +118,19 @@ class ReconocimientoPagosController extends Controller
                 $exitoSubirExcel = false;
             }
 
-            $nuevoCargaArchivo = new carcargasarchivos;
-            $nuevoCargaArchivo->tcaid            = 13; // Carga Reconocimiento de Pagos
-            $nuevoCargaArchivo->fecid            = $fecid;
-            $nuevoCargaArchivo->usuid            = $usuusuario->usuid;
-            $nuevoCargaArchivo->carnombrearchivo = $archivo;
-            $nuevoCargaArchivo->carubicacion     = $fichero_subido;
-            $nuevoCargaArchivo->carexito         = $exitoSubirExcel;
-            $nuevoCargaArchivo->carurl           = env('APP_URL').'/Sistema/cargaArchivos/reconocimientopagos/'.$archivo;
-            if($nuevoCargaArchivo->save()){
-                $pkid = "CAR-".$nuevoCargaArchivo->carid;
-            }else{
+            // $nuevoCargaArchivo = new carcargasarchivos;
+            // $nuevoCargaArchivo->tcaid            = 13; // Carga Reconocimiento de Pagos
+            // $nuevoCargaArchivo->fecid            = $fecid;
+            // $nuevoCargaArchivo->usuid            = $usuusuario->usuid;
+            // $nuevoCargaArchivo->carnombrearchivo = $archivo;
+            // $nuevoCargaArchivo->carubicacion     = $fichero_subido;
+            // $nuevoCargaArchivo->carexito         = $exitoSubirExcel;
+            // $nuevoCargaArchivo->carurl           = env('APP_URL').'/Sistema/cargaArchivos/reconocimientopagos/'.$archivo;
+            // if($nuevoCargaArchivo->save()){
+            //     $pkid = "CAR-".$nuevoCargaArchivo->carid;
+            // }else{
 
-            }
+            // }
 
             DB::commit();
 
