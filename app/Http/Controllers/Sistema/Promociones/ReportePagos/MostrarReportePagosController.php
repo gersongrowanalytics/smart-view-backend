@@ -106,12 +106,12 @@ class MostrarReportePagosController extends Controller
                         array("value" => ""),
                         array("value" => $rep->sucsoldto),
                         array("value" => $rep->sucnombre),
-                        array("value" => $rep->repconcepto),
-                        array("value" => $rep->reptipodocumento),
-                        array("value" => $rep->repnumerodocumento),
-                        array("value" => $rep->repfechadocumento),
-                        array("value" => $rep->repcategoria),
-                        array("value" => floatval($rep->repimporte))
+                        array("value" => $rep->repconcepto, "style" => array("font" => array("sz" => "10"))),
+                        array("value" => $rep->reptipodocumento, "style" => array("font" => array("sz" => "10"))),
+                        array("value" => $rep->repnumerodocumento, "style" => array("font" => array("sz" => "10"))),
+                        array("value" => $rep->repfechadocumento, "style" => array("font" => array("sz" => "10"))),
+                        array("value" => $rep->repcategoria, "style" => array("font" => array("sz" => "10"))),
+                        array("value" => floatval($rep->repimporte), "style" => array("font" => array("sz" => "10"))),
                     );
 
                     $nuevoArray[0]['data'][] = $arrayFilaExcel;
