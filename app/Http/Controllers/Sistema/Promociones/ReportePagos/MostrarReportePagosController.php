@@ -90,7 +90,7 @@ class MostrarReportePagosController extends Controller
                     if($posicionRep == 0){
                         $arrayTitulos = array(
                             array("title" => "", "width" => array("wpx" => 100)),
-                            array("title" => "", "width" => array("wpx" => 200)),
+                            array("title" => "", "width" => array("wpx" => 100)),
                             array("title" => "", "width" => array("wpx" => 150)),
                             array("title" => "", "width" => array("wpx" => 150)),
                             array("title" => "", "width" => array("wpx" => 150)),
@@ -121,13 +121,6 @@ class MostrarReportePagosController extends Controller
                                     
                                 )
                             ),
-                            array("value" => ""),
-                            array("value" => ""),
-                            array("value" => ""),
-                            array("value" => ""),
-                            array("value" => ""),
-                            array("value" => ""),
-                            array("value" => "")
                         );
                         
                         $nuevoArray[0]['data'][] = $arrayFilaExcel;
