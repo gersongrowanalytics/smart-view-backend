@@ -42,7 +42,8 @@ class ReconocimientoPagosController extends Controller
             "NO_SE_ENCONTRO_FECHA" => [],
             "NO_SE_ENCONTRO_SUCURSAL" => []
         );
-
+        
+        $fecid = 1;
         $exitoSubirExcel = false;
 
         DB::beginTransaction();
