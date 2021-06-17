@@ -53,6 +53,8 @@ class ReconocimientoPagosController extends Controller
 
             if (move_uploaded_file($_FILES['file']['tmp_name'], $fichero_subido)) {
 
+                repreconocimientopago::where('repid', '>', 0)->delete();
+
                 $objPHPExcel    = IOFactory::load($fichero_subido);
                 $objPHPExcel->setActiveSheetIndex(0);
                 $numRows        = $objPHPExcel->setActiveSheetIndex(0)->getHighestRow();
