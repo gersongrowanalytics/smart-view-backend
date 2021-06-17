@@ -23,7 +23,7 @@ class MostrarReportePagosController extends Controller
 
         $usuusuario = usuusuarios::where('usutoken', $usutoken)->first(['ususoldto']);
 
-        $respuesta      = false;
+        $respuesta      = true;
         $mensaje        = '';
         $datos          = []; 
         $mensajeDetalle = '';
@@ -123,6 +123,7 @@ class MostrarReportePagosController extends Controller
 
         }catch (Exception $e) {
             $mensajedev = $e->getMessage();
+            $respuesta      = false;
         }
 
 
