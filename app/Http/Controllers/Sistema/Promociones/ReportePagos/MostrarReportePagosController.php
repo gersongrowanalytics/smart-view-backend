@@ -235,13 +235,6 @@ class MostrarReportePagosController extends Controller
                         $arrayFilaExcel = array(
                             array("value" => ""),
                             array("value" => "Detalle de reconocimiento", "style" => array("font" => array("sz" => "18"))),
-                            array("value" => ""),
-                            array("value" => ""),
-                            array("value" => ""),
-                            array("value" => ""),
-                            array("value" => ""),
-                            array("value" => ""),
-                            array("value" => "")
                         );
                         
                         $nuevoArray[0]['data'][] = $arrayFilaExcel;
