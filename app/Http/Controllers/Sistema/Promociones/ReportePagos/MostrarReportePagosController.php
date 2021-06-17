@@ -87,6 +87,7 @@ class MostrarReportePagosController extends Controller
 
                     if($posicionRep == 0){
                         $arrayTitulos = array(
+                            array("title" => ""),
                             array("title" => "Sold To"),
                             array("title" => "Clientes"),
                             array("title" => "Concepto"),
@@ -100,13 +101,14 @@ class MostrarReportePagosController extends Controller
                     }
 
                     $arrayFilaExcel = array(
+                        array("value" => ""),
                         array("value" => $rep->sucsoldto),
                         array("value" => $rep->sucnombre),
                         array("value" => $rep->repconcepto),
                         array("value" => $rep->reptipodocumento),
                         array("value" => $rep->repnumerodocumento),
                         array("value" => $rep->repfechadocumento),
-                        array("value" => $rep->repimporte)
+                        array("value" => floatval($rep->repimporte))
                     );
 
                     $nuevoArray[0]['data'][] = $arrayFilaExcel;
