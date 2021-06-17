@@ -115,36 +115,38 @@ class MostrarReportePagosController extends Controller
                     );
 
                     $nuevoArray[0]['data'][] = $arrayFilaExcel;
-
-                    if($posicionRep+1 == sizeof($reps)){
-                        $arrayFilaExcel = array(
-                            array("value" => ""),
-                            array("value" => ""),
-                            array("value" => ""),
-                            array("value" => ""),
-                            array("value" => ""),
-                            array("value" => ""),
-                            array("value" => ""),
-                            array("value" => ""),
-                            array("value" => "")
-                        );
-                        $nuevoArray[0]['data'][] = $arrayFilaExcel;
-
-                        $arrayFilaExcel = array(
-                            array("value" => ""),
-                            array("value" => ""),
-                            array("value" => ""),
-                            array("value" => ""),
-                            array("value" => ""),
-                            array("value" => ""),
-                            array("value" => ""),
-                            array("value" => ""),
-                            array("value" => floatval($totalImporte))
-                        );
-                    }
-
                     
                 }
+
+                
+                $arrayFilaExcel = array(
+                    array("value" => ""),
+                    array("value" => ""),
+                    array("value" => ""),
+                    array("value" => ""),
+                    array("value" => ""),
+                    array("value" => ""),
+                    array("value" => ""),
+                    array("value" => ""),
+                    array("value" => "")
+                );
+                
+                $nuevoArray[0]['data'][] = $arrayFilaExcel;
+
+                $arrayFilaExcel = array(
+                    array("value" => ""),
+                    array("value" => ""),
+                    array("value" => ""),
+                    array("value" => ""),
+                    array("value" => ""),
+                    array("value" => ""),
+                    array("value" => ""),
+                    array("value" => ""),
+                    array("value" => floatval($totalImporte))
+                );
+                
+                $nuevoArray[0]['data'][] = $arrayFilaExcel;
+                
 
                 $datos     = $nuevoArray;
             }else{
