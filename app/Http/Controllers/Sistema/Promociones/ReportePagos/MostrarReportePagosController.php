@@ -90,7 +90,7 @@ class MostrarReportePagosController extends Controller
                     if($posicionRep == 0){
                         $arrayTitulos = array(
                             array("title" => "", "width" => array("wpx" => 100)),
-                            array("title" => "Sold To", "width" => array("wpx" => 150)),
+                            array("title" => "Sold To", "width" => array("wpx" => 100)),
                             array("title" => "Clientes", "width" => array("wpx" => 150)),
                             array("title" => "Concepto", "width" => array("wpx" => 150)),
                             array("title" => "Tipo Doc.", "width" => array("wpx" => 150)),
