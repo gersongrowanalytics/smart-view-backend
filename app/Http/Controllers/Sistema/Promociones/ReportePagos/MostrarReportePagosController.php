@@ -90,6 +90,18 @@ class MostrarReportePagosController extends Controller
                     if($posicionRep == 0){
                         $arrayTitulos = array(
                             array("title" => "", "width" => array("wpx" => 100)),
+                            array("title" => "", "width" => array("wpx" => 100)),
+                            array("title" => "", "width" => array("wpx" => 150)),
+                            array("title" => "", "width" => array("wpx" => 150)),
+                            array("title" => "", "width" => array("wpx" => 150)),
+                            array("title" => "", "width" => array("wpx" => 150)),
+                            array("title" => "", "width" => array("wpx" => 150)),
+                            array("title" => "", "width" => array("wpx" => 150)),
+                            array("title" => "", "width" => array("wpx" => 150))
+                        );
+                        $nuevoArray[0]['columns'] = $arrayTitulos;
+                        $arrayTitulos = array(
+                            array("title" => "", "width" => array("wpx" => 100)),
                             array("title" => "Sold To", "width" => array("wpx" => 100)),
                             array("title" => "Clientes", "width" => array("wpx" => 150)),
                             array("title" => "Concepto", "width" => array("wpx" => 150)),
@@ -104,8 +116,8 @@ class MostrarReportePagosController extends Controller
 
                     $arrayFilaExcel = array(
                         array("value" => ""),
-                        array("value" => $rep->sucsoldto),
-                        array("value" => $rep->sucnombre),
+                        array("value" => $rep->sucsoldto, "style" => array("font" => array("sz" => "10"))),
+                        array("value" => $rep->sucnombre, "style" => array("font" => array("sz" => "10"))),
                         array("value" => $rep->repconcepto, "style" => array("font" => array("sz" => "10"))),
                         array("value" => $rep->reptipodocumento, "style" => array("font" => array("sz" => "10"))),
                         array("value" => $rep->repnumerodocumento, "style" => array("font" => array("sz" => "10"))),
@@ -141,8 +153,8 @@ class MostrarReportePagosController extends Controller
                     array("value" => ""),
                     array("value" => ""),
                     array("value" => ""),
-                    array("value" => "Total"),
-                    array("value" => floatval($totalImporte))
+                    array("value" => "Total", "style" => array("font" => array("sz" => "12","bold" => true),)),
+                    array("value" => floatval($totalImporte), "style" => array("font" => array("sz" => "12","bold" => true),)),
                 );
 
                 $nuevoArray[0]['data'][] = $arrayFilaExcel;
