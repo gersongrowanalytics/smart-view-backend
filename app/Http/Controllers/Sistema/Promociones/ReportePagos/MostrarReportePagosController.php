@@ -89,15 +89,15 @@ class MostrarReportePagosController extends Controller
 
                     if($posicionRep == 0){
                         $arrayTitulos = array(
-                            array("title" => ""),
-                            array("title" => "Sold To"),
-                            array("title" => "Clientes"),
-                            array("title" => "Concepto"),
-                            array("title" => "Tipo Doc."),
-                            array("title" => "Nro. Doc."),
-                            array("title" => "Fecha Doc."),
-                            array("title" => "Categoría"),
-                            array("title" => "Importe (sin igv)")
+                            array("title" => "", "width" => array("wpx" => 200)),
+                            array("title" => "Sold To", "width" => array("wpx" => 200)),
+                            array("title" => "Clientes", "width" => array("wpx" => 200)),
+                            array("title" => "Concepto", "width" => array("wpx" => 200)),
+                            array("title" => "Tipo Doc.", "width" => array("wpx" => 200)),
+                            array("title" => "Nro. Doc.", "width" => array("wpx" => 200)),
+                            array("title" => "Fecha Doc.", "width" => array("wpx" => 200)),
+                            array("title" => "Categoría", "width" => array("wpx" => 200)),
+                            array("title" => "Importe (sin igv)", "width" => array("wpx" => 200))
                         );
                         $nuevoArray[0]['columns'] = $arrayTitulos;
                     }
@@ -141,10 +141,10 @@ class MostrarReportePagosController extends Controller
                     array("value" => ""),
                     array("value" => ""),
                     array("value" => ""),
-                    array("value" => ""),
+                    array("value" => "Total"),
                     array("value" => floatval($totalImporte))
                 );
-                
+
                 $nuevoArray[0]['data'][] = $arrayFilaExcel;
                 
 
