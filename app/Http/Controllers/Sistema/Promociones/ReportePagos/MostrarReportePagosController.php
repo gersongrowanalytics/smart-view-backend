@@ -90,7 +90,7 @@ class MostrarReportePagosController extends Controller
                     if($posicionRep == 0){
                         $arrayTitulos = array(
                             array("title" => "", "width" => array("wpx" => 100)),
-                            array("title" => "", "width" => array("wpx" => 100)),
+                            array("title" => "", "width" => array("wpx" => 200)),
                             array("title" => "", "width" => array("wpx" => 150)),
                             array("title" => "", "width" => array("wpx" => 150)),
                             array("title" => "", "width" => array("wpx" => 150)),
@@ -101,20 +101,24 @@ class MostrarReportePagosController extends Controller
                         );
                         $nuevoArray[0]['columns'] = $arrayTitulos;
 
+                        // "fill" => array(
+                        //     "patternType" => 'solid',
+                        //     "fgColor" => array(
+                        //         "rgb" => "FF31859B"
+                        //     )
+                        // ) 
                         $arrayFilaExcel = array(
                             array("value" => ""),
                             array(
                                 "value" => "Registro de pagos", 
                                 "style" => array(
                                     "font" => array(
-                                        "sz" => "22"
-                                    ), 
-                                    "fill" => array(
-                                        "patternType" => 'solid',
-                                        "fgColor" => array(
+                                        "sz" => "22",
+                                        "color" => array(
                                             "rgb" => "FF31859B"
                                         )
-                                    ) 
+                                    ), 
+                                    
                                 )
                             ),
                             array("value" => ""),
@@ -130,8 +134,37 @@ class MostrarReportePagosController extends Controller
 
                         $arrayFilaExcel = array(
                             array("value" => ""),
-                            array("value" => "Año promoción"),
-                            array("value" => $anio),
+                            array(
+                                "value" => "Año promoción",
+                                "style" => array(
+                                    "font" => array(
+                                        "sz" => "12",
+                                        "color" => array(
+                                            "rgb" => "FF31859B"
+                                        )
+                                    ),
+                                    "fill" => array(
+                                        "patternType" => 'solid',
+                                        "fgColor" => array(
+                                            "rgb" => "FFFFFFCC"
+                                        )
+                                    )
+                                )
+                            ),
+                            array(
+                                "value" => $anio,
+                                "style" => array(
+                                    "font" => array(
+                                        "sz" => "12",
+                                    ),
+                                    "fill" => array(
+                                        "patternType" => 'solid',
+                                        "fgColor" => array(
+                                            "rgb" => "FFFFFFCC"
+                                        )
+                                    )
+                                )
+                            ),
                             array("value" => ""),
                             array("value" => ""),
                             array("value" => ""),
@@ -144,8 +177,37 @@ class MostrarReportePagosController extends Controller
 
                         $arrayFilaExcel = array(
                             array("value" => ""),
-                            array("value" => "Mes promoción"),
-                            array("value" => $rep->fecmes),
+                            array(
+                                "value" => "Mes promoción",
+                                "style" => array(
+                                    "font" => array(
+                                        "sz" => "12",
+                                        "color" => array(
+                                            "rgb" => "FF31859B"
+                                        )
+                                    ),
+                                    "fill" => array(
+                                        "patternType" => 'solid',
+                                        "fgColor" => array(
+                                            "rgb" => "FFFFFFCC"
+                                        )
+                                    )
+                                )
+                            ),
+                            array(
+                                "value" => $rep->fecmes,
+                                "style" => array(
+                                    "font" => array(
+                                        "sz" => "12",
+                                    ),
+                                    "fill" => array(
+                                        "patternType" => 'solid',
+                                        "fgColor" => array(
+                                            "rgb" => "FFFFFFCC"
+                                        )
+                                    )
+                                )
+                            ),
                             array("value" => ""),
                             array("value" => ""),
                             array("value" => ""),
