@@ -100,6 +100,104 @@ class MostrarReportePagosController extends Controller
                             array("title" => "", "width" => array("wpx" => 150))
                         );
                         $nuevoArray[0]['columns'] = $arrayTitulos;
+
+                        $arrayFilaExcel = array(
+                            array("value" => ""),
+                            array(
+                                "value" => "Registro de pagos", 
+                                "style" => array(
+                                    "font" => array(
+                                        "sz" => "22"
+                                    ), 
+                                    "fill" => array(
+                                        "patternType" => 'solid',
+                                        "fgColor" => array(
+                                            "rgb" => "FF31859B"
+                                        )
+                                    ) 
+                                )
+                            ),
+                            array("value" => ""),
+                            array("value" => ""),
+                            array("value" => ""),
+                            array("value" => ""),
+                            array("value" => ""),
+                            array("value" => ""),
+                            array("value" => "")
+                        );
+                        
+                        $nuevoArray[0]['data'][] = $arrayFilaExcel;
+
+                        $arrayFilaExcel = array(
+                            array("value" => ""),
+                            array("value" => "Año promoción"),
+                            array("value" => $anio),
+                            array("value" => ""),
+                            array("value" => ""),
+                            array("value" => ""),
+                            array("value" => ""),
+                            array("value" => ""),
+                            array("value" => "")
+                        );
+                        
+                        $nuevoArray[0]['data'][] = $arrayFilaExcel;
+
+                        $arrayFilaExcel = array(
+                            array("value" => ""),
+                            array("value" => "Mes promoción"),
+                            array("value" => $rep->fecmes),
+                            array("value" => ""),
+                            array("value" => ""),
+                            array("value" => ""),
+                            array("value" => ""),
+                            array("value" => ""),
+                            array("value" => "")
+                        );
+                        
+                        $nuevoArray[0]['data'][] = $arrayFilaExcel;
+
+                        $arrayFilaExcel = array(
+                            array("value" => ""),
+                            array("value" => ""),
+                            array("value" => ""),
+                            array("value" => ""),
+                            array("value" => ""),
+                            array("value" => ""),
+                            array("value" => ""),
+                            array("value" => ""),
+                            array("value" => "")
+                        );
+                        
+                        $nuevoArray[0]['data'][] = $arrayFilaExcel;
+
+                        $arrayFilaExcel = array(
+                            array("value" => ""),
+                            array("value" => "Detalle de reconocimiento", "style" => array("font" => array("sz" => "18"))),
+                            array("value" => ""),
+                            array("value" => ""),
+                            array("value" => ""),
+                            array("value" => ""),
+                            array("value" => ""),
+                            array("value" => ""),
+                            array("value" => "")
+                        );
+                        
+                        $nuevoArray[0]['data'][] = $arrayFilaExcel;
+
+
+                        $arrayFilaExcel = array(
+                            array("value" => ""),
+                            array("value" => "Sold To", "style" => array("font" => array("sz" => "11", "bold" => true))),
+                            array("value" => "Clientes", "style" => array("font" => array("sz" => "11", "bold" => true))),
+                            array("value" => "Concepto", "style" => array("font" => array("sz" => "11", "bold" => true))),
+                            array("value" => "Tipo Doc", "style" => array("font" => array("sz" => "11", "bold" => true))),
+                            array("value" => "Nro. Doc", "style" => array("font" => array("sz" => "11", "bold" => true))),
+                            array("value" => "Fecha Doc.", "style" => array("font" => array("sz" => "11", "bold" => true))),
+                            array("value" => "Categoría", "style" => array("font" => array("sz" => "11", "bold" => true))),
+                            array("value" => "Importe (sin igv)", "style" => array("font" => array("sz" => "11", "bold" => true)))
+                        );
+                        
+                        $nuevoArray[0]['data'][] = $arrayFilaExcel;
                     }
 
                     $arrayFilaExcel = array(
