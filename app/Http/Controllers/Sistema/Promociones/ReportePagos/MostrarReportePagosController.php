@@ -1212,7 +1212,7 @@ class MostrarReportePagosController extends Controller
                             "value" => floatval($prl->prlliquidaciontotalpagar), 
                             "style" => array(
                                 "font" => array("sz" => "10"),
-                                "numFmt" => "0.00"
+                                "numFmt" => "0,000.00"
                             )
                         )
                     );
