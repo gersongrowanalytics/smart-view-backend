@@ -765,7 +765,7 @@ class MostrarReportePagosController extends Controller
 
                 foreach ($prls as $posicionPrl => $prl) {
                     
-                    if($posicionRep == 0){
+                    if($posicionPrl == 0){
                         $arrayTitulos = array(
                             array("title" => "", "width" => array("wpx" => 100)),
                             array("title" => "", "width" => array("wpx" => 100)),
