@@ -8,6 +8,7 @@ use App\Http\Controllers\AuditoriaController;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+use PhpOffice\PhpSpreadsheet\Shared\Date;
 use Illuminate\Support\Facades\DB;
 use App\usuusuarios;
 use App\carcargasarchivos;
