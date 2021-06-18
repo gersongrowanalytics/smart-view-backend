@@ -1158,7 +1158,7 @@ class MostrarReportePagosController extends Controller
                         $prl->prlejecutivo = "";
                     }
 
-                    if($prl->prlgrupo == null){
+                    if($prl->prlgrupo == null || $prl->prlgrupo == "null"){
                         $prl->prlgrupo = "";
                     }
 
