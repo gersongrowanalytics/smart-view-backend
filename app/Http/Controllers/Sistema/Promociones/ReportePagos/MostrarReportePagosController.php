@@ -803,7 +803,8 @@ class MostrarReportePagosController extends Controller
                                 "value" => "GBA", 
                                 "style" => array(
                                     "font" => array(
-                                        "sz" => "10",
+                                        "sz" => "11", 
+                                        "bold" => true
                                     ),
                                     "fill" => array(
                                         "patternType" => 'solid',
@@ -817,7 +818,8 @@ class MostrarReportePagosController extends Controller
                                 "value" => "Año promoción", 
                                 "style" => array(
                                     "font" => array(
-                                        "sz" => "10",
+                                        "sz" => "11", 
+                                        "bold" => true
                                     ),
                                     "fill" => array(
                                         "patternType" => 'solid',
@@ -831,7 +833,8 @@ class MostrarReportePagosController extends Controller
                                 "value" => "Mes promoción", 
                                 "style" => array(
                                     "font" => array(
-                                        "sz" => "10",
+                                        "sz" => "11", 
+                                        "bold" => true
                                     ),
                                     "fill" => array(
                                         "patternType" => 'solid',
@@ -845,7 +848,8 @@ class MostrarReportePagosController extends Controller
                                 "value" => "Concepto", 
                                 "style" => array(
                                     "font" => array(
-                                        "sz" => "10",
+                                        "sz" => "11", 
+                                        "bold" => true
                                     ),
                                     "fill" => array(
                                         "patternType" => 'solid',
@@ -859,7 +863,8 @@ class MostrarReportePagosController extends Controller
                                 "value" => "Ejecutivo", 
                                 "style" => array(
                                     "font" => array(
-                                        "sz" => "10",
+                                        "sz" => "11", 
+                                        "bold" => true
                                     ),
                                     "fill" => array(
                                         "patternType" => 'solid',
@@ -873,7 +878,8 @@ class MostrarReportePagosController extends Controller
                                 "value" => "Grupo", 
                                 "style" => array(
                                     "font" => array(
-                                        "sz" => "10",
+                                        "sz" => "11", 
+                                        "bold" => true
                                     ),
                                     "fill" => array(
                                         "patternType" => 'solid',
@@ -887,7 +893,8 @@ class MostrarReportePagosController extends Controller
                                 "value" => "Sold To", 
                                 "style" => array(
                                     "font" => array(
-                                        "sz" => "10",
+                                        "sz" => "11", 
+                                        "bold" => true
                                     ),
                                     "fill" => array(
                                         "patternType" => 'solid',
@@ -901,7 +908,8 @@ class MostrarReportePagosController extends Controller
                                 "value" => "Cliente", 
                                 "style" => array(
                                     "font" => array(
-                                        "sz" => "10",
+                                        "sz" => "11", 
+                                        "bold" => true
                                     ),
                                     "fill" => array(
                                         "patternType" => 'solid',
@@ -915,7 +923,8 @@ class MostrarReportePagosController extends Controller
                                 "value" => "Compra (UND)", 
                                 "style" => array(
                                     "font" => array(
-                                        "sz" => "10",
+                                        "sz" => "11", 
+                                        "bold" => true
                                     ),
                                     "fill" => array(
                                         "patternType" => 'solid',
@@ -929,7 +938,8 @@ class MostrarReportePagosController extends Controller
                                 "value" => "Bonificación (UND)", 
                                 "style" => array(
                                     "font" => array(
-                                        "sz" => "10",
+                                        "sz" => "11", 
+                                        "bold" => true
                                     ),
                                     "fill" => array(
                                         "patternType" => 'solid',
@@ -944,7 +954,8 @@ class MostrarReportePagosController extends Controller
                                 "value" => "Mecánica", 
                                 "style" => array(
                                     "font" => array(
-                                        "sz" => "10",
+                                        "sz" => "11", 
+                                        "bold" => true
                                     ),
                                     "fill" => array(
                                         "patternType" => 'solid',
@@ -959,7 +970,8 @@ class MostrarReportePagosController extends Controller
                                 "value" => "Categoría", 
                                 "style" => array(
                                     "font" => array(
-                                        "sz" => "10",
+                                        "sz" => "11", 
+                                        "bold" => true
                                     ),
                                     "fill" => array(
                                         "patternType" => 'solid',
@@ -973,7 +985,8 @@ class MostrarReportePagosController extends Controller
                                 "value" => "SKU", 
                                 "style" => array(
                                     "font" => array(
-                                        "sz" => "10",
+                                        "sz" => "11", 
+                                        "bold" => true
                                     ),
                                     "fill" => array(
                                         "patternType" => 'solid',
@@ -987,7 +1000,8 @@ class MostrarReportePagosController extends Controller
                                 "value" => "Producto", 
                                 "style" => array(
                                     "font" => array(
-                                        "sz" => "10",
+                                        "sz" => "11", 
+                                        "bold" => true
                                     ),
                                     "fill" => array(
                                         "patternType" => 'solid',
@@ -1001,7 +1015,8 @@ class MostrarReportePagosController extends Controller
                                 "value" => "Sku a Bonificar", 
                                 "style" => array(
                                     "font" => array(
-                                        "sz" => "10",
+                                        "sz" => "11", 
+                                        "bold" => true
                                     ),
                                     "fill" => array(
                                         "patternType" => 'solid',
@@ -1015,7 +1030,8 @@ class MostrarReportePagosController extends Controller
                                 "value" => "Producto a Bonificar", 
                                 "style" => array(
                                     "font" => array(
-                                        "sz" => "10",
+                                        "sz" => "11", 
+                                        "bold" => true
                                     ),
                                     "fill" => array(
                                         "patternType" => 'solid',
@@ -1029,7 +1045,8 @@ class MostrarReportePagosController extends Controller
                                 "value" => "Planchas a rotar o (Sell Out)", 
                                 "style" => array(
                                     "font" => array(
-                                        "sz" => "10",
+                                        "sz" => "11", 
+                                        "bold" => true
                                     ),
                                     "fill" => array(
                                         "patternType" => 'solid',
@@ -1043,7 +1060,8 @@ class MostrarReportePagosController extends Controller
                                 "value" => "# Combos", 
                                 "style" => array(
                                     "font" => array(
-                                        "sz" => "10",
+                                        "sz" => "11", 
+                                        "bold" => true
                                     ),
                                     "fill" => array(
                                         "patternType" => 'solid',
@@ -1057,7 +1075,8 @@ class MostrarReportePagosController extends Controller
                                 "value" => "Reconocer x Combo S/IGV", 
                                 "style" => array(
                                     "font" => array(
-                                        "sz" => "10",
+                                        "sz" => "11", 
+                                        "bold" => true
                                     ),
                                     "fill" => array(
                                         "patternType" => 'solid',
@@ -1071,7 +1090,8 @@ class MostrarReportePagosController extends Controller
                                 "value" => "Reconocer x PL S/IGV", 
                                 "style" => array(
                                     "font" => array(
-                                        "sz" => "10",
+                                        "sz" => "11", 
+                                        "bold" => true
                                     ),
                                     "fill" => array(
                                         "patternType" => 'solid',
@@ -1085,7 +1105,8 @@ class MostrarReportePagosController extends Controller
                                 "value" => "Total Soles S/IGV", 
                                 "style" => array(
                                     "font" => array(
-                                        "sz" => "10",
+                                        "sz" => "11", 
+                                        "bold" => true
                                     ),
                                     "fill" => array(
                                         "patternType" => 'solid',
@@ -1099,7 +1120,8 @@ class MostrarReportePagosController extends Controller
                                 "value" => "LIQUIDACION:  Sell out planchas", 
                                 "style" => array(
                                     "font" => array(
-                                        "sz" => "10",
+                                        "sz" => "11", 
+                                        "bold" => true
                                     ),
                                     "fill" => array(
                                         "patternType" => 'solid',
@@ -1113,7 +1135,8 @@ class MostrarReportePagosController extends Controller
                                 "value" => "LIQUIDACION: Combos usados", 
                                 "style" => array(
                                     "font" => array(
-                                        "sz" => "10",
+                                        "sz" => "11", 
+                                        "bold" => true
                                     ),
                                     "fill" => array(
                                         "patternType" => 'solid',
@@ -1127,7 +1150,8 @@ class MostrarReportePagosController extends Controller
                                 "value" => "LIQUIDACION: Valorizado", 
                                 "style" => array(
                                     "font" => array(
-                                        "sz" => "10",
+                                        "sz" => "11", 
+                                        "bold" => true
                                     ),
                                     "fill" => array(
                                         "patternType" => 'solid',
@@ -1141,7 +1165,8 @@ class MostrarReportePagosController extends Controller
                                 "value" => "LIQUIDACION: Total a Pagar",
                                 "style" => array(
                                     "font" => array(
-                                        "sz" => "10",
+                                        "sz" => "11", 
+                                        "bold" => true
                                     ),
                                     "fill" => array(
                                         "patternType" => 'solid',
