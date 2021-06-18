@@ -1208,7 +1208,13 @@ class MostrarReportePagosController extends Controller
                         array("value" => floatval($prl->prlliquidacionso), "style" => array("font" => array("sz" => "10"))),
                         array("value" => floatval($prl->prlliquidacioncombo), "style" => array("font" => array("sz" => "10"))),
                         array("value" => floatval($prl->prlliquidacionvalorizado), "style" => array("font" => array("sz" => "10"))),
-                        array("value" => floatval($prl->prlliquidaciontotalpagar), "style" => array("font" => array("sz" => "10")))
+                        array(
+                            "value" => floatval($prl->prlliquidaciontotalpagar), 
+                            "style" => array(
+                                "font" => array("sz" => "10"),
+                                "numFmt" => "0"
+                            )
+                        )
                     );
 
                     $nuevoArrayPromocionesLiquidadas[0]['data'][] = $arrayFilaExcel;
