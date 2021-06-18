@@ -115,7 +115,7 @@ class PromocionesLiquidadasController extends Controller
                                     $prln->fecid            = $fecid;
                                     $prln->sucid            = $sucid;
                                     $prln->proid            = $proid;
-                                    $prln->proidbonificado  = $probonificado;
+                                    $prln->proidbonificado  = $proidbonificado;
                                     $prln->prlconcepto      = $concepto;
                                     $prln->prlejecutivo     = $ejecutivo;
                                     $prln->prlgrupo         = $grupo;
