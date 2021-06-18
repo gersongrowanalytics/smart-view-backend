@@ -79,7 +79,7 @@ class PromocionesLiquidadasController extends Controller
                     $categoria     = $objPHPExcel->getActiveSheet()->getCell('M'.$i)->getCalculatedValue();
 
                     $sku           = $objPHPExcel->getActiveSheet()->getCell('N'.$i)->getCalculatedValue();
-                    $skuproducto   = $objPHPExcel->getActiveSheet()->getCell('N'.$i)->getCalculatedValue();
+                    $skuproducto   = $objPHPExcel->getActiveSheet()->getCell('O'.$i)->getCalculatedValue();
                     $skubonificado = $objPHPExcel->getActiveSheet()->getCell('P'.$i)->getCalculatedValue();
                     $productoBonif = $objPHPExcel->getActiveSheet()->getCell('Q'.$i)->getCalculatedValue();
 
@@ -115,10 +115,10 @@ class PromocionesLiquidadasController extends Controller
                             $prln->fecid            = $fecid;
                             $prln->sucid            = $sucid;
 
-                            $prlsku           = $sku;
-                            $prlproducto      = $skuproducto;
-                            $prlskubonificado = $skubonificado;
-                            $prlproductobonificado = $productoBonif;
+                            $prln->prlsku           = $sku;
+                            $prln->prlproducto      = $skuproducto;
+                            $prln->prlskubonificado = $skubonificado;
+                            $prln->prlproductobonificado = $productoBonif;
 
                             $prln->prlconcepto      = $concepto;
                             $prln->prlejecutivo     = $ejecutivo;
