@@ -1201,7 +1201,7 @@ class MostrarReportePagosController extends Controller
                         array("value" => $prl->fecmes, "style" => array("font" => array("sz" => "10"))),
                         array("value" => $prl->prlconcepto, "style" => array("font" => array("sz" => "10"))),
                         array("value" => $prl->prlejecutivo, "style" => array("font" => array("sz" => "10"))),
-                        array("value" => $prl->prlgrupo == "null" ? "" :$prl->prlgrupo, "style" => array("font" => array("sz" => "10"))),
+                        array("value" => $prl->prlgrupo == NULL ? "" :$prl->prlgrupo, "style" => array("font" => array("sz" => "10"))),
                         array("value" => $prl->soldto, "style" => array("font" => array("sz" => "10"))),
                         array("value" => $prl->sucnombre, "style" => array("font" => array("sz" => "10"))),
                         array("value" => $prl->prlcompra, "style" => array("font" => array("sz" => "10"))),
