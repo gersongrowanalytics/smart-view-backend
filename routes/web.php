@@ -96,6 +96,7 @@ $router->group(['middleware' => ['permisos']], function() use($router) {
     $router->post('/cargarArchivo/clientes/actualizarGrupoSucursal', 'Sistema\CargarArchivo\Clientes\ActualizarGrupoSucursalController@ActualizarGrupoSucursal');
 
     $router->post('/cargarArchivo/reconocimiento-pagos', 'Sistema\CargarArchivo\ReportePagos\ReconocimientoPagosController@CargarReconocimiento');
+    $router->post('/cargarArchivo/promociones-liquidadas', 'Sistema\CargarArchivo\ReportePagos\PromocionesLiquidadasController@PromocionesLiquidadas');
 
     $router->post('/cargarArchivo/productos', 'Sistema\CargarArchivo\Productos\ProductosCargarController@ActualiazarCargarProductos');
     $router->post('/cargarArchivo/prueba/soldto', 'Sistema\CargarArchivo\Prueba\PruebaController@prueba');
