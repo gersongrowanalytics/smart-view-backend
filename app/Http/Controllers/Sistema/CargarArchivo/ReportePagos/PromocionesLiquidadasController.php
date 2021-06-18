@@ -62,6 +62,8 @@ class PromocionesLiquidadasController extends Controller
                 $numRows        = $objPHPExcel->setActiveSheetIndex(0)->getHighestRow();
                 $ultimaColumna  = $objPHPExcel->setActiveSheetIndex(0)->getHighestColumn();
 
+                prlpromocionesliquidadas::where('prlid', '>', 0)->delete();
+
                 for ($i=2; $i <= $numRows ; $i++) {
                     $dia = '01';
 
@@ -112,7 +114,7 @@ class PromocionesLiquidadasController extends Controller
                             $prln = new prlpromocionesliquidadas;
                             $prln->fecid            = $fecid;
                             $prln->sucid            = $sucid;
-                            
+
                             $prlsku           = $sku;
                             $prlproducto      = $skuproducto;
                             $prlskubonificado = $skubonificado;
@@ -149,6 +151,8 @@ class PromocionesLiquidadasController extends Controller
                     }
                 }
             }
+
+            DB::commit();
 
         } catch (Exception $e) {
             $respuesta = false;
