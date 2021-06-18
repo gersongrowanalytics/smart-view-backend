@@ -116,9 +116,9 @@ class MostrarReportePagosController extends Controller
                             array("title" => "", "width" => array("wpx" => 150)),
                             array("title" => "", "width" => array("wpx" => 150)),
                             array("title" => "", "width" => array("wpx" => 150)),
-                            array("title" => "", "width" => array("wpx" => 150)),
-                            array("title" => "", "width" => array("wpx" => 150)),
-                            array("title" => "", "width" => array("wpx" => 150))
+                            array("title" => "", "width" => array("wpx" => 100)),
+                            array("title" => "", "width" => array("wpx" => 100)),
+                            array("title" => "", "width" => array("wpx" => 100))
                         );
                         $nuevoArray[0]['columns'] = $arrayTitulos;
 
@@ -384,21 +384,21 @@ class MostrarReportePagosController extends Controller
                     $celdaPintada = array();
 
                     if($posicionRep % 2 == 0){
-                        $celdaPintada = array();
+                        $celdaPintada = array("patternType" => 'solid',"fgColor" => array("rgb" => "FFDCEDF4"));
                     }else{
-
+                        $celdaPintada = array("patternType" => 'solid',"fgColor" => array("rgb" => "FFFFFFFF"));
                     }
 
                     $arrayFilaExcel = array(
                         array("value" => ""),
-                        array("value" => $rep->sucsoldto, "style" => array("font" => array("sz" => "10"))),
-                        array("value" => $rep->sucnombre, "style" => array("font" => array("sz" => "10"))),
-                        array("value" => $rep->repconcepto, "style" => array("font" => array("sz" => "10"))),
-                        array("value" => $rep->reptipodocumento, "style" => array("font" => array("sz" => "10"))),
-                        array("value" => $rep->repnumerodocumento, "style" => array("font" => array("sz" => "10"))),
-                        array("value" => $rep->repfechadocumento, "style" => array("font" => array("sz" => "10"))),
-                        array("value" => $rep->repcategoria, "style" => array("font" => array("sz" => "10"))),
-                        array("value" => floatval($rep->repimporte), "style" => array("font" => array("sz" => "10"))),
+                        array("value" => $rep->sucsoldto, "style" => array("font" => array("sz" => "10"), "fill" => $celdaPintada)),
+                        array("value" => $rep->sucnombre, "style" => array("font" => array("sz" => "10"), "fill" => $celdaPintada)),
+                        array("value" => $rep->repconcepto, "style" => array("font" => array("sz" => "10"), "fill" => $celdaPintada)),
+                        array("value" => $rep->reptipodocumento, "style" => array("font" => array("sz" => "10"), "fill" => $celdaPintada)),
+                        array("value" => $rep->repnumerodocumento, "style" => array("font" => array("sz" => "10"), "fill" => $celdaPintada)),
+                        array("value" => $rep->repfechadocumento, "style" => array("font" => array("sz" => "10"), "fill" => $celdaPintada)),
+                        array("value" => $rep->repcategoria, "style" => array("font" => array("sz" => "10"), "fill" => $celdaPintada)),
+                        array("value" => floatval($rep->repimporte), "style" => array("font" => array("sz" => "10"),"fill" => $celdaPintada,"numFmt" => "#,##0.00")),
                     );
 
                     $nuevoArray[0]['data'][] = $arrayFilaExcel;
@@ -429,7 +429,7 @@ class MostrarReportePagosController extends Controller
                     array("value" => ""),
                     array("value" => ""),
                     array("value" => "Total", "style" => array("font" => array("sz" => "12","bold" => true),)),
-                    array("value" => floatval($totalImporte), "style" => array("font" => array("sz" => "12","bold" => true),)),
+                    array("value" => floatval($totalImporte), "style" => array("font" => array("sz" => "12","bold" => true),"numFmt" => "#,##0.00")), 
                 );
 
                 $nuevoArray[0]['data'][] = $arrayFilaExcel;
@@ -443,12 +443,12 @@ class MostrarReportePagosController extends Controller
 
                     if($posicionRep == 0){
                         $arrayTitulos = array(
+                            array("title" => "", "width" => array("wpx" => 10)),
                             array("title" => "", "width" => array("wpx" => 100)),
                             array("title" => "", "width" => array("wpx" => 50)),
                             array("title" => "", "width" => array("wpx" => 50)),
                             array("title" => "", "width" => array("wpx" => 150)),
                             array("title" => "", "width" => array("wpx" => 150)),
-                            array("title" => "", "width" => array("wpx" => 150)),
                             array("title" => "", "width" => array("wpx" => 100)),
                             array("title" => "", "width" => array("wpx" => 100)),
                             array("title" => "", "width" => array("wpx" => 100)),
@@ -456,7 +456,7 @@ class MostrarReportePagosController extends Controller
                             array("title" => "", "width" => array("wpx" => 100)),
                             array("title" => "", "width" => array("wpx" => 50)),
                             array("title" => "", "width" => array("wpx" => 100)),
-                            array("title" => "", "width" => array("wpx" => 200)),
+                            array("title" => "", "width" => array("wpx" => 250)),
                         );
                         $nuevoArrayReconocimiento[0]['columns'] = $arrayTitulos;
 
@@ -707,7 +707,7 @@ class MostrarReportePagosController extends Controller
                         array("value" => $rep->reptipodocumento, "style" => array("font" => array("sz" => "10"))),
                         array("value" => $rep->repfechadocumento, "style" => array("font" => array("sz" => "10"))),
                         array("value" => $rep->repnumerodocumento, "style" => array("font" => array("sz" => "10"))),
-                        array("value" => floatval($rep->repimporte), "style" => array("font" => array("sz" => "10"))),
+                        array("value" => floatval($rep->repimporte), "style" => array("font" => array("sz" => "10"),"numFmt" => "#,##0.00")),
                         array("value" => $rep->repmonedalocal, "style" => array("font" => array("sz" => "10"))),
                         array("value" => $rep->repcategoria, "style" => array("font" => array("sz" => "10"))),
                         array("value" => $rep->reptexto, "style" => array("font" => array("sz" => "10"))),
@@ -1200,21 +1200,15 @@ class MostrarReportePagosController extends Controller
                         array("value" => $prl->prlproducto, "style" => array("font" => array("sz" => "10"))),
                         array("value" => $prl->prlskubonificado, "style" => array("font" => array("sz" => "10"))),
                         array("value" => $prl->prlproductobonificado, "style" => array("font" => array("sz" => "10"))),
-                        array("value" => floatval($prl->prlplancha), "style" => array("font" => array("sz" => "10"))),
-                        array("value" => floatval($prl->prlcombo), "style" => array("font" => array("sz" => "10"))),
-                        array("value" => floatval($prl->prlreconocerxcombo), "style" => array("font" => array("sz" => "10"))),
-                        array("value" => floatval($prl->prlreconocerxplancha), "style" => array("font" => array("sz" => "10"))),
-                        array("value" => floatval($prl->prltotal), "style" => array("font" => array("sz" => "10"))),
-                        array("value" => floatval($prl->prlliquidacionso), "style" => array("font" => array("sz" => "10"))),
-                        array("value" => floatval($prl->prlliquidacioncombo), "style" => array("font" => array("sz" => "10"))),
-                        array("value" => floatval($prl->prlliquidacionvalorizado), "style" => array("font" => array("sz" => "10"))),
-                        array(
-                            "value" => floatval($prl->prlliquidaciontotalpagar), 
-                            "style" => array(
-                                "font" => array("sz" => "10"),
-                                "numFmt" => "#,##0.00"
-                            )
-                        )
+                        array("value" => floatval($prl->prlplancha), "style" => array("font" => array("sz" => "10"),"numFmt" => "#,##0.00")),
+                        array("value" => floatval($prl->prlcombo), "style" => array("font" => array("sz" => "10"),"numFmt" => "#,##0.00")),
+                        array("value" => floatval($prl->prlreconocerxcombo), "style" => array("font" => array("sz" => "10"),"numFmt" => "#,##0.00")),
+                        array("value" => floatval($prl->prlreconocerxplancha), "style" => array("font" => array("sz" => "10"),"numFmt" => "#,##0.00")),
+                        array("value" => floatval($prl->prltotal), "style" => array("font" => array("sz" => "10"),"numFmt" => "#,##0.00")),
+                        array("value" => floatval($prl->prlliquidacionso), "style" => array("font" => array("sz" => "10"),"numFmt" => "#,##0.00")),
+                        array("value" => floatval($prl->prlliquidacioncombo), "style" => array("font" => array("sz" => "10"),"numFmt" => "#,##0.00")),
+                        array("value" => floatval($prl->prlliquidacionvalorizado), "style" => array("font" => array("sz" => "10"),"numFmt" => "#,##0.00")),
+                        array("value" => floatval($prl->prlliquidaciontotalpagar), "style" => array("font" => array("sz" => "10"),"numFmt" => "#,##0.00"))
                     );
 
                     $nuevoArrayPromocionesLiquidadas[0]['data'][] = $arrayFilaExcel;
