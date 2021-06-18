@@ -75,8 +75,12 @@ class PromocionesLiquidadasController extends Controller
                     $bonificacion  = $objPHPExcel->getActiveSheet()->getCell('K'.$i)->getCalculatedValue();
                     $mecanica      = $objPHPExcel->getActiveSheet()->getCell('L'.$i)->getCalculatedValue();
                     $categoria     = $objPHPExcel->getActiveSheet()->getCell('M'.$i)->getCalculatedValue();
+
                     $sku           = $objPHPExcel->getActiveSheet()->getCell('N'.$i)->getCalculatedValue();
+                    $skuproducto   = $objPHPExcel->getActiveSheet()->getCell('N'.$i)->getCalculatedValue();
                     $skubonificado = $objPHPExcel->getActiveSheet()->getCell('P'.$i)->getCalculatedValue();
+                    $productoBonif = $objPHPExcel->getActiveSheet()->getCell('Q'.$i)->getCalculatedValue();
+
                     $plancha       = $objPHPExcel->getActiveSheet()->getCell('R'.$i)->getCalculatedValue();
                     $combo         = $objPHPExcel->getActiveSheet()->getCell('S'.$i)->getCalculatedValue();
                     $reconocerxcombo       = $objPHPExcel->getActiveSheet()->getCell('T'.$i)->getCalculatedValue();
@@ -86,6 +90,10 @@ class PromocionesLiquidadasController extends Controller
                     $liquidacioncombo      = $objPHPExcel->getActiveSheet()->getCell('X'.$i)->getCalculatedValue();
                     $liquidacionvalorizado = $objPHPExcel->getActiveSheet()->getCell('Y'.$i)->getCalculatedValue();
                     $liquidaciontotal      = $objPHPExcel->getActiveSheet()->getCell('Z'.$i)->getCalculatedValue();
+
+                    if($plancha == "-"){
+                        $plancha = "0";
+                    }
 
                     $fec = fecfechas::where('fecdia', $dia)
                                         ->where('fecmes', $mesPromocion)
@@ -101,51 +109,32 @@ class PromocionesLiquidadasController extends Controller
                         if($suc){
                             $sucid = $suc->sucid;
 
-                            $pro = proproductos::where('prosku', $sku)->first(['proid']);
+                            $prln = new prlpromocionesliquidadas;
+                            $prln->fecid            = $fecid;
+                            $prln->sucid            = $sucid;
+                            
+                            $prlsku           = $sku;
+                            $prlproducto      = $skuproducto;
+                            $prlskubonificado = $skubonificado;
+                            $prlproductobonificado = $productoBonif;
 
-                            if($pro){
-                                $proid = $pro->proid;
-
-                                $probonificado = proproductos::where('prosku', $skubonificado)->first(['proid']);
-
-                                if($probonificado){
-                                    $proidbonificado = $probonificado->proid;
-
-                                    $prln = new prlpromocionesliquidadas;
-                                    $prln->fecid            = $fecid;
-                                    $prln->sucid            = $sucid;
-                                    $prln->proid            = $proid;
-                                    $prln->proidbonificado  = $proidbonificado;
-                                    $prln->prlconcepto      = $concepto;
-                                    $prln->prlejecutivo     = $ejecutivo;
-                                    $prln->prlgrupo         = $grupo;
-                                    $prln->prlcompra        = $compra;
-                                    $prln->prlbonificacion  = $bonificacion;
-                                    $prln->prlmecanica      = $mecanica;
-                                    $prln->prlcategoria     = $categoria;
-                                    $prln->prlplancha       = $plancha;
-                                    $prln->prlcombo         = $combo;
-                                    $prln->prlreconocerxcombo   = $reconocerxcombo;
-                                    $prln->prlreconocerxplancha = $reconocerxplancha;
-                                    $prln->prltotal             = $totalsoles;
-                                    $prln->prlliquidacionso     = $liquidacionso;
-                                    $prln->prlliquidacioncombo  = $liquidacioncombo;
-                                    $prln->prlliquidacionvalorizado = $liquidacionvalorizado;
-                                    $prln->prlliquidaciontotalpagar = $liquidaciontotal;
-                                    $prln->save();
-
-                                }else{
-                                    $log["NO_SE_ENCONTRO_PRODUCTO_BONIFICADO"][] = "No se encontro un producto bonificado: ".$skubonificado." en la linea: ".$i;
-                                    $mensaje = 'Lo sentimos, se encontraron algunas observaciones en la columna de sku bonificados';
-                                    $respuesta = false;    
-                                }
-
-                            }else{
-                                
-                                $log["NO_SE_ENCONTRO_PRODUCTO"][] = "No se encontro un producto: ".$sku." en la linea: ".$i;
-                                $mensaje = 'Lo sentimos, se encontraron algunas observaciones en la columna de sku';
-                                $respuesta = false;
-                            }
+                            $prln->prlconcepto      = $concepto;
+                            $prln->prlejecutivo     = $ejecutivo;
+                            $prln->prlgrupo         = $grupo;
+                            $prln->prlcompra        = $compra;
+                            $prln->prlbonificacion  = $bonificacion;
+                            $prln->prlmecanica      = $mecanica;
+                            $prln->prlcategoria     = $categoria;
+                            $prln->prlplancha       = $plancha;
+                            $prln->prlcombo         = $combo;
+                            $prln->prlreconocerxcombo   = $reconocerxcombo;
+                            $prln->prlreconocerxplancha = $reconocerxplancha;
+                            $prln->prltotal             = $totalsoles;
+                            $prln->prlliquidacionso     = $liquidacionso;
+                            $prln->prlliquidacioncombo  = $liquidacioncombo;
+                            $prln->prlliquidacionvalorizado = $liquidacionvalorizado;
+                            $prln->prlliquidaciontotalpagar = $liquidaciontotal;
+                            $prln->save();
 
                         }else{
                             $log["NO_SE_ENCONTRO_SUCURSAL"][] = "No se encontro la sucursal: ".$soldto." en la linea: ".$i;

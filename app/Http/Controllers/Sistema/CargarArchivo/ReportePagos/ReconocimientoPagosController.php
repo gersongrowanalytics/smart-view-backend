@@ -110,7 +110,7 @@ class ReconocimientoPagosController extends Controller
                             $repn->save();
 
                         }else{
-                            $log["NO_SE_ENCONTRO_SUCURSAL"][] = "En la linea: ".$i;
+                            $log["NO_SE_ENCONTRO_SUCURSAL"][] = "No se encontro la sucursal: ".$soldto." en la linea: ".$i;
                             $mensaje = 'Lo sentimos, se encontraron algunas observaciones en la columna de soldto';
                             $respuesta = false;
                         }
