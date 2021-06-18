@@ -1138,6 +1138,22 @@ class MostrarReportePagosController extends Controller
                         $nuevoArrayPromocionesLiquidadas[0]['data'][] = $arrayFilaExcel;
                     }
 
+                    if($prl->prlsku == null){
+                        $prl->prlsku = "";
+                    }
+
+                    if($prl->prlproducto == null){
+                        $prl->prlproducto = "";
+                    }
+
+                    if($prl->prlskubonificado == null){
+                        $prl->prlskubonificado = "";
+                    }
+
+                    if($prl->prlproductobonificado == null){
+                        $prl->prlproductobonificado = "";
+                    }
+
                     if($prl->prlejecutivo == null){
                         $prl->prlejecutivo = "";
                     }
