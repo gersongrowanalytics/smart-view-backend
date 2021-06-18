@@ -720,9 +720,9 @@ class MostrarReportePagosController extends Controller
                 $datosReconocimiento = $nuevoArrayReconocimiento;
 
                 // PLANTILLA PARA DESCARGAR PROMOCIONES LIQUIDADAS
-                $prls = prlpromocionesliquidadas::join('sucsucursales as suc', 'suc.sucid', 'repreconocimientopago.sucid')
+                $prls = prlpromocionesliquidadas::join('sucsucursales as suc', 'suc.sucid', 'prlpromocionesliquidadas.sucid')
                                                 ->leftjoin('cascanalessucursales as cas', 'cas.casid', 'suc.casid')
-                                                ->join('fecfechas as fec', 'fec.fecid', 'repreconocimientopago.fecid')
+                                                ->join('fecfechas as fec', 'fec.fecid', 'prlpromocionesliquidadas.fecid')
                                                 ->where('fec.fecid', $fec->fecid)
                                                 ->where(function ($query) use($sucs) {
                                                     foreach($sucs as $suc){
