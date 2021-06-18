@@ -1104,7 +1104,7 @@ class MostrarReportePagosController extends Controller
                                     "fill" => array(
                                         "patternType" => 'solid',
                                         "fgColor" => array(
-                                            "rgb" => "FFC6ED59"
+                                            "rgb" => "FFF2AD68"
                                         )
                                     )
                                 )
@@ -1118,7 +1118,7 @@ class MostrarReportePagosController extends Controller
                                     "fill" => array(
                                         "patternType" => 'solid',
                                         "fgColor" => array(
-                                            "rgb" => "FFC6ED59"
+                                            "rgb" => "FFF2AD68"
                                         )
                                     )
                                 )
@@ -1132,7 +1132,7 @@ class MostrarReportePagosController extends Controller
                                     "fill" => array(
                                         "patternType" => 'solid',
                                         "fgColor" => array(
-                                            "rgb" => "FFC6ED59"
+                                            "rgb" => "FFF2AD68"
                                         )
                                     )
                                 )
@@ -1146,7 +1146,7 @@ class MostrarReportePagosController extends Controller
                                     "fill" => array(
                                         "patternType" => 'solid',
                                         "fgColor" => array(
-                                            "rgb" => "FFC6ED59"
+                                            "rgb" => "FFF2AD68"
                                         )
                                     )
                                 )
