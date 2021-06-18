@@ -742,7 +742,7 @@ class MostrarReportePagosController extends Controller
                                                     'prlconcepto',
                                                     'prlejecutivo',
                                                     'prlgrupo',
-                                                    'suc.soldto',
+                                                    'suc.sucsoldto',
                                                     'sucnombre',
                                                     'prlcompra',
                                                     'prlbonificacion',
