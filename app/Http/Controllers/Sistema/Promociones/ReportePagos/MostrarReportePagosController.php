@@ -435,19 +435,19 @@ class MostrarReportePagosController extends Controller
                     if($posicionRep == 0){
                         $arrayTitulos = array(
                             array("title" => "", "width" => array("wpx" => 100)),
-                            array("title" => "", "width" => array("wpx" => 100)),
+                            array("title" => "", "width" => array("wpx" => 50)),
+                            array("title" => "", "width" => array("wpx" => 50)),
                             array("title" => "", "width" => array("wpx" => 150)),
                             array("title" => "", "width" => array("wpx" => 150)),
                             array("title" => "", "width" => array("wpx" => 150)),
-                            array("title" => "", "width" => array("wpx" => 150)),
                             array("title" => "", "width" => array("wpx" => 100)),
                             array("title" => "", "width" => array("wpx" => 100)),
                             array("title" => "", "width" => array("wpx" => 100)),
                             array("title" => "", "width" => array("wpx" => 100)),
                             array("title" => "", "width" => array("wpx" => 100)),
+                            array("title" => "", "width" => array("wpx" => 50)),
                             array("title" => "", "width" => array("wpx" => 100)),
-                            array("title" => "", "width" => array("wpx" => 100)),
-                            array("title" => "", "width" => array("wpx" => 100)),
+                            array("title" => "", "width" => array("wpx" => 200)),
                         );
                         $nuevoArrayReconocimiento[0]['columns'] = $arrayTitulos;
 

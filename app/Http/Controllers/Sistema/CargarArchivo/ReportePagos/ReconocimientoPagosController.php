@@ -76,6 +76,11 @@ class ReconocimientoPagosController extends Controller
                     $categoria       = $objPHPExcel->getActiveSheet()->getCell('M'.$i)->getCalculatedValue();
                     $texto           = $objPHPExcel->getActiveSheet()->getCell('N'.$i)->getCalculatedValue();
 
+                    $fechaDocumento = Date::excelToDateTimeObject($fechaDocumento);
+                    $fechaDocumento = json_encode($fechaDocumento);
+                    $fechaDocumento = json_decode($fechaDocumento);
+                    $fechaDocumento = date("Y-m-d", strtotime($fechaDocumento->date));
+
                     $fec = fecfechas::where('fecdia', $dia)
                                         ->where('fecmes', $mesPromocion)
                                         ->where('fecano', $anioPromocion)
