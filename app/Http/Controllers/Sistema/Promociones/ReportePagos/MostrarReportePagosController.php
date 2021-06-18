@@ -1138,62 +1138,7 @@ class MostrarReportePagosController extends Controller
                         $nuevoArrayPromocionesLiquidadas[0]['data'][] = $arrayFilaExcel;
                     }
 
-                    if($prl->prlsku == null){
-                        $prl->prlsku = "";
-                    }
-
-                    if($prl->prlproducto == null){
-                        $prl->prlproducto = "";
-                    }
-
-                    if($prl->prlskubonificado == null){
-                        $prl->prlskubonificado = "";
-                    }
-
-                    if($prl->prlproductobonificado == null){
-                        $prl->prlproductobonificado = "";
-                    }
-
-                    if($prl->prlejecutivo == null){
-                        $prl->prlejecutivo = "";
-                    }
-
-                    if($prl->prlgrupo == null || $prl->prlgrupo == "null"){
-                        $prl->prlgrupo = "";
-                    }
-
-                    if($prl->prlcompra == null){
-                        $prl->prlcompra = "";
-                    }
-
-                    if($prl->prlbonificacion == null){
-                        $prl->prlbonificacion = "";
-                    }
-
-                    if($prl->prlmecanica == null){
-                        $prl->prlmecanica = "";
-                    }
-
-                    if($prl->prlcombo == null){
-                        $prl->prlcombo = "";
-                    }
-
-                    if($prl->prlreconocerxcombo == null){
-                        $prl->prlreconocerxcombo = "";
-                    }
-
-                    if($prl->prlreconocerxplancha == null){
-                        $prl->prlreconocerxplancha = "";
-                    }
-
-                    if($prl->prlliquidacionso == null){
-                        $prl->prlliquidacionso = "";
-                    }
-
-                    if($prl->prlliquidacioncombo == null){
-                        $prl->prlliquidacioncombo = "";
-                    }
-
+                    
                     $arrayFilaExcel = array(
                         array("value" => ""),
                         array("value" => $prl->casnombre, "style" => array("font" => array("sz" => "10"))),
@@ -1201,8 +1146,8 @@ class MostrarReportePagosController extends Controller
                         array("value" => $prl->fecmes, "style" => array("font" => array("sz" => "10"))),
                         array("value" => $prl->prlconcepto, "style" => array("font" => array("sz" => "10"))),
                         array("value" => $prl->prlejecutivo, "style" => array("font" => array("sz" => "10"))),
-                        array("value" => $prl->prlgrupo === null ? "" :$prl->prlgrupo, "style" => array("font" => array("sz" => "10"))),
-                        array("value" => $prl->soldto, "style" => array("font" => array("sz" => "10"))),
+                        array("value" => $prl->prlgrupo, "style" => array("font" => array("sz" => "10"))),
+                        array("value" => $prl->sucsoldto, "style" => array("font" => array("sz" => "10"))),
                         array("value" => $prl->sucnombre, "style" => array("font" => array("sz" => "10"))),
                         array("value" => $prl->prlcompra, "style" => array("font" => array("sz" => "10"))),
                         array("value" => $prl->prlbonificacion, "style" => array("font" => array("sz" => "10"))),
