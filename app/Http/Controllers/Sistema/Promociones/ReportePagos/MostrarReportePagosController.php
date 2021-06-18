@@ -767,15 +767,33 @@ class MostrarReportePagosController extends Controller
                     
                     if($posicionPrl == 0){
                         $arrayTitulos = array(
+                            array("title" => "", "width" => array("wpx" => 50)),
+                            array("title" => "", "width" => array("wpx" => 100)),
+                            array("title" => "", "width" => array("wpx" => 50)),
+                            array("title" => "", "width" => array("wpx" => 50)),
+                            array("title" => "", "width" => array("wpx" => 100)),
+                            array("title" => "", "width" => array("wpx" => 100)),
                             array("title" => "", "width" => array("wpx" => 100)),
                             array("title" => "", "width" => array("wpx" => 100)),
                             array("title" => "", "width" => array("wpx" => 150)),
-                            array("title" => "", "width" => array("wpx" => 150)),
-                            array("title" => "", "width" => array("wpx" => 150)),
-                            array("title" => "", "width" => array("wpx" => 150)),
-                            array("title" => "", "width" => array("wpx" => 150)),
-                            array("title" => "", "width" => array("wpx" => 150)),
-                            array("title" => "", "width" => array("wpx" => 150))
+
+                            array("title" => "", "width" => array("wpx" => 50)),
+                            array("title" => "", "width" => array("wpx" => 50)),
+                            array("title" => "", "width" => array("wpx" => 100)),
+                            array("title" => "", "width" => array("wpx" => 80)),
+                            array("title" => "", "width" => array("wpx" => 50)),
+                            array("title" => "", "width" => array("wpx" => 100)),
+                            array("title" => "", "width" => array("wpx" => 50)),
+                            array("title" => "", "width" => array("wpx" => 100)),
+                            array("title" => "", "width" => array("wpx" => 50)),
+                            array("title" => "", "width" => array("wpx" => 50)),
+                            array("title" => "", "width" => array("wpx" => 50)),
+                            array("title" => "", "width" => array("wpx" => 70)),
+                            array("title" => "", "width" => array("wpx" => 70)),
+                            array("title" => "", "width" => array("wpx" => 100)),
+                            array("title" => "", "width" => array("wpx" => 100)),
+                            array("title" => "", "width" => array("wpx" => 100)),
+                            array("title" => "", "width" => array("wpx" => 100)),
                         );
                         $nuevoArrayPromocionesLiquidadas[0]['columns'] = $arrayTitulos;
 
@@ -1157,15 +1175,15 @@ class MostrarReportePagosController extends Controller
                         array("value" => $prl->prlproducto, "style" => array("font" => array("sz" => "10"))),
                         array("value" => $prl->prlskubonificado, "style" => array("font" => array("sz" => "10"))),
                         array("value" => $prl->prlproductobonificado, "style" => array("font" => array("sz" => "10"))),
-                        array("value" => $prl->prlplancha, "style" => array("font" => array("sz" => "10"))),
-                        array("value" => $prl->prlcombo, "style" => array("font" => array("sz" => "10"))),
-                        array("value" => $prl->prlreconocerxcombo, "style" => array("font" => array("sz" => "10"))),
-                        array("value" => $prl->prlreconocerxplancha, "style" => array("font" => array("sz" => "10"))),
-                        array("value" => $prl->prltotal, "style" => array("font" => array("sz" => "10"))),
-                        array("value" => $prl->prlliquidacionso, "style" => array("font" => array("sz" => "10"))),
-                        array("value" => $prl->prlliquidacioncombo, "style" => array("font" => array("sz" => "10"))),
-                        array("value" => $prl->prlliquidacionvalorizado, "style" => array("font" => array("sz" => "10"))),
-                        array("value" => $prl->prlliquidaciontotalpagar, "style" => array("font" => array("sz" => "10")))
+                        array("value" => floatval($prl->prlplancha), "style" => array("font" => array("sz" => "10"))),
+                        array("value" => floatval($prl->prlcombo), "style" => array("font" => array("sz" => "10"))),
+                        array("value" => floatval($prl->prlreconocerxcombo), "style" => array("font" => array("sz" => "10"))),
+                        array("value" => floatval($prl->prlreconocerxplancha), "style" => array("font" => array("sz" => "10"))),
+                        array("value" => floatval($prl->prltotal), "style" => array("font" => array("sz" => "10"))),
+                        array("value" => floatval($prl->prlliquidacionso), "style" => array("font" => array("sz" => "10"))),
+                        array("value" => floatval($prl->prlliquidacioncombo), "style" => array("font" => array("sz" => "10"))),
+                        array("value" => floatval($prl->prlliquidacionvalorizado), "style" => array("font" => array("sz" => "10"))),
+                        array("value" => floatval($prl->prlliquidaciontotalpagar), "style" => array("font" => array("sz" => "10")))
                     );
 
                     $nuevoArrayPromocionesLiquidadas[0]['data'][] = $arrayFilaExcel;
