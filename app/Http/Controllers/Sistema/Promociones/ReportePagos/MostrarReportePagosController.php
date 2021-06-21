@@ -1255,9 +1255,9 @@ class MostrarReportePagosController extends Controller
 
         $usutoken   = $request['usutoken'];
         $sucs       = $request['sucs'];
-        // $dia        = "01";
-        // $mes        = $request['mes'];
-        // $anio       = $request['ano'];
+        $dia        = "01";
+        $mes        = $request['mes'];
+        $anio       = $request['ano'];
 
 
         $usuusuario = usuusuarios::where('usutoken', $usutoken)->first(['ususoldto']);
