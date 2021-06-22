@@ -1387,91 +1387,91 @@ class MostrarReportePagosController extends Controller
                     
                     $nuevoArray[0]['data'][] = $arrayFilaExcel;
 
-                    $arrayFilaExcel = array(
-                        array("value" => ""),
-                        array(
-                            "value" => "Año promoción",
-                            "style" => array(
-                                "font" => array(
-                                    "sz" => "12",
-                                    "color" => array(
-                                        "rgb" => "FF31859B"
-                                    )
-                                ),
-                                "fill" => array(
-                                    "patternType" => 'solid',
-                                    "fgColor" => array(
-                                        "rgb" => "FFFFFFCC"
-                                    )
-                                )
-                            )
-                        ),
-                        array(
-                            "value" => $anio,
-                            "style" => array(
-                                "font" => array(
-                                    "sz" => "12",
-                                ),
-                                "fill" => array(
-                                    "patternType" => 'solid',
-                                    "fgColor" => array(
-                                        "rgb" => "FFFFFFCC"
-                                    )
-                                )
-                            )
-                        ),
-                        array("value" => ""),
-                        array("value" => ""),
-                        array("value" => ""),
-                        array("value" => ""),
-                        array("value" => ""),
-                        array("value" => "")
-                    );
+                    // $arrayFilaExcel = array(
+                    //     array("value" => ""),
+                    //     array(
+                    //         "value" => "Año promoción",
+                    //         "style" => array(
+                    //             "font" => array(
+                    //                 "sz" => "12",
+                    //                 "color" => array(
+                    //                     "rgb" => "FF31859B"
+                    //                 )
+                    //             ),
+                    //             "fill" => array(
+                    //                 "patternType" => 'solid',
+                    //                 "fgColor" => array(
+                    //                     "rgb" => "FFFFFFCC"
+                    //                 )
+                    //             )
+                    //         )
+                    //     ),
+                    //     array(
+                    //         "value" => $anio,
+                    //         "style" => array(
+                    //             "font" => array(
+                    //                 "sz" => "12",
+                    //             ),
+                    //             "fill" => array(
+                    //                 "patternType" => 'solid',
+                    //                 "fgColor" => array(
+                    //                     "rgb" => "FFFFFFCC"
+                    //                 )
+                    //             )
+                    //         )
+                    //     ),
+                    //     array("value" => ""),
+                    //     array("value" => ""),
+                    //     array("value" => ""),
+                    //     array("value" => ""),
+                    //     array("value" => ""),
+                    //     array("value" => "")
+                    // );
                     
-                    $nuevoArray[0]['data'][] = $arrayFilaExcel;
+                    // $nuevoArray[0]['data'][] = $arrayFilaExcel;
 
-                    $arrayFilaExcel = array(
-                        array("value" => ""),
-                        array(
-                            "value" => "Mes promoción",
-                            "style" => array(
-                                "font" => array(
-                                    "sz" => "12",
-                                    "color" => array(
-                                        "rgb" => "FF31859B"
-                                    )
-                                ),
-                                "fill" => array(
-                                    "patternType" => 'solid',
-                                    "fgColor" => array(
-                                        "rgb" => "FFFFFFCC"
-                                    )
-                                )
-                            )
-                        ),
-                        array(
-                            "value" => $rep->fecmes,
-                            "style" => array(
-                                "font" => array(
-                                    "sz" => "12",
-                                ),
-                                "fill" => array(
-                                    "patternType" => 'solid',
-                                    "fgColor" => array(
-                                        "rgb" => "FFFFFFCC"
-                                    )
-                                )
-                            )
-                        ),
-                        array("value" => ""),
-                        array("value" => ""),
-                        array("value" => ""),
-                        array("value" => ""),
-                        array("value" => ""),
-                        array("value" => "")
-                    );
+                    // $arrayFilaExcel = array(
+                    //     array("value" => ""),
+                    //     array(
+                    //         "value" => "Mes promoción",
+                    //         "style" => array(
+                    //             "font" => array(
+                    //                 "sz" => "12",
+                    //                 "color" => array(
+                    //                     "rgb" => "FF31859B"
+                    //                 )
+                    //             ),
+                    //             "fill" => array(
+                    //                 "patternType" => 'solid',
+                    //                 "fgColor" => array(
+                    //                     "rgb" => "FFFFFFCC"
+                    //                 )
+                    //             )
+                    //         )
+                    //     ),
+                    //     array(
+                    //         "value" => $rep->fecmes,
+                    //         "style" => array(
+                    //             "font" => array(
+                    //                 "sz" => "12",
+                    //             ),
+                    //             "fill" => array(
+                    //                 "patternType" => 'solid',
+                    //                 "fgColor" => array(
+                    //                     "rgb" => "FFFFFFCC"
+                    //                 )
+                    //             )
+                    //         )
+                    //     ),
+                    //     array("value" => ""),
+                    //     array("value" => ""),
+                    //     array("value" => ""),
+                    //     array("value" => ""),
+                    //     array("value" => ""),
+                    //     array("value" => "")
+                    // );
                     
-                    $nuevoArray[0]['data'][] = $arrayFilaExcel;
+                    // $nuevoArray[0]['data'][] = $arrayFilaExcel;
 
                     $arrayFilaExcel = array(
                         array("value" => ""),
@@ -1494,9 +1494,38 @@ class MostrarReportePagosController extends Controller
                     
                     $nuevoArray[0]['data'][] = $arrayFilaExcel;
 
-
                     $arrayFilaExcel = array(
                         array("value" => ""),
+                        array(
+                            "value" => "Año Promoción", 
+                            "style" => array(
+                                "font" => array(
+                                    "sz" => "11", 
+                                    "bold" => true
+                                ),
+                                "fill" => array(
+                                    "patternType" => 'solid',
+                                    "fgColor" => array(
+                                        "rgb" => "FFA7D8E3"
+                                    )
+                                )
+                            )
+                        ),
+                        array(
+                            "value" => "Mes Promoción", 
+                            "style" => array(
+                                "font" => array(
+                                    "sz" => "11", 
+                                    "bold" => true
+                                ),
+                                "fill" => array(
+                                    "patternType" => 'solid',
+                                    "fgColor" => array(
+                                        "rgb" => "FFA7D8E3"
+                                    )
+                                )
+                            )
+                        ),
                         array(
                             "value" => "Sold To", 
                             "style" => array(
@@ -1632,6 +1661,8 @@ class MostrarReportePagosController extends Controller
 
                 $arrayFilaExcel = array(
                     array("value" => ""),
+                    array("value" => $rep->fecano, "style" => array("font" => array("sz" => "10"), "fill" => $celdaPintada)),
+                    array("value" => $rep->fecmes, "style" => array("font" => array("sz" => "10"), "fill" => $celdaPintada)),
                     array("value" => $rep->sucsoldto, "style" => array("font" => array("sz" => "10"), "fill" => $celdaPintada)),
                     array("value" => $rep->sucnombre, "style" => array("font" => array("sz" => "10"), "fill" => $celdaPintada)),
                     array("value" => $rep->repconcepto, "style" => array("font" => array("sz" => "10"), "fill" => $celdaPintada)),
