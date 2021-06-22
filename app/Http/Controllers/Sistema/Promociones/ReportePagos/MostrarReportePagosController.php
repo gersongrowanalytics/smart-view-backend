@@ -1700,6 +1700,8 @@ class MostrarReportePagosController extends Controller
                 array("value" => ""),
                 array("value" => ""),
                 array("value" => ""),
+                array("value" => ""),
+                array("value" => ""),
                 array("value" => "Total", "style" => array("font" => array("sz" => "12","bold" => true),)),
                 array("value" => floatval($totalImporte), "style" => array("font" => array("sz" => "12","bold" => true),"numFmt" => "#,##0.00")), 
             );
