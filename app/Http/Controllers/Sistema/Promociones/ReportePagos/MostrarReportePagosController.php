@@ -1353,13 +1353,16 @@ class MostrarReportePagosController extends Controller
                     $arrayTitulos = array(
                         array("title" => "", "width" => array("wpx" => 100)),
                         array("title" => "", "width" => array("wpx" => 100)),
+                        array("title" => "", "width" => array("wpx" => 100)),
                         array("title" => "", "width" => array("wpx" => 150)),
                         array("title" => "", "width" => array("wpx" => 150)),
                         array("title" => "", "width" => array("wpx" => 150)),
                         array("title" => "", "width" => array("wpx" => 150)),
                         array("title" => "", "width" => array("wpx" => 100)),
                         array("title" => "", "width" => array("wpx" => 100)),
-                        array("title" => "", "width" => array("wpx" => 100))
+                        array("title" => "", "width" => array("wpx" => 100)),
+                        array("title" => "", "width" => array("wpx" => 100)),
+                        array("title" => "", "width" => array("wpx" => 100)),
                     );
                     $nuevoArray[0]['columns'] = $arrayTitulos;
 
@@ -1496,6 +1499,21 @@ class MostrarReportePagosController extends Controller
 
                     $arrayFilaExcel = array(
                         array("value" => ""),
+                        array(
+                            "value" => "GBA", 
+                            "style" => array(
+                                "font" => array(
+                                    "sz" => "11", 
+                                    "bold" => true
+                                ),
+                                "fill" => array(
+                                    "patternType" => 'solid',
+                                    "fgColor" => array(
+                                        "rgb" => "FFA7D8E3"
+                                    )
+                                )
+                            )
+                        ),
                         array(
                             "value" => "Año Promoción", 
                             "style" => array(
@@ -1645,7 +1663,37 @@ class MostrarReportePagosController extends Controller
                                     )
                                 )
                             )
-                        )
+                        ),
+                        array(
+                            "value" => "Moneda local",
+                            "style" => array(
+                                "font" => array(
+                                    "sz" => "11",
+                                    "bold" => true
+                                ),
+                                "fill" => array(
+                                    "patternType" => 'solid',
+                                    "fgColor" => array(
+                                        "rgb" => "FFA7D8E3"
+                                    )
+                                )
+                            )
+                        ),
+                        array(
+                            "value" => "Texto",
+                            "style" => array(
+                                "font" => array(
+                                    "sz" => "11",
+                                    "bold" => true
+                                ),
+                                "fill" => array(
+                                    "patternType" => 'solid',
+                                    "fgColor" => array(
+                                        "rgb" => "FFA7D8E3"
+                                    )
+                                )
+                            )
+                        ),
                     );
                     
                     $nuevoArray[0]['data'][] = $arrayFilaExcel;
@@ -1661,6 +1709,7 @@ class MostrarReportePagosController extends Controller
 
                 $arrayFilaExcel = array(
                     array("value" => ""),
+                    array("value" => $rep->casnombre, "style" => array("font" => array("sz" => "10"), "fill" => $celdaPintada)),
                     array("value" => $rep->fecano, "style" => array("font" => array("sz" => "10"), "fill" => $celdaPintada)),
                     array("value" => $rep->fecmes, "style" => array("font" => array("sz" => "10"), "fill" => $celdaPintada)),
                     array("value" => $rep->sucsoldto, "style" => array("font" => array("sz" => "10"), "fill" => $celdaPintada)),
@@ -1671,6 +1720,8 @@ class MostrarReportePagosController extends Controller
                     array("value" => $rep->repfechadocumento, "style" => array("font" => array("sz" => "10"), "fill" => $celdaPintada)),
                     array("value" => $rep->repcategoria, "style" => array("font" => array("sz" => "10"), "fill" => $celdaPintada)),
                     array("value" => floatval($rep->repimporte), "style" => array("font" => array("sz" => "10"),"fill" => $celdaPintada,"numFmt" => "#,##0.00")),
+                    array("value" => $rep->repmonedalocal, "style" => array("font" => array("sz" => "10"), "fill" => $celdaPintada)),
+                    array("value" => $rep->reptexto, "style" => array("font" => array("sz" => "10"), "fill" => $celdaPintada)),
                 );
 
                 $nuevoArray[0]['data'][] = $arrayFilaExcel;
