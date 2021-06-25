@@ -161,7 +161,8 @@ class ReconocimientoPagosController extends Controller
             "mensajeDetalle" => $mensajeDetalle,
             "mensajedev"     => $mensajedev,
             "numeroCelda"    => $numeroCelda,
-            "logs"           => $log
+            "logs"           => $log,
+            "actualizacion"  => "Actualización 24 de Junio 2021"
         ]);
 
         $AuditoriaController = new AuditoriaController;
