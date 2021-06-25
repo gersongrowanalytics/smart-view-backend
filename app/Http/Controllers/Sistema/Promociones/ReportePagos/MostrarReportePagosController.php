@@ -1241,6 +1241,7 @@ class MostrarReportePagosController extends Controller
             'datosPromociones'    => $datosPromociones,
             'mensajeDetalle' => $mensajeDetalle,
             'mensajedev'     => $mensajedev,
+            "actualizacion"  => "Actualización 24 de Junio 2021"
         ]);
 
         return $requestsalida;
@@ -2559,6 +2560,7 @@ class MostrarReportePagosController extends Controller
             'datosPromociones'    => $datosPromociones,
             'mensajeDetalle' => $mensajeDetalle,
             'mensajedev'     => $mensajedev,
+            "actualizacion"  => "Actualización 24 de Junio 2021"
         ]);
 
         return $requestsalida;
