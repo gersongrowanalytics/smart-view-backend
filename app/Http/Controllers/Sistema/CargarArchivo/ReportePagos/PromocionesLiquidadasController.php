@@ -62,8 +62,6 @@ class PromocionesLiquidadasController extends Controller
                 $numRows        = $objPHPExcel->setActiveSheetIndex(0)->getHighestRow();
                 $ultimaColumna  = $objPHPExcel->setActiveSheetIndex(0)->getHighestColumn();
 
-                prlpromocionesliquidadas::where('prlid', '>', 0)->delete();
-
                 for ($i=2; $i <= $numRows ; $i++) {
                     $dia = '01';
 
@@ -104,6 +102,11 @@ class PromocionesLiquidadasController extends Controller
                                         
                     $fecid = 0;
                     if($fec){
+
+                        if($i == 2){
+                            prlpromocionesliquidadas::where('fecid', $fec->fecid)->delete(); 
+                        }
+
                         $fecid = $fec->fecid;
 
                         $suc = sucsucursales::where('sucsoldto', $soldto)->first(['sucid']);
