@@ -334,7 +334,20 @@ class ClientesCargarController extends Controller
                         if($cliente->update()){
 
                         }
+                    }else{
+                        $log[] = "No se encontro la sucursal: ".$codSoldTo;
                     }
+
+                    $suc = sucsucursales::where('sucsoldto', $codSoldTo)->first();
+
+                    if($suc){
+                        $suc->zonid = $zonid;
+                        $suc->update();
+                    }else{
+
+                    }
+
+
                 }
 
                 $nuevoCargaArchivo = new carcargasarchivos;
@@ -350,7 +363,8 @@ class ClientesCargarController extends Controller
 
                 }
             }else{
-
+                $respuesta      = false;
+                $mensaje        = 'No se pudo guardar el archivo en el servidor';
             }
 
         } catch (Exception $e) {
