@@ -64,18 +64,18 @@ class ReconocimientoPagosController extends Controller
                 for ($i=2; $i <= $numRows ; $i++) {
                     $dia = '01';
 
-                    $gbaZona         = $objPHPExcel->getActiveSheet()->getCell('B'.$i)->getCalculatedValue();
-                    $anioPromocion   = $objPHPExcel->getActiveSheet()->getCell('C'.$i)->getCalculatedValue();
-                    $mesPromocion    = $objPHPExcel->getActiveSheet()->getCell('D'.$i)->getCalculatedValue();
-                    $concepto        = $objPHPExcel->getActiveSheet()->getCell('E'.$i)->getCalculatedValue();
-                    $soldto          = $objPHPExcel->getActiveSheet()->getCell('F'.$i)->getCalculatedValue();
-                    $tipoDocumento   = $objPHPExcel->getActiveSheet()->getCell('H'.$i)->getCalculatedValue();
-                    $fechaDocumento  = $objPHPExcel->getActiveSheet()->getCell('I'.$i)->getCalculatedValue();
-                    $numeroDocumento = $objPHPExcel->getActiveSheet()->getCell('J'.$i)->getCalculatedValue();
-                    $importeSinIgv   = $objPHPExcel->getActiveSheet()->getCell('K'.$i)->getCalculatedValue();
-                    $monedaLocal     = $objPHPExcel->getActiveSheet()->getCell('L'.$i)->getCalculatedValue();
-                    $categoria       = $objPHPExcel->getActiveSheet()->getCell('M'.$i)->getCalculatedValue();
-                    $texto           = $objPHPExcel->getActiveSheet()->getCell('N'.$i)->getCalculatedValue();
+                    $gbaZona         = $objPHPExcel->getActiveSheet()->getCell('A'.$i)->getCalculatedValue();
+                    $anioPromocion   = $objPHPExcel->getActiveSheet()->getCell('B'.$i)->getCalculatedValue();
+                    $mesPromocion    = $objPHPExcel->getActiveSheet()->getCell('C'.$i)->getCalculatedValue();
+                    $concepto        = $objPHPExcel->getActiveSheet()->getCell('D'.$i)->getCalculatedValue();
+                    $soldto          = $objPHPExcel->getActiveSheet()->getCell('E'.$i)->getCalculatedValue();
+                    $tipoDocumento   = $objPHPExcel->getActiveSheet()->getCell('G'.$i)->getCalculatedValue();
+                    $fechaDocumento  = $objPHPExcel->getActiveSheet()->getCell('H'.$i)->getCalculatedValue();
+                    $numeroDocumento = $objPHPExcel->getActiveSheet()->getCell('I'.$i)->getCalculatedValue();
+                    $importeSinIgv   = $objPHPExcel->getActiveSheet()->getCell('J'.$i)->getCalculatedValue();
+                    $monedaLocal     = $objPHPExcel->getActiveSheet()->getCell('K'.$i)->getCalculatedValue();
+                    $categoria       = $objPHPExcel->getActiveSheet()->getCell('L'.$i)->getCalculatedValue();
+                    $texto           = $objPHPExcel->getActiveSheet()->getCell('M'.$i)->getCalculatedValue();
 
                     $fechaDocumento = Date::excelToDateTimeObject($fechaDocumento);
                     $fechaDocumento = json_encode($fechaDocumento);

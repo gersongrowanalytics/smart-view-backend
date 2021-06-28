@@ -67,31 +67,31 @@ class PromocionesLiquidadasController extends Controller
                 for ($i=2; $i <= $numRows ; $i++) {
                     $dia = '01';
 
-                    $anioPromocion = $objPHPExcel->getActiveSheet()->getCell('C'.$i)->getCalculatedValue();
-                    $mesPromocion  = $objPHPExcel->getActiveSheet()->getCell('D'.$i)->getCalculatedValue();
-                    $concepto      = $objPHPExcel->getActiveSheet()->getCell('E'.$i)->getCalculatedValue();
-                    $ejecutivo     = $objPHPExcel->getActiveSheet()->getCell('F'.$i)->getCalculatedValue();
-                    $grupo         = $objPHPExcel->getActiveSheet()->getCell('G'.$i)->getCalculatedValue();
-                    $soldto        = $objPHPExcel->getActiveSheet()->getCell('H'.$i)->getCalculatedValue();
-                    $compra        = $objPHPExcel->getActiveSheet()->getCell('J'.$i)->getCalculatedValue();
-                    $bonificacion  = $objPHPExcel->getActiveSheet()->getCell('K'.$i)->getCalculatedValue();
-                    $mecanica      = $objPHPExcel->getActiveSheet()->getCell('L'.$i)->getCalculatedValue();
-                    $categoria     = $objPHPExcel->getActiveSheet()->getCell('M'.$i)->getCalculatedValue();
+                    $anioPromocion = $objPHPExcel->getActiveSheet()->getCell('B'.$i)->getCalculatedValue();
+                    $mesPromocion  = $objPHPExcel->getActiveSheet()->getCell('C'.$i)->getCalculatedValue();
+                    $concepto      = $objPHPExcel->getActiveSheet()->getCell('D'.$i)->getCalculatedValue();
+                    $ejecutivo     = $objPHPExcel->getActiveSheet()->getCell('E'.$i)->getCalculatedValue();
+                    $grupo         = $objPHPExcel->getActiveSheet()->getCell('F'.$i)->getCalculatedValue();
+                    $soldto        = $objPHPExcel->getActiveSheet()->getCell('G'.$i)->getCalculatedValue();
+                    $compra        = $objPHPExcel->getActiveSheet()->getCell('I'.$i)->getCalculatedValue();
+                    $bonificacion  = $objPHPExcel->getActiveSheet()->getCell('J'.$i)->getCalculatedValue();
+                    $mecanica      = $objPHPExcel->getActiveSheet()->getCell('K'.$i)->getCalculatedValue();
+                    $categoria     = $objPHPExcel->getActiveSheet()->getCell('L'.$i)->getCalculatedValue();
 
-                    $sku           = $objPHPExcel->getActiveSheet()->getCell('N'.$i)->getCalculatedValue();
-                    $skuproducto   = $objPHPExcel->getActiveSheet()->getCell('O'.$i)->getCalculatedValue();
-                    $skubonificado = $objPHPExcel->getActiveSheet()->getCell('P'.$i)->getCalculatedValue();
-                    $productoBonif = $objPHPExcel->getActiveSheet()->getCell('Q'.$i)->getCalculatedValue();
+                    $sku           = $objPHPExcel->getActiveSheet()->getCell('M'.$i)->getCalculatedValue();
+                    $skuproducto   = $objPHPExcel->getActiveSheet()->getCell('N'.$i)->getCalculatedValue();
+                    $skubonificado = $objPHPExcel->getActiveSheet()->getCell('O'.$i)->getCalculatedValue();
+                    $productoBonif = $objPHPExcel->getActiveSheet()->getCell('P'.$i)->getCalculatedValue();
 
-                    $plancha       = $objPHPExcel->getActiveSheet()->getCell('R'.$i)->getCalculatedValue();
-                    $combo         = $objPHPExcel->getActiveSheet()->getCell('S'.$i)->getCalculatedValue();
-                    $reconocerxcombo       = $objPHPExcel->getActiveSheet()->getCell('T'.$i)->getCalculatedValue();
-                    $reconocerxplancha     = $objPHPExcel->getActiveSheet()->getCell('U'.$i)->getCalculatedValue();
-                    $totalsoles            = $objPHPExcel->getActiveSheet()->getCell('V'.$i)->getCalculatedValue();
-                    $liquidacionso         = $objPHPExcel->getActiveSheet()->getCell('W'.$i)->getCalculatedValue();
-                    $liquidacioncombo      = $objPHPExcel->getActiveSheet()->getCell('X'.$i)->getCalculatedValue();
-                    $liquidacionvalorizado = $objPHPExcel->getActiveSheet()->getCell('Y'.$i)->getCalculatedValue();
-                    $liquidaciontotal      = $objPHPExcel->getActiveSheet()->getCell('Z'.$i)->getCalculatedValue();
+                    $plancha       = $objPHPExcel->getActiveSheet()->getCell('Q'.$i)->getCalculatedValue();
+                    $combo         = $objPHPExcel->getActiveSheet()->getCell('R'.$i)->getCalculatedValue();
+                    $reconocerxcombo       = $objPHPExcel->getActiveSheet()->getCell('S'.$i)->getCalculatedValue();
+                    $reconocerxplancha     = $objPHPExcel->getActiveSheet()->getCell('T'.$i)->getCalculatedValue();
+                    $totalsoles            = $objPHPExcel->getActiveSheet()->getCell('U'.$i)->getCalculatedValue();
+                    $liquidacionso         = $objPHPExcel->getActiveSheet()->getCell('V'.$i)->getCalculatedValue();
+                    $liquidacioncombo      = $objPHPExcel->getActiveSheet()->getCell('W'.$i)->getCalculatedValue();
+                    $liquidacionvalorizado = $objPHPExcel->getActiveSheet()->getCell('X'.$i)->getCalculatedValue();
+                    $liquidaciontotal      = $objPHPExcel->getActiveSheet()->getCell('Y'.$i)->getCalculatedValue();
 
                     if($plancha == "-"){
                         $plancha = "0";
