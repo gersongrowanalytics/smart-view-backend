@@ -1251,6 +1251,8 @@ class MostrarReportePagosController extends Controller
     public function MostrarReportePagosXFechaIncioFechaFin(Request $request)
     {
 
+        ini_set('memory_limit','512M');
+
         $fechaInicio = $request['fechaInicio'];
         $fechaFinal  = $request['fechaFinal'];
 
