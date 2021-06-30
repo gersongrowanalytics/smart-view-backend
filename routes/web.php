@@ -96,8 +96,8 @@ $router->group(['middleware' => ['permisos']], function() use($router) {
     $router->post('/cargarArchivo/clientes/actualizargruporebate', 'Sistema\CargarArchivo\Clientes\ClientesCargarController@ActualizarGrupoRebateOctubre');
     $router->post('/cargarArchivo/clientes/actualizarGrupoSucursal', 'Sistema\CargarArchivo\Clientes\ActualizarGrupoSucursalController@ActualizarGrupoSucursal');
 
-    $router->post('/cargarArchivo/reconocimiento-pagos', 'Sistema\CargarArchivo\ReportePagos\ReconocimientoPagosController@CargarReconocimiento');
-    $router->post('/cargarArchivo/promociones-liquidadas', 'Sistema\CargarArchivo\ReportePagos\PromocionesLiquidadasController@PromocionesLiquidadas');
+    // $router->post('/cargarArchivo/reconocimiento-pagos', 'Sistema\CargarArchivo\ReportePagos\ReconocimientoPagosController@CargarReconocimiento');
+    // $router->post('/cargarArchivo/promociones-liquidadas', 'Sistema\CargarArchivo\ReportePagos\PromocionesLiquidadasController@PromocionesLiquidadas');
 
     $router->post('/cargarArchivo/productos', 'Sistema\CargarArchivo\Productos\ProductosCargarController@ActualiazarCargarProductos');
     $router->post('/cargarArchivo/prueba/soldto', 'Sistema\CargarArchivo\Prueba\PruebaController@prueba');
@@ -156,3 +156,8 @@ $router->get('/ActualizarSucursales', 'salvacionController@ActualizarSucursales'
 $router->get('/ws/obtenerSellOutEspecifico/{anio}/{mes}/{dia}', 'Sistema\SellOut\ObtenerSellOutController@ObtenerSellOutEspecifico');
 $router->get('/ws/obtenerSellOutDiario', 'Sistema\SellOut\ObtenerSellOutController@ObtenerSellOutActual');
 $router->get('/ws/obtenerSellOutTodo', 'Sistema\SellOut\ObtenerSellOutController@ObtenerTodoSellOut');
+
+
+
+$router->post('/cargarArchivo/reconocimiento-pagos', 'Sistema\CargarArchivo\ReportePagos\ReconocimientoPagosController@CargarReconocimiento');
+$router->post('/cargarArchivo/promociones-liquidadas', 'Sistema\CargarArchivo\ReportePagos\PromocionesLiquidadasController@PromocionesLiquidadas');
