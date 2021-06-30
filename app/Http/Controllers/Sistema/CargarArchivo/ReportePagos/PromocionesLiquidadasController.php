@@ -96,7 +96,7 @@ class PromocionesLiquidadasController extends Controller
                     }
 
                     $fec = fecfechas::where('fecdia', $dia)
-                                        ->where('fecmes', $mesPromocion)
+                                        ->where('fecmes', 'LIKE', "%".$mesPromocion."%")
                                         ->where('fecano', $anioPromocion)
                                         ->first(['fecid']);
                                         

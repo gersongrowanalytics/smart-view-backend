@@ -81,7 +81,7 @@ class ReconocimientoPagosController extends Controller
                     $fechaDocumento = date("Y-m-d", strtotime($fechaDocumento->date));
 
                     $fec = fecfechas::where('fecdia', $dia)
-                                        ->where('fecmes', $mesPromocion)
+                                        ->where('fecmes', 'LIKE', "%".$mesPromocion."%")
                                         ->where('fecano', $anioPromocion)
                                         ->first(['fecid']);
                                         
