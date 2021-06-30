@@ -105,7 +105,7 @@ class PromocionesLiquidadasController extends Controller
 
                         if($i == 2){
                             // prlpromocionesliquidadas::where('fecid', $fec->fecid)->delete(); 
-                            prlpromocionesliquidadas::where('prlid', '>', 0)->delete(); 
+                            // prlpromocionesliquidadas::where('prlid', '>', 0)->delete(); 
                         }
 
                         $fecid = $fec->fecid;
@@ -113,6 +113,12 @@ class PromocionesLiquidadasController extends Controller
                         $suc = sucsucursales::where('sucsoldto', $soldto)->first(['sucid']);
 
                         if($suc){
+
+                            if($suc->sucestado != 1){
+                                $suc->sucestado = 1;
+                                $suc->updaet();
+                            }
+
                             $sucid = $suc->sucid;
 
                             $prln = new prlpromocionesliquidadas;

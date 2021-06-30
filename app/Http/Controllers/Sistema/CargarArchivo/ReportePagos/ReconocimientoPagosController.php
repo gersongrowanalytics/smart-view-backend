@@ -90,7 +90,7 @@ class ReconocimientoPagosController extends Controller
 
                         if($i == 2){
                             // repreconocimientopago::where('fecid', $fec->fecid)->delete();
-                            repreconocimientopago::where('repid', '>', 0)->delete();
+                            // repreconocimientopago::where('repid', '>', 0)->delete();
                         }
 
                         $fecid = $fec->fecid;
@@ -98,6 +98,12 @@ class ReconocimientoPagosController extends Controller
                         $suc = sucsucursales::where('sucsoldto', $soldto)->first(['sucid']);
 
                         if($suc){
+
+                            if($suc->sucestado != 1){
+                                $suc->sucestado = 1;
+                                $suc->updaet();
+                            }
+
                             $sucid = $suc->sucid;
 
                             $repn = new repreconocimientopago;
