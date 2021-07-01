@@ -101,7 +101,7 @@ class ReconocimientoPagosController extends Controller
 
                             if($suc->sucestado != 1){
                                 $suc->sucestado = 1;
-                                $suc->updaet();
+                                $suc->update();
                             }
 
                             $sucid = $suc->sucid;
