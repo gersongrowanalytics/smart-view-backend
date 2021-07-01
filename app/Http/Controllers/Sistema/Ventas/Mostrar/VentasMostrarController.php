@@ -160,18 +160,16 @@ class VentasMostrarController extends Controller
             //     }
             // }
 
-            // $tsutipospromocionessucursales = tsutipospromocionessucursales::join('fecfechas as fec', 'tsutipospromocionessucursales.fecid', 'fec.fecid')
-            $tsutipospromocionessucursales = tprtipospromociones::leftjoin('tsutipospromocionessucursales as tsu', 'tprtipospromociones.tprid', 'tsu.tprid')
-                                                                        // ->join('tprtipospromociones as tpr', 'tpr.tprid', 'tsutipospromocionessucursales.tprid')
-                                                                        ->leftjoin('tretiposrebates as tre', 'tre.treid', 'tsu.treid')
-                                                                        ->join('fecfechas as fec', 'tsu.fecid', 'fec.fecid')
-                                                                        ->where('tsu.sucid', $sucid)
+            $tsutipospromocionessucursales = tsutipospromocionessucursales::join('fecfechas as fec', 'tsutipospromocionessucursales.fecid', 'fec.fecid')
+                                                                        ->join('tprtipospromociones as tpr', 'tpr.tprid', 'tsutipospromocionessucursales.tprid')
+                                                                        ->leftjoin('tretiposrebates as tre', 'tre.treid', 'tsutipospromocionessucursales.treid')
+                                                                        ->where('tsutipospromocionessucursales.sucid', $sucid)
                                                                         ->where('fec.fecano', $ano)
                                                                         ->where('fec.fecmes', $mes)
                                                                         ->where('fec.fecdia', $dia)
                                                                         ->OrderBy('tpr.tprnombre', 'ASC')
                                                                         ->get([
-                                                                            'tsu.tsuid',
+                                                                            'tsutipospromocionessucursales.tsuid',
                                                                             'tpr.tprid',
                                                                             'fec.fecid',
                                                                             'tre.treid',
@@ -180,11 +178,11 @@ class VentasMostrarController extends Controller
                                                                             'tpr.tpricono',
                                                                             'tpr.tprcolorbarra',
                                                                             'tpr.tprcolortooltip',
-                                                                            'tsu.tsuvalorizadoobjetivo',
-                                                                            'tsu.tsuvalorizadoreal',
-                                                                            'tsu.tsuvalorizadotogo',
-                                                                            'tsu.tsuporcentajecumplimiento',
-                                                                            'tsu.tsuvalorizadorebate',
+                                                                            'tsutipospromocionessucursales.tsuvalorizadoobjetivo',
+                                                                            'tsutipospromocionessucursales.tsuvalorizadoreal',
+                                                                            'tsutipospromocionessucursales.tsuvalorizadotogo',
+                                                                            'tsutipospromocionessucursales.tsuporcentajecumplimiento',
+                                                                            'tsutipospromocionessucursales.tsuvalorizadorebate',
 
                                                                             'tsuobjetivotrimestral',
                                                                             'tsurealtrimestral',
@@ -195,21 +193,6 @@ class VentasMostrarController extends Controller
             if(sizeof($tsutipospromocionessucursales) > 0){
 
                 foreach($tsutipospromocionessucursales as $posicion => $tsutipopromocionsucursal){
-
-                    if($posicion == 0){
-                        if($tsutipopromocionsucursal->tsuvalorizadoobjetivo == null){
-                            $tsutipopromocionsucursal->tsuvalorizadoobjetivo = 0;
-                        }
-
-                        if($tsutipopromocionsucursal->tsuvalorizadoreal == null){
-                            $tsutipopromocionsucursal->tsuvalorizadoreal = 0;
-                        }
-
-                        if($tsutipopromocionsucursal->tsuvalorizadorebate == null){
-                            $tsutipopromocionsucursal->tsuvalorizadorebate = 0;
-                        }
-
-                    }
 
                     $tsutipospromocionessucursales[$posicion]["tieneRebateTrimestral"] = $tieneRebateTrimestral;
                     $tsutipospromocionessucursales[$posicion]["nombreTrimestre"] = $nombreTrimestre;
