@@ -161,7 +161,7 @@ class VentasMostrarController extends Controller
             // }
 
             $tsutipospromocionessucursales = tsutipospromocionessucursales::join('fecfechas as fec', 'tsutipospromocionessucursales.fecid', 'fec.fecid')
-                                                                        ->join('tprtipospromociones as tpr', 'tpr.tprid', 'tsutipospromocionessucursales.tprid')
+                                                                        ->leftjoin('tprtipospromociones as tpr', 'tpr.tprid', 'tsutipospromocionessucursales.tprid')
                                                                         ->leftjoin('tretiposrebates as tre', 'tre.treid', 'tsutipospromocionessucursales.treid')
                                                                         ->where('tsutipospromocionessucursales.sucid', $sucid)
                                                                         ->where('fec.fecano', $ano)
@@ -193,6 +193,21 @@ class VentasMostrarController extends Controller
             if(sizeof($tsutipospromocionessucursales) > 0){
 
                 foreach($tsutipospromocionessucursales as $posicion => $tsutipopromocionsucursal){
+
+                    if($posicion == 0){
+                        if($tsutipopromocionsucursal->tsuvalorizadoobjetivo == null){
+                            $tsutipopromocionsucursal->tsuvalorizadoobjetivo = 0;
+                        }
+
+                        if($tsutipopromocionsucursal->tsuvalorizadoreal == null){
+                            $tsutipopromocionsucursal->tsuvalorizadoreal = 0;
+                        }
+
+                        if($tsutipopromocionsucursal->tsuvalorizadorebate == null){
+                            $tsutipopromocionsucursal->tsuvalorizadorebate = 0;
+                        }
+
+                    }
 
                     $tsutipospromocionessucursales[$posicion]["tieneRebateTrimestral"] = $tieneRebateTrimestral;
                     $tsutipospromocionessucursales[$posicion]["nombreTrimestre"] = $nombreTrimestre;
