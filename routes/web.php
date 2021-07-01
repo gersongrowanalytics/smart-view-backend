@@ -161,3 +161,7 @@ $router->get('/ws/obtenerSellOutTodo', 'Sistema\SellOut\ObtenerSellOutController
 
 $router->post('/cargarArchivo/reconocimiento-pagos', 'Sistema\CargarArchivo\ReportePagos\ReconocimientoPagosController@CargarReconocimiento');
 $router->post('/cargarArchivo/promociones-liquidadas', 'Sistema\CargarArchivo\ReportePagos\PromocionesLiquidadasController@PromocionesLiquidadas');
+
+
+$router->get('/actualizar-si-distribuidoras-activas/{fecid}', 'salvacionController@AsignarSi');
+

@@ -293,6 +293,42 @@ class salvacionController extends Controller
 
 
     }
+
+    public function AsignarSi($fecid)
+    {
+        $sucs = sucsucursales::where('sucestado', 1)->get();
+
+
+        foreach ($sucs as $key => $suc) {
+            $tsu = tsutipospromocionessucursales::where('fecid', $fecid)
+                                                ->where('tprid', 1)
+                                                ->where('sucid', $suc->sucid)
+                                                ->first();
+
+            if($tsu){
+
+            }else{
+
+                $nuevotsu = new tsutipospromocionessucursales;
+                $nuevotsu->fecid = $fecid;
+                $nuevotsu->treid = $suc->treid;
+                $nuevotsu->sucid = $suc->sucid;
+                $nuevotsu->tprid = 1;
+                $nuevotsu->tsuporcentajecumplimiento = 0;
+                $nuevotsu->tsuvalorizadoobjetivo  = 0;
+                $nuevotsu->tsuvalorizadoreal      = 0;
+                $nuevotsu->tsuvalorizadorebate    = 0;
+                $nuevotsu->tsuvalorizadotogo      = 0;
+                $nuevotsu->save();
+
+            }
+
+        }
+
+
+
+
+    }
 }
 
 
