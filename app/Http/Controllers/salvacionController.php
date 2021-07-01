@@ -297,7 +297,7 @@ class salvacionController extends Controller
     public function AsignarSi($fecid)
     {
         $sucs = sucsucursales::where('sucestado', 1)->get();
-
+        $cats = catcategorias::all();
 
         foreach ($sucs as $key => $suc) {
             $tsu = tsutipospromocionessucursales::where('fecid', $fecid)
@@ -306,6 +306,28 @@ class salvacionController extends Controller
                                                 ->first();
 
             if($tsu){
+
+                $scas = scasucursalescategorias::where('tsuid', $tsu->tsuid)
+                                                ->where('fecid', $fecid)
+                                                ->where('sucid', $suc->sucid)
+                                                ->get();
+
+                if(sizeof($scas) > 0){
+
+                }else{
+                    foreach ($cats as $key => $cat) {
+                        $nuevosca = new scasucursalescategorias;
+                        $nuevosca->sucid                 = $suc->sucid;
+                        $nuevosca->catid                 = $cat->catid;
+                        $nuevosca->fecid                 = $fecid;
+                        $nuevosca->tsuid                 = $tsu->tsuid;
+                        $nuevosca->scavalorizadoobjetivo = 0;
+                        $nuevosca->scaiconocategoria     = env('APP_URL').'/Sistema/categorias-tiposPromociones/img/iconos/'.$cat->catnombre.'-Sell In.png';
+                        $nuevosca->scavalorizadoreal     = 0;
+                        $nuevosca->scavalorizadotogo     = 0;
+                        $nuevosca->save();                        
+                    }
+                }
 
             }else{
 
@@ -319,7 +341,22 @@ class salvacionController extends Controller
                 $nuevotsu->tsuvalorizadoreal      = 0;
                 $nuevotsu->tsuvalorizadorebate    = 0;
                 $nuevotsu->tsuvalorizadotogo      = 0;
-                $nuevotsu->save();
+                if($nuevotsu->save()){
+
+                    foreach ($cats as $key => $cat) {
+                        $nuevosca = new scasucursalescategorias;
+                        $nuevosca->sucid                 = $suc->sucid;
+                        $nuevosca->catid                 = $cat->catid;
+                        $nuevosca->fecid                 = $fecid;
+                        $nuevosca->tsuid                 = $nuevotsu->tsuid;
+                        $nuevosca->scavalorizadoobjetivo = 0;
+                        $nuevosca->scaiconocategoria     = env('APP_URL').'/Sistema/categorias-tiposPromociones/img/iconos/'.$cat->catnombre.'-Sell In.png';
+                        $nuevosca->scavalorizadoreal     = 0;
+                        $nuevosca->scavalorizadotogo     = 0;
+                        $nuevosca->save();                        
+                    }
+
+                }
 
             }
 
