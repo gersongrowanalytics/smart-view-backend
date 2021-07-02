@@ -647,6 +647,7 @@ class VentasMostrarController extends Controller
                 }
 
                 foreach($tprs as $posicionTpr => $tpr){
+                    
                     $plantillaTrrs = array(
                         array(
                             "rtpid" => 0,
@@ -670,6 +671,7 @@ class VentasMostrarController extends Controller
                             "realTotal" => "0"
                         ),
                     );
+
                     $dataarray[$posicionTpr]['tsuid']                     = 0;
                     $dataarray[$posicionTpr]['tprid']                     = $tpr->tprid;
                     $dataarray[$posicionTpr]['tprnombre']                 = $tpr->tprnombre;
@@ -706,7 +708,7 @@ class VentasMostrarController extends Controller
 
                         if($tpr->tprid == 1){
                             $tsu = tsutipospromocionessucursales::join('fecfechas as fec', 'tsutipospromocionessucursales.fecid', 'fec.fecid')
-                                                            ->join('tretiposrebates as tre', 'tre.treid', 'tsutipospromocionessucursales.treid')
+                                                            ->leftjoin('tretiposrebates as tre', 'tre.treid', 'tsutipospromocionessucursales.treid')
                                                             ->join('sucsucursales as suc', 'suc.sucid', 'tsutipospromocionessucursales.sucid')
                                                             ->where('tsutipospromocionessucursales.sucid', $usu->sucid)
                                                             // ->where('suc.sucestado', 1)
@@ -732,7 +734,7 @@ class VentasMostrarController extends Controller
                                                             ]);
                         }else{
                             $tsu = tsutipospromocionessucursales::join('fecfechas as fec', 'tsutipospromocionessucursales.fecid', 'fec.fecid')
-                                                            ->join('tretiposrebates as tre', 'tre.treid', 'tsutipospromocionessucursales.treid')
+                                                            ->leftjoin('tretiposrebates as tre', 'tre.treid', 'tsutipospromocionessucursales.treid')
                                                             ->join('sucsucursales as suc', 'suc.sucid', 'tsutipospromocionessucursales.sucid')
                                                             ->where('tsutipospromocionessucursales.sucid', $usu->sucid)
                                                             // ->where('suc.sucestado', 1)
@@ -758,7 +760,7 @@ class VentasMostrarController extends Controller
                                                             ]);
 
                             $tsuSI = tsutipospromocionessucursales::join('fecfechas as fec', 'tsutipospromocionessucursales.fecid', 'fec.fecid')
-                                                            ->join('tretiposrebates as tre', 'tre.treid', 'tsutipospromocionessucursales.treid')
+                                                            ->leftjoin('tretiposrebates as tre', 'tre.treid', 'tsutipospromocionessucursales.treid')
                                                             ->join('sucsucursales as suc', 'suc.sucid', 'tsutipospromocionessucursales.sucid')
                                                             ->where('tsutipospromocionessucursales.sucid', $usu->sucid)
                                                             // ->where('suc.sucestado', 1)
