@@ -16,6 +16,10 @@ class CargarSOXCategoriaController extends Controller
     // 2021, 1 2021 DE ENERO
     public function CargarSOXCategoria($anioSelec, $mesSelec)
     {
+
+        ini_set('max_execution_time', '300');
+        set_time_limit(300);
+
         if(strlen($mesSelec) == 1){
             $mesSelec = "0$mesSelec";
         }

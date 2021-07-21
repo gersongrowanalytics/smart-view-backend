@@ -15,6 +15,10 @@ class CargarSOXSoldtoController extends Controller
 {
     public function CargarSOXSoldTo($anioSelec, $mesSelec)
     {
+
+        ini_set('max_execution_time', '300');
+        set_time_limit(300);
+
         if(strlen($mesSelec) == 1){
             $mesSelec = "0$mesSelec";
         }
