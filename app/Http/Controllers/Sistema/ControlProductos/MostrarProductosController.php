@@ -13,8 +13,29 @@ class MostrarProductosController extends Controller
     public function MostrarProductos(Request $request)
     {
 
-        $prosSinImagenes = proproductos::where('proimagen', "/")->limit(200)->get();
-        $prosConImagenes = proproductos::where('proimagen', "!=", "/")->limit(200)->get();
+        $prosSinImagenes = proproductos::join('catcategorias as cat', 'cat.catid', 'proproductos.catid')
+                                        ->where('proimagen', "/")
+                                        ->limit(200)
+                                        ->get([
+                                            'proproductos.proid',
+                                            'prosku',
+                                            'catnombre',
+                                            'proimagen',
+                                            'proproductos.created_at',
+                                            'proproductos.updated_at'
+                                        ]);
+
+        $prosConImagenes = proproductos::join('catcategorias as cat', 'cat.catid', 'proproductos.catid')
+                                        ->where('proimagen', "!=", "/")
+                                        ->limit(200)
+                                        ->get([
+                                            'proproductos.proid',
+                                            'prosku',
+                                            'catnombre',
+                                            'proimagen',
+                                            'proproductos.created_at',
+                                            'proproductos.updated_at'
+                                        ]);
 
 
         $requestsalida = response()->json([
