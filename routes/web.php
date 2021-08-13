@@ -124,6 +124,13 @@ $router->group(['middleware' => ['permisos']], function() use($router) {
 
     // PROMOCIONES
     $router->get('/quitarGratisPromociones/{fecid}', 'Sistema\Promociones\Editar\PromocionEditarGratisController@QuitarGratisPromociones');
+
+
+    // CONTROL DE PRODUCTOS
+    $router->get('/control-promociones/mostrar-productos', 'Sistema\ControlProductos\MostrarProductosController@MostrarProductos');
+    $router->get('/control-promociones/modificar-imagen-productos', 'Sistema\ControlProductos\MostrarProductosController@ModificarImagenProductos');
+
+
 });
 
 $router->get('/cargarArchivo/leerpromociones/{nombreArchivo}', 'Sistema\CargarArchivo\Promociones\CargarArchivoPromocionesController@LeerCargarArchivo');
