@@ -13,8 +13,8 @@ class MostrarProductosController extends Controller
     public function MostrarProductos(Request $request)
     {
 
-        $prosSinImagenes = proproductos::where('proimagem', "/")->limit(200)->get();
-        $prosConImagenes = proproductos::where('proimagem', "!=", "/")->limit(200)->get();
+        $prosSinImagenes = proproductos::where('proimagen', "/")->limit(200)->get();
+        $prosConImagenes = proproductos::where('proimagen', "!=", "/")->limit(200)->get();
 
 
         $requestsalida = response()->json([
@@ -35,8 +35,8 @@ class MostrarProductosController extends Controller
             "NO_SE_ENCONTRO_PRODUCTO" => []
         );
 
-        proproductos::where('proimagem', '!=', "/")
-                    ->update(['proimagem' => "/"]);
+        proproductos::where('proimagen', '!=', "/")
+                    ->update(['proimagen' => "/"]);
 
         $pros = proproductos::get();
 
@@ -46,7 +46,7 @@ class MostrarProductosController extends Controller
 
             if($prp){
                 $proe = proproductos::find($pro->proid);
-                $proe->proimagem = $prp->prpimagen;
+                $proe->proimagen = $prp->prpimagen;
                 $proe->update();
 
                 $logs["PRODUCTOS_MODIFICADO_PRP"][] = "Imagen de productos: ".$pro->proid." con la imagen: ".$prp->prpimagen;
@@ -56,7 +56,7 @@ class MostrarProductosController extends Controller
 
                 if($prb){
                     $proe = proproductos::find($pro->proid);
-                    $proe->proimagem = $prb->prbimagen;
+                    $proe->proimagen = $prb->prbimagen;
                     $proe->update();
 
                     $logs["PRODUCTOS_MODIFICADO_PRB"][] = "Imagen de productos: ".$pro->proid." con la imagen: ".$prb->prbimagen;
