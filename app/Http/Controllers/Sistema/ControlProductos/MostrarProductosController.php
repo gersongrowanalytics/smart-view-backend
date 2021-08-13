@@ -19,6 +19,7 @@ class MostrarProductosController extends Controller
                                         ->get([
                                             'proproductos.proid',
                                             'prosku',
+                                            'pronombre',
                                             'catnombre',
                                             'proimagen',
                                             'proproductos.created_at',
@@ -31,6 +32,7 @@ class MostrarProductosController extends Controller
                                         ->get([
                                             'proproductos.proid',
                                             'prosku',
+                                            'pronombre',
                                             'catnombre',
                                             'proimagen',
                                             'proproductos.created_at',
