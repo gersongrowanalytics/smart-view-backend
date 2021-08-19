@@ -106,4 +106,69 @@ class MostrarProductosController extends Controller
         return $requestsalida;
 
     }
+
+    public function AsignarImagenProducto(Request $request)
+    {
+
+        $respuesta = true;
+        $mensaje   = "El producto se actualizo correctamente";
+
+        $req_prosku = $request['req_prosku'];
+        $req_imagen = $request['req_imagen'];
+
+        $proe = proproductos::where('prosku', $req_prosku)->first();
+
+        if($proe){
+
+            list(, $base64) = explode(',', $req_imagen);
+            $fichero = '/Sistema/promociones/IMAGENES/PRODUCTOSNUEVO/';
+            $archivo = base64_decode($base64);
+            file_put_contents(base_path().'/public'.$fichero.$req_prosku, $archivo);
+
+            $proe->proimagen = env('APP_URL').$fichero.$req_prosku;
+            $proe->update();
+
+        }else{
+            $respuesta = false;
+            $mensaje = "Lo sentimos, no pudimos encontrar el sku seleccionado, recomendamos actualizar la pagina o comunicarse con alguien de soporte";
+        }
+
+        $requestsalida = response()->json([
+            "respuesta" => $respuesta,
+            "mensaje"   => $mensaje,
+        ]);
+
+        return $requestsalida;
+
+    }
+
+    public function EliminarImagenProducto(Request $request)
+    {
+        $req_eliminarimagenes = $request['req_eliminarimagenes'];
+        $req_skusproductos = $request['req_skusproductos']; // array de skus []
+        $req_sku = $request['req_sku'];
+
+        if($req_eliminarimagenes == true){
+
+            foreach ($req_skusproductos as $sku) {
+                $proe = proproductos::where('prosku', $sku)->first();
+                $proe->proimagen = "/";
+                $proe->update();
+            }
+
+        }else{
+
+            $proe = proproductos::where('prosku', $req_sku)->first();
+            $proe->proimagen = "/";
+            $proe->update();
+
+        }
+
+        $requestsalida = response()->json([
+            "mensaje"   => "Productos eliminados",
+        ]);
+
+        return $requestsalida;
+
+    }
 }

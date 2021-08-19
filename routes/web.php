@@ -129,7 +129,8 @@ $router->group(['middleware' => ['permisos']], function() use($router) {
     // CONTROL DE PRODUCTOS
     $router->post('/control-promociones/mostrar-productos', 'Sistema\ControlProductos\MostrarProductosController@MostrarProductos');
     $router->get('/control-promociones/modificar-imagen-productos', 'Sistema\ControlProductos\MostrarProductosController@ModificarImagenProductos');
-
+    $router->post('/control-promociones/asignar-imagen-producto', 'Sistema\ControlProductos\MostrarProductosController@AsignarImagenProducto');
+    $router->post('/control-promociones/eliminar-imagenes-productos', 'Sistema\ControlProductos\MostrarProductosController@EliminarImagenProducto');
 
 });
 
