@@ -187,6 +187,10 @@ class MostrarProductosController extends Controller
 
         }
 
+
+        // ALTER TABLE `prppromocionesproductos` CHANGE `prpoimagen` `prpoimagen` VARCHAR(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '/';
+        // ALTER TABLE `prbpromocionesbonificaciones` CHANGE `prboimagen` `prboimagen` VARCHAR(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '/';
+
         // ALTER TABLE `prppromocionesproductos` ADD `prpoimagen` VARCHAR(100) NOT NULL DEFAULT '/' ;
         // ALTER TABLE `prbpromocionesbonificaciones` ADD `prboimagen` VARCHAR(100) NOT NULL DEFAULT '/' ;
 

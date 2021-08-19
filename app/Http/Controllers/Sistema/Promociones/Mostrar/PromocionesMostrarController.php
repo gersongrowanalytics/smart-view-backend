@@ -85,7 +85,8 @@ class PromocionesMostrarController extends Controller
                                                                                     'pro.proimagen',
                                                                                     'prpproductoppt',
                                                                                     'prpcomprappt',
-                                                                                    'prpimagen'
+                                                                                    'prpimagen',
+                                                                                    'prpoimagen',
                                                                                 ]);
 
                             if(sizeof($prppromocionesproductos) > 0){
@@ -105,7 +106,8 @@ class PromocionesMostrarController extends Controller
                                                                                             'pro.proimagen',
                                                                                             'prbproductoppt',
                                                                                             'prbcomprappt',
-                                                                                            'prbimagen'
+                                                                                            'prbimagen',
+                                                                                            'prboimagen',
                                                                                         ]);
                             
                             if(sizeof($prbpromocionesbonificaciones) > 0){
@@ -317,7 +319,8 @@ class PromocionesMostrarController extends Controller
                                                                                         'pro.proimagen',
                                                                                         'prpproductoppt',
                                                                                         'prpcomprappt',
-                                                                                        'prpimagen'
+                                                                                        'prpimagen',
+                                                                                        'prpoimagen',
                                                                                     ]);
 
                                 if(sizeof($prppromocionesproductos) > 0){
@@ -337,7 +340,8 @@ class PromocionesMostrarController extends Controller
                                                                                                 'pro.proimagen',
                                                                                                 'prbproductoppt',
                                                                                                 'prbcomprappt',
-                                                                                                'prbimagen'
+                                                                                                'prbimagen',
+                                                                                                'prboimagen',
                                                                                             ]);
                                 
                                 if(sizeof($prbpromocionesbonificaciones) > 0){
@@ -392,7 +396,8 @@ class PromocionesMostrarController extends Controller
                                                                                 'pro.proimagen',
                                                                                 'prpproductoppt',
                                                                                 'prpcomprappt',
-                                                                                'prpimagen'
+                                                                                'prpimagen',
+                                                                                'prpoimagen',
                                                                             ]);
 
                         if(sizeof($prppromocionesproductos) > 0){
@@ -412,7 +417,8 @@ class PromocionesMostrarController extends Controller
                                                                                         'pro.proimagen',
                                                                                         'prbproductoppt',
                                                                                         'prbcomprappt',
-                                                                                        'prbimagen'
+                                                                                        'prbimagen',
+                                                                                        'prboimagen',
                                                                                     ]);
                         
                         if(sizeof($prbpromocionesbonificaciones) > 0){
