@@ -15,6 +15,7 @@ class MostrarProductosController extends Controller
 
         $prosSinImagenes = proproductos::join('catcategorias as cat', 'cat.catid', 'proproductos.catid')
                                         ->where('proimagen', "/")
+                                        ->where('proespromocion', 1)
                                         ->limit(200)
                                         ->get([
                                             'proproductos.proid',
@@ -28,6 +29,7 @@ class MostrarProductosController extends Controller
 
         $prosConImagenes = proproductos::join('catcategorias as cat', 'cat.catid', 'proproductos.catid')
                                         ->where('proimagen', "!=", "/")
+                                        ->where('proespromocion', 1)
                                         ->limit(200)
                                         ->get([
                                             'proproductos.proid',
@@ -58,8 +60,10 @@ class MostrarProductosController extends Controller
             "NO_SE_ENCONTRO_PRODUCTO" => []
         );
 
-        proproductos::where('proimagen', '!=', "/")
-                    ->update(['proimagen' => "/"]);
+        proproductos::update([
+                        'proimagen' => "/",
+                        'proespromocion' => 0
+                    ]);
 
         $pros = proproductos::get();
 
@@ -70,6 +74,7 @@ class MostrarProductosController extends Controller
             if($prp){
                 $proe = proproductos::find($pro->proid);
                 $proe->proimagen = $prp->prpimagen;
+                $proe->proespromocion = 1;
                 $proe->update();
 
                 $logs["PRODUCTOS_MODIFICADO_PRP"][] = "Imagen de productos: ".$pro->proid." con la imagen: ".$prp->prpimagen;
@@ -80,6 +85,7 @@ class MostrarProductosController extends Controller
                 if($prb){
                     $proe = proproductos::find($pro->proid);
                     $proe->proimagen = $prb->prbimagen;
+                    $proe->proespromocion = 1;
                     $proe->update();
 
                     $logs["PRODUCTOS_MODIFICADO_PRB"][] = "Imagen de productos: ".$pro->proid." con la imagen: ".$prb->prbimagen;
