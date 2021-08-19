@@ -128,6 +128,13 @@ class MostrarProductosController extends Controller
             $proe->proimagen = env('APP_URL').$fichero.$req_prosku;
             $proe->update();
 
+            prppromocionesproductos::where('proid', $proe->proid)
+                                    ->update(['prpoimagen' => $proe->proimagen]);
+
+            prbpromocionesbonificaciones::where('proid', $pro->proid)
+                                    ->update(['prboimagen' => $proe->proimagen]);
+
+
         }else{
             $respuesta = false;
             $mensaje = "Lo sentimos, no pudimos encontrar el sku seleccionado, recomendamos actualizar la pagina o comunicarse con alguien de soporte";
