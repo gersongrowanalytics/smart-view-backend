@@ -60,12 +60,13 @@ class MostrarProductosController extends Controller
             "NO_SE_ENCONTRO_PRODUCTO" => []
         );
 
+        proproductos::where('proimagen', '!=', "/")
+                    ->update(['proimagen' => "/"]);
+
+        proproductos::where('proespromocion', 1)
+                    ->update(['proespromocion' => 0]);
+
         $pros = proproductos::get();
-        $pros->update([
-            'proimagen' => "/",
-            'proespromocion' => 0
-        ]);
-        
 
         foreach ($pros as $posicionPro => $pro) {
             
