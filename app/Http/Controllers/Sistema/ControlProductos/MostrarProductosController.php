@@ -60,12 +60,12 @@ class MostrarProductosController extends Controller
             "NO_SE_ENCONTRO_PRODUCTO" => []
         );
 
-        proproductos::update([
-                        'proimagen' => "/",
-                        'proespromocion' => 0
-                    ]);
-
         $pros = proproductos::get();
+        $pros->update([
+            'proimagen' => "/",
+            'proespromocion' => 0
+        ]);
+        
 
         foreach ($pros as $posicionPro => $pro) {
             
