@@ -171,4 +171,27 @@ class MostrarProductosController extends Controller
         return $requestsalida;
 
     }
+
+    public function AisngarImagensColumnasPrueba()
+    {
+        
+        $pros = proproductos::where('proespromocion', 1)->get();
+
+        foreach ($pros as $pro ) {
+            
+            prppromocionesproductos::where('proid', $pro->proid)
+                                    ->update(['prpoimagen' => $pro->proimagen]);
+
+            prbpromocionesbonificaciones::where('proid', $pro->proid)
+                                    ->update(['prboimagen' => $pro->proimagen]);
+
+        }
+
+        // ALTER TABLE `prppromocionesproductos` ADD `prpoimagen` VARCHAR(100) NOT NULL DEFAULT '/' ;
+        // ALTER TABLE `prbpromocionesbonificaciones` ADD `prboimagen` VARCHAR(100) NOT NULL DEFAULT '/' ;
+
+
+
+    }
+
 }
