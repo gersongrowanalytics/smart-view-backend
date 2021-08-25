@@ -36,6 +36,7 @@ class CargarSOXSoldtoController extends Controller
         $pks = array(
             "PK_FECHAS" => array(
                 "NUEVOS" => [],
+                "USADO" => ""
             ),
             "PK_VENTAS_SSO" => array(
                 "NUEVOS" => [],
@@ -137,7 +138,7 @@ class CargarSOXSoldtoController extends Controller
 
         if($fecMes){
             $fecidFec = $fecMes->fecid;
-
+            $pks["PK_FECHAS"]["USADO"] = "FECHA USADA FEC-".$fecidFec;
         }else{
 
             $fecn = new fecfechas;

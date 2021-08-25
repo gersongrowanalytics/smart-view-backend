@@ -259,6 +259,12 @@ class salvacionController extends Controller
             $tsu->update();
         }
 
+
+
+
+
+        // 
+
         $scas = scasucursalescategorias::join('tsutipospromocionessucursales as tsu', 'tsu.tsuid', 'scasucursalescategorias.tsuid')   
                                             ->where('tsu.tprid', 2)
                                             ->where('scasucursalescategorias.fecid', $fecid)
@@ -277,13 +283,22 @@ class salvacionController extends Controller
                                     ->where('sucid', $sca->sucid)
                                     ->sum('vsovalorizado');
 
+            $sumvsoniv = vsoventassso::join('proproductos as pro', 'pro.proid', 'vsoventassso.proid')
+                                    ->where('fecid', $fecid)
+                                    ->where('pro.catid', $sca->catid)
+                                    ->where('sucid', $sca->sucid)
+                                    ->sum('vsovalorizadoniv');
+
             $scae = scasucursalescategorias::find($sca->scaid);
             $scae->scavalorizadoreal = $sumvso;
+            $scae->scavalorizadorealniv = $sumvsoniv;
 
             if(intval(round($scae->scavalorizadoobjetivo)) <= 0){
                 $scae->scavalorizadotogo = 0;
+                $scae->scavalorizadotogoniv = 0;
             }else{
                 $scae->scavalorizadotogo = $scae->scavalorizadoobjetivo - $sumvso;
+                $scae->scavalorizadotogoniv = $scae->scavalorizadoobjetivo - $sumvsoniv;
             }
 
             $scae->update();
