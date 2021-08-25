@@ -51,7 +51,7 @@ class MostrarProductosController extends Controller
 
     }
 
-    public function ModificarImagenProductos()
+    public function ModificarImagenProductos() // ASIGNAR IMAGENES A LOS PRODUCTOS
     {
 
         $logs = array(
@@ -109,6 +109,8 @@ class MostrarProductosController extends Controller
 
     public function AsignarImagenProducto(Request $request)
     {
+        date_default_timezone_set("America/Lima");
+        $fechaActual = date('Y-m-d');
 
         $respuesta = true;
         $mensaje   = "El producto se actualizo correctamente";
@@ -121,17 +123,21 @@ class MostrarProductosController extends Controller
         if($proe){
 
             list(, $base64) = explode(',', $req_imagen);
-            $fichero = '/Sistema/promociones/IMAGENES/PRODUCTOSNUEVO/';
+            $fichero = '/Sistema/promociones/IMAGENES/PRODUCTOSNUEVO/'.$fechaActual;
             $archivo = base64_decode($base64);
             file_put_contents(base_path().'/public'.$fichero.$req_prosku, $archivo);
 
             $proe->proimagen = env('APP_URL').$fichero.$req_prosku;
             $proe->update();
 
-            prppromocionesproductos::where('proid', $proe->proid)
+            prppromocionesproductos::join('prmpromociones as prm', 'prm.prmid', 'prppromocionesproductos.prmid')
+                                    ->where('proid', $proe->proid)
+                                    ->where('prm.fecid', '<' ,59)
                                     ->update(['prpoimagen' => $proe->proimagen]);
 
-            prbpromocionesbonificaciones::where('proid', $pro->proid)
+            prbpromocionesbonificaciones::join('prmpromociones as prm', 'prm.prmid', 'prppromocionesproductos.prmid')
+                                    ->where('proid', $pro->proid)
+                                    ->where('prm.fecid', '<' ,59)
                                     ->update(['prboimagen' => $proe->proimagen]);
 
 

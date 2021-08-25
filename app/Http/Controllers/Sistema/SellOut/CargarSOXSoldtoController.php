@@ -126,7 +126,7 @@ class CargarSOXSoldtoController extends Controller
         vsoventassso::join('fecfechas as fec', 'fec.fecid', 'vsoventassso.fecid')
                     ->where('fec.fecano', $anioSelec)
                     ->where('fec.fecmes', $mesTxtFec)
-                    ->update(['vsovalorizado' => 0]);
+                    ->update(['vsovalorizado' => 0, 'vsovalorizadoniv' => 0]);
 
         // 
 
@@ -160,6 +160,7 @@ class CargarSOXSoldtoController extends Controller
                 $categoria   = $dato['CATEGORY'];
                 $codMaterial = $dato['COD_MATERIAL'];
                 $real        = $dato['SELLS'];
+                $niv         = $dato['NIV'];
     
                 if($dato['SELLS'] == null){
                     $real = 0;
@@ -167,6 +168,12 @@ class CargarSOXSoldtoController extends Controller
                     $real = $dato['SELLS'];
                 }
     
+                if($dato['NIV'] == null){
+                    $niv = 0;
+                }else{
+                    $niv = $dato['NIV'];
+                }
+
                 $pro = proproductos::where('prosku', $codMaterial)->first();
     
                 if($pro){
@@ -188,7 +195,8 @@ class CargarSOXSoldtoController extends Controller
     
                         if($vso){
     
-                            $vso->vsovalorizado = $real + $vso->vsovalorizado;
+                            $vso->vsovalorizado    = $real + $vso->vsovalorizado;
+                            $vso->vsovalorizadoniv = $niv + $vso->vsovalorizadoniv;
                             $vso->update();
     
                         }else{
@@ -199,6 +207,7 @@ class CargarSOXSoldtoController extends Controller
                             $vson->tpmid         = 1;
                             $vson->vsocantidad   = 0;
                             $vson->vsovalorizado = $real;
+                            $vson->vsovalorizadoniv = $niv;
                             $vson->save();
                         }
 

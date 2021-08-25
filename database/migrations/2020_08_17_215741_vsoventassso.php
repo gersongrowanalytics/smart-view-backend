@@ -22,6 +22,7 @@ class Vsoventassso extends Migration
             $table->unsignedInteger('tpmid');
             $table->string('vsocantidad');
             $table->string('vsovalorizado');
+            $table->string('vsovalorizadoniv');
             $table->string('vsoobjetivo');
             $table->timestamps();
 
