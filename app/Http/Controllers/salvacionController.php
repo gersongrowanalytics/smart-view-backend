@@ -13,6 +13,7 @@ use App\tsutipospromocionessucursales;
 use App\zonzonas;
 use App\rscrbsscategorias;
 use App\catcategorias;
+use App\vsoventassso;
 
 class salvacionController extends Controller
 {
@@ -258,6 +259,36 @@ class salvacionController extends Controller
             $tsu->update();
         }
 
+        $scas = scasucursalescategorias::join('tsutipospromocionessucursales as tsu', 'tsu.tsuid', 'scasucursalescategorias.tsuid')   
+                                            ->where('tsu.tprid', 2)
+                                            ->where('fecid', $fecid)
+                                            ->get([
+                                                'scasucursalescategorias.scaid',
+                                                'scasucursalescategorias.catid',
+                                                'scasucursalescategorias.sucid',
+                                                'scasucursalescategorias.scavalorizadoobjetivo',
+                                            ]);
+
+        foreach ($scas as $key => $sca) {
+            
+            $sumvso = vsoventassso::join('proproductos as pro', 'pro.proid', 'vsoventassso.proid')
+                                    ->where('fecid', $fecid)
+                                    ->where('pro.catid', $sca->catid)
+                                    ->where('sucid', $sca->sucid)
+                                    ->sum('vsovalorizado');
+
+            $scae = scasucursalescategorias::find($sca->scaid);
+            $scae->scavalorizadoreal = $sumvso;
+
+            if(intval(round($scae->scavalorizadoobjetivo)) <= 0){
+                $scae->scavalorizadotogo = 0;
+            }else{
+                $scae->scavalorizadotogo = $scae->scavalorizadoobjetivo - $sumvso;
+            }
+
+            $scae->update();
+
+        }
 
     }
 
