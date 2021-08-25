@@ -261,7 +261,7 @@ class salvacionController extends Controller
 
         $scas = scasucursalescategorias::join('tsutipospromocionessucursales as tsu', 'tsu.tsuid', 'scasucursalescategorias.tsuid')   
                                             ->where('tsu.tprid', 2)
-                                            ->where('fecid', $fecid)
+                                            ->where('scasucursalescategorias.fecid', $fecid)
                                             ->get([
                                                 'scasucursalescategorias.scaid',
                                                 'scasucursalescategorias.catid',
