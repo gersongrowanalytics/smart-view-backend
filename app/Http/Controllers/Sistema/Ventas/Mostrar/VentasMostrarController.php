@@ -188,7 +188,11 @@ class VentasMostrarController extends Controller
                                                                             'tsurealtrimestral',
                                                                             'tsufacturartrimestral',
                                                                             'tsucumplimientotrimestral',
-                                                                            'tsurebatetrimestral'
+                                                                            'tsurebatetrimestral',
+
+                                                                            'tsuvalorizadorealniv',
+                                                                            'tsuvalorizadotogoniv',
+                                                                            'tsuporcentajecumplimientoniv',
                                                                         ]);
             if(sizeof($tsutipospromocionessucursales) > 0){
 
@@ -228,7 +232,9 @@ class VentasMostrarController extends Controller
                                                                         'scasucursalescategorias.scavalorizadoobjetivo',
                                                                         'scasucursalescategorias.scavalorizadoreal',
                                                                         'scasucursalescategorias.scavalorizadotogo',
-                                                                        'scasucursalescategorias.scaiconocategoria'
+                                                                        'scasucursalescategorias.scaiconocategoria',
+                                                                        'scasucursalescategorias.scavalorizadorealniv',
+                                                                        'scasucursalescategorias.scavalorizadotogoniv',
                                                                     ]);
                     if(sizeof($scasucursalescategorias) > 0){
                         $tsutipospromocionessucursales[$posicion]['categorias'] = $scasucursalescategorias;
