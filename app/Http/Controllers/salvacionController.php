@@ -305,6 +305,37 @@ class salvacionController extends Controller
 
         }
 
+        // 
+
+        $tsus = tsutipospromocionessucursales::where('fecid', $fecid)
+                                            ->where('tprid', 2)
+                                            ->get();
+
+                                            // tsuvalorizadorealniv
+                                            // tsuvalorizadotogoniv
+                                            // tsuporcentajecumplimientoniv
+                                            
+        foreach ($tsus as $key => $tsu) {
+            $sumscaniv = scasucursalescategorias::where('tsuid', $tsu->tsuid)
+                                            ->sum('scavalorizadorealniv');
+
+            $tsue = tsutipospromocionessucursales::find($tsu->tsuid);
+
+            if(intval(round($tsue->tsuvalorizadoobjetivo)) <= 0){
+                $porcentajeCumplimiento = $sumscaniv;
+                $togo = 0;
+            }else{
+                $porcentajeCumplimiento = (100*$sumscaniv)/$tsue->tsuvalorizadoobjetivo;
+                $togo = $tsue->tsuvalorizadoobjetivo - $sumscaniv;
+            }
+            
+            $tsue->tsuvalorizadorealniv         = $sumscaniv;
+            
+            $tsue->tsuvalorizadotogoniv         = $togo;
+            $tsue->tsuporcentajecumplimientoniv = $porcentajeCumplimiento;
+            $tsue->update();
+        }
+
     }
 
     public function ActualizarSucursales()
