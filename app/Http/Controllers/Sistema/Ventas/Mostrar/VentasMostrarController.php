@@ -858,6 +858,9 @@ class VentasMostrarController extends Controller
 
                                         $dataarray[$posicionTpr]['categorias'][$posicionCat]['scavalorizadorealniv'] = 0;
                                         $dataarray[$posicionTpr]['categorias'][$posicionCat]['scavalorizadotogoniv'] = 0;
+                                    }else{
+                                        $dataarray[$posicionTpr]['categorias'][$posicionCat]['scavalorizadorealniv'] = 0;
+                                        $dataarray[$posicionTpr]['categorias'][$posicionCat]['scavalorizadotogoniv'] = 0;
                                     }
 
                                     $scas = scasucursalescategorias::where('tsuid', $tsu->tsuid )
