@@ -219,8 +219,18 @@ class MostrarDescargaSiSoController extends Controller
                         array("value" => $catnombre),
                         array("value" => $prosku),
                         array("value" => $pronombre),
-                        array("value" => floatval($osi->osivalorizado)),
-                        array("value" => $real),
+                        array(
+                            "value" => floatval($osi->osivalorizado),
+                            "style" => array(
+                                "numFmt" => "#,##0.00"
+                            )
+                        ),
+                        array(
+                            "value" => floatval($real),
+                            "style" => array(
+                                "numFmt" => "#,##0.00"
+                            )
+                        ),
                     );
 
                     $nuevoArray[0]['data'][] = $arrayFilaExcel;
@@ -820,6 +830,7 @@ class MostrarDescargaSiSoController extends Controller
                             array("title" => "MATERIAL"),
                             array("title" => "CUOTA"),
                             array("title" => "REAL"),
+                            array("title" => "NIV"),
                         );
                         $nuevoArray[0]['columns'] = $arrayTitulos;
                     }
@@ -831,8 +842,10 @@ class MostrarDescargaSiSoController extends Controller
 
                     if($vso){
                         $real = floatval($vso->vsovalorizado);
+                        $realniv = floatval($vso->vsovalorizadoniv);
                     }else{
                         $real = 0;
+                        $realniv = 0;
                     }
                     
                     $casnombre = $oso->casnombre;
@@ -904,8 +917,24 @@ class MostrarDescargaSiSoController extends Controller
                         array("value" => $catnombre),
                         array("value" => $prosku),
                         array("value" => $pronombre),
-                        array("value" => floatval($oso->osovalorizado)),
-                        array("value" => $real),
+                        array(
+                            "value" => floatval($oso->osovalorizado),
+                            "style" => array(
+                                "numFmt" => "#,##0.00"
+                            )
+                        ),
+                        array(
+                            "value" => floatval($real),
+                            "style" => array(
+                                "numFmt" => "#,##0.00"
+                            )
+                        ),
+                        array(
+                            "value" => floatval($realniv),
+                            "style" => array(
+                                "numFmt" => "#,##0.00"
+                            )
+                        ),
                     );
 
                     $nuevoArray[0]['data'][] = $arrayFilaExcel;
