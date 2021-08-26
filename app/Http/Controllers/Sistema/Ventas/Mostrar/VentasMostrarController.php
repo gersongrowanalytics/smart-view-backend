@@ -705,6 +705,13 @@ class VentasMostrarController extends Controller
                     $dataarray[$posicionTpr]['treid'] = "";
                     $dataarray[$posicionTpr]['trenombre'] = "";
 
+                    $dataarray[$posicionTpr]['tsuvalorizadorealniv'] = 0;
+                    $dataarray[$posicionTpr]['tsuvalorizadotogoniv'] = 0;
+                    $dataarray[$posicionTpr]['tsuporcentajecumplimientoniv'] = 0;
+                    $dataarray[$posicionTpr]['tsuvalorizadorebateniv'] = 0;
+
+
+
                     foreach($usus as $usu){
 
                         if($usu->sucid  == 309){
@@ -763,8 +770,19 @@ class VentasMostrarController extends Controller
                                                                 'tsurealtrimestral',
                                                                 'tsuobjetivotrimestral',
                                                                 'tsufacturartrimestral',
-                                                                'tsurebatetrimestral'
+                                                                'tsurebatetrimestral',
+                                                                'tsuvalorizadorealniv',
+                                                                'tsuvalorizadotogoniv',
+                                                                'tsuporcentajecumplimientoniv',
+                                                                'tsuvalorizadorebateniv',
                                                             ]);
+
+                            if($tsu){
+                                $dataarray[$posicionTpr]['tsuvalorizadorealniv'] = $dataarray[$posicionTpr]['tsuvalorizadorealniv'] + $tsu->tsuvalorizadorealniv;
+                                $dataarray[$posicionTpr]['tsuvalorizadotogoniv'] = $dataarray[$posicionTpr]['tsuvalorizadotogoniv'] + $tsu->tsuvalorizadotogoniv;
+                                $dataarray[$posicionTpr]['tsuporcentajecumplimientoniv'] = $dataarray[$posicionTpr]['tsuporcentajecumplimientoniv'] + $tsu->tsuporcentajecumplimientoniv;
+                                $dataarray[$posicionTpr]['tsuvalorizadorebateniv'] = $dataarray[$posicionTpr]['tsuvalorizadorebateniv'] + $tsu->tsuvalorizadorebateniv;
+                            }
 
                             $tsuSI = tsutipospromocionessucursales::join('fecfechas as fec', 'tsutipospromocionessucursales.fecid', 'fec.fecid')
                                                             ->leftjoin('tretiposrebates as tre', 'tre.treid', 'tsutipospromocionessucursales.treid')
@@ -789,7 +807,7 @@ class VentasMostrarController extends Controller
                                                                 'tsurealtrimestral',
                                                                 'tsuobjetivotrimestral',
                                                                 'tsufacturartrimestral',
-                                                                'tsurebatetrimestral'
+                                                                'tsurebatetrimestral',
                                                             ]);
                         }
 
