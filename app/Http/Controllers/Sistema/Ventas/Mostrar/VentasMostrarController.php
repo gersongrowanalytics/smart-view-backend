@@ -875,8 +875,8 @@ class VentasMostrarController extends Controller
                                     if(sizeof($scas) > 0){
 
                                         foreach($scas as $sca){
-                                            $dataarray[$posicionTpr]['categorias'][$posicionCat]['scavalorizadorealniv'] = $dataarray[$posicionTpr]['categorias'][$posicionCat]['scavalorizadorealniv'] + $sca->scavalorizadoobjetivo;
-                                            $dataarray[$posicionTpr]['categorias'][$posicionCat]['scavalorizadotogoniv'] = $dataarray[$posicionTpr]['categorias'][$posicionCat]['scavalorizadotogoniv'] + $sca->scavalorizadoobjetivo;
+                                            $dataarray[$posicionTpr]['categorias'][$posicionCat]['scavalorizadorealniv'] = $dataarray[$posicionTpr]['categorias'][$posicionCat]['scavalorizadorealniv'] + $sca->scavalorizadorealniv;
+                                            $dataarray[$posicionTpr]['categorias'][$posicionCat]['scavalorizadotogoniv'] = $dataarray[$posicionTpr]['categorias'][$posicionCat]['scavalorizadotogoniv'] + $sca->scavalorizadotogoniv;
 
                                             $dataarray[$posicionTpr]['categorias'][$posicionCat]['scavalorizadoobjetivo'] = $dataarray[$posicionTpr]['categorias'][$posicionCat]['scavalorizadoobjetivo'] + $sca->scavalorizadoobjetivo;
                                             $dataarray[$posicionTpr]['categorias'][$posicionCat]['scavalorizadoreal']     = $dataarray[$posicionTpr]['categorias'][$posicionCat]['scavalorizadoreal']     + $sca->scavalorizadoreal;
