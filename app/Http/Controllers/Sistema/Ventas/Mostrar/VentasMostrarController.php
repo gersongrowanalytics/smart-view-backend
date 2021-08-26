@@ -193,6 +193,7 @@ class VentasMostrarController extends Controller
                                                                             'tsuvalorizadorealniv',
                                                                             'tsuvalorizadotogoniv',
                                                                             'tsuporcentajecumplimientoniv',
+                                                                            'tsuvalorizadorebateniv'
                                                                         ]);
             if(sizeof($tsutipospromocionessucursales) > 0){
 
