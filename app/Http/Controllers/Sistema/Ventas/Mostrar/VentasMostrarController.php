@@ -855,6 +855,9 @@ class VentasMostrarController extends Controller
                                         $dataarray[$posicionTpr]['categorias'][$posicionCat]['scavalorizadoreal']     = 0;
                                         $dataarray[$posicionTpr]['categorias'][$posicionCat]['scavalorizadotogo']     = 0;
                                         $dataarray[$posicionTpr]['categorias'][$posicionCat]['scaiconocategoria']     = env('APP_URL').'/Sistema/categorias-tiposPromociones/img/iconos/'.$categoria->catnombre.'-'.$tpr->tprnombre.'.png';
+
+                                        $dataarray[$posicionTpr]['categorias'][$posicionCat]['scavalorizadorealniv'] = 0;
+                                        $dataarray[$posicionTpr]['categorias'][$posicionCat]['scavalorizadotogoniv'] = 0;
                                     }
 
                                     $scas = scasucursalescategorias::where('tsuid', $tsu->tsuid )
