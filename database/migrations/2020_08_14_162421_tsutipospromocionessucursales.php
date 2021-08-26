@@ -30,9 +30,10 @@ class Tsutipospromocionessucursales extends Migration
             $table->string('tsucumplimientotrimestral')->nullable();
             $table->string('tsurebatetrimestral')->nullable();
 
-            $table->string('tsuvalorizadorealniv')->nullable();
-            $table->string('tsuvalorizadotogoniv')->nullable();
-            $table->string('tsuporcentajecumplimientoniv')->nullable();
+            $table->string('tsuvalorizadorebateniv')->default(0);
+            $table->string('tsuvalorizadorealniv')->default(0);
+            $table->string('tsuvalorizadotogoniv')->default(0);
+            $table->string('tsuporcentajecumplimientoniv')->default(0);
 
             $table->timestamps();
 

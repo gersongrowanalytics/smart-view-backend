@@ -36,6 +36,7 @@ class RebateActualizarController extends Controller
             $tsuu = tsutipospromocionessucursales::where('fecid', $fecid)
                                                 ->update([
                                                     'tsuvalorizadorebate' => 0,
+                                                    'tsuvalorizadorebateniv' => 0
                                                 ]);
             
             // SELL IN
@@ -170,6 +171,7 @@ class RebateActualizarController extends Controller
                                                 'tpr.tprid',
                                                 'tpr.tprnombre',
                                                 'tsuporcentajecumplimiento',
+                                                'tsuporcentajecumplimientoniv',
                                                 'suc.sucid',
                                                 'suc.sucnombre'
                                             ]);
@@ -204,7 +206,9 @@ class RebateActualizarController extends Controller
                 }
 
                 $tsu->tsuporcentajecumplimiento = intval(round($tsu->tsuporcentajecumplimiento));
+                $tsu->tsuporcentajecumplimientoniv = intval(round($tsu->tsuporcentajecumplimientoniv));
 
+                // REAL
                 $trrs = trrtiposrebatesrebates::join('rtprebatetipospromociones as rtp', 'rtp.rtpid', 'trrtiposrebatesrebates.rtpid')
                                                 ->where('trrtiposrebatesrebates.treid', $treidSeleccionado)
                                                 ->where('rtp.fecid', $fecid)
@@ -262,6 +266,69 @@ class RebateActualizarController extends Controller
                 }else{
                     $log['escala']['noentra'][] = "No entra en la escala rebate: ".$tsu->tsuid." de la sucursal: ".$tsu->sucnombre."(".$tsu->sucid.") con el grupo: ".$trenombre;
                 }
+
+                // NIV
+
+                $trrs = trrtiposrebatesrebates::join('rtprebatetipospromociones as rtp', 'rtp.rtpid', 'trrtiposrebatesrebates.rtpid')
+                                                ->where('trrtiposrebatesrebates.treid', $treidSeleccionado)
+                                                ->where('rtp.fecid', $fecid)
+                                                ->where('rtp.tprid', $tsu->tprid)
+                                                ->where('rtp.rtpporcentajedesde', '<=', $tsu->tsuporcentajecumplimientoniv)
+                                                ->where('rtp.rtpporcentajehasta', '>=', $tsu->tsuporcentajecumplimientoniv)
+                                                ->get([
+                                                    'trrtiposrebatesrebates.trrid',
+                                                    'rtp.rtpporcentajedesde',
+                                                    'rtp.rtpporcentajehasta',
+                                                    'rtp.rtpporcentajerebate',
+                                                    'trrtiposrebatesrebates.catid'
+                                                ]);
+
+                if(sizeof($trrs) > 0){
+                    
+                    if(sizeof($trrs) <= 5){
+                        $totalRebate = 0;
+                        foreach($trrs as $posicion => $trr){
+                            if($posicion == 0){
+                                $log['escala']['entra'][] = "Si entra en la escala rebate: ".$tsu->tsuid." de la sucursal: ".$tsu->sucid." con un cumplimiento de: ".round($tsu->tsuporcentajecumplimiento)." y escalas desde: ".$trr->rtpporcentajedesde." y hasta: ".$trr->rtpporcentajehasta;
+                            }
+                            $sca = scasucursalescategorias::join('tsutipospromocionessucursales  as tsu', 'tsu.tsuid', 'scasucursalescategorias.tsuid')
+                                                        // ->where('tsuid', $tsu->tsuid)
+                                                        ->where('tsu.sucid', $tsu->sucid)
+                                                        ->where('tsu.tprid', 1)
+                                                        ->where('scasucursalescategorias.fecid', $fecid)
+                                                        ->where('scasucursalescategorias.catid', $trr->catid)
+                                                        ->first([
+                                                            'scaid',
+                                                            'scavalorizadoreal',
+
+                                                        ]);
+
+                            if($sca){
+                                $nuevoRebate = ($sca->scavalorizadoreal*$trr->rtpporcentajerebate)/100;
+                                $totalRebate = $totalRebate + $nuevoRebate;
+                            }else{
+
+                            }
+
+                        }
+
+                        $tsuu = tsutipospromocionessucursales::find($tsu->tsuid);
+                        $tsuu->tsuvalorizadorebateniv = $totalRebate;
+                        $tsuu->update();
+
+
+                    }else{
+                        // echo "Hay mas de 5 datos: ";
+                        foreach($trrs as $trr){
+                            echo $trr->trrid;
+                        }
+                    }
+
+                }else{
+                    $log['escala']['noentra'][] = "No entra en la escala rebate: ".$tsu->tsuid." de la sucursal: ".$tsu->sucnombre."(".$tsu->sucid.") con el grupo: ".$trenombre;
+                }
+                
+
 
                 $trr = trrtiposrebatesrebates::join('rtprebatetipospromociones as rtp', 'rtp.rtpid', 'trrtiposrebatesrebates.rtpid')
                                                 ->where('trrtiposrebatesrebates.treid', $treidSeleccionado)
