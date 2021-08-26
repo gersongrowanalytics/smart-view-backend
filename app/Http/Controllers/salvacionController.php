@@ -316,8 +316,14 @@ class salvacionController extends Controller
                                             // tsuporcentajecumplimientoniv
                                             
         foreach ($tsus as $key => $tsu) {
-            $sumscaniv = scasucursalescategorias::where('tsuid', $tsu->tsuid)
-                                            ->sum('scavalorizadorealniv');
+            // $sumscaniv = scasucursalescategorias::where('tsuid', $tsu->tsuid)
+            //                                 ->sum('scavalorizadorealniv');
+
+            $sumscaniv = vsoventassso::join('proproductos as pro', 'pro.proid', 'vsoventassso.proid')
+                                    ->where('fecid', $fecid)
+                                    // ->where('pro.catid', $sca->catid)
+                                    ->where('sucid', $tsu->sucid)
+                                    ->sum('vsovalorizadoniv');
 
             $tsue = tsutipospromocionessucursales::find($tsu->tsuid);
 
