@@ -600,6 +600,7 @@ class VentasMostrarController extends Controller
                             "scavalorizadoreal"     => "",
                             "scavalorizadorealniv"  => "",
                             "scavalorizadotogo"     => "",
+                            "scavalorizadotogoniv"     => "",
                             "scaiconocategoria"     => ""
                         )
                     )
@@ -861,7 +862,6 @@ class VentasMostrarController extends Controller
                                         $dataarray[$posicionTpr]['categorias'][$posicionCat]['scavalorizadotogoniv'] = 0;
                                     }else{
                                         
-                                        $dataarray[$posicionTpr]['categorias'][$posicionCat]['scavalorizadotogoniv'] = 0;
                                     }
 
                                     $scas = scasucursalescategorias::where('tsuid', $tsu->tsuid )
@@ -881,10 +881,6 @@ class VentasMostrarController extends Controller
                                         foreach($scas as $sca){
 
                                             $dataarray[$posicionTpr]['categorias'][$posicionCat]['scavalorizadorealniv'] = $dataarray[$posicionTpr]['categorias'][$posicionCat]['scavalorizadorealniv'] + $sca->scavalorizadorealniv;
-
-                                            if($sca->scavalorizadotogoniv){
-                                                
-                                            } 
 
                                             $dataarray[$posicionTpr]['categorias'][$posicionCat]['scavalorizadotogoniv'] = $dataarray[$posicionTpr]['categorias'][$posicionCat]['scavalorizadotogoniv'] + $sca->scavalorizadotogoniv;
 
@@ -943,6 +939,7 @@ class VentasMostrarController extends Controller
                                                                         'scavalorizadoreal', 
                                                                         'scavalorizadorealniv', 
                                                                         'scavalorizadotogo', 
+                                                                        'scavalorizadotogoniv',
                                                                         'scaiconocategoria'
                                                                     ]);
 
@@ -1020,6 +1017,7 @@ class VentasMostrarController extends Controller
                                         $dataarray[$posicionTpr]['categorias'][$posicionCat]['scavalorizadoreal']     = 0;
                                         $dataarray[$posicionTpr]['categorias'][$posicionCat]['scavalorizadorealniv']  = 0;
                                         $dataarray[$posicionTpr]['categorias'][$posicionCat]['scavalorizadotogo']     = 0;
+                                        $dataarray[$posicionTpr]['categorias'][$posicionCat]['scavalorizadotogoniv']  = 0;
                                         $dataarray[$posicionTpr]['categorias'][$posicionCat]['scaiconocategoria']     = env('APP_URL').'/Sistema/categorias-tiposPromociones/img/iconos/'.$categoria->catnombre.'-'.$tpr->tprnombre.'.png';
                                     }
                                     
@@ -1098,6 +1096,7 @@ class VentasMostrarController extends Controller
                         $dataVacia[$posicionTpr]['categorias'][$posicion]['scavalorizadoreal']      = 0;
                         $dataVacia[$posicionTpr]['categorias'][$posicion]['scavalorizadorealniv']   = 0;
                         $dataVacia[$posicionTpr]['categorias'][$posicion]['scavalorizadotogo']      = 0;
+                        $dataVacia[$posicionTpr]['categorias'][$posicion]['scavalorizadotogoniv']   = 0;
                         $dataVacia[$posicionTpr]['categorias'][$posicion]['scaiconocategoria']      = env('APP_URL').'/Sistema/categorias-tiposPromociones/img/iconos/'.$categoria->catnombre.'-'.$tpr->tprnombre.'.png';
                     }
                 }
