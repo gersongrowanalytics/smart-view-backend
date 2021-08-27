@@ -248,8 +248,10 @@ class ActualizarSucursalesController extends Controller
 
                     $suc = sucsucursales::where('sucsoldto', $codSoldTo)->first();
                     if($suc){
-                        $suc->sucnombre = $clienteHml;
-                        $suc->update();
+                        if($clienteHml){
+                            $suc->sucnombre = $clienteHml;
+                            $suc->update();
+                        }
                     }
 
 
