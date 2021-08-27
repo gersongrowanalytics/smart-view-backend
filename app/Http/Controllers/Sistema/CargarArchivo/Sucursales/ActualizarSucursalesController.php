@@ -246,10 +246,11 @@ class ActualizarSucursalesController extends Controller
                     $customerGroup    = $objPHPExcel->getActiveSheet()->getCell('O'.$i)->getCalculatedValue();
                     $cg2              = $objPHPExcel->getActiveSheet()->getCell('P'.$i)->getCalculatedValue();
 
-
                     $suc = sucsucursales::where('sucsoldto', $codSoldTo)->first();
-                    $suc->sucnombre = $clienteHml;
-                    $suc->update();
+                    if($suc){
+                        $suc->sucnombre = $clienteHml;
+                        $suc->update();
+                    }
 
 
 
