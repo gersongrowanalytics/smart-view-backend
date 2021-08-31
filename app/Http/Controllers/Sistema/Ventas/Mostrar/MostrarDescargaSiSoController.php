@@ -829,7 +829,7 @@ class MostrarDescargaSiSoController extends Controller
                             array("title" => "SKU"),
                             array("title" => "MATERIAL"),
                             array("title" => "CUOTA"),
-                            array("title" => "REAL"),
+                            // array("title" => "REAL"),
                             array("title" => "NIV"),
                         );
                         $nuevoArray[0]['columns'] = $arrayTitulos;
@@ -923,12 +923,12 @@ class MostrarDescargaSiSoController extends Controller
                                 "numFmt" => "#,##0.00"
                             )
                         ),
-                        array(
-                            "value" => floatval($real),
-                            "style" => array(
-                                "numFmt" => "#,##0.00"
-                            )
-                        ),
+                        // array(
+                        //     "value" => floatval($real),
+                        //     "style" => array(
+                        //         "numFmt" => "#,##0.00"
+                        //     )
+                        // ),
                         array(
                             "value" => floatval($realniv),
                             "style" => array(

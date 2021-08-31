@@ -294,7 +294,7 @@ class RebateActualizarController extends Controller
                             $sca = scasucursalescategorias::join('tsutipospromocionessucursales  as tsu', 'tsu.tsuid', 'scasucursalescategorias.tsuid')
                                                         // ->where('tsuid', $tsu->tsuid)
                                                         ->where('tsu.sucid', $tsu->sucid)
-                                                        ->where('tsu.tprid', 1)
+                                                        ->where('tsu.tprid', 1) // SCA DE SELL IN
                                                         ->where('scasucursalescategorias.fecid', $fecid)
                                                         ->where('scasucursalescategorias.catid', $trr->catid)
                                                         ->first([
@@ -394,10 +394,6 @@ class RebateActualizarController extends Controller
             $log
         );
         
-        return $requestsalida;
-
-        
+        return $requestsalida;   
     }
-
-    
 }
