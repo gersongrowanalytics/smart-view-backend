@@ -124,7 +124,7 @@ class MostrarProductosController extends Controller
         if($proe){
 
             list(, $base64) = explode(',', $req_imagen);
-            $fichero = '/Sistema/promociones/IMAGENES/PRODUCTOSNUEVO/'.Str::random(5)."-".$fechaActual."-".$req_prosku;
+            $fichero = '/Sistema/promociones/IMAGENES/PRODUCTOSNUEVO/'.Str::random(5)."-".$fechaActual."-".$req_prosku.".png";
             $archivo = base64_decode($base64);
             file_put_contents(base_path().'/public'.$fichero, $archivo);
 
