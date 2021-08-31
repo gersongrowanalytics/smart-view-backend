@@ -127,15 +127,16 @@ $router->group(['middleware' => ['permisos']], function() use($router) {
     $router->get('/quitarGratisPromociones/{fecid}', 'Sistema\Promociones\Editar\PromocionEditarGratisController@QuitarGratisPromociones');
 
 
-    // CONTROL DE PRODUCTOS
-    $router->post('/control-promociones/mostrar-productos', 'Sistema\ControlProductos\MostrarProductosController@MostrarProductos');
-    $router->get('/control-promociones/modificar-imagen-productos', 'Sistema\ControlProductos\MostrarProductosController@ModificarImagenProductos');
-    $router->post('/control-promociones/asignar-imagen-producto', 'Sistema\ControlProductos\MostrarProductosController@AsignarImagenProducto');
-    $router->post('/control-promociones/eliminar-imagenes-productos', 'Sistema\ControlProductos\MostrarProductosController@EliminarImagenProducto');
-
-    $router->post('/control-promociones/asignar-imagen-productos-prueba', 'Sistema\ControlProductos\MostrarProductosController@AisngarImagensColumnasPrueba');
 
 });
+
+// CONTROL DE PRODUCTOS
+$router->post('/control-promociones/mostrar-productos', 'Sistema\ControlProductos\MostrarProductosController@MostrarProductos');
+$router->get('/control-promociones/modificar-imagen-productos', 'Sistema\ControlProductos\MostrarProductosController@ModificarImagenProductos');
+$router->post('/control-promociones/asignar-imagen-producto', 'Sistema\ControlProductos\MostrarProductosController@AsignarImagenProducto');
+$router->post('/control-promociones/eliminar-imagenes-productos', 'Sistema\ControlProductos\MostrarProductosController@EliminarImagenProducto');
+$router->post('/control-promociones/asignar-imagen-productos-prueba', 'Sistema\ControlProductos\MostrarProductosController@AisngarImagensColumnasPrueba');
+
 
 $router->get('/cargarArchivo/leerpromociones/{nombreArchivo}', 'Sistema\CargarArchivo\Promociones\CargarArchivoPromocionesController@LeerCargarArchivo');
 
