@@ -137,7 +137,7 @@ class MostrarProductosController extends Controller
                                     ->update(['prpimagen' => $proe->proimagen]);
 
             prbpromocionesbonificaciones::join('prmpromociones as prm', 'prm.prmid', 'prbpromocionesbonificaciones.prmid')
-                                    ->where('proid', $pro->proid)
+                                    ->where('proid', $proe->proid)
                                     ->where('prm.fecid', '>' ,59)
                                     ->update(['prbimagen' => $proe->proimagen]);
 
