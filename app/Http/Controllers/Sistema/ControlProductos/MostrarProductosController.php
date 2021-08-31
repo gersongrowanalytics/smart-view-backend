@@ -136,7 +136,7 @@ class MostrarProductosController extends Controller
                                     ->where('prm.fecid', '>' ,59)
                                     ->update(['prpimagen' => $proe->proimagen]);
 
-            prbpromocionesbonificaciones::join('prmpromociones as prm', 'prm.prmid', 'prppromocionesproductos.prmid')
+            prbpromocionesbonificaciones::join('prmpromociones as prm', 'prm.prmid', 'prbpromocionesbonificaciones.prmid')
                                     ->where('proid', $pro->proid)
                                     ->where('prm.fecid', '>' ,59)
                                     ->update(['prbimagen' => $proe->proimagen]);
@@ -193,11 +193,15 @@ class MostrarProductosController extends Controller
 
         foreach ($pros as $pro ) {
             
-            prppromocionesproductos::where('proid', $pro->proid)
-                                    ->update(['prpoimagen' => $pro->proimagen]);
+            prppromocionesproductos::join('prmpromociones as prm', 'prm.prmid', 'prppromocionesproductos.prmid')
+                                    ->where('prm.fecid', '>' ,59)
+                                    ->where('proid', $pro->proid)
+                                    ->update(['prpimagen' => $pro->proimagen]);
 
-            prbpromocionesbonificaciones::where('proid', $pro->proid)
-                                    ->update(['prboimagen' => $pro->proimagen]);
+            prbpromocionesbonificaciones::join('prmpromociones as prm', 'prm.prmid', 'prbpromocionesbonificaciones.prmid')
+                                    ->where('prm.fecid', '>' ,59)
+                                    ->where('proid', $pro->proid)
+                                    ->update(['prbimagen' => $pro->proimagen]);
 
         }
 
