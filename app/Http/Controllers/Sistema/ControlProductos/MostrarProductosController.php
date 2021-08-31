@@ -128,7 +128,7 @@ class MostrarProductosController extends Controller
             $archivo = base64_decode($base64);
             file_put_contents(base_path().'/public'.$fichero, $archivo);
 
-            $proe->proimagen = env('APP_URL').$fichero.$req_prosku;
+            $proe->proimagen = env('APP_URL').$fichero;
             $proe->update();
 
             prppromocionesproductos::join('prmpromociones as prm', 'prm.prmid', 'prppromocionesproductos.prmid')
