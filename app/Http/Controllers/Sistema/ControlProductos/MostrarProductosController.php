@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\proproductos;
 use App\prppromocionesproductos;
 use App\prbpromocionesbonificaciones;
+use Illuminate\Support\Str;
 
 class MostrarProductosController extends Controller
 {
@@ -123,9 +124,9 @@ class MostrarProductosController extends Controller
         if($proe){
 
             list(, $base64) = explode(',', $req_imagen);
-            $fichero = '/Sistema/promociones/IMAGENES/PRODUCTOSNUEVO/'.$fechaActual;
+            $fichero = '/Sistema/promociones/IMAGENES/PRODUCTOSNUEVO/'.Str::random(5)."-".$fechaActual."-".$req_prosku;
             $archivo = base64_decode($base64);
-            file_put_contents(base_path().'/public'.$fichero.$req_prosku, $archivo);
+            file_put_contents(base_path().'/public'.$fichero, $archivo);
 
             $proe->proimagen = env('APP_URL').$fichero.$req_prosku;
             $proe->update();
@@ -133,12 +134,12 @@ class MostrarProductosController extends Controller
             prppromocionesproductos::join('prmpromociones as prm', 'prm.prmid', 'prppromocionesproductos.prmid')
                                     ->where('proid', $proe->proid)
                                     ->where('prm.fecid', '>' ,59)
-                                    ->update(['prpoimagen' => $proe->proimagen]);
+                                    ->update(['prpimagen' => $proe->proimagen]);
 
             prbpromocionesbonificaciones::join('prmpromociones as prm', 'prm.prmid', 'prppromocionesproductos.prmid')
                                     ->where('proid', $pro->proid)
                                     ->where('prm.fecid', '>' ,59)
-                                    ->update(['prboimagen' => $proe->proimagen]);
+                                    ->update(['prbimagen' => $proe->proimagen]);
 
 
         }else{
