@@ -236,13 +236,13 @@ class CargarArchivoPromocionesController extends Controller
 
                             // ELIMINAR PRP Y PRB
                             if($i == 2){
-                                prppromocionesproductos::join('prmpromociones as prm', 'prm.prmid', 'prppromocionesproductos.prmid')
-                                                        ->where('prm.fecid', $fecid)
-                                                        ->delete();
+                                // prppromocionesproductos::join('prmpromociones as prm', 'prm.prmid', 'prppromocionesproductos.prmid')
+                                //                         ->where('prm.fecid', $fecid)
+                                //                         ->delete();
 
-                                prbpromocionesbonificaciones::join('prmpromociones as prm', 'prm.prmid', 'prbpromocionesbonificaciones.prmid')
-                                                            ->where('prm.fecid', $fecid)
-                                                            ->delete();
+                                // prbpromocionesbonificaciones::join('prmpromociones as prm', 'prm.prmid', 'prbpromocionesbonificaciones.prmid')
+                                //                             ->where('prm.fecid', $fecid)
+                                //                             ->delete();
                             }
                 
                             // VERIFICAR SI EXISTE LA PERSONA
@@ -738,13 +738,13 @@ class CargarArchivoPromocionesController extends Controller
                                             }
 
                                             if($i == 2){
-                                                cspcanalessucursalespromociones::join('prmpromociones as prm', 'prm.prmid', 'cspcanalessucursalespromociones.prmid')
-                                                                                ->where('cspcanalessucursalespromociones.fecid', $fecid)
-                                                                                ->update([
-                                                                                    'cspestado' => 0, 
-                                                                                    'cspcantidadcombo' => 0,
-                                                                                    'cspcantidadplancha' => 0,
-                                                                                ]);
+                                                // cspcanalessucursalespromociones::join('prmpromociones as prm', 'prm.prmid', 'cspcanalessucursalespromociones.prmid')
+                                                //                                 ->where('cspcanalessucursalespromociones.fecid', $fecid)
+                                                //                                 ->update([
+                                                //                                     'cspestado' => 0, 
+                                                //                                     'cspcantidadcombo' => 0,
+                                                //                                     'cspcantidadplancha' => 0,
+                                                //                                 ]);
                                             }
                     
                                             $csp = cspcanalessucursalespromociones::join('prmpromociones as prm', 'prm.prmid', 'cspcanalessucursalespromociones.prmid')
