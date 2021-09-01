@@ -449,6 +449,29 @@ class salvacionController extends Controller
 
 
     }
+
+    public function QuitarDecimales($fecid)
+    {
+        $logs = [];
+
+        $prbs = prbpromocionesbonificaciones::join('prmpromociones as prm', 'prm.prmid', 'prbpromocionesbonificaciones.prmid')
+                                    ->where('prm.fecid', $fecid)
+                                    ->get(['prbid', 'prbcomprappt']);
+
+        foreach ($prbs as $prb) {
+            
+            if(is_numeric ( $prb->prbcomprappt )){
+                
+                // $prbe = prbpromocionesbonificaciones::find($prb->prbid);
+                // $prbe->prbcomprappt = 
+                $logs[] = $prb->prbcomprappt;
+            }else{
+                
+            }
+        }
+
+        return $logs;
+    }
 }
 
 
