@@ -462,8 +462,9 @@ class salvacionController extends Controller
             
             if(is_numeric ( $prb->prbcomprappt )){
                 
-                // $prbe = prbpromocionesbonificaciones::find($prb->prbid);
-                // $prbe->prbcomprappt = 
+                $prbe = prbpromocionesbonificaciones::find($prb->prbid);
+                $prbe->prbcomprappt = number_format($prb->prbcomprappt, 2);
+                $prbe->update();
                 $logs[] = $prb->prbcomprappt." - ".number_format($prb->prbcomprappt, 2);
             }else{
                 
