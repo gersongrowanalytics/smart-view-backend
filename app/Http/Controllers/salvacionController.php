@@ -464,7 +464,7 @@ class salvacionController extends Controller
                 
                 // $prbe = prbpromocionesbonificaciones::find($prb->prbid);
                 // $prbe->prbcomprappt = 
-                $logs[] = $prb->prbcomprappt;
+                $logs[] = $prb->prbcomprappt." - ".number_format($prb->prbcomprappt, 2);
             }else{
                 
             }
