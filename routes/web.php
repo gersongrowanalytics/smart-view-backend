@@ -159,7 +159,7 @@ $router->get('/obtenerSOXSoldTo/{anioSelec}/{mesSelec}', 'Sistema\SellOut\Cargar
 
 $router->get('/actualizarTogo/{fecid}', 'salvacionController@ActualizarToGo');
 $router->get('/ActualizarSucursales', 'salvacionController@ActualizarSucursales');
-$router->get('/quitar-decimales', 'salvacionController@QuitarDecimales');
+$router->get('/quitar-decimales/{fecid}', 'salvacionController@QuitarDecimales');
 
 
 
