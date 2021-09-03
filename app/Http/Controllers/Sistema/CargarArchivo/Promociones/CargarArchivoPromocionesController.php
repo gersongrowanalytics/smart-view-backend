@@ -236,13 +236,13 @@ class CargarArchivoPromocionesController extends Controller
 
                             // ELIMINAR PRP Y PRB
                             if($i == 2){
-                                // prppromocionesproductos::join('prmpromociones as prm', 'prm.prmid', 'prppromocionesproductos.prmid')
-                                //                         ->where('prm.fecid', $fecid)
-                                //                         ->delete();
+                                prppromocionesproductos::join('prmpromociones as prm', 'prm.prmid', 'prppromocionesproductos.prmid')
+                                                        ->where('prm.fecid', $fecid)
+                                                        ->delete();
 
-                                // prbpromocionesbonificaciones::join('prmpromociones as prm', 'prm.prmid', 'prbpromocionesbonificaciones.prmid')
-                                //                             ->where('prm.fecid', $fecid)
-                                //                             ->delete();
+                                prbpromocionesbonificaciones::join('prmpromociones as prm', 'prm.prmid', 'prbpromocionesbonificaciones.prmid')
+                                                            ->where('prm.fecid', $fecid)
+                                                            ->delete();
                             }
                 
                             // VERIFICAR SI EXISTE LA PERSONA
