@@ -674,6 +674,7 @@ class CargarArchivoPromocionesController extends Controller
                                                 $nuevoPrm->prmcodigo            = "-";
                                                 $nuevoPrm->prmmecanica          = $mecanica;
                                                 $nuevoPrm->prmaccion            = $accion;
+                                                $nuevoPrm->prmsku            = $sku;
                                                 if($nuevoPrm->save()){
                                                     $prmid = $nuevoPrm->prmid;
                                                     $log["NUEVO_PROMOCION_CREADO"][] = $i."-".$prmid;
