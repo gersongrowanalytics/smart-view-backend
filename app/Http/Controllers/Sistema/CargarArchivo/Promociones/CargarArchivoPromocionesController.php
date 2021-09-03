@@ -243,6 +243,8 @@ class CargarArchivoPromocionesController extends Controller
                                 prbpromocionesbonificaciones::join('prmpromociones as prm', 'prm.prmid', 'prbpromocionesbonificaciones.prmid')
                                                             ->where('prm.fecid', $fecid)
                                                             ->delete();
+
+                                prmpromociones::where('fecid', $fecid)->delete();
                             }
                 
                             // VERIFICAR SI EXISTE LA PERSONA
