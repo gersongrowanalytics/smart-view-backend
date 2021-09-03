@@ -215,17 +215,20 @@ class CategoriasController extends Controller
                     foreach($cscs as $csc){
                         if(sizeof($promociones) > 0){
                             foreach($promociones as $posicionPromocion => $promocion){
-                                if($promocion == $csc->prmcodigo){
+                                // if($promocion == $csc->prmcodigo){
+                                if($promocion == $csc->prmmecanica){
                                     break;
                                 }
 
                                 if($posicionPromocion+1 == sizeof($promociones)){
-                                    $promociones[] = $csc->prmcodigo;
+                                    // $promociones[] = $csc->prmcodigo;
+                                    $promociones[] = $csc->prmmecanica;
                                     $numeroCodigosPromociones = $numeroCodigosPromociones+1;
                                 }
                             }
                         }else{
-                            $promociones[] = $csc->prmcodigo;
+                            // $promociones[] = $csc->prmcodigo;
+                            $promociones[] = $csc->prmmecanica;
                             $numeroCodigosPromociones = $numeroCodigosPromociones+1;
                         }
 
