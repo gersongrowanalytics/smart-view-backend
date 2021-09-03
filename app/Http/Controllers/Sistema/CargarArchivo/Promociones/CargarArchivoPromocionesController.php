@@ -244,7 +244,7 @@ class CargarArchivoPromocionesController extends Controller
                                                             ->where('prm.fecid', $fecid)
                                                             ->delete();
 
-                                prmpromociones::where('fecid', $fecid)->delete();
+                                // prmpromociones::where('fecid', $fecid)->delete();
                             }
                 
                             // VERIFICAR SI EXISTE LA PERSONA
