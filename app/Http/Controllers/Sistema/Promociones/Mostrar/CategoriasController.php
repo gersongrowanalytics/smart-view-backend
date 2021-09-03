@@ -209,7 +209,8 @@ class CategoriasController extends Controller
                                                             ->where('csp.cspestado', 1)
                                                             ->get([
                                                                 'prmcodigo',
-                                                                'can.cannombre'
+                                                                'can.cannombre',
+                                                                'prmmecanica'
                                                             ]);
 
                     foreach($cscs as $csc){
