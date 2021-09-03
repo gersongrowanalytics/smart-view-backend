@@ -655,6 +655,7 @@ class CargarArchivoPromocionesController extends Controller
                                             $prm = prmpromociones::where('tprid', $tprid)
                                                             // ->where('prmcodigo', $codPromoc)
                                                             ->where('prmmecanica', $mecanica)
+                                                            ->where('prmsku', $sku)
                                                             ->where('prmaccion', $accion)
                                                             ->where('fecid', $fecid)
                                                             ->where('prmcodigoprincipal', $codPrinci)
@@ -752,6 +753,7 @@ class CargarArchivoPromocionesController extends Controller
                                                                             // ->where('cspcanalessucursalespromociones.prmid', $prmid)
                                                                             // ->where('prm.prmcodigo', $codPromoc)
                                                                             ->where('prm.prmmecanica', $mecanica)
+                                                                            ->where('prm.prmsku', $sku)
                                                                             ->first([
                                                                                 'cspcanalessucursalespromociones.cspid', 
                                                                                 'cspcanalessucursalespromociones.cspcantidadcombo', 
