@@ -1,4 +1,4 @@
-<?php
+<?php //Promociones Set 2021.xlsx
 
 namespace App\Http\Controllers\Sistema\CargarArchivo\Promociones;
 
@@ -235,7 +235,24 @@ class CargarArchivoPromocionesController extends Controller
                             }
 
                             // ELIMINAR PRP Y PRB
-                            
+                            if($i == 2){
+                                prppromocionesproductos::join('prmpromociones as prm', 'prm.prmid', 'prppromocionesproductos.prmid')
+                                                        ->where('prm.fecid', $fecid)
+                                                        ->delete();
+
+                                prbpromocionesbonificaciones::join('prmpromociones as prm', 'prm.prmid', 'prbpromocionesbonificaciones.prmid')
+                                                            ->where('prm.fecid', $fecid)
+                                                            ->delete();
+
+                            }
+
+                            if($i == 2){
+                                cspcanalessucursalespromociones::join('prmpromociones as prm', 'prm.prmid', 'cspcanalessucursalespromociones.prmid')
+                                                                ->where('cspcanalessucursalespromociones.fecid', $fecid)
+                                                                ->delete();
+
+                                prmpromociones::where('fecid', $fecid)->delete();
+                            }
                 
                             // VERIFICAR SI EXISTE LA PERSONA
                             // $perpersona = perpersonas::where('pernombrecompleto', $ejecutivo)->first(['perid']);
@@ -904,19 +921,19 @@ class CargarArchivoPromocionesController extends Controller
                 $mensaje   = "El excel no se pudo guardar en el servidor";
             }
 
-            // $nuevoCargaArchivo = new carcargasarchivos;
-            // $nuevoCargaArchivo->tcaid            = 1;
-            // $nuevoCargaArchivo->fecid            = $fecid;
-            // $nuevoCargaArchivo->usuid            = $usuusuario->usuid;
-            // $nuevoCargaArchivo->carnombrearchivo = $archivo;
-            // $nuevoCargaArchivo->carubicacion     = $fichero_subido;
-            // $nuevoCargaArchivo->carexito         = $cargarData;
-            // $nuevoCargaArchivo->carurl           = env('APP_URL').'/Sistema/cargaArchivos/promociones/'.$archivo;
-            // if($nuevoCargaArchivo->save()){
-            //     $pkid = "CAR-".$nuevoCargaArchivo->carid;
-            // }else{
+            $nuevoCargaArchivo = new carcargasarchivos;
+            $nuevoCargaArchivo->tcaid            = 1;
+            $nuevoCargaArchivo->fecid            = $fecid;
+            $nuevoCargaArchivo->usuid            = $usuusuario->usuid;
+            $nuevoCargaArchivo->carnombrearchivo = $archivo;
+            $nuevoCargaArchivo->carubicacion     = $fichero_subido;
+            $nuevoCargaArchivo->carexito         = $cargarData;
+            $nuevoCargaArchivo->carurl           = env('APP_URL').'/Sistema/cargaArchivos/promociones/'.$archivo;
+            if($nuevoCargaArchivo->save()){
+                $pkid = "CAR-".$nuevoCargaArchivo->carid;
+            }else{
 
-            // }
+            }
             
             
 
@@ -1634,15 +1651,15 @@ class CargarArchivoPromocionesController extends Controller
                                         }
                                     }
 
-                                    // if($i == 2){
-                                    //     cspcanalessucursalespromociones::join('prmpromociones as prm', 'prm.prmid', 'cspcanalessucursalespromociones.prmid')
-                                    //                                     ->where('cspcanalessucursalespromociones.fecid', $fecid)
-                                    //                                     ->update([
-                                    //                                         'cspestado' => 0, 
-                                    //                                         'cspcantidadcombo' => 0,
-                                    //                                         'cspcantidadplancha' => 0,
-                                    //                                     ]);
-                                    // }
+                                    if($i == 2){
+                                        cspcanalessucursalespromociones::join('prmpromociones as prm', 'prm.prmid', 'cspcanalessucursalespromociones.prmid')
+                                                                        ->where('cspcanalessucursalespromociones.fecid', $fecid)
+                                                                        ->update([
+                                                                            'cspestado' => 0, 
+                                                                            'cspcantidadcombo' => 0,
+                                                                            'cspcantidadplancha' => 0,
+                                                                        ]);
+                                    }
             
                                     $csp = cspcanalessucursalespromociones::join('prmpromociones as prm', 'prm.prmid', 'cspcanalessucursalespromociones.prmid')
                                                                     ->where('cspcanalessucursalespromociones.cscid', $cscid)
