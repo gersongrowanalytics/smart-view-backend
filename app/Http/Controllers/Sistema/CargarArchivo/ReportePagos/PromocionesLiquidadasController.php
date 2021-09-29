@@ -105,7 +105,7 @@ class PromocionesLiquidadasController extends Controller
 
                         if($i == 2){
                             // prlpromocionesliquidadas::where('fecid', $fec->fecid)->delete(); 
-                            prlpromocionesliquidadas::where('prlid', '>', 0)->delete(); 
+                            // prlpromocionesliquidadas::where('pcrlid', '>', 0)->delete(); 
                         }
 
                         $fecid = $fec->fecid;
