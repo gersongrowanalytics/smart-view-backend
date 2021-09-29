@@ -90,7 +90,7 @@ class ReconocimientoPagosController extends Controller
 
                         if($i == 2){
                             // repreconocimientopago::where('fecid', $fec->fecid)->delete();
-                            // repreconocimientopago::where('repid', '>', 0)->delete();
+                            repreconocimientopago::where('repid', '>', 0)->delete();
                         }
 
                         $fecid = $fec->fecid;
@@ -141,19 +141,19 @@ class ReconocimientoPagosController extends Controller
                 $exitoSubirExcel = false;
             }
 
-            // $nuevoCargaArchivo = new carcargasarchivos;
-            // $nuevoCargaArchivo->tcaid            = 13; // Carga Reconocimiento de Pagos
-            // $nuevoCargaArchivo->fecid            = $fecid;
-            // $nuevoCargaArchivo->usuid            = $usuusuario->usuid;
-            // $nuevoCargaArchivo->carnombrearchivo = $archivo;
-            // $nuevoCargaArchivo->carubicacion     = $fichero_subido;
-            // $nuevoCargaArchivo->carexito         = $exitoSubirExcel;
-            // $nuevoCargaArchivo->carurl           = env('APP_URL').'/Sistema/cargaArchivos/reconocimientopagos/'.$archivo;
-            // if($nuevoCargaArchivo->save()){
-            //     $pkid = "CAR-".$nuevoCargaArchivo->carid;
-            // }else{
+            $nuevoCargaArchivo = new carcargasarchivos;
+            $nuevoCargaArchivo->tcaid            = 13; // Carga Reconocimiento de Pagos
+            $nuevoCargaArchivo->fecid            = $fecid;
+            $nuevoCargaArchivo->usuid            = $usuusuario->usuid;
+            $nuevoCargaArchivo->carnombrearchivo = $archivo;
+            $nuevoCargaArchivo->carubicacion     = $fichero_subido;
+            $nuevoCargaArchivo->carexito         = $exitoSubirExcel;
+            $nuevoCargaArchivo->carurl           = env('APP_URL').'/Sistema/cargaArchivos/reconocimientopagos/'.$archivo;
+            if($nuevoCargaArchivo->save()){
+                $pkid = "CAR-".$nuevoCargaArchivo->carid;
+            }else{
 
-            // }
+            }
 
             DB::commit();
 
