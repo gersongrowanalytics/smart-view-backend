@@ -43,20 +43,20 @@ class PromocionesMostrarController extends Controller
                                                                             'can.canid',
                                                                             'can.cannombre'
                                                                         ]);
-            $csccanalessucursalescategoriasa = array();
-            // $csccanalessucursalescategoriasa = csccanalessucursalescategorias::join('cspcanalessucursalespromociones as csp', 'csp.cscid', 'csccanalessucursalescategorias.cscid')
-            //                                                                     ->join('cancanales as can', 'can.canid', 'csccanalessucursalescategorias.canid')
-            //                                                                     ->where('csccanalessucursalescategorias.scaid', $scaid)
-            //                                                                     ->groupBy('csc.cscid')
-            //                                                                     ->orderBy('cont', 'DESC')
-            //                                                                     ->select(
-            //                                                                         'csccanalessucursalescategorias.cscid',
-            //                                                                         'csccanalessucursalescategorias.scaid',
-            //                                                                         'can.canid',
-            //                                                                         'can.cannombre',
-            //                                                                         DB::raw('count(cspid) as cont')
-            //                                                                     )
-            //                                                                     ->get();
+            // $csccanalessucursalescategoriasa = array();
+            $csccanalessucursalescategoriasa = csccanalessucursalescategorias::join('cspcanalessucursalespromociones as csp', 'csp.cscid', 'csccanalessucursalescategorias.cscid')
+                                                                                ->join('cancanales as can', 'can.canid', 'csccanalessucursalescategorias.canid')
+                                                                                ->where('csccanalessucursalescategorias.scaid', $scaid)
+                                                                                ->groupBy('csccanalessucursalescategorias.cscid')
+                                                                                ->orderBy('cont', 'DESC')
+                                                                                ->select(
+                                                                                    'csccanalessucursalescategorias.cscid',
+                                                                                    'csccanalessucursalescategorias.scaid',
+                                                                                    'can.canid',
+                                                                                    'can.cannombre',
+                                                                                    DB::raw('count(cspid) as cont')
+                                                                                )
+                                                                                ->get();
             
 //             SELECT csc.cscid, count(cspid) as cont from csccanalessucursalescategorias as csc INNER JOIN cspcanalessucursalespromociones as csp ON csp.cscid = csc.cscid where csc.scaid =
 // 13716 group by csc.cscid order by cont desc;
