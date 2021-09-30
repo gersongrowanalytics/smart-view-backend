@@ -85,7 +85,7 @@ class PromocionesMostrarController extends Controller
                             }
                             $prppromocionesproductos = prppromocionesproductos::join('proproductos as pro', 'pro.proid', 'prppromocionesproductos.proid')
                                                                                 ->where('prppromocionesproductos.prmid', $cspcanalesucursalpromocion->prmid )
-                                                                                ->first([
+                                                                                ->get([
                                                                                     'prppromocionesproductos.prpid',
                                                                                     'pro.proid',
                                                                                     'pro.prosku',
@@ -99,7 +99,7 @@ class PromocionesMostrarController extends Controller
 
                             if($prppromocionesproductos){
                                 $cspcanalessucursalespromociones[$posicionPromociones]['productos'] = $prppromocionesproductos;
-                                $productosCsc[] = $prppromocionesproductos->prosku;
+                                $productosCsc[] = $prppromocionesproductos[0]['prosku'];
 
                             }else{
                                 $cspcanalessucursalespromociones[$posicionPromociones]['productos'] = [];
