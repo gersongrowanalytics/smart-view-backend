@@ -30,19 +30,6 @@ class PromocionesMostrarController extends Controller
         $mensajedev     = null;
 
         try{
-            // $csccanalessucursalescategorias = csccanalessucursalescategorias::join('cancanales as can', 'can.canid', 'csccanalessucursalescategorias.canid')
-            //                                                             ->join('cspcanalessucursalespromociones as csp', 'csp.cscid', 'csccanalessucursalescategorias.cscid')
-            //                                                             ->where('csccanalessucursalescategorias.scaid', $scaid)
-            //                                                             // ->where('csp.cspcantidadcombo', '!=', "0")
-            //                                                             ->where('csp.cspcantidadplancha', '!=', "0")
-            //                                                             ->where('csp.cspestado', 1)
-            //                                                             ->distinct('can.canid')
-            //                                                             ->get([
-            //                                                                 'csccanalessucursalescategorias.cscid',
-            //                                                                 'csccanalessucursalescategorias.scaid',
-            //                                                                 'can.canid',
-            //                                                                 'can.cannombre'
-            //                                                             ]);
             $csccanalessucursalescategoriasa = array();
             $csccanalessucursalescategorias = csccanalessucursalescategorias::join('cspcanalessucursalespromociones as csp', 'csp.cscid', 'csccanalessucursalescategorias.cscid')
                                                                                 ->join('cancanales as can', 'can.canid', 'csccanalessucursalescategorias.canid')
@@ -64,6 +51,9 @@ class PromocionesMostrarController extends Controller
             if(sizeof($csccanalessucursalescategorias) > 0){
                 
                 foreach($csccanalessucursalescategorias as $posicion => $csccanalesucursalcategoria){
+
+                    $csccanalessucursalescategorias[$posicion]['productos'] = [];
+                    
                     $cspcanalessucursalespromociones = cspcanalessucursalespromociones::join('prmpromociones as prm', 'prm.prmid', 'cspcanalessucursalespromociones.prmid')
                                                                                         ->join('tprtipospromociones as tpr', 'tpr.tprid', 'prm.tprid')
                                                                                         ->where('cscid', $csccanalesucursalcategoria->cscid)
@@ -109,6 +99,9 @@ class PromocionesMostrarController extends Controller
 
                             if(sizeof($prppromocionesproductos) > 0){
                                 $cspcanalessucursalespromociones[$posicionPromociones]['productos'] = $prppromocionesproductos;
+                                
+                                $csccanalessucursalescategorias[$posicion]['productos'][] = $prppromocionesproductos[0]['prosku'];
+
                             }else{
                                 $cspcanalessucursalespromociones[$posicionPromociones]['productos'] = [];
                             }
