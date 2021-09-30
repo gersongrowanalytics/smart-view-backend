@@ -52,7 +52,7 @@ class PromocionesMostrarController extends Controller
                 
                 foreach($csccanalessucursalescategorias as $posicion => $csccanalesucursalcategoria){
 
-                    $csccanalessucursalescategorias[$posicion]['productos'] = [];
+                    $productosCsc = [];
                     
                     $cspcanalessucursalespromociones = cspcanalessucursalespromociones::join('prmpromociones as prm', 'prm.prmid', 'cspcanalessucursalespromociones.prmid')
                                                                                         ->join('tprtipospromociones as tpr', 'tpr.tprid', 'prm.tprid')
@@ -99,8 +99,7 @@ class PromocionesMostrarController extends Controller
 
                             if($prppromocionesproductos){
                                 $cspcanalessucursalespromociones[$posicionPromociones]['productos'] = $prppromocionesproductos;
-
-                                $csccanalessucursalescategorias[$posicion]['productos'][] = $prppromocionesproductos->prosku;
+                                $productosCsc[] = $prppromocionesproductos->prosku;
 
                             }else{
                                 $cspcanalessucursalespromociones[$posicionPromociones]['productos'] = [];
@@ -133,6 +132,7 @@ class PromocionesMostrarController extends Controller
                     
                     $csccanalessucursalescategorias[$posicion]['porcentaje'] = (sizeof($cspcanalessucursalespromociones)*$numeroPromocionesTerminadas)/100;
                     $csccanalessucursalescategorias[$posicion]['promociones'] = $cspcanalessucursalespromociones;
+                    $csccanalessucursalescategorias[$posicion]['productos'] = $productosCsc;
                 }
 
                 $linea          = __LINE__;
