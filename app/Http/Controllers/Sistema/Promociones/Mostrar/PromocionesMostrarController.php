@@ -43,7 +43,7 @@ class PromocionesMostrarController extends Controller
             //                                                                 'can.canid',
             //                                                                 'can.cannombre'
             //                                                             ]);
-            // $csccanalessucursalescategoriasa = array();
+            $csccanalessucursalescategoriasa = array();
             $csccanalessucursalescategorias = csccanalessucursalescategorias::join('cspcanalessucursalespromociones as csp', 'csp.cscid', 'csccanalessucursalescategorias.cscid')
                                                                                 ->join('cancanales as can', 'can.canid', 'csccanalessucursalescategorias.canid')
                                                                                 ->where('csccanalessucursalescategorias.scaid', $scaid)
