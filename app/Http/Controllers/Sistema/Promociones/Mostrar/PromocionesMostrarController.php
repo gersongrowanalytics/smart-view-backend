@@ -30,21 +30,21 @@ class PromocionesMostrarController extends Controller
         $mensajedev     = null;
 
         try{
-            $csccanalessucursalescategorias = csccanalessucursalescategorias::join('cancanales as can', 'can.canid', 'csccanalessucursalescategorias.canid')
-                                                                        ->join('cspcanalessucursalespromociones as csp', 'csp.cscid', 'csccanalessucursalescategorias.cscid')
-                                                                        ->where('csccanalessucursalescategorias.scaid', $scaid)
-                                                                        // ->where('csp.cspcantidadcombo', '!=', "0")
-                                                                        ->where('csp.cspcantidadplancha', '!=', "0")
-                                                                        ->where('csp.cspestado', 1)
-                                                                        ->distinct('can.canid')
-                                                                        ->get([
-                                                                            'csccanalessucursalescategorias.cscid',
-                                                                            'csccanalessucursalescategorias.scaid',
-                                                                            'can.canid',
-                                                                            'can.cannombre'
-                                                                        ]);
+            // $csccanalessucursalescategorias = csccanalessucursalescategorias::join('cancanales as can', 'can.canid', 'csccanalessucursalescategorias.canid')
+            //                                                             ->join('cspcanalessucursalespromociones as csp', 'csp.cscid', 'csccanalessucursalescategorias.cscid')
+            //                                                             ->where('csccanalessucursalescategorias.scaid', $scaid)
+            //                                                             // ->where('csp.cspcantidadcombo', '!=', "0")
+            //                                                             ->where('csp.cspcantidadplancha', '!=', "0")
+            //                                                             ->where('csp.cspestado', 1)
+            //                                                             ->distinct('can.canid')
+            //                                                             ->get([
+            //                                                                 'csccanalessucursalescategorias.cscid',
+            //                                                                 'csccanalessucursalescategorias.scaid',
+            //                                                                 'can.canid',
+            //                                                                 'can.cannombre'
+            //                                                             ]);
             // $csccanalessucursalescategoriasa = array();
-            $csccanalessucursalescategoriasa = csccanalessucursalescategorias::join('cspcanalessucursalespromociones as csp', 'csp.cscid', 'csccanalessucursalescategorias.cscid')
+            $csccanalessucursalescategorias = csccanalessucursalescategorias::join('cspcanalessucursalespromociones as csp', 'csp.cscid', 'csccanalessucursalescategorias.cscid')
                                                                                 ->join('cancanales as can', 'can.canid', 'csccanalessucursalescategorias.canid')
                                                                                 ->where('csccanalessucursalescategorias.scaid', $scaid)
                                                                                 ->groupBy('csccanalessucursalescategorias.cscid')
