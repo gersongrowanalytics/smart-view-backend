@@ -1114,25 +1114,25 @@ class PromocionesMostrarController extends Controller
 
                 foreach ($cspcanalessucursalespromociones as $posicionCsp => $csp) {
                     $nuevoArrayCsp[] = array(
-                        'cspid'              => $csp->cspid,
-                        'prmid'              => $csp->prmid,
-                        'prmcodigo'          => $csp->prmcodigo,
-                        'cspvalorizado'      => $csp->cspvalorizado,
-                        'cspplanchas'        => $csp->cspplanchas,
-                        'cspcompletado'      => $csp->cspcompletado,
-                        'cspcantidadcombo'   => $csp->cspcantidadcombo,
-                        'prmmecanica'        => $csp->prmmecanica,
-                        'cspcantidadplancha' => $csp->cspcantidadplancha,
-                        'csptotalcombo'      => $csp->csptotalcombo,
-                        'csptotalplancha'    => $csp->csptotalplancha,
-                        'csptotal'           => $csp->csptotal,
-                        'cspgratis'          => $csp->cspgratis,
-                        'prmaccion'          => $csp->prmaccion,
-                        'tprnombre'          => $csp->tprnombre,
-                        'cspnuevo'           => $csp->cspnuevo,
-                        'productos'          => $csp->productos,
-                        'productoPrincipal'  => $csp->productoPrincipal,
-                        'productosbonificados' => $csp->productosbonificados
+                        'cspid'              => $csp[$posicionCsp]['cspid'],
+                        'prmid'              => $csp[$posicionCsp]['prmid'],
+                        'prmcodigo'          => $csp[$posicionCsp]['prmcodigo'],
+                        'cspvalorizado'      => $csp[$posicionCsp]['cspvalorizado'],
+                        'cspplanchas'        => $csp[$posicionCsp]['cspplanchas'],
+                        'cspcompletado'      => $csp[$posicionCsp]['cspcompletado'],
+                        'cspcantidadcombo'   => $csp[$posicionCsp]['cspcantidadcombo'],
+                        'prmmecanica'        => $csp[$posicionCsp]['prmmecanica'],
+                        'cspcantidadplancha' => $csp[$posicionCsp]['cspcantidadplancha'],
+                        'csptotalcombo'      => $csp[$posicionCsp]['csptotalcombo'],
+                        'csptotalplancha'    => $csp[$posicionCsp]['csptotalplancha'],
+                        'csptotal'           => $csp[$posicionCsp]['csptotal'],
+                        'cspgratis'          => $csp[$posicionCsp]['cspgratis'],
+                        'prmaccion'          => $csp[$posicionCsp]['prmaccion'],
+                        'tprnombre'          => $csp[$posicionCsp]['tprnombre'],
+                        'cspnuevo'           => $csp[$posicionCsp]['cspnuevo'],
+                        'productos'          => $csp[$posicionCsp]['productos'],
+                        'productoPrincipal'  => $csp[$posicionCsp]['productoPrincipal'],
+                        'productosbonificados' => $csp[$posicionCsp]['productosbonificados']
                     );
                 }
             }
