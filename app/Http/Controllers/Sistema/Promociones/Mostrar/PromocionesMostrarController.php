@@ -698,8 +698,8 @@ class PromocionesMostrarController extends Controller
 
             
             $cspcanalessucursalespromociones = $csps;
-            // $cscs[$posicionCsc]["promocionesOrdenadas"] = $this->ArmarPromociones($cspcanalessucursalespromociones, $productosCsc, $posicionCsc);
-            $cscs[$posicionCsc]["promocionesOrdenadas"] = $csps;
+            $cscs[$posicionCsc]["promocionesOrdenadas"] = $this->ArmarPromociones($cspcanalessucursalespromociones, $productosCsc, $posicionCsc);
+            // $cscs[$posicionCsc]["promocionesOrdenadas"] = $csps;
 
 
 
@@ -1084,25 +1084,25 @@ class PromocionesMostrarController extends Controller
 
                     if($encontroProductoMomento == false){
                         $nuevoArrayCsp[] = array(
-                            'cspid'              => $csp->cspid,
-                            'prmid'              => $csp->prmid,
-                            'prmcodigo'          => $csp->prmcodigo,
-                            'cspvalorizado'      => $csp->cspvalorizado,
-                            'cspplanchas'        => $csp->cspplanchas,
-                            'cspcompletado'      => $csp->cspcompletado,
-                            'cspcantidadcombo'   => $csp->cspcantidadcombo,
-                            'prmmecanica'        => $csp->prmmecanica,
-                            'cspcantidadplancha' => $csp->cspcantidadplancha,
-                            'csptotalcombo'      => $csp->csptotalcombo,
-                            'csptotalplancha'    => $csp->csptotalplancha,
-                            'csptotal'           => $csp->csptotal,
-                            'cspgratis'          => $csp->cspgratis,
-                            'prmaccion'          => $csp->prmaccion,
-                            'tprnombre'          => $csp->tprnombre,
-                            'cspnuevo'           => $csp->cspnuevo,
-                            'productos'          => $csp->productos,
-                            'productoPrincipal'  => $csp->productoPrincipal,
-                            'productosbonificados' => $csp->productosbonificados,
+                            'cspid'              => $csp[$posicionCspDos]['cspid'],
+                            'prmid'              => $csp[$posicionCspDos]['prmid'],
+                            'prmcodigo'          => $csp[$posicionCspDos]['prmcodigo'],
+                            'cspvalorizado'      => $csp[$posicionCspDos]['cspvalorizado'],
+                            'cspplanchas'        => $csp[$posicionCspDos]['cspplanchas'],
+                            'cspcompletado'      => $csp[$posicionCspDos]['cspcompletado'],
+                            'cspcantidadcombo'   => $csp[$posicionCspDos]['cspcantidadcombo'],
+                            'prmmecanica'        => $csp[$posicionCspDos]['prmmecanica'],
+                            'cspcantidadplancha' => $csp[$posicionCspDos]['cspcantidadplancha'],
+                            'csptotalcombo'      => $csp[$posicionCspDos]['csptotalcombo'],
+                            'csptotalplancha'    => $csp[$posicionCspDos]['csptotalplancha'],
+                            'csptotal'           => $csp[$posicionCspDos]['csptotal'],
+                            'cspgratis'          => $csp[$posicionCspDos]['cspgratis'],
+                            'prmaccion'          => $csp[$posicionCspDos]['prmaccion'],
+                            'tprnombre'          => $csp[$posicionCspDos]['tprnombre'],
+                            'cspnuevo'           => $csp[$posicionCspDos]['cspnuevo'],
+                            'productos'          => $csp[$posicionCspDos]['productos'],
+                            'productoPrincipal'  => $csp[$posicionCspDos]['productoPrincipal'],
+                            'productosbonificados' => $csp[$posicionCspDos]['productosbonificados'],
 
                         );
                     }
