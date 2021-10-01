@@ -886,9 +886,9 @@ class PromocionesMostrarController extends Controller
 
 
 
-                if($cspcanalesucursalpromocion[$posicionPromociones]['cspcompletado'] == true){
-                    $numeroPromocionesTerminadas = $numeroPromocionesTerminadas+1;
-                }
+                // if($cspcanalesucursalpromocion[$posicionPromociones]['cspcompletado'] == true){
+                //     $numeroPromocionesTerminadas = $numeroPromocionesTerminadas+1;
+                // }
 
                 $prppromocionesproductos = $cspcanalessucursalespromociones[$posicionPromociones]['productos'];
 
