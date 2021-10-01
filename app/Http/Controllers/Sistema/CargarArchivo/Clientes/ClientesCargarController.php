@@ -701,8 +701,10 @@ class ClientesCargarController extends Controller
 
 
                     $suc = sucsucursales::where('sucsoldto', $codSoldTo)->first();
-                    $suc->sucnombre = $clienteHml;
-                    $suc->update();
+                    if($suc){
+                        $suc->sucnombre = $clienteHml;
+                        $suc->update();
+                    }
 
                     // VERIFICAR SI EXISTE LA PERSONA DEL EJECUTIVO
                     // $perpersonaEjecutivo = perpersonas::where('pernombrecompleto', $ejecutivo)->first(['perid']);
