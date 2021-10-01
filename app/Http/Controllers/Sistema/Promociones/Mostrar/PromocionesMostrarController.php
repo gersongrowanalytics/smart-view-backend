@@ -698,8 +698,8 @@ class PromocionesMostrarController extends Controller
 
             
             $cspcanalessucursalespromociones = $csps;
-            $cscs[$posicionCsc]["promocionesOrdenadas"] = $this->ArmarPromociones($cspcanalessucursalespromociones, $productosCsc);
-            // $cscs[$posicionCsc]["promocionesOrdenadas"] = $csps;
+            // $cscs[$posicionCsc]["promocionesOrdenadas"] = $this->ArmarPromociones($cspcanalessucursalespromociones, $productosCsc);
+            $cscs[$posicionCsc]["promocionesOrdenadas"] = $csps;
 
 
 
