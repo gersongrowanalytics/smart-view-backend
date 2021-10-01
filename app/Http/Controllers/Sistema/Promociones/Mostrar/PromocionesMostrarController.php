@@ -886,7 +886,7 @@ class PromocionesMostrarController extends Controller
 
 
 
-                if($cspcanalesucursalpromocion->cspcompletado == true){
+                if($cspcanalesucursalpromocion[$posicionPromociones]['cspcompletado'] == true){
                     $numeroPromocionesTerminadas = $numeroPromocionesTerminadas+1;
                 }
 
