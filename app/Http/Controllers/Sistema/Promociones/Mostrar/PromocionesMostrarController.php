@@ -50,9 +50,11 @@ class PromocionesMostrarController extends Controller
                                                     
             if(sizeof($csccanalessucursalescategorias) > 0){
                 
+                $productosCsc = [];
+
                 foreach($csccanalessucursalescategorias as $posicion => $csccanalesucursalcategoria){
 
-                    $productosCsc = [];
+                    $nuevoArrayCsp = array();
                     
                     $cspcanalessucursalespromociones = cspcanalessucursalespromociones::join('prmpromociones as prm', 'prm.prmid', 'cspcanalessucursalespromociones.prmid')
                                                                                         ->join('tprtipospromociones as tpr', 'tpr.tprid', 'prm.tprid')
@@ -79,7 +81,13 @@ class PromocionesMostrarController extends Controller
                     $numeroPromocionesTerminadas = 0;
 
                     if(sizeof($cspcanalessucursalespromociones) > 0){
+
+                        $productosCscMomento = [];
+
                         foreach($cspcanalessucursalespromociones as $posicionPromociones => $cspcanalesucursalpromocion){
+
+
+
                             if($cspcanalesucursalpromocion->cspcompletado == true){
                                 $numeroPromocionesTerminadas = $numeroPromocionesTerminadas+1;
                             }
@@ -99,7 +107,14 @@ class PromocionesMostrarController extends Controller
 
                             if($prppromocionesproductos){
                                 $cspcanalessucursalespromociones[$posicionPromociones]['productos'] = $prppromocionesproductos;
-                                $productosCsc[] = $prppromocionesproductos[0]['prosku'];
+
+                                if($posicion == 0){
+                                    $productosCsc[] = $prppromocionesproductos[0]['prosku'];
+                                }else{
+                                    $productosCscMomento[] = $prppromocionesproductos[0]['prosku'];
+                                }
+
+                                $cspcanalessucursalespromociones[$posicionPromociones]['productoPrincipal'] = $prppromocionesproductos[0]['prosku'];
 
                             }else{
                                 $cspcanalessucursalespromociones[$posicionPromociones]['productos'] = [];
@@ -126,11 +141,120 @@ class PromocionesMostrarController extends Controller
                                 $cspcanalessucursalespromociones[$posicionPromociones]['productosbonificados'] = [];
                             }
                         }
+
+
+                        if($posicion != 0){
+
+                            foreach ($productosCsc as $posicionProductoCsc => $productoCsc) {
+                                
+                                $encontroProducto = false;
+
+                                foreach ($cspcanalessucursalespromociones as $posicionCspDos => $csp) {
+                                    
+                                    if($csp->productoPrincipal == $productoCsc){
+                                        $encontroProducto = true;
+                                        $nuevoArrayCsp[] = array(
+                                            'cspid'              => $csp->cspid,
+                                            'prmid'              => $csp->prmid,
+                                            'prmcodigo'          => $csp->prmcodigo,
+                                            'cspvalorizado'      => $csp->cspvalorizado,
+                                            'cspplanchas'        => $csp->cspplanchas,
+                                            'cspcompletado'      => $csp->cspcompletado,
+                                            'cspcantidadcombo'   => $csp->cspcantidadcombo,
+                                            'prmmecanica'        => $csp->prmmecanica,
+                                            'cspcantidadplancha' => $csp->cspcantidadplancha,
+                                            'csptotalcombo'      => $csp->csptotalcombo,
+                                            'csptotalplancha'    => $csp->csptotalplancha,
+                                            'csptotal'           => $csp->csptotal,
+                                            'cspgratis'          => $csp->cspgratis,
+                                            'prmaccion'          => $csp->prmaccion,
+                                            'tprnombre'          => $csp->tprnombre,
+                                            'cspnuevo'           => $csp->cspnuevo,
+                                            'productos'          => $csp->productos,
+                                            'productoPrincipal'  => $csp->productoPrincipal,
+                                            'productosbonificados' => $csp->productosbonificados,
+
+                                        );
+                                    }
+
+                                }
+
+                                if($encontroProducto == false){
+                                    $nuevoArrayCsp[] = array(
+                                        'cspid'              => 0,
+                                        'prmid'              => "",
+                                        'prmcodigo'          => "",
+                                        'cspvalorizado'      => "",
+                                        'cspplanchas'        => "",
+                                        'cspcompletado'      => "",
+                                        'cspcantidadcombo'   => "",
+                                        'prmmecanica'        => "",
+                                        'cspcantidadplancha' => "",
+                                        'csptotalcombo'      => "",
+                                        'csptotalplancha'    => "",
+                                        'csptotal'           => "",
+                                        'cspgratis'          => "",
+                                        'prmaccion'          => "",
+                                        'tprnombre'          => "",
+                                        'cspnuevo'           => "",
+                                        'productos'          => [],
+                                        'productoPrincipal'  => $productoCsc,
+                                        'productosbonificados' => [],
+
+                                    );
+                                }
+                            }
+
+                            foreach ($cspcanalessucursalespromociones as $posicionCspDos => $csp) {
+                                $encontroProductoMomento = false;
+                                foreach ($productosCsc as $key => $productoCsc) {
+                                    if($csp->productoPrincipal == $productoCsc){
+                                        $encontroProductoMomento = true;
+                                    }
+                                }
+
+                                if($encontroProductoMomento == false){
+                                    $nuevoArrayCsp[] = array(
+                                        'cspid'              => $csp->cspid,
+                                        'prmid'              => $csp->prmid,
+                                        'prmcodigo'          => $csp->prmcodigo,
+                                        'cspvalorizado'      => $csp->cspvalorizado,
+                                        'cspplanchas'        => $csp->cspplanchas,
+                                        'cspcompletado'      => $csp->cspcompletado,
+                                        'cspcantidadcombo'   => $csp->cspcantidadcombo,
+                                        'prmmecanica'        => $csp->prmmecanica,
+                                        'cspcantidadplancha' => $csp->cspcantidadplancha,
+                                        'csptotalcombo'      => $csp->csptotalcombo,
+                                        'csptotalplancha'    => $csp->csptotalplancha,
+                                        'csptotal'           => $csp->csptotal,
+                                        'cspgratis'          => $csp->cspgratis,
+                                        'prmaccion'          => $csp->prmaccion,
+                                        'tprnombre'          => $csp->tprnombre,
+                                        'cspnuevo'           => $csp->cspnuevo,
+                                        'productos'          => $csp->productos,
+                                        'productoPrincipal'  => $csp->productoPrincipal,
+                                        'productosbonificados' => $csp->productosbonificados,
+
+                                    );
+                                }
+
+                            }
+
+                        }else{
+                            $nuevoArrayCsp = $cspcanalessucursalespromociones;
+                        }
+
+
+
+
+
                     }else{
                         $cspcanalessucursalespromociones = [];
+                        $nuevoArrayCsp = [];
                     }
                     
                     $csccanalessucursalescategorias[$posicion]['porcentaje'] = (sizeof($cspcanalessucursalespromociones)*$numeroPromocionesTerminadas)/100;
+                    $csccanalessucursalescategorias[$posicion]['promocionesOrdenadas'] = $nuevoArrayCsp;
                     $csccanalessucursalescategorias[$posicion]['promociones'] = $cspcanalessucursalespromociones;
                     $csccanalessucursalescategorias[$posicion]['productos'] = $productosCsc;
                 }
