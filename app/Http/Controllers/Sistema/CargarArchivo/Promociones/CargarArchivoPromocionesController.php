@@ -604,7 +604,7 @@ class CargarArchivoPromocionesController extends Controller
                         
                                         // }
                                         $existeProducto = false;
-                                        $log['PRODUCTO_NO_EXISTE'][] = "El producto: ".$sku;
+                                        $log['PRODUCTO_NO_EXISTE'][] = "El producto: ".$skuBonifi;
                                     }
                                     
 
