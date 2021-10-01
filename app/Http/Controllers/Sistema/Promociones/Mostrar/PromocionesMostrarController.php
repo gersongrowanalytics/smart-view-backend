@@ -477,6 +477,8 @@ class PromocionesMostrarController extends Controller
                                                 'can.cannombre'
                                             ]);
 
+
+        $productosCsc = [];
         foreach($cscs as $posicionCsc => $csc){
 
             $csps = array();
@@ -692,7 +694,11 @@ class PromocionesMostrarController extends Controller
             $cscs[$posicionCsc]["cscid"] = 0;
             $cscs[$posicionCsc]["porcentaje"] = 0;
             $cscs[$posicionCsc]["promociones"] = $csps;
-            $cscs[$posicionCsc]["promocionesOrdenadas"] = $csps;
+
+
+            
+
+            $cscs[$posicionCsc]["promocionesOrdenadas"] = $this->ArmarPromociones($csps, $productosCsc);
 
 
 
@@ -864,7 +870,7 @@ class PromocionesMostrarController extends Controller
         return $requestsalida;
     }
 
-    public function ArmarPromociones($cspcanalessucursalespromociones)
+    public function ArmarPromociones($cspcanalessucursalespromociones, $productosCsc)
     {
 
         $nuevoArrayCsp = array();
@@ -882,19 +888,8 @@ class PromocionesMostrarController extends Controller
                 if($cspcanalesucursalpromocion->cspcompletado == true){
                     $numeroPromocionesTerminadas = $numeroPromocionesTerminadas+1;
                 }
-                $prppromocionesproductos = prppromocionesproductos::join('proproductos as pro', 'pro.proid', 'prppromocionesproductos.proid')
-                                                                    ->where('prppromocionesproductos.prmid', $cspcanalesucursalpromocion->prmid )
-                                                                    ->get([
-                                                                        'prppromocionesproductos.prpid',
-                                                                        'pro.proid',
-                                                                        'pro.prosku',
-                                                                        'pro.pronombre',
-                                                                        'pro.proimagen',
-                                                                        'prpproductoppt',
-                                                                        'prpcomprappt',
-                                                                        'prpimagen',
-                                                                        'prpoimagen',
-                                                                    ]);
+
+                $prppromocionesproductos = $cspcanalessucursalespromociones[$posicionPromociones]['productos'];
 
                 if($prppromocionesproductos){
                     $cspcanalessucursalespromociones[$posicionPromociones]['productos'] = $prppromocionesproductos;
@@ -912,19 +907,7 @@ class PromocionesMostrarController extends Controller
                 }
 
 
-                $prbpromocionesbonificaciones = prbpromocionesbonificaciones::join('proproductos as pro', 'pro.proid', 'prbpromocionesbonificaciones.proid')
-                                                                            ->where('prbpromocionesbonificaciones.prmid', $cspcanalesucursalpromocion->prmid )
-                                                                            ->get([
-                                                                                'prbpromocionesbonificaciones.prbid',
-                                                                                'pro.proid',
-                                                                                'pro.prosku',
-                                                                                'pro.pronombre',
-                                                                                'pro.proimagen',
-                                                                                'prbproductoppt',
-                                                                                'prbcomprappt',
-                                                                                'prbimagen',
-                                                                                'prboimagen',
-                                                                            ]);
+                $prbpromocionesbonificaciones = $cspcanalessucursalespromociones[$posicionPromociones]['productosbonificados'];
                 
                 if(sizeof($prbpromocionesbonificaciones) > 0){
                     $cspcanalessucursalespromociones[$posicionPromociones]['productosbonificados'] = $prbpromocionesbonificaciones;
@@ -1162,5 +1145,6 @@ class PromocionesMostrarController extends Controller
             $nuevoArrayCsp = [];
         }
 
+        return $nuevoArrayCsp;
     }
 }
