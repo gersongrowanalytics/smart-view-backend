@@ -553,7 +553,7 @@ class PromocionesMostrarController extends Controller
                                 $csps[$cont]['cspcantidadplancha'] = $cantidadPlanchaNuevo;
                                 $csps[$cont]['cspcompletado']      = 0;
                                 $csps[$cont]['cspgratis']          = $cspsc->cspgratis;
-                                $csps[$cont]['cspid']              = 0;
+                                $csps[$cont]['cspid']              = 1;
                                 $csps[$cont]['cspnuevo']           = 0;
                                 $csps[$cont]['cspplanchas']        = 0;
                                 $csps[$cont]['csptotal']           = 0;
@@ -630,7 +630,7 @@ class PromocionesMostrarController extends Controller
                         $csps[$cont]['cspcantidadplancha'] = $cantidadPlanchaNuevo;
                         $csps[$cont]['cspcompletado']      = 0;
                         $csps[$cont]['cspgratis']          = $cspsc->cspgratis;
-                        $csps[$cont]['cspid']              = 0;
+                        $csps[$cont]['cspid']              = 1;
                         $csps[$cont]['cspnuevo']           = 0;
                         $csps[$cont]['cspplanchas']        = 0;
                         $csps[$cont]['csptotal']           = 0;
