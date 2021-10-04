@@ -705,8 +705,6 @@ class PromocionesMostrarController extends Controller
 
         }
 
-
-        // $cscsDoble = $cscs;
         
         usort(
             $cscsDoble,
@@ -720,6 +718,8 @@ class PromocionesMostrarController extends Controller
                 }
             }
         );
+
+        $cscs = $cscsDoble;
 
         // foreach($cscs as $posicionCsc => $csc){
             
