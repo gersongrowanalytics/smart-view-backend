@@ -695,17 +695,13 @@ class PromocionesMostrarController extends Controller
         }
 
         $cscsDoble = $cscs;
-        $array = array(
-            array('foo' => 'bar', 'baz' => 42),
-            array('foo' => "otros",   'baz' => "."),
-
-        );
+        
         usort(
-            $array,
+            $cscs,
             function ($a, $b)  {
-                if ($a['foo'] < $b['foo']) {
+                if ($a['cantidadPromociones'] < $b['cantidadPromociones']) {
                     return -1;
-                } else if ($a['foo'] > $b['foo']) {
+                } else if ($a['cantidadPromociones'] > $b['cantidadPromociones']) {
                     return 1;
                 } else {
                     return 0;
