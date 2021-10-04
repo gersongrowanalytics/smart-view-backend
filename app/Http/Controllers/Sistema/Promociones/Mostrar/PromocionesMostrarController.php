@@ -695,12 +695,26 @@ class PromocionesMostrarController extends Controller
         }
 
         $cscsDoble = $cscs;
+        usort($cscs, 'cmp');
 
-        // usort($cscs, $this->object_sorter('cantidadPromociones','DESC'));
-        
+        // foreach($cscs as $posicionCsc => $csc){
+            
+        //     $numerosGrandes = [];
+        //     foreach($cscsDoble as $posicionCscDos => $cscDos){
 
-        
+        //         if($posicionCsc != $posicionCscDos){
+                    
+        //             if( $cscs[$posicionCsc]['cantidadPromociones'] > $cscsDoble[$posicionCscDos]['cantidadPromociones'] ){
 
+
+                        
+        //             }
+
+        //         }
+
+        //     }
+
+        // }
 
         $productosCsc = [];
         foreach($cscs as $posicionCsc => $csc){
@@ -1023,12 +1037,13 @@ class PromocionesMostrarController extends Controller
         ); 
     }
 
-    public function object_sorter($clave,$orden=null) {
-
-        return function ($a, $b) use ($clave,$orden) {
-              $result =  ($orden=="DESC") ? strnatcmp($b[$clave], $a[$clave]) :  strnatcmp($a[$clave], $b[$clave]);
-              return $result;
-        };
-
+    function cmp(array $a, array $b) {
+        if ($a['cantidadPromociones'] < $b['cantidadPromociones']) {
+            return -1;
+        } else if ($a['cantidadPromociones'] > $b['cantidadPromociones']) {
+            return 1;
+        } else {
+            return 0;
+        }
     }
 }
