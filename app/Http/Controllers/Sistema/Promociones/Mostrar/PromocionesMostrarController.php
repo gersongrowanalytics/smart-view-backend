@@ -693,19 +693,33 @@ class PromocionesMostrarController extends Controller
             $cscs[$posicionCsc]["porcentaje"] = 0;
             $cscs[$posicionCsc]["promociones"] = $csps;
             $cscs[$posicionCsc]["cantidadPromociones"] = sizeof($csps);
+        }
+
+        $productosCsc = [];
+        foreach($cscs as $posicionCsc => $csc){
+
+            $csccanalessucursalescategorias = $cscs;
+            $cspcanalessucursalespromociones = $cscs[$posicionCsc]["promociones"];
+
+            $rptaArmarPromociones = $this->ArmarPromociones($cspcanalessucursalespromociones, $productosCsc, $posicionCsc, $csccanalessucursalescategorias);
+            $cscs[$posicionCsc]["promocionesOrdenadas"] = $rptaArmarPromociones['nuevoArrayCsp'];
+            $productosCsc = $rptaArmarPromociones['productosCsc'];
+            $cscs = $rptaArmarPromociones['csccanalessucursalescategorias'];
+            // $cscs[$posicionCsc]["promocionesOrdenadas"] = $csps;
 
             $cscsDoble[] = array(
                 "canid" => $csc->canid,
                 "cannombre" => $csc->cannombre,
                 "cscid" => 0,
                 "porcentaje" => 0,
-                "promociones" => $csps,
-                "cantidadPromociones" => sizeof($csps),
+                "promociones" => $csc->promociones,
+                "cantidadPromociones" => sizeof($csc->promociones),
+                "promocionesOrdenadas" => $rptaArmarPromociones['nuevoArrayCsp']
             );
 
         }
 
-        
+
         usort(
             $cscsDoble,
             function ($a, $b)  {
@@ -720,40 +734,6 @@ class PromocionesMostrarController extends Controller
         );
 
         $cscs = $cscsDoble;
-
-        // foreach($cscs as $posicionCsc => $csc){
-            
-        //     $numerosGrandes = [];
-        //     foreach($cscsDoble as $posicionCscDos => $cscDos){
-
-        //         if($posicionCsc != $posicionCscDos){
-                    
-        //             if( $cscs[$posicionCsc]['cantidadPromociones'] > $cscsDoble[$posicionCscDos]['cantidadPromociones'] ){
-
-
-                        
-        //             }
-
-        //         }
-
-        //     }
-
-        // }
-
-        $productosCsc = [];
-        foreach($cscs as $posicionCsc => $csc){
-
-            $csccanalessucursalescategorias = $cscs;
-            $cspcanalessucursalespromociones = $cscs[$posicionCsc]["promociones"];
-
-            $rptaArmarPromociones = $this->ArmarPromociones($cspcanalessucursalespromociones, $productosCsc, $posicionCsc, $csccanalessucursalescategorias);
-            $cscs[$posicionCsc]["promocionesOrdenadas"] = $rptaArmarPromociones['nuevoArrayCsp'];
-            $productosCsc = $rptaArmarPromociones['productosCsc'];
-            $cscs = $rptaArmarPromociones['csccanalessucursalescategorias'];
-            // $cscs[$posicionCsc]["promocionesOrdenadas"] = $csps;
-
-
-        }
 
 
 
