@@ -1024,9 +1024,11 @@ class PromocionesMostrarController extends Controller
     }
 
     public function object_sorter($clave,$orden=null) {
+
         return function ($a, $b) use ($clave,$orden) {
-              $result=  ($orden=="DESC") ? strnatcmp($b->$clave, $a->$clave) :  strnatcmp($a->$clave, $b->$clave);
+              $result =  ($orden=="DESC") ? strnatcmp($b[$clave], $a[$clave]) :  strnatcmp($a[$clave], $b[$clave]);
               return $result;
         };
+
     }
 }
