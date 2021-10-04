@@ -700,7 +700,18 @@ class PromocionesMostrarController extends Controller
             array('foo' => "otros",   'baz' => "."),
 
         );
-        usort($array, $this->cmp());
+        usort(
+            $array,
+            function ($a, $b)  {
+                if ($a['foo'] < $b['foo']) {
+                    return -1;
+                } else if ($a['foo'] > $b['foo']) {
+                    return 1;
+                } else {
+                    return 0;
+                }
+            }
+        );
 
         // foreach($cscs as $posicionCsc => $csc){
             
