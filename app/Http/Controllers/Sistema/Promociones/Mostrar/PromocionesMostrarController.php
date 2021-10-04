@@ -884,15 +884,9 @@ class PromocionesMostrarController extends Controller
 
             foreach($cspcanalessucursalespromociones as $posicionPromociones => $cspcanalesucursalpromocion){
 
-
-
-                // if($cspcanalesucursalpromocion[$posicionPromociones]['cspcompletado'] == true){
-                //     $numeroPromocionesTerminadas = $numeroPromocionesTerminadas+1;
-                // }
-
                 $prppromocionesproductos = $cspcanalessucursalespromociones[$posicionPromociones]['productos'];
 
-                if($prppromocionesproductos){
+                if(sizeof($prppromocionesproductos) > 0){
                     $cspcanalessucursalespromociones[$posicionPromociones]['productos'] = $prppromocionesproductos;
 
                     if($posicion == 0){
@@ -928,7 +922,7 @@ class PromocionesMostrarController extends Controller
 
                     foreach ($cspcanalessucursalespromociones as $posicionCspDos => $csp) {
                         
-                        if($csp->productoPrincipal == $productoCsc){
+                        if($cspcanalessucursalespromociones[$posicionCspDos]['productoPrincipal'] == $productoCsc){
                             $encontroProducto = true;
                             $nuevoArrayCsp[] = array(
                                 'cspid'              => 1,
@@ -1077,7 +1071,7 @@ class PromocionesMostrarController extends Controller
                 foreach ($cspcanalessucursalespromociones as $posicionCspDos => $csp) {
                     $encontroProductoMomento = false;
                     foreach ($productosCsc as $key => $productoCsc) {
-                        if($csp->productoPrincipal == $productoCsc){
+                        if($cspcanalessucursalespromociones[$posicionCspDos]['productoPrincipal'] == $productoCsc){
                             $encontroProductoMomento = true;
                         }
                     }
