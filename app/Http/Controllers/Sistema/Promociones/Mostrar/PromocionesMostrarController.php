@@ -474,6 +474,8 @@ class PromocionesMostrarController extends Controller
                                                 'can.canid',
                                                 'can.cannombre'
                                             ]);
+
+        $cscsDoble = array();
         
         foreach($cscs as $posicionCsc => $csc){
 
@@ -692,12 +694,22 @@ class PromocionesMostrarController extends Controller
             $cscs[$posicionCsc]["promociones"] = $csps;
             $cscs[$posicionCsc]["cantidadPromociones"] = sizeof($csps);
 
+            $cscsDoble[] = array(
+                "canid" => $csc->canid,
+                "cannombre" => $csc->cannombre,
+                "cscid" => 0,
+                "porcentaje" => 0,
+                "promociones" => $csps,
+                "cantidadPromociones" => sizeof($csps),
+            );
+
         }
 
-        $cscsDoble = $cscs;
+
+        // $cscsDoble = $cscs;
         
         usort(
-            $cscs,
+            $cscsDoble,
             function ($a, $b)  {
                 if ($a['cantidadPromociones'] < $b['cantidadPromociones']) {
                     return -1;
