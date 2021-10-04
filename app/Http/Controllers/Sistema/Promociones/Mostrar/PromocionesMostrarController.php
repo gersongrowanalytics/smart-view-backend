@@ -931,7 +931,7 @@ class PromocionesMostrarController extends Controller
                         if($csp->productoPrincipal == $productoCsc){
                             $encontroProducto = true;
                             $nuevoArrayCsp[] = array(
-                                'cspid'              => $csp[$posicionCspDos]['cspid'],
+                                'cspid'              => 1,
                                 'prmid'              => $csp[$posicionCspDos]['prmid'],
                                 'prmcodigo'          => $csp[$posicionCspDos]['prmcodigo'],
                                 'cspvalorizado'      => $csp[$posicionCspDos]['cspvalorizado'],
@@ -967,7 +967,7 @@ class PromocionesMostrarController extends Controller
                                         if($nuevoArrayCspn[$posicionNuevInv]['productoPrincipal'] == $productoDuplicado){
 
                                             $nuevoArrayCspDuplicado[] = array(
-                                                'cspid'              => $nuevoArrayCspn[$posicionNuevInv]['cspid'],
+                                                'cspid'              => 1,
                                                 'prmid'              => $nuevoArrayCspn[$posicionNuevInv]['prmid'],
                                                 'prmcodigo'          => $nuevoArrayCspn[$posicionNuevInv]['prmcodigo'],
                                                 'cspvalorizado'      => $nuevoArrayCspn[$posicionNuevInv]['cspvalorizado'],
@@ -1013,7 +1013,7 @@ class PromocionesMostrarController extends Controller
 
                                         }else{
                                             $nuevoArrayCspDuplicado[] = array(
-                                                'cspid'              => $nuevoArrayCspn[$posicionNuevInv]['cspid'],
+                                                'cspid'              => 1,
                                                 'prmid'              => $nuevoArrayCspn[$posicionNuevInv]['prmid'],
                                                 'prmcodigo'          => $nuevoArrayCspn[$posicionNuevInv]['prmcodigo'],
                                                 'cspvalorizado'      => $nuevoArrayCspn[$posicionNuevInv]['cspvalorizado'],
@@ -1084,7 +1084,7 @@ class PromocionesMostrarController extends Controller
 
                     if($encontroProductoMomento == false){
                         $nuevoArrayCsp[] = array(
-                            'cspid'              => $csp[$posicionCspDos]['cspid'],
+                            'cspid'              => 1,
                             'prmid'              => $csp[$posicionCspDos]['prmid'],
                             'prmcodigo'          => $csp[$posicionCspDos]['prmcodigo'],
                             'cspvalorizado'      => $csp[$posicionCspDos]['cspvalorizado'],
@@ -1114,7 +1114,7 @@ class PromocionesMostrarController extends Controller
 
                 foreach ($cspcanalessucursalespromociones as $posicionCsp => $csp) {
                     $nuevoArrayCsp[] = array(
-                        'cspid'              => $csp[$posicionCsp]['cspid'],
+                        'cspid'              => 1,
                         'prmid'              => $csp[$posicionCsp]['prmid'],
                         'prmcodigo'          => $csp[$posicionCsp]['prmcodigo'],
                         'cspvalorizado'      => $csp[$posicionCsp]['cspvalorizado'],
