@@ -1042,7 +1042,7 @@ class PromocionesMostrarController extends Controller
         ); 
     }
 
-    public function cmp(array $a, array $b) {
+    public function cmp($a, $b) {
         if ($a['foo'] < $b['foo']) {
             return -1;
         } else if ($a['foo'] > $b['foo']) {
