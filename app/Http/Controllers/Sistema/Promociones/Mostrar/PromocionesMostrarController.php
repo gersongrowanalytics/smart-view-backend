@@ -713,7 +713,7 @@ class PromocionesMostrarController extends Controller
                 "cscid" => 0,
                 "porcentaje" => 0,
                 "promociones" => $csc->promociones,
-                "cantidadPromociones" => sizeof($csc->promociones),
+                "cantidadPromociones" => sizeof($rptaArmarPromociones['nuevoArrayCsp']),
                 "promocionesOrdenadas" => $rptaArmarPromociones['nuevoArrayCsp']
             );
 
