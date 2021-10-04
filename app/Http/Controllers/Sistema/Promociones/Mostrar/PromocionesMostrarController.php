@@ -988,34 +988,36 @@ class PromocionesMostrarController extends Controller
                                                 'productosbonificados' => $nuevoArrayCspn[$posicionNuevInv]['productosbonificados'],
                                             );
 
-                                            if($nuevoArrayCspn[$posicionNuevInv+1]['productoPrincipal'] == $productoDuplicado){
+                                            if(sizeof($nuevoArrayCspn)-1 >=  $posicionNuevInv+1 ){
+                                                if($nuevoArrayCspn[$posicionNuevInv+1]['productoPrincipal'] == $productoDuplicado){
 
-                                                $productosMasDuplicados = $productoDuplicado;
-
-                                            }else{
-                                                if($productosMasDuplicados != $productoDuplicado){
-                                                    $nuevoArrayCspDuplicado[] = array(
-                                                        'cspid'              => 0,
-                                                        'prmid'              => "",
-                                                        'prmcodigo'          => "",
-                                                        'cspvalorizado'      => "",
-                                                        'cspplanchas'        => "",
-                                                        'cspcompletado'      => "",
-                                                        'cspcantidadcombo'   => "",
-                                                        'prmmecanica'        => "",
-                                                        'cspcantidadplancha' => "",
-                                                        'csptotalcombo'      => "",
-                                                        'csptotalplancha'    => "",
-                                                        'csptotal'           => "",
-                                                        'cspgratis'          => "",
-                                                        'prmaccion'          => "",
-                                                        'tprnombre'          => "",
-                                                        'cspnuevo'           => "",
-                                                        'productos'          => [],
-                                                        'productoPrincipal'  => $productoCsc,
-                                                        'productosbonificados' => [],
-                
-                                                    );
+                                                    $productosMasDuplicados = $productoDuplicado;
+    
+                                                }else{
+                                                    if($productosMasDuplicados != $productoDuplicado){
+                                                        $nuevoArrayCspDuplicado[] = array(
+                                                            'cspid'              => 0,
+                                                            'prmid'              => "",
+                                                            'prmcodigo'          => "",
+                                                            'cspvalorizado'      => "",
+                                                            'cspplanchas'        => "",
+                                                            'cspcompletado'      => "",
+                                                            'cspcantidadcombo'   => "",
+                                                            'prmmecanica'        => "",
+                                                            'cspcantidadplancha' => "",
+                                                            'csptotalcombo'      => "",
+                                                            'csptotalplancha'    => "",
+                                                            'csptotal'           => "",
+                                                            'cspgratis'          => "",
+                                                            'prmaccion'          => "",
+                                                            'tprnombre'          => "",
+                                                            'cspnuevo'           => "",
+                                                            'productos'          => [],
+                                                            'productoPrincipal'  => $productoCsc,
+                                                            'productosbonificados' => [],
+                    
+                                                        );
+                                                    }
                                                 }
                                             }
 
