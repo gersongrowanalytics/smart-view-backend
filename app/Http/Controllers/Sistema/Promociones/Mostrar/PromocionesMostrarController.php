@@ -696,7 +696,7 @@ class PromocionesMostrarController extends Controller
 
         $cscsDoble = $cscs;
 
-        usort($cscs, object_sorter('cantidadPromociones','DESC'));
+        usort($cscs, $this->object_sorter('cantidadPromociones','DESC'));
         
 
         
