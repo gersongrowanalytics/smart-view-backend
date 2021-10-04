@@ -470,20 +470,12 @@ class PromocionesMostrarController extends Controller
                                             ->where('csp.cspcantidadplancha', '!=', "0")
                                             ->where('csp.cspestado', 1)
                                             ->distinct('can.canid')
-                                            ->groupBy('csccanalessucursalescategorias.cscid')
-                                            ->orderBy('cont', 'DESC')
-                                            ->select(
+                                            ->get([
+                                                // 'csccanalessucursalescategorias.cscid',
+                                                // 'csccanalessucursalescategorias.scaid',
                                                 'can.canid',
-                                                'can.cannombre',
-                                                DB::raw('count(cspid) as cont')
-                                            )
-                                            ->get();
-                                            // ->get([
-                                            //     // 'csccanalessucursalescategorias.cscid',
-                                            //     // 'csccanalessucursalescategorias.scaid',
-                                            //     'can.canid',
-                                            //     'can.cannombre'
-                                            // ]);
+                                                'can.cannombre'
+                                            ]);
 
 
         $productosCsc = [];
