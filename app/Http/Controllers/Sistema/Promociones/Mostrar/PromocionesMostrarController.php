@@ -700,7 +700,7 @@ class PromocionesMostrarController extends Controller
             array('foo' => "otros",   'baz' => "."),
 
         );
-        usort($array, 'cmp');
+        usort($array, $this->cmp());
 
         // foreach($cscs as $posicionCsc => $csc){
             
@@ -1042,10 +1042,10 @@ class PromocionesMostrarController extends Controller
         ); 
     }
 
-    function cmp(array $a, array $b) {
-        if ($a['cantidadPromociones'] < $b['cantidadPromociones']) {
+    public function cmp(array $a, array $b) {
+        if ($a['foo'] < $b['foo']) {
             return -1;
-        } else if ($a['cantidadPromociones'] > $b['cantidadPromociones']) {
+        } else if ($a['foo'] > $b['foo']) {
             return 1;
         } else {
             return 0;
