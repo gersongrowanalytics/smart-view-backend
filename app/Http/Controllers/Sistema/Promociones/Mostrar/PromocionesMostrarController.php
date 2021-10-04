@@ -695,7 +695,12 @@ class PromocionesMostrarController extends Controller
         }
 
         $cscsDoble = $cscs;
-        usort($cscs, 'cmp');
+        $array = array(
+            array('foo' => 'bar', 'baz' => 42),
+            array('foo' => "otros",   'baz' => "."),
+
+        );
+        usort($array, 'cmp');
 
         // foreach($cscs as $posicionCsc => $csc){
             
