@@ -723,9 +723,9 @@ class PromocionesMostrarController extends Controller
         usort(
             $cscsDoble,
             function ($a, $b)  {
-                if ($a['cantidadPromociones'] < $b['cantidadPromociones']) {
+                if ($a['cantidadPromociones'] > $b['cantidadPromociones']) {
                     return -1;
-                } else if ($a['cantidadPromociones'] > $b['cantidadPromociones']) {
+                } else if ($a['cantidadPromociones'] < $b['cantidadPromociones']) {
                     return 1;
                 } else {
                     return 0;
