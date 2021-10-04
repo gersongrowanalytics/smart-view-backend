@@ -706,7 +706,7 @@ class PromocionesMostrarController extends Controller
         foreach($cscs as $posicionCsc => $csc){
 
             $csccanalessucursalescategorias = $cscs;
-            $cspcanalessucursalespromociones = $csps;
+            $cspcanalessucursalespromociones = $cscs[$posicionCsc]["promociones"];
 
             $rptaArmarPromociones = $this->ArmarPromociones($cspcanalessucursalespromociones, $productosCsc, $posicionCsc, $csccanalessucursalescategorias);
             $cscs[$posicionCsc]["promocionesOrdenadas"] = $rptaArmarPromociones['nuevoArrayCsp'];
