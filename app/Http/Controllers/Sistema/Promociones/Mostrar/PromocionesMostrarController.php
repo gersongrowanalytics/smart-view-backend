@@ -697,11 +697,14 @@ class PromocionesMostrarController extends Controller
 
 
             
+
+            $csccanalessucursalescategorias = $cscs;
             $cspcanalessucursalespromociones = $csps;
 
-            $rptaArmarPromociones = $this->ArmarPromociones($cspcanalessucursalespromociones, $productosCsc, $posicionCsc);
+            $rptaArmarPromociones = $this->ArmarPromociones($cspcanalessucursalespromociones, $productosCsc, $posicionCsc, $csccanalessucursalescategorias);
             $cscs[$posicionCsc]["promocionesOrdenadas"] = $rptaArmarPromociones['nuevoArrayCsp'];
             $productosCsc = $rptaArmarPromociones['productosCsc'];
+            $cscs = $rptaArmarPromociones['csccanalessucursalescategorias'];
             // $cscs[$posicionCsc]["promocionesOrdenadas"] = $csps;
 
 
@@ -874,7 +877,7 @@ class PromocionesMostrarController extends Controller
         return $requestsalida;
     }
 
-    public function ArmarPromociones($cspcanalessucursalespromociones, $productosCsc, $posicion)
+    public function ArmarPromociones($cspcanalessucursalespromociones, $productosCsc, $posicion, $csccanalessucursalescategorias)
     {
 
         $nuevoArrayCsp = array();
@@ -1146,7 +1149,8 @@ class PromocionesMostrarController extends Controller
 
         return array(
             "productosCsc" => $productosCsc,
-            "nuevoArrayCsp" => $nuevoArrayCsp
+            "nuevoArrayCsp" => $nuevoArrayCsp,
+            "csccanalessucursalescategorias" => $csccanalessucursalescategorias
         ); 
     }
 }
