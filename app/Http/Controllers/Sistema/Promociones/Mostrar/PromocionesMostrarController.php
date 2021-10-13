@@ -705,6 +705,20 @@ class PromocionesMostrarController extends Controller
             $cscs[$posicionCsc]["cantidadPromociones"] = sizeof($csps);
         }
 
+        usort(
+            $cscs,
+            function ($a, $b)  {
+                if ($a['cantidadPromociones'] > $b['cantidadPromociones']) {
+                    return -1;
+                } else if ($a['cantidadPromociones'] < $b['cantidadPromociones']) {
+                    return 1;
+                } else {
+                    return 0;
+                }
+            }
+        );
+
+
         $productosCsc = [];
         foreach($cscs as $posicionCsc => $csc){
 
@@ -1049,15 +1063,5 @@ class PromocionesMostrarController extends Controller
             "nuevoArrayCsp" => $nuevoArrayCsp,
             "csccanalessucursalescategorias" => $csccanalessucursalescategorias
         ); 
-    }
-
-    public function cmp($a, $b) {
-        if ($a['foo'] < $b['foo']) {
-            return -1;
-        } else if ($a['foo'] > $b['foo']) {
-            return 1;
-        } else {
-            return 0;
-        }
     }
 }
