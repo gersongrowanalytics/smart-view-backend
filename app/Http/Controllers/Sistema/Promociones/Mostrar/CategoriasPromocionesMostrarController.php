@@ -769,7 +769,7 @@ class CategoriasPromocionesMostrarController extends Controller
                                     if($abc == "AN" || $abc == "AQ" || $abc == "AO" || $abc == "AP" ){
                                         
                                         if(is_numeric ( $columnasFilas )){
-                                            $columnasFilas = intval($columnasFilas);
+                                            $columnasFilas = floatval($columnasFilas);
                                             $arrayFilaExcel[$contadorColumna]['style']['numFmt'] = '#,##0.00';
                                         }else{
                                             
