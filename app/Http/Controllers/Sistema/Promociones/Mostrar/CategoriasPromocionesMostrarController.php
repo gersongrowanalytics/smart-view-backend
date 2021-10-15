@@ -777,6 +777,7 @@ class CategoriasPromocionesMostrarController extends Controller
 
                                     }
 
+                                    $arrayFilaExcel[$contadorColumna]['style']['font']['sz'] = '9';
                                     $arrayFilaExcel[$contadorColumna]['value'] = $columnasFilas;
 
                                     // if($abc == "L" || $abc == "O" || $abc == "P" || $abc == "R" || $abc == "S" || $abc == "Y" || $abc == "AC" || $abc == "AL" || $abc == "AU"){
