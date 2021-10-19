@@ -125,9 +125,11 @@ class VentasMostrarController extends Controller
                                 ->first([
                                     'tri.trinombre'
                                 ]);
-
+            
+            $suca = sucsucursales::find($sucid);
+            $gsuidSelec = $suca->gsuid;
             if($tri){
-                $suca = sucsucursales::find($sucid);
+                
                 // if($ano == "2021"){
                     if($suca->treid != 24){
                         $tieneRebateTrimestral = true;
@@ -247,6 +249,15 @@ class VentasMostrarController extends Controller
                                                     ->where('treid', $tsutipopromocionsucursal->treid)
                                                     ->where('rtp.tprid', $tsutipopromocionsucursal->tprid)
                                                     ->where('rtp.fecid', $tsutipopromocionsucursal->fecid)
+                                                    ->where(function ($query) use($tsutipopromocionsucursal, $gsuidSelec) {
+
+                                                        if($tsutipopromocionsucursal->fecid == 65){
+                                                            if($gsuidSelec != 6){
+                                                                $query->where('rtpid', '!=' , 248);
+                                                            }
+                                                        }
+
+                                                    })
                                                     ->distinct('rtpid')
                                                     ->get([
                                                         'rtp.rtpid',
