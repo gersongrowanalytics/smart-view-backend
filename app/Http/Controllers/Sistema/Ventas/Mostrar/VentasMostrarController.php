@@ -251,11 +251,11 @@ class VentasMostrarController extends Controller
                                                     ->where('rtp.fecid', $tsutipopromocionsucursal->fecid)
                                                     ->where(function ($query) use($tsutipopromocionsucursal, $gsuidSelec) {
 
-                                                        // if($tsutipopromocionsucursal->fecid == 65){
-                                                        //     if($gsuidSelec != 6){
-                                                        //         $query->where('rtp.rtpid', '!=' , 248);
-                                                        //     }
-                                                        // }
+                                                        if($tsutipopromocionsucursal->fecid == 65){
+                                                            if($gsuidSelec != 6){
+                                                                $query->where('rtp.rtpid', '!=' , 248);
+                                                            }
+                                                        }
 
                                                     })
                                                     ->distinct('rtpid')
