@@ -431,16 +431,27 @@ class VentasMostrarController extends Controller
         $tieneRebateTrimestral = false;
         $nombreTrimestre = "";
 
-        $tri = tritrimestres::join('fecfechas as fec', 'tritrimestres.fecid', 'fec.fecid')
-                            ->where('fec.fecano', $ano)
-                            ->where('fec.fecmes', $mes)
-                            ->where('fec.fecdia', $dia)
-                            ->where('triestado', 1)
-                            ->first();
+        // $tri = tritrimestres::join('fecfechas as fec', 'tritrimestres.fecid', 'fec.fecid')
+        //                     ->where('fec.fecano', $ano)
+        //                     ->where('fec.fecmes', $mes)
+        //                     ->where('fec.fecdia', $dia)
+        //                     ->where('triestado', 1)
+        //                     ->first();
 
-        if($tri){
+
+        $trf = trftrimestresfechas::join('tritrimestres as tri', 'tri.trid', 'trftrimestresfechas.triid')
+                                    ->join('fecfechas as fec', 'fec.fecid', 'trftrimestresfechas.fecid')
+                                    ->where('fec.fecano', $ano)
+                                    ->where('fec.fecmes', $mes)
+                                    ->where('fec.fecdia', $dia)
+                                    ->where('triestado', 1)
+                                    ->first([
+                                        'trinombre'
+                                    ]);
+
+        if($trf){
             $tieneRebateTrimestral = true;
-            $nombreTrimestre = $tri->trinombre;
+            $nombreTrimestre = $trf->trinombre;
         }
 
         try{
