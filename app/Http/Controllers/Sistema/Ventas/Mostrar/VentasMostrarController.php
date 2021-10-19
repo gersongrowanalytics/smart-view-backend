@@ -253,7 +253,7 @@ class VentasMostrarController extends Controller
 
                                                         if($tsutipopromocionsucursal->fecid == 65){
                                                             if($gsuidSelec != 6){
-                                                                $query->where('rtpid', '!=' , 248);
+                                                                $query->where('rtp.rtpid', '!=' , 248);
                                                             }
                                                         }
 
