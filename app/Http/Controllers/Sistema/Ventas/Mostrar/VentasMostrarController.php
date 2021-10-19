@@ -251,6 +251,11 @@ class VentasMostrarController extends Controller
                                                     ->where('rtp.fecid', $tsutipopromocionsucursal->fecid)
                                                     ->where(function ($query) use($tsutipopromocionsucursal, $gsuidSelec) {
 
+                                                        // RESTRICCION REALIZADA EL 19/10 -> EL CORREO PARA DICHA RESTRCCION FUE ENVIADO EL DÍA 18/10 POR GABRIEL
+                                                        // DONDE INDICABA QUE PARA SOLO PARA EL GRUPO PERAMAS LE MUESTRE LAS ESCALAS DE 90 A 94 
+                                                        // UNA RESTRICCION PARA EL MES DE OCTUBRE 2021 EL GRUPO 6 DE PERAMAS Y LOS IDS(RTPID) DE LAS 
+                                                        // ESCALAS 90 A 94 DE SELL IN Y SELL OUT
+
                                                         if($tsutipopromocionsucursal->fecid == 65){
                                                             if($gsuidSelec != 6){
                                                                 $query->where('rtp.rtpid', '!=' , 248);
@@ -637,7 +642,8 @@ class VentasMostrarController extends Controller
                                     }
                                 })
                                 ->get([
-                                    'sucid'
+                                    'sucid',
+                                    'gsuid'
                                 ]);
 
             // $usus = usuusuarios::join('ussusuariossucursales as uss', 'uss.usuid', 'usuusuarios.usuid')
@@ -728,6 +734,40 @@ class VentasMostrarController extends Controller
 
 
                     foreach($usus as $usu){
+
+                        if($usu->gsuid == 6 && $mes == "OCT" && $ano == "2021"){
+                            $plantillaTrrs = array(
+                                array(
+                                    "rtpid" => 0,
+                                    "rtpporcentajedesde" => "90",
+                                    "rtpporcentajehasta" => "94",
+                                    "rtpporcentajerebate" => "0",
+                                    "realTotal" => "0"
+                                ),
+                                array(
+                                    "rtpid" => 0,
+                                    "rtpporcentajedesde" => "95",
+                                    "rtpporcentajehasta" => "99",
+                                    "rtpporcentajerebate" => "0",
+                                    "realTotal" => "0"
+                                ),
+                                array(
+                                    "rtpid" => 0,
+                                    "rtpporcentajedesde" => "100",
+                                    "rtpporcentajehasta" => "104",
+                                    "rtpporcentajerebate" => "0",
+                                    "realTotal" => "0"
+                                ),
+                                array(
+                                    "rtpid" => 0,
+                                    "rtpporcentajedesde" => "105",
+                                    "rtpporcentajehasta" => "10000",
+                                    "rtpporcentajerebate" => "0",
+                                    "realTotal" => "0"
+                                ),
+                            );
+                            
+                        }
 
                         if($usu->sucid  == 309){
                             $observaciones[] = "Se encontro la sucursal 309";
