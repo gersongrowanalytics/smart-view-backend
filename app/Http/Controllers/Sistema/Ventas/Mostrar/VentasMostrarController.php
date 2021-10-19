@@ -259,6 +259,7 @@ class VentasMostrarController extends Controller
 
                                                     })
                                                     ->distinct('rtpid')
+                                                    ->orderBy('rtpporcentajedesde')
                                                     ->get([
                                                         'rtp.rtpid',
                                                         'rtpporcentajedesde',
