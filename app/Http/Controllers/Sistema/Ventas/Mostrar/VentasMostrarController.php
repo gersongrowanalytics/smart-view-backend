@@ -674,12 +674,22 @@ class VentasMostrarController extends Controller
                 // SABER SI ESTE MES TIENE REBATE TRIMESTRAL
                 $tieneRebateTrimestral = false;
                 $nombreTrimestre = "";
-                $tri = tritrimestres::join('fecfechas as fec', 'tritrimestres.fecid', 'fec.fecid')
+                // $tri = tritrimestres::join('fecfechas as fec', 'tritrimestres.fecid', 'fec.fecid')
+                //                     ->where('fec.fecano', $ano)
+                //                     ->where('fec.fecmes', $mes)
+                //                     ->where('fec.fecdia', $dia)
+                //                     ->where('triestado', 1)
+                //                     ->first();
+
+                $tri = trftrimestresfechas::join('tritrimestres as tri', 'tri.triid', 'trftrimestresfechas.triid')
+                                    ->join('fecfechas as fec', 'fec.fecid', 'trftrimestresfechas.fecid')
                                     ->where('fec.fecano', $ano)
                                     ->where('fec.fecmes', $mes)
                                     ->where('fec.fecdia', $dia)
                                     ->where('triestado', 1)
-                                    ->first();
+                                    ->first([
+                                        'trinombre'
+                                    ]);
 
                 if($tri){
                     $tieneRebateTrimestral = true;
