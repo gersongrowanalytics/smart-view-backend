@@ -439,7 +439,7 @@ class VentasMostrarController extends Controller
         //                     ->first();
 
 
-        $trf = trftrimestresfechas::join('tritrimestres as tri', 'tri.trid', 'trftrimestresfechas.triid')
+        $trf = trftrimestresfechas::join('tritrimestres as tri', 'tri.triid', 'trftrimestresfechas.triid')
                                     ->join('fecfechas as fec', 'fec.fecid', 'trftrimestresfechas.fecid')
                                     ->where('fec.fecano', $ano)
                                     ->where('fec.fecmes', $mes)
