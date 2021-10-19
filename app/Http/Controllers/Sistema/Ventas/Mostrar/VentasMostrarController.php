@@ -643,7 +643,8 @@ class VentasMostrarController extends Controller
                                 })
                                 ->get([
                                     'sucid',
-                                    'gsuid'
+                                    'gsuid',
+                                    'treid'
                                 ]);
 
             // $usus = usuusuarios::join('ussusuariossucursales as uss', 'uss.usuid', 'usuusuarios.usuid')
@@ -731,43 +732,96 @@ class VentasMostrarController extends Controller
                     $dataarray[$posicionTpr]['tsuporcentajecumplimientoniv'] = 0;
                     $dataarray[$posicionTpr]['tsuvalorizadorebateniv'] = 0;
 
-
+                    $encontroNuevoTrrs = false;
 
                     foreach($usus as $usu){
 
-                        if($usu->gsuid == 6 && $mes == "OCT" && $ano == "2021"){
-                            $plantillaTrrs = array(
-                                array(
-                                    "rtpid" => 0,
-                                    "rtpporcentajedesde" => "90",
-                                    "rtpporcentajehasta" => "94",
-                                    "rtpporcentajerebate" => "0",
-                                    "realTotal" => "0"
-                                ),
-                                array(
-                                    "rtpid" => 0,
-                                    "rtpporcentajedesde" => "95",
-                                    "rtpporcentajehasta" => "99",
-                                    "rtpporcentajerebate" => "0",
-                                    "realTotal" => "0"
-                                ),
-                                array(
-                                    "rtpid" => 0,
-                                    "rtpporcentajedesde" => "100",
-                                    "rtpporcentajehasta" => "104",
-                                    "rtpporcentajerebate" => "0",
-                                    "realTotal" => "0"
-                                ),
-                                array(
-                                    "rtpid" => 0,
-                                    "rtpporcentajedesde" => "105",
-                                    "rtpporcentajehasta" => "10000",
-                                    "rtpporcentajerebate" => "0",
-                                    "realTotal" => "0"
-                                ),
-                            );
-                            
+                        if($encontroNuevoTrrs == false){
+                            if($usu->gsuid == 6 && $mes == "OCT" && $ano == "2021"){
+                                $plantillaTrrs = array(
+                                    array(
+                                        "rtpid" => 0,
+                                        "rtpporcentajedesde" => "90",
+                                        "rtpporcentajehasta" => "94",
+                                        "rtpporcentajerebate" => "0",
+                                        "realTotal" => "0"
+                                    ),
+                                    array(
+                                        "rtpid" => 0,
+                                        "rtpporcentajedesde" => "95",
+                                        "rtpporcentajehasta" => "99",
+                                        "rtpporcentajerebate" => "0",
+                                        "realTotal" => "0"
+                                    ),
+                                    array(
+                                        "rtpid" => 0,
+                                        "rtpporcentajedesde" => "100",
+                                        "rtpporcentajehasta" => "104",
+                                        "rtpporcentajerebate" => "0",
+                                        "realTotal" => "0"
+                                    ),
+                                    array(
+                                        "rtpid" => 0,
+                                        "rtpporcentajedesde" => "105",
+                                        "rtpporcentajehasta" => "10000",
+                                        "rtpporcentajerebate" => "0",
+                                        "realTotal" => "0"
+                                    ),
+                                );
+    
+                                $encontroNuevoTrrs = true;
+    
+                            }else{
+                                $trr = trrtiposrebatesrebates::join('rtprebatetipospromociones as rtp', 'rtp.rtpid', 'trrtiposrebatesrebates.rtpid')
+                                                                ->join('fecfechas as fec', 'fec.fecid', 'rtp.fecid')
+                                                                ->where('fec.fecano', $ano)
+                                                                ->where('fec.fecmes', $mes)
+                                                                ->where('fec.fecdia', $dia)
+                                                                ->where('rtpporcentajedesde', 90)
+                                                                ->where('rtpporcentajehasta', 94)
+                                                                ->where('treid', $usu->treid)
+                                                                ->where('tprid', $tpr->tprid)
+                                                                ->first();
+    
+                                if($trr){
+                                    $plantillaTrrs = array(
+                                        array(
+                                            "rtpid" => 0,
+                                            "rtpporcentajedesde" => "90",
+                                            "rtpporcentajehasta" => "94",
+                                            "rtpporcentajerebate" => "0",
+                                            "realTotal" => "0"
+                                        ),
+                                        array(
+                                            "rtpid" => 0,
+                                            "rtpporcentajedesde" => "95",
+                                            "rtpporcentajehasta" => "99",
+                                            "rtpporcentajerebate" => "0",
+                                            "realTotal" => "0"
+                                        ),
+                                        array(
+                                            "rtpid" => 0,
+                                            "rtpporcentajedesde" => "100",
+                                            "rtpporcentajehasta" => "104",
+                                            "rtpporcentajerebate" => "0",
+                                            "realTotal" => "0"
+                                        ),
+                                        array(
+                                            "rtpid" => 0,
+                                            "rtpporcentajedesde" => "105",
+                                            "rtpporcentajehasta" => "10000",
+                                            "rtpporcentajerebate" => "0",
+                                            "realTotal" => "0"
+                                        ),
+                                    );
+    
+                                    $encontroNuevoTrrs = true;
+                                }
+                            }
                         }
+                    }
+
+                    foreach($usus as $posicionUsu => $usu){
 
                         if($usu->sucid  == 309){
                             $observaciones[] = "Se encontro la sucursal 309";
