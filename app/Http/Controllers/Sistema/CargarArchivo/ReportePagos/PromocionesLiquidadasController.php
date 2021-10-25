@@ -105,13 +105,14 @@ class PromocionesLiquidadasController extends Controller
 
                         if($i == 2){
                             // prlpromocionesliquidadas::where('fecid', $fec->fecid)->delete(); 
-                            // prlpromocionesliquidadas::where('pcrlid', '>', 0)->delete(); 
+                            prlpromocionesliquidadas::where('prlid', '>', 0)->delete(); 
                         }
 
                         $fecid = $fec->fecid;
 
                         $suc = sucsucursales::where('sucsoldto', $soldto)->first(['sucid']);
 
+                        $sucid = 1;
                         if($suc){
 
                             if($suc->sucestado != 1){
@@ -121,38 +122,40 @@ class PromocionesLiquidadasController extends Controller
 
                             $sucid = $suc->sucid;
 
-                            $prln = new prlpromocionesliquidadas;
-                            $prln->fecid            = $fecid;
-                            $prln->sucid            = $sucid;
-
-                            $prln->prlsku           = $sku;
-                            $prln->prlproducto      = $skuproducto;
-                            $prln->prlskubonificado = $skubonificado;
-                            $prln->prlproductobonificado = $productoBonif;
-
-                            $prln->prlconcepto      = $concepto;
-                            $prln->prlejecutivo     = $ejecutivo;
-                            $prln->prlgrupo         = $grupo;
-                            $prln->prlcompra        = $compra;
-                            $prln->prlbonificacion  = $bonificacion;
-                            $prln->prlmecanica      = $mecanica;
-                            $prln->prlcategoria     = $categoria;
-                            $prln->prlplancha       = $plancha;
-                            $prln->prlcombo         = $combo;
-                            $prln->prlreconocerxcombo   = $reconocerxcombo;
-                            $prln->prlreconocerxplancha = $reconocerxplancha;
-                            $prln->prltotal             = $totalsoles;
-                            $prln->prlliquidacionso     = $liquidacionso;
-                            $prln->prlliquidacioncombo  = $liquidacioncombo;
-                            $prln->prlliquidacionvalorizado = $liquidacionvalorizado;
-                            $prln->prlliquidaciontotalpagar = $liquidaciontotal;
-                            $prln->save();
-
                         }else{
                             $log["NO_SE_ENCONTRO_SUCURSAL"][] = "No se encontro la sucursal: ".$soldto." en la linea: ".$i;
                             $mensaje = 'Lo sentimos, se encontraron algunas observaciones en la columna de soldto';
-                            $respuesta = false;
+                            $respuesta = true;
                         }
+
+
+                        $prln = new prlpromocionesliquidadas;
+                        $prln->fecid            = $fecid;
+                        $prln->sucid            = $sucid;
+                        $prln->prlsoldto        = $soldto;
+
+                        $prln->prlsku           = $sku;
+                        $prln->prlproducto      = $skuproducto;
+                        $prln->prlskubonificado = $skubonificado;
+                        $prln->prlproductobonificado = $productoBonif;
+
+                        $prln->prlconcepto      = $concepto;
+                        $prln->prlejecutivo     = $ejecutivo;
+                        $prln->prlgrupo         = $grupo;
+                        $prln->prlcompra        = $compra;
+                        $prln->prlbonificacion  = $bonificacion;
+                        $prln->prlmecanica      = $mecanica;
+                        $prln->prlcategoria     = $categoria;
+                        $prln->prlplancha       = $plancha;
+                        $prln->prlcombo         = $combo;
+                        $prln->prlreconocerxcombo   = $reconocerxcombo;
+                        $prln->prlreconocerxplancha = $reconocerxplancha;
+                        $prln->prltotal             = $totalsoles;
+                        $prln->prlliquidacionso     = $liquidacionso;
+                        $prln->prlliquidacioncombo  = $liquidacioncombo;
+                        $prln->prlliquidacionvalorizado = $liquidacionvalorizado;
+                        $prln->prlliquidaciontotalpagar = $liquidaciontotal;
+                        $prln->save();
 
                     }else{
                         $log["NO_SE_ENCONTRO_FECHA"][] = "En la linea: ".$i.", registrado con el mes: ".$mesPromocion." en el año: ".$anioPromocion;

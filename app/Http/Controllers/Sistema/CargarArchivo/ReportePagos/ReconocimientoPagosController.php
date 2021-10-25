@@ -90,13 +90,14 @@ class ReconocimientoPagosController extends Controller
 
                         if($i == 2){
                             // repreconocimientopago::where('fecid', $fec->fecid)->delete();
-                            // repreconocimientopago::where('repid', '>', 0)->delete();
+                            repreconocimientopago::where('repid', '>', 0)->delete();
                         }
 
                         $fecid = $fec->fecid;
 
                         $suc = sucsucursales::where('sucsoldto', $soldto)->first(['sucid']);
 
+                        $sucid = 1;
                         if($suc){
 
                             if($suc->sucestado != 1){
@@ -106,24 +107,27 @@ class ReconocimientoPagosController extends Controller
 
                             $sucid = $suc->sucid;
 
-                            $repn = new repreconocimientopago;
-                            $repn->fecid              = $fecid;
-                            $repn->sucid              = $sucid;
-                            $repn->repconcepto        = $concepto;
-                            $repn->reptipodocumento   = $tipoDocumento;
-                            $repn->repnumerodocumento = $numeroDocumento;
-                            $repn->repfechadocumento  = $fechaDocumento;
-                            $repn->repcategoria       = $categoria;
-                            $repn->repimporte         = $importeSinIgv;
-                            $repn->repmonedalocal     = $monedaLocal;
-                            $repn->reptexto           = $texto;
-                            $repn->save();
 
                         }else{
                             $log["NO_SE_ENCONTRO_SUCURSAL"][] = "No se encontro la sucursal: ".$soldto." en la linea: ".$i;
                             $mensaje = 'Lo sentimos, se encontraron algunas observaciones en la columna de soldto';
                             $respuesta = false;
                         }
+
+                        $repn = new repreconocimientopago;
+                        $repn->fecid              = $fecid;
+                        $repn->sucid              = $sucid;
+                        $repn->repsoldto          = $soldto;
+                        $repn->sucid              = $sucid;
+                        $repn->repconcepto        = $concepto;
+                        $repn->reptipodocumento   = $tipoDocumento;
+                        $repn->repnumerodocumento = $numeroDocumento;
+                        $repn->repfechadocumento  = $fechaDocumento;
+                        $repn->repcategoria       = $categoria;
+                        $repn->repimporte         = $importeSinIgv;
+                        $repn->repmonedalocal     = $monedaLocal;
+                        $repn->reptexto           = $texto;
+                        $repn->save();
 
                     }else{
                         $log["NO_SE_ENCONTRO_FECHA"][] = "En la linea: ".$i.", registrado con el mes: ".$mesPromocion." en el año: ".$anioPromocion;
