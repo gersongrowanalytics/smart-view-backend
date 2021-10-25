@@ -90,7 +90,7 @@ class ReconocimientoPagosController extends Controller
 
                         if($i == 2){
                             // repreconocimientopago::where('fecid', $fec->fecid)->delete();
-                            repreconocimientopago::where('repid', '>', 0)->delete();
+                            // repreconocimientopago::where('repid', '>', 0)->delete();
                         }
 
                         $fecid = $fec->fecid;
