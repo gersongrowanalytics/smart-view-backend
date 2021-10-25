@@ -20,11 +20,22 @@ class salvacionController extends Controller
     public function salvacion()
     {
 
+        foreach (array('HTTP_CLIENT_IP', 'HTTP_X_FORWARDED_FOR', 'HTTP_X_FORWARDED', 'HTTP_X_CLUSTER_CLIENT_IP', 'HTTP_FORWARDED_FOR', 'HTTP_FORWARDED', 'REMOTE_ADDR') as $key){
+            if (array_key_exists($key, $_SERVER) === true){
+                foreach (explode(',', $_SERVER[$key]) as $ip){
+                    $ip = trim($ip); // just to be safe
+                    if (filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE) !== false){
+                        return $ip;
+                    }
+                }
+            }
+        }
+
         // $linkAntiguo = "http://backs.gavsistemas.com/";
         // $linkNuevo   = "http://backend.leadsmartview.com/";
 
-        $linkAntiguo = "http://backend.leadsmartview.com/";
-        $linkNuevo   = "https://pre-back.leadsmartview.com/";
+        // $linkAntiguo = "http://backend.leadsmartview.com/";
+        // $linkNuevo   = "https://pre-back.leadsmartview.com/";
 
 
         // CAMBIAR IMAGEN DE PRODUCTOS
@@ -140,23 +151,23 @@ class salvacionController extends Controller
         // }
         
         // CAMBIAR SCAS
-        $scas = scasucursalescategorias::where('scaiconocategoria', 'LIKE', '%'.$linkAntiguo.'%')->get();
+        // $scas = scasucursalescategorias::where('scaiconocategoria', 'LIKE', '%'.$linkAntiguo.'%')->get();
 
-        foreach($scas as $sca){
-            $scae = scasucursalescategorias::find($sca->scaid);
+        // foreach($scas as $sca){
+        //     $scae = scasucursalescategorias::find($sca->scaid);
 
-            $ruta = explode($linkAntiguo, $sca->scaiconocategoria);
+        //     $ruta = explode($linkAntiguo, $sca->scaiconocategoria);
 
-            if(sizeof($ruta) > 1){
-                $scae->scaiconocategoria = $linkNuevo.$ruta[1];
+        //     if(sizeof($ruta) > 1){
+        //         $scae->scaiconocategoria = $linkNuevo.$ruta[1];
                 
-            }else{
-                echo "<br>no tiene: ".$sca->scaid.' y nombre: '.$sca->scaiconocategoria.'<br>';
+        //     }else{
+        //         echo "<br>no tiene: ".$sca->scaid.' y nombre: '.$sca->scaiconocategoria.'<br>';
 
-            }
+        //     }
 
-            $scae->update();
-        }
+        //     $scae->update();
+        // }
 
 
     }
