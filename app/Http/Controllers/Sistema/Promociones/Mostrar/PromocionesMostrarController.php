@@ -89,10 +89,10 @@ class PromocionesMostrarController extends Controller
 
                         foreach($cspcanalessucursalespromociones as $posicionPromociones => $cspcanalesucursalpromocion){
 
-                            $fechaInicio = date("d-m-Y", strtotime($cspcanalesucursalpromocion->fecfecha));
+                            $fechaInicio = date("d/m", strtotime($cspcanalesucursalpromocion->fecfecha));
 
-                            $fechaFinal = date("m-Y", strtotime($cspcanalesucursalpromocion->fecfecha));
-                            $fechafinal = "30-".$fechaFinal;
+                            $fechaFinal = date("m", strtotime($cspcanalesucursalpromocion->fecfecha));
+                            $fechafinal = "30/".$fechaFinal;
 
                             $cspcanalessucursalespromociones[$posicionPromociones]['fechainicio'] = $fechaInicio;
                             $cspcanalessucursalespromociones[$posicionPromociones]['fechafinal']  = $fechafinal;
