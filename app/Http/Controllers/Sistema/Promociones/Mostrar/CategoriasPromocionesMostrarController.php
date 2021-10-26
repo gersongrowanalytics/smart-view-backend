@@ -757,7 +757,7 @@ class CategoriasPromocionesMostrarController extends Controller
                                     $columnasFilas = $objPHPExcel->getActiveSheet()->getCell($abc.$i)->getCalculatedValue();
                                     
                                     if($columnasFilas == null || $columnasFilas == " " ){
-                                        $columnasFilas = "";
+                                        $columnasFilas = "0";
                                     }else if($columnasFilas == "-"){
                                         $columnasFilas = "0";
                                     }
