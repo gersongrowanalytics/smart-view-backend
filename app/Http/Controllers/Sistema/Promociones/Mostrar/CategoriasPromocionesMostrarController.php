@@ -756,11 +756,11 @@ class CategoriasPromocionesMostrarController extends Controller
                                 foreach($columnasExcel as $abc) {
                                     $columnasFilas = $objPHPExcel->getActiveSheet()->getCell($abc.$i)->getCalculatedValue();
                                     
-                                    // if($columnasFilas == null || $columnasFilas == " " ){
-                                    //     $columnasFilas = "";
-                                    // }else if($columnasFilas == "-"){
-                                    //     $columnasFilas = "0";
-                                    // }
+                                    if($columnasFilas == null || $columnasFilas == " " ){
+                                        $columnasFilas = "";
+                                    }else if($columnasFilas == "-"){
+                                        $columnasFilas = "0";
+                                    }
 
                                     
                                     if($abc == "AR"){
