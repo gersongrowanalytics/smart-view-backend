@@ -89,7 +89,8 @@ class CargarArchivoPromocionesController extends Controller
             "NUEVO_CANAL_ASIGNADO"         => [],
             "NUEVO_CATEGORIA_ASIGNADO"     => [],
             "NUEVA_SUCURSAL"               => [],
-            "PRODUCTO_NO_EXISTE"           => []
+            "PRODUCTO_NO_EXISTE"           => [],
+            "SUCURSALES_NO_IDENTIFICADAS"  => []
         );
 
         $fecActual = new \DateTime(date("Y-m-d", strtotime("2020-10-20")));
