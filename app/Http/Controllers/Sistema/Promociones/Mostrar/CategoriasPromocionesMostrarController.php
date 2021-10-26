@@ -652,7 +652,7 @@ class CategoriasPromocionesMostrarController extends Controller
             $fec = fecfechas::where('fecdia', 'LIKE', "%".$dia."%")
                             ->where('fecmes', 'LIKE', "%".$mes."%")
                             ->where('fecano', 'LIKE', "%".$anio."%")
-                            ->first(['fecid']);
+                            ->first(['fecid', 'fecfecha']);
 
             if($fec){
                 $car = carcargasarchivos::where('fecid', $fec->fecid)
@@ -681,6 +681,14 @@ class CategoriasPromocionesMostrarController extends Controller
                             $contadorTitulos = 0;
                             foreach($columnasExcel as $abc) {  
                                 $columnasFilas = $objPHPExcel->getActiveSheet()->getCell($abc.$i)->getCalculatedValue();
+                                
+                                if($columnasFilas == "SOLD TO"){
+                                    $columnasFilas = "Sold To";
+                                }else if($columnasFilas == "Año"){
+                                    $columnasFilas = "Inicio Promo";
+                                }else if($columnasFilas == "Mes"){
+                                    $columnasFilas = "Fin Promo";
+                                }
                                 
                                 $arrayTitulos[$contadorTitulos]['title'] = $columnasFilas;
                                 $arrayTitulos[$contadorTitulos]['style']['fill']['patternType'] = 'solid';
@@ -776,6 +784,15 @@ class CategoriasPromocionesMostrarController extends Controller
                                         }
 
                                     }
+
+                                    if($abc == "A" ){
+                                        $fechaInicio = date("d-m-Y", strtotime($fec->fecfecha));
+                                        $columnasFilas = $fechaInicio;
+                                    }else if($abc == "B"){
+                                        $fechaFinal = date("m-Y", strtotime($fec->fecfecha));
+                                        $columnasFilas = "30-".$fechaFinal;
+                                    }
+
 
                                     $arrayFilaExcel[$contadorColumna]['style']['font']['sz'] = '9';
                                     $arrayFilaExcel[$contadorColumna]['value'] = $columnasFilas;
