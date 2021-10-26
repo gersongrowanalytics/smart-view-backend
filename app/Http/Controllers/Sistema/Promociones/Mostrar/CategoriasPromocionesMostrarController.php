@@ -604,20 +604,20 @@ class CategoriasPromocionesMostrarController extends Controller
             // "AV"
         ];
 
-        $columnasExcel = [
-            "A",
-            "B",
-            "P",
-            "Q",
-            "AK",
-            "W",
-            "AA",
-            "V",
-            "AN",
-            "AQ",
-            "AO",
-            "AP"
-        ];
+        // $columnasExcel = [
+        //     "A",
+        //     "B",
+        //     "P",
+        //     "Q",
+        //     "AK",
+        //     "W",
+        //     "AA",
+        //     "V",
+        //     "AN",
+        //     "AQ",
+        //     "AO",
+        //     "AP"
+        // ];
 
         $colorPlomo         = "FF595959";
         $colorBlanco        = "FFFFFFFF";
@@ -756,11 +756,11 @@ class CategoriasPromocionesMostrarController extends Controller
                                 foreach($columnasExcel as $abc) {
                                     $columnasFilas = $objPHPExcel->getActiveSheet()->getCell($abc.$i)->getCalculatedValue();
                                     
-                                    if($columnasFilas == null || $columnasFilas == " " ){
-                                        $columnasFilas = "";
-                                    }else if($columnasFilas == "-"){
-                                        $columnasFilas = "0";
-                                    }
+                                    // if($columnasFilas == null || $columnasFilas == " " ){
+                                    //     $columnasFilas = "";
+                                    // }else if($columnasFilas == "-"){
+                                    //     $columnasFilas = "0";
+                                    // }
 
                                     
                                     if($abc == "AR"){
