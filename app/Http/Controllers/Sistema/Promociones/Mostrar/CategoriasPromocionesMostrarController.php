@@ -767,23 +767,23 @@ class CategoriasPromocionesMostrarController extends Controller
                                         
                                     }
 
-                                    if($abc != "A" && $abc != "P" && $abc != "Z" && $abc != "AD" && $abc != "AR" && $abc != "AN" && $abc != "AO" && $abc != "AP" && $abc != "AQ"){
-                                        if(is_numeric($columnasFilas)){
-                                            $columnasFilas = number_format($columnasFilas, 2);
-                                            $columnasFilas = floatval($columnasFilas);
-                                        }
-                                    }
+                                    // if($abc != "A" && $abc != "P" && $abc != "Z" && $abc != "AD" && $abc != "AR" && $abc != "AN" && $abc != "AO" && $abc != "AP" && $abc != "AQ"){
+                                    //     if(is_numeric($columnasFilas)){
+                                    //         $columnasFilas = number_format($columnasFilas, 2);
+                                    //         $columnasFilas = floatval($columnasFilas);
+                                    //     }
+                                    // }
 
-                                    if($abc == "AN" || $abc == "AQ" || $abc == "AO" || $abc == "AP" ){
+                                    // if($abc == "AN" || $abc == "AQ" || $abc == "AO" || $abc == "AP" ){
                                         
-                                        if(is_numeric ( $columnasFilas )){
-                                            $columnasFilas = floatval($columnasFilas);
-                                            $arrayFilaExcel[$contadorColumna]['style']['numFmt'] = '#,##0.00';
-                                        }else{
+                                    //     if(is_numeric ( $columnasFilas )){
+                                    //         $columnasFilas = floatval($columnasFilas);
+                                    //         $arrayFilaExcel[$contadorColumna]['style']['numFmt'] = '#,##0.00';
+                                    //     }else{
                                             
-                                        }
+                                    //     }
 
-                                    }
+                                    // }
 
                                     if($abc == "A" ){
                                         $fechaInicio = date("d-m-Y", strtotime($fec->fecfecha));
