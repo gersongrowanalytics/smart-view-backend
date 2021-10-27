@@ -607,6 +607,10 @@ class CategoriasPromocionesMostrarController extends Controller
         $columnasExcel = [
             "A",
             "B",
+            "region",
+            "zona",
+            "grupo",
+            "clientehml",
             "P",
             "Q",
             "AK",
@@ -631,16 +635,25 @@ class CategoriasPromocionesMostrarController extends Controller
 
         try{
 
-            $uss = sucsucursales::where(function ($query) use($sucs) {
-                                        foreach($sucs as $suc){
-                                            if(isset($suc['sucpromociondescarga'])){
-                                                if($suc['sucpromociondescarga'] == true){
-                                                    $query->orwhere('sucid', $suc['sucid']);
-                                                }
+            $uss = sucsucursales::join('zonzonas as zon', 'zon.zonid', 'sucsucursales.zonid')
+                                ->join('gsugrupossucursales as gsu', 'gsu.gsuid', 'sucsucursales.gsuid')
+                                ->join('cascanalessucursales as cas', 'cas.casid', 'sucsucursales.casid')
+                                ->where(function ($query) use($sucs) {
+                                    foreach($sucs as $suc){
+                                        if(isset($suc['sucpromociondescarga'])){
+                                            if($suc['sucpromociondescarga'] == true){
+                                                $query->orwhere('sucid', $suc['sucid']);
                                             }
                                         }
-                                    })
-                                ->get(['sucsoldto']);
+                                    }
+                                })
+                                ->get([
+                                    'casnombre',
+                                    'zonnombre',
+                                    'gsunombre',
+                                    'sucsoldto',
+                                    'sucnombre'
+                                ]);
 
             $nuevoArray = array(
                 array(
@@ -680,7 +693,17 @@ class CategoriasPromocionesMostrarController extends Controller
 
                             $contadorTitulos = 0;
                             foreach($columnasExcel as $abc) {  
-                                $columnasFilas = $objPHPExcel->getActiveSheet()->getCell($abc.$i)->getCalculatedValue();
+                                if($abc == "region"){
+                                    $columnasFilas = "Región";
+                                }else if($abc == "zona"){
+                                    $columnasFilas = "Zona";
+                                }else if($abc == "grupo"){
+                                    $columnasFilas = "Grupo";
+                                }else if($abc == "clientehml"){
+                                    $columnasFilas = "Cliente Hml";
+                                }else{
+                                    $columnasFilas = $objPHPExcel->getActiveSheet()->getCell($abc.$i)->getCalculatedValue();
+                                }
                                 
                                 if($columnasFilas == "SOLD TO"){
                                     $columnasFilas = "Sold To";
@@ -733,6 +756,9 @@ class CategoriasPromocionesMostrarController extends Controller
 
 
                             $pertenecedata = false;
+                            
+                            $sucursal = array();
+
                             foreach($uss as $u){
 
                                 $pos = strpos($soldto, $u->sucsoldto);
@@ -741,7 +767,15 @@ class CategoriasPromocionesMostrarController extends Controller
                                     $pertenecedata = false;
                                 }else{
                                     $pertenecedata = true;
-                                    break;                                    
+                                    $sucursal = array(
+                                        "casnombre" => $u->casnombre,
+                                        "zonnombre" => $u->zonnombre,
+                                        "gsunombre" => $u->gsunombre,
+                                        "sucsoldto" => $u->sucsoldto,
+                                        "sucnombre" => $u->sucnombre
+                                    );
+
+                                    break;
                                 }
                             }
 
@@ -754,7 +788,18 @@ class CategoriasPromocionesMostrarController extends Controller
                                 $contadorColumna = 0;
 
                                 foreach($columnasExcel as $abc) {
-                                    $columnasFilas = $objPHPExcel->getActiveSheet()->getCell($abc.$i)->getCalculatedValue();
+
+                                    if($abc == "region"){
+                                        $columnasFilas = $sucursal->casnombre;
+                                    }else if($abc == "zona"){
+                                        $columnasFilas = $sucursal->zonnombre;
+                                    }else if($abc == "grupo"){
+                                        $columnasFilas = $sucursal->gsunombre;
+                                    }else if($abc == "clientehml"){
+                                        $columnasFilas = $sucursal->sucnombre;
+                                    }else{
+                                        $columnasFilas = $objPHPExcel->getActiveSheet()->getCell($abc.$i)->getCalculatedValue();
+                                    }
                                     
                                     if($columnasFilas == null || $columnasFilas == " " ){
                                         $columnasFilas = "0";
