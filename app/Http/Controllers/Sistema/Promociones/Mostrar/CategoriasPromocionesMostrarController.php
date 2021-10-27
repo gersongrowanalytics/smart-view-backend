@@ -790,13 +790,13 @@ class CategoriasPromocionesMostrarController extends Controller
                                 foreach($columnasExcel as $abc) {
 
                                     if($abc == "region"){
-                                        $columnasFilas = $sucursal->casnombre;
+                                        $columnasFilas = $sucursal['casnombre'];
                                     }else if($abc == "zona"){
-                                        $columnasFilas = $sucursal->zonnombre;
+                                        $columnasFilas = $sucursal['zonnombre'];
                                     }else if($abc == "grupo"){
-                                        $columnasFilas = $sucursal->gsunombre;
+                                        $columnasFilas = $sucursal['gsunombre'];
                                     }else if($abc == "clientehml"){
-                                        $columnasFilas = $sucursal->sucnombre;
+                                        $columnasFilas = $sucursal['sucnombre'];
                                     }else{
                                         $columnasFilas = $objPHPExcel->getActiveSheet()->getCell($abc.$i)->getCalculatedValue();
                                     }
