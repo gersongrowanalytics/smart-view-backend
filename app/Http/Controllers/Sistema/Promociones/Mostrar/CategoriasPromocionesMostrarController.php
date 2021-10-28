@@ -1131,6 +1131,14 @@ class CategoriasPromocionesMostrarController extends Controller
                             )
                         ),
                         array(
+                            "value" => $desc_sucnombre,
+                            "style" => array(
+                                "font" => array(
+                                    "sz" => "9"
+                                )
+                            )
+                        ),
+                        array(
                             "value" => $desc_cannombre,
                             "style" => array(
                                 "font" => array(
