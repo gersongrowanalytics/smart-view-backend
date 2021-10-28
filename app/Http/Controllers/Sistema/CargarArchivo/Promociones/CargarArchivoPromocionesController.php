@@ -301,11 +301,11 @@ class CargarArchivoPromocionesController extends Controller
                             if($i == 2){
                                 cspcanalessucursalespromociones::join('prmpromociones as prm', 'prm.prmid', 'cspcanalessucursalespromociones.prmid')
                                                                 ->where('cspcanalessucursalespromociones.fecid', $fecid)
-                                                                ->where('cspzona ', $ex_zona)
+                                                                ->where('cspzona', $ex_zona)
                                                                 ->delete();
 
                                 prmpromociones::where('fecid', $fecid)
-                                                ->where('prmzona ', $ex_zona)
+                                                ->where('prmzona', $ex_zona)
                                                 ->delete();
                             }
                 
