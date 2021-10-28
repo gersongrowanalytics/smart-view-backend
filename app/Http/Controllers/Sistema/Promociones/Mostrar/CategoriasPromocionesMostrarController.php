@@ -1063,11 +1063,11 @@ class CategoriasPromocionesMostrarController extends Controller
                     }
 
 
-                    if($desc_cspiniciopromo){
+                    if($desc_cspiniciopromo == null){
                         $fechaInicio = date("d-m-Y", strtotime($fec->fecfecha));
                         $desc_cspiniciopromo = $fechaInicio;
                     }
-                    if($desc_cspfinpromo){
+                    if($desc_cspfinpromo == null){
                         $fechaFinal = date("m-Y", strtotime($fec->fecfecha));
                         $desc_cspfinpromo = "30-".$fechaFinal;
                     }
