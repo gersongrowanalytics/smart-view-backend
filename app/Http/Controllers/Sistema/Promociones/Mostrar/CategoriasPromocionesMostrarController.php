@@ -649,16 +649,16 @@ class CategoriasPromocionesMostrarController extends Controller
 
             if($fec){
                 
-                $csps = cspcanalessucursalespromociones::join('prmpromociones as prm', 'prm.prmid', 'cspcanalessucursalespromociones.prmid')
-                                                        ->join('proproductos as pro', 'pro.prosku', 'prm.prmsku')
-                                                        ->join('csccanalessucursalescategorias as csc', 'csc.cscid', 'cspcanalessucursalespromociones.cscid')
-                                                        ->join('cancanales as can', 'can.canid', 'csc.canid')
-                                                        ->join('scasucursalescategorias as sca', 'sca.scaid', 'csc.scaid')
-                                                        ->join('catcategorias as cat', 'cat.catid', 'sca.catid')
-                                                        ->join('sucsucursales as suc', 'sca.sucid', 'suc.sucid')
-                                                        ->join('zonzonas as zon', 'zon.zonid', 'suc.zonid')
-                                                        ->join('gsugrupossucursales as gsu', 'gsu.gsuid', 'suc.gsuid')
-                                                        ->join('cascanalessucursales as cas', 'cas.casid', 'suc.casid')
+                $csps = cspcanalessucursalespromociones::leftjoin('prmpromociones as prm', 'prm.prmid', 'cspcanalessucursalespromociones.prmid')
+                                                        ->leftjoin('proproductos as pro', 'pro.prosku', 'prm.prmsku')
+                                                        ->leftjoin('csccanalessucursalescategorias as csc', 'csc.cscid', 'cspcanalessucursalespromociones.cscid')
+                                                        ->leftjoin('cancanales as can', 'can.canid', 'csc.canid')
+                                                        ->leftjoin('scasucursalescategorias as sca', 'sca.scaid', 'csc.scaid')
+                                                        ->leftjoin('catcategorias as cat', 'cat.catid', 'sca.catid')
+                                                        ->leftjoin('sucsucursales as suc', 'sca.sucid', 'suc.sucid')
+                                                        ->leftjoin('zonzonas as zon', 'zon.zonid', 'suc.zonid')
+                                                        ->leftjoin('gsugrupossucursales as gsu', 'gsu.gsuid', 'suc.gsuid')
+                                                        ->leftjoin('cascanalessucursales as cas', 'cas.casid', 'suc.casid')
                                                         ->where(function ($query) use($sucs) {
                                                             foreach($sucs as $suc){
                                                                 if(isset($suc['sucpromociondescarga'])){
