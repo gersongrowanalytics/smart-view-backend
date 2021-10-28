@@ -1183,7 +1183,7 @@ class CategoriasPromocionesMostrarController extends Controller
 
                 $respuesta = true;
                 $datos     = $nuevoArray;
-                $archivo   = $car->carnombrearchivo;
+                // $archivo   = $car->carnombrearchivo;
                        
             }else{
                 $respuesta = false;
@@ -1204,7 +1204,7 @@ class CategoriasPromocionesMostrarController extends Controller
             'linea'          => $linea,
             'mensajeDetalle' => $mensajeDetalle,
             'mensajedev'     => $mensajedev,
-            'archivo'        => $archivo
+            // 'archivo'        => $archivo
         ]);
 
         return $requestsalida;
