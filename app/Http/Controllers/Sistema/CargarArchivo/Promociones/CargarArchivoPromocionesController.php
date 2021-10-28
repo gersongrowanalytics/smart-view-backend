@@ -293,7 +293,7 @@ class CargarArchivoPromocionesController extends Controller
 
                                 prbpromocionesbonificaciones::join('prmpromociones as prm', 'prm.prmid', 'prbpromocionesbonificaciones.prmid')
                                                             ->where('prm.fecid', $fecid)
-                                                            ->where('prbpzona', $ex_zona)
+                                                            ->where('prbzona', $ex_zona)
                                                             ->delete();
 
                             }
@@ -563,12 +563,12 @@ class CargarArchivoPromocionesController extends Controller
                                             if($prb){
                                                 $prbid = $prb->prbid;
                                                 $prb->prbcomprappt = $compBonPpt;
-                                                $prb->prbpzona     = $ex_zona;
+                                                $prb->prbzona      = $ex_zona;
                                                 $prb->update();
                                             }else{
                                                 $nuevoPrb = new prbpromocionesbonificaciones;
                                                 $nuevoPrb->prmid                = $prmid;
-                                                $nuevoPrb->prbpzona             = $ex_zona;
+                                                $nuevoPrb->prbzona              = $ex_zona;
                                                 $nuevoPrb->proid                = $bonificadoproid;
                                                 $nuevoPrb->prbcantidad          = $cantBonifi;
                                                 $nuevoPrb->prbproductoppt       = $proBoniPpt;
