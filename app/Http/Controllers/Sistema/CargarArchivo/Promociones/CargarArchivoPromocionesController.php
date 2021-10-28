@@ -288,12 +288,12 @@ class CargarArchivoPromocionesController extends Controller
                             if($i == 2){
                                 prppromocionesproductos::join('prmpromociones as prm', 'prm.prmid', 'prppromocionesproductos.prmid')
                                                         ->where('prm.fecid', $fecid)
-                                                        ->where('prpzona ', $ex_zona)
+                                                        ->where('prpzona', $ex_zona)
                                                         ->delete();
 
                                 prbpromocionesbonificaciones::join('prmpromociones as prm', 'prm.prmid', 'prbpromocionesbonificaciones.prmid')
                                                             ->where('prm.fecid', $fecid)
-                                                            ->where('prbpzona ', $ex_zona)
+                                                            ->where('prbpzona', $ex_zona)
                                                             ->delete();
 
                             }
