@@ -686,6 +686,8 @@ class CategoriasPromocionesMostrarController extends Controller
                                                             'csptotalcombo',
                                                             'csptotalplancha',
                                                             'csptotal',
+                                                            'cspiniciopromo',
+                                                            'cspfinpromo'
                                                         ]);
 
 
@@ -991,6 +993,9 @@ class CategoriasPromocionesMostrarController extends Controller
                     $desc_csptotalplancha    = $csp->csptotalplancha;
                     $desc_csptotal           = $csp->csptotal;
 
+                    $desc_cspiniciopromo     = $csp->cspiniciopromo;
+                    $desc_cspfinpromo        = $csp->cspfinpromo;
+
                     if($desc_casnombre == null || $desc_casnombre == " " || $desc_casnombre == "-" ){
                         $desc_casnombre = "0";
                     }
@@ -1058,7 +1063,33 @@ class CategoriasPromocionesMostrarController extends Controller
                     }
 
 
+                    if($desc_cspiniciopromo){
+                        $fechaInicio = date("d-m-Y", strtotime($fec->fecfecha));
+                        $desc_cspiniciopromo = $fechaInicio;
+                    }
+                    if($desc_cspfinpromo){
+                        $fechaFinal = date("m-Y", strtotime($fec->fecfecha));
+                        $desc_cspfinpromo = "30-".$fechaFinal;
+                    }
+
+
                     $arrayFilaExcel = array(
+                        array(
+                            "value" => $desc_cspiniciopromo,
+                            "style" => array(
+                                "font" => array(
+                                    "sz" => "9"
+                                )
+                            )
+                        ),
+                        array(
+                            "value" => $desc_cspfinpromo,
+                            "style" => array(
+                                "font" => array(
+                                    "sz" => "9"
+                                )
+                            )
+                        ),
                         array(
                             "value" => $desc_casnombre,
                             "style" => array(
