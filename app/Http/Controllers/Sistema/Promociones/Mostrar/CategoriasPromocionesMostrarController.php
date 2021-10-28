@@ -534,7 +534,7 @@ class CategoriasPromocionesMostrarController extends Controller
 
     }
 
-    public function MostrarSucursalesDescargarPromocionesExcel(Request $request)
+    public function MostrarSucursalesDescargarPromocionesExcelbk(Request $request)
     {
 
         $usutoken   = $request['usutoken'];
@@ -1251,7 +1251,7 @@ class CategoriasPromocionesMostrarController extends Controller
 
     }
 
-    public function MostrarSucursalesDescargarPromocionesExcelbk(Request $request)
+    public function MostrarSucursalesDescargarPromocionesExcel(Request $request)
     {
 
         $usutoken   = $request['usutoken'];
