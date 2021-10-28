@@ -635,6 +635,684 @@ class CategoriasPromocionesMostrarController extends Controller
 
         try{
 
+            $nuevoArray = array(
+                array(
+                    "columns" => [],
+                    "data"    => []
+                )
+            );
+
+            $fec = fecfechas::where('fecdia', 'LIKE', "%".$dia."%")
+                            ->where('fecmes', 'LIKE', "%".$mes."%")
+                            ->where('fecano', 'LIKE', "%".$anio."%")
+                            ->first(['fecid', 'fecfecha']);
+
+            if($fec){
+                
+                $csps = cspcanalessucursalespromociones::join('prmpromociones as prm', 'prm.prmid', 'cspcanalessucursalespromociones.prmid')
+                                                        ->join('proproductos as pro', 'pro.prosku', 'prm.prmsku')
+                                                        ->join('csccanalessucursalescategorias as csc', 'csc.cscid', 'cspcanalessucursalespromociones.cscid')
+                                                        ->join('cancanales as can', 'can.canid', 'csc.canid')
+                                                        ->join('scasucursalescategorias as sca', 'sca.scaid', 'csc.scaid')
+                                                        ->join('catcategorias as cat', 'cat.catid', 'sca.catid')
+                                                        ->join('sucsucursales as suc', 'sca.sucid', 'suc.sucid')
+                                                        ->join('zonzonas as zon', 'zon.zonid', 'suc.zonid')
+                                                        ->join('gsugrupossucursales as gsu', 'gsu.gsuid', 'suc.gsuid')
+                                                        ->join('cascanalessucursales as cas', 'cas.casid', 'suc.casid')
+                                                        ->where(function ($query) use($sucs) {
+                                                            foreach($sucs as $suc){
+                                                                if(isset($suc['sucpromociondescarga'])){
+                                                                    if($suc['sucpromociondescarga'] == true){
+                                                                        $query->orwhere('sca.sucid', $suc['sucid']);
+                                                                    }
+                                                                }
+                                                            }
+                                                        })
+                                                        ->where('cspcanalessucursalespromociones.fecid', $fec->fecid)
+                                                        ->get([
+                                                            'cspcanalessucursalespromociones.cspid',
+                                                            'casnombre',
+                                                            'zonnombre',
+                                                            'gsunombre',
+                                                            'sucnombre',
+                                                            'sucsoldto',
+                                                            'cannombre',
+                                                            'catnombre',
+                                                            'prm.prmsku',
+                                                            'pronombre',
+                                                            'prmmecanica',
+                                                            'cspcantidadcombo',
+                                                            'cspcantidadplancha',
+                                                            'csptotalcombo',
+                                                            'csptotalplancha',
+                                                            'csptotal',
+                                                        ]);
+
+
+                // for ($i=1; $i <= $numRows ; $i++) {
+                foreach($csps as $posicionCsp => $csp){
+
+                    if($posicionCsp == 0){
+
+                        $arrayTitulos = array(
+                            array(
+                                "title" => "Inicio Promo",
+                                "style" => array(
+                                    "fill" => array(
+                                        "patternType" => "solid",
+                                        "fgColor" => array(
+                                            "rgb" => $colorAzul
+                                        )
+                                    ),
+                                    "font" => array(
+                                        "color" => array(
+                                            "rgb" => $colorBlanco
+                                        )
+                                    )
+                                )
+                            ),
+                            array(
+                                "title" => "Fin Promo",
+                                "style" => array(
+                                    "fill" => array(
+                                        "patternType" => "solid",
+                                        "fgColor" => array(
+                                            "rgb" => $colorAzul
+                                        )
+                                    ),
+                                    "font" => array(
+                                        "color" => array(
+                                            "rgb" => $colorBlanco
+                                        )
+                                    )
+                                )
+                            ),
+                            array(
+                                "title" => "Región",
+                                "style" => array(
+                                    "fill" => array(
+                                        "patternType" => "solid",
+                                        "fgColor" => array(
+                                            "rgb" => $colorAzul
+                                        )
+                                    ),
+                                    "font" => array(
+                                        "color" => array(
+                                            "rgb" => $colorBlanco
+                                        )
+                                    )
+                                )
+                            ),
+                            array(
+                                "title" => "Zona",
+                                "style" => array(
+                                    "fill" => array(
+                                        "patternType" => "solid",
+                                        "fgColor" => array(
+                                            "rgb" => $colorAzul
+                                        )
+                                    ),
+                                    "font" => array(
+                                        "color" => array(
+                                            "rgb" => $colorBlanco
+                                        )
+                                    )
+                                )
+                            ),
+                            array(
+                                "title" => "Grupo",
+                                "style" => array(
+                                    "fill" => array(
+                                        "patternType" => "solid",
+                                        "fgColor" => array(
+                                            "rgb" => $colorAzul
+                                        )
+                                    ),
+                                    "font" => array(
+                                        "color" => array(
+                                            "rgb" => $colorBlanco
+                                        )
+                                    )
+                                )
+                            ),
+                            array(
+                                "title" => "Cliente Hml",
+                                "style" => array(
+                                    "fill" => array(
+                                        "patternType" => "solid",
+                                        "fgColor" => array(
+                                            "rgb" => $colorAzul
+                                        )
+                                    ),
+                                    "font" => array(
+                                        "color" => array(
+                                            "rgb" => $colorBlanco
+                                        )
+                                    )
+                                )
+                            ),
+                            array(
+                                "title" => "Sold To",
+                                "style" => array(
+                                    "fill" => array(
+                                        "patternType" => "solid",
+                                        "fgColor" => array(
+                                            "rgb" => $colorAzul
+                                        )
+                                    ),
+                                    "font" => array(
+                                        "color" => array(
+                                            "rgb" => $colorBlanco
+                                        )
+                                    )
+                                )
+                            ),
+                            array(
+                                "title" => "Cliente",
+                                "style" => array(
+                                    "fill" => array(
+                                        "patternType" => "solid",
+                                        "fgColor" => array(
+                                            "rgb" => $colorAzul
+                                        )
+                                    ),
+                                    "font" => array(
+                                        "color" => array(
+                                            "rgb" => $colorBlanco
+                                        )
+                                    )
+                                )
+                            ),
+                            array(
+                                "title" => "Tipo de Cliente",
+                                "style" => array(
+                                    "fill" => array(
+                                        "patternType" => "solid",
+                                        "fgColor" => array(
+                                            "rgb" => $colorAzul
+                                        )
+                                    ),
+                                    "font" => array(
+                                        "color" => array(
+                                            "rgb" => $colorBlanco
+                                        )
+                                    )
+                                )
+                            ),
+                            array(
+                                "title" => "Categoría",
+                                "style" => array(
+                                    "fill" => array(
+                                        "patternType" => "solid",
+                                        "fgColor" => array(
+                                            "rgb" => $colorAzul
+                                        )
+                                    ),
+                                    "font" => array(
+                                        "color" => array(
+                                            "rgb" => $colorBlanco
+                                        )
+                                    )
+                                )
+                            ),
+                            array(
+                                "title" => "Sku",
+                                "style" => array(
+                                    "fill" => array(
+                                        "patternType" => "solid",
+                                        "fgColor" => array(
+                                            "rgb" => $colorAzul
+                                        )
+                                    ),
+                                    "font" => array(
+                                        "color" => array(
+                                            "rgb" => $colorBlanco
+                                        )
+                                    )
+                                )
+                            ),
+                            array(
+                                "title" => "Producto",
+                                "style" => array(
+                                    "fill" => array(
+                                        "patternType" => "solid",
+                                        "fgColor" => array(
+                                            "rgb" => $colorAzul
+                                        )
+                                    ),
+                                    "font" => array(
+                                        "color" => array(
+                                            "rgb" => $colorBlanco
+                                        )
+                                    )
+                                )
+                            ),
+                            array(
+                                "title" => "Mecánica",
+                                "style" => array(
+                                    "fill" => array(
+                                        "patternType" => "solid",
+                                        "fgColor" => array(
+                                            "rgb" => $colorAzul
+                                        )
+                                    ),
+                                    "font" => array(
+                                        "color" => array(
+                                            "rgb" => $colorBlanco
+                                        )
+                                    )
+                                )
+                            ),
+
+                            array(
+                                "title" => "Planchas a rotar o (Sell Out)",
+                                "style" => array(
+                                    "fill" => array(
+                                        "patternType" => "solid",
+                                        "fgColor" => array(
+                                            "rgb" => $colorNaranjaClaro
+                                        )
+                                    ),
+                                    "font" => array(
+                                        "color" => array(
+                                            "rgb" => $colorNegro
+                                        )
+                                    )
+                                )
+                            ),
+                            array(
+                                "title" => "Reconocer x PL S/IGV",
+                                "style" => array(
+                                    "fill" => array(
+                                        "patternType" => "solid",
+                                        "fgColor" => array(
+                                            "rgb" => $colorNaranjaClaro
+                                        )
+                                    ),
+                                    "font" => array(
+                                        "color" => array(
+                                            "rgb" => $colorNegro
+                                        )
+                                    )
+                                )
+                            ),
+                            array(
+                                "title" => "# Combos",
+                                "style" => array(
+                                    "fill" => array(
+                                        "patternType" => "solid",
+                                        "fgColor" => array(
+                                            "rgb" => $colorNaranjaClaro
+                                        )
+                                    ),
+                                    "font" => array(
+                                        "color" => array(
+                                            "rgb" => $colorNegro
+                                        )
+                                    )
+                                )
+                            ),
+                            array(
+                                "title" => "Reconocer x Combo S/",
+                                "style" => array(
+                                    "fill" => array(
+                                        "patternType" => "solid",
+                                        "fgColor" => array(
+                                            "rgb" => $colorNaranjaClaro
+                                        )
+                                    ),
+                                    "font" => array(
+                                        "color" => array(
+                                            "rgb" => $colorNegro
+                                        )
+                                    )
+                                )
+                            ),
+                        );
+
+                        $nuevoArray[0]['columns'] = $arrayTitulos;
+
+                    }
+
+                    $desc_casnombre = $csp->casnombre;
+                    $desc_zonnombre = $csp->zonnombre;
+                    $desc_gsunombre = $csp->gsunombre;
+                    $desc_sucnombre = $csp->sucnombre;
+                    $desc_sucsoldto = $csp->sucsoldto;
+                    $desc_cannombre = $csp->cannombre;
+                    $desc_catnombre = $csp->catnombre;
+                    $desc_prmsku    = $csp->prmsku;
+                    $desc_pronombre = $csp->pronombre;
+                    $desc_prmmecanica = $csp->prmmecanica;
+
+                    $desc_cspcantidadcombo   = $csp->cspcantidadcombo;
+                    $desc_cspcantidadplancha = $csp->cspcantidadplancha;
+                    $desc_csptotalcombo      = $csp->csptotalcombo;
+                    $desc_csptotalplancha    = $csp->csptotalplancha;
+                    $desc_csptotal           = $csp->csptotal;
+
+                    if($desc_casnombre == null || $desc_casnombre == " " || $desc_casnombre == "-" ){
+                        $desc_casnombre = "0";
+                    }
+                    if($desc_zonnombre == null || $desc_zonnombre == " " || $desc_zonnombre == "-" ){
+                        $desc_zonnombre = "0";
+                    }
+                    if($desc_gsunombre == null || $desc_gsunombre == " " || $desc_gsunombre == "-" ){
+                        $desc_gsunombre = "0";
+                    }
+                    if($desc_sucnombre == null || $desc_sucnombre == " " || $desc_sucnombre == "-" ){
+                        $desc_sucnombre = "0";
+                    }
+                    if($desc_sucsoldto == null || $desc_sucsoldto == " " || $desc_sucsoldto == "-" ){
+                        $desc_sucsoldto = "0";
+                    }
+                    if($desc_cannombre == null || $desc_cannombre == " " || $desc_cannombre == "-" ){
+                        $desc_cannombre = "0";
+                    }
+                    if($desc_catnombre == null || $desc_catnombre == " " || $desc_catnombre == "-" ){
+                        $desc_catnombre = "0";
+                    }
+                    if($desc_prmsku == null || $desc_prmsku == " " || $desc_prmsku == "-" ){
+                        $desc_prmsku = "0";
+                    }
+                    if($desc_pronombre == null || $desc_pronombre == " " || $desc_pronombre == "-" ){
+                        $desc_pronombre = "0";
+                    }
+                    if($desc_prmmecanica == null || $desc_prmmecanica == " " || $desc_prmmecanica == "-" ){
+                        $desc_prmmecanica = "0";
+                    }
+                    if($desc_cspcantidadcombo == null || $desc_cspcantidadcombo == " " || $desc_cspcantidadcombo == "-" ){
+                        $desc_cspcantidadcombo = "0";
+                    }
+                    if($desc_cspcantidadplancha == null || $desc_cspcantidadplancha == " " || $desc_cspcantidadplancha == "-" ){
+                        $desc_cspcantidadplancha = "0";
+                    }
+                    if($desc_csptotalcombo == null || $desc_csptotalcombo == " " || $desc_csptotalcombo == "-" ){
+                        $desc_csptotalcombo = "0";
+                    }
+                    if($desc_csptotalplancha == null || $desc_csptotalplancha == " " || $desc_csptotalplancha == "-" ){
+                        $desc_csptotalplancha = "0";
+                    }
+                    if($desc_csptotal == null || $desc_csptotal == " " || $desc_csptotal == "-" ){
+                        $desc_csptotal = "0";
+                    }
+
+                    if(is_numeric($desc_cspcantidadcombo)){
+                        $desc_cspcantidadcombo = floatval($desc_cspcantidadcombo);
+                    }
+
+                    if(is_numeric($desc_cspcantidadplancha)){
+                        $desc_cspcantidadplancha = floatval($desc_cspcantidadplancha);
+                    }
+
+                    if(is_numeric($desc_csptotalcombo)){
+                        $desc_csptotalcombo = floatval($desc_csptotalcombo);
+                    }
+
+                    if(is_numeric($desc_csptotalplancha)){
+                        $desc_csptotalplancha = floatval($desc_csptotalplancha);
+                    }
+
+                    if(is_numeric($desc_csptotal)){
+                        $desc_csptotal = floatval($desc_csptotal);
+                    }
+
+
+                    $arrayFilaExcel = array(
+                        array(
+                            "value" => $desc_casnombre,
+                            "style" => array(
+                                "font" => array(
+                                    "sz" => "9"
+                                )
+                            )
+                        ),
+                        array(
+                            "value" => $desc_zonnombre,
+                            "style" => array(
+                                "font" => array(
+                                    "sz" => "9"
+                                )
+                            )
+                        ),
+                        array(
+                            "value" => $desc_gsunombre,
+                            "style" => array(
+                                "font" => array(
+                                    "sz" => "9"
+                                )
+                            )
+                        ),
+                        array(
+                            "value" => $desc_sucnombre,
+                            "style" => array(
+                                "font" => array(
+                                    "sz" => "9"
+                                )
+                            )
+                        ),
+                        array(
+                            "value" => $desc_sucsoldto,
+                            "style" => array(
+                                "font" => array(
+                                    "sz" => "9"
+                                )
+                            )
+                        ),
+                        array(
+                            "value" => $desc_cannombre,
+                            "style" => array(
+                                "font" => array(
+                                    "sz" => "9"
+                                )
+                            )
+                        ),
+                        array(
+                            "value" => $desc_catnombre,
+                            "style" => array(
+                                "font" => array(
+                                    "sz" => "9"
+                                )
+                            )
+                        ),
+                        array(
+                            "value" => $desc_prmsku,
+                            "style" => array(
+                                "font" => array(
+                                    "sz" => "9"
+                                )
+                            )
+                        ),
+                        array(
+                            "value" => $desc_pronombre,
+                            "style" => array(
+                                "font" => array(
+                                    "sz" => "9"
+                                )
+                            )
+                        ),
+                        array(
+                            "value" => $desc_prmmecanica,
+                            "style" => array(
+                                "font" => array(
+                                    "sz" => "9"
+                                )
+                            )
+                        ),
+                        array(
+                            "value" => $desc_cspcantidadplancha,
+                            "style" => array(
+                                "font" => array(
+                                    "sz" => "9"
+                                ),
+                                "numFmt" => "#,##0.00"
+                            )
+                        ),
+                        array(
+                            "value" => $desc_csptotalplancha,
+                            "style" => array(
+                                "font" => array(
+                                    "sz" => "9"
+                                ),
+                                "numFmt" => "#,##0.00"
+                            )
+                        ),
+                        array(
+                            "value" => $desc_cspcantidadcombo,
+                            "style" => array(
+                                "font" => array(
+                                    "sz" => "9"
+                                ),
+                                "numFmt" => "#,##0.00"
+                            )
+                        ),
+                        array(
+                            "value" => $desc_csptotalcombo,
+                            "style" => array(
+                                "font" => array(
+                                    "sz" => "9"
+                                ),
+                                "numFmt" => "#,##0.00"
+                            )
+                        ),
+
+                    );
+                    
+                    $nuevoArray[0]['data'][] = $arrayFilaExcel;
+                }
+
+                $respuesta = true;
+                $datos     = $nuevoArray;
+                $archivo   = $car->carnombrearchivo;
+                       
+            }else{
+                $respuesta = false;
+                $mensaje = "Lo sentimos, no pudimos encontrar la fecha seleccionada";
+                $mensajeDetalle = "Vuelve a seleccionar la fecha o comunicate con soporte";
+            }
+
+
+        } catch (Exception $e) {
+            $mensajedev = $e->getMessage();
+            $linea      = __LINE__;
+        }
+
+        $requestsalida = response()->json([
+            'respuesta'      => $respuesta,
+            'mensaje'        => $mensaje,
+            'datos'          => $datos,
+            'linea'          => $linea,
+            'mensajeDetalle' => $mensajeDetalle,
+            'mensajedev'     => $mensajedev,
+            'archivo'        => $archivo
+        ]);
+
+        return $requestsalida;
+
+
+    }
+
+    public function MostrarSucursalesDescargarPromocionesExcelbk(Request $request)
+    {
+
+        $usutoken   = $request['usutoken'];
+        $sucs       = $request['sucs'];
+        $dia        = "01";
+        $mes        = $request['mes'];
+        $anio       = $request['ano'];
+        
+        $usuusuario = usuusuarios::where('usutoken', $usutoken)->first(['ususoldto']);
+
+        $respuesta      = false;
+        $mensaje        = '';
+        $datos          = [];
+        $linea          = __LINE__;
+        $mensajeDetalle = '';
+        $mensajedev     = null;
+
+
+        $columnasExcel = [
+            "A",
+            "B",
+            "C",
+            "D",
+            "E",
+            "F",
+            "G",
+            "H",
+            "I",
+            "J",
+            "K",
+            "L",
+            "M",
+            "N",
+            "O",
+            "P",
+            "Q",
+            "R",
+            "S",
+            "T",
+            "U",
+            "V",
+            "W",
+            // "X",
+            // "Y",
+            "Z",
+            "AA",
+            // "AB",
+            // "AC",
+            "AD",
+            "AE",
+            // "AF",
+            // "AG",
+            "AH",
+            "AI",
+            "AJ",
+            "AK",
+            "AL",
+            "AM",
+            "AN",
+            "AO",
+            "AP",
+            "AQ",
+            "AR",
+            // "AS",
+            // "AT",
+            // "AU",
+            // "AV"
+        ];
+
+        $columnasExcel = [
+            "A",
+            "B",
+            "region",
+            "zona",
+            "grupo",
+            "clientehml",
+            "P",
+            "Q",
+            "AK",
+            "W",
+            "AA",
+            "V",
+            "AN",
+            "AQ",
+            "AO",
+            "AP"
+        ];
+
+        $colorPlomo         = "FF595959";
+        $colorBlanco        = "FFFFFFFF";
+        $colorAzul          = "FF002060";
+        $colorVerdeClaro    = "FF66FF33";
+        $colorRosa          = "FFFF9999";
+        $colorNaranjaClaro  = "FFFFC000";
+        $colorPiel          = "FFFFF2CC";
+        $colorVerdeLimon    = "FFCCFFCC";
+        $colorNegro    = "FF000000";
+
+        try{
+
             $uss = sucsucursales::join('zonzonas as zon', 'zon.zonid', 'sucsucursales.zonid')
                                 ->join('gsugrupossucursales as gsu', 'gsu.gsuid', 'sucsucursales.gsuid')
                                 ->join('cascanalessucursales as cas', 'cas.casid', 'sucsucursales.casid')
