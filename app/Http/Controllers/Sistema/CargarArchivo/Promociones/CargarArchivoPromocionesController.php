@@ -31,6 +31,8 @@ use App\prbpromocionesbonificaciones;
 use App\prppromocionesproductos;
 use App\carcargasarchivos;
 use App\tuptiposusuariospermisos;
+use \DateTime;
+use PhpOffice\PhpSpreadsheet\Shared\Date;
 
 class CargarArchivoPromocionesController extends Controller
 {
