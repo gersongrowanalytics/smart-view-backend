@@ -201,6 +201,17 @@ class CargarArchivoPromocionesController extends Controller
                         $ex_finpromo    = $objPHPExcel->getActiveSheet()->getCell('AK'.$i)->getCalculatedValue(); // AR
                         $nuevoProm      = $objPHPExcel->getActiveSheet()->getCell('AP'.$i)->getCalculatedValue();
 
+                        
+                        $ex_iniciopromo = Date::excelToDateTimeObject($ex_iniciopromo);
+                        $ex_iniciopromo = json_encode($ex_iniciopromo);
+                        $ex_iniciopromo = json_decode($ex_iniciopromo);
+                        $ex_iniciopromo = date("d-m-Y", strtotime($ex_iniciopromo->date));
+
+                        $ex_finpromo = Date::excelToDateTimeObject($ex_finpromo);
+                        $ex_finpromo = json_encode($ex_finpromo);
+                        $ex_finpromo = json_decode($ex_finpromo);
+                        $ex_finpromo = date("d-m-Y", strtotime($ex_finpromo->date));
+
                         $codPrinci  = $soldTo.$sku.$skuBonifi.$tipoClien;
 
                         if($nuevoProm == "x"){
