@@ -56,22 +56,22 @@ class CargarArchivoPromocionesController extends Controller
                                     'usuusuarios.tpuid', 
                                     'tpu.tpuprivilegio'
                                 ]);
-        if($usuusuario->tpuprivilegio == "todo"){
-            $cargarData = true;
-        }else{
-            $tup = tuptiposusuariospermisos::join('pempermisos as pem', 'pem.pemid', 'tuptiposusuariospermisos.pemid')
-                                            ->where('tuptiposusuariospermisos.tpuid', $usuusuario->tpuid)
-                                            ->where('pem.pemslug', "cargar.data.servidor.promociones")
-                                            ->first([
-                                                'tuptiposusuariospermisos.tpuid'
-                                            ]);
+        // if($usuusuario->tpuprivilegio == "todo"){
+        //     $cargarData = true;
+        // }else{
+        //     $tup = tuptiposusuariospermisos::join('pempermisos as pem', 'pem.pemid', 'tuptiposusuariospermisos.pemid')
+        //                                     ->where('tuptiposusuariospermisos.tpuid', $usuusuario->tpuid)
+        //                                     ->where('pem.pemslug', "cargar.data.servidor.promociones")
+        //                                     ->first([
+        //                                         'tuptiposusuariospermisos.tpuid'
+        //                                     ]);
 
-            if($tup){
-                $cargarData = true;
-            }else{
-                $cargarData = false;
-            }
-        }
+        //     if($tup){
+        //         $cargarData = true;
+        //     }else{
+        //         $cargarData = false;
+        //     }
+        // }
         
 
         $fichero_subido = '';
