@@ -47,7 +47,7 @@ class CargarArchivoPromocionesController extends Controller
         $usutoken       = $request->header('api_token');
         $archivo        = $_FILES['file']['name'];
 
-        $cargarData = false;
+        $cargarData = true;
         
         $usuusuario = usuusuarios::join('tputiposusuarios as tpu', 'tpu.tpuid', 'usuusuarios.tpuid')
                                 ->where('usuusuarios.usutoken', $usutoken)
