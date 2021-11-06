@@ -64,7 +64,7 @@ $router->group(['middleware' => ['permisos']], function() use($router) {
     
     // $router->post('/promociones/descargar', 'Sistema\Promociones\Mostrar\CategoriasPromocionesMostrarController@mostrarCategoriasPromociones');
     $router->post('/promociones/descargar', 'Sistema\Promociones\Mostrar\CategoriasPromocionesMostrarController@mostrarCategoriasPromocionesExcel');
-    $router->post('/promociones/descargar/especificos', 'Sistema\Promociones\Mostrar\CategoriasPromocionesMostrarController@MostrarSucursalesDescargarPromocionesExcel');
+    $router->post('/promociones/descargar/especificos', 'Sistema\Promociones\Mostrar\CategoriasPromocionesMostrarController@MostrarSucursalesDescargarPromocionesExcelbk');
 
     $router->post('/promociones/descargar/reporte-pagos', 'Sistema\Promociones\ReportePagos\MostrarReportePagosController@MostrarReportePagos');
     $router->post('/promociones/descargar/reporte-pagos-fecha', 'Sistema\Promociones\ReportePagos\MostrarReportePagosController@MostrarReportePagosXFechaIncioFechaFin');
