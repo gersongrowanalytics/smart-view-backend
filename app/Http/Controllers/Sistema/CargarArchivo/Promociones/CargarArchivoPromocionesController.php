@@ -203,16 +203,52 @@ class CargarArchivoPromocionesController extends Controller
                         $ex_finpromo    = $objPHPExcel->getActiveSheet()->getCell('AM'.$i)->getCalculatedValue(); // AR
                         $nuevoProm      = $objPHPExcel->getActiveSheet()->getCell('AO'.$i)->getCalculatedValue();
 
-                        
-                        $ex_iniciopromo = Date::excelToDateTimeObject($ex_iniciopromo);
-                        $ex_iniciopromo = json_encode($ex_iniciopromo);
-                        $ex_iniciopromo = json_decode($ex_iniciopromo);
-                        $ex_iniciopromo = date("d-m-Y", strtotime($ex_iniciopromo->date));
 
-                        $ex_finpromo = Date::excelToDateTimeObject($ex_finpromo);
-                        $ex_finpromo = json_encode($ex_finpromo);
-                        $ex_finpromo = json_decode($ex_finpromo);
-                        $ex_finpromo = date("d-m-Y", strtotime($ex_finpromo->date));
+                        $arrayFecha = explode(".", $ex_iniciopromo);
+
+                        if(sizeof($arrayFecha) == 3){
+                            $encontroFecha = true;
+                            $ex_iniciopromo = $arrayFecha[0]."-".$arrayFecha[1]."-".$arrayFecha[2];
+                        }else{
+                            $arrayFecha = explode("/", $ex_iniciopromo);
+                            if(sizeof($arrayFecha) == 3){
+                                $encontroFecha = true;
+                                $ex_iniciopromo = $arrayFecha[0]."-".$arrayFecha[1]."-".$arrayFecha[2];
+
+                            }else{
+
+                                $ex_iniciopromo = Date::excelToDateTimeObject($ex_iniciopromo);
+                                $ex_iniciopromo = json_encode($ex_iniciopromo);
+                                $ex_iniciopromo = json_decode($ex_iniciopromo);
+                                $ex_iniciopromo = date("d-m-Y", strtotime($ex_iniciopromo->date));
+
+                                
+                            }
+                        }
+
+                        $arrayFecha = explode(".", $ex_finpromo);
+
+                        if(sizeof($arrayFecha) == 3){
+                            $encontroFecha = true;
+                            $ex_finpromo = $arrayFecha[0]."-".$arrayFecha[1]."-".$arrayFecha[2];
+                        }else{
+                            $arrayFecha = explode("/", $ex_finpromo);
+                            if(sizeof($arrayFecha) == 3){
+                                $encontroFecha = true;
+                                $ex_finpromo = $arrayFecha[0]."-".$arrayFecha[1]."-".$arrayFecha[2];
+
+                            }else{
+
+                                $ex_finpromo = Date::excelToDateTimeObject($ex_finpromo);
+                                $ex_finpromo = json_encode($ex_finpromo);
+                                $ex_finpromo = json_decode($ex_finpromo);
+                                $ex_finpromo = date("d-m-Y", strtotime($ex_finpromo->date));
+                                
+                            }
+                        }
+
+
+
 
                         $codPrinci  = $soldTo.$sku.$skuBonifi.$tipoClien;
 
