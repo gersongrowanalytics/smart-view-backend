@@ -472,11 +472,15 @@ class salvacionController extends Controller
         foreach ($prbs as $prb) {
             
             if(is_numeric ( $prb->prbcomprappt )){
-                
+                $desc = "NORMAL";
+                if(number_format($prb->prbcomprappt, 2) < 0.9){
+                    $desc = "PORCENTAJE";
+                }
+
                 $prbe = prbpromocionesbonificaciones::find($prb->prbid);
                 $prbe->prbcomprappt = number_format($prb->prbcomprappt, 2);
                 $prbe->update();
-                $logs[] = $prb->prbcomprappt." - ".number_format($prb->prbcomprappt, 2);
+                $logs[] = $desc." | ".$prb->prbcomprappt." - ".number_format($prb->prbcomprappt, 2);
             }else{
                 
             }
