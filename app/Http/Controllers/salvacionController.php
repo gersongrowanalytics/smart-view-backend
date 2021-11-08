@@ -475,12 +475,23 @@ class salvacionController extends Controller
                 $desc = "NORMAL";
                 if(number_format($prb->prbcomprappt, 2) < 0.9){
                     $desc = "PORCENTAJE";
+
+                    $porcentaje = $prb->prbcomprappt * 100;
+
+                    $prbe = prbpromocionesbonificaciones::find($prb->prbid);
+                    $prbe->prbcomprappt = $porcentaje."%";
+                    $prbe->update();
+                    $logs[] = $desc." | ".$prb->prbcomprappt." - ".$porcentaje."%";
+
+                }else{
+
+                    $prbe = prbpromocionesbonificaciones::find($prb->prbid);
+                    $prbe->prbcomprappt = number_format($prb->prbcomprappt, 2);
+                    $prbe->update();
+                    $logs[] = $desc." | ".$prb->prbcomprappt." - ".number_format($prb->prbcomprappt, 2);
+
                 }
 
-                $prbe = prbpromocionesbonificaciones::find($prb->prbid);
-                $prbe->prbcomprappt = number_format($prb->prbcomprappt, 2);
-                $prbe->update();
-                $logs[] = $desc." | ".$prb->prbcomprappt." - ".number_format($prb->prbcomprappt, 2);
             }else{
                 
             }
