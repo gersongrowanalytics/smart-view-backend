@@ -199,9 +199,9 @@ class CargarArchivoPromocionesController extends Controller
                         $precXcombo = $objPHPExcel->getActiveSheet()->getCell('AI'.$i)->getCalculatedValue(); // AP
                         $precXplanc = $objPHPExcel->getActiveSheet()->getCell('AJ'.$i)->getCalculatedValue(); // AQ
                         $precXtodo  = $objPHPExcel->getActiveSheet()->getCell('AK'.$i)->getCalculatedValue(); // AR
-                        $ex_iniciopromo = $objPHPExcel->getActiveSheet()->getCell('AK'.$i)->getCalculatedValue(); // AR
-                        $ex_finpromo    = $objPHPExcel->getActiveSheet()->getCell('AK'.$i)->getCalculatedValue(); // AR
-                        $nuevoProm      = $objPHPExcel->getActiveSheet()->getCell('AP'.$i)->getCalculatedValue();
+                        $ex_iniciopromo = $objPHPExcel->getActiveSheet()->getCell('AL'.$i)->getCalculatedValue(); // AR
+                        $ex_finpromo    = $objPHPExcel->getActiveSheet()->getCell('AM'.$i)->getCalculatedValue(); // AR
+                        $nuevoProm      = $objPHPExcel->getActiveSheet()->getCell('AO'.$i)->getCalculatedValue();
 
                         
                         $ex_iniciopromo = Date::excelToDateTimeObject($ex_iniciopromo);
