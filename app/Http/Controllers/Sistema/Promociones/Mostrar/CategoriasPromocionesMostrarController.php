@@ -1075,7 +1075,7 @@ class CategoriasPromocionesMostrarController extends Controller
 
                     $arrayFilaExcel = array(
                         array(
-                            "value" => $desc_cspiniciopromo,
+                            "value" => $csp->cspiniciopromo,
                             "style" => array(
                                 "font" => array(
                                     "sz" => "9"
@@ -1083,7 +1083,7 @@ class CategoriasPromocionesMostrarController extends Controller
                             )
                         ),
                         array(
-                            "value" => $desc_cspfinpromo,
+                            "value" => $csp->cspfinpromo,
                             "style" => array(
                                 "font" => array(
                                     "sz" => "9"
