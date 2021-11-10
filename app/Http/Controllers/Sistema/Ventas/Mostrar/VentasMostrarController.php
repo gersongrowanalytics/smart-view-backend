@@ -261,6 +261,14 @@ class VentasMostrarController extends Controller
                                                                 $query->where('rtp.rtpid', '!=' , 248);
                                                                 $query->where('rtp.rtpid', '!=' , 249);
                                                             }
+                                                        }else if($tsutipopromocionsucursal->fecid == 66){
+
+                                                            // DICHA RESTRICCION DE ARRIBA SE APLICARA A NOVIEMBRE
+
+                                                            if($gsuidSelec != 6){
+                                                                $query->where('rtp.rtpid', '!=' , 250);
+                                                                $query->where('rtp.rtpid', '!=' , 257);
+                                                            }
                                                         }
 
                                                     })
@@ -758,6 +766,11 @@ class VentasMostrarController extends Controller
                     foreach($usus as $usu){
 
                         if($encontroNuevoTrrs == false){
+
+                            // RESTRICCION REALIZADA EL 19/10 -> EL CORREO PARA DICHA RESTRCCION FUE ENVIADO EL DÍA 18/10 POR GABRIEL
+                            // DONDE INDICABA QUE PARA SOLO PARA EL GRUPO PERAMAS LE MUESTRE LAS ESCALAS DE 90 A 94 
+                            // UNA RESTRICCION PARA EL MES DE OCTUBRE 2021 EL GRUPO 6 DE PERAMAS Y LOS IDS(RTPID) DE LAS 
+                            // ESCALAS 90 A 94 DE SELL IN Y SELL OUT
                             if($usu->gsuid == 6 && $mes == "OCT" && $ano == "2021"){
                                 $plantillaTrrs = array(
                                     array(
@@ -792,9 +805,46 @@ class VentasMostrarController extends Controller
     
                                 $encontroNuevoTrrs = true;
     
+                            }else if($usu->gsuid == 6 && $mes == "NOV" && $ano == "2021"){
+                                // DICHA RESTRICCION DE ARRIBA SE APLICARA A NOVIEMBRE
+                                $plantillaTrrs = array(
+                                    array(
+                                        "rtpid" => 0,
+                                        "rtpporcentajedesde" => "90",
+                                        "rtpporcentajehasta" => "94",
+                                        "rtpporcentajerebate" => "0",
+                                        "realTotal" => "0"
+                                    ),
+                                    array(
+                                        "rtpid" => 0,
+                                        "rtpporcentajedesde" => "95",
+                                        "rtpporcentajehasta" => "99",
+                                        "rtpporcentajerebate" => "0",
+                                        "realTotal" => "0"
+                                    ),
+                                    array(
+                                        "rtpid" => 0,
+                                        "rtpporcentajedesde" => "100",
+                                        "rtpporcentajehasta" => "104",
+                                        "rtpporcentajerebate" => "0",
+                                        "realTotal" => "0"
+                                    ),
+                                    array(
+                                        "rtpid" => 0,
+                                        "rtpporcentajedesde" => "105",
+                                        "rtpporcentajehasta" => "10000",
+                                        "rtpporcentajerebate" => "0",
+                                        "realTotal" => "0"
+                                    ),
+                                );
+    
+                                $encontroNuevoTrrs = true;
+
                             }else{
 
                                 if($mes == "OCT" && $ano == "2021"){
+
+                                }else if($mes == "NOV" && $ano == "2021"){
 
                                 }else{
                                     $trr = trrtiposrebatesrebates::join('rtprebatetipospromociones as rtp', 'rtp.rtpid', 'trrtiposrebatesrebates.rtpid')
