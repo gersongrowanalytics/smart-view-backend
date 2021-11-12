@@ -104,7 +104,7 @@ class PromocionesMostrarController extends Controller
                                 $fechaInicio = date("d/m", strtotime($cspcanalesucursalpromocion->cspiniciopromo));
 
                                 $fechaFinal = date("d/m", strtotime($cspcanalesucursalpromocion->cspfinpromo));
-                                // $fechafinal = "30/".$fechaFinal;
+                                $fechafinal = $fechaFinal;
                             }
 
                             $cspcanalessucursalespromociones[$posicionPromociones]['fechainicio'] = $fechaInicio;
