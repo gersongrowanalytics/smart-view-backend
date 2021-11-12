@@ -247,7 +247,8 @@ class PromocionesMostrarController extends Controller
                                                             }else{
                                                                 if($productosMasDuplicados != $productoDuplicado){
 
-                                                                    $fechaInicio = date("d/m", strtotime($fechaActual));
+                                                                    $fechaInicio = date("m", strtotime($fechaActual));
+                                                                    $fechaInicio = "01/".$fechaInicio;
                                                                     $fechaFinal = date("m", strtotime($fechaActual));
                                                                     $fechafinal = "30/".$fechaFinal;
 
@@ -321,6 +322,7 @@ class PromocionesMostrarController extends Controller
                                 if($encontroProducto == false){
                                     
                                     $fechaInicio = date("d/m", strtotime($fechaActual));
+                                    $fechaInicio = "01/".$fechaInicio;
                                     $fechaFinal = date("m", strtotime($fechaActual));
                                     $fechafinal = "30/".$fechaFinal;
 
