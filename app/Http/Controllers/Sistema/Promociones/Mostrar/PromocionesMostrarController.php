@@ -474,7 +474,7 @@ class PromocionesMostrarController extends Controller
 
                 $cuadrarPromos = $contador - $dat['cont'];
 
-                for($i = 0; $i < $cuadrarPromos; $i++){
+                for($i = 0; $i <= $cuadrarPromos; $i++){
                     $fechaInicio = date("m", strtotime($fechaActual));
                     $fechaInicio = "01/".$fechaInicio;
                     $fechaFinal = date("m", strtotime($fechaActual));
