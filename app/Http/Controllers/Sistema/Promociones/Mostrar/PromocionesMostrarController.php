@@ -466,9 +466,11 @@ class PromocionesMostrarController extends Controller
             }
         }
 
-        foreach($datos as $dat){
+        foreach($datos as $contadorDat => $dat){
             
             if($contador > $dat['cont'] ){
+
+                $nuevasPromos = $dat['promocionesOrdenadas'];
 
                 $cuadrarPromos = $contador - $dat['cont'];
 
@@ -478,7 +480,7 @@ class PromocionesMostrarController extends Controller
                     $fechaFinal = date("m", strtotime($fechaActual));
                     $fechafinal = "30/".$fechaFinal;
 
-                    $dat['promocionesOrdenadas'][] = array(
+                    $nuevasPromos[] = array(
                         'cspid'              => 0,
                         'prmid'              => "",
                         'prmcodigo'          => "",
@@ -503,6 +505,8 @@ class PromocionesMostrarController extends Controller
                     );
 
                 }
+
+                $datos[$contadorDat]['promocionesOrdenadas'] = $nuevasPromos;
 
             }
 
