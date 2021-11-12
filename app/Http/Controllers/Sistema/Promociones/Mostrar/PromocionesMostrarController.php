@@ -272,7 +272,7 @@ class PromocionesMostrarController extends Controller
                                                                         'productoPrincipal'  => $productoCsc,
                                                                         'productosbonificados' => [],
                                                                         'fechainicio' => $fechaInicio,
-                                                                        'fechafinal'  => $fechaFinal,
+                                                                        'fechafinal'  => $fechafinal,
                                 
                                                                     );
                                                                 }
@@ -345,7 +345,7 @@ class PromocionesMostrarController extends Controller
                                         'productoPrincipal'  => $productoCsc,
                                         'productosbonificados' => [],
                                         'fechainicio' => $fechaInicio,
-                                        'fechafinal'  => $fechaFinal,
+                                        'fechafinal'  => $fechafinal,
 
                                     );
                                 }
