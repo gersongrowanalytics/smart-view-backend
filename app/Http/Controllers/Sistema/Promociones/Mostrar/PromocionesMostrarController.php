@@ -659,6 +659,21 @@ class PromocionesMostrarController extends Controller
                             
                             if($posicionCsp+1 == sizeof($csps)){
 
+                                if($cspsc->cspiniciopromo == null){
+                                    $fechaInicio = date("d/m", strtotime($cspsc->fecfecha));
+        
+                                    $fechaFinal = date("m", strtotime($cspsc->fecfecha));
+                                    $fechafinal = "30/".$fechaFinal;
+                                }else{
+                                    $fechaInicio = date("d/m", strtotime($cspsc->cspiniciopromo));
+        
+                                    $fechaFinal = date("d/m", strtotime($cspsc->cspfinpromo));
+                                    $fechafinal = $fechaFinal;
+                                }
+        
+                                $csps[$cont]['cspiniciopromo']  = $fechaInicio;
+                                $csps[$cont]['cspfinpromo']     = $fechafinal;
+
                                 if(is_numeric ( $cspsc->cspcantidadcombo )){
                                     $cantidadComboNuevo = $cspsc->cspcantidadcombo;
                                 }else{
