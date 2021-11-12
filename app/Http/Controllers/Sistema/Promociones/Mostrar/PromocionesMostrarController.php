@@ -980,6 +980,9 @@ class PromocionesMostrarController extends Controller
     public function ArmarPromociones($cspcanalessucursalespromociones, $productosCsc, $posicion, $csccanalessucursalescategorias)
     {
 
+        date_default_timezone_set("America/Lima");
+        $fechaActual = date('Y-m-d');
+        
         $nuevoArrayCsp = array();
                     
         $numeroPromocionesTerminadas = 0;
