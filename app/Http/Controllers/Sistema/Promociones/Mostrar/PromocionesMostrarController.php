@@ -873,9 +873,9 @@ class PromocionesMostrarController extends Controller
 
         $contador = 0;
 
-        foreach($datos as $dat){
+        foreach($datos as $contDat => $dat){
             $contadorDat = sizeof($dat['promocionesOrdenadas']);
-            $dat['cont'] = $contadorDat;
+            $datos[$contDat]['cont'] = $contadorDat;
 
             if($contadorDat > $contador){
                 $contador =  $contadorDat;
