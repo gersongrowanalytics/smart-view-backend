@@ -509,8 +509,6 @@ class PromocionesMostrarController extends Controller
                 $datos[$contadorDat]['promocionesOrdenadas'] = $nuevasPromos;
 
             }
-
-
         }
 
         $requestsalida = response()->json([
@@ -867,6 +865,64 @@ class PromocionesMostrarController extends Controller
         );
 
         $cscs = $cscsDoble;
+
+        
+
+        $contador = 0;
+
+        foreach($datos as $dat){
+            $contadorDat = sizeof($dat['promocionesOrdenadas']);
+            $dat['cont'] = $contadorDat;
+
+            if($contadorDat > $contador){
+                $contador =  $contadorDat;
+            }
+        }
+
+        foreach($datos as $contadorDat => $dat){
+            
+            if($contador > $dat['cont'] ){
+
+                $nuevasPromos = $dat['promocionesOrdenadas'];
+
+                $cuadrarPromos = $contador - $dat['cont'];
+
+                for($i = 0; $i <= $cuadrarPromos; $i++){
+                    $fechaInicio = date("m", strtotime($fechaActual));
+                    $fechaInicio = "01/".$fechaInicio;
+                    $fechaFinal = date("m", strtotime($fechaActual));
+                    $fechafinal = "30/".$fechaFinal;
+
+                    $nuevasPromos[] = array(
+                        'cspid'              => 0,
+                        'prmid'              => "",
+                        'prmcodigo'          => "",
+                        'cspvalorizado'      => "",
+                        'cspplanchas'        => "",
+                        'cspcompletado'      => "",
+                        'cspcantidadcombo'   => "",
+                        'prmmecanica'        => "",
+                        'cspcantidadplancha' => "",
+                        'csptotalcombo'      => "",
+                        'csptotalplancha'    => "",
+                        'csptotal'           => "",
+                        'cspgratis'          => "",
+                        'prmaccion'          => "",
+                        'tprnombre'          => "",
+                        'cspnuevo'           => "",
+                        'productos'          => [],
+                        'productoPrincipal'  => "0",
+                        'productosbonificados' => [],
+                        'fechainicio' => $fechaInicio,
+                        'fechafinal'  => $fechafinal,
+                    );
+
+                }
+
+                $datos[$contadorDat]['promocionesOrdenadas'] = $nuevasPromos;
+
+            }
+        }
 
 
 
