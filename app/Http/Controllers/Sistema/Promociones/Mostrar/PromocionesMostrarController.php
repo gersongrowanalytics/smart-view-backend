@@ -866,7 +866,10 @@ class PromocionesMostrarController extends Controller
 
         $cscs = $cscsDoble;
 
-        
+        $linea          = __LINE__;
+        $respuesta      = true;
+        $datos          = $cscs;
+        $mensaje        = 'Las promociones se cargaron satisfactoriamente';
 
         $contador = 0;
 
@@ -923,13 +926,6 @@ class PromocionesMostrarController extends Controller
 
             }
         }
-
-
-
-        $linea          = __LINE__;
-        $respuesta      = true;
-        $datos          = $cscs;
-        $mensaje        = 'Las promociones se cargaron satisfactoriamente';
         
         $requestsalida = response()->json([
             'respuesta'      => $respuesta,
