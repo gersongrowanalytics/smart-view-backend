@@ -56,6 +56,8 @@ class PromocionesMostrarController extends Controller
                 
                 $productosCsc = [];
 
+                
+
                 foreach($csccanalessucursalescategorias as $posicion => $csccanalesucursalcategoria){
 
                     $nuevoArrayCsp = array();
@@ -450,6 +452,61 @@ class PromocionesMostrarController extends Controller
         } catch (Exception $e) {
             $mensajedev = $e->getMessage();
             $linea      = __LINE__;
+        }
+
+
+        $contador = 0;
+
+        foreach($datos as $dat){
+            $contadorDat = sizeof($dat['promocionesOrdenadas']);
+            $dat['cont'] = $contadorDat;
+
+            if($contadorDat > $contador){
+                $contador =  $contadorDat;
+            }
+        }
+
+        foreach($datos as $dat){
+            
+            if($contador > $dat['cont'] ){
+
+                $cuadrarPromos = $contador - $dat['cont'];
+
+                for($i = 0; $i < $cuadrarPromos; $i++){
+                    $fechaInicio = date("m", strtotime($fechaActual));
+                    $fechaInicio = "01/".$fechaInicio;
+                    $fechaFinal = date("m", strtotime($fechaActual));
+                    $fechafinal = "30/".$fechaFinal;
+
+                    $dat['promocionesOrdenadas'][] = array(
+                        'cspid'              => 0,
+                        'prmid'              => "",
+                        'prmcodigo'          => "",
+                        'cspvalorizado'      => "",
+                        'cspplanchas'        => "",
+                        'cspcompletado'      => "",
+                        'cspcantidadcombo'   => "",
+                        'prmmecanica'        => "",
+                        'cspcantidadplancha' => "",
+                        'csptotalcombo'      => "",
+                        'csptotalplancha'    => "",
+                        'csptotal'           => "",
+                        'cspgratis'          => "",
+                        'prmaccion'          => "",
+                        'tprnombre'          => "",
+                        'cspnuevo'           => "",
+                        'productos'          => [],
+                        'productoPrincipal'  => "0",
+                        'productosbonificados' => [],
+                        'fechainicio' => $fechaInicio,
+                        'fechafinal'  => $fechafinal,
+                    );
+
+                }
+
+            }
+
+
         }
 
         $requestsalida = response()->json([
