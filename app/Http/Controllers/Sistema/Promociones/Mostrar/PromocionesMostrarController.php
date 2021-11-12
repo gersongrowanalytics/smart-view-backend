@@ -526,6 +526,10 @@ class PromocionesMostrarController extends Controller
 
     public function mostrarPromocionesXZona(Request $request)
     {
+
+        date_default_timezone_set("America/Lima");
+        $fechaActual = date('Y-m-d');
+        
         $usutoken   = $request['usutoken'];
         $catid      = $request['catid'];
         $zonid      = $request['zonid'];
