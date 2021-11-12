@@ -1818,4 +1818,127 @@ class ObjetivoCargarController extends Controller
         
         return $requestsalida;
     }
+
+    public function CargarRebate(Request $request)
+    {
+
+        date_default_timezone_set("America/Lima");
+        $fechaActual = date('Y-m-d H:i:s');
+
+        $respuesta      = true;
+        $mensaje        = '';
+        $datos          = [];
+        $skusNoExisten  = [0];
+        $soldtosNoExisten  = [];
+        $linea          = __LINE__;
+        $mensajeDetalle = '';
+        $mensajedev     = null;
+        $numeroCelda    = 0;
+        $usutoken       = $request->header('api_token');
+        $archivo        = $_FILES['file']['name'];
+
+        $fichero_subido = '';
+
+        $pkid = 0;
+        $log  = [];
+        $observaciones  = [];
+
+        $cargarData = false;
+        
+        $usuusuario = usuusuarios::join('tputiposusuarios as tpu', 'tpu.tpuid', 'usuusuarios.tpuid')
+                                ->where('usuusuarios.usutoken', $usutoken)
+                                ->first([
+                                    'usuusuarios.usuid', 
+                                    'usuusuarios.tpuid', 
+                                    'tpu.tpuprivilegio'
+                                ]);
+
+        if($usuusuario->tpuprivilegio == "todo"){
+            $cargarData = true;
+        }else{
+            $tup = tuptiposusuariospermisos::join('pempermisos as pem', 'pem.pemid', 'tuptiposusuariospermisos.pemid')
+                                            ->where('tuptiposusuariospermisos.tpuid', $usuusuario->tpuid)
+                                            ->where('pem.pemslug', "cargar.data.servidor")
+                                            ->first([
+                                                'tuptiposusuariospermisos.tpuid'
+                                            ]);
+
+            if($tup){
+                $cargarData = true;
+            }else{
+                $cargarData = false;
+            }
+        }
+
+
+        $fichero_subido = base_path().'/public/Sistema/cargaArchivos/rebate/'.basename($usuusuario->usuid.'-'.$usuusuario->usuusuario.'-'.$fechaActual.'-'.$_FILES['file']['name']);
+
+        if (move_uploaded_file($_FILES['file']['tmp_name'], $fichero_subido)) {
+
+            if($respuesta == true){
+                date_default_timezone_set("America/Lima");
+                $fechaActual = date('Y-m-d H:i:s');
+
+                $nuevoCargaArchivo = new carcargasarchivos;
+                $nuevoCargaArchivo->tcaid             = 14;
+                $nuevoCargaArchivo->fecid             = $fecid;
+                $nuevoCargaArchivo->usuid             = $usuusuario->usuid;
+                $nuevoCargaArchivo->carnombrearchivo  = $archivo;
+                $nuevoCargaArchivo->carubicacion      = $fichero_subido;
+                $nuevoCargaArchivo->carexito          = $cargarData;
+                $nuevoCargaArchivo->carurl            = env('APP_URL').'/Sistema/cargaArchivos/objetivos/sellout/'.$archivo;
+                if($nuevoCargaArchivo->save()){
+                    $pkid = "CAR-".$nuevoCargaArchivo->carid;
+                }else{
+
+                }
+
+                // DB::commit();
+            }else{
+                // DB::rollBack();
+            }
+
+        }else{
+            $respuesta  = false;
+            $mensaje    = "No se pudo guardar el excel en el sistema";
+        }
+
+        $requestsalida = response()->json([
+            "respuesta"      => $respuesta,
+            "mensaje"        => $mensaje,
+            "datos"          => $datos,
+            "linea"          => $linea,
+            "mensajeDetalle" => $mensajeDetalle,
+            "mensajedev"     => $mensajedev,
+            "numeroCelda"    => $numeroCelda,
+            "skusNoExisten"  => $skusNoExisten,
+            "soldtosNoExisten" => $soldtosNoExisten,
+            "observaciones" => $observaciones
+        ]);
+
+        if($respuesta == true){
+            $AuditoriaController = new AuditoriaController;
+            $registrarAuditoria  = $AuditoriaController->registrarAuditoria(
+                $usutoken,
+                $usuusuario->usuid,
+                null,
+                $fichero_subido,
+                $requestsalida,
+                'CARGAR DATA DE OBJETIVOS SELL OUT',
+                'IMPORTAR',
+                '/cargarArchivo/ventas/obejtivossellout', //ruta
+                $pkid,
+                $log
+            );
+
+            if($registrarAuditoria == true){
+
+            }else{
+                
+            }
+        }
+        
+        return $requestsalida;
+
+    }
 }
