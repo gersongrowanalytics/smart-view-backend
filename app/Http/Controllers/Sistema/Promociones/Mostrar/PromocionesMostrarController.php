@@ -1035,6 +1035,8 @@ class PromocionesMostrarController extends Controller
                                 'productos'          => $cspcanalessucursalespromociones[$posicionCspDos]['productos'],
                                 'productoPrincipal'  => $cspcanalessucursalespromociones[$posicionCspDos]['productoPrincipal'],
                                 'productosbonificados' => $cspcanalessucursalespromociones[$posicionCspDos]['productosbonificados'],
+                                'fechainicio'       => $cspcanalessucursalespromociones[$posicionCspDos]['cspiniciopromo'],
+                                'fechafinal'        => $cspcanalessucursalespromociones[$posicionCspDos]['cspfinpromo']
                             );
 
 
@@ -1071,6 +1073,8 @@ class PromocionesMostrarController extends Controller
                                                 'productos'          => $nuevoArrayCspn[$posicionNuevInv]['productos'],
                                                 'productoPrincipal'  => $nuevoArrayCspn[$posicionNuevInv]['productoPrincipal'],
                                                 'productosbonificados' => $nuevoArrayCspn[$posicionNuevInv]['productosbonificados'],
+                                                'fechainicio'       => $nuevoArrayCspn[$posicionNuevInv]['cspiniciopromo'],
+                                                'fechafinal'        => $nuevoArrayCspn[$posicionNuevInv]['cspfinpromo']
                                             );
 
                                             if(sizeof($nuevoArrayCspn)-1 >=  $posicionNuevInv+1 ){
@@ -1080,6 +1084,12 @@ class PromocionesMostrarController extends Controller
     
                                                 }else{
                                                     if($productosMasDuplicados != $productoDuplicado){
+
+                                                        $fechaInicio = date("m", strtotime($fechaActual));
+                                                        $fechaInicio = "01/".$fechaInicio;
+                                                        $fechaFinal = date("m", strtotime($fechaActual));
+                                                        $fechafinal = "30/".$fechaFinal;
+
                                                         $nuevoArrayCspDuplicado[] = array(
                                                             'cspid'              => 0,
                                                             'prmid'              => "",
@@ -1100,7 +1110,8 @@ class PromocionesMostrarController extends Controller
                                                             'productos'          => [],
                                                             'productoPrincipal'  => $productoCsc,
                                                             'productosbonificados' => [],
-                    
+                                                            'fechainicio' => $fechaInicio,
+                                                            'fechafinal'  => $fechafinal,
                                                         );
                                                     }
                                                 }
@@ -1127,6 +1138,8 @@ class PromocionesMostrarController extends Controller
                                                 'productos'          => $nuevoArrayCspn[$posicionNuevInv]['productos'],
                                                 'productoPrincipal'  => $nuevoArrayCspn[$posicionNuevInv]['productoPrincipal'],
                                                 'productosbonificados' => $nuevoArrayCspn[$posicionNuevInv]['productosbonificados'],
+                                                'fechainicio'       => $nuevoArrayCspn[$posicionNuevInv]['cspiniciopromo'],
+                                                'fechafinal'        => $nuevoArrayCspn[$posicionNuevInv]['cspfinpromo']
                                             );
                                         }
                                     }
@@ -1144,6 +1157,12 @@ class PromocionesMostrarController extends Controller
                     }
 
                     if($encontroProducto == false){
+
+                        $fechaInicio = date("m", strtotime($fechaActual));
+                        $fechaInicio = "01/".$fechaInicio;
+                        $fechaFinal = date("m", strtotime($fechaActual));
+                        $fechafinal = "30/".$fechaFinal;
+
                         $nuevoArrayCsp[] = array(
                             'cspid'              => 0,
                             'prmid'              => "",
@@ -1164,6 +1183,8 @@ class PromocionesMostrarController extends Controller
                             'productos'          => [],
                             'productoPrincipal'  => $productoCsc,
                             'productosbonificados' => [],
+                            'fechainicio' => $fechaInicio,
+                            'fechafinal'  => $fechafinal,
 
                         );
                     }
@@ -1198,6 +1219,8 @@ class PromocionesMostrarController extends Controller
                             'productos'          => $cspcanalessucursalespromociones[$posicionCspDos]['productos'],
                             'productoPrincipal'  => $cspcanalessucursalespromociones[$posicionCspDos]['productoPrincipal'],
                             'productosbonificados' => $cspcanalessucursalespromociones[$posicionCspDos]['productosbonificados'],
+                            'fechainicio'       => $cspcanalessucursalespromociones[$posicionCspDos]['cspiniciopromo'],
+                            'fechafinal'        => $cspcanalessucursalespromociones[$posicionCspDos]['cspfinpromo']
 
                         );
                     }
@@ -1227,7 +1250,9 @@ class PromocionesMostrarController extends Controller
                         'cspnuevo'           => $cspcanalessucursalespromociones[$posicionCsp]['cspnuevo'],
                         'productos'          => $cspcanalessucursalespromociones[$posicionCsp]['productos'],
                         'productoPrincipal'  => $cspcanalessucursalespromociones[$posicionCsp]['productoPrincipal'],
-                        'productosbonificados' => $cspcanalessucursalespromociones[$posicionCsp]['productosbonificados']
+                        'productosbonificados' => $cspcanalessucursalespromociones[$posicionCsp]['productosbonificados'],
+                        'fechainicio'       => $cspcanalessucursalespromociones[$posicionCsp]['cspiniciopromo'],
+                        'fechafinal'        => $cspcanalessucursalespromociones[$posicionCsp]['cspfinpromo']
                     );
                 }
             }
