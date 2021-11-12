@@ -529,7 +529,7 @@ class PromocionesMostrarController extends Controller
 
         date_default_timezone_set("America/Lima");
         $fechaActual = date('Y-m-d');
-        
+
         $usutoken   = $request['usutoken'];
         $catid      = $request['catid'];
         $zonid      = $request['zonid'];
@@ -608,6 +608,7 @@ class PromocionesMostrarController extends Controller
                                                     ->join('csccanalessucursalescategorias as csc', 'csc.cscid', 'cspcanalessucursalespromociones.cscid')
                                                     ->join('scasucursalescategorias as sca', 'sca.scaid', 'csc.scaid')
                                                     ->join('tprtipospromociones as tpr', 'tpr.tprid', 'prm.tprid')
+                                                    ->join('fecfechas as fec', 'fec.fecid', 'cspcanalessucursalespromociones.fecid')
                                                     ->where('cspcanalessucursalespromociones.fecid', $fec->fecid)
                                                     ->where('sca.catid', $catid)
                                                     ->where('sca.sucid', $suc->sucid)
@@ -622,7 +623,10 @@ class PromocionesMostrarController extends Controller
                                                         'cspcantidadcombo',
                                                         'cspcantidadplancha',
                                                         'tprnombre',
-                                                        'cspgratis'
+                                                        'cspgratis',
+                                                        'cspiniciopromo',
+                                                        'cspfinpromo',
+                                                        'fecfecha'
                                                     ]);
 
                 foreach($cspscs as $cspsc){
@@ -732,6 +736,21 @@ class PromocionesMostrarController extends Controller
 
                     }else{
                         $csps[$cont]['prmcodigo'] = $cspsc->prmcodigo;
+
+                        if($cspsc->cspiniciopromo == null){
+                            $fechaInicio = date("d/m", strtotime($cspsc->fecfecha));
+
+                            $fechaFinal = date("m", strtotime($cspsc->fecfecha));
+                            $fechafinal = "30/".$fechaFinal;
+                        }else{
+                            $fechaInicio = date("d/m", strtotime($cspsc->cspiniciopromo));
+
+                            $fechaFinal = date("d/m", strtotime($cspsc->cspfinpromo));
+                            $fechafinal = $fechaFinal;
+                        }
+
+                        $csps[$cont]['cspiniciopromo']  = $fechaInicio;
+                        $csps[$cont]['cspfinpromo']     = $fechafinal;
 
                         if(is_numeric ( $cspsc->cspcantidadcombo )){
                             $cantidadComboNuevo = $cspsc->cspcantidadcombo;
