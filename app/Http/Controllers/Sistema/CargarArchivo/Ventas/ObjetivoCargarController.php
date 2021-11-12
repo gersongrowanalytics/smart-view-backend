@@ -1879,6 +1879,60 @@ class ObjetivoCargarController extends Controller
                 date_default_timezone_set("America/Lima");
                 $fechaActual = date('Y-m-d H:i:s');
 
+                $anioActual = date('Y');
+                $mesActual  = date('m');
+                $diaActual  = '01';
+
+                $fecfecha = fecfechas::where('fecdia', $diaActual)
+                                    ->where('fecmesnumero', $mesActual)
+                                    ->where('fecano', $anioActual)
+                                    ->first(['fecid']);
+
+                $fecid = 0;
+                if($fecfecha){
+                    $fecid = $fecfecha->fecid;
+                }else{
+                    $mesTxt = "";
+
+                    if($mesActual == "01"){
+                        $mesTxt = "ENE";
+                    }else if($mesActual == "02"){
+                        $mesTxt = "FEB";
+                    }else if($mesActual == "03"){
+                        $mesTxt = "MAR";
+                    }else if($mesActual == "04"){
+                        $mesTxt = "ABR";
+                    }else if($mesActual == "05"){
+                        $mesTxt = "MAY";
+                    }else if($mesActual == "06"){
+                        $mesTxt = "JUN";
+                    }else if($mesActual == "07"){
+                        $mesTxt = "JUL";
+                    }else if($mesActual == "08"){
+                        $mesTxt = "AGO";
+                    }else if($mesActual == "09"){
+                        $mesTxt = "SET";
+                    }else if($mesActual == "10"){
+                        $mesTxt = "OCT";
+                    }else if($mesActual == "11"){
+                        $mesTxt = "NOV";
+                    }else if($mesActual == "12"){
+                        $mesTxt = "DIC";
+                    }
+
+                    $nuevaFecha = new fecfechas;
+                    $nuevaFecha->fecfecha     = new \DateTime(date("Y-m-d", strtotime($anioActual.'-'.$mesActual.'-'.$diaActual)));
+                    $nuevaFecha->fecdia       = $diaActual;
+                    $nuevaFecha->fecmes       = $mesTxt;
+                    $nuevaFecha->fecmesnumero = $mesActual;
+                    $nuevaFecha->fecano       = $anioActual;
+                    if($nuevaFecha->save()){
+                        $fecid = $nuevaFecha->fecid;
+                    }else{
+    
+                    }
+                }
+
                 $nuevoCargaArchivo = new carcargasarchivos;
                 $nuevoCargaArchivo->tcaid             = 14;
                 $nuevoCargaArchivo->fecid             = $fecid;
