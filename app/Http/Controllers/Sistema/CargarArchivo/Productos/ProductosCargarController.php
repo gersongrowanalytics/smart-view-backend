@@ -319,7 +319,8 @@ class ProductosCargarController extends Controller
                                 $nuevopro->catid     = $categoriaid;
                                 $nuevopro->prosku    = $codigoMaterial;
                                 $nuevopro->pronombre = $material;
-                                $nuevopro->proimagen = env('APP_URL').'/Sistema/abs/img/nohay.png';
+                                $nuevopro->proimagen = '/';
+                                $nuevopro->proespromocion = false;
                                 if($nuevopro->save()){
                                     $log["NUEVO_PRODUCTO"][] = $codigoMaterial." CATEGORIA: ".$categoria."(".$categoriaid.")";
                                 }else{
