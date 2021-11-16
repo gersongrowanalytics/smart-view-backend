@@ -639,7 +639,7 @@ class CargarArchivoController extends Controller
         );
 
         $requestsalida = response()->json([
-            "respuesta"      => $respuesta,
+            "respuesta"      => true,
             "mensaje"        => $mensaje,
             "datos"          => $datos,
             "linea"          => $linea,
