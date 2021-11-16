@@ -90,58 +90,117 @@ class CargarArchivoController extends Controller
                     for ($i=2; $i <= $numRows; $i++) {
                         $dia = '01';
     
-                        $ano        = $objPHPExcel->getActiveSheet()->getCell('D'.$i)->getCalculatedValue();
-                        $mesTxt     = $objPHPExcel->getActiveSheet()->getCell('E'.$i)->getCalculatedValue();
-    
-                        $soldto     = $objPHPExcel->getActiveSheet()->getCell('H'.$i)->getCalculatedValue();
-                        $cliente    = $objPHPExcel->getActiveSheet()->getCell('I'.$i)->getCalculatedValue();
-                        $sku        = $objPHPExcel->getActiveSheet()->getCell('J'.$i)->getCalculatedValue();
-                        $producto   = $objPHPExcel->getActiveSheet()->getCell('K'.$i)->getCalculatedValue();
-                        $sector     = $objPHPExcel->getActiveSheet()->getCell('L'.$i)->getCalculatedValue();
-                        $real       = $objPHPExcel->getActiveSheet()->getCell('O'.$i)->getCalculatedValue();
+                        // $ano        = $objPHPExcel->getActiveSheet()->getCell('D'.$i)->getCalculatedValue();
+                        // $mesTxt     = $objPHPExcel->getActiveSheet()->getCell('E'.$i)->getCalculatedValue();
+                        // $soldto     = $objPHPExcel->getActiveSheet()->getCell('H'.$i)->getCalculatedValue();
+                        // $cliente    = $objPHPExcel->getActiveSheet()->getCell('I'.$i)->getCalculatedValue();
+                        // $sku        = $objPHPExcel->getActiveSheet()->getCell('J'.$i)->getCalculatedValue();
+                        // $producto   = $objPHPExcel->getActiveSheet()->getCell('K'.$i)->getCalculatedValue();
+                        // $sector     = $objPHPExcel->getActiveSheet()->getCell('L'.$i)->getCalculatedValue();
+                        // $real       = $objPHPExcel->getActiveSheet()->getCell('O'.$i)->getCalculatedValue();
+                        
+                        $ano        = $objPHPExcel->getActiveSheet()->getCell('E'.$i)->getCalculatedValue();
+                        $mesTxt     = $objPHPExcel->getActiveSheet()->getCell('F'.$i)->getCalculatedValue();
+                        $soldto     = $objPHPExcel->getActiveSheet()->getCell('G'.$i)->getCalculatedValue();
+                        $cliente    = $objPHPExcel->getActiveSheet()->getCell('H'.$i)->getCalculatedValue();
+                        $sku        = $objPHPExcel->getActiveSheet()->getCell('I'.$i)->getCalculatedValue();
+                        $producto   = $objPHPExcel->getActiveSheet()->getCell('J'.$i)->getCalculatedValue();
+                        // $sector     = $objPHPExcel->getActiveSheet()->getCell(''.$i)->getCalculatedValue();
+                        $real       = $objPHPExcel->getActiveSheet()->getCell('K'.$i)->getCalculatedValue();
                         
                         if(isset($mesTxt)){
+
+                            $mesTxt = round($mesTxt);
+
                             if(isset($ano)){
                                 $fecfecha = fecfechas::where('fecdia', $dia)
-                                                        ->where('fecmes', $mesTxt)
+                                                        // ->where('fecmes', $mesTxt)
+                                                        ->where('fecmesnumero', $mesTxt)
                                                         ->where('fecano', $ano)
                                                         ->first(['fecid']);
                                 $fecid = 0;
+                                // if($fecfecha){
+                                //     $fecid = $fecfecha->fecid;
+                                // }else{
+
+                                //     $mes = "0";
+
+
+                                //     if($mesTxt == "ENE"){
+                                //         $mes = "01";
+                                //     }else if($mesTxt == "FEB"){
+                                //         $mes = "02";
+                                //     }else if($mesTxt == "MAR"){
+                                //         $mes = "03";
+                                //     }else if($mesTxt == "ABR"){
+                                //         $mes = "04";
+                                //     }else if($mesTxt == "MAY"){
+                                //         $mes = "05";
+                                //     }else if($mesTxt == "JUN"){
+                                //         $mes = "06";
+                                //     }else if($mesTxt == "JUL"){
+                                //         $mes = "07";
+                                //     }else if($mesTxt == "AGO"){
+                                //         $mes = "08";
+                                //     }else if($mesTxt == "SET"){
+                                //         $mes = "09";
+                                //     }else if($mesTxt == "OCT"){
+                                //         $mes = "10";
+                                //     }else if($mesTxt == "NOV"){
+                                //         $mes = "11";
+                                //     }else if($mesTxt == "DIC"){
+                                //         $mes = "12";
+                                //     }
+            
+                                //     $nuevaFecha = new fecfechas;
+                                //     $nuevaFecha->fecfecha = new \DateTime(date("Y-m-d", strtotime($ano.'-'.$mes.'-'.$dia)));
+                                //     $nuevaFecha->fecdia   = $dia;
+                                //     $nuevaFecha->fecmes   = $mesTxt;
+                                //     $nuevaFecha->fecmesnumero = $mes;
+                                //     $nuevaFecha->fecano   = $ano;
+                                //     if($nuevaFecha->save()){
+                                //         $fecid = $nuevaFecha->fecid;
+                                //     }else{
+                    
+                                //     }
+                                // }
+
+
                                 if($fecfecha){
                                     $fecid = $fecfecha->fecid;
                                 }else{
-                                    $mes = "0";
-                                    if($mesTxt == "ENE"){
-                                        $mes = "01";
-                                    }else if($mesTxt == "FEB"){
-                                        $mes = "02";
-                                    }else if($mesTxt == "MAR"){
-                                        $mes = "03";
-                                    }else if($mesTxt == "ABR"){
-                                        $mes = "04";
-                                    }else if($mesTxt == "MAY"){
-                                        $mes = "05";
-                                    }else if($mesTxt == "JUN"){
-                                        $mes = "06";
-                                    }else if($mesTxt == "JUL"){
-                                        $mes = "07";
-                                    }else if($mesTxt == "AGO"){
-                                        $mes = "08";
-                                    }else if($mesTxt == "SET"){
-                                        $mes = "09";
-                                    }else if($mesTxt == "OCT"){
-                                        $mes = "10";
-                                    }else if($mesTxt == "NOV"){
-                                        $mes = "11";
-                                    }else if($mesTxt == "DIC"){
-                                        $mes = "12";
+                                    $mes = "";
+                                    if($mesTxt == "1"){
+                                        $mes = "ENE";
+                                    }else if($mesTxt == "2"){
+                                        $mes = "FEB";
+                                    }else if($mesTxt == "3"){
+                                        $mes = "MAR";
+                                    }else if($mesTxt == "4"){
+                                        $mes = "ABR";
+                                    }else if($mesTxt == "5"){
+                                        $mes = "MAY";
+                                    }else if($mesTxt == "6"){
+                                        $mes = "JUN";
+                                    }else if($mesTxt == "7"){
+                                        $mes = "JUL";
+                                    }else if($mesTxt == "8"){
+                                        $mes = "AGO";
+                                    }else if($mesTxt == "9"){
+                                        $mes = "SET";
+                                    }else if($mesTxt == "10"){
+                                        $mes = "OCT";
+                                    }else if($mesTxt == "11"){
+                                        $mes = "NOV";
+                                    }else if($mesTxt == "12"){
+                                        $mes = "DIC";
                                     }
             
                                     $nuevaFecha = new fecfechas;
-                                    $nuevaFecha->fecfecha = new \DateTime(date("Y-m-d", strtotime($ano.'-'.$mes.'-'.$dia)));
+                                    $nuevaFecha->fecfecha = new \DateTime(date("Y-m-d", strtotime($ano.'-'.$mesTxt.'-'.$dia)));
                                     $nuevaFecha->fecdia   = $dia;
-                                    $nuevaFecha->fecmes   = $mesTxt;
-                                    $nuevaFecha->fecmesnumero = $mes;
+                                    $nuevaFecha->fecmes   = $mes;
+                                    $nuevaFecha->fecmesnumero = $mesTxt;
                                     $nuevaFecha->fecano   = $ano;
                                     if($nuevaFecha->save()){
                                         $fecid = $nuevaFecha->fecid;
@@ -151,40 +210,57 @@ class CargarArchivoController extends Controller
                                 }
             
                                 if($i == 2){
+                                    // $scas = scasucursalescategorias::join('tsutipospromocionessucursales as tsu', 'tsu.tsuid', 'scasucursalescategorias.tsuid')
+                                    //                                 ->where('tsu.fecid', $fecid)
+                                    //                                 ->where('tsu.tprid', 1)
+                                    //                                 ->get(['scasucursalescategorias.scaid']);
+
                                     $scas = scasucursalescategorias::join('tsutipospromocionessucursales as tsu', 'tsu.tsuid', 'scasucursalescategorias.tsuid')
                                                                     ->where('tsu.fecid', $fecid)
                                                                     ->where('tsu.tprid', 1)
-                                                                    ->get(['scasucursalescategorias.scaid']);
+                                                                    ->update([
+                                                                        'scavalorizadoreal' => 0,
+                                                                        'scavalorizadotogo' => 0,
+                                                                    ]);
             
-                                    foreach($scas as $sca){
-                                        $scae = scasucursalescategorias::find($sca->scaid);
+                                    // foreach($scas as $sca){
+                                    //     $scae = scasucursalescategorias::find($sca->scaid);
             
-                                        $scae->scavalorizadoreal = 0;
-                                        $scae->scavalorizadotogo = 0;
-                                        if($scae->update()){
+                                    //     $scae->scavalorizadoreal = 0;
+                                    //     $scae->scavalorizadotogo = 0;
+                                    //     if($scae->update()){
             
-                                        }else{
-                                            $log[] = "No se pudo editar el sca: ".$sca->scaid;
-                                        }
-                                    }
+                                    //     }else{
+                                    //         $log[] = "No se pudo editar el sca: ".$sca->scaid;
+                                    //     }
+                                    // }
             
+                                    // $tsus = tsutipospromocionessucursales::where('fecid', $fecid)
+                                    //                                     ->where('tprid', 1)
+                                    //                                     ->get(['tsuid']);
+
                                     $tsus = tsutipospromocionessucursales::where('fecid', $fecid)
                                                                         ->where('tprid', 1)
-                                                                        ->get(['tsuid']);
+                                                                        ->update([
+                                                                            'tsuvalorizadoreal' => 0,
+                                                                            'tsuvalorizadotogo' => 0,
+                                                                            'tsuporcentajecumplimiento' => 0,
+                                                                            'tsuvalorizadorebate' => 0,
+                                                                        ]);
             
-                                    foreach($tsus as $tsu){
-                                        $tsue = tsutipospromocionessucursales::find($tsu->tsuid);
-                                        $tsue->tsuvalorizadoreal = 0;
-                                        $tsue->tsuvalorizadotogo = 0;
-                                        $tsue->tsuporcentajecumplimiento = 0;
-                                        $tsue->tsuvalorizadorebate = 0;
-                                        if($tsue->update()){
+                                    // foreach($tsus as $tsu){
+                                    //     $tsue = tsutipospromocionessucursales::find($tsu->tsuid);
+                                    //     $tsue->tsuvalorizadoreal = 0;
+                                    //     $tsue->tsuvalorizadotogo = 0;
+                                    //     $tsue->tsuporcentajecumplimiento = 0;
+                                    //     $tsue->tsuvalorizadorebate = 0;
+                                    //     if($tsue->update()){
             
-                                        }else{
-                                            $log[] = "No se pudo editar el tsu: ".$tsu->tsuid;
-                                        }
+                                    //     }else{
+                                    //         $log[] = "No se pudo editar el tsu: ".$tsu->tsuid;
+                                    //     }
             
-                                    }
+                                    // }
 
                                     vsiventasssi::where('fecid', $fecid)->update(['vsivalorizado' => 0]);
             
