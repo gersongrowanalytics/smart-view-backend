@@ -1263,7 +1263,7 @@ class MostrarReportePagosController extends Controller
         $anio       = $request['ano'];
 
 
-        $usuusuario = usuusuarios::where('usutoken', $usutoken)->first(['ususoldto']);
+        $usuusuario = usuusuarios::where('usutoken', $usutoken)->first(['ususoldto', 'tpuid']);
 
         $respuesta      = true;
         $mensaje        = '';
