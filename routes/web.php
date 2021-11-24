@@ -69,6 +69,9 @@ $router->group(['middleware' => ['permisos']], function() use($router) {
     $router->post('/promociones/descargar/reporte-pagos', 'Sistema\Promociones\ReportePagos\MostrarReportePagosController@MostrarReportePagos');
     $router->post('/promociones/descargar/reporte-pagos-fecha', 'Sistema\Promociones\ReportePagos\MostrarReportePagosController@MostrarReportePagosXFechaIncioFechaFin');
 
+    $router->post('/promociones/descargar/reporte-pagos-unicamente-fecha', 'Sistema\Promociones\ReportePagos\MostrarReportePagosController@MostrarReportePagosXFecha');
+    $router->post('/promociones/descargar/reporte-promociones-liquidadas-fecha', 'Sistema\Promociones\ReportePagos\MostrarReportePagosController@MostrarReporteLiquidacionXFecha');
+
     $router->post('/promociones/editar', 'Sistema\Promociones\Editar\PromocionEditarController@editarPromocion');
     $router->post('/promociones/editar/imagenes', 'Sistema\Promociones\Editar\PromocionEditarImagenesController@EditarImagenesPromocion');
 

@@ -1277,20 +1277,20 @@ class MostrarReportePagosController extends Controller
 
             $todasSucursales = false;
 
-            if($usuusuario->tpuid == 3 || $usuusuario->tpuid == 1 ){
+            if($usuusuario->tpuid == 1000 ){
                 $todasSucursales = true;
             }else{
 
-                $usss = sucsucursales::where(function ($query) use($sucs) {
-                    foreach($sucs as $suc){
-                        if(isset($suc['sucpromociondescarga'])){
-                            if($suc['sucpromociondescarga'] == true){
-                                $query->orwhere('sucid', $suc['sucid']);
-                            }
-                        }
-                    }
-                })
-                ->get(['sucsoldto', 'sucnombre']);
+                // $usss = sucsucursales::where(function ($query) use($sucs) {
+                //     foreach($sucs as $suc){
+                //         if(isset($suc['sucpromociondescarga'])){
+                //             if($suc['sucpromociondescarga'] == true){
+                //                 $query->orwhere('sucid', $suc['sucid']);
+                //             }
+                //         }
+                //     }
+                // })
+                // ->get(['sucsoldto', 'sucnombre']);
 
             }
 
@@ -2625,20 +2625,20 @@ class MostrarReportePagosController extends Controller
 
             $todasSucursales = false;
 
-            if($usuusuario->tpuid == 3 || $usuusuario->tpuid == 1 ){
+            if($usuusuario->tpuid == 1000){
                 $todasSucursales = true;
             }else{
 
-                $usss = sucsucursales::where(function ($query) use($sucs) {
-                    foreach($sucs as $suc){
-                        if(isset($suc['sucpromociondescarga'])){
-                            if($suc['sucpromociondescarga'] == true){
-                                $query->orwhere('sucid', $suc['sucid']);
-                            }
-                        }
-                    }
-                })
-                ->get(['sucsoldto', 'sucnombre']);
+                // $usss = sucsucursales::where(function ($query) use($sucs) {
+                //     foreach($sucs as $suc){
+                //         if(isset($suc['sucpromociondescarga'])){
+                //             if($suc['sucpromociondescarga'] == true){
+                //                 $query->orwhere('sucid', $suc['sucid']);
+                //             }
+                //         }
+                //     }
+                // })
+                // ->get(['sucsoldto', 'sucnombre']);
 
             }
 
@@ -3427,8 +3427,614 @@ class MostrarReportePagosController extends Controller
         $requestsalida = response()->json([
             'respuesta'      => $respuesta,
             'mensaje'        => $mensaje,
-            'datos'          => $datos,
+            // 'datos'          => $datos,
             'datosReconocimiento' => $datosReconocimiento,
+            'mensajeDetalle' => $mensajeDetalle,
+            'mensajedev'     => $mensajedev,
+            "actualizacion"  => "Actualización 24 de Junio 2021"
+        ]);
+
+        return $requestsalida;
+
+    }
+
+    public function MostrarReporteLiquidacionXFecha(Request $request)
+    {
+
+        ini_set('memory_limit','512M');
+
+        $fechaInicio = $request['fechaInicio'];
+        $fechaFinal  = $request['fechaFinal'];
+
+        $usutoken   = $request['usutoken'];
+        $sucs       = $request['sucs'];
+        $dia        = "01";
+        $mes        = $request['mes'];
+        $anio       = $request['ano'];
+
+
+        $usuusuario = usuusuarios::where('usutoken', $usutoken)->first(['ususoldto', 'tpuid']);
+
+        $respuesta      = true;
+        $mensaje        = '';
+        $datos          = []; 
+        $datosReconocimiento = [];
+        $datosPromociones = [];
+        $mensajeDetalle = '';
+        $mensajedev     = null;
+
+        try{
+
+            $todasSucursales = false;
+
+            if($usuusuario->tpuid == 1000){
+                $todasSucursales = true;
+            }else{
+
+                // $usss = sucsucursales::where(function ($query) use($sucs) {
+                //     foreach($sucs as $suc){
+                //         if(isset($suc['sucpromociondescarga'])){
+                //             if($suc['sucpromociondescarga'] == true){
+                //                 $query->orwhere('sucid', $suc['sucid']);
+                //             }
+                //         }
+                //     }
+                // })
+                // ->get(['sucsoldto', 'sucnombre']);
+
+            }
+
+            $nuevoArray = array(
+                array(
+                    "columns" => [],
+                    "data"    => []
+                )
+            );
+
+            $nuevoArrayReconocimiento = array(
+                array(
+                    "columns" => [],
+                    "data"    => []
+                )
+            );
+
+            $nuevoArrayPromocionesLiquidadas = array(
+                array(
+                    "columns" => [],
+                    "data"    => []
+                )
+            );
+
+            // $fec = fecfechas::where('fecdia', 'LIKE', "%".$dia."%")
+            //                 ->where('fecmes', 'LIKE', "%".$mes."%")
+            //                 ->where('fecano', 'LIKE', "%".$anio."%")
+            //                 ->first(['fecid']);
+
+            $fechaInicio = new \DateTime(date("Y-m-d", strtotime($fechaInicio)));
+            $fechaFinal  = new \DateTime(date("Y-m-d", strtotime($fechaFinal)));
+            // $fec = fecfechas::where('fecfecha', $fecha)->first(['fecid']);
+            $fecs = fecfechas::whereBetween('fecfecha', [$fechaInicio, $fechaFinal])
+                            ->get(['fecid']);
+
+            // PLANTILLA PARA DESCARGAR PROMOCIONES LIQUIDADAS
+            $prls = prlpromocionesliquidadas::join('sucsucursales as suc', 'suc.sucid', 'prlpromocionesliquidadas.sucid')
+                                            ->leftjoin('cascanalessucursales as cas', 'cas.casid', 'suc.casid')
+                                            ->join('fecfechas as fec', 'fec.fecid', 'prlpromocionesliquidadas.fecid')
+                                            // ->whereBetween('fecfecha', [$fechaInicio, $fechaFinal])
+                                            ->where(function ($query) use($fecs) {
+                                                foreach($fecs as $feca){
+                                                    $query->orwhere('prlpromocionesliquidadas.fecid', $feca->fecid);
+                                                }
+                                            })
+                                            ->where(function ($query) use($sucs, $todasSucursales) {
+
+                                                if($todasSucursales == true){
+
+                                                }else{
+                                                    foreach($sucs as $suc){
+                                                        if(isset($suc['sucpromociondescarga'])){
+                                                            if($suc['sucpromociondescarga'] == true){
+                                                                $query->orwhere('suc.sucid', $suc['sucid']);
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            })
+                                            ->get([
+                                                'prlpromocionesliquidadas.prlid',
+                                                'cas.casnombre',
+                                                'fec.fecid',
+                                                'fec.fecano',
+                                                'fec.fecmes',
+                                                'prlconcepto',
+                                                'prlejecutivo',
+                                                'prlgrupo',
+                                                'suc.sucsoldto',
+                                                'sucnombre',
+                                                'prlcompra',
+                                                'prlbonificacion',
+                                                'prlmecanica',
+                                                'prlcategoria',
+                                                'prlsku',
+                                                'prlproducto',
+                                                'prlskubonificado',
+                                                'prlproductobonificado',
+                                                'prlplancha',
+                                                'prlcombo',
+                                                'prlreconocerxcombo',
+                                                'prlreconocerxplancha',
+                                                'prltotal',
+                                                'prlliquidacionso',
+                                                'prlliquidacioncombo',
+                                                'prlliquidacionvalorizado',
+                                                'prlliquidaciontotalpagar'
+                                            ]);
+
+            foreach ($prls as $posicionPrl => $prl) {
+                
+                if($posicionPrl == 0){
+                    $arrayTitulos = array(
+                        array("title" => "", "width" => array("wpx" => 50)),
+                        array("title" => "", "width" => array("wpx" => 100)),
+                        array("title" => "", "width" => array("wpx" => 50)),
+                        array("title" => "", "width" => array("wpx" => 50)),
+                        array("title" => "", "width" => array("wpx" => 100)),
+                        array("title" => "", "width" => array("wpx" => 100)),
+                        array("title" => "", "width" => array("wpx" => 100)),
+                        array("title" => "", "width" => array("wpx" => 100)),
+                        array("title" => "", "width" => array("wpx" => 150)),
+
+                        array("title" => "", "width" => array("wpx" => 50)),
+                        array("title" => "", "width" => array("wpx" => 50)),
+                        array("title" => "", "width" => array("wpx" => 100)),
+                        array("title" => "", "width" => array("wpx" => 80)),
+                        array("title" => "", "width" => array("wpx" => 50)),
+                        array("title" => "", "width" => array("wpx" => 100)),
+                        array("title" => "", "width" => array("wpx" => 50)),
+                        array("title" => "", "width" => array("wpx" => 100)),
+                        array("title" => "", "width" => array("wpx" => 50)),
+                        array("title" => "", "width" => array("wpx" => 50)),
+                        array("title" => "", "width" => array("wpx" => 150)),
+                        array("title" => "", "width" => array("wpx" => 150)),
+                        array("title" => "", "width" => array("wpx" => 150)),
+                        array("title" => "", "width" => array("wpx" => 150)),
+                        array("title" => "", "width" => array("wpx" => 150)),
+                        array("title" => "", "width" => array("wpx" => 150)),
+                        array("title" => "", "width" => array("wpx" => 150)),
+                    );
+                    $nuevoArrayPromocionesLiquidadas[0]['columns'] = $arrayTitulos;
+
+                    $arrayFilaExcel = array(
+                        array("value" => ""),
+                        array(
+                            "value" => "GBA", 
+                            "style" => array(
+                                "font" => array(
+                                    "sz" => "11", 
+                                    "bold" => true
+                                ),
+                                "fill" => array(
+                                    "patternType" => 'solid',
+                                    "fgColor" => array(
+                                        "rgb" => "FFC6ED59"
+                                    )
+                                )
+                            )
+                        ),
+                        array(
+                            "value" => "Año promoción", 
+                            "style" => array(
+                                "font" => array(
+                                    "sz" => "11", 
+                                    "bold" => true
+                                ),
+                                "fill" => array(
+                                    "patternType" => 'solid',
+                                    "fgColor" => array(
+                                        "rgb" => "FFC6ED59"
+                                    )
+                                )
+                            )
+                        ),
+                        array(
+                            "value" => "Mes promoción", 
+                            "style" => array(
+                                "font" => array(
+                                    "sz" => "11", 
+                                    "bold" => true
+                                ),
+                                "fill" => array(
+                                    "patternType" => 'solid',
+                                    "fgColor" => array(
+                                        "rgb" => "FFC6ED59"
+                                    )
+                                )
+                            )
+                        ),
+                        array(
+                            "value" => "Concepto", 
+                            "style" => array(
+                                "font" => array(
+                                    "sz" => "11", 
+                                    "bold" => true
+                                ),
+                                "fill" => array(
+                                    "patternType" => 'solid',
+                                    "fgColor" => array(
+                                        "rgb" => "FFC6ED59"
+                                    )
+                                )
+                            )
+                        ),
+                        array(
+                            "value" => "Ejecutivo", 
+                            "style" => array(
+                                "font" => array(
+                                    "sz" => "11", 
+                                    "bold" => true
+                                ),
+                                "fill" => array(
+                                    "patternType" => 'solid',
+                                    "fgColor" => array(
+                                        "rgb" => "FFC6ED59"
+                                    )
+                                )
+                            )
+                        ),
+                        array(
+                            "value" => "Grupo", 
+                            "style" => array(
+                                "font" => array(
+                                    "sz" => "11", 
+                                    "bold" => true
+                                ),
+                                "fill" => array(
+                                    "patternType" => 'solid',
+                                    "fgColor" => array(
+                                        "rgb" => "FFC6ED59"
+                                    )
+                                )
+                            )
+                        ),
+                        array(
+                            "value" => "Sold To", 
+                            "style" => array(
+                                "font" => array(
+                                    "sz" => "11", 
+                                    "bold" => true
+                                ),
+                                "fill" => array(
+                                    "patternType" => 'solid',
+                                    "fgColor" => array(
+                                        "rgb" => "FFC6ED59"
+                                    )
+                                )
+                            )
+                        ),
+                        array(
+                            "value" => "Cliente", 
+                            "style" => array(
+                                "font" => array(
+                                    "sz" => "11", 
+                                    "bold" => true
+                                ),
+                                "fill" => array(
+                                    "patternType" => 'solid',
+                                    "fgColor" => array(
+                                        "rgb" => "FFC6ED59"
+                                    )
+                                )
+                            )
+                        ),
+                        array(
+                            "value" => "Compra (UND)", 
+                            "style" => array(
+                                "font" => array(
+                                    "sz" => "11", 
+                                    "bold" => true
+                                ),
+                                "fill" => array(
+                                    "patternType" => 'solid',
+                                    "fgColor" => array(
+                                        "rgb" => "FFC6ED59"
+                                    )
+                                )
+                            )
+                        ),
+                        array(
+                            "value" => "Bonificación (UND)", 
+                            "style" => array(
+                                "font" => array(
+                                    "sz" => "11", 
+                                    "bold" => true
+                                ),
+                                "fill" => array(
+                                    "patternType" => 'solid',
+                                    "fgColor" => array(
+                                        "rgb" => "FFC6ED59"
+                                    )
+                                )
+                            )
+                        ),
+
+                        array(
+                            "value" => "Mecánica", 
+                            "style" => array(
+                                "font" => array(
+                                    "sz" => "11", 
+                                    "bold" => true
+                                ),
+                                "fill" => array(
+                                    "patternType" => 'solid',
+                                    "fgColor" => array(
+                                        "rgb" => "FFC6ED59"
+                                    )
+                                )
+                            )
+                        ),
+
+                        array(
+                            "value" => "Categoría", 
+                            "style" => array(
+                                "font" => array(
+                                    "sz" => "11", 
+                                    "bold" => true
+                                ),
+                                "fill" => array(
+                                    "patternType" => 'solid',
+                                    "fgColor" => array(
+                                        "rgb" => "FFC6ED59"
+                                    )
+                                )
+                            )
+                        ),
+                        array(
+                            "value" => "SKU", 
+                            "style" => array(
+                                "font" => array(
+                                    "sz" => "11", 
+                                    "bold" => true
+                                ),
+                                "fill" => array(
+                                    "patternType" => 'solid',
+                                    "fgColor" => array(
+                                        "rgb" => "FFC6ED59"
+                                    )
+                                )
+                            )
+                        ),
+                        array(
+                            "value" => "Producto", 
+                            "style" => array(
+                                "font" => array(
+                                    "sz" => "11", 
+                                    "bold" => true
+                                ),
+                                "fill" => array(
+                                    "patternType" => 'solid',
+                                    "fgColor" => array(
+                                        "rgb" => "FFC6ED59"
+                                    )
+                                )
+                            )
+                        ),
+                        array(
+                            "value" => "Sku a Bonificar", 
+                            "style" => array(
+                                "font" => array(
+                                    "sz" => "11", 
+                                    "bold" => true
+                                ),
+                                "fill" => array(
+                                    "patternType" => 'solid',
+                                    "fgColor" => array(
+                                        "rgb" => "FFC6ED59"
+                                    )
+                                )
+                            )
+                        ),
+                        array(
+                            "value" => "Producto a Bonificar", 
+                            "style" => array(
+                                "font" => array(
+                                    "sz" => "11", 
+                                    "bold" => true
+                                ),
+                                "fill" => array(
+                                    "patternType" => 'solid',
+                                    "fgColor" => array(
+                                        "rgb" => "FFC6ED59"
+                                    )
+                                )
+                            )
+                        ),
+                        array(
+                            "value" => "Planchas a rotar o (Sell Out)", 
+                            "style" => array(
+                                "font" => array(
+                                    "sz" => "11", 
+                                    "bold" => true
+                                ),
+                                "fill" => array(
+                                    "patternType" => 'solid',
+                                    "fgColor" => array(
+                                        "rgb" => "FFC6ED59"
+                                    )
+                                )
+                            )
+                        ),
+                        array(
+                            "value" => "# Combos", 
+                            "style" => array(
+                                "font" => array(
+                                    "sz" => "11", 
+                                    "bold" => true
+                                ),
+                                "fill" => array(
+                                    "patternType" => 'solid',
+                                    "fgColor" => array(
+                                        "rgb" => "FFC6ED59"
+                                    )
+                                )
+                            )
+                        ),
+                        array(
+                            "value" => "Reconocer x Combo S/IGV", 
+                            "style" => array(
+                                "font" => array(
+                                    "sz" => "11", 
+                                    "bold" => true
+                                ),
+                                "fill" => array(
+                                    "patternType" => 'solid',
+                                    "fgColor" => array(
+                                        "rgb" => "FFC6ED59"
+                                    )
+                                )
+                            )
+                        ),
+                        array(
+                            "value" => "Reconocer x PL S/IGV", 
+                            "style" => array(
+                                "font" => array(
+                                    "sz" => "11", 
+                                    "bold" => true
+                                ),
+                                "fill" => array(
+                                    "patternType" => 'solid',
+                                    "fgColor" => array(
+                                        "rgb" => "FFC6ED59"
+                                    )
+                                )
+                            )
+                        ),
+                        array(
+                            "value" => "Total Soles S/IGV", 
+                            "style" => array(
+                                "font" => array(
+                                    "sz" => "11", 
+                                    "bold" => true
+                                ),
+                                "fill" => array(
+                                    "patternType" => 'solid',
+                                    "fgColor" => array(
+                                        "rgb" => "FFC6ED59"
+                                    )
+                                )
+                            )
+                        ),
+                        array(
+                            "value" => "LIQUIDACION:  Sell out planchas", 
+                            "style" => array(
+                                "font" => array(
+                                    "sz" => "11", 
+                                    "bold" => true
+                                ),
+                                "fill" => array(
+                                    "patternType" => 'solid',
+                                    "fgColor" => array(
+                                        "rgb" => "FFF2AD68"
+                                    )
+                                )
+                            )
+                        ),
+                        array(
+                            "value" => "LIQUIDACION: Combos usados", 
+                            "style" => array(
+                                "font" => array(
+                                    "sz" => "11", 
+                                    "bold" => true
+                                ),
+                                "fill" => array(
+                                    "patternType" => 'solid',
+                                    "fgColor" => array(
+                                        "rgb" => "FFF2AD68"
+                                    )
+                                )
+                            )
+                        ),
+                        array(
+                            "value" => "LIQUIDACION: Valorizado", 
+                            "style" => array(
+                                "font" => array(
+                                    "sz" => "11", 
+                                    "bold" => true
+                                ),
+                                "fill" => array(
+                                    "patternType" => 'solid',
+                                    "fgColor" => array(
+                                        "rgb" => "FFF2AD68"
+                                    )
+                                )
+                            )
+                        ),
+                        array(
+                            "value" => "LIQUIDACION: Total a Pagar",
+                            "style" => array(
+                                "font" => array(
+                                    "sz" => "11", 
+                                    "bold" => true
+                                ),
+                                "fill" => array(
+                                    "patternType" => 'solid',
+                                    "fgColor" => array(
+                                        "rgb" => "FFF2AD68"
+                                    )
+                                )
+                            )
+                        ),
+                    );
+                    
+                    $nuevoArrayPromocionesLiquidadas[0]['data'][] = $arrayFilaExcel;
+                }
+
+                
+                $arrayFilaExcel = array(
+                    array("value" => ""),
+                    array("value" => $prl->casnombre, "style" => array("font" => array("sz" => "10"))),
+                    array("value" => $prl->fecano, "style" => array("font" => array("sz" => "10"))),
+                    array("value" => $prl->fecmes, "style" => array("font" => array("sz" => "10"))),
+                    array("value" => $prl->prlconcepto, "style" => array("font" => array("sz" => "10"))),
+                    array("value" => $prl->prlejecutivo, "style" => array("font" => array("sz" => "10"))),
+                    array("value" => $prl->prlgrupo, "style" => array("font" => array("sz" => "10"))),
+                    array("value" => $prl->sucsoldto, "style" => array("font" => array("sz" => "10"))),
+                    array("value" => $prl->sucnombre, "style" => array("font" => array("sz" => "10"))),
+                    array("value" => $prl->prlcompra, "style" => array("font" => array("sz" => "10"))),
+                    array("value" => $prl->prlbonificacion, "style" => array("font" => array("sz" => "10"))),
+                    array("value" => $prl->prlmecanica, "style" => array("font" => array("sz" => "10"))),
+                    array("value" => $prl->prlcategoria, "style" => array("font" => array("sz" => "10"))),
+                    array("value" => $prl->prlsku, "style" => array("font" => array("sz" => "10"))),
+                    array("value" => $prl->prlproducto, "style" => array("font" => array("sz" => "10"))),
+                    array("value" => $prl->prlskubonificado, "style" => array("font" => array("sz" => "10"))),
+                    array("value" => $prl->prlproductobonificado, "style" => array("font" => array("sz" => "10"))),
+                    array("value" => floatval($prl->prlplancha), "style" => array("font" => array("sz" => "10"),"numFmt" => "#,##0.00")),
+                    array("value" => floatval($prl->prlcombo), "style" => array("font" => array("sz" => "10"),"numFmt" => "#,##0.00")),
+                    array("value" => floatval($prl->prlreconocerxcombo), "style" => array("font" => array("sz" => "10"),"numFmt" => "#,##0.00")),
+                    array("value" => floatval($prl->prlreconocerxplancha), "style" => array("font" => array("sz" => "10"),"numFmt" => "#,##0.00")),
+                    array("value" => floatval($prl->prltotal), "style" => array("font" => array("sz" => "10"),"numFmt" => "#,##0.00")),
+                    array("value" => floatval($prl->prlliquidacionso), "style" => array("font" => array("sz" => "10"),"numFmt" => "#,##0.00")),
+                    array("value" => floatval($prl->prlliquidacioncombo), "style" => array("font" => array("sz" => "10"),"numFmt" => "#,##0.00")),
+                    array("value" => floatval($prl->prlliquidacionvalorizado), "style" => array("font" => array("sz" => "10"),"numFmt" => "#,##0.00")),
+                    array("value" => floatval($prl->prlliquidaciontotalpagar), "style" => array("font" => array("sz" => "10"),"numFmt" => "#,##0.00"))
+                );
+
+                $nuevoArrayPromocionesLiquidadas[0]['data'][] = $arrayFilaExcel;
+            }
+
+            $datosPromociones = $nuevoArrayPromocionesLiquidadas;
+
+
+
+        }catch (Exception $e) {
+            $mensajedev = $e->getMessage();
+            $respuesta      = false;
+        }
+
+
+        $requestsalida = response()->json([
+            'respuesta'      => $respuesta,
+            'mensaje'        => $mensaje,
+            'datosPromociones'    => $datosPromociones,
             'mensajeDetalle' => $mensajeDetalle,
             'mensajedev'     => $mensajedev,
             "actualizacion"  => "Actualización 24 de Junio 2021"
