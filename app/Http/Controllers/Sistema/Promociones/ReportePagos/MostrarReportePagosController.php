@@ -2584,8 +2584,8 @@ class MostrarReportePagosController extends Controller
         $requestsalida = response()->json([
             'respuesta'      => $respuesta,
             'mensaje'        => $mensaje,
-            'datos'          => $datos,
-            // 'datosReconocimiento' => $datosReconocimiento,
+            // 'datos'          => $datos,
+            'datosReconocimiento' => $datosReconocimiento,
             'datosPromociones'    => $datosPromociones,
             'mensajeDetalle' => $mensajeDetalle,
             'mensajedev'     => $mensajedev,
