@@ -1275,16 +1275,24 @@ class MostrarReportePagosController extends Controller
 
         try{
 
-            $usss = sucsucursales::where(function ($query) use($sucs) {
-                                    foreach($sucs as $suc){
-                                        if(isset($suc['sucpromociondescarga'])){
-                                            if($suc['sucpromociondescarga'] == true){
-                                                $query->orwhere('sucid', $suc['sucid']);
-                                            }
-                                        }
-                                    }
-                                })
-                                ->get(['sucsoldto', 'sucnombre']);
+            $todasSucursales = false;
+
+            if($usuusuario->tpuid == 3 || $usuusuario->tpuid == 1 ){
+                $todasSucursales = true;
+            }else{
+
+                $usss = sucsucursales::where(function ($query) use($sucs) {
+                    foreach($sucs as $suc){
+                        if(isset($suc['sucpromociondescarga'])){
+                            if($suc['sucpromociondescarga'] == true){
+                                $query->orwhere('sucid', $suc['sucid']);
+                            }
+                        }
+                    }
+                })
+                ->get(['sucsoldto', 'sucnombre']);
+
+            }
 
             $nuevoArray = array(
                 array(
@@ -1321,11 +1329,15 @@ class MostrarReportePagosController extends Controller
                                             ->join('fecfechas as fec', 'fec.fecid', 'repreconocimientopago.fecid')
                                             ->whereBetween('fecfecha', [$fechaInicio, $fechaFinal])
                                             // ->where('fec.fecid', $fec->fecid)
-                                            ->where(function ($query) use($sucs) {
-                                                foreach($sucs as $suc){
-                                                    if(isset($suc['sucpromociondescarga'])){
-                                                        if($suc['sucpromociondescarga'] == true){
-                                                            $query->orwhere('suc.sucid', $suc['sucid']);
+                                            ->where(function ($query) use($sucs, $todasSucursales) {
+                                                if($todasSucursales == true){
+
+                                                }else{
+                                                    foreach($sucs as $suc){
+                                                        if(isset($suc['sucpromociondescarga'])){
+                                                            if($suc['sucpromociondescarga'] == true){
+                                                                $query->orwhere('suc.sucid', $suc['sucid']);
+                                                            }
                                                         }
                                                     }
                                                 }
@@ -2054,11 +2066,16 @@ class MostrarReportePagosController extends Controller
                                             ->join('fecfechas as fec', 'fec.fecid', 'prlpromocionesliquidadas.fecid')
                                             ->whereBetween('fecfecha', [$fechaInicio, $fechaFinal])
                                             // ->where('fec.fecid', $fec->fecid)
-                                            ->where(function ($query) use($sucs) {
-                                                foreach($sucs as $suc){
-                                                    if(isset($suc['sucpromociondescarga'])){
-                                                        if($suc['sucpromociondescarga'] == true){
-                                                            $query->orwhere('suc.sucid', $suc['sucid']);
+                                            ->where(function ($query) use($sucs, $todasSucursales) {
+
+                                                if($todasSucursales == true){
+
+                                                }else{
+                                                    foreach($sucs as $suc){
+                                                        if(isset($suc['sucpromociondescarga'])){
+                                                            if($suc['sucpromociondescarga'] == true){
+                                                                $query->orwhere('suc.sucid', $suc['sucid']);
+                                                            }
                                                         }
                                                     }
                                                 }
