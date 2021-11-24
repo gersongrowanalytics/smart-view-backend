@@ -1324,7 +1324,7 @@ class MostrarReportePagosController extends Controller
             $fechaFinal  = new \DateTime(date("Y-m-d", strtotime($fechaFinal)));
             // $fec = fecfechas::where('fecfecha', $fecha)->first(['fecid']);
             $fecs = fecfechas::whereBetween('fecfecha', [$fechaInicio, $fechaFinal])
-                            ->first(['fecid']);
+                            ->get(['fecid']);
 
             $reps = repreconocimientopago::join('sucsucursales as suc', 'suc.sucid', 'repreconocimientopago.sucid')
                                             ->leftjoin('cascanalessucursales as cas', 'cas.casid', 'suc.casid')
