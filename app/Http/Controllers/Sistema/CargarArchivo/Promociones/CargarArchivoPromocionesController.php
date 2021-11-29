@@ -109,6 +109,9 @@ class CargarArchivoPromocionesController extends Controller
                 $ultimaColumna  = $objPHPExcel->setActiveSheetIndex(0)->getHighestColumn();
 
                 if($cargarData == true){
+
+                    $soldtosBorrar = [];
+
                     for ($i=2; $i <= $numRows ; $i++) {
                         // $ano = '2020';
                         $dia = '01';
@@ -334,29 +337,92 @@ class CargarArchivoPromocionesController extends Controller
                             }
 
                             // ELIMINAR PRP Y PRB
-                            if($i == 2){
+                            // if($i == 2){
+                            //     prppromocionesproductos::join('prmpromociones as prm', 'prm.prmid', 'prppromocionesproductos.prmid')
+                            //                             ->where('prm.fecid', $fecid)
+                            //                             ->where('prpzona', $ex_zona)
+                            //                             ->delete();
+
+                            //     prbpromocionesbonificaciones::join('prmpromociones as prm', 'prm.prmid', 'prbpromocionesbonificaciones.prmid')
+                            //                                 ->where('prm.fecid', $fecid)
+                            //                                 ->where('prbzona', $ex_zona)
+                            //                                 ->delete();
+
+                            // }
+
+                            $limpiarDataSoldto = true;
+
+                            if(sizeof($soldtosBorrar) > 0){
+
+                                $encontroSoldto = false;
+
+                                foreach($soldtosBorrar as $soldtoBorrar){
+                                    if($soldtoBorrar == $soldTo ){
+
+                                        $encontroSoldto = true;
+                                        $limpiarDataSoldto = false;
+
+                                    }
+                                }
+
+                                if($encontroSoldto == false){
+                                    $soldtosBorrar[] = $soldTo;
+                                }
+
+                            }else{
+                                $soldtosBorrar[] = $soldTo;
+                            }
+
+                            if($limpiarDataSoldto == true){
+                                
+                                cspcanalessucursalespromociones::join('csccanalessucursalescategorias as csc', 'csc.cscid', 'cspcanalessucursalespromociones.cscid')
+                                                                ->join('scasucursalescategorias as sca', 'sca.scaid', 'csc.scaid')
+                                                                -join('sucsucursales as suc', 'suc.sucid', 'sca.sucid')
+                                                                ->where('cspcanalessucursalespromociones.fecid', $fecid)
+                                                                ->where('sucsoldto', $soldTo)
+                                                                ->delete();
+
+                                prmpromociones::join('cspcanalessucursalespromociones as csp', 'csp.prmid', 'prmpromociones.prmid')
+                                                ->join('csccanalessucursalescategorias as csc', 'csc.cscid', 'csp.cscid')
+                                                ->join('scasucursalescategorias as sca', 'sca.scaid', 'csc.scaid')
+                                                ->join('sucsucursales as suc', 'suc.sucid', 'sca.sucid')
+                                                ->where('prmpromociones.fecid', $fecid)
+                                                ->where('sucsoldto', $soldTo)
+                                                ->delete();
+
+
                                 prppromocionesproductos::join('prmpromociones as prm', 'prm.prmid', 'prppromocionesproductos.prmid')
+                                                        ->join('cspcanalessucursalespromociones as csp', 'csp.prmid', 'prm.prmid')
+                                                        ->join('csccanalessucursalescategorias as csc', 'csc.cscid', 'csp.cscid')
+                                                        ->join('scasucursalescategorias as sca', 'sca.scaid', 'csc.scaid')
+                                                        ->join('sucsucursales as suc', 'suc.sucid', 'sca.sucid')
                                                         ->where('prm.fecid', $fecid)
-                                                        ->where('prpzona', $ex_zona)
+                                                        ->where('sucsoldto', $soldTo)
                                                         ->delete();
 
                                 prbpromocionesbonificaciones::join('prmpromociones as prm', 'prm.prmid', 'prbpromocionesbonificaciones.prmid')
+                                                            ->join('cspcanalessucursalespromociones as csp', 'csp.prmid', 'prm.prmid')
+                                                            ->join('csccanalessucursalescategorias as csc', 'csc.cscid', 'csp.cscid')
+                                                            ->join('scasucursalescategorias as sca', 'sca.scaid', 'csc.scaid')
+                                                            ->join('sucsucursales as suc', 'suc.sucid', 'sca.sucid')
                                                             ->where('prm.fecid', $fecid)
-                                                            ->where('prbzona', $ex_zona)
+                                                            ->where('sucsoldto', $soldTo)
                                                             ->delete();
-
                             }
 
-                            if($i == 2){
-                                cspcanalessucursalespromociones::join('prmpromociones as prm', 'prm.prmid', 'cspcanalessucursalespromociones.prmid')
-                                                                ->where('cspcanalessucursalespromociones.fecid', $fecid)
-                                                                ->where('cspzona', $ex_zona)
-                                                                ->delete();
 
-                                prmpromociones::where('fecid', $fecid)
-                                                ->where('prmzona', $ex_zona)
-                                                ->delete();
-                            }
+
+
+                            // if($i == 2){
+                            //     cspcanalessucursalespromociones::join('prmpromociones as prm', 'prm.prmid', 'cspcanalessucursalespromociones.prmid')
+                            //                                     ->where('cspcanalessucursalespromociones.fecid', $fecid)
+                            //                                     ->where('cspzona', $ex_zona)
+                            //                                     ->delete();
+
+                            //     prmpromociones::where('fecid', $fecid)
+                            //                     ->where('prmzona', $ex_zona)
+                            //                     ->delete();
+                            // }
                 
                             
                             // VERIFICAR SI EXISTE EL USUARIO
