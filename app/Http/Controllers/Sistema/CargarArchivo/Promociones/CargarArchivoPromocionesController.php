@@ -377,7 +377,7 @@ class CargarArchivoPromocionesController extends Controller
                                 
                                 cspcanalessucursalespromociones::join('csccanalessucursalescategorias as csc', 'csc.cscid', 'cspcanalessucursalespromociones.cscid')
                                                                 ->join('scasucursalescategorias as sca', 'sca.scaid', 'csc.scaid')
-                                                                -join('sucsucursales as suc', 'suc.sucid', 'sca.sucid')
+                                                                ->join('sucsucursales as suc', 'suc.sucid', 'sca.sucid')
                                                                 ->where('cspcanalessucursalespromociones.fecid', $fecid)
                                                                 ->where('sucsoldto', $soldTo)
                                                                 ->delete();
