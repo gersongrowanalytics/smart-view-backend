@@ -495,11 +495,11 @@ class PromocionesMostrarController extends Controller
                 $contador =  $contadorDat;
             }
 
-            // $promocionesOrdenadas = $dat['promocionesOrdenadas'];
+            $promocionesOrdenadas = $dat['promocionesOrdenadas'];
 
             $mecanicasUtilizadas = [];
 
-            foreach($datos[$posicionDat]['promocionesOrdenadas'] as $posicionPromocionesOrdenadas => $promocionOrdenada){
+            foreach($promocionesOrdenadas as $posicionPromocionesOrdenadas => $promocionOrdenada){
 
                 if($promocionOrdenada['prmmecanica'] != ""){
                     
@@ -511,6 +511,7 @@ class PromocionesMostrarController extends Controller
                             if($mecanicaUtilizada == $promocionOrdenada['prmmecanica']){
                                 $encontroMecanica = true;
                                 // $datos[$posicionDat]['promocionesOrdenadas'][$posicionPromocionesOrdenadas] = $promocionVacia;
+                                $promocionesOrdenadas[$posicionPromocionesOrdenadas] = $promocionVacia;
                             }
                         }
 
