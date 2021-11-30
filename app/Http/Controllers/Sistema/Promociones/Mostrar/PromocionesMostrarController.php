@@ -489,12 +489,16 @@ class PromocionesMostrarController extends Controller
 
         foreach($datos as $posicionDat => $dat){
             $contadorDat = sizeof($dat['promocionesOrdenadas']);
-            $dat['cont'] = $contadorDat;
+            $datos[$posicionDat]['cont'] = $contadorDat;
 
             if($contadorDat > $contador){
                 $contador =  $contadorDat;
             }
 
+
+
+
+            // LOGICA LIMPIAR LAS MECANICAS IGUALES Y REEMPLAZAR POR PROMOCIONES EN 0
             $promocionesOrdenadas = $dat['promocionesOrdenadas'];
 
             $mecanicasUtilizadas = [];
@@ -521,10 +525,8 @@ class PromocionesMostrarController extends Controller
 
                     }else{
                         $mecanicasUtilizadas[] = $promocionOrdenada['prmmecanica'];
-                    }
-                    
+                    }   
                 }
-
             }
 
             $datos[$posicionDat]['promocionesOrdenadas'] = $promocionesOrdenadas;
