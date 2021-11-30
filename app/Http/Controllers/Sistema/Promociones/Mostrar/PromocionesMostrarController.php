@@ -33,6 +33,36 @@ class PromocionesMostrarController extends Controller
         $mensajeDetalle = '';
         $mensajedev     = null;
 
+        $fechaInicio = date("m", strtotime($fechaActual));
+        $fechaInicio = "01/".$fechaInicio;
+        $fechaFinal = date("m", strtotime($fechaActual));
+        $fechafinal = "30/".$fechaFinal;
+
+        $promocionVacia = array(
+            'cspid'              => 0,
+            'prmid'              => "",
+            'prmcodigo'          => "",
+            'cspvalorizado'      => "",
+            'cspplanchas'        => "",
+            'cspcompletado'      => "",
+            'cspcantidadcombo'   => "",
+            'prmmecanica'        => "",
+            'cspcantidadplancha' => "",
+            'csptotalcombo'      => "",
+            'csptotalplancha'    => "",
+            'csptotal'           => "",
+            'cspgratis'          => "",
+            'prmaccion'          => "",
+            'tprnombre'          => "",
+            'cspnuevo'           => "",
+            'productos'          => [],
+            'productoPrincipal'  => "0",
+            'productosbonificados' => [],
+            'fechainicio' => $fechaInicio,
+            'fechafinal'  => $fechafinal,
+
+        );
+
         try{
             $csccanalessucursalescategoriasa = array();
             $csccanalessucursalescategorias = csccanalessucursalescategorias::join('cspcanalessucursalespromociones as csp', 'csp.cscid', 'csccanalessucursalescategorias.cscid')
@@ -457,13 +487,45 @@ class PromocionesMostrarController extends Controller
 
         $contador = 0;
 
-        foreach($datos as $dat){
+        foreach($datos as $posicionDat => $dat){
             $contadorDat = sizeof($dat['promocionesOrdenadas']);
             $dat['cont'] = $contadorDat;
 
             if($contadorDat > $contador){
                 $contador =  $contadorDat;
             }
+
+            $promocionesOrdenadas = $dat['promocionesOrdenadas'];
+
+            $mecanicasUtilizadas = [];
+
+            foreach($promocionesOrdenadas as $posicionPromocionesOrdenadas => $promocionOrdenada){
+
+                if($promocionOrdenada['prmmecanica'] != ""){
+                    
+                    if(sizeof($mecanicasUtilizadas) > 0){
+
+                        $encontroMecanica = false;
+
+                        foreach($mecanicasUtilizadas as $mecanicaUtilizada){
+                            if($mecanicaUtilizada == $promocionOrdenada['prmmecanica']){
+                                $encontroMecanica = true;
+                                $datos[$posicionDat]['promocionesOrdenadas'][$posicionPromocionesOrdenadas] = $promocionVacia;
+                            }
+                        }
+
+                        if($encontroMecanica == false){
+                            $mecanicasUtilizadas[] = $promocionOrdenada['prmmecanica'];
+                        }
+
+                    }else{
+                        $mecanicasUtilizadas[] = $promocionOrdenada['prmmecanica'];
+                    }
+                    
+                }
+
+            }
+
         }
 
         foreach($datos as $contadorDat => $dat){
@@ -509,6 +571,8 @@ class PromocionesMostrarController extends Controller
                 $datos[$contadorDat]['promocionesOrdenadas'] = $nuevasPromos;
 
             }
+
+
         }
 
         $requestsalida = response()->json([
