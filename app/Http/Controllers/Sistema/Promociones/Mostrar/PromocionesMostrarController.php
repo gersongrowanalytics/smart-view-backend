@@ -355,71 +355,71 @@ class PromocionesMostrarController extends Controller
                                 }
                             }
 
-                            // foreach ($cspcanalessucursalespromociones as $posicionCspDos => $csp) {
-                            //     $encontroProductoMomento = false;
-                            //     foreach ($productosCsc as $key => $productoCsc) {
-                            //         if($csp->productoPrincipal == $productoCsc){
-                            //             $encontroProductoMomento = true;
-                            //         }
-                            //     }
+                            foreach ($cspcanalessucursalespromociones as $posicionCspDos => $csp) {
+                                $encontroProductoMomento = false;
+                                foreach ($productosCsc as $key => $productoCsc) {
+                                    if($csp->productoPrincipal == $productoCsc){
+                                        $encontroProductoMomento = true;
+                                    }
+                                }
 
-                            //     if($encontroProductoMomento == false){
-                            //         $nuevoArrayCsp[] = array(
-                            //             'cspid'              => $csp->cspid,
-                            //             'prmid'              => $csp->prmid,
-                            //             'prmcodigo'          => $csp->prmcodigo,
-                            //             'cspvalorizado'      => $csp->cspvalorizado,
-                            //             'cspplanchas'        => $csp->cspplanchas,
-                            //             'cspcompletado'      => $csp->cspcompletado,
-                            //             'cspcantidadcombo'   => $csp->cspcantidadcombo,
-                            //             'prmmecanica'        => $csp->prmmecanica,
-                            //             'cspcantidadplancha' => $csp->cspcantidadplancha,
-                            //             'csptotalcombo'      => $csp->csptotalcombo,
-                            //             'csptotalplancha'    => $csp->csptotalplancha,
-                            //             'csptotal'           => $csp->csptotal,
-                            //             'cspgratis'          => $csp->cspgratis,
-                            //             'prmaccion'          => $csp->prmaccion,
-                            //             'tprnombre'          => $csp->tprnombre,
-                            //             'cspnuevo'           => $csp->cspnuevo,
-                            //             'productos'          => $csp->productos,
-                            //             'productoPrincipal'  => $csp->productoPrincipal,
-                            //             'productosbonificados' => $csp->productosbonificados,
-                            //             'fechainicio' => $csp->fechainicio,
-                            //             'fechafinal' => $csp->fechafinal,
+                                if($encontroProductoMomento == false){
+                                    $nuevoArrayCsp[] = array(
+                                        'cspid'              => $csp->cspid,
+                                        'prmid'              => $csp->prmid,
+                                        'prmcodigo'          => $csp->prmcodigo,
+                                        'cspvalorizado'      => $csp->cspvalorizado,
+                                        'cspplanchas'        => $csp->cspplanchas,
+                                        'cspcompletado'      => $csp->cspcompletado,
+                                        'cspcantidadcombo'   => $csp->cspcantidadcombo,
+                                        'prmmecanica'        => $csp->prmmecanica,
+                                        'cspcantidadplancha' => $csp->cspcantidadplancha,
+                                        'csptotalcombo'      => $csp->csptotalcombo,
+                                        'csptotalplancha'    => $csp->csptotalplancha,
+                                        'csptotal'           => $csp->csptotal,
+                                        'cspgratis'          => $csp->cspgratis,
+                                        'prmaccion'          => $csp->prmaccion,
+                                        'tprnombre'          => $csp->tprnombre,
+                                        'cspnuevo'           => $csp->cspnuevo,
+                                        'productos'          => $csp->productos,
+                                        'productoPrincipal'  => $csp->productoPrincipal,
+                                        'productosbonificados' => $csp->productosbonificados,
+                                        'fechainicio' => $csp->fechainicio,
+                                        'fechafinal' => $csp->fechafinal,
 
-                            //         );
-                            //     }
+                                    );
+                                }
 
-                            // }
+                            }
 
                         }else{
                             // $nuevoArrayCsp = $cspcanalessucursalespromociones;
 
-                            foreach ($cspcanalessucursalespromociones as $posicionCsp => $csp) {
-                                $nuevoArrayCsp[] = array(
-                                    'cspid'              => $csp->cspid,
-                                    'prmid'              => $csp->prmid,
-                                    'prmcodigo'          => $csp->prmcodigo,
-                                    'cspvalorizado'      => $csp->cspvalorizado,
-                                    'cspplanchas'        => $csp->cspplanchas,
-                                    'cspcompletado'      => $csp->cspcompletado,
-                                    'cspcantidadcombo'   => $csp->cspcantidadcombo,
-                                    'prmmecanica'        => $csp->prmmecanica,
-                                    'cspcantidadplancha' => $csp->cspcantidadplancha,
-                                    'csptotalcombo'      => $csp->csptotalcombo,
-                                    'csptotalplancha'    => $csp->csptotalplancha,
-                                    'csptotal'           => $csp->csptotal,
-                                    'cspgratis'          => $csp->cspgratis,
-                                    'prmaccion'          => $csp->prmaccion,
-                                    'tprnombre'          => $csp->tprnombre,
-                                    'cspnuevo'           => $csp->cspnuevo,
-                                    'productos'          => $csp->productos,
-                                    'productoPrincipal'  => $csp->productoPrincipal,
-                                    'productosbonificados' => $csp->productosbonificados,
-                                    'fechainicio' => $csp->fechainicio,
-                                    'fechafinal' => $csp->fechafinal,
-                                );
-                            }
+                            // foreach ($cspcanalessucursalespromociones as $posicionCsp => $csp) {
+                            //     $nuevoArrayCsp[] = array(
+                            //         'cspid'              => $csp->cspid,
+                            //         'prmid'              => $csp->prmid,
+                            //         'prmcodigo'          => $csp->prmcodigo,
+                            //         'cspvalorizado'      => $csp->cspvalorizado,
+                            //         'cspplanchas'        => $csp->cspplanchas,
+                            //         'cspcompletado'      => $csp->cspcompletado,
+                            //         'cspcantidadcombo'   => $csp->cspcantidadcombo,
+                            //         'prmmecanica'        => $csp->prmmecanica,
+                            //         'cspcantidadplancha' => $csp->cspcantidadplancha,
+                            //         'csptotalcombo'      => $csp->csptotalcombo,
+                            //         'csptotalplancha'    => $csp->csptotalplancha,
+                            //         'csptotal'           => $csp->csptotal,
+                            //         'cspgratis'          => $csp->cspgratis,
+                            //         'prmaccion'          => $csp->prmaccion,
+                            //         'tprnombre'          => $csp->tprnombre,
+                            //         'cspnuevo'           => $csp->cspnuevo,
+                            //         'productos'          => $csp->productos,
+                            //         'productoPrincipal'  => $csp->productoPrincipal,
+                            //         'productosbonificados' => $csp->productosbonificados,
+                            //         'fechainicio' => $csp->fechainicio,
+                            //         'fechafinal' => $csp->fechafinal,
+                            //     );
+                            // }
                         }
 
 
