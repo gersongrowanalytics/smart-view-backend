@@ -510,7 +510,7 @@ class PromocionesMostrarController extends Controller
                         foreach($mecanicasUtilizadas as $mecanicaUtilizada){
                             if($mecanicaUtilizada == $promocionOrdenada['prmmecanica']){
                                 $encontroMecanica = true;
-                                $datos[$posicionDat]['promocionesOrdenadas'][$posicionPromocionesOrdenadas] = $promocionVacia;
+                                // $datos[$posicionDat]['promocionesOrdenadas'][$posicionPromocionesOrdenadas] = $promocionVacia;
                             }
                         }
 
