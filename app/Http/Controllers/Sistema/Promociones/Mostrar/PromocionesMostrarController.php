@@ -283,29 +283,29 @@ class PromocionesMostrarController extends Controller
                                                         }
 
                                                     }else{
-                                                        // $nuevoArrayCspDuplicado[] = array(
-                                                        //     'cspid'              => $nuevoArrayCspn[$posicionNuevInv]['cspid'],
-                                                        //     'prmid'              => $nuevoArrayCspn[$posicionNuevInv]['prmid'],
-                                                        //     'prmcodigo'          => $nuevoArrayCspn[$posicionNuevInv]['prmcodigo'],
-                                                        //     'cspvalorizado'      => $nuevoArrayCspn[$posicionNuevInv]['cspvalorizado'],
-                                                        //     'cspplanchas'        => $nuevoArrayCspn[$posicionNuevInv]['cspplanchas'],
-                                                        //     'cspcompletado'      => $nuevoArrayCspn[$posicionNuevInv]['cspcompletado'],
-                                                        //     'cspcantidadcombo'   => $nuevoArrayCspn[$posicionNuevInv]['cspcantidadcombo'],
-                                                        //     'prmmecanica'        => $nuevoArrayCspn[$posicionNuevInv]['prmmecanica'],
-                                                        //     'cspcantidadplancha' => $nuevoArrayCspn[$posicionNuevInv]['cspcantidadplancha'],
-                                                        //     'csptotalcombo'      => $nuevoArrayCspn[$posicionNuevInv]['csptotalcombo'],
-                                                        //     'csptotalplancha'    => $nuevoArrayCspn[$posicionNuevInv]['csptotalplancha'],
-                                                        //     'csptotal'           => $nuevoArrayCspn[$posicionNuevInv]['csptotal'],
-                                                        //     'cspgratis'          => $nuevoArrayCspn[$posicionNuevInv]['cspgratis'],
-                                                        //     'prmaccion'          => $nuevoArrayCspn[$posicionNuevInv]['prmaccion'],
-                                                        //     'tprnombre'          => $nuevoArrayCspn[$posicionNuevInv]['tprnombre'],
-                                                        //     'cspnuevo'           => $nuevoArrayCspn[$posicionNuevInv]['cspnuevo'],
-                                                        //     'productos'          => $nuevoArrayCspn[$posicionNuevInv]['productos'],
-                                                        //     'productoPrincipal'  => $nuevoArrayCspn[$posicionNuevInv]['productoPrincipal'],
-                                                        //     'productosbonificados' => $nuevoArrayCspn[$posicionNuevInv]['productosbonificados'],
-                                                        //     'fechainicio'       => $nuevoArrayCspn[$posicionNuevInv]['fechainicio'],
-                                                        //     'fechafinal'        => $nuevoArrayCspn[$posicionNuevInv]['fechafinal'],
-                                                        // );
+                                                        $nuevoArrayCspDuplicado[] = array(
+                                                            'cspid'              => $nuevoArrayCspn[$posicionNuevInv]['cspid'],
+                                                            'prmid'              => $nuevoArrayCspn[$posicionNuevInv]['prmid'],
+                                                            'prmcodigo'          => $nuevoArrayCspn[$posicionNuevInv]['prmcodigo'],
+                                                            'cspvalorizado'      => $nuevoArrayCspn[$posicionNuevInv]['cspvalorizado'],
+                                                            'cspplanchas'        => $nuevoArrayCspn[$posicionNuevInv]['cspplanchas'],
+                                                            'cspcompletado'      => $nuevoArrayCspn[$posicionNuevInv]['cspcompletado'],
+                                                            'cspcantidadcombo'   => $nuevoArrayCspn[$posicionNuevInv]['cspcantidadcombo'],
+                                                            'prmmecanica'        => $nuevoArrayCspn[$posicionNuevInv]['prmmecanica'],
+                                                            'cspcantidadplancha' => $nuevoArrayCspn[$posicionNuevInv]['cspcantidadplancha'],
+                                                            'csptotalcombo'      => $nuevoArrayCspn[$posicionNuevInv]['csptotalcombo'],
+                                                            'csptotalplancha'    => $nuevoArrayCspn[$posicionNuevInv]['csptotalplancha'],
+                                                            'csptotal'           => $nuevoArrayCspn[$posicionNuevInv]['csptotal'],
+                                                            'cspgratis'          => $nuevoArrayCspn[$posicionNuevInv]['cspgratis'],
+                                                            'prmaccion'          => $nuevoArrayCspn[$posicionNuevInv]['prmaccion'],
+                                                            'tprnombre'          => $nuevoArrayCspn[$posicionNuevInv]['tprnombre'],
+                                                            'cspnuevo'           => $nuevoArrayCspn[$posicionNuevInv]['cspnuevo'],
+                                                            'productos'          => $nuevoArrayCspn[$posicionNuevInv]['productos'],
+                                                            'productoPrincipal'  => $nuevoArrayCspn[$posicionNuevInv]['productoPrincipal'],
+                                                            'productosbonificados' => $nuevoArrayCspn[$posicionNuevInv]['productosbonificados'],
+                                                            'fechainicio'       => $nuevoArrayCspn[$posicionNuevInv]['fechainicio'],
+                                                            'fechafinal'        => $nuevoArrayCspn[$posicionNuevInv]['fechafinal'],
+                                                        );
                                                     }
                                                 }
 
