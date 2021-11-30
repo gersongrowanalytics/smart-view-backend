@@ -495,36 +495,36 @@ class PromocionesMostrarController extends Controller
                 $contador =  $contadorDat;
             }
 
-            $promocionesOrdenadas = $dat['promocionesOrdenadas'];
+            // $promocionesOrdenadas = $dat['promocionesOrdenadas'];
 
             $mecanicasUtilizadas = [];
 
-            // foreach($promocionesOrdenadas as $posicionPromocionesOrdenadas => $promocionOrdenada){
+            foreach($datos[$posicionDat]['promocionesOrdenadas'] as $posicionPromocionesOrdenadas => $promocionOrdenada){
 
-            //     if($promocionOrdenada['prmmecanica'] != ""){
+                if($promocionOrdenada['prmmecanica'] != ""){
                     
-            //         if(sizeof($mecanicasUtilizadas) > 0){
+                    if(sizeof($mecanicasUtilizadas) > 0){
 
-            //             $encontroMecanica = false;
+                        $encontroMecanica = false;
 
-            //             foreach($mecanicasUtilizadas as $mecanicaUtilizada){
-            //                 if($mecanicaUtilizada == $promocionOrdenada['prmmecanica']){
-            //                     $encontroMecanica = true;
-            //                     $datos[$posicionDat]['promocionesOrdenadas'][$posicionPromocionesOrdenadas] = $promocionVacia;
-            //                 }
-            //             }
+                        foreach($mecanicasUtilizadas as $mecanicaUtilizada){
+                            if($mecanicaUtilizada == $promocionOrdenada['prmmecanica']){
+                                $encontroMecanica = true;
+                                $datos[$posicionDat]['promocionesOrdenadas'][$posicionPromocionesOrdenadas] = $promocionVacia;
+                            }
+                        }
 
-            //             if($encontroMecanica == false){
-            //                 $mecanicasUtilizadas[] = $promocionOrdenada['prmmecanica'];
-            //             }
+                        if($encontroMecanica == false){
+                            $mecanicasUtilizadas[] = $promocionOrdenada['prmmecanica'];
+                        }
 
-            //         }else{
-            //             $mecanicasUtilizadas[] = $promocionOrdenada['prmmecanica'];
-            //         }
+                    }else{
+                        $mecanicasUtilizadas[] = $promocionOrdenada['prmmecanica'];
+                    }
                     
-            //     }
+                }
 
-            // }
+            }
 
         }
 
