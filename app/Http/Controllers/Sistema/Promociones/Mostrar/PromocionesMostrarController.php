@@ -527,6 +527,8 @@ class PromocionesMostrarController extends Controller
 
             }
 
+            $datos[$posicionDat]['promocionesOrdenadas'] = $promocionesOrdenadas;
+
         }
 
         foreach($datos as $contadorDat => $dat){
