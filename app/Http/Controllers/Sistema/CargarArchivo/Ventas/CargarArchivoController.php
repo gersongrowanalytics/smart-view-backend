@@ -635,7 +635,7 @@ class CargarArchivoController extends Controller
         $nuevoCargaArchivo = new carcargasarchivos;
         $nuevoCargaArchivo->tcaid            = 3;
         $nuevoCargaArchivo->fecid            = 66;
-        $nuevoCargaArchivo->usuid            = 1;
+        $nuevoCargaArchivo->usuid            = $usuusuario->usuid;
         $nuevoCargaArchivo->carnombrearchivo = "Grow Avance ventas - Nueva plantilla FINAL 30Nov(CIERRE)";
         $nuevoCargaArchivo->carubicacion     = "/";
         $nuevoCargaArchivo->carexito         = true;
