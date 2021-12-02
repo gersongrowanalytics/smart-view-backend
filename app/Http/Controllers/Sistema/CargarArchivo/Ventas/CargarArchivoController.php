@@ -632,6 +632,20 @@ class CargarArchivoController extends Controller
         // }
 
 
+        $nuevoCargaArchivo = new carcargasarchivos;
+        $nuevoCargaArchivo->tcaid            = 3;
+        $nuevoCargaArchivo->fecid            = 66;
+        $nuevoCargaArchivo->usuid            = 1;
+        $nuevoCargaArchivo->carnombrearchivo = "Grow Avance ventas - Nueva plantilla FINAL 30Nov(CIERRE)";
+        $nuevoCargaArchivo->carubicacion     = "/";
+        $nuevoCargaArchivo->carexito         = true;
+        $nuevoCargaArchivo->carurl           = env('APP_URL').'/Sistema/cargaArchivos/ventas/sellin/'."Grow Avance ventas - Nueva plantilla FINAL 30Nov(CIERRE)";
+        if($nuevoCargaArchivo->save()){
+            $pkid = "CAR-".$nuevoCargaArchivo->carid;
+        }else{
+
+        }
+
         $datos = array(
             array(
                 "skusnoexisten" => $skusNoExisten
