@@ -39,6 +39,9 @@ $router->group(['middleware' => ['permisos']], function() use($router) {
     $router->post('/promociones/mostrar/categorias/xzona', 'Sistema\Promociones\Mostrar\CategoriasController@mostrarCategoriasXZona');
     $router->post('/promociones/mostrar/promociones', 'Sistema\Promociones\Mostrar\PromocionesMostrarController@mostrarPromociones');
     $router->post('/promociones/mostrar/promociones/xzona', 'Sistema\Promociones\Mostrar\PromocionesMostrarController@mostrarPromocionesXZona');
+
+    $router->post('/promociones/mostrar/pdf-generar', 'Sistema\Promociones\Mostrar\PdfPromocionesController@MostrarPdfPromociones');
+
     $router->post('/promociones/promocion/editar', 'Sistema\Promociones\Mostrar\PromocionesMostrarController@mostrarPromociones');
     $router->post('/usuario/mostrar/sucursales', 'Sistema\Usuario\Sucursales\Mostrar\SucursalesMostrarController@mostrarSucursales');
     $router->post('/usuario/mostrar/permisos', 'Sistema\Usuario\Permisos\Mostrar\PermisosMostrarController@mostrarPermisosUsuario');
@@ -182,3 +185,4 @@ $router->post('/cargarArchivo/promociones-liquidadas', 'Sistema\CargarArchivo\Re
 
 $router->get('/actualizar-si-distribuidoras-activas/{fecid}', 'salvacionController@AsignarSi');
 
+$router->get('/mostrar-promociones-pdf', 'Sistema\Promociones\Mostrar\PdfPromocionesController@MostrarPdfPromociones');

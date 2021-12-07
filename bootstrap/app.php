@@ -92,7 +92,7 @@ $app->routeMiddleware([
 | totally optional, so you are not required to uncomment this line.
 |
 */
-
+$app->register(\Barryvdh\DomPDF\ServiceProvider::class);
 $app->register(Flipbox\LumenGenerator\LumenGeneratorServiceProvider::class);
 $app->register(Illuminate\Mail\MailServiceProvider::class);
 $app->register(\App\Providers\MailServiceProvider::class);
