@@ -1,5 +1,5 @@
 <div class="body1_page3"></div>
-<div class="circle_page3">•</div>
+<div class="circle_page3" style="color:{{$categoria['catcolor']}}">•</div>
 <div class="box2_page" id="color_page3" style="color:{{$categoria['catcolor']}}" >Creciendo Juntos</div>
 <div class="box2_page3">Actualización 5 de Agosto del 2021</div>
 <div class="box4_page" id="color_page3">Infant</div>
@@ -33,12 +33,12 @@
                                     class="text1" 
                                     id="text1_color_page3"
                                     style="color:{{$categoria['catcolor']}}"
-                                >{{$promocion['csptotalcombo']}} Combos </div> 
+                                >{{round($promocion['csptotalcombo'])}} Combos </div> 
                                 <div 
                                     class="text2" 
                                     id="text2_color_page3"
                                     style="color:{{$categoria['catcolor']}}"
-                                >Total de planchas: {{$promocion['csptotalplancha']}}</div> 
+                                >Total de planchas: {{round($promocion['csptotalplancha'])}}</div> 
                                 <div class="text3">Sell In Bonificación</div>
                             </div>
                             <div class="box_table_img">
@@ -92,8 +92,11 @@
 
         @if($posicionDat == 1)
         <div class="Segunda-Columna-Pdf-Promociones">
-        <div class="Contenedor-Titulo-Canal-Pdf-Promociones">
-                <div class="Titulo-Canal-Pdf-Promociones">
+            <div class="Contenedor-Titulo-Canal-Pdf-Promociones">
+                <div 
+                    class="Titulo-Canal-Pdf-Promociones"
+                    style="background:{{$categoria['catcolor']}}"
+                >
                     <b>{{$dat['cannombre']}}</b>
                 </div>
             </div>
@@ -102,10 +105,20 @@
                 <tr class="fila">
                     <th class="columna">
                             <div class="box_table"
-                            id="box_table_color_page3">
+                                id="box_table_color_page3"
+                                style="border: 1px solid {{$categoria['catcolor']}}"
+                            >
                             <div class="big_text">
-                                <div class="text1" id="text1_color_page3">{{$promocion['csptotalcombo']}} Combos </div> 
-                                <div class="text2" id="text2_color_page3">Total de planchas: {{$promocion['csptotalplancha']}}</div> 
+                                <div 
+                                    class="text1" 
+                                    id="text1_color_page3"
+                                    style="color:{{$categoria['catcolor']}}"
+                                >{{round($promocion['csptotalcombo'])}} Combos </div> 
+                                <div 
+                                    class="text2" 
+                                    id="text2_color_page3"
+                                    style="color:{{$categoria['catcolor']}}"
+                                >Total de planchas: {{round($promocion['csptotalplancha'])}}</div> 
                                 <div class="text3">Sell In Bonificación</div>
                             </div>
                             <div class="box_table_img">
@@ -158,8 +171,11 @@
 
         @if($posicionDat == 2)
         <div class="Tercera-Columna-Pdf-Promociones">
-        <div class="Contenedor-Titulo-Canal-Pdf-Promociones">
-                <div class="Titulo-Canal-Pdf-Promociones">
+            <div class="Contenedor-Titulo-Canal-Pdf-Promociones">
+                <div 
+                    class="Titulo-Canal-Pdf-Promociones"
+                    style="background:{{$categoria['catcolor']}}"
+                >
                     <b>{{$dat['cannombre']}}</b>
                 </div>
             </div>
@@ -168,10 +184,20 @@
                 <tr class="fila">
                     <th class="columna">
                             <div class="box_table"
-                            id="box_table_color_page3">
+                                id="box_table_color_page3"
+                                style="border: 1px solid {{$categoria['catcolor']}}"
+                            >
                             <div class="big_text">
-                                <div class="text1" id="text1_color_page3">{{$promocion['csptotalcombo']}} Combos </div> 
-                                <div class="text2" id="text2_color_page3">Total de planchas: {{$promocion['csptotalplancha']}}</div> 
+                                <div 
+                                    class="text1" 
+                                    id="text1_color_page3"
+                                    style="color:{{$categoria['catcolor']}}"
+                                >{{round($promocion['csptotalcombo'])}} Combos </div> 
+                                <div 
+                                    class="text2" 
+                                    id="text2_color_page3"
+                                    style="color:{{$categoria['catcolor']}}"
+                                >Total de planchas: {{round($promocion['csptotalplancha'])}}</div> 
                                 <div class="text3">Sell In Bonificación</div>
                             </div>
                             <div class="box_table_img">
@@ -224,8 +250,11 @@
 
         @if($posicionDat == 3)
         <div class="Cuarta-Columna-Pdf-Promociones">
-        <div class="Contenedor-Titulo-Canal-Pdf-Promociones">
-                <div class="Titulo-Canal-Pdf-Promociones">
+            <div class="Contenedor-Titulo-Canal-Pdf-Promociones">
+                <div 
+                    class="Titulo-Canal-Pdf-Promociones"
+                    style="background:{{$categoria['catcolor']}}"
+                >
                     <b>{{$dat['cannombre']}}</b>
                 </div>
             </div>
@@ -234,10 +263,20 @@
                 <tr class="fila">
                     <th class="columna">
                             <div class="box_table"
-                            id="box_table_color_page3">
+                                id="box_table_color_page3"
+                                style="border: 1px solid {{$categoria['catcolor']}}"
+                            >
                             <div class="big_text">
-                                <div class="text1" id="text1_color_page3">{{$promocion['csptotalcombo']}} Combos </div> 
-                                <div class="text2" id="text2_color_page3">Total de planchas: {{$promocion['csptotalplancha']}}</div> 
+                                <div 
+                                    class="text1" 
+                                    id="text1_color_page3"
+                                    style="color:{{$categoria['catcolor']}}"
+                                >{{round($promocion['csptotalcombo'])}} Combos </div> 
+                                <div 
+                                    class="text2" 
+                                    id="text2_color_page3"
+                                    style="color:{{$categoria['catcolor']}}"
+                                >Total de planchas: {{round($promocion['csptotalplancha'])}}</div> 
                                 <div class="text3">Sell In Bonificación</div>
                             </div>
                             <div class="box_table_img">
