@@ -15,7 +15,7 @@
             <div class="Contenedor-Titulo-Canal-Pdf-Promociones">
                 <div 
                     class="Titulo-Canal-Pdf-Promociones"
-                    style="background:{{categoria['catcolor']}}"
+                    style="background:{{$categoria['catcolor']}}"
                 >
                     <b>{{$dat['cannombre']}}</b>
                 </div>
@@ -30,12 +30,12 @@
                                 <div 
                                     class="text1" 
                                     id="text1_color_page3"
-                                    style="color:{{categoria['catcolor']}}"
+                                    style="color:{{$categoria['catcolor']}}"
                                 >{{$promocion['csptotalcombo']}} Combos </div> 
                                 <div 
                                     class="text2" 
                                     id="text2_color_page3"
-                                    style="color:{{categoria['catcolor']}}"
+                                    style="color:{{$categoria['catcolor']}}"
                                 >Total de planchas: {{$promocion['csptotalplancha']}}</div> 
                                 <div class="text3">Sell In Bonificación</div>
                             </div>
