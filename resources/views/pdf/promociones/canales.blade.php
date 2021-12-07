@@ -2,7 +2,7 @@
 <div class="circle_page3" style="color:{{$categoria['catcolor']}}">•</div>
 <div class="box2_page" id="color_page3" style="color:{{$categoria['catcolor']}}" >Creciendo Juntos</div>
 <div class="box2_page3">Actualización 5 de Agosto del 2021</div>
-<div class="box4_page" id="color_page3">Infant</div>
+<div class="box4_page" id="color_page3" style="color:{{$categoria['catcolor']}}">{{$categoria['catnombre']}}</div>
 <div class="box4_page3">
     
     
@@ -91,7 +91,7 @@
         @endif
 
         @if($posicionDat == 1)
-        <div class="Segunda-Columna-Pdf-Promociones">
+        <div class="Segunda-Columna-Pdf-Promociones" style="border-right: 1px dashed {{$categoria['catcolor']}}" >
             <div class="Contenedor-Titulo-Canal-Pdf-Promociones">
                 <div 
                     class="Titulo-Canal-Pdf-Promociones"

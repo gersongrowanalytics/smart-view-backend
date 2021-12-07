@@ -38,7 +38,7 @@ body, html{
     position: absolute;
     width: 100%;
     height: 80px;
-    left: 500px;
+    left: 350px;
     top: 680px;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-style: normal;
@@ -145,7 +145,7 @@ body, html{
     background-color: white;
 }
 #color_page3{
-    color: #E41A37;
+    /* color: #E41A37; */
 }
 
 .box2_page3{
@@ -427,7 +427,7 @@ body, html{
     height: 30px;
     left: 33px;
     top: 35px;
-    color: #E41A37;
+    /* color: #E41A37; */
     font-size: 30px;
 }
 .circle_page5{
