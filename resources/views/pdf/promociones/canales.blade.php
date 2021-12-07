@@ -18,37 +18,52 @@
                 </div>
             </div>
             <table >
+                @foreach($dat['promocionesOrdenadas'] as $promocion)
                 <tr class="fila">
                     <th class="columna">
                             <div class="box_table"
                             id="box_table_color_page3">
                             <div class="big_text">
-                                <div class="text1" id="text1_color_page3">50 Combos </div> 
-                                <div class="text2" id="text2_color_page3">Total de planchas: 300</div> 
+                                <div class="text1" id="text1_color_page3">{{$promocion['csptotalcombo']}} Combos </div> 
+                                <div class="text2" id="text2_color_page3">Total de planchas: {{$promocion['csptotalplancha']}}</div> 
                                 <div class="text3">Sell In Bonificación</div>
                             </div>
                             <div class="box_table_img">
                                 <table>
                                     <tr>
                                         <th>
+                                            @foreach($promocion['productos'] as $posicionProducto => $producto)
+                                            @if($posicionProducto == 0)
                                             <div class="img_products">
                                                 <div class="text_free_product1">Gratis</div>
-                                                <img class="img_product" src="https://pre-back.leadsmartview.com/Sistema/promociones/IMAGENES/PRODUCTOSNUEVO/iE3g1-2021-08-31-30226606.png" alt="">
-                                                <div class="text1_product1">11 HAF x120</div>
-                                                <div class="text2_product1">Por 9 plancha(s)</div>
-                                            </div>
-                                        </th>
-                                        <th>
-                                            <div class="img_products">
-                                                <div class="text_free_product2">Gratis</div>
                                                 <img 
                                                     class="img_product" 
-                                                    src="https://pre-back.leadsmartview.com/Sistema/promociones/IMAGENES/PRODUCTOSNUEVO/iE3g1-2021-08-31-30226606.png" 
+                                                    src="{{$producto['proimagen']}}"
                                                     alt=""
                                                 >
-                                                <div class="text1_product2">11 HAF x120</div>
-                                                <div class="text2_product2">Por 9 plancha(s)</div>
+                                                <div class="text1_product1">{{$producto['prpproductoppt']}}</div>
+                                                <div class="text2_product1">{{$producto['prpcomprappt']}}</div>
                                             </div>
+                                            @endif
+                                            @endforeach
+                                        </th>
+                                        <th>
+                                            @foreach($promocion['productosbonificados'] as $posicionProductoBonif => $productobonificado)
+                                            @if($posicionProductoBonif == 0)
+                                            <div class="img_products">
+                                                @if($promocion['cspgratis'] == 1)
+                                                <div class="text_free_product2">Gratis</div>
+                                                @endif
+                                                <img 
+                                                    class="img_product" 
+                                                    src="{{$productobonificado['prbimagen']}}" 
+                                                    alt=""
+                                                >
+                                                <div class="text1_product2">{{$productobonificado['prbproductoppt']}}</div>
+                                                <div class="text2_product2">{{$productobonificado['prbcomprappt']}}</div>
+                                            </div>
+                                            @endif
+                                            @endforeach
                                         </th>
                                     </tr>
                                 </table>
@@ -56,21 +71,208 @@
                         </div>
                     </th>
                 </tr>
+                @endforeach
             </table>
 
         </div>
         @endif
 
         @if($posicionDat == 1)
-        <div class="Segunda-Columna-Pdf-Promociones"></div>
+        <div class="Segunda-Columna-Pdf-Promociones">
+        <div class="Contenedor-Titulo-Canal-Pdf-Promociones">
+                <div class="Titulo-Canal-Pdf-Promociones">
+                    <b>{{$dat['cannombre']}}</b>
+                </div>
+            </div>
+            <table >
+                @foreach($dat['promocionesOrdenadas'] as $promocion)
+                <tr class="fila">
+                    <th class="columna">
+                            <div class="box_table"
+                            id="box_table_color_page3">
+                            <div class="big_text">
+                                <div class="text1" id="text1_color_page3">{{$promocion['csptotalcombo']}} Combos </div> 
+                                <div class="text2" id="text2_color_page3">Total de planchas: {{$promocion['csptotalplancha']}}</div> 
+                                <div class="text3">Sell In Bonificación</div>
+                            </div>
+                            <div class="box_table_img">
+                                <table>
+                                    <tr>
+                                        <th>
+                                            @foreach($promocion['productos'] as $posicionProducto => $producto)
+                                            @if($posicionProducto == 0)
+                                            <div class="img_products">
+                                                <div class="text_free_product1">Gratis</div>
+                                                <img 
+                                                    class="img_product" 
+                                                    src="{{$producto['proimagen']}}"
+                                                    alt=""
+                                                >
+                                                <div class="text1_product1">{{$producto['prpproductoppt']}}</div>
+                                                <div class="text2_product1">{{$producto['prpcomprappt']}}</div>
+                                            </div>
+                                            @endif
+                                            @endforeach
+                                        </th>
+                                        <th>
+                                            @foreach($promocion['productosbonificados'] as $posicionProductoBonif => $productobonificado)
+                                            @if($posicionProductoBonif == 0)
+                                            <div class="img_products">
+                                                @if($promocion['cspgratis'] == 1)
+                                                <div class="text_free_product2">Gratis</div>
+                                                @endif
+                                                <img 
+                                                    class="img_product" 
+                                                    src="{{$productobonificado['prbimagen']}}" 
+                                                    alt=""
+                                                >
+                                                <div class="text1_product2">{{$productobonificado['prbproductoppt']}}</div>
+                                                <div class="text2_product2">{{$productobonificado['prbcomprappt']}}</div>
+                                            </div>
+                                            @endif
+                                            @endforeach
+                                        </th>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </th>
+                </tr>
+                @endforeach
+            </table>
+        </div>
         @endif
 
         @if($posicionDat == 2)
-        <div class="Tercera-Columna-Pdf-Promociones"></div>
+        <div class="Tercera-Columna-Pdf-Promociones">
+        <div class="Contenedor-Titulo-Canal-Pdf-Promociones">
+                <div class="Titulo-Canal-Pdf-Promociones">
+                    <b>{{$dat['cannombre']}}</b>
+                </div>
+            </div>
+            <table >
+                @foreach($dat['promocionesOrdenadas'] as $promocion)
+                <tr class="fila">
+                    <th class="columna">
+                            <div class="box_table"
+                            id="box_table_color_page3">
+                            <div class="big_text">
+                                <div class="text1" id="text1_color_page3">{{$promocion['csptotalcombo']}} Combos </div> 
+                                <div class="text2" id="text2_color_page3">Total de planchas: {{$promocion['csptotalplancha']}}</div> 
+                                <div class="text3">Sell In Bonificación</div>
+                            </div>
+                            <div class="box_table_img">
+                                <table>
+                                    <tr>
+                                        <th>
+                                            @foreach($promocion['productos'] as $posicionProducto => $producto)
+                                            @if($posicionProducto == 0)
+                                            <div class="img_products">
+                                                <div class="text_free_product1">Gratis</div>
+                                                <img 
+                                                    class="img_product" 
+                                                    src="{{$producto['proimagen']}}"
+                                                    alt=""
+                                                >
+                                                <div class="text1_product1">{{$producto['prpproductoppt']}}</div>
+                                                <div class="text2_product1">{{$producto['prpcomprappt']}}</div>
+                                            </div>
+                                            @endif
+                                            @endforeach
+                                        </th>
+                                        <th>
+                                            @foreach($promocion['productosbonificados'] as $posicionProductoBonif => $productobonificado)
+                                            @if($posicionProductoBonif == 0)
+                                            <div class="img_products">
+                                                @if($promocion['cspgratis'] == 1)
+                                                <div class="text_free_product2">Gratis</div>
+                                                @endif
+                                                <img 
+                                                    class="img_product" 
+                                                    src="{{$productobonificado['prbimagen']}}" 
+                                                    alt=""
+                                                >
+                                                <div class="text1_product2">{{$productobonificado['prbproductoppt']}}</div>
+                                                <div class="text2_product2">{{$productobonificado['prbcomprappt']}}</div>
+                                            </div>
+                                            @endif
+                                            @endforeach
+                                        </th>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </th>
+                </tr>
+                @endforeach
+            </table>
+        </div>
         @endif
 
         @if($posicionDat == 3)
-        <div class="Cuarta-Columna-Pdf-Promociones"></div>
+        <div class="Cuarta-Columna-Pdf-Promociones">
+        <div class="Contenedor-Titulo-Canal-Pdf-Promociones">
+                <div class="Titulo-Canal-Pdf-Promociones">
+                    <b>{{$dat['cannombre']}}</b>
+                </div>
+            </div>
+            <table >
+                @foreach($dat['promocionesOrdenadas'] as $promocion)
+                <tr class="fila">
+                    <th class="columna">
+                            <div class="box_table"
+                            id="box_table_color_page3">
+                            <div class="big_text">
+                                <div class="text1" id="text1_color_page3">{{$promocion['csptotalcombo']}} Combos </div> 
+                                <div class="text2" id="text2_color_page3">Total de planchas: {{$promocion['csptotalplancha']}}</div> 
+                                <div class="text3">Sell In Bonificación</div>
+                            </div>
+                            <div class="box_table_img">
+                                <table>
+                                    <tr>
+                                        <th>
+                                            @foreach($promocion['productos'] as $posicionProducto => $producto)
+                                            @if($posicionProducto == 0)
+                                            <div class="img_products">
+                                                <div class="text_free_product1">Gratis</div>
+                                                <img 
+                                                    class="img_product" 
+                                                    src="{{$producto['proimagen']}}"
+                                                    alt=""
+                                                >
+                                                <div class="text1_product1">{{$producto['prpproductoppt']}}</div>
+                                                <div class="text2_product1">{{$producto['prpcomprappt']}}</div>
+                                            </div>
+                                            @endif
+                                            @endforeach
+                                        </th>
+                                        <th>
+                                            @foreach($promocion['productosbonificados'] as $posicionProductoBonif => $productobonificado)
+                                            @if($posicionProductoBonif == 0)
+                                            <div class="img_products">
+                                                @if($promocion['cspgratis'] == 1)
+                                                <div class="text_free_product2">Gratis</div>
+                                                @endif
+                                                <img 
+                                                    class="img_product" 
+                                                    src="{{$productobonificado['prbimagen']}}" 
+                                                    alt=""
+                                                >
+                                                <div class="text1_product2">{{$productobonificado['prbproductoppt']}}</div>
+                                                <div class="text2_product2">{{$productobonificado['prbcomprappt']}}</div>
+                                            </div>
+                                            @endif
+                                            @endforeach
+                                        </th>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </th>
+                </tr>
+                @endforeach
+            </table>
+        </div>
         @endif
     @endforeach
 
