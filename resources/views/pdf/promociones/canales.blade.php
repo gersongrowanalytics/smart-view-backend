@@ -24,10 +24,19 @@
                 @foreach($dat['promocionesOrdenadas'] as $promocion)
                 <tr class="fila">
                     <th class="columna">
+
+                            @if($promocion['cspid'] == 0)
+                            <div class="box_table"
+                                id="box_table_color_page3"
+                                style="border: 1px solid red"
+                            >
+                            @endif
+                            @if($promocion['cspid'] != 0)
                             <div class="box_table"
                                 id="box_table_color_page3"
                                 style="border: 1px solid {{$categoria['catcolor']}}"
                             >
+                            @endif
                             <div class="big_text">
                                 <div 
                                     class="text1" 

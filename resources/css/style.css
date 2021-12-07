@@ -30,16 +30,16 @@ body, html{
 }
 .img_body_page{
     position: absolute;
-    left: 530px;
-    top: 554px;
-    width: 15%;
+    left: 310px;
+    top: 50px;
+    width: 600px;
 }
 .box1_page{
     position: absolute;
     width: 100%;
     height: 80px;
-    left: 200px;
-    top: 680px;
+    left: 400px;
+    top: 660px;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-style: normal;
     font-weight: bold;
