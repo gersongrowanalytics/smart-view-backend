@@ -1,6 +1,6 @@
 <div class="body1_page3"></div>
 <div class="circle_page3">•</div>
-<div class="box2_page" id="color_page3">Creciendo Juntos</div>
+<div class="box2_page" id="color_page3" style="color:{{$categoria['catcolor']}}" >Creciendo Juntos</div>
 <div class="box2_page3">Actualización 5 de Agosto del 2021</div>
 <div class="box4_page" id="color_page3">Infant</div>
 <div class="box4_page3">
@@ -25,7 +25,9 @@
                 <tr class="fila">
                     <th class="columna">
                             <div class="box_table"
-                            id="box_table_color_page3">
+                                id="box_table_color_page3"
+                                style="border: 1px solid {{$categoria['catcolor']}}"
+                            >
                             <div class="big_text">
                                 <div 
                                     class="text1" 
