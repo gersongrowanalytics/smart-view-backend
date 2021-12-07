@@ -124,7 +124,7 @@ class PdfPromocionesController extends Controller
 
             $pdf2 = app('dompdf.wrapper');
             $pdf2->setPaper('A3','landscape');
-            $pdf2->loadView('pdf.promociones.promocion', ["data" => $dataCategoria['canales']]);
+            $pdf2->loadView('pdf.promociones.promocion', ["data" => $dataCategoria['canales'], "categoria" => $dataCategoria ]);
             $m->addRaw($pdf2->output());
         }
 

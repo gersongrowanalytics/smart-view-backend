@@ -13,7 +13,10 @@
         @if($posicionDat == 0)
         <div class="Primera-Columna-Pdf-Promociones">
             <div class="Contenedor-Titulo-Canal-Pdf-Promociones">
-                <div class="Titulo-Canal-Pdf-Promociones">
+                <div 
+                    class="Titulo-Canal-Pdf-Promociones"
+                    style="background:{{categoria['catcolor']}}"
+                >
                     <b>{{$dat['cannombre']}}</b>
                 </div>
             </div>
@@ -24,8 +27,16 @@
                             <div class="box_table"
                             id="box_table_color_page3">
                             <div class="big_text">
-                                <div class="text1" id="text1_color_page3">{{$promocion['csptotalcombo']}} Combos </div> 
-                                <div class="text2" id="text2_color_page3">Total de planchas: {{$promocion['csptotalplancha']}}</div> 
+                                <div 
+                                    class="text1" 
+                                    id="text1_color_page3"
+                                    style="color:{{categoria['catcolor']}}"
+                                >{{$promocion['csptotalcombo']}} Combos </div> 
+                                <div 
+                                    class="text2" 
+                                    id="text2_color_page3"
+                                    style="color:{{categoria['catcolor']}}"
+                                >Total de planchas: {{$promocion['csptotalplancha']}}</div> 
                                 <div class="text3">Sell In Bonificación</div>
                             </div>
                             <div class="box_table_img">
