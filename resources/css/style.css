@@ -25,22 +25,21 @@ body, html{
 .body2_page{
     width: 100%;
     position: absolute;
-    bottom: 60px;
+    bottom: 330px;
     margin-left: -20px;
-    margin-right: -20px;
 }
 .img_body_page{
     position: absolute;
-    left: 320px;
-    top: 150px;
-    width: 600px;
+    left: 530px;
+    top: 554px;
+    width: 15%;
 }
 .box1_page{
     position: absolute;
-    width: 100%;
+    width: 178px;
     height: 80px;
-    left: 190px;
-    top: 750px;
+    left: 500px;
+    top: 680px;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-style: normal;
     font-weight: bold;
@@ -180,8 +179,8 @@ body, html{
 .box_table{ 
     position: relative;
     width: 90%;
-    height: 222px;
-    margin: 17px 8px 17px 8px;
+    height: 190px;
+    margin: -10px 8px 17px 8px;
     /* background-color: tomato; */
     box-sizing: border-box;
     border-radius: 20px;
@@ -199,7 +198,7 @@ body, html{
 }
 .big_text{
     /* background-color: tomato; */
-    margin-top: 20px;
+    margin-top: 10px;
 }
 .text1{
     font-family: 'Roboto', sans-serif;
@@ -271,6 +270,7 @@ body, html{
 .box_table_img{
     /* background-color: violet; */
     height: 16%;
+    margin-top: -10px;
 }
 .img_products{
     position: relative;
@@ -296,6 +296,7 @@ body, html{
     text-align: center;
     /* background-color: bisque; */
     color: #4D4D4D;
+    margin-top: -10px;
 }
 .text2_product1{
     position: relative;
@@ -352,6 +353,7 @@ body, html{
     text-align: center;
     /* background-color: bisque; */
     color: #4D4D4D;
+    margin-top: -10px;
 }
 .text2_product2{
     position: relative;
@@ -527,7 +529,7 @@ body, html{
     /* background-color: green; */
     width: 100%;
     height: 50px;
-    margin-bottom: -20px;
+    margin-bottom: 5px;
 }
 
 .Titulo-Canal-Pdf-Promociones{
@@ -547,4 +549,8 @@ body, html{
     color: #FFFFFF;
     align-items: center;
     text-align: center;
+}
+
+.fila{
+    margin-bottom: -20px;
 }
