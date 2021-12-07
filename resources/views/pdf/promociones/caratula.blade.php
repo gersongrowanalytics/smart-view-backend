@@ -1,3 +1,3 @@
 <img class="body_page" src='../public/images/pdf/portada-14.jpg' alt="">
 <div class="box1_page1"> Catálogo de Promociones</div>
-<div class="box2_page1">Diciembre 2021</div>
+<div class="box2_page1">Noviembre 2021</div>
