@@ -5,7 +5,7 @@
 <div class="box4_page" id="color_page3">Infant</div>
 <div class="box4_page3">
     
-    <img class="body2_page" src='../public/images/Rojo-14-15-15.jpg' alt="">
+    
 
 
     @foreach($data as $posicionDat => $dat)
@@ -275,7 +275,7 @@
         </div>
         @endif
     @endforeach
-
+    <img class="body2_page" src='../public/images/Rojo-14-15-15.jpg' alt="">
 </div>
 
 
