@@ -500,8 +500,8 @@ body, html{
     left: 25%;
     top: 0;
     position: absolute;
-
-    border-right: 1px dashed red;
+    margin-left: -20px;
+    /* border-right: 1px dashed red; */
 }
 
 .Tercera-Columna-Pdf-Promociones{
