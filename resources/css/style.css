@@ -554,3 +554,17 @@ body, html{
 .fila{
     margin-bottom: -20px;
 }
+
+.img-no-hay-promocion{
+    width: 100px;
+    margin-top: 28px;
+}
+
+.Txt-No-Hay-Promocion{
+    font-family: 'Roboto', sans-serif;
+    font-style: normal;
+    font-size: 14px;
+    line-height: 16px;
+
+    color: rgba(228, 26, 55, 0.7);
+}
