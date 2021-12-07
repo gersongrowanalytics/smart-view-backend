@@ -8,8 +8,6 @@
     <link rel="stylesheet" href="../resources/css/style.css">
 </head>
 <body>
-    <!-- @foreach ( $data as $valve)  -->
-        @include('pdf.promociones.canales')
-    <!-- @endforeach -->
+    @include('pdf.promociones.canales')
 </body>
 </html>
