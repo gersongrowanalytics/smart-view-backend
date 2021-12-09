@@ -48,21 +48,22 @@
                                             id="text1_color_page3"
                                             style="color:{{$categoria['catcolor']}}"
                                         >
-                                            @if(isset($promocion['cspcantidadcombo']))
-                                                {{round($promocion['cspcantidadcombo'])}} Combos 
+                                            @if(isset($promocion['cspcantidadplancha']))
+                                                {{round($promocion['cspcantidadplancha'])}} Planchas 
                                             @else 
-                                                {{round($promocion['csptotalcombo'])}} Combos 
+                                                {{round($promocion['csptotalplancha'])}} Planchas
                                             @endif
+
                                         </div> 
                                         <div 
                                             class="text2" 
                                             id="text2_color_page3"
                                             style="color:{{$categoria['catcolor']}}"
                                         >
-                                            @if(isset($promocion['cspcantidadplancha']))
-                                                Total de planchas: {{round($promocion['cspcantidadplancha'])}}
+                                            @if(isset($promocion['cspcantidadcombo']))
+                                                Total de Combos: {{round($promocion['cspcantidadcombo'])}}
                                             @else
-                                                Total de planchas: {{round($promocion['csptotalplancha'])}}
+                                                Total de Combos: {{round($promocion['csptotalcombo'])}}
                                             @endif
                                         </div> 
                                         <div class="text3">Sell In Bonificación</div>
@@ -156,12 +157,25 @@
                                             class="text1" 
                                             id="text1_color_page3"
                                             style="color:{{$categoria['catcolor']}}"
-                                        >{{round($promocion['csptotalcombo'])}} Combos </div> 
+                                        >
+                                            @if(isset($promocion['cspcantidadplancha']))
+                                                {{round($promocion['cspcantidadplancha'])}} Planchas 
+                                            @else 
+                                                {{round($promocion['csptotalplancha'])}} Planchas
+                                            @endif
+
+                                        </div> 
                                         <div 
                                             class="text2" 
                                             id="text2_color_page3"
                                             style="color:{{$categoria['catcolor']}}"
-                                        >Total de planchas: {{round($promocion['csptotalplancha'])}}</div> 
+                                        >
+                                            @if(isset($promocion['cspcantidadcombo']))
+                                                Total de Combos: {{round($promocion['cspcantidadcombo'])}}
+                                            @else
+                                                Total de Combos: {{round($promocion['csptotalcombo'])}}
+                                            @endif
+                                        </div> 
                                         <div class="text3">Sell In Bonificación</div>
                                     </div>
                                     <div class="box_table_img">
@@ -215,7 +229,7 @@
             </table>
         </div>
         @endif
-        
+
     @endforeach
 
     @if($categoria['catid'] == 1)
