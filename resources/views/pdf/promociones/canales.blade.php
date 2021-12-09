@@ -156,12 +156,24 @@
                                             class="text1" 
                                             id="text1_color_page3"
                                             style="color:{{$categoria['catcolor']}}"
-                                        >{{round($promocion['csptotalcombo'])}} Combos </div> 
+                                        >
+                                            @if(isset($promocion['cspcantidadcombo']))
+                                                {{round($promocion['cspcantidadcombo'])}} Combos 
+                                            @else 
+                                                {{round($promocion['csptotalcombo'])}} Combos 
+                                            @endif
+                                        </div> 
                                         <div 
                                             class="text2" 
                                             id="text2_color_page3"
                                             style="color:{{$categoria['catcolor']}}"
-                                        >Total de planchas: {{round($promocion['csptotalplancha'])}}</div> 
+                                        >
+                                            @if(isset($promocion['cspcantidadplancha']))
+                                                Total de planchas: {{round($promocion['cspcantidadplancha'])}}
+                                            @else
+                                                Total de planchas: {{round($promocion['csptotalplancha'])}}
+                                            @endif
+                                        </div> 
                                         <div class="text3">Sell In Bonificación</div>
                                     </div>
                                     <div class="box_table_img">
@@ -253,12 +265,24 @@
                                             class="text1" 
                                             id="text1_color_page3"
                                             style="color:{{$categoria['catcolor']}}"
-                                        >{{round($promocion['csptotalcombo'])}} Combos </div> 
+                                        >
+                                            @if(isset($promocion['cspcantidadcombo']))
+                                                {{round($promocion['cspcantidadcombo'])}} Combos 
+                                            @else 
+                                                {{round($promocion['csptotalcombo'])}} Combos 
+                                            @endif
+                                        </div> 
                                         <div 
                                             class="text2" 
                                             id="text2_color_page3"
                                             style="color:{{$categoria['catcolor']}}"
-                                        >Total de planchas: {{round($promocion['csptotalplancha'])}}</div> 
+                                        >
+                                            @if(isset($promocion['cspcantidadplancha']))
+                                                Total de planchas: {{round($promocion['cspcantidadplancha'])}}
+                                            @else
+                                                Total de planchas: {{round($promocion['csptotalplancha'])}}
+                                            @endif
+                                        </div> 
                                         <div class="text3">Sell In Bonificación</div>
                                     </div>
                                     <div class="box_table_img">
@@ -350,12 +374,24 @@
                                             class="text1" 
                                             id="text1_color_page3"
                                             style="color:{{$categoria['catcolor']}}"
-                                        >{{round($promocion['csptotalcombo'])}} Combos </div> 
+                                        >
+                                            @if(isset($promocion['cspcantidadcombo']))
+                                                {{round($promocion['cspcantidadcombo'])}} Combos 
+                                            @else 
+                                                {{round($promocion['csptotalcombo'])}} Combos 
+                                            @endif
+                                        </div> 
                                         <div 
                                             class="text2" 
                                             id="text2_color_page3"
                                             style="color:{{$categoria['catcolor']}}"
-                                        >Total de planchas: {{round($promocion['csptotalplancha'])}}</div> 
+                                        >
+                                            @if(isset($promocion['cspcantidadplancha']))
+                                                Total de planchas: {{round($promocion['cspcantidadplancha'])}}
+                                            @else
+                                                Total de planchas: {{round($promocion['csptotalplancha'])}}
+                                            @endif
+                                        </div> 
                                         <div class="text3">Sell In Bonificación</div>
                                     </div>
                                     <div class="box_table_img">
