@@ -8,6 +8,13 @@
     <link rel="stylesheet" href="../resources/css/style.css">
 </head>
 <body>
-    @include('pdf.promociones.canales')
+
+    @if($mostrarPdfA4 == true)
+        @include('pdf.promociones.canalesa4')
+    @else
+        @include('pdf.promociones.canales')
+    @endif
+    
+
 </body>
 </html>

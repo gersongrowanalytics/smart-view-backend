@@ -584,3 +584,77 @@ body, html{
 
     color: rgba(228, 26, 55, 0.7);
 }
+
+
+
+
+
+
+/* A4 */
+
+.Titulo-Canal-Pdf-Promociones-A4{
+    margin-left: 65%;
+    padding-top: 7px;
+
+    width: 121px;
+    height: 23.23px;
+    /* background-color: #E41A37; */
+    border-radius: 11px;
+
+    font-family: 'Roboto', sans-serif;
+    font-style: normal;
+    /* font-weight: 500; */
+    font-size: 13px;
+    line-height: 15px;
+    color: #FFFFFF;
+    align-items: center;
+    text-align: center;
+}
+
+
+.Segunda-Columna-Pdf-Promociones-A4{
+    /* background-color: red; */
+    width: 25%;
+    height: 100%;
+    left: 25%;
+    top: 0;
+    position: absolute;
+    margin-left: -20px;
+}
+
+.body2_page-A4{
+    width: 100%;
+    position: absolute;
+    bottom:  155px;
+    margin-left: -20px;
+}
+
+
+.box4_page3-A4{
+    position: absolute;
+    left: 20px;
+    right: 20px;
+    margin-bottom: 40px;
+    top: 120px;
+    width: 100%;
+    /* height: 90%; */
+    /* display: flex; */
+    /* background-color: turquoise; */
+}
+
+.box_table-A4{
+
+    position: relative;
+    width: 90%;
+    height: 220px;
+    margin: -10px 8px 40px 8px;
+    /* background-color: tomato; */
+    box-sizing: border-box;
+    border-radius: 20px;
+
+}
+
+.big_text-A4{
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
