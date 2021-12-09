@@ -9,12 +9,19 @@ use iio\libmergepdf\Merger;
 use Barryvdh\DomPDF\PDF;
 use Dompdf\Dompdf;
 use Dompdf\Options;
+use App\usuusuarios;
 
 class PdfPromocionesController extends Controller
 {
     public function MostrarPdfPromociones(Request $request)
     {
+        $usutoken   = $request->header('api_token');
+        $usu = usuusuarios::where('usutoken', $usutoken)->first(['usuid']);
 
+        if($usu){
+            $usuid = $usu->usuid;
+        }
+        
         $dataCategorias = $request['categorias'];
 
         $m = new Merger();
@@ -129,12 +136,12 @@ class PdfPromocionesController extends Controller
                 if($i == 0){
                     $pdf2 = app('dompdf.wrapper');
                     $pdf2->setPaper('A3','landscape');
-                    $pdf2->loadView('pdf.promociones.promocion', ["data" => $dataCategoria['canales'], "categoria" => $dataCategoria, "desde" => 0, "hasta" => 2 ] );
+                    $pdf2->loadView('pdf.promociones.promocion', ["data" => $dataCategoria['canales'], "categoria" => $dataCategoria, "desde" => 0, "hasta" => 2, "opacidadcanal" => 1 ] );
                     $m->addRaw($pdf2->output());
                 }else if($i == 1){
                     $pdf3 = app('dompdf.wrapper');
                     $pdf3->setPaper('A3','landscape');
-                    $pdf3->loadView('pdf.promociones.promocion', ["data" => $dataCategoria['canales'], "categoria" => $dataCategoria, "desde" => 3, "hasta" => 5 ] );
+                    $pdf3->loadView('pdf.promociones.promocion', ["data" => $dataCategoria['canales'], "categoria" => $dataCategoria, "desde" => 3, "hasta" => 5, "opacidadcanal" => 0.5 ] );
                     $m->addRaw($pdf3->output());
                 }
             }
@@ -142,7 +149,7 @@ class PdfPromocionesController extends Controller
         }
 
 
-        file_put_contents('Pdf-123afas123.pdf', $m->merge());
+        file_put_contents('Sistema/Pdf/'.$usutoken.'.pdf', $m->merge());
         
         // return $m->stream();
         return true;

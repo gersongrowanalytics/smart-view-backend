@@ -15,7 +15,7 @@
             <div class="Contenedor-Titulo-Canal-Pdf-Promociones">
                 <div 
                     class="Titulo-Canal-Pdf-Promociones"
-                    style="background:{{$categoria['catcolor']}}"
+                    style="background:{{$categoria['catcolor']}}; opacity:{{$opacidadcanal}}"
                 >
                     <b>{{$dat['cannombre']}}</b>
                 </div>
