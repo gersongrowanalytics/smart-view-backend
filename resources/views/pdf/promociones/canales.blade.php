@@ -50,8 +50,7 @@
                                         >
                                             @if(isset($promocion['cspcantidadcombo']))
                                                 {{round($promocion['cspcantidadcombo'])}} Combos 
-                                            @endif
-                                            @if(isset($promocion['csptotalcombo']))
+                                            @else 
                                                 {{round($promocion['csptotalcombo'])}} Combos 
                                             @endif
                                         </div> 
@@ -62,8 +61,7 @@
                                         >
                                             @if(isset($promocion['cspcantidadplancha']))
                                                 Total de planchas: {{round($promocion['cspcantidadplancha'])}}
-                                            @endif
-                                            @if(isset($promocion['csptotalplancha']))
+                                            @else
                                                 Total de planchas: {{round($promocion['csptotalplancha'])}}
                                             @endif
                                         </div> 
