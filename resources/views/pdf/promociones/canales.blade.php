@@ -47,12 +47,26 @@
                                             class="text1" 
                                             id="text1_color_page3"
                                             style="color:{{$categoria['catcolor']}}"
-                                        >{{round($promocion['csptotalcombo'])}} Combos </div> 
+                                        >
+                                            @if(isset($promocion['cspcantidadcombo']))
+                                                {{round($promocion['cspcantidadcombo'])}} Combos 
+                                            @endif
+                                            @if(isset($promocion['csptotalcombo']))
+                                                {{round($promocion['csptotalcombo'])}} Combos 
+                                            @endif
+                                        </div> 
                                         <div 
                                             class="text2" 
                                             id="text2_color_page3"
                                             style="color:{{$categoria['catcolor']}}"
-                                        >Total de planchas: {{round($promocion['csptotalplancha'])}}</div> 
+                                        >
+                                            @if(isset($promocion['cspcantidadplancha']))
+                                                Total de planchas: {{round($promocion['cspcantidadplancha'])}}
+                                            @endif
+                                            @if(isset($promocion['csptotalplancha']))
+                                                Total de planchas: {{round($promocion['csptotalplancha'])}}
+                                            @endif
+                                        </div> 
                                         <div class="text3">Sell In Bonificación</div>
                                     </div>
                                     <div class="box_table_img">
@@ -110,7 +124,7 @@
             <div class="Contenedor-Titulo-Canal-Pdf-Promociones">
                 <div 
                     class="Titulo-Canal-Pdf-Promociones"
-                    style="background:{{$categoria['catcolor']}}"
+                    style="background:{{$categoria['catcolor']}}; opacity:{{$opacidadcanal}}"
                 >
                     <b>{{$dat['cannombre']}}</b>
                 </div>
@@ -205,7 +219,7 @@
             <div class="Contenedor-Titulo-Canal-Pdf-Promociones">
                 <div 
                     class="Titulo-Canal-Pdf-Promociones"
-                    style="background:{{$categoria['catcolor']}}"
+                    style="background:{{$categoria['catcolor']}}; opacity:{{$opacidadcanal}}"
                 >
                     <b>{{$dat['cannombre']}}</b>
                 </div>
@@ -300,7 +314,7 @@
             <div class="Contenedor-Titulo-Canal-Pdf-Promociones">
                 <div 
                     class="Titulo-Canal-Pdf-Promociones"
-                    style="background:{{$categoria['catcolor']}}"
+                    style="background:{{$categoria['catcolor']}}; opacity:{{$opacidadcanal}}"
                 >
                     <b>{{$dat['cannombre']}}</b>
                 </div>
