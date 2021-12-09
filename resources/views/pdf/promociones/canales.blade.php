@@ -92,6 +92,8 @@
                                                     <div class="img_products">
                                                         @if($promocion['cspgratis'] == 1)
                                                         <div class="text_free_product2">Gratis</div>
+                                                        @else
+                                                        <div class="text_free_product2" style="color:white">Gratis</div>
                                                         @endif
                                                         <img 
                                                             class="img_product" 
@@ -187,6 +189,8 @@
                                                     <div class="img_products">
                                                         @if($promocion['cspgratis'] == 1)
                                                         <div class="text_free_product2">Gratis</div>
+                                                        @else
+                                                        <div class="text_free_product2" style="color:white">Gratis</div>
                                                         @endif
                                                         <img 
                                                             class="img_product" 
@@ -282,6 +286,8 @@
                                                     <div class="img_products">
                                                         @if($promocion['cspgratis'] == 1)
                                                         <div class="text_free_product2">Gratis</div>
+                                                        @else
+                                                        <div class="text_free_product2" style="color:white">Gratis</div>
                                                         @endif
                                                         <img 
                                                             class="img_product" 
@@ -377,6 +383,8 @@
                                                     <div class="img_products">
                                                         @if($promocion['cspgratis'] == 1)
                                                         <div class="text_free_product2">Gratis</div>
+                                                        @else
+                                                        <div class="text_free_product2" style="color:white">Gratis</div>
                                                         @endif
                                                         <img 
                                                             class="img_product" 
