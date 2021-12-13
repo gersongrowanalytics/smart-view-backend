@@ -36,7 +36,7 @@ use PhpOffice\PhpSpreadsheet\Shared\Date;
 
 class CargarArchivoPromocionesController extends Controller
 {
-    public function CargarArchivo(Request $request)
+    public function CargarArchivos(Request $request)
     {
 
         $respuesta      = true;
