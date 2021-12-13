@@ -86,6 +86,7 @@ $router->group(['middleware' => ['permisos']], function() use($router) {
 
     // $router->post('/cargarArchivo/promociones', 'Sistema\CargarArchivo\Promociones\CargarArchivoController@CargarArchivo');
     $router->post('/cargarArchivo/promociones', 'Sistema\CargarArchivo\Promociones\CargarArchivoPromocionesController@CargarArchivo');
+    $router->post('/cargarArchivo/promociones/nuevaspromociones', 'Sistema\CargarArchivo\Promociones\CargarArchivoPromocionesController@CargarArchivo');
     
     $router->post('/cargarArchivo/promociones/actualizarNew', 'Sistema\CargarArchivo\Promociones\ActualizarNuevoController@ActualizarPromociones');
     $router->post('/cargarArchivo/promociones/planTrade', 'Sistema\CargarArchivo\Promociones\CargarArchivoController@CargarPlanTrade');
