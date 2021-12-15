@@ -14,6 +14,8 @@ use App\zonzonas;
 use App\rscrbsscategorias;
 use App\catcategorias;
 use App\vsoventassso;
+use App\cspcanalessucursalespromociones;
+use App\prmpromociones;
 
 class salvacionController extends Controller
 {
@@ -498,6 +500,32 @@ class salvacionController extends Controller
         }
 
         return $logs;
+    }
+
+    public function EliminarZonaPromociones(Request $request)
+    {
+        $fecid = $request['fecid'];
+        $ex_zona = $request['zona'];
+        // ELIMINAR PRP Y PRB
+        prppromocionesproductos::join('prmpromociones as prm', 'prm.prmid', 'prppromocionesproductos.prmid')
+                                ->where('prm.fecid', $fecid)
+                                ->where('prpzona', $ex_zona)
+                                ->delete();
+
+        prbpromocionesbonificaciones::join('prmpromociones as prm', 'prm.prmid', 'prbpromocionesbonificaciones.prmid')
+                                    ->where('prm.fecid', $fecid)
+                                    ->where('prbzona', $ex_zona)
+                                    ->delete();
+        
+        cspcanalessucursalespromociones::join('prmpromociones as prm', 'prm.prmid', 'cspcanalessucursalespromociones.prmid')
+                                        ->where('cspcanalessucursalespromociones.fecid', $fecid)
+                                        ->where('cspzona', $ex_zona)
+                                        ->delete();
+
+        prmpromociones::where('fecid', $fecid)
+                        ->where('prmzona', $ex_zona)
+                        ->delete();
+
     }
 }
 
