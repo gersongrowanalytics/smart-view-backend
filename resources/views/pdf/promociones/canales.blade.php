@@ -2,7 +2,13 @@
 
 <div class="box2_page" id="color_page3" style="color:{{$categoria['catcolor']}}" >{{$categoria['catnombre']}}</div>
 
-<div class="circle_page3" style="color:{{$categoria['catcolor']}}">•</div><div class="box4_page" id="color_page3" style="color:{{$categoria['catcolor']}}">URIAFER</div>
+<div class="Contenedor-izquierda-pdf">
+    <div class="circle_page3" style="color:{{$categoria['catcolor']}}">•</div>
+    URIAFER
+    <!-- <div class="box4_page" style="color:{{$categoria['catcolor']}}">URIAFER</div> -->
+</div>
+
+
 <!-- <div class="box2_page3">Actualización 5 de Agosto del 2021</div> -->
 <div class="box4_page3">
     

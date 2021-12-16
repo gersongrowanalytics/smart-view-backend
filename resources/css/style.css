@@ -658,3 +658,11 @@ body, html{
     margin-top: 20px;
     margin-bottom: 10px;
 }
+
+.Contenedor-izquierda-pdf{
+    background-color: black;
+    right: 0;
+    width: 200px;
+    height: 100px;
+    top: 38px;
+}
