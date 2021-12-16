@@ -719,5 +719,6 @@ body, html{
 .img-calendario-expiracion-pdf{
     width: 18px;
     padding-top: 2px;
+    padding-left: 10px;
     border-radius: 5px 0px 0px 5px;
 }
