@@ -31,4 +31,4 @@
 @endif
 
 
-<div class="box1_page">{{$data['catnombre']}}</div>
+<div class="box1_page"><b>{{$data['catnombre']}}</b></div>
