@@ -125,7 +125,7 @@ class PdfPromocionesController extends Controller
 
         foreach($dataCategorias as $posicionDataCategoria => $dataCategoria){
 
-            if($dataCategoria['canales'] > 0){
+            if(sizeof($dataCategoria['canales']) > 0){
                 $pdf = app('dompdf.wrapper');
                 $pdf->setPaper('A3','landscape');
                 $pdf->loadView('pdf.promociones.indice', ["data" => $dataCategoria, "posicion" => $posicionDataCategoria]);
