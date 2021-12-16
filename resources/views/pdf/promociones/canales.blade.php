@@ -3,7 +3,7 @@
 <div class="box2_page" id="color_page3" style="color:{{$categoria['catcolor']}}" >{{$categoria['catnombre']}}</div>
 
 <div class="Contenedor-izquierda-pdf">
-    <div class="circle_page3" style="color:{{$categoria['catcolor']}}">•</div>
+    <span class="circle_page3" style="color:{{$categoria['catcolor']}}">•</span>
     URIAFER
     <!-- <div class="box4_page" style="color:{{$categoria['catcolor']}}">URIAFER</div> -->
 </div>
