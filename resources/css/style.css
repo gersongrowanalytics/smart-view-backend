@@ -665,4 +665,5 @@ body, html{
     width: 200px;
     height: 100px;
     top: 38px;
+    position: absolute;
 }
