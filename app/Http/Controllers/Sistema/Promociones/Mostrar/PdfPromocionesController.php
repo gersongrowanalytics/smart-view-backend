@@ -154,10 +154,10 @@ class PdfPromocionesController extends Controller
                     $pdf3 = app('dompdf.wrapper');
                     if($mostrarPdfA4 == true){
                         $pdf3->setPaper('A4','portrait');
-                        $pdf3->loadView('pdf.promociones.promocion', ["data" => $dataCategoria['canales'], "categoria" => $dataCategoria, "desde" => 3, "hasta" => 5, "opacidadcanal" => 0.5, "mostrarPdfA4" => $mostrarPdfA4 ] );
+                        $pdf3->loadView('pdf.promociones.promocion', ["data" => $dataCategoria['canales'], "categoria" => $dataCategoria, "desde" => 3, "hasta" => 5, "opacidadcanal" => 1, "mostrarPdfA4" => $mostrarPdfA4 ] );
                     }else{
                         $pdf3->setPaper('A3','landscape');
-                        $pdf3->loadView('pdf.promociones.promocion', ["data" => $dataCategoria['canales'], "categoria" => $dataCategoria, "desde" => 3, "hasta" => 5, "opacidadcanal" => 0.5, "mostrarPdfA4" => $mostrarPdfA4 ] );
+                        $pdf3->loadView('pdf.promociones.promocion', ["data" => $dataCategoria['canales'], "categoria" => $dataCategoria, "desde" => 3, "hasta" => 5, "opacidadcanal" => 1, "mostrarPdfA4" => $mostrarPdfA4 ] );
                     }
                     
                     $m->addRaw($pdf3->output());
