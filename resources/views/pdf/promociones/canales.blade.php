@@ -164,7 +164,22 @@
                                     style="border: 1px solid {{$categoria['catcolor']}}"
                                 >
                                     <div class="Fecha-Expiracion-Promocion-Pdf" style="background:{{$categoria['catcolor']}}">
-                                        <div class="Primera-Mitad-Fecha-Expiracion-Promocion-Pdf"></div>
+                                        <div class="Primera-Mitad-Fecha-Expiracion-Promocion-Pdf">
+                                            @if($categoria['catid'] == 1)
+                                            <img class="img-calendario-expiracion-pdf" src='../public/images/pdf/nohaypromocion/calfamily.jpg'>
+                                            @else if($categoria['catid'] == 2)
+                                            <img class="img-calendario-expiracion-pdf" src='../public/images/pdf/nohaypromocion/calinfant.jpg'>
+                                            @else if($categoria['catid'] == 3)
+                                            <img class="img-calendario-expiracion-pdf" src='../public/images/pdf/nohaypromocion/caladult.jpg'>
+                                            @else if($categoria['catid'] == 4)
+                                            <img class="img-calendario-expiracion-pdf" src='../public/images/pdf/nohaypromocion/calwipes.jpg'>
+                                            @else if($categoria['catid'] == 5)
+                                            <img class="img-calendario-expiracion-pdf" src='../public/images/pdf/nohaypromocion/calfem.jpg'>
+                                            @else if($categoria['catid'] == 6)
+                                            <img class="img-calendario-expiracion-pdf" src='../public/images/pdf/nohaypromocion/calmulticategoria.jpg'>
+                                            @endif
+                                            
+                                        </div>
                                         <div class="Segunda-Mitad-Fecha-Expiracion-Promocion-Pdf">
                                             <div class="Texto-Inicio-Fecha-Expiracion-Pdf">{{$promocion['fechainicio']}}</div>
                                             <div class="Texto-Fin-Fecha-Expiracion-Pdf">{{$promocion['fechafinal']}}</div>
