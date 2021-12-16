@@ -48,8 +48,8 @@
                                     <div class="Fecha-Expiracion-Promocion-Pdf" style="background:{{$categoria['catcolor']}}">
                                         <div class="Primera-Mitad-Fecha-Expiracion-Promocion-Pdf"></div>
                                         <div class="Segunda-Mitad-Fecha-Expiracion-Promocion-Pdf">
-                                            <div class="Texto-Inicio-Fecha-Expiracion-Pdf">Ini 8/10</div>
-                                            <div class="Texto-Fin-Fecha-Expiracion-Pdf">Fin 9/10</div>
+                                            <div class="Texto-Inicio-Fecha-Expiracion-Pdf">{{$categoria['fechainicio']}}</div>
+                                            <div class="Texto-Fin-Fecha-Expiracion-Pdf">{{$categoria['fechafinal']}}</div>
                                         </div>
                                     </div>
                                 
@@ -166,8 +166,8 @@
                                     <div class="Fecha-Expiracion-Promocion-Pdf" style="background:{{$categoria['catcolor']}}">
                                         <div class="Primera-Mitad-Fecha-Expiracion-Promocion-Pdf"></div>
                                         <div class="Segunda-Mitad-Fecha-Expiracion-Promocion-Pdf">
-                                            <div class="Texto-Inicio-Fecha-Expiracion-Pdf">Ini 8/10</div>
-                                            <div class="Texto-Fin-Fecha-Expiracion-Pdf">Fin 9/10</div>
+                                            <div class="Texto-Inicio-Fecha-Expiracion-Pdf">{{$categoria['fechainicio']}}</div>
+                                            <div class="Texto-Fin-Fecha-Expiracion-Pdf">{{$categoria['fechafinal']}}</div>
                                         </div>
                                     </div>
                                 
@@ -284,8 +284,8 @@
                                     <div class="Fecha-Expiracion-Promocion-Pdf" style="background:{{$categoria['catcolor']}}">
                                         <div class="Primera-Mitad-Fecha-Expiracion-Promocion-Pdf"></div>
                                         <div class="Segunda-Mitad-Fecha-Expiracion-Promocion-Pdf">
-                                            <div class="Texto-Inicio-Fecha-Expiracion-Pdf">Ini 8/10</div>
-                                            <div class="Texto-Fin-Fecha-Expiracion-Pdf">Fin 9/10</div>
+                                            <div class="Texto-Inicio-Fecha-Expiracion-Pdf">{{$categoria['fechainicio']}}</div>
+                                            <div class="Texto-Fin-Fecha-Expiracion-Pdf">{{$categoria['fechafinal']}}</div>
                                         </div>
                                     </div>
                                     <div class="big_text">
@@ -401,8 +401,8 @@
                                     <div class="Fecha-Expiracion-Promocion-Pdf" style="background:{{$categoria['catcolor']}}">
                                         <div class="Primera-Mitad-Fecha-Expiracion-Promocion-Pdf"></div>
                                         <div class="Segunda-Mitad-Fecha-Expiracion-Promocion-Pdf">
-                                            <div class="Texto-Inicio-Fecha-Expiracion-Pdf">Ini 8/10</div>
-                                            <div class="Texto-Fin-Fecha-Expiracion-Pdf">Fin 9/10</div>
+                                            <div class="Texto-Inicio-Fecha-Expiracion-Pdf">{{$categoria['fechainicio']}}</div>
+                                            <div class="Texto-Fin-Fecha-Expiracion-Pdf">{{$categoria['fechafinal']}}</div>
                                         </div>
                                     </div>
                                     <div class="big_text">
