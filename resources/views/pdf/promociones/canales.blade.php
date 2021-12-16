@@ -36,7 +36,19 @@
                                     style="border: 1px solid {{$categoria['catcolor']}}"
                                 >
                                 
-                                    <img class="img-no-hay-promocion" src='../public/images/pdf/nohaypromocion.jpg'><br>
+                                    @if($categoria['catid'] == 1)
+                                    <img class="img-no-hay-promocion" src='../public/images/pdf/nohaypromocion/family.jpg'><br>
+                                    @elseif($categoria['catid'] == 2)
+                                    <img class="img-no-hay-promocion" src='../public/images/pdf/nohaypromocion/infant.jpg'><br>
+                                    @elseif($categoria['catid'] == 3)
+                                    <img class="img-no-hay-promocion" src='../public/images/pdf/nohaypromocion/adult.jpg'><br>
+                                    @elseif($categoria['catid'] == 4)
+                                    <img class="img-no-hay-promocion" src='../public/images/pdf/nohaypromocion/wipes.jpg'><br>
+                                    @elseif($categoria['catid'] == 5)
+                                    <img class="img-no-hay-promocion" src='../public/images/pdf/nohaypromocion/fem.jpg'><br>
+                                    @elseif($categoria['catid'] == 6)
+                                    <img class="img-no-hay-promocion" src='../public/images/pdf/nohaypromocion/multicategoria.jpg'><br>
+                                    @endif
                                     <div class="Txt-No-Hay-Promocion" style="color: {{$categoria['catcolor']}}"  >No hay promoción</div>
                                 </div>
                                 @endif
@@ -168,7 +180,21 @@
                                     style="border: 1px solid {{$categoria['catcolor']}}"
                                 >
                                 
-                                    <img class="img-no-hay-promocion" src='../public/images/pdf/nohaypromocion.jpg'><br>
+                                    
+                                    @if($categoria['catid'] == 1)
+                                    <img class="img-no-hay-promocion" src='../public/images/pdf/nohaypromocion/family.jpg'><br>
+                                    @elseif($categoria['catid'] == 2)
+                                    <img class="img-no-hay-promocion" src='../public/images/pdf/nohaypromocion/infant.jpg'><br>
+                                    @elseif($categoria['catid'] == 3)
+                                    <img class="img-no-hay-promocion" src='../public/images/pdf/nohaypromocion/adult.jpg'><br>
+                                    @elseif($categoria['catid'] == 4)
+                                    <img class="img-no-hay-promocion" src='../public/images/pdf/nohaypromocion/wipes.jpg'><br>
+                                    @elseif($categoria['catid'] == 5)
+                                    <img class="img-no-hay-promocion" src='../public/images/pdf/nohaypromocion/fem.jpg'><br>
+                                    @elseif($categoria['catid'] == 6)
+                                    <img class="img-no-hay-promocion" src='../public/images/pdf/nohaypromocion/multicategoria.jpg'><br>
+                                    @endif
+
                                     <div class="Txt-No-Hay-Promocion" style="color: {{$categoria['catcolor']}}">No hay promoción</div>
                                 </div>
                                 @endif
@@ -301,7 +327,19 @@
                                     style="border: 1px solid {{$categoria['catcolor']}}"
                                 >
                                 
-                                    <img class="img-no-hay-promocion" src='../public/images/pdf/nohaypromocion.jpg'><br>
+                                    @if($categoria['catid'] == 1)
+                                    <img class="img-no-hay-promocion" src='../public/images/pdf/nohaypromocion/family.jpg'><br>
+                                    @elseif($categoria['catid'] == 2)
+                                    <img class="img-no-hay-promocion" src='../public/images/pdf/nohaypromocion/infant.jpg'><br>
+                                    @elseif($categoria['catid'] == 3)
+                                    <img class="img-no-hay-promocion" src='../public/images/pdf/nohaypromocion/adult.jpg'><br>
+                                    @elseif($categoria['catid'] == 4)
+                                    <img class="img-no-hay-promocion" src='../public/images/pdf/nohaypromocion/wipes.jpg'><br>
+                                    @elseif($categoria['catid'] == 5)
+                                    <img class="img-no-hay-promocion" src='../public/images/pdf/nohaypromocion/fem.jpg'><br>
+                                    @elseif($categoria['catid'] == 6)
+                                    <img class="img-no-hay-promocion" src='../public/images/pdf/nohaypromocion/multicategoria.jpg'><br>
+                                    @endif
                                     <div class="Txt-No-Hay-Promocion" style="color: {{$categoria['catcolor']}}" >No hay promoción</div>
                                 </div>
                                 @endif
@@ -432,7 +470,19 @@
                                     style="border: 1px solid {{$categoria['catcolor']}}"
                                 >
                                 
-                                    <img class="img-no-hay-promocion" src='../public/images/pdf/nohaypromocion.jpg'><br>
+                                    @if($categoria['catid'] == 1)
+                                    <img class="img-no-hay-promocion" src='../public/images/pdf/nohaypromocion/family.jpg'><br>
+                                    @elseif($categoria['catid'] == 2)
+                                    <img class="img-no-hay-promocion" src='../public/images/pdf/nohaypromocion/infant.jpg'><br>
+                                    @elseif($categoria['catid'] == 3)
+                                    <img class="img-no-hay-promocion" src='../public/images/pdf/nohaypromocion/adult.jpg'><br>
+                                    @elseif($categoria['catid'] == 4)
+                                    <img class="img-no-hay-promocion" src='../public/images/pdf/nohaypromocion/wipes.jpg'><br>
+                                    @elseif($categoria['catid'] == 5)
+                                    <img class="img-no-hay-promocion" src='../public/images/pdf/nohaypromocion/fem.jpg'><br>
+                                    @elseif($categoria['catid'] == 6)
+                                    <img class="img-no-hay-promocion" src='../public/images/pdf/nohaypromocion/multicategoria.jpg'><br>
+                                    @endif
                                     <div class="Txt-No-Hay-Promocion" style="color: {{$categoria['catcolor']}}">No hay promoción</div>
                                 </div>
                                 @endif
