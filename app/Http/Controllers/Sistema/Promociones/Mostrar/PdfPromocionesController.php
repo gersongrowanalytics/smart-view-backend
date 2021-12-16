@@ -125,7 +125,7 @@ class PdfPromocionesController extends Controller
 
         foreach($dataCategorias as $posicionDataCategoria => $dataCategoria){
             $pdf = app('dompdf.wrapper');
-            $pdf->setPaper('A4', 'portrait');
+            $pdf->setPaper('A3','landscape');
             $pdf->loadView('pdf.promociones.indice', ["data" => $dataCategoria, "posicion" => $posicionDataCategoria]);
             $m->addRaw($pdf->output());
 

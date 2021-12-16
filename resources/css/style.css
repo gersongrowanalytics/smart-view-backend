@@ -722,3 +722,43 @@ body, html{
     padding-left: 10px;
     border-radius: 5px 0px 0px 5px;
 }
+
+.titulo_caratula_pdf{
+
+    position: absolute;
+    width: 560px;
+    height: 122px;
+    left: 615px;
+    top: 180px;
+    padding: 0%;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    /* font-family: 'Segoe UI'; */
+    font-style: normal;
+    font-weight: bold;
+    font-size: 90px;
+    line-height: 104.06%;
+    /* or 61px */
+    text-align: center;
+    color: #FFFFFF;
+    
+}
+
+.subtitulo_caratula_pdf{
+    position: absolute;
+    /* width: 190px; */
+    height: 50px;
+    left: 820px;
+    top: 390px;
+    background: #4157BD;
+    border-radius: 8px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 25px;
+    line-height: 24px;
+    /* identical to box height */
+    letter-spacing: 0.01em;
+    text-align: center;
+    color: #FFFFFF;
+    padding: 30px 10px 0px 10px;
+}
