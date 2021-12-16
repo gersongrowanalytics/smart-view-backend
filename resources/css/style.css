@@ -666,4 +666,5 @@ body, html{
     height: 50px;
     top: 38px;
     position: absolute;
+    display: flex;
 }
