@@ -12,6 +12,7 @@
 <body>
     @if($posicion == 0)
         @include('pdf.promociones.caratula')
+        @include('pdf.promociones.indicecategorias')
     @endif
     
     @include('pdf.promociones.titulocategoria')
