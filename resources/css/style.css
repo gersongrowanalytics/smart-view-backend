@@ -661,3 +661,58 @@ body, html{
     top: 38px;
     position: absolute;
 }
+
+/* EXPIRACION FECHA */
+
+.Fecha-Expiracion-Promocion-Pdf{
+    width: 54px;
+    height: 22px;
+    background: #B21B86;
+    border-radius: 9px 0px 0px 9px;
+    position: absolute;
+    right: 0;
+    z-index: 1;
+    top: 20px;
+}
+
+.Primera-Mitad-Fecha-Expiracion-Promocion-Pdf{
+    width: 40%;
+    height: 22px;
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+
+.Segunda-Mitad-Fecha-Expiracion-Promocion-Pdf{
+    width: 60%;
+    height: 22px;
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+
+.Texto-Inicio-Fecha-Expiracion-Pdf{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 8px;
+    line-height: 24px;
+    letter-spacing: 0.01em;
+    color: #FFFFFF;
+    position: absolute;
+    right: 1px;
+    top: -10px;
+}
+
+.Texto-Fin-Fecha-Expiracion-Pdf{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 8px;
+    line-height: 24px;
+    letter-spacing: 0.01em;
+    color: #FFFFFF;
+    position: absolute;
+    right: 1px;
+    top: 0;
+}
