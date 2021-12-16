@@ -660,8 +660,8 @@ body, html{
 }
 
 .Contenedor-izquierda-pdf{
-    background-color: red;
-    right: 0;
+    /* background-color: red; */
+    right: 50px;
     /* width: 200px; */
     /* height: 50px; */
     top: 38px;
