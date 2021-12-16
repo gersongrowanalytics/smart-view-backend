@@ -124,43 +124,46 @@ class PdfPromocionesController extends Controller
         );
 
         foreach($dataCategorias as $posicionDataCategoria => $dataCategoria){
-            $pdf = app('dompdf.wrapper');
-            $pdf->setPaper('A3','landscape');
-            $pdf->loadView('pdf.promociones.indice', ["data" => $dataCategoria, "posicion" => $posicionDataCategoria]);
-            $m->addRaw($pdf->output());
 
-            $numeroPdfsAbajo = $dataCategoria['cantidadPromociones'] / 3;
-            $numeroPdfsAbajo = ceil($numeroPdfsAbajo);
+            if($dataCategoria['canales'] > 0){
+                $pdf = app('dompdf.wrapper');
+                $pdf->setPaper('A3','landscape');
+                $pdf->loadView('pdf.promociones.indice', ["data" => $dataCategoria, "posicion" => $posicionDataCategoria]);
+                $m->addRaw($pdf->output());
 
-            $mostrarPdfA4 = false;
-            // if(sizeof($dataCategoria['canales']) < 3){
-            //     $mostrarPdfA4 = true;
-            // }
+                $numeroPdfsAbajo = $dataCategoria['cantidadPromociones'] / 3;
+                $numeroPdfsAbajo = ceil($numeroPdfsAbajo);
 
-            for($i = 0; $i < $numeroPdfsAbajo; $i++ ){
-                if($i == 0){
-                    $pdf2 = app('dompdf.wrapper');
+                $mostrarPdfA4 = false;
+                // if(sizeof($dataCategoria['canales']) < 3){
+                //     $mostrarPdfA4 = true;
+                // }
 
-                    if($mostrarPdfA4 == true){
-                        $pdf2->setPaper('A4','portrait');
-                        $pdf2->loadView('pdf.promociones.promocion', ["data" => $dataCategoria['canales'], "categoria" => $dataCategoria, "desde" => 0, "hasta" => 2, "opacidadcanal" => 1, "mostrarPdfA4" => $mostrarPdfA4 ] );
-                    }else{
-                        $pdf2->setPaper('A3','landscape');
-                        $pdf2->loadView('pdf.promociones.promocion', ["data" => $dataCategoria['canales'], "categoria" => $dataCategoria, "desde" => 0, "hasta" => 2, "opacidadcanal" => 1, "mostrarPdfA4" => $mostrarPdfA4 ] );
+                for($i = 0; $i < $numeroPdfsAbajo; $i++ ){
+                    if($i == 0){
+                        $pdf2 = app('dompdf.wrapper');
+
+                        if($mostrarPdfA4 == true){
+                            $pdf2->setPaper('A4','portrait');
+                            $pdf2->loadView('pdf.promociones.promocion', ["data" => $dataCategoria['canales'], "categoria" => $dataCategoria, "desde" => 0, "hasta" => 2, "opacidadcanal" => 1, "mostrarPdfA4" => $mostrarPdfA4 ] );
+                        }else{
+                            $pdf2->setPaper('A3','landscape');
+                            $pdf2->loadView('pdf.promociones.promocion', ["data" => $dataCategoria['canales'], "categoria" => $dataCategoria, "desde" => 0, "hasta" => 2, "opacidadcanal" => 1, "mostrarPdfA4" => $mostrarPdfA4 ] );
+                        }
+
+                        $m->addRaw($pdf2->output());
+                    }else if($i == 1){
+                        $pdf3 = app('dompdf.wrapper');
+                        if($mostrarPdfA4 == true){
+                            $pdf3->setPaper('A4','portrait');
+                            $pdf3->loadView('pdf.promociones.promocion', ["data" => $dataCategoria['canales'], "categoria" => $dataCategoria, "desde" => 3, "hasta" => 5, "opacidadcanal" => 1, "mostrarPdfA4" => $mostrarPdfA4 ] );
+                        }else{
+                            $pdf3->setPaper('A3','landscape');
+                            $pdf3->loadView('pdf.promociones.promocion', ["data" => $dataCategoria['canales'], "categoria" => $dataCategoria, "desde" => 3, "hasta" => 5, "opacidadcanal" => 1, "mostrarPdfA4" => $mostrarPdfA4 ] );
+                        }
+                        
+                        $m->addRaw($pdf3->output());
                     }
-
-                    $m->addRaw($pdf2->output());
-                }else if($i == 1){
-                    $pdf3 = app('dompdf.wrapper');
-                    if($mostrarPdfA4 == true){
-                        $pdf3->setPaper('A4','portrait');
-                        $pdf3->loadView('pdf.promociones.promocion', ["data" => $dataCategoria['canales'], "categoria" => $dataCategoria, "desde" => 3, "hasta" => 5, "opacidadcanal" => 1, "mostrarPdfA4" => $mostrarPdfA4 ] );
-                    }else{
-                        $pdf3->setPaper('A3','landscape');
-                        $pdf3->loadView('pdf.promociones.promocion', ["data" => $dataCategoria['canales'], "categoria" => $dataCategoria, "desde" => 3, "hasta" => 5, "opacidadcanal" => 1, "mostrarPdfA4" => $mostrarPdfA4 ] );
-                    }
-                    
-                    $m->addRaw($pdf3->output());
                 }
             }
 
