@@ -3,7 +3,7 @@
 <div class="box2_page" id="color_page3" style="color:{{$categoria['catcolor']}}" >{{$categoria['catnombre']}}</div>
 
 <div class="box4_page" id="color_page3" style="color:{{$categoria['catcolor']}}"><div class="circle_page3" style="color:{{$categoria['catcolor']}}">•</div>URIAFER</div>
-<div class="box2_page3">Actualización 5 de Agosto del 2021</div>
+<!-- <div class="box2_page3">Actualización 5 de Agosto del 2021</div> -->
 <div class="box4_page3">
     
     
