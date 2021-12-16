@@ -439,12 +439,12 @@ body, html{
 }
 .circle_page3{
     /* position: absolute; */
-    width: 40px;
-    height: 40px;
+    width: 30px;
+    height: 30px;
     /* left: 33px;
     top: 35px; */
     /* color: #E41A37; */
-    font-size: 40px;
+    font-size: 30px;
 }
 .circle_page5{
     position: absolute;
