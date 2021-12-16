@@ -1,6 +1,21 @@
 <div class="body1_page3"></div>
 
-<img class="Img-Icono-Categoria-Pdf" src='../public/images/pdf/iconos/icofamily.jpg'><br>
+@if($categoria['catid'] == 1)
+<img class="Img-Icono-Categoria-Pdf" src='../public/images/pdf/iconos/icofamily.jpg'>
+@elseif($categoria['catid'] == 2)
+<img class="Img-Icono-Categoria-Pdf" src='../public/images/pdf/iconos/icoinfant.jpg'>
+@elseif($categoria['catid'] == 3)
+<img class="Img-Icono-Categoria-Pdf" src='../public/images/pdf/iconos/icoadult.jpg'>
+@elseif($categoria['catid'] == 4)
+<img class="Img-Icono-Categoria-Pdf" src='../public/images/pdf/iconos/icowipes.jpg'>
+@elseif($categoria['catid'] == 5)
+<img class="Img-Icono-Categoria-Pdf" src='../public/images/pdf/iconos/icofem.jpg'>
+@elseif($categoria['catid'] == 6)
+<img class="Img-Icono-Categoria-Pdf" src='../public/images/pdf/iconos/icomulticategoria.jpg'>
+@endif
+
+
+
 <div class="box2_page" id="color_page3" style="color:{{$categoria['catcolor']}}" >{{$categoria['catnombre']}}</div>
 
 <div class="Contenedor-izquierda-pdf">
