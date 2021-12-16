@@ -54,7 +54,7 @@ body, html{
     position: absolute;
     width: 262px;
     height: 27px;
-    left: 47px;
+    left: 100px;
     top: 38px;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-style: normal;
@@ -761,4 +761,11 @@ body, html{
     text-align: center;
     color: #FFFFFF;
     padding: 30px 10px 0px 10px;
+}
+
+.Img-Icono-Categoria-Pdf{
+    position: absolute;
+    left: 50px;
+    top: 38px;
+    width: 35px;
 }

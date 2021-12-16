@@ -1,5 +1,6 @@
 <div class="body1_page3"></div>
 
+<img class="Img-Icono-Categoria-Pdf" src='../public/images/pdf/iconos/icofamily.jpg'><br>
 <div class="box2_page" id="color_page3" style="color:{{$categoria['catcolor']}}" >{{$categoria['catnombre']}}</div>
 
 <div class="Contenedor-izquierda-pdf">
