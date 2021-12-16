@@ -63,17 +63,17 @@ body, html{
     line-height: 27px;
 }
 .box4_page{
-    position: absolute;
-    width: 207px;
-    height: 31px;
-    right: 50px;
-    top: 38px;
+    /* position: absolute; */
+    /* width: 207px; */
+    /* height: 31px; */
+    /* right: 50px; */
+    /* top: 38px; */
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-style: normal;
     font-weight: bold;
     font-size: 25px;
     line-height: 33px;
-    text-align: right;
+    /* text-align: right; */
     /* background-color: yellow; */
 }
 

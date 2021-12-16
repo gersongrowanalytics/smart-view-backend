@@ -4,8 +4,7 @@
 
 <div class="Contenedor-izquierda-pdf">
     <span class="circle_page3" style="color:{{$categoria['catcolor']}}">•</span>
-    URIAFER
-    <!-- <div class="box4_page" style="color:{{$categoria['catcolor']}}">URIAFER</div> -->
+    <div class="box4_page" style="color:{{$categoria['catcolor']}}">URIAFER</div>
 </div>
 
 
