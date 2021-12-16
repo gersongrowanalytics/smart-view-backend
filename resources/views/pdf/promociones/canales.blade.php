@@ -45,7 +45,7 @@
                                     id="box_table_color_page3"
                                     style="border: 1px solid {{$categoria['catcolor']}}"
                                 >
-                                    <div class="Fecha-Expiracion-Promocion-Pdf" style="background: {{{{$categoria['catcolor']}}}}"  >
+                                    <div class="Fecha-Expiracion-Promocion-Pdf" style="background:{{$categoria['catcolor']}}">
                                         <div class="Primera-Mitad-Fecha-Expiracion-Promocion-Pdf"></div>
                                         <div class="Segunda-Mitad-Fecha-Expiracion-Promocion-Pdf">
                                             <div class="Texto-Inicio-Fecha-Expiracion-Pdf">Ini 8/10</div>
@@ -163,7 +163,7 @@
                                     id="box_table_color_page3"
                                     style="border: 1px solid {{$categoria['catcolor']}}"
                                 >
-                                    <div class="Fecha-Expiracion-Promocion-Pdf">
+                                    <div class="Fecha-Expiracion-Promocion-Pdf" style="background:{{$categoria['catcolor']}}">
                                         <div class="Primera-Mitad-Fecha-Expiracion-Promocion-Pdf"></div>
                                         <div class="Segunda-Mitad-Fecha-Expiracion-Promocion-Pdf">
                                             <div class="Texto-Inicio-Fecha-Expiracion-Pdf">Ini 8/10</div>
@@ -281,7 +281,7 @@
                                     id="box_table_color_page3"
                                     style="border: 1px solid {{$categoria['catcolor']}}"
                                 >
-                                    <div class="Fecha-Expiracion-Promocion-Pdf">
+                                    <div class="Fecha-Expiracion-Promocion-Pdf" style="background:{{$categoria['catcolor']}}">
                                         <div class="Primera-Mitad-Fecha-Expiracion-Promocion-Pdf"></div>
                                         <div class="Segunda-Mitad-Fecha-Expiracion-Promocion-Pdf">
                                             <div class="Texto-Inicio-Fecha-Expiracion-Pdf">Ini 8/10</div>
@@ -398,7 +398,7 @@
                                     id="box_table_color_page3"
                                     style="border: 1px solid {{$categoria['catcolor']}}"
                                 >
-                                    <div class="Fecha-Expiracion-Promocion-Pdf">
+                                    <div class="Fecha-Expiracion-Promocion-Pdf" style="background:{{$categoria['catcolor']}}">
                                         <div class="Primera-Mitad-Fecha-Expiracion-Promocion-Pdf"></div>
                                         <div class="Segunda-Mitad-Fecha-Expiracion-Promocion-Pdf">
                                             <div class="Texto-Inicio-Fecha-Expiracion-Pdf">Ini 8/10</div>
