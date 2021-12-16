@@ -667,12 +667,11 @@ body, html{
 .Fecha-Expiracion-Promocion-Pdf{
     width: 54px;
     height: 22px;
-    background: #B21B86;
     border-radius: 9px 0px 0px 9px;
     position: absolute;
     right: 0;
     z-index: 1;
-    top: 20px;
+    top: 18px;
 }
 
 .Primera-Mitad-Fecha-Expiracion-Promocion-Pdf{
