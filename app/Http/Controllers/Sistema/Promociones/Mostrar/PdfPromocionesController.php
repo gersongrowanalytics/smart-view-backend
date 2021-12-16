@@ -133,9 +133,9 @@ class PdfPromocionesController extends Controller
             $numeroPdfsAbajo = ceil($numeroPdfsAbajo);
 
             $mostrarPdfA4 = false;
-            if(sizeof($dataCategoria['canales']) < 3){
-                $mostrarPdfA4 = true;
-            }
+            // if(sizeof($dataCategoria['canales']) < 3){
+            //     $mostrarPdfA4 = true;
+            // }
 
             for($i = 0; $i < $numeroPdfsAbajo; $i++ ){
                 if($i == 0){

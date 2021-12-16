@@ -122,7 +122,7 @@
         @endif
 
         @if($posicionDat == 1)
-        <div class="Segunda-Columna-Pdf-Promociones" style="border-right: 1px dashed {{$categoria['catcolor']}}" >
+        <div class="Segunda-Columna-Pdf-Promociones" >
             <div class="Contenedor-Titulo-Canal-Pdf-Promociones">
                 <div 
                     class="Titulo-Canal-Pdf-Promociones"
