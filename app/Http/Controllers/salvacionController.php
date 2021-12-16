@@ -527,6 +527,17 @@ class salvacionController extends Controller
                         ->delete();
 
     }
+
+    public function MecanicasUnicas($fecid)
+    {
+        $prms = prmpromociones::where('fecid', $fecid)->get();
+
+        foreach($prms as $posicionPrm => $prm){
+            $prme = prmpromociones::find($prm->prmid);
+            $prme->prmmecanica = $posicionPrm.$prme->prmmecanica;
+            $prme->update();
+        }
+    }
 }
 
 
