@@ -5,8 +5,8 @@
 <div class="Contenedor-izquierda-pdf">
     <span class="circle_page3" style="color:{{$categoria['catcolor']}}">•</span>
     <span class="box4_page" style="color:{{$categoria['catcolor']}}">URIAFER</span>
-    <div class="box2_page3">Actualización 5 de Agosto del 2021</div>
 </div>
+<div class="box2_page3">Actualización 5 de Agosto del 2021</div>
 <div class="box4_page3">
     
     
