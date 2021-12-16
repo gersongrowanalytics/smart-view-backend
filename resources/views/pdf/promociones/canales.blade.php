@@ -167,15 +167,15 @@
                                         <div class="Primera-Mitad-Fecha-Expiracion-Promocion-Pdf">
                                             @if($categoria['catid'] == 1)
                                             <img class="img-calendario-expiracion-pdf" src='../public/images/pdf/nohaypromocion/calfamily.jpg'>
-                                            @else if($categoria['catid'] == 2)
+                                            @elseif($categoria['catid'] == 2)
                                             <img class="img-calendario-expiracion-pdf" src='../public/images/pdf/nohaypromocion/calinfant.jpg'>
-                                            @else if($categoria['catid'] == 3)
+                                            @elseif($categoria['catid'] == 3)
                                             <img class="img-calendario-expiracion-pdf" src='../public/images/pdf/nohaypromocion/caladult.jpg'>
-                                            @else if($categoria['catid'] == 4)
+                                            @elseif($categoria['catid'] == 4)
                                             <img class="img-calendario-expiracion-pdf" src='../public/images/pdf/nohaypromocion/calwipes.jpg'>
-                                            @else if($categoria['catid'] == 5)
+                                            @elseif($categoria['catid'] == 5)
                                             <img class="img-calendario-expiracion-pdf" src='../public/images/pdf/nohaypromocion/calfem.jpg'>
-                                            @else if($categoria['catid'] == 6)
+                                            @elseif($categoria['catid'] == 6)
                                             <img class="img-calendario-expiracion-pdf" src='../public/images/pdf/nohaypromocion/calmulticategoria.jpg'>
                                             @endif
                                             
