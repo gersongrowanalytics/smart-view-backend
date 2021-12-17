@@ -164,7 +164,7 @@
                                                 <th>
                                                     @foreach($promocion['productosbonificados'] as $posicionProductoBonif => $productobonificado)
                                                     @if($posicionProductoBonif == 0)
-                                                    <div class="img_products">
+                                                    <div class="img_products" style="margin-right:20px">
                                                         @if($promocion['cspgratis'] == 1)
                                                         <div class="text_free_product2">Gratis</div>
                                                         @else
