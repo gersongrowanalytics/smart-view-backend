@@ -10,6 +10,7 @@ use Barryvdh\DomPDF\PDF;
 use Dompdf\Dompdf;
 use Dompdf\Options;
 use App\usuusuarios;
+use App\sucsucursales;
 
 class PdfPromocionesController extends Controller
 {
