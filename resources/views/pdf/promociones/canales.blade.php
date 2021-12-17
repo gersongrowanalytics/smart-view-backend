@@ -19,7 +19,7 @@
     @endif
 
 
-@if($categoria['catid'] == 1)
+<!-- @if($categoria['catid'] == 1)
 <img class="Img-Icono-Categoria-Pdf" src='../public/images/pdf/iconos/icofamily.jpg'>
 @elseif($categoria['catid'] == 2)
 <img class="Img-Icono-Categoria-Pdf" src='../public/images/pdf/iconos/icoinfant.jpg'>
@@ -32,7 +32,7 @@
 @elseif($categoria['catid'] == 6)
 <img class="Img-Icono-Categoria-Pdf" src='../public/images/pdf/iconos/icomulticategoria.jpg'>
 @endif
-
+ -->
 
 
 <div class="box2_page" id="color_page3" style="color:{{$categoria['catcolor']}}" >{{$categoria['catnombre']}}</div>
