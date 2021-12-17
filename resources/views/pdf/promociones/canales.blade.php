@@ -628,7 +628,7 @@
         @endif
     @endforeach
 
-    <div class="Texto-Numero-Pagina-Pdf">1</div>
+    <div class="Texto-Numero-Pagina-Pdf" style="color:{{$categoria['catcolor']}}" >1</div>
 </div>
 
 
