@@ -22,7 +22,7 @@
     <span class="circle_page3" style="color:{{$categoria['catcolor']}}">•</span>
     <span class="box4_page" style="color:{{$categoria['catcolor']}}">URIAFER</span>
 </div>
-<div class="box2_page3">Actualización 16 de Diciembre del 2021</div>
+<div class="box2_page3">Agosto del 2021</div>
 <div class="box4_page3">
     
     
