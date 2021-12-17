@@ -11,6 +11,7 @@ use Dompdf\Dompdf;
 use Dompdf\Options;
 use App\usuusuarios;
 use App\sucsucursales;
+use App\gsugrupossucursales;
 
 class PdfPromocionesController extends Controller
 {
