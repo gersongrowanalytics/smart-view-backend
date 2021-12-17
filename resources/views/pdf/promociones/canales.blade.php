@@ -35,7 +35,7 @@
  -->
 
 
-<div class="box2_page" id="color_page3" style="color:{{$categoria['catcolor']}}" >{{$categoria['catnombre']}}</div>
+<!-- <div class="box2_page" id="color_page3" style="color:{{$categoria['catcolor']}}" >{{$categoria['catnombre']}}</div> -->
 
 <div class="Contenedor-izquierda-pdf">
     <span class="circle_page3" style="color:{{$categoria['catcolor']}}">•</span>
