@@ -193,7 +193,7 @@ class PdfPromocionesController extends Controller
             if(sizeof($dataCategoria['canales']) > 0){
                 $pdf = app('dompdf.wrapper');
                 $pdf->setPaper('A3','landscape');
-                $pdf->loadView('pdf.promociones.indice', ["data" => $dataCategoria, "posicion" => $posicionDataCategoria, "titulocaratula" => $titulocaratula, "categorias" => $dataCategorias, "fechaPromocion" => $fechaPromocion, "sucursal" => $suc->sucnombre, "cantidadCategorias" => $cantidadCategorias]);
+                $pdf->loadView('pdf.promociones.indice', ["data" => $dataCategoria, "posicion" => $posicionDataCategoria, "titulocaratula" => $titulocaratula, "categorias" => $dataCategorias, "fechaPromocion" => $fechaPromocion, "sucursal" => $suc->sucnombre, "cantidadCategorias" => $cantidadCategorias, "fechasExpPromos" => $fechasExpPromos]);
                 $m->addRaw($pdf->output());
 
                 $numeroPdfsAbajo = $dataCategoria['cantidadPromociones'] / 3;
