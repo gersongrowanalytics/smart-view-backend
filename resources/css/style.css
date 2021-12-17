@@ -770,6 +770,8 @@ body, html{
     text-align: center;
     color: #FFFFFF;
     padding: 10px 10px 10px 10px;
+    align-items: center;
+    
 }
 
 .Img-Icono-Categoria-Pdf{
@@ -808,4 +810,21 @@ body, html{
 
 .Icono-Indice-Promociones-Pdf{
     width: 490px;
+}
+
+
+
+
+.Contenedor-Todo-Pdf{
+    width: 100%;
+    background-color: blueviolet;
+    height: 1125px;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.Texto-Dt-Todo-Pdf{
+    align-items: center;
+    text-align: center;
 }
