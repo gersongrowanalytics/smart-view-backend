@@ -768,6 +768,10 @@ body, html{
     padding: 10px 10px 10px 10px;
     align-items: center;
     
+    position: absolute;
+    /* padding: 10px;
+    height: 20px; */
+    left: 45%;
 }
 
 .Img-Icono-Categoria-Pdf{
@@ -813,7 +817,7 @@ body, html{
 
 .Contenedor-Todo-Pdf{
     width: 100%;
-    background-color: blueviolet;
+    /* background-color: blueviolet; */
     height: 1125px;
     position: absolute;
     top: 0;
@@ -823,4 +827,5 @@ body, html{
 .Texto-Dt-Todo-Pdf{
     align-items: center;
     text-align: center;
+
 }
