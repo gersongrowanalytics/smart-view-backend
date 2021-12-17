@@ -209,6 +209,17 @@ class PdfPromocionesController extends Controller
                         }
                         
                         $m->addRaw($pdf3->output());
+                    }else if($i == 2){
+                        $pdf4 = app('dompdf.wrapper');
+                        if($mostrarPdfA4 == true){
+                            $pdf4->setPaper('A4','portrait');
+                            $pdf4->loadView('pdf.promociones.promocion', ["data" => $dataCategoria['canales'], "categoria" => $dataCategoria, "desde" => 6, "hasta" => 8, "opacidadcanal" => 1, "mostrarPdfA4" => $mostrarPdfA4, "titulocaratula" => $titulocaratula, "categorias" => $dataCategorias, "fechaPromocion" => $fechaPromocion, "sucursal" => $suc->sucnombre, "cantidadCategorias" => $cantidadCategorias, "pagina" => $i ] );
+                        }else{
+                            $pdf4->setPaper('A3','landscape');
+                            $pdf4->loadView('pdf.promociones.promocion', ["data" => $dataCategoria['canales'], "categoria" => $dataCategoria, "desde" => 6, "hasta" => 8, "opacidadcanal" => 1, "mostrarPdfA4" => $mostrarPdfA4, "titulocaratula" => $titulocaratula, "categorias" => $dataCategorias, "fechaPromocion" => $fechaPromocion, "sucursal" => $suc->sucnombre, "cantidadCategorias" => $cantidadCategorias, "pagina" => $i ] );
+                        }
+                        
+                        $m->addRaw($pdf4->output());
                     }
                 }
             } 
