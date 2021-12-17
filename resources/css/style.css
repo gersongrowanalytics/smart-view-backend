@@ -515,7 +515,7 @@ body, html{
     left: 25%;
     top: 0;
     position: absolute;
-    margin-left: -10px;
+    margin-left: 0px;
     margin-top: 20px;
     /* border-right: 1px dashed red; */
 }
