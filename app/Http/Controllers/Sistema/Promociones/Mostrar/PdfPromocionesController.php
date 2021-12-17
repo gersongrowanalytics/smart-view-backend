@@ -21,15 +21,26 @@ class PdfPromocionesController extends Controller
         $re_idsucursal = $request['idsucursal'];
         $re_anio = $request['anio'];
         $re_mes = $request['mes'];
+        $re_gsuid = $request['gsuid'];
 
         $fechasExpPromos = array(
             "fechaInicio" => "01/12",
             "fechaFinal"  => "30/12",
         );
 
-        $suc = sucsucursales::where('sucid', $re_idsucursal)->first();
+        $nombreDTSeleccionado = "";
 
-        $titulocaratula = $suc->sucnombre." - ".$re_mes." ".$re_anio;
+        if($re_gsuid != 0){
+            $gsu = gsugrupossucursales::where('gsuid', $re_gsuid)->first();
+            $nombreDTSeleccionado = $gsu->gsunombre;
+        }else{
+            $suc = sucsucursales::where('sucid', $re_idsucursal)->first();
+            $nombreDTSeleccionado = $suc->sucnombre;
+        }
+
+        
+
+        $titulocaratula = $nombreDTSeleccionado." - ".$re_mes." ".$re_anio;
 
 
         if($re_mes == "ENE"){
@@ -57,7 +68,7 @@ class PdfPromocionesController extends Controller
         }else if($re_mes == "DIC"){
             $re_mes = "Diciembre";
         }
-        $fechaPromocion = $re_mes." del ".$re_anio;
+        $fechaPromocion = $re_mes." ".$re_anio;
 
         $usu = usuusuarios::where('usutoken', $usutoken)->first(['usuid']);
 
@@ -204,7 +215,7 @@ class PdfPromocionesController extends Controller
                 $numeroPagina = $numeroPagina + 1;
                 $pdf = app('dompdf.wrapper');
                 $pdf->setPaper('A3','landscape');
-                $pdf->loadView('pdf.promociones.indice', ["data" => $dataCategoria, "posicion" => $posicionDataCategoria, "titulocaratula" => $titulocaratula, "categorias" => $dataCategorias, "fechaPromocion" => $fechaPromocion, "sucursal" => $suc->sucnombre, "cantidadCategorias" => $cantidadCategorias, "fechasExpPromos" => $fechasExpPromos]);
+                $pdf->loadView('pdf.promociones.indice', ["data" => $dataCategoria, "posicion" => $posicionDataCategoria, "titulocaratula" => $titulocaratula, "categorias" => $dataCategorias, "fechaPromocion" => $fechaPromocion, "sucursal" => $nombreDTSeleccionado, "cantidadCategorias" => $cantidadCategorias, "fechasExpPromos" => $fechasExpPromos]);
                 $m->addRaw($pdf->output());
 
                 $cantidadPromociones = 0;
@@ -230,10 +241,10 @@ class PdfPromocionesController extends Controller
 
                         if($mostrarPdfA4 == true){
                             $pdf2->setPaper('A4','portrait');
-                            $pdf2->loadView('pdf.promociones.promocion', ["data" => $dataCategoria['canales'], "categoria" => $dataCategoria, "desde" => 0, "hasta" => 2, "opacidadcanal" => 1, "mostrarPdfA4" => $mostrarPdfA4, "titulocaratula" => $titulocaratula, "categorias" => $dataCategorias, "fechaPromocion" => $fechaPromocion, "sucursal" => $suc->sucnombre, "cantidadCategorias" => $cantidadCategorias, "pagina" => $numeroPagina, "fechasExpPromos" => $fechasExpPromos ] );
+                            $pdf2->loadView('pdf.promociones.promocion', ["data" => $dataCategoria['canales'], "categoria" => $dataCategoria, "desde" => 0, "hasta" => 2, "opacidadcanal" => 1, "mostrarPdfA4" => $mostrarPdfA4, "titulocaratula" => $titulocaratula, "categorias" => $dataCategorias, "fechaPromocion" => $fechaPromocion, "sucursal" => $nombreDTSeleccionado, "cantidadCategorias" => $cantidadCategorias, "pagina" => $numeroPagina, "fechasExpPromos" => $fechasExpPromos ] );
                         }else{
                             $pdf2->setPaper('A3','landscape');
-                            $pdf2->loadView('pdf.promociones.promocion', ["data" => $dataCategoria['canales'], "categoria" => $dataCategoria, "desde" => 0, "hasta" => 2, "opacidadcanal" => 1, "mostrarPdfA4" => $mostrarPdfA4, "titulocaratula" => $titulocaratula, "categorias" => $dataCategorias, "fechaPromocion" => $fechaPromocion, "sucursal" => $suc->sucnombre, "cantidadCategorias" => $cantidadCategorias, "pagina" => $numeroPagina, "fechasExpPromos" => $fechasExpPromos ] );
+                            $pdf2->loadView('pdf.promociones.promocion', ["data" => $dataCategoria['canales'], "categoria" => $dataCategoria, "desde" => 0, "hasta" => 2, "opacidadcanal" => 1, "mostrarPdfA4" => $mostrarPdfA4, "titulocaratula" => $titulocaratula, "categorias" => $dataCategorias, "fechaPromocion" => $fechaPromocion, "sucursal" => $nombreDTSeleccionado, "cantidadCategorias" => $cantidadCategorias, "pagina" => $numeroPagina, "fechasExpPromos" => $fechasExpPromos ] );
                         }
 
                         $m->addRaw($pdf2->output());
@@ -241,10 +252,10 @@ class PdfPromocionesController extends Controller
                         $pdf3 = app('dompdf.wrapper');
                         if($mostrarPdfA4 == true){
                             $pdf3->setPaper('A4','portrait');
-                            $pdf3->loadView('pdf.promociones.promocion', ["data" => $dataCategoria['canales'], "categoria" => $dataCategoria, "desde" => 3, "hasta" => 5, "opacidadcanal" => 1, "mostrarPdfA4" => $mostrarPdfA4, "titulocaratula" => $titulocaratula, "categorias" => $dataCategorias, "fechaPromocion" => $fechaPromocion, "sucursal" => $suc->sucnombre, "cantidadCategorias" => $cantidadCategorias, "pagina" => $numeroPagina, "fechasExpPromos" => $fechasExpPromos ] );
+                            $pdf3->loadView('pdf.promociones.promocion', ["data" => $dataCategoria['canales'], "categoria" => $dataCategoria, "desde" => 3, "hasta" => 5, "opacidadcanal" => 1, "mostrarPdfA4" => $mostrarPdfA4, "titulocaratula" => $titulocaratula, "categorias" => $dataCategorias, "fechaPromocion" => $fechaPromocion, "sucursal" => $nombreDTSeleccionado, "cantidadCategorias" => $cantidadCategorias, "pagina" => $numeroPagina, "fechasExpPromos" => $fechasExpPromos ] );
                         }else{
                             $pdf3->setPaper('A3','landscape');
-                            $pdf3->loadView('pdf.promociones.promocion', ["data" => $dataCategoria['canales'], "categoria" => $dataCategoria, "desde" => 3, "hasta" => 5, "opacidadcanal" => 1, "mostrarPdfA4" => $mostrarPdfA4, "titulocaratula" => $titulocaratula, "categorias" => $dataCategorias, "fechaPromocion" => $fechaPromocion, "sucursal" => $suc->sucnombre, "cantidadCategorias" => $cantidadCategorias, "pagina" => $numeroPagina, "fechasExpPromos" => $fechasExpPromos ] );
+                            $pdf3->loadView('pdf.promociones.promocion', ["data" => $dataCategoria['canales'], "categoria" => $dataCategoria, "desde" => 3, "hasta" => 5, "opacidadcanal" => 1, "mostrarPdfA4" => $mostrarPdfA4, "titulocaratula" => $titulocaratula, "categorias" => $dataCategorias, "fechaPromocion" => $fechaPromocion, "sucursal" => $nombreDTSeleccionado, "cantidadCategorias" => $cantidadCategorias, "pagina" => $numeroPagina, "fechasExpPromos" => $fechasExpPromos ] );
                         }
                         
                         $m->addRaw($pdf3->output());
@@ -252,10 +263,10 @@ class PdfPromocionesController extends Controller
                         $pdf4 = app('dompdf.wrapper');
                         if($mostrarPdfA4 == true){
                             $pdf4->setPaper('A4','portrait');
-                            $pdf4->loadView('pdf.promociones.promocion', ["data" => $dataCategoria['canales'], "categoria" => $dataCategoria, "desde" => 6, "hasta" => 8, "opacidadcanal" => 1, "mostrarPdfA4" => $mostrarPdfA4, "titulocaratula" => $titulocaratula, "categorias" => $dataCategorias, "fechaPromocion" => $fechaPromocion, "sucursal" => $suc->sucnombre, "cantidadCategorias" => $cantidadCategorias, "pagina" => $numeroPagina, "fechasExpPromos" => $fechasExpPromos ] );
+                            $pdf4->loadView('pdf.promociones.promocion', ["data" => $dataCategoria['canales'], "categoria" => $dataCategoria, "desde" => 6, "hasta" => 8, "opacidadcanal" => 1, "mostrarPdfA4" => $mostrarPdfA4, "titulocaratula" => $titulocaratula, "categorias" => $dataCategorias, "fechaPromocion" => $fechaPromocion, "sucursal" => $nombreDTSeleccionado, "cantidadCategorias" => $cantidadCategorias, "pagina" => $numeroPagina, "fechasExpPromos" => $fechasExpPromos ] );
                         }else{
                             $pdf4->setPaper('A3','landscape');
-                            $pdf4->loadView('pdf.promociones.promocion', ["data" => $dataCategoria['canales'], "categoria" => $dataCategoria, "desde" => 6, "hasta" => 8, "opacidadcanal" => 1, "mostrarPdfA4" => $mostrarPdfA4, "titulocaratula" => $titulocaratula, "categorias" => $dataCategorias, "fechaPromocion" => $fechaPromocion, "sucursal" => $suc->sucnombre, "cantidadCategorias" => $cantidadCategorias, "pagina" => $numeroPagina, "fechasExpPromos" => $fechasExpPromos ] );
+                            $pdf4->loadView('pdf.promociones.promocion', ["data" => $dataCategoria['canales'], "categoria" => $dataCategoria, "desde" => 6, "hasta" => 8, "opacidadcanal" => 1, "mostrarPdfA4" => $mostrarPdfA4, "titulocaratula" => $titulocaratula, "categorias" => $dataCategorias, "fechaPromocion" => $fechaPromocion, "sucursal" => $nombreDTSeleccionado, "cantidadCategorias" => $cantidadCategorias, "pagina" => $numeroPagina, "fechasExpPromos" => $fechasExpPromos ] );
                         }
                         
                         $m->addRaw($pdf4->output());
@@ -263,10 +274,10 @@ class PdfPromocionesController extends Controller
                         $pdf5 = app('dompdf.wrapper');
                         if($mostrarPdfA4 == true){
                             $pdf5->setPaper('A4','portrait');
-                            $pdf5->loadView('pdf.promociones.promocion', ["data" => $dataCategoria['canales'], "categoria" => $dataCategoria, "desde" => 9, "hasta" => 11, "opacidadcanal" => 1, "mostrarPdfA4" => $mostrarPdfA4, "titulocaratula" => $titulocaratula, "categorias" => $dataCategorias, "fechaPromocion" => $fechaPromocion, "sucursal" => $suc->sucnombre, "cantidadCategorias" => $cantidadCategorias, "pagina" => $numeroPagina, "fechasExpPromos" => $fechasExpPromos ] );
+                            $pdf5->loadView('pdf.promociones.promocion', ["data" => $dataCategoria['canales'], "categoria" => $dataCategoria, "desde" => 9, "hasta" => 11, "opacidadcanal" => 1, "mostrarPdfA4" => $mostrarPdfA4, "titulocaratula" => $titulocaratula, "categorias" => $dataCategorias, "fechaPromocion" => $fechaPromocion, "sucursal" => $nombreDTSeleccionado, "cantidadCategorias" => $cantidadCategorias, "pagina" => $numeroPagina, "fechasExpPromos" => $fechasExpPromos ] );
                         }else{
                             $pdf5->setPaper('A3','landscape');
-                            $pdf5->loadView('pdf.promociones.promocion', ["data" => $dataCategoria['canales'], "categoria" => $dataCategoria, "desde" => 9, "hasta" => 11, "opacidadcanal" => 1, "mostrarPdfA4" => $mostrarPdfA4, "titulocaratula" => $titulocaratula, "categorias" => $dataCategorias, "fechaPromocion" => $fechaPromocion, "sucursal" => $suc->sucnombre, "cantidadCategorias" => $cantidadCategorias, "pagina" => $numeroPagina, "fechasExpPromos" => $fechasExpPromos ] );
+                            $pdf5->loadView('pdf.promociones.promocion', ["data" => $dataCategoria['canales'], "categoria" => $dataCategoria, "desde" => 9, "hasta" => 11, "opacidadcanal" => 1, "mostrarPdfA4" => $mostrarPdfA4, "titulocaratula" => $titulocaratula, "categorias" => $dataCategorias, "fechaPromocion" => $fechaPromocion, "sucursal" => $nombreDTSeleccionado, "cantidadCategorias" => $cantidadCategorias, "pagina" => $numeroPagina, "fechasExpPromos" => $fechasExpPromos ] );
                         }
                         
                         $m->addRaw($pdf5->output());
@@ -274,10 +285,10 @@ class PdfPromocionesController extends Controller
                         $pdf6 = app('dompdf.wrapper');
                         if($mostrarPdfA4 == true){
                             $pdf6->setPaper('A4','portrait');
-                            $pdf6->loadView('pdf.promociones.promocion', ["data" => $dataCategoria['canales'], "categoria" => $dataCategoria, "desde" => 12, "hasta" => 14, "opacidadcanal" => 1, "mostrarPdfA4" => $mostrarPdfA4, "titulocaratula" => $titulocaratula, "categorias" => $dataCategorias, "fechaPromocion" => $fechaPromocion, "sucursal" => $suc->sucnombre, "cantidadCategorias" => $cantidadCategorias, "pagina" => $numeroPagina, "fechasExpPromos" => $fechasExpPromos ] );
+                            $pdf6->loadView('pdf.promociones.promocion', ["data" => $dataCategoria['canales'], "categoria" => $dataCategoria, "desde" => 12, "hasta" => 14, "opacidadcanal" => 1, "mostrarPdfA4" => $mostrarPdfA4, "titulocaratula" => $titulocaratula, "categorias" => $dataCategorias, "fechaPromocion" => $fechaPromocion, "sucursal" => $nombreDTSeleccionado, "cantidadCategorias" => $cantidadCategorias, "pagina" => $numeroPagina, "fechasExpPromos" => $fechasExpPromos ] );
                         }else{
                             $pdf6->setPaper('A3','landscape');
-                            $pdf6->loadView('pdf.promociones.promocion', ["data" => $dataCategoria['canales'], "categoria" => $dataCategoria, "desde" => 12, "hasta" => 14, "opacidadcanal" => 1, "mostrarPdfA4" => $mostrarPdfA4, "titulocaratula" => $titulocaratula, "categorias" => $dataCategorias, "fechaPromocion" => $fechaPromocion, "sucursal" => $suc->sucnombre, "cantidadCategorias" => $cantidadCategorias, "pagina" => $numeroPagina, "fechasExpPromos" => $fechasExpPromos ] );
+                            $pdf6->loadView('pdf.promociones.promocion', ["data" => $dataCategoria['canales'], "categoria" => $dataCategoria, "desde" => 12, "hasta" => 14, "opacidadcanal" => 1, "mostrarPdfA4" => $mostrarPdfA4, "titulocaratula" => $titulocaratula, "categorias" => $dataCategorias, "fechaPromocion" => $fechaPromocion, "sucursal" => $nombreDTSeleccionado, "cantidadCategorias" => $cantidadCategorias, "pagina" => $numeroPagina, "fechasExpPromos" => $fechasExpPromos ] );
                         }
                         
                         $m->addRaw($pdf6->output());
