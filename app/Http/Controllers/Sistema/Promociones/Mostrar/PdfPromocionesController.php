@@ -199,7 +199,15 @@ class PdfPromocionesController extends Controller
                 $pdf->loadView('pdf.promociones.indice', ["data" => $dataCategoria, "posicion" => $posicionDataCategoria, "titulocaratula" => $titulocaratula, "categorias" => $dataCategorias, "fechaPromocion" => $fechaPromocion, "sucursal" => $suc->sucnombre, "cantidadCategorias" => $cantidadCategorias, "fechasExpPromos" => $fechasExpPromos]);
                 $m->addRaw($pdf->output());
 
-                $numeroPdfsAbajo = $dataCategoria['cantidadPromociones'] / 3;
+                $cantidadPromociones = 0;
+                $canalesPromociones = $dataCategoria['canales'];
+                foreach($canalesPromociones as $posicionCanal => $canal){
+                    if($posicionCanal == 0){
+                        $cantidadPromociones = sizeof($canal['promocionesOrdenadas']);
+                    }
+                }
+                // $numeroPdfsAbajo = $dataCategoria['cantidadPromociones'] / 3;
+                $numeroPdfsAbajo = $cantidadPromociones / 3;
                 $numeroPdfsAbajo = ceil($numeroPdfsAbajo);
 
                 $mostrarPdfA4 = false;
