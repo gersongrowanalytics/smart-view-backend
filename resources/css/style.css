@@ -839,6 +839,6 @@ body, html{
     line-height: 16px;
     color: #E41A37;
     position: absolute;
-    bottom: 50px;
-    right: 50px;
+    bottom: 150px;
+    right: 100px;
 }
