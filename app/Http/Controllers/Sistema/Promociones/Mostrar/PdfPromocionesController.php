@@ -177,6 +177,13 @@ class PdfPromocionesController extends Controller
             if($dataCategoria['scaid'] == 1){
                 $pdfxgrupo = true; 
             }
+
+            $canalesPromociones = $dataCategoria['canales'];
+            foreach($canalesPromociones as $posicionCanal => $canal){
+                if($posicionCanal == 0){
+                    $cantidadPromociones = sizeof($canal['promocionesOrdenadas']);
+                }
+            }
         }
 
         if($pdfxgrupo == true){
@@ -250,6 +257,28 @@ class PdfPromocionesController extends Controller
                         }
                         
                         $m->addRaw($pdf4->output());
+                    }else if($i == 3){
+                        $pdf5 = app('dompdf.wrapper');
+                        if($mostrarPdfA4 == true){
+                            $pdf5->setPaper('A4','portrait');
+                            $pdf5->loadView('pdf.promociones.promocion', ["data" => $dataCategoria['canales'], "categoria" => $dataCategoria, "desde" => 9, "hasta" => 11, "opacidadcanal" => 1, "mostrarPdfA4" => $mostrarPdfA4, "titulocaratula" => $titulocaratula, "categorias" => $dataCategorias, "fechaPromocion" => $fechaPromocion, "sucursal" => $suc->sucnombre, "cantidadCategorias" => $cantidadCategorias, "pagina" => $i ] );
+                        }else{
+                            $pdf5->setPaper('A3','landscape');
+                            $pdf5->loadView('pdf.promociones.promocion', ["data" => $dataCategoria['canales'], "categoria" => $dataCategoria, "desde" => 9, "hasta" => 11, "opacidadcanal" => 1, "mostrarPdfA4" => $mostrarPdfA4, "titulocaratula" => $titulocaratula, "categorias" => $dataCategorias, "fechaPromocion" => $fechaPromocion, "sucursal" => $suc->sucnombre, "cantidadCategorias" => $cantidadCategorias, "pagina" => $i ] );
+                        }
+                        
+                        $m->addRaw($pdf5->output());
+                    }else if($i == 4){
+                        $pdf6 = app('dompdf.wrapper');
+                        if($mostrarPdfA4 == true){
+                            $pdf6->setPaper('A4','portrait');
+                            $pdf6->loadView('pdf.promociones.promocion', ["data" => $dataCategoria['canales'], "categoria" => $dataCategoria, "desde" => 12, "hasta" => 14, "opacidadcanal" => 1, "mostrarPdfA4" => $mostrarPdfA4, "titulocaratula" => $titulocaratula, "categorias" => $dataCategorias, "fechaPromocion" => $fechaPromocion, "sucursal" => $suc->sucnombre, "cantidadCategorias" => $cantidadCategorias, "pagina" => $i ] );
+                        }else{
+                            $pdf6->setPaper('A3','landscape');
+                            $pdf6->loadView('pdf.promociones.promocion', ["data" => $dataCategoria['canales'], "categoria" => $dataCategoria, "desde" => 12, "hasta" => 14, "opacidadcanal" => 1, "mostrarPdfA4" => $mostrarPdfA4, "titulocaratula" => $titulocaratula, "categorias" => $dataCategorias, "fechaPromocion" => $fechaPromocion, "sucursal" => $suc->sucnombre, "cantidadCategorias" => $cantidadCategorias, "pagina" => $i ] );
+                        }
+                        
+                        $m->addRaw($pdf6->output());
                     }
                 }
             } 
