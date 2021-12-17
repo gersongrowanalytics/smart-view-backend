@@ -223,4 +223,16 @@ class PdfPromocionesController extends Controller
         // return $pdf2->stream();
         // dd($resultPromociones);
     }
+
+    public function AgregarFechaExpiracionPromociones($anio, $mes)
+    {
+
+        
+
+        return array(
+            "fechaInicio" => ,
+            "fechaFinal"  => ,
+        );
+
+    }
 }
