@@ -20,7 +20,7 @@
 
 <div class="Contenedor-izquierda-pdf">
     <span class="circle_page3" style="color:{{$categoria['catcolor']}}">•</span>
-    <span class="box4_page" style="color:{{$categoria['catcolor']}}">URIAFER</span>
+    <span class="box4_page" style="color:{{$categoria['catcolor']}}">{{$sucursal}}</span>
 </div>
 <!-- <div class="box2_page3">Agosto del 2021</div> -->
 <div class="box2_page3">{{$fechaPromocion}}</div>
