@@ -783,3 +783,20 @@ body, html{
     letter-spacing: 0.01em;
     color: #558CFF;
 }
+
+.Contenedor-Tarjetas-Categorias-Indice-Pdf{
+    position: absolute;
+    right: 0;
+    width: 400px;
+    height: 1200px;
+    /* background-color: black; */
+    margin-top: 140px;
+    margin-right: 40px;
+    align-items: center;
+    text-align: center;
+    /* display: flex; */
+}
+
+.Icono-Indice-Promociones-Pdf{
+    width: 400px;
+}
