@@ -1,5 +1,24 @@
 <div class="body1_page3"></div>
+@if($categoria['catid'] == 1)
+        <img class="body2_page" src='../public/images/pdf/Azul-15-15.jpg' alt="">
+    @endif
+    @if($categoria['catid'] == 2)
+        <img class="body2_page" src='../public/images/Rojo-14-15-15.jpg' alt="">
+    @endif
+    @if($categoria['catid'] == 3)
+        <img class="body2_page" src='../public/images/pdf/Lila-15-15.jpg' alt="">
+    @endif
+    @if($categoria['catid'] == 4)
+        <img class="body2_page" src='../public/images/pdf/Verde-15-15.jpg' alt="">
+    @endif
+    @if($categoria['catid'] == 5)
+        <img class="body2_page" src='../public/images/pdf/Morado-15-15.jpg' alt="">
+    @endif
+    @if($categoria['catid'] == 6)
+        <img class="body2_page" src='../public/images/pdf/Celeste-15-15.jpg' alt="">
+    @endif
 
+    
 @if($categoria['catid'] == 1)
 <img class="Img-Icono-Categoria-Pdf" src='../public/images/pdf/iconos/icofamily.jpg'>
 @elseif($categoria['catid'] == 2)
@@ -609,24 +628,7 @@
         @endif
     @endforeach
 
-    @if($categoria['catid'] == 1)
-        <img class="body2_page" src='../public/images/pdf/Azul-15-15.jpg' alt="">
-    @endif
-    @if($categoria['catid'] == 2)
-        <img class="body2_page" src='../public/images/Rojo-14-15-15.jpg' alt="">
-    @endif
-    @if($categoria['catid'] == 3)
-        <img class="body2_page" src='../public/images/pdf/Lila-15-15.jpg' alt="">
-    @endif
-    @if($categoria['catid'] == 4)
-        <img class="body2_page" src='../public/images/pdf/Verde-15-15.jpg' alt="">
-    @endif
-    @if($categoria['catid'] == 5)
-        <img class="body2_page" src='../public/images/pdf/Morado-15-15.jpg' alt="">
-    @endif
-    @if($categoria['catid'] == 6)
-        <img class="body2_page" src='../public/images/pdf/Celeste-15-15.jpg' alt="">
-    @endif
+    
 </div>
 
 
