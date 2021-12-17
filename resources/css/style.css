@@ -70,9 +70,10 @@ body, html{
     /* height: 31px; */
     /* right: 50px; */
     /* top: 38px; */
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    /* font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; */
+    font-family: Arial;
     font-style: normal;
-    font-weight: bold;
+    font-weight: 900;
     font-size: 25px;
     line-height: 33px;
     /* text-align: right; */
