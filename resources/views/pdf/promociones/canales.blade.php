@@ -114,14 +114,14 @@
                                                 @if(isset($promocion['fechainicio']))
                                                 {{$promocion['fechainicio']}}
                                                 @else
-                                                {{$fechasExpPromos['fechaInicio']}}
+                                                01/12
                                                 @endif
                                             </div>
                                             <div class="Texto-Fin-Fecha-Expiracion-Pdf">
                                                 @if(isset($promocion['fechafinal']))
                                                 {{$promocion['fechafinal']}}
                                                 @else
-                                                {{$fechasExpPromos['fechaFinal']}}
+                                                30/12
                                                 @endif
                                             </div>
                                         </div>
@@ -273,7 +273,7 @@
                                                 @if(isset($promocion['fechainicio']))
                                                 {{$promocion['fechainicio']}}
                                                 @else
-                                                {{$fechasExpPromos['fechaInicio']}}
+                                                01/12
                                                 @endif
                                             </div>
                                             <div class="Texto-Fin-Fecha-Expiracion-Pdf">
@@ -281,7 +281,7 @@
                                                 @if(isset($promocion['fechafinal']))
                                                 {{$promocion['fechafinal']}}
                                                 @else
-                                                {{$fechasExpPromos['fechaFinal']}}
+                                                30/12
                                                 @endif
                                             </div>
                                         </div>
@@ -431,7 +431,7 @@
                                                 @if(isset($promocion['fechainicio']))
                                                 {{$promocion['fechainicio']}}
                                                 @else
-                                                {{$fechasExpPromos['fechaInicio']}}
+                                                01/12
                                                 @endif
                                             </div>
                                             <div class="Texto-Fin-Fecha-Expiracion-Pdf">
@@ -439,7 +439,7 @@
                                                 @if(isset($promocion['fechafinal']))
                                                 {{$promocion['fechafinal']}}
                                                 @else
-                                                {{$fechasExpPromos['fechaFinal']}}
+                                                30/12
                                                 @endif
                                             </div>
                                         </div>
@@ -588,7 +588,7 @@
                                                 @if(isset($promocion['fechainicio']))
                                                 {{$promocion['fechainicio']}}
                                                 @else
-                                                {{$fechasExpPromos['fechaInicio']}}
+                                                01/12
                                                 @endif
                                             </div>
                                             <div class="Texto-Fin-Fecha-Expiracion-Pdf">
@@ -596,7 +596,7 @@
                                                 @if(isset($promocion['fechafinal']))
                                                 {{$promocion['fechafinal']}}
                                                 @else
-                                                {{$fechasExpPromos['fechaFinal']}}
+                                                30/12
                                                 @endif
                                             </div>
                                         </div>
