@@ -25,6 +25,33 @@ class PdfPromocionesController extends Controller
         $suc = sucsucursales::where('sucid', $re_idsucursal)->first();
 
         $titulocaratula = $suc->sucnombre." - ".$re_mes." ".$re_anio;
+
+
+        if($re_mes == "ENE"){
+            $re_mes = "Enero";
+        }else if($re_mes == "FEB"){
+            $re_mes = "Febrero";
+        }else if($re_mes == "MAR"){
+            $re_mes = "Marzo";
+        }else if($re_mes == "ABR"){
+            $re_mes = "Abril";
+        }else if($re_mes == "MAY"){
+            $re_mes = "Mayo";
+        }else if($re_mes == "JUN"){
+            $re_mes = "Junio";
+        }else if($re_mes == "JUL"){
+            $re_mes = "Julio";
+        }else if($re_mes == "AGO"){
+            $re_mes = "Agosto";
+        }else if($re_mes == "SET"){
+            $re_mes = "Setiembre";
+        }else if($re_mes == "OCT"){
+            $re_mes = "Octubre";
+        }else if($re_mes == "NOV"){
+            $re_mes = "Noviembre";
+        }else if($re_mes == "DIC"){
+            $re_mes = "Diciembre";
+        }
         $fechaPromocion = $re_mes." del ".$re_anio;
 
         $usu = usuusuarios::where('usutoken', $usutoken)->first(['usuid']);
