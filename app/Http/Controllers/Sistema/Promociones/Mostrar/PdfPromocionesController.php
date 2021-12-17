@@ -155,10 +155,10 @@ class PdfPromocionesController extends Controller
 
                         if($mostrarPdfA4 == true){
                             $pdf2->setPaper('A4','portrait');
-                            $pdf2->loadView('pdf.promociones.promocion', ["data" => $dataCategoria['canales'], "categoria" => $dataCategoria, "desde" => 0, "hasta" => 2, "opacidadcanal" => 1, "mostrarPdfA4" => $mostrarPdfA4, "titulocaratula" => "otros" ] );
+                            $pdf2->loadView('pdf.promociones.promocion', ["titulocaratula" => "otros", "data" => $dataCategoria['canales'], "categoria" => $dataCategoria, "desde" => 0, "hasta" => 2, "opacidadcanal" => 1, "mostrarPdfA4" => $mostrarPdfA4 ] );
                         }else{
                             $pdf2->setPaper('A3','landscape');
-                            $pdf2->loadView('pdf.promociones.promocion', ["data" => $dataCategoria['canales'], "categoria" => $dataCategoria, "desde" => 0, "hasta" => 2, "opacidadcanal" => 1, "mostrarPdfA4" => $mostrarPdfA4, "titulocaratula" => "otros"  ] );
+                            $pdf2->loadView('pdf.promociones.promocion', ["titulocaratula" => "otros", "data" => $dataCategoria['canales'], "categoria" => $dataCategoria, "desde" => 0, "hasta" => 2, "opacidadcanal" => 1, "mostrarPdfA4" => $mostrarPdfA4 ] );
                         }
 
                         $m->addRaw($pdf2->output());
@@ -166,10 +166,10 @@ class PdfPromocionesController extends Controller
                         $pdf3 = app('dompdf.wrapper');
                         if($mostrarPdfA4 == true){
                             $pdf3->setPaper('A4','portrait');
-                            $pdf3->loadView('pdf.promociones.promocion', ["data" => $dataCategoria['canales'], "categoria" => $dataCategoria, "desde" => 3, "hasta" => 5, "opacidadcanal" => 1, "mostrarPdfA4" => $mostrarPdfA4, "titulocaratula" => "otros" ] );
+                            $pdf3->loadView('pdf.promociones.promocion', ["titulocaratula" => "otros", "data" => $dataCategoria['canales'], "categoria" => $dataCategoria, "desde" => 3, "hasta" => 5, "opacidadcanal" => 1, "mostrarPdfA4" => $mostrarPdfA4 ] );
                         }else{
                             $pdf3->setPaper('A3','landscape');
-                            $pdf3->loadView('pdf.promociones.promocion', ["data" => $dataCategoria['canales'], "categoria" => $dataCategoria, "desde" => 3, "hasta" => 5, "opacidadcanal" => 1, "mostrarPdfA4" => $mostrarPdfA4, "titulocaratula" => "otros" ] );
+                            $pdf3->loadView('pdf.promociones.promocion', ["titulocaratula" => "otros", "data" => $dataCategoria['canales'], "categoria" => $dataCategoria, "desde" => 3, "hasta" => 5, "opacidadcanal" => 1, "mostrarPdfA4" => $mostrarPdfA4 ] );
                         }
                         
                         $m->addRaw($pdf3->output());
