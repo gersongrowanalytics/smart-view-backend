@@ -1,6 +1,6 @@
 <div class="body1_page3"></div>
     @if($categoria['catid'] == 1)
-        <img class="body2_page" src='../public/images/pdf/Azul-15-15.jpg' alt="">
+        <img class="body2_page" src='../public/images/pdf/fondofamily.jpg' alt="">
     @endif
     @if($categoria['catid'] == 2)
         <img class="body2_page" src='../public/images/Rojo-14-15-15.jpg' alt="">

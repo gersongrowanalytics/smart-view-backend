@@ -25,8 +25,9 @@ body, html{
 .body2_page{
     width: 100%;
     position: absolute;
-    bottom: 20px;
-    margin-left: -20px;
+    height: 1200px;
+    /* bottom: 20px;
+    margin-left: -20px; */
 }
 .img_body_page{
     position: absolute;
