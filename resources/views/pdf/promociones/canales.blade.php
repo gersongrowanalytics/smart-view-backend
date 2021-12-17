@@ -3,19 +3,19 @@
         <img class="body2_page" src='../public/images/pdf/fondofamily.jpg' alt="">
     @endif
     @if($categoria['catid'] == 2)
-        <img class="body2_page" src='../public/images/Rojo-14-15-15.jpg' alt="">
+        <img class="body2_page" src='../public/images/pdf/fondoinfant.jpg' alt="">
     @endif
     @if($categoria['catid'] == 3)
-        <img class="body2_page" src='../public/images/pdf/Lila-15-15.jpg' alt="">
+        <img class="body2_page" src='../public/images/pdf/fondoadult.jpg' alt="">
     @endif
     @if($categoria['catid'] == 4)
-        <img class="body2_page" src='../public/images/pdf/Verde-15-15.jpg' alt="">
+        <img class="body2_page" src='../public/images/pdf/fondowipes.jpg' alt="">
     @endif
     @if($categoria['catid'] == 5)
-        <img class="body2_page" src='../public/images/pdf/Morado-15-15.jpg' alt="">
+        <img class="body2_page" src='../public/images/pdf/fondofem.jpg' alt="">
     @endif
     @if($categoria['catid'] == 6)
-        <img class="body2_page" src='../public/images/pdf/Celeste-15-15.jpg' alt="">
+        <img class="body2_page" src='../public/images/pdf/fondomulticategoria.jpg' alt="">
     @endif
 
 
