@@ -1,5 +1,5 @@
 <div class="body1_page3"></div>
-@if($categoria['catid'] == 1)
+    @if($categoria['catid'] == 1)
         <img class="body2_page" src='../public/images/pdf/Azul-15-15.jpg' alt="">
     @endif
     @if($categoria['catid'] == 2)
@@ -18,7 +18,7 @@
         <img class="body2_page" src='../public/images/pdf/Celeste-15-15.jpg' alt="">
     @endif
 
-    
+
 @if($categoria['catid'] == 1)
 <img class="Img-Icono-Categoria-Pdf" src='../public/images/pdf/iconos/icofamily.jpg'>
 @elseif($categoria['catid'] == 2)
