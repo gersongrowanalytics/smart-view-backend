@@ -229,10 +229,10 @@ class PdfPromocionesController extends Controller
 
         
 
-        return array(
-            "fechaInicio" => ,
-            "fechaFinal"  => ,
-        );
+        // return array(
+        //     "fechaInicio" => ,
+        //     "fechaFinal"  => ,
+        // );
 
     }
 }
