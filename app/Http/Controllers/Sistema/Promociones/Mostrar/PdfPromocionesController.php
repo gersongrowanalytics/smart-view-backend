@@ -191,10 +191,10 @@ class PdfPromocionesController extends Controller
 
                         if($mostrarPdfA4 == true){
                             $pdf2->setPaper('A4','portrait');
-                            $pdf2->loadView('pdf.promociones.promocion', ["data" => $dataCategoria['canales'], "categoria" => $dataCategoria, "desde" => 0, "hasta" => 2, "opacidadcanal" => 1, "mostrarPdfA4" => $mostrarPdfA4, "titulocaratula" => $titulocaratula, "categorias" => $dataCategorias, "fechaPromocion" => $fechaPromocion, "sucursal" => $suc->sucnombre, "cantidadCategorias" => $cantidadCategorias ] );
+                            $pdf2->loadView('pdf.promociones.promocion', ["data" => $dataCategoria['canales'], "categoria" => $dataCategoria, "desde" => 0, "hasta" => 2, "opacidadcanal" => 1, "mostrarPdfA4" => $mostrarPdfA4, "titulocaratula" => $titulocaratula, "categorias" => $dataCategorias, "fechaPromocion" => $fechaPromocion, "sucursal" => $suc->sucnombre, "cantidadCategorias" => $cantidadCategorias, "pagina" => $i ] );
                         }else{
                             $pdf2->setPaper('A3','landscape');
-                            $pdf2->loadView('pdf.promociones.promocion', ["data" => $dataCategoria['canales'], "categoria" => $dataCategoria, "desde" => 0, "hasta" => 2, "opacidadcanal" => 1, "mostrarPdfA4" => $mostrarPdfA4, "titulocaratula" => $titulocaratula, "categorias" => $dataCategorias, "fechaPromocion" => $fechaPromocion, "sucursal" => $suc->sucnombre, "cantidadCategorias" => $cantidadCategorias ] );
+                            $pdf2->loadView('pdf.promociones.promocion', ["data" => $dataCategoria['canales'], "categoria" => $dataCategoria, "desde" => 0, "hasta" => 2, "opacidadcanal" => 1, "mostrarPdfA4" => $mostrarPdfA4, "titulocaratula" => $titulocaratula, "categorias" => $dataCategorias, "fechaPromocion" => $fechaPromocion, "sucursal" => $suc->sucnombre, "cantidadCategorias" => $cantidadCategorias, "pagina" => $i ] );
                         }
 
                         $m->addRaw($pdf2->output());
@@ -202,10 +202,10 @@ class PdfPromocionesController extends Controller
                         $pdf3 = app('dompdf.wrapper');
                         if($mostrarPdfA4 == true){
                             $pdf3->setPaper('A4','portrait');
-                            $pdf3->loadView('pdf.promociones.promocion', ["data" => $dataCategoria['canales'], "categoria" => $dataCategoria, "desde" => 3, "hasta" => 5, "opacidadcanal" => 1, "mostrarPdfA4" => $mostrarPdfA4, "titulocaratula" => $titulocaratula, "categorias" => $dataCategorias, "fechaPromocion" => $fechaPromocion, "sucursal" => $suc->sucnombre, "cantidadCategorias" => $cantidadCategorias ] );
+                            $pdf3->loadView('pdf.promociones.promocion', ["data" => $dataCategoria['canales'], "categoria" => $dataCategoria, "desde" => 3, "hasta" => 5, "opacidadcanal" => 1, "mostrarPdfA4" => $mostrarPdfA4, "titulocaratula" => $titulocaratula, "categorias" => $dataCategorias, "fechaPromocion" => $fechaPromocion, "sucursal" => $suc->sucnombre, "cantidadCategorias" => $cantidadCategorias, "pagina" => $i ] );
                         }else{
                             $pdf3->setPaper('A3','landscape');
-                            $pdf3->loadView('pdf.promociones.promocion', ["data" => $dataCategoria['canales'], "categoria" => $dataCategoria, "desde" => 3, "hasta" => 5, "opacidadcanal" => 1, "mostrarPdfA4" => $mostrarPdfA4, "titulocaratula" => $titulocaratula, "categorias" => $dataCategorias, "fechaPromocion" => $fechaPromocion, "sucursal" => $suc->sucnombre, "cantidadCategorias" => $cantidadCategorias ] );
+                            $pdf3->loadView('pdf.promociones.promocion', ["data" => $dataCategoria['canales'], "categoria" => $dataCategoria, "desde" => 3, "hasta" => 5, "opacidadcanal" => 1, "mostrarPdfA4" => $mostrarPdfA4, "titulocaratula" => $titulocaratula, "categorias" => $dataCategorias, "fechaPromocion" => $fechaPromocion, "sucursal" => $suc->sucnombre, "cantidadCategorias" => $cantidadCategorias, "pagina" => $i ] );
                         }
                         
                         $m->addRaw($pdf3->output());
