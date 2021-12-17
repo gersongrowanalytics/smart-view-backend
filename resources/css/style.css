@@ -503,6 +503,7 @@ body, html{
     width: 25%;
     height: 100%;
     margin-left: 20px;
+    margin-top: 20px;
 }
 
 .Segunda-Columna-Pdf-Promociones{
@@ -513,6 +514,7 @@ body, html{
     top: 0;
     position: absolute;
     margin-left: -10px;
+    margin-top: 20px;
     /* border-right: 1px dashed red; */
 }
 
@@ -524,6 +526,7 @@ body, html{
     left: 50%;
     top: 0;
     position: absolute;
+    margin-top: 20px;
 }
 
 .Cuarta-Columna-Pdf-Promociones{
@@ -534,6 +537,7 @@ body, html{
     left: 75%;
     top: 0;
     position: absolute;
+    margin-top: 20px;
 }
 
 
