@@ -134,9 +134,9 @@
                                             style="color:{{$categoria['catcolor']}}"
                                         >
                                             @if(isset($promocion['cspcantidadplancha']))
-                                                {{round($promocion['cspcantidadplancha'])}} Planchas 
+                                                {{ number_format(round($promocion['cspcantidadplancha'])) }} Planchas 
                                             @else
-                                                {{round($promocion['csptotalplancha'])}} Planchas
+                                                {{ number_format(round($promocion['csptotalplancha'])) }} Planchas
 
                                             @endif
 
@@ -147,9 +147,9 @@
                                             style="color:{{$categoria['catcolor']}}"
                                         >
                                             @if(isset($promocion['cspcantidadcombo']))
-                                                Total de Combos: {{round($promocion['cspcantidadcombo'])}}
+                                                Total de Combos: {{ number_format(round($promocion['cspcantidadcombo'])) }}
                                             @else
-                                                Total de Combos: {{round($promocion['csptotalcombo'])}}
+                                                Total de Combos: {{ number_format(round($promocion['csptotalcombo'])) }}
                                             @endif
                                         </div> 
                                         <div class="text3">Sell Out</div>
@@ -294,9 +294,9 @@
                                             style="color:{{$categoria['catcolor']}}"
                                         >
                                             @if(isset($promocion['cspcantidadplancha']))
-                                                {{round($promocion['cspcantidadplancha'])}} Planchas 
+                                                {{ number_format(round($promocion['cspcantidadplancha'])) }} Planchas 
                                             @else
-                                                {{round($promocion['csptotalplancha'])}} Planchas
+                                                {{ number_format(round($promocion['csptotalplancha'])) }} Planchas
 
                                             @endif
 
@@ -307,9 +307,9 @@
                                             style="color:{{$categoria['catcolor']}}"
                                         >
                                             @if(isset($promocion['cspcantidadcombo']))
-                                                Total de Combos: {{round($promocion['cspcantidadcombo'])}}
+                                                Total de Combos: {{ number_format(round($promocion['cspcantidadcombo'])) }}
                                             @else
-                                                Total de Combos: {{round($promocion['csptotalcombo'])}}
+                                                Total de Combos: {{ number_format(round($promocion['csptotalcombo'])) }}
                                             @endif
                                         </div> 
                                         <div class="text3">Sell Out</div>
@@ -451,9 +451,9 @@
                                             style="color:{{$categoria['catcolor']}}"
                                         >
                                             @if(isset($promocion['cspcantidadplancha']))
-                                                {{round($promocion['cspcantidadplancha'])}} Planchas 
+                                                {{ number_format(round($promocion['cspcantidadplancha'])) }} Planchas 
                                             @else
-                                                {{round($promocion['csptotalplancha'])}} Planchas
+                                                {{ number_format(round($promocion['csptotalplancha'])) }} Planchas
 
                                             @endif
 
@@ -464,9 +464,9 @@
                                             style="color:{{$categoria['catcolor']}}"
                                         >
                                             @if(isset($promocion['cspcantidadcombo']))
-                                                Total de Combos: {{round($promocion['cspcantidadcombo'])}}
+                                                Total de Combos: {{ number_format(round($promocion['cspcantidadcombo'])) }}
                                             @else
-                                                Total de Combos: {{round($promocion['csptotalcombo'])}}
+                                                Total de Combos: {{ number_format(round($promocion['csptotalcombo'])) }}
                                             @endif
                                         </div> 
                                         <div class="text3">Sell Out</div>
@@ -608,9 +608,9 @@
                                             style="color:{{$categoria['catcolor']}}"
                                         >
                                             @if(isset($promocion['cspcantidadplancha']))
-                                                {{round($promocion['cspcantidadplancha'])}} Planchas 
+                                                {{ number_format(round($promocion['cspcantidadplancha'])) }} Planchas 
                                             @else
-                                                {{round($promocion['csptotalplancha'])}} Planchas
+                                                {{ number_format(round($promocion['csptotalplancha'])) }} Planchas
 
                                             @endif
 
@@ -621,9 +621,9 @@
                                             style="color:{{$categoria['catcolor']}}"
                                         >
                                             @if(isset($promocion['cspcantidadcombo']))
-                                                Total de Combos: {{round($promocion['cspcantidadcombo'])}}
+                                                Total de Combos: {{ number_format(round($promocion['cspcantidadcombo'])) }}
                                             @else
-                                                Total de Combos: {{round($promocion['csptotalcombo'])}}
+                                                Total de Combos: {{ number_format(round($promocion['csptotalcombo'])) }}
                                             @endif
                                         </div> 
                                         <div class="text3">Sell Out</div>
