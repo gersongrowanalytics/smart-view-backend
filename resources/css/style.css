@@ -55,7 +55,7 @@ body, html{
     width: 262px;
     height: 27px;
     left: 100px;
-    top: 38px;
+    top: 41px;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-style: normal;
     font-weight: bold;
@@ -766,8 +766,8 @@ body, html{
 .Img-Icono-Categoria-Pdf{
     position: absolute;
     left: 50px;
-    top: 36px;
-    width: 35px;
+    top: 38px;
+    width: 40px;
 }
 
 .Texto-Titulo-Indice-Promociones{
