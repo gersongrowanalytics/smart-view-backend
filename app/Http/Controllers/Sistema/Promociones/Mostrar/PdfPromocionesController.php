@@ -196,11 +196,12 @@ class PdfPromocionesController extends Controller
 
         }
 
-        $numeroPagina = 0;
+        $numeroPagina = 1;
 
         foreach($dataCategorias as $posicionDataCategoria => $dataCategoria){
 
             if(sizeof($dataCategoria['canales']) > 0){
+                $numeroPagina = $numeroPagina + 1;
                 $pdf = app('dompdf.wrapper');
                 $pdf->setPaper('A3','landscape');
                 $pdf->loadView('pdf.promociones.indice', ["data" => $dataCategoria, "posicion" => $posicionDataCategoria, "titulocaratula" => $titulocaratula, "categorias" => $dataCategorias, "fechaPromocion" => $fechaPromocion, "sucursal" => $suc->sucnombre, "cantidadCategorias" => $cantidadCategorias, "fechasExpPromos" => $fechasExpPromos]);
