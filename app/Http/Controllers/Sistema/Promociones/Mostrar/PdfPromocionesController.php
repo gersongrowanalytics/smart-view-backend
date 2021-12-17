@@ -22,7 +22,10 @@ class PdfPromocionesController extends Controller
         $re_anio = $request['anio'];
         $re_mes = $request['mes'];
 
-        $fechasExpPromos = $this->AgregarFechaExpiracionPromociones($re_anio, $re_mes);
+        $fechasExpPromos = array(
+            "fechaInicio" => "01/12",
+            "fechaFinal"  => "30/12",
+        );
 
         $suc = sucsucursales::where('sucid', $re_idsucursal)->first();
 
