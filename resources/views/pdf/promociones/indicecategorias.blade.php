@@ -1,5 +1,5 @@
 <img class="body_page" src='../public/images/pdf/Indice.jpg' alt="">
-<div class="Texto-Titulo-Indice-Promociones" >Índice</div>
+<!-- <div class="Texto-Titulo-Indice-Promociones" >Índice</div> -->
 <div class="Contenedor-Tarjetas-Categorias-Indice-Pdf">
     @foreach($categorias as $categoria)
         @if($categoria['catid'] == 1)
