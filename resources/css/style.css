@@ -790,7 +790,7 @@ body, html{
     width: 400px;
     height: 1200px;
     /* background-color: black; */
-    margin-top: 140px;
+    /* margin-top: 140px; */
     margin-right: 40px;
     align-items: center;
     text-align: center;
@@ -798,5 +798,5 @@ body, html{
 }
 
 .Icono-Indice-Promociones-Pdf{
-    width: 400px;
+    width: 450px;
 }
