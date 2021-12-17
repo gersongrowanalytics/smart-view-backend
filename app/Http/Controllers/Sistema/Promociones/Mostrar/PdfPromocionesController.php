@@ -196,7 +196,7 @@ class PdfPromocionesController extends Controller
 
         }
 
-        $numeroPagina = 1;
+        $numeroPagina = 0;
 
         foreach($dataCategorias as $posicionDataCategoria => $dataCategoria){
 
