@@ -110,8 +110,20 @@
                                             @endif
                                         </div>
                                         <div class="Segunda-Mitad-Fecha-Expiracion-Promocion-Pdf">
-                                            <div class="Texto-Inicio-Fecha-Expiracion-Pdf">{{$promocion['fechainicio']}}</div>
-                                            <div class="Texto-Fin-Fecha-Expiracion-Pdf">{{$promocion['fechafinal']}}</div>
+                                            <div class="Texto-Inicio-Fecha-Expiracion-Pdf">
+                                                @if(isset($promocion['fechainicio']))
+                                                {{$promocion['fechainicio']}}
+                                                @else
+                                                {{$fechasExpPromos['fechaInicio']}}
+                                                @endif
+                                            </div>
+                                            <div class="Texto-Fin-Fecha-Expiracion-Pdf">
+                                                @if(isset($promocion['fechafinal']))
+                                                {{$promocion['fechafinal']}}
+                                                @else
+                                                {{$fechasExpPromos['fechaFinal']}}
+                                                @endif
+                                            </div>
                                         </div>
                                     </div>
                                 
@@ -257,8 +269,21 @@
                                             
                                         </div>
                                         <div class="Segunda-Mitad-Fecha-Expiracion-Promocion-Pdf">
-                                            <div class="Texto-Inicio-Fecha-Expiracion-Pdf">{{$promocion['fechainicio']}}</div>
-                                            <div class="Texto-Fin-Fecha-Expiracion-Pdf">{{$promocion['fechafinal']}}</div>
+                                            <div class="Texto-Inicio-Fecha-Expiracion-Pdf">
+                                                @if(isset($promocion['fechainicio']))
+                                                {{$promocion['fechainicio']}}
+                                                @else
+                                                {{$fechasExpPromos['fechaInicio']}}
+                                                @endif
+                                            </div>
+                                            <div class="Texto-Fin-Fecha-Expiracion-Pdf">
+                                                
+                                                @if(isset($promocion['fechafinal']))
+                                                {{$promocion['fechafinal']}}
+                                                @else
+                                                {{$fechasExpPromos['fechaFinal']}}
+                                                @endif
+                                            </div>
                                         </div>
                                     </div>
                                 
@@ -401,8 +426,22 @@
                                             @endif
                                         </div>
                                         <div class="Segunda-Mitad-Fecha-Expiracion-Promocion-Pdf">
-                                            <div class="Texto-Inicio-Fecha-Expiracion-Pdf">{{$promocion['fechainicio']}}</div>
-                                            <div class="Texto-Fin-Fecha-Expiracion-Pdf">{{$promocion['fechafinal']}}</div>
+                                            <div class="Texto-Inicio-Fecha-Expiracion-Pdf">
+                                                
+                                                @if(isset($promocion['fechainicio']))
+                                                {{$promocion['fechainicio']}}
+                                                @else
+                                                {{$fechasExpPromos['fechaInicio']}}
+                                                @endif
+                                            </div>
+                                            <div class="Texto-Fin-Fecha-Expiracion-Pdf">
+
+                                                @if(isset($promocion['fechafinal']))
+                                                {{$promocion['fechafinal']}}
+                                                @else
+                                                {{$fechasExpPromos['fechaFinal']}}
+                                                @endif
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="big_text">
@@ -544,8 +583,22 @@
                                             @endif
                                         </div>
                                         <div class="Segunda-Mitad-Fecha-Expiracion-Promocion-Pdf">
-                                            <div class="Texto-Inicio-Fecha-Expiracion-Pdf">{{$promocion['fechainicio']}}</div>
-                                            <div class="Texto-Fin-Fecha-Expiracion-Pdf">{{$promocion['fechafinal']}}</div>
+                                            <div class="Texto-Inicio-Fecha-Expiracion-Pdf">
+                                                
+                                                @if(isset($promocion['fechainicio']))
+                                                {{$promocion['fechainicio']}}
+                                                @else
+                                                {{$fechasExpPromos['fechaInicio']}}
+                                                @endif
+                                            </div>
+                                            <div class="Texto-Fin-Fecha-Expiracion-Pdf">
+                                                
+                                                @if(isset($promocion['fechafinal']))
+                                                {{$promocion['fechafinal']}}
+                                                @else
+                                                {{$fechasExpPromos['fechaFinal']}}
+                                                @endif
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="big_text">
