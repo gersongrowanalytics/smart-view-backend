@@ -709,7 +709,7 @@ body, html{
     color: #FFFFFF;
     position: absolute;
     right: 3px;
-    top: -10px;
+    top: -20px;
 }
 
 .Texto-Fin-Fecha-Expiracion-Pdf{
@@ -722,11 +722,11 @@ body, html{
     color: #FFFFFF;
     position: absolute;
     right: 3px;
-    top: 0;
+    top: 15;
 }
 
 .img-calendario-expiracion-pdf{
-    width: 22px;
+    width: 26px;
     padding-top: 2px;
     padding-left: 10px;
     border-radius: 5px 0px 0px 5px;
