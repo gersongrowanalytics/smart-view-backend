@@ -556,7 +556,7 @@ body, html{
     margin-left: 30%;
     padding-top: 7px;
 
-    width: 121px;
+    width: 125px;
     height: 23.23px;
     /* background-color: #E41A37; */
     border-radius: 11px;
@@ -564,7 +564,7 @@ body, html{
     font-family: 'Roboto', sans-serif;
     font-style: normal;
     /* font-weight: 500; */
-    font-size: 13px;
+    font-size: 15px;
     line-height: 15px;
     color: #FFFFFF;
     align-items: center;
