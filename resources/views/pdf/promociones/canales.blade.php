@@ -542,7 +542,7 @@
                                 @if($promocion['cspid'] == 0)
                                 <div class="box_table"
                                     id="box_table_color_page3"
-                                    style="border: 1px solid {{$categoria['catcolor']}}"
+                                    style="border: 1px solid {{$categoria['catcolor']}}; width: 320px;"
                                 >
                                 
                                     @if($categoria['catid'] == 1)
@@ -564,7 +564,7 @@
                                 @if($promocion['cspid'] != 0)
                                 <div class="box_table"
                                     id="box_table_color_page3"
-                                    style="border: 1px solid {{$categoria['catcolor']}}"
+                                    style="border: 1px solid {{$categoria['catcolor']}}; width: 320px;"
                                 >
                                     <div class="Fecha-Expiracion-Promocion-Pdf" style="background:{{$categoria['catcolor']}}">
                                         <div class="Primera-Mitad-Fecha-Expiracion-Promocion-Pdf">
