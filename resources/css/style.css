@@ -576,7 +576,7 @@ body, html{
 
 .img-no-hay-promocion{
     width: 65px;
-    margin-top: 45px;
+    margin-top: 60px;
 }
 
 .Txt-No-Hay-Promocion{
@@ -703,7 +703,7 @@ body, html{
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-style: normal;
     font-weight: bold;
-    font-size: 10px;
+    font-size: 12px;
     line-height: 24px;
     letter-spacing: 0.01em;
     color: #FFFFFF;
@@ -716,7 +716,7 @@ body, html{
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-style: normal;
     font-weight: bold;
-    font-size: 10px;
+    font-size: 12px;
     line-height: 24px;
     letter-spacing: 0.01em;
     color: #FFFFFF;
