@@ -1276,7 +1276,7 @@ class PromocionesMostrarController extends Controller
                         'tprnombre'          => $cspcanalessucursalespromociones[$posicionCsp]['tprnombre'],
                         'cspnuevo'           => $cspcanalessucursalespromociones[$posicionCsp]['cspnuevo'],
                         'productos'          => $cspcanalessucursalespromociones[$posicionCsp]['productos'],
-                        'productoPrincipal'  => $cspcanalessucursalespromociones[$posicionCsp]['productoPrincipal'],
+                        'productoPrincipal'  => $cspcanalessucursalespromociones[$posicionCsp]['productoPrincipal'] ? $cspcanalessucursalespromociones[$posicionCsp]['productoPrincipal'] : 0,
                         'productosbonificados' => $cspcanalessucursalespromociones[$posicionCsp]['productosbonificados']
                     );
                 }
