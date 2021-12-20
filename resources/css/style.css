@@ -533,7 +533,7 @@ body, html{
 }
 
 .Cuarta-Columna-Pdf-Promociones{
-    background-color: green;
+    /* background-color: green; */
     width: 25%;
     height: 100%;
 
@@ -575,7 +575,7 @@ body, html{
 }
 
 .img-no-hay-promocion{
-    width: 100px;
+    width: 65px;
     margin-top: 45px;
 }
 
@@ -674,8 +674,8 @@ body, html{
 /* EXPIRACION FECHA */
 
 .Fecha-Expiracion-Promocion-Pdf{
-    width: 75px;
-    height: 25px;
+    width: 95px;
+    height: 31px;
     border-radius: 9px 0px 0px 9px;
     position: absolute;
     right: 0;
@@ -685,7 +685,7 @@ body, html{
 
 .Primera-Mitad-Fecha-Expiracion-Promocion-Pdf{
     width: 40%;
-    height: 22px;
+    height: 31px;
     position: absolute;
     left: 0;
     top: -1px;
@@ -693,7 +693,7 @@ body, html{
 
 .Segunda-Mitad-Fecha-Expiracion-Promocion-Pdf{
     width: 60%;
-    height: 22px;
+    height: 31px;
     position: absolute;
     right: 5px;
     top: 0;
@@ -703,7 +703,7 @@ body, html{
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-style: normal;
     font-weight: bold;
-    font-size: 8px;
+    font-size: 10px;
     line-height: 24px;
     letter-spacing: 0.01em;
     color: #FFFFFF;
@@ -716,7 +716,7 @@ body, html{
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-style: normal;
     font-weight: bold;
-    font-size: 8px;
+    font-size: 10px;
     line-height: 24px;
     letter-spacing: 0.01em;
     color: #FFFFFF;
