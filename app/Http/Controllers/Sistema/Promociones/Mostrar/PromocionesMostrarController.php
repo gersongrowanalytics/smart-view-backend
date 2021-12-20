@@ -1258,6 +1258,14 @@ class PromocionesMostrarController extends Controller
                 // $nuevoArrayCsp = $cspcanalessucursalespromociones;
 
                 foreach ($cspcanalessucursalespromociones as $posicionCsp => $csp) {
+
+                    $productoPrincipal = "0";
+
+                    if(isset($cspcanalessucursalespromociones[$posicionCsp]['productoPrincipal'])){
+                        $productoPrincipal = $cspcanalessucursalespromociones[$posicionCsp]['productoPrincipal'];
+                    }
+
+
                     $nuevoArrayCsp[] = array(
                         'cspid'              => 1,
                         'prmid'              => $cspcanalessucursalespromociones[$posicionCsp]['prmid'],
@@ -1276,7 +1284,7 @@ class PromocionesMostrarController extends Controller
                         'tprnombre'          => $cspcanalessucursalespromociones[$posicionCsp]['tprnombre'],
                         'cspnuevo'           => $cspcanalessucursalespromociones[$posicionCsp]['cspnuevo'],
                         'productos'          => $cspcanalessucursalespromociones[$posicionCsp]['productos'],
-                        'productoPrincipal'  => isset($cspcanalessucursalespromociones[$posicionCsp]['productoPrincipal']) ? $cspcanalessucursalespromociones[$posicionCsp]['productoPrincipal'] : 0,
+                        'productoPrincipal'  => $productoPrincipal,
                         'productosbonificados' => $cspcanalessucursalespromociones[$posicionCsp]['productosbonificados']
                     );
                 }
