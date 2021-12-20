@@ -1227,6 +1227,12 @@ class PromocionesMostrarController extends Controller
                         }
                     }
 
+                    $productoPrincipal = "0";
+
+                    if(isset($cspcanalessucursalespromociones[$posicionCsp]['productoPrincipal'])){
+                        $productoPrincipal = $cspcanalessucursalespromociones[$posicionCsp]['productoPrincipal'];
+                    }
+
                     if($encontroProductoMomento == false){
                         $nuevoArrayCsp[] = array(
                             'cspid'              => 1,
@@ -1246,7 +1252,7 @@ class PromocionesMostrarController extends Controller
                             'tprnombre'          => $cspcanalessucursalespromociones[$posicionCspDos]['tprnombre'],
                             'cspnuevo'           => $cspcanalessucursalespromociones[$posicionCspDos]['cspnuevo'],
                             'productos'          => $cspcanalessucursalespromociones[$posicionCspDos]['productos'],
-                            'productoPrincipal'  => $cspcanalessucursalespromociones[$posicionCspDos]['productoPrincipal'],
+                            'productoPrincipal'  => $productoPrincipal,
                             'productosbonificados' => $cspcanalessucursalespromociones[$posicionCspDos]['productosbonificados'],
 
                         );
