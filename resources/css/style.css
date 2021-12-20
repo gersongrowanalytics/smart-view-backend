@@ -174,7 +174,8 @@ body, html{
 }
 .box_table{ 
     position: relative;
-    width: 90%;
+    /* width: 90%; */
+    width: 200px;
     height: 210px;
     margin: -10px 8px 30px 8px;
     /* background-color: tomato; */
