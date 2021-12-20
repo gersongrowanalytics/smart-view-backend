@@ -1229,8 +1229,8 @@ class PromocionesMostrarController extends Controller
 
                     $productoPrincipal = "0";
 
-                    if(isset($cspcanalessucursalespromociones[$posicionCsp]['productoPrincipal'])){
-                        $productoPrincipal = $cspcanalessucursalespromociones[$posicionCsp]['productoPrincipal'];
+                    if(isset($cspcanalessucursalespromociones[$posicionCspDos]['productoPrincipal'])){
+                        $productoPrincipal = $cspcanalessucursalespromociones[$posicionCspDos]['productoPrincipal'];
                     }
 
                     if($encontroProductoMomento == false){
