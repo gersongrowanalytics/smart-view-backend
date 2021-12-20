@@ -513,7 +513,7 @@ body, html{
     /* background-color: red; */
     width: 25%;
     height: 100%;
-    left: 25%;
+    left: 24%;
     top: 0;
     position: absolute;
     margin-left: 10px;
@@ -526,7 +526,7 @@ body, html{
     width: 25%;
     height: 100%;
 
-    left: 48%;
+    left: 49%;
     top: 0;
     position: absolute;
     margin-top: 20px;
