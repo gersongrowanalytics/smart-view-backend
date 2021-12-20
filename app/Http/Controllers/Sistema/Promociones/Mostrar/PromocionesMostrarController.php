@@ -501,7 +501,7 @@ class PromocionesMostrarController extends Controller
             // LOGICA LIMPIAR LAS MECANICAS IGUALES Y REEMPLAZAR POR PROMOCIONES EN 0
             $promocionesOrdenadas = $dat['promocionesOrdenadas'];
 
-            $mecanicasUtilizadas = [];
+            $mecanicasUtilizadas = array();
 
             foreach($promocionesOrdenadas as $posicionPromocionesOrdenadas => $promocionOrdenada){
 
@@ -509,22 +509,49 @@ class PromocionesMostrarController extends Controller
                     
                     if(sizeof($mecanicasUtilizadas) > 0){
 
+                        $productos = $promocionOrdenada['productos'];
+                        $productoBuscar = "";
+                        foreach($productos as $posicionProducto => $producto){
+                            if($posicionProducto == 0){
+                                $productoBuscar = $producto['prosku'];
+                                
+                            }
+                        }
+
                         $encontroMecanica = false;
 
                         foreach($mecanicasUtilizadas as $mecanicaUtilizada){
-                            if($mecanicaUtilizada == $promocionOrdenada['prmmecanica']){
+
+
+                            if($mecanicaUtilizada['mecanica'] == $promocionOrdenada['prmmecanica'] && $productoBuscar == $mecanicaUtilizada['sku'] ){
                                 $encontroMecanica = true;
                                 // $datos[$posicionDat]['promocionesOrdenadas'][$posicionPromocionesOrdenadas] = $promocionVacia;
                                 $promocionesOrdenadas[$posicionPromocionesOrdenadas] = $promocionVacia;
                             }
+
+
                         }
 
                         if($encontroMecanica == false){
-                            $mecanicasUtilizadas[] = $promocionOrdenada['prmmecanica'];
+                            // $mecanicasUtilizadas[] = $promocionOrdenada['prmmecanica'];
+                            $mecanicasUtilizadas[] = array(
+                                "mecanica" => $promocionOrdenada['prmmecanica'],
+                                "sku" => $productoBuscar
+                            );
                         }
 
                     }else{
-                        $mecanicasUtilizadas[] = $promocionOrdenada['prmmecanica'];
+                        // $mecanicasUtilizadas[] = $promocionOrdenada['prmmecanica'];
+                        $productos = $promocionOrdenada['productos'];
+
+                        foreach($productos as $posicionProducto => $producto){
+                            if($posicionProducto == 0){
+                                $mecanicasUtilizadas[] = array(
+                                    "mecanica" => $promocionOrdenada['prmmecanica'],
+                                    "sku" => $producto['prosku']
+                                );
+                            }
+                        }
                     }   
                 }
             }
