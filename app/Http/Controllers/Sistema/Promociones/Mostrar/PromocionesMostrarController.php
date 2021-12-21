@@ -1115,9 +1115,9 @@ class PromocionesMostrarController extends Controller
         $fechaActual = date('Y-m-d');
 
         $act_fechaInicio = date("m", strtotime($fechaActual));
-        $act_fechaInicio = "01/".$fechaInicio;
+        $act_fechaInicio = "01/".$act_fechaInicio;
         $act_fechaFinal = date("m", strtotime($fechaActual));
-        $act_fechafinal = "30/".$fechaFinal;
+        $act_fechafinal = "30/".$act_fechaFinal;
 
         $nuevoArrayCsp = array();
                     
