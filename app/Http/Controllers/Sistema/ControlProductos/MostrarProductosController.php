@@ -133,12 +133,12 @@ class MostrarProductosController extends Controller
 
             prppromocionesproductos::join('prmpromociones as prm', 'prm.prmid', 'prppromocionesproductos.prmid')
                                     ->where('proid', $proe->proid)
-                                    ->where('prm.fecid', '>' ,59)
+                                    ->where('prm.fecid', '>' ,66)
                                     ->update(['prpimagen' => $proe->proimagen]);
 
             prbpromocionesbonificaciones::join('prmpromociones as prm', 'prm.prmid', 'prbpromocionesbonificaciones.prmid')
                                     ->where('proid', $proe->proid)
-                                    ->where('prm.fecid', '>' ,59)
+                                    ->where('prm.fecid', '>' ,66)
                                     ->update(['prbimagen' => $proe->proimagen]);
 
 
