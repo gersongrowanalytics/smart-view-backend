@@ -828,6 +828,9 @@ class PromocionesMostrarController extends Controller
                                     $cantidadPlanchaNuevo = 0;
                                 }
                                 
+                                $csps[$cont]['fechainicio'] = $fechaInicio;
+                                $csps[$cont]['fechafinal'] = $fechafinal;
+
                                 $csps[$cont]['prmcodigo'] = $cspsc->prmcodigo;
                                 $csps[$cont]['cspcantidadcombo']   = $cantidadComboNuevo;
                                 $csps[$cont]['cspcantidadplancha'] = $cantidadPlanchaNuevo;
