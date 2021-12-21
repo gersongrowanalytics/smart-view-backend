@@ -777,8 +777,8 @@ class PromocionesMostrarController extends Controller
 
 
                             // if($csp['prmcodigo'] == $cspsc->prmcodigo){
-                            // if($csp['prmmecanica'] == $cspsc->prmmecanica && $productoInicialCspscs == $productoInicialCsp ){
-                            if($csp['prmmecanica'] == $cspsc->prmmecanica ){
+                            if($csp['prmmecanica'] == $cspsc->prmmecanica && $productoInicialCspscs == $productoInicialCsp ){
+                            // if($csp['prmmecanica'] == $cspsc->prmmecanica ){
 
                                 if(is_numeric ( $cspsc->cspcantidadcombo )){
                                     $cantidadComboNuevo = $cspsc->cspcantidadcombo;
