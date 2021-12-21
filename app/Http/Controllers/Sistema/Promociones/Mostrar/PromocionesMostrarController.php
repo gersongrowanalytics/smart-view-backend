@@ -704,6 +704,7 @@ class PromocionesMostrarController extends Controller
                                                     ->join('csccanalessucursalescategorias as csc', 'csc.cscid', 'cspcanalessucursalespromociones.cscid')
                                                     ->join('scasucursalescategorias as sca', 'sca.scaid', 'csc.scaid')
                                                     ->join('tprtipospromociones as tpr', 'tpr.tprid', 'prm.tprid')
+                                                    ->join('fecfechas as fec', 'fec.fecid', 'cspcanalessucursalespromociones.fecid')
                                                     ->where('cspcanalessucursalespromociones.fecid', $fec->fecid)
                                                     ->where('sca.catid', $catid)
                                                     ->where('sca.sucid', $suc->sucid)
@@ -719,9 +720,24 @@ class PromocionesMostrarController extends Controller
                                                         'cspcantidadplancha',
                                                         'tprnombre',
                                                         'cspgratis',
+                                                        'cspiniciopromo',
+                                                        'cspfinpromo',
+                                                        'fecfecha'
                                                     ]);
 
                 foreach($cspscs as $posicionCspsc => $cspsc){
+
+                    if($cspsc->cspiniciopromo == null){
+                        $fechaInicio = date("d/m", strtotime($cspsc->fecfecha));
+
+                        $fechaFinal = date("m", strtotime($cspsc->fecfecha));
+                        $fechafinal = "30/".$fechaFinal;
+                    }else{
+                        $fechaInicio = date("d/m", strtotime($cspsc->cspiniciopromo));
+
+                        $fechaFinal = date("d/m", strtotime($cspsc->cspfinpromo));
+                        $fechafinal = $fechaFinal;
+                    }
 
                     $contadorEspecificoCsps = 0;
 
@@ -876,6 +892,10 @@ class PromocionesMostrarController extends Controller
                         }
 
                     }else{
+
+                        $csps[$cont]['fechainicio'] = $fechaInicio;
+                        $csps[$cont]['fechafinal'] = $fechafinal;
+
                         $csps[$cont]['prmcodigo'] = $cspsc->prmcodigo;
 
                         if(is_numeric ( $cspsc->cspcantidadcombo )){
