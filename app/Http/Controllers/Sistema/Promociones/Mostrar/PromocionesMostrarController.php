@@ -754,7 +754,7 @@ class PromocionesMostrarController extends Controller
 
                             $productoInicialCsp = "0";
                             $prppromocionesproducto = prppromocionesproductos::join('proproductos as pro', 'pro.proid', 'prppromocionesproductos.proid')
-                                                                                ->where('prppromocionesproductos.prmid', $cspsc->prmid )
+                                                                                ->where('prppromocionesproductos.prmid', $csp['prmid'] )
                                                                                 ->first([
                                                                                     'prppromocionesproductos.prpid',
                                                                                     'pro.proid',
