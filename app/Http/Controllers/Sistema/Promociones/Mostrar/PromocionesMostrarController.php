@@ -721,15 +721,63 @@ class PromocionesMostrarController extends Controller
                                                         'cspgratis',
                                                     ]);
 
-                foreach($cspscs as $cspsc){
-
+                foreach($cspscs as $posicionCspsc => $cspsc){
 
                     $contadorEspecificoCsps = 0;
 
+                    $productoInicialCspscs = "0";
+                    $prppromocionesproducto = prppromocionesproductos::join('proproductos as pro', 'pro.proid', 'prppromocionesproductos.proid')
+                                                                        ->where('prppromocionesproductos.prmid', $cspsc->prmid )
+                                                                        ->first([
+                                                                            'prppromocionesproductos.prpid',
+                                                                            'pro.proid',
+                                                                            'pro.prosku',
+                                                                            'pro.pronombre',
+                                                                            'pro.proimagen',
+                                                                            'prpproductoppt',
+                                                                            'prpcomprappt',
+                                                                            'prpimagen',
+                                                                            'prpoimagen',
+                                                                        ]);
+
+                    if($prppromocionesproducto){
+                        $cspscs[$posicionCspsc]['productoInicial'] = $prppromocionesproducto->prosku;
+                        $productoInicialCspscs = $prppromocionesproducto->prosku;
+                    }else{
+                        $cspscs[$posicionCspsc]['productoInicial'] = "0";
+                        $productoInicialCspscs = "0";
+                    }
+
                     if(sizeof($csps) > 0){
                         foreach($csps as $posicionCsp => $csp){
+
+
+                            $productoInicialCsp = "0";
+                            $prppromocionesproducto = prppromocionesproductos::join('proproductos as pro', 'pro.proid', 'prppromocionesproductos.proid')
+                                                                                ->where('prppromocionesproductos.prmid', $cspsc->prmid )
+                                                                                ->first([
+                                                                                    'prppromocionesproductos.prpid',
+                                                                                    'pro.proid',
+                                                                                    'pro.prosku',
+                                                                                    'pro.pronombre',
+                                                                                    'pro.proimagen',
+                                                                                    'prpproductoppt',
+                                                                                    'prpcomprappt',
+                                                                                    'prpimagen',
+                                                                                    'prpoimagen',
+                                                                                ]);
+
+                            if($prppromocionesproducto){
+                                $csps[$posicionCsp]['productoInicial'] = $prppromocionesproducto->prosku;
+                                $productoInicialCsp = $prppromocionesproducto->prosku;
+                            }else{
+                                $csps[$posicionCsp]['productoInicial'] = "0";
+                                $productoInicialCsp = "0";
+                            }
+
+
                             // if($csp['prmcodigo'] == $cspsc->prmcodigo){
-                            if($csp['prmmecanica'] == $cspsc->prmmecanica){
+                            if($csp['prmmecanica'] == $cspsc->prmmecanica && $productoInicialCspscs == $productoInicialCsp ){
 
                                 if(is_numeric ( $cspsc->cspcantidadcombo )){
                                     $cantidadComboNuevo = $cspsc->cspcantidadcombo;
