@@ -984,19 +984,34 @@ class PromocionesMostrarController extends Controller
             $cscs[$posicionCsc]["cantidadPromociones"] = sizeof($csps);
         }
 
-        // usort(
-        //     $cscs,
-        //     function ($a, $b)  {
-        //         if ($a['cantidadPromociones'] > $b['cantidadPromociones']) {
-        //             return -1;
-        //         } else if ($a['cantidadPromociones'] < $b['cantidadPromociones']) {
-        //             return 1;
-        //         } else {
-        //             return 0;
-        //         }
-        //     }
-        // );
+        usort(
+            $cscs,
+            function ($a, $b)  {
+                if ($a['cantidadPromociones'] > $b['cantidadPromociones']) {
+                    return -1;
+                } else if ($a['cantidadPromociones'] < $b['cantidadPromociones']) {
+                    return 1;
+                } else {
+                    return 0;
+                }
+            }
+        );
 
+        // $cantidadPromociones = 0;
+
+        // foreach($cscs as $posicionCsc => $csc){
+
+        //     $promociones = $cscs[$posicionCsc]["promociones"];
+        //     $cantidadPromociones = sizeof($cscs[$posicionCsc]["promociones"]);
+
+        //     if($cantidadPromociones < $csc['cantidadPromociones']){
+
+        //     }
+
+        //     foreach($cspcanalessucursalespromociones as $posicionCsp => $cspcanalessucursalespromocion){
+
+        //     }
+        // }
 
         $productosCsc = [];
         foreach($cscs as $posicionCsc => $csc){
