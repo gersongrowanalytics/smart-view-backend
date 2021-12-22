@@ -984,18 +984,45 @@ class PromocionesMostrarController extends Controller
             $cscs[$posicionCsc]["cantidadPromociones"] = sizeof($csps);
         }
 
-        // usort(
-        //     $cscs,
-        //     function ($a, $b)  {
-        //         if ($a['cantidadPromociones'] > $b['cantidadPromociones']) {
-        //             return -1;
-        //         } else if ($a['cantidadPromociones'] < $b['cantidadPromociones']) {
-        //             return 1;
-        //         } else {
-        //             return 0;
-        //         }
-        //     }
-        // );
+        $datanuevaprueba = array(
+            array(
+                "cat" => 2,
+                "cate" => [1,2,3,4],
+                "cates" => array(),
+                "cantidadPromociones" => 1
+            ),
+            array(
+                "cat" => 2,
+                "cate" => [1,2,3,4],
+                "cates" => array(),
+                "cantidadPromociones" => 3
+            ),
+            array(
+                "cat" => 2,
+                "cate" => [1,2,3,4],
+                "cates" => array(),
+                "cantidadPromociones" => 2
+            ),
+            array(
+                "cat" => 2,
+                "cate" => [1,2,3,4],
+                "cates" => array(),
+                "cantidadPromociones" => 4
+            ),
+        );
+
+        usort(
+            $datanuevaprueba,
+            function ($a, $b)  {
+                if ($a['cantidadPromociones'] > $b['cantidadPromociones']) {
+                    return -1;
+                } else if ($a['cantidadPromociones'] < $b['cantidadPromociones']) {
+                    return 1;
+                } else {
+                    return 0;
+                }
+            }
+        );
 
         // $cantidadPromociones = 0;
 
@@ -1120,7 +1147,8 @@ class PromocionesMostrarController extends Controller
             'datos'          => $datos,
             'linea'          => $linea,
             'mensajeDetalle' => $mensajeDetalle,
-            'mensajedev'     => $mensajedev
+            'mensajedev'     => $mensajedev,
+            'datanuevaprueba'     => $datanuevaprueba,
         ]);
         
         return $requestsalida;
