@@ -983,10 +983,16 @@ class PromocionesMostrarController extends Controller
             $cscs[$posicionCsc]["promociones"] = $csps;
             $cscs[$posicionCsc]["cantidadPromociones"] = sizeof($csps);
         }
+        
+        $dataPrueba = array();
 
-        if(sizeof($cscs) > 0){
+        foreach($cscs as $csc){
+            $dataPrueba[] = $csc;
+        }
+
+        if(sizeof($dataPrueba) > 0){
             usort(
-                $cscs,
+                $dataPrueba,
                 function ($a, $b)  {
                     if ($a['cantidadPromociones'] > $b['cantidadPromociones']) {
                         return -1;
