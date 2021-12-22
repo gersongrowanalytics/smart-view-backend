@@ -1048,18 +1048,18 @@ class PromocionesMostrarController extends Controller
         }
 
 
-        usort(
-            $cscsDoble,
-            function ($a, $b)  {
-                if ($a['cantidadPromociones'] > $b['cantidadPromociones']) {
-                    return -1;
-                } else if ($a['cantidadPromociones'] < $b['cantidadPromociones']) {
-                    return 1;
-                } else {
-                    return 0;
-                }
-            }
-        );
+        // usort(
+        //     $cscsDoble,
+        //     function ($a, $b)  {
+        //         if ($a['cantidadPromociones'] > $b['cantidadPromociones']) {
+        //             return -1;
+        //         } else if ($a['cantidadPromociones'] < $b['cantidadPromociones']) {
+        //             return 1;
+        //         } else {
+        //             return 0;
+        //         }
+        //     }
+        // );
 
         $cscs = $cscsDoble;
 
