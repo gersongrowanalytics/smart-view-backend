@@ -169,6 +169,7 @@
                                                         >
                                                         <div class="text1_product1">{{$producto['prpproductoppt']}}</div>
                                                         <div class="text2_product1">{{$producto['prpcomprappt']}}</div>
+                                                        <div class="text2_product1">{{$producto['prosku']}}</div>
                                                     </div>
                                                     @endif
                                                     @endforeach
@@ -189,6 +190,7 @@
                                                         >
                                                         <div class="text1_product2">{{$productobonificado['prbproductoppt']}}</div>
                                                         <div class="text2_product2">{{$productobonificado['prbcomprappt']}}</div>
+                                                        <div class="text2_product2">{{$productobonificado['prosku']}}</div>
                                                     </div>
                                                     @endif
                                                     @endforeach
@@ -329,6 +331,7 @@
                                                         >
                                                         <div class="text1_product1">{{$producto['prpproductoppt']}}</div>
                                                         <div class="text2_product1">{{$producto['prpcomprappt']}}</div>
+                                                        <div class="text2_product1">{{$producto['prosku']}}</div>
                                                     </div>
                                                     @endif
                                                     @endforeach
@@ -349,6 +352,7 @@
                                                         >
                                                         <div class="text1_product2">{{$productobonificado['prbproductoppt']}}</div>
                                                         <div class="text2_product2">{{$productobonificado['prbcomprappt']}}</div>
+                                                        <div class="text2_product2">{{$productobonificado['prosku']}}</div>
                                                     </div>
                                                     @endif
                                                     @endforeach
@@ -486,6 +490,7 @@
                                                         >
                                                         <div class="text1_product1">{{$producto['prpproductoppt']}}</div>
                                                         <div class="text2_product1">{{$producto['prpcomprappt']}}</div>
+                                                        <div class="text2_product1">{{$producto['prosku']}}</div>
                                                     </div>
                                                     @endif
                                                     @endforeach
@@ -506,6 +511,7 @@
                                                         >
                                                         <div class="text1_product2">{{$productobonificado['prbproductoppt']}}</div>
                                                         <div class="text2_product2">{{$productobonificado['prbcomprappt']}}</div>
+                                                        <div class="text2_product2">{{$productobonificado['prosku']}}</div>
                                                     </div>
                                                     @endif
                                                     @endforeach
@@ -643,6 +649,7 @@
                                                         >
                                                         <div class="text1_product1">{{$producto['prpproductoppt']}}</div>
                                                         <div class="text2_product1">{{$producto['prpcomprappt']}}</div>
+                                                        <div class="text2_product1">{{$producto['prosku']}}</div>
                                                     </div>
                                                     @endif
                                                     @endforeach
@@ -663,6 +670,7 @@
                                                         >
                                                         <div class="text1_product2">{{$productobonificado['prbproductoppt']}}</div>
                                                         <div class="text2_product2">{{$productobonificado['prbcomprappt']}}</div>
+                                                        <div class="text2_product2">{{$productobonificado['prosku']}}</div>
                                                     </div>
                                                     @endif
                                                     @endforeach
