@@ -1132,7 +1132,7 @@ class PromocionesMostrarController extends Controller
 
 
 
-        $cscs = $dataPrueba;
+        // $cscs = $dataPrueba;
 
 
 
