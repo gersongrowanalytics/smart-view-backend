@@ -1353,9 +1353,9 @@ class PromocionesMostrarController extends Controller
 
             }
 
-            foreach($cspcanalessucursalespromociones as $posicionCsp => $cspcanalessucursalespromocion){
+            // foreach($cspcanalessucursalespromociones as $posicionCsp => $cspcanalessucursalespromocion){
 
-            }
+            // }
         }
 
         $productosCsc = [];
