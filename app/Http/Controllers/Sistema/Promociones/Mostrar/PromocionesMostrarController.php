@@ -1005,8 +1005,7 @@ class PromocionesMostrarController extends Controller
             );
         }
 
-        $arrProductos = array();
-        
+        $arrProductosTotal = array();
         
         foreach($dataPrueba as $posicionDatPrueba => $datPrueba){
             
@@ -1058,6 +1057,43 @@ class PromocionesMostrarController extends Controller
             $dataPrueba[$posicionDatPrueba]['arrProductos'] = $arrProductos;
 
         }
+
+        foreach($dataPrueba as $posicionDatPrueba => $datPrueba){
+
+            $arrProductos = $datPrueba['arrProductos'];
+            
+            foreach($arrProductos as $arrProducto){
+                if(sizeof($arrProductosTotal) > 0){
+                    
+                    $encontroProducto = false;
+
+                    foreach($arrProductosTotal as $posicionArrProductoTotal => $arrProductoTotal){
+                        if($arrProductoTotal['sku'] == $arrProducto['sku']){
+                            if($arrProducto['cantidad'] > $arrProductoTotal['cantidad']){
+                                $arrProductosTotal[$posicionArrProductoTotal]['cantidad'] = $arrProducto['cantidad'];
+                            }
+                            $encontroProducto = true;
+                        }
+                    }
+
+                    if($encontroProducto == false){
+                        $arrProductosTotal[] = array(
+                            "sku"      => $arrProducto['sku'],
+                            "cantidad" => $arrProducto['cantidad']
+                        );
+                    }
+
+                }else{
+                    $arrProductosTotal[] = array(
+                        "sku" => $arrProducto['sku'],
+                        "cantidad" => $arrProducto['cantidad']
+                    );
+                }
+            }
+
+        }
+
+
 
 
         $cscs = $dataPrueba;
@@ -1353,6 +1389,7 @@ class PromocionesMostrarController extends Controller
             'mensajeDetalle' => $mensajeDetalle,
             'mensajedev'     => $mensajedev,
             'dataPrueba'     => $dataPrueba,
+            'arrProductosTotal' => $arrProductosTotal,
         ]);
         
         return $requestsalida;
