@@ -1022,7 +1022,7 @@ class PromocionesMostrarController extends Controller
 
         foreach($dataPrueba as $posicionDataPrueba => $datPrueba){
 
-            foreach($columnaPrincipal['promociones'] as $posicionPromocion => $promocion){
+            foreach($datPrueba['promociones'] as $posicionPromocion => $promocion){
                 if(sizeof($promocion['productos']) > 0){
                     $datPrueba[$posicionDataPrueba]['promociones'][$posicionPromocion]['productounoprincipal'] = $promocion['productos'][0]['prosku'];
                 }
