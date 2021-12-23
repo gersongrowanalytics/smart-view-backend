@@ -1005,16 +1005,14 @@ class PromocionesMostrarController extends Controller
             );
         }
 
-        $arrProductos = array(
-            array(
-                "sku" => "123",
-                "cantidad" => 1
-            )
-        );
+        $arrProductos = array();
+        
         
         foreach($dataPrueba as $posicionDatPrueba => $datPrueba){
             
             $promociones = $datPrueba['promociones'];
+
+            $arrProductos = array();
 
             foreach($promociones as $posicionPromocion => $promocion){
 
@@ -1029,14 +1027,35 @@ class PromocionesMostrarController extends Controller
 
                 }
 
-                
+                if(sizeof($arrProductos) > 0){
+                    $encontroProducto = false;
+                    foreach($arrProductos as $posicionArr => $arrProducto){
+                        if($arrProducto['sku'] == $productoSeleccionado){
 
+                            $arrProductos[$posicionArr]['cantidad'] = $arrProductos[$posicionArr]['cantidad'] + 1;
+
+                            $encontroProducto = true;
+                        }
+                    }
+                    
+                    if($encontroProducto == false){
+                        $arrProductos[] = array(
+                            "sku" => $productoSeleccionado,
+                            "cantidad" => 1
+                        );
+                    }
+
+                }else{
+                    $arrProductos[] = array(
+                        "sku" => $productoSeleccionado,
+                        "cantidad" => 1
+                    );
+                }
 
 
             }
 
-
-
+            $dataPrueba[$posicionDatPrueba]['arrProductos'] = $arrProductos;
 
         }
 
