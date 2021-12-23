@@ -1005,6 +1005,54 @@ class PromocionesMostrarController extends Controller
             );
         }
 
+        $arrProductos = array(
+            array(
+                "sku" => "123",
+                "cantidad" => 1
+            )
+        );
+        
+        foreach($dataPrueba as $posicionDatPrueba => $datPrueba){
+            
+            $promociones = $datPrueba['promociones'];
+
+            foreach($promociones as $posicionPromocion => $promocion){
+
+                $productos = $promocion['productos'];
+                $productoSeleccionado = 0;
+
+                foreach($productos as $posicionProducto => $producto){
+
+                    if($posicionProducto == 0){
+                        $productoSeleccionado = $producto['prosku'];
+                    }
+
+                }
+
+                
+
+
+
+            }
+
+
+
+
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         // foreach($dataPrueba as $posicionDatPrueba => $datPrueba){
         //     $promociones = $dataPrueba[$posicionDatPrueba]['promociones'];
         //     if(sizeof($promociones) > 0){
