@@ -1005,6 +1005,122 @@ class PromocionesMostrarController extends Controller
             );
         }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        foreach($dataPrueba as $posicionDataPrueba => $datPrueba){
+
+            foreach($columnaPrincipal['promociones'] as $posicionPromocion => $promocion){
+                if(sizeof($promocion['productos']) > 0){
+                    $datPrueba[$posicionDataPrueba]['promociones'][$posicionPromocion]['productounoprincipal'] = $promocion['productos'][0]['prosku'];
+                }
+            }
+
+        }
+
+        foreach($dataPrueba as $posicionDataPrueba => $datPrueba){
+            
+            $promocionesPrincipales = $columnaPrincipal['promociones'];
+
+            usort(
+                $promocionesPrincipales,
+                function ($a, $b)  {
+                    if ($a['productounoprincipal'] > $b['productounoprincipal']) {
+                        return -1;
+                    } else if ($a['productounoprincipal'] < $b['productounoprincipal']) {
+                        return 1;
+                    } else {
+                        return 0;
+                    }
+                }
+            );
+
+            $dataPrueba[$posicionDataPrueba]['promociones'] = $promocionesPrincipales;
+
+        }
+
+
+
+
+        // $columnaPrincipal = array();
+        // $promocionesPrincipales = array();
+
+        // foreach($dataPrueba as $posicionDataPrueba => $datPrueba){
+
+        //     if($posicionDataPrueba == 0){
+        //         $columnaPrincipal = $datPrueba;
+        //         $promocionesPrincipales = $columnaPrincipal['promociones'];
+
+        //         usort(
+        //             $promocionesPrincipales,
+        //             function ($a, $b)  {
+        //                 if ($a['productounoprincipal'] > $b['productounoprincipal']) {
+        //                     return -1;
+        //                 } else if ($a['productounoprincipal'] < $b['productounoprincipal']) {
+        //                     return 1;
+        //                 } else {
+        //                     return 0;
+        //                 }
+        //             }
+        //         );
+
+        //     }else{
+        //         $promociones = $datPrueba['promociones'];
+
+
+
+        //         foreach($promociones as $promocion){
+                    
+                    
+
+        //             foreach($promocionesPrincipales as $promocionPrincipal){
+
+        //             }
+
+
+        //         }
+        //     }
+            
+        // }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         
 
         // $cantidadPromociones = 0;
