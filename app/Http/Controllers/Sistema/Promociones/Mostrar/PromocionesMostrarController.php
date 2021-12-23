@@ -607,6 +607,228 @@ class PromocionesMostrarController extends Controller
 
         }
 
+
+
+
+
+
+
+
+
+        $dataPrueba = array();
+
+        foreach($datos as $dato){
+            $dataPrueba[] = $dato;
+        }
+
+        foreach($dataPrueba as $posicionDat => $datPrueba){
+
+            $dataPrueba[$posicionDat]['cantidadPromociones'] = sizeof($datPrueba['promociones']);
+
+        }
+        
+
+        if(sizeof($dataPrueba) > 0){
+            usort(
+                $dataPrueba,
+                function ($a, $b)  {
+                    if ($a['cantidadPromociones'] > $b['cantidadPromociones']) {
+                        return -1;
+                    } else if ($a['cantidadPromociones'] < $b['cantidadPromociones']) {
+                        return 1;
+                    } else {
+                        return 0;
+                    }
+                }
+            );
+        }
+
+        $arrProductosTotal = array();
+
+        foreach($dataPrueba as $posicionDatPrueba => $datPrueba){
+            
+            $promociones = $datPrueba['promociones'];
+
+            $arrProductos = array();
+
+            foreach($promociones as $posicionPromocion => $promocion){
+
+                $productos = $promocion['productos'];
+                $productoSeleccionado = 0;
+
+                foreach($productos as $posicionProducto => $producto){
+
+                    if($posicionProducto == 0){
+                        $productoSeleccionado = $producto['prosku'];
+                    }
+
+                }
+
+                if(sizeof($arrProductos) > 0){
+                    $encontroProducto = false;
+                    foreach($arrProductos as $posicionArr => $arrProducto){
+                        if($arrProducto['sku'] == $productoSeleccionado){
+
+                            $arrProductos[$posicionArr]['cantidad'] = $arrProductos[$posicionArr]['cantidad'] + 1;
+
+                            $encontroProducto = true;
+                        }
+                    }
+                    
+                    if($encontroProducto == false){
+                        $arrProductos[] = array(
+                            "sku" => $productoSeleccionado,
+                            "cantidad" => 1
+                        );
+                    }
+
+                }else{
+                    $arrProductos[] = array(
+                        "sku" => $productoSeleccionado,
+                        "cantidad" => 1
+                    );
+                }
+
+
+            }
+
+            $dataPrueba[$posicionDatPrueba]['arrProductos'] = $arrProductos;
+
+        }
+
+        usort(
+            $arrProductosTotal,
+            function ($a, $b)  {
+                if ($a['cantidad'] < $b['cantidad']) {
+                    return -1;
+                } else if ($a['cantidad'] > $b['cantidad']) {
+                    return 1;
+                } else {
+                    return 0;
+                }
+            }
+        );
+
+        foreach($dataPrueba as $posicionDatPrueba => $datPrueba){
+
+            $arrProductos = $datPrueba['arrProductos'];
+            
+            foreach($arrProductos as $arrProducto){
+                if(sizeof($arrProductosTotal) > 0){
+                    
+                    $encontroProducto = false;
+
+                    foreach($arrProductosTotal as $posicionArrProductoTotal => $arrProductoTotal){
+                        if($arrProductoTotal['sku'] == $arrProducto['sku']){
+                            if($arrProducto['cantidad'] > $arrProductoTotal['cantidad']){
+                                $arrProductosTotal[$posicionArrProductoTotal]['cantidad'] = $arrProducto['cantidad'];
+                            }
+                            $encontroProducto = true;
+                        }
+                    }
+
+                    if($encontroProducto == false){
+                        $arrProductosTotal[] = array(
+                            "sku"      => $arrProducto['sku'],
+                            "cantidad" => $arrProducto['cantidad']
+                        );
+                    }
+
+                }else{
+                    $arrProductosTotal[] = array(
+                        "sku" => $arrProducto['sku'],
+                        "cantidad" => $arrProducto['cantidad']
+                    );
+                }
+            }
+
+        }
+
+        $fechaInicio = date("m", strtotime($fechaActual));
+        $fechaInicio = "01/".$fechaInicio;
+        $fechaFinal = date("m", strtotime($fechaActual));
+        $fechafinal = "30/".$fechaFinal;
+
+        $promoVacia = array(
+            'cspid'              => 0,
+            'prmid'              => "",
+            'prmcodigo'          => "",
+            'cspvalorizado'      => "",
+            'cspplanchas'        => "",
+            'cspcompletado'      => "",
+            'cspcantidadcombo'   => "",
+            'prmmecanica'        => "",
+            'cspcantidadplancha' => "",
+            'csptotalcombo'      => "",
+            'csptotalplancha'    => "",
+            'csptotal'           => "",
+            'cspgratis'          => "",
+            'prmaccion'          => "",
+            'tprnombre'          => "",
+            'cspnuevo'           => "",
+            'productos'          => [],
+            'productoPrincipal'  => "0",
+            'productosbonificados' => [],
+            'fechainicio' => $fechaInicio,
+            'fechafinal'  => $fechafinal,
+        );
+
+        foreach($dataPrueba as $posicionDatPrueba => $datPrueba){
+
+            $promociones = $datPrueba['promociones'];
+            $nuevasPromos = array();
+
+            foreach($arrProductosTotal as $arrProductoTotal){
+                
+                $promocionesEncontradas = 0;
+
+                foreach($promociones as $posicionPromocion => $promocion){
+
+                    $productoSeleccionado = 0;
+                    $productos = $promocion['productos'];
+
+                    foreach($productos as $posicionProducto => $producto){
+
+                        if($posicionProducto == 0){
+                            $productoSeleccionado = $producto['prosku'];
+                        }
+
+                    }
+
+
+                    if($productoSeleccionado == $arrProductoTotal['sku']){
+                        $promocionesEncontradas = $promocionesEncontradas + 1;
+                        $nuevasPromos[] = $promocion;
+                    }
+
+                }
+
+                $diferenciaPromocionesEncontradas = $arrProductoTotal['cantidad'] - $promocionesEncontradas;
+
+                if( $diferenciaPromocionesEncontradas != 0){
+                    for($i = 0; $i < $diferenciaPromocionesEncontradas; $i++){
+                        $nuevasPromos[] = $promoVacia;
+                    }
+                }
+
+            }
+            
+            $dataPrueba[$posicionDatPrueba]['promociones'] = $nuevasPromos;
+            $dataPrueba[$posicionDatPrueba]['promocionesOrdenadas'] = $nuevasPromos;
+
+        }
+
+
+
+
+
+
+
+
+
+
+
+
         $requestsalida = response()->json([
             'respuesta'      => $respuesta,
             'mensaje'        => $mensaje,
@@ -615,6 +837,7 @@ class PromocionesMostrarController extends Controller
             'mensajeDetalle' => $mensajeDetalle,
             'mensajedev'     => $mensajedev,
             'csccanalessucursalescategoriasa'     => $csccanalessucursalescategoriasa,
+            'dataPrueba'     => $dataPrueba,
         ]);
         
         return $requestsalida;
@@ -983,6 +1206,15 @@ class PromocionesMostrarController extends Controller
             $cscs[$posicionCsc]["promociones"] = $csps;
             $cscs[$posicionCsc]["cantidadPromociones"] = sizeof($csps);
         }
+
+
+
+
+
+
+
+        // ORDENAR LAS PROMOS POR PRODUCTO 23/12
+
         
         $dataPrueba = array();
 
@@ -1106,8 +1338,6 @@ class PromocionesMostrarController extends Controller
 
         }
 
-        
-
         $fechaInicio = date("m", strtotime($fechaActual));
         $fechaInicio = "01/".$fechaInicio;
         $fechaFinal = date("m", strtotime($fechaActual));
@@ -1184,230 +1414,14 @@ class PromocionesMostrarController extends Controller
 
 
 
+        //FIN ORDENAR LAS PROMOS POR PRODUCTO 23/12
 
 
 
-        // $cscs = $dataPrueba;
 
 
 
 
-
-
-
-
-
-
-
-        // foreach($dataPrueba as $posicionDatPrueba => $datPrueba){
-        //     $promociones = $dataPrueba[$posicionDatPrueba]['promociones'];
-        //     if(sizeof($promociones) > 0){
-        //         usort(
-        //             $promociones,
-        //             function ($a, $b)  {
-        //                 if(isset($a['productoInicial']) && isset($b['productoInicial'])  ){
-        //                     if ($a['productoInicial'] > $b['productoInicial']) {
-        //                         return -1;
-        //                     } else if ($a['productoInicial'] < $b['productoInicial']) {
-        //                         return 1;
-        //                     } else {
-        //                         return 0;
-        //                     }
-        //                 }else{
-        //                     return -1;
-        //                 }
-        //             }
-        //         );
-        //     }
-        //     $dataPrueba[$posicionDatPrueba]['promociones'] = $promociones;
-        // }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        // foreach($dataPrueba as $posicionDataPrueba => $datPrueba){
-
-        //     $promosDataPrueba = $dataPrueba[$posicionDataPrueba]['promociones'];
-
-        //     foreach($promosDataPrueba as $posicionPromocion => $promocion){
-
-        //         $nuevasPromos = $promosDataPrueba[$posicionPromocion];
-
-        //         if(sizeof($promocion['productos']) > 0){
-        //             $nuevasPromos['productounoprincipal'] = intval($promocion['productos'][0]['proid']);
-        //         }else{
-        //             $nuevasPromos['productounoprincipal'] = intval(0);
-        //         }
-
-        //         if(isset($dataPrueba[$posicionDataPrueba]['promociones'][$posicionPromocion]['productos'])){
-        //             $nuevasPromos['productos'] = $dataPrueba[$posicionDataPrueba]['promociones'][$posicionPromocion]['productos'];
-        //         }else{
-        //             $nuevasPromos['productos'] = array();;
-        //         }
-
-        //         $dataPrueba[$posicionDataPrueba]['promociones'] = $nuevasPromos;
-        //     }
-
-        // }
-
-        // foreach($dataPrueba as $posicionDataPrueba => $datPrueba){
-            
-        //     $promocionesPrincipales = $datPrueba['promociones'];
-
-        //     usort(
-        //         $promocionesPrincipales,
-        //         function ($a, $b)  {
-        //             if ($a['productounoprincipal'] > $b['productounoprincipal']) {
-        //                 return -1;
-        //             } else if ($a['productounoprincipal'] < $b['productounoprincipal']) {
-        //                 return 1;
-        //             } else {
-        //                 return 0;
-        //             }
-        //         }
-        //     );
-
-        //     $dataPrueba[$posicionDataPrueba]['promociones'] = $promocionesPrincipales;
-
-        // }
-
-
-
-
-        // $columnaPrincipal = array();
-        // $promocionesPrincipales = array();
-
-        // foreach($dataPrueba as $posicionDataPrueba => $datPrueba){
-
-        //     if($posicionDataPrueba == 0){
-        //         $columnaPrincipal = $datPrueba;
-        //         $promocionesPrincipales = $columnaPrincipal['promociones'];
-
-        //         usort(
-        //             $promocionesPrincipales,
-        //             function ($a, $b)  {
-        //                 if ($a['productounoprincipal'] > $b['productounoprincipal']) {
-        //                     return -1;
-        //                 } else if ($a['productounoprincipal'] < $b['productounoprincipal']) {
-        //                     return 1;
-        //                 } else {
-        //                     return 0;
-        //                 }
-        //             }
-        //         );
-
-        //     }else{
-        //         $promociones = $datPrueba['promociones'];
-
-
-
-        //         foreach($promociones as $promocion){
-                    
-                    
-
-        //             foreach($promocionesPrincipales as $promocionPrincipal){
-
-        //             }
-
-
-        //         }
-        //     }
-            
-        // }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
-
-        // $cantidadPromociones = 0;
-
-        // foreach($cscs as $posicionCsc => $csc){
-
-        //     $promociones = $cscs[$posicionCsc]["promociones"];
-        //     $cantidadPromociones = sizeof($cscs[$posicionCsc]["promociones"]);
-
-        //     if($cantidadPromociones < $csc['cantidadPromociones']){
-
-        //     }
-
-        //     foreach($cspcanalessucursalespromociones as $posicionCsp => $cspcanalessucursalespromocion){
-
-        //     }
-        // }
-
-        // $productosCsc = [];
-        // foreach($cscs as $posicionCsc => $csc){
-
-        //     $csccanalessucursalescategorias = $cscs;
-        //     $cspcanalessucursalespromociones = $cscs[$posicionCsc]["promociones"];
-
-        //     $rptaArmarPromociones = $this->ArmarPromociones($cspcanalessucursalespromociones, $productosCsc, $posicionCsc, $csccanalessucursalescategorias);
-        //     $cscs[$posicionCsc]["promocionesOrdenadas"] = $rptaArmarPromociones['nuevoArrayCsp'];
-        //     $productosCsc = $rptaArmarPromociones['productosCsc'];
-        //     $cscs = $rptaArmarPromociones['csccanalessucursalescategorias'];
-        //     // $cscs[$posicionCsc]["promocionesOrdenadas"] = $csps;
-
-        //     $cscsDoble[] = array(
-        //         "canid" => $csc->canid,
-        //         "cannombre" => $csc->cannombre,
-        //         "cscid" => 0,
-        //         "porcentaje" => 0,
-        //         "promociones" => $csc->promociones,
-        //         "cantidadPromociones" => sizeof($rptaArmarPromociones['nuevoArrayCsp']),
-        //         "promocionesOrdenadas" => $rptaArmarPromociones['nuevoArrayCsp']
-        //     );
-
-        // }
-
-
-        // usort(
-        //     $cscsDoble,
-        //     function ($a, $b)  {
-        //         if ($a['cantidadPromociones'] > $b['cantidadPromociones']) {
-        //             return -1;
-        //         } else if ($a['cantidadPromociones'] < $b['cantidadPromociones']) {
-        //             return 1;
-        //         } else {
-        //             return 0;
-        //         }
-        //     }
-        // );
 
         $cscs = $cscsDoble;
 
