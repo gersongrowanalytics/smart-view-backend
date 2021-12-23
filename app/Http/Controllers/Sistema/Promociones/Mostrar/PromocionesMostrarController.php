@@ -1093,6 +1093,37 @@ class PromocionesMostrarController extends Controller
 
         }
 
+        
+
+        $fechaInicio = date("m", strtotime($fechaActual));
+        $fechaInicio = "01/".$fechaInicio;
+        $fechaFinal = date("m", strtotime($fechaActual));
+        $fechafinal = "30/".$fechaFinal;
+
+        $promoVacia = array(
+            'cspid'              => 0,
+            'prmid'              => "",
+            'prmcodigo'          => "",
+            'cspvalorizado'      => "",
+            'cspplanchas'        => "",
+            'cspcompletado'      => "",
+            'cspcantidadcombo'   => "",
+            'prmmecanica'        => "",
+            'cspcantidadplancha' => "",
+            'csptotalcombo'      => "",
+            'csptotalplancha'    => "",
+            'csptotal'           => "",
+            'cspgratis'          => "",
+            'prmaccion'          => "",
+            'tprnombre'          => "",
+            'cspnuevo'           => "",
+            'productos'          => [],
+            'productoPrincipal'  => "0",
+            'productosbonificados' => [],
+            'fechainicio' => $fechaInicio,
+            'fechafinal'  => $fechafinal,
+        );
+
         foreach($dataPrueba as $posicionDatPrueba => $datPrueba){
 
             $promociones = $datPrueba['promociones'];
@@ -1127,13 +1158,14 @@ class PromocionesMostrarController extends Controller
 
                 if( $diferenciaPromocionesEncontradas != 0){
                     for($i = 0; $i < $diferenciaPromocionesEncontradas; $i++){
-                        $nuevasPromos[] = array();
+                        $nuevasPromos[] = $promoVacia;
                     }
                 }
 
             }
             
             $dataPrueba[$posicionDatPrueba]['promociones'] = $nuevasPromos;
+            $dataPrueba[$posicionDatPrueba]['promocionesOrdenadas'] = $nuevasPromos;
 
         }
 
