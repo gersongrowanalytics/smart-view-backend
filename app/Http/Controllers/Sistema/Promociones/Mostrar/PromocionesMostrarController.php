@@ -1027,7 +1027,7 @@ class PromocionesMostrarController extends Controller
                 $nuevasPromos = $promocion;
 
                 if(sizeof($promocion['productos']) > 0){
-                    $nuevasPromos['productounoprincipal'] = $promocion['productos'][0]['prosku'];
+                    $nuevasPromos['productounoprincipal'] = intval($promocion['productos'][0]['prosku']);
                 }
 
                 $dataPrueba[$posicionDataPrueba]['promociones'] = $nuevasPromos;
