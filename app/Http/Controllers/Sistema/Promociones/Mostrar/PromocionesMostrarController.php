@@ -1005,28 +1005,28 @@ class PromocionesMostrarController extends Controller
             );
         }
 
-        foreach($dataPrueba as $posicionDatPrueba => $datPrueba){
-            $promociones = $dataPrueba[$posicionDatPrueba]['promociones'];
-            if(sizeof($promociones) > 0){
-                usort(
-                    $promociones,
-                    function ($a, $b)  {
-                        if(isset($a['productoInicial']) && isset($b['productoInicial'])  ){
-                            if ($a['productoInicial'] > $b['productoInicial']) {
-                                return -1;
-                            } else if ($a['productoInicial'] < $b['productoInicial']) {
-                                return 1;
-                            } else {
-                                return 0;
-                            }
-                        }else{
-                            return -1;
-                        }
-                    }
-                );
-            }
-            $dataPrueba[$posicionDatPrueba]['promociones'] = $promociones;
-        }
+        // foreach($dataPrueba as $posicionDatPrueba => $datPrueba){
+        //     $promociones = $dataPrueba[$posicionDatPrueba]['promociones'];
+        //     if(sizeof($promociones) > 0){
+        //         usort(
+        //             $promociones,
+        //             function ($a, $b)  {
+        //                 if(isset($a['productoInicial']) && isset($b['productoInicial'])  ){
+        //                     if ($a['productoInicial'] > $b['productoInicial']) {
+        //                         return -1;
+        //                     } else if ($a['productoInicial'] < $b['productoInicial']) {
+        //                         return 1;
+        //                     } else {
+        //                         return 0;
+        //                     }
+        //                 }else{
+        //                     return -1;
+        //                 }
+        //             }
+        //         );
+        //     }
+        //     $dataPrueba[$posicionDatPrueba]['promociones'] = $promociones;
+        // }
 
 
 
