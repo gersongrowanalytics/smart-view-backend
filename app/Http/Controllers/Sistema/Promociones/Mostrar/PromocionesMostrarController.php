@@ -1093,6 +1093,31 @@ class PromocionesMostrarController extends Controller
 
         }
 
+        foreach($dataPrueba as $posicionDatPrueba => $datPrueba){
+
+            $promociones = $datPrueba['promociones'];
+            $nuevasPromos = array();
+
+            foreach($arrProductosTotal as $arrProductoTotal){
+
+                foreach($promociones as $posicionPromocion => $promocion){
+
+                    if($promocion['productoInicial'] == $arrProductoTotal['sku']){
+                        $nuevasPromos[] = $promocion;
+                    }else{
+                        $nuevasPromos[] = array();
+                    }
+
+                }
+
+            }
+            
+            $dataPrueba[$posicionDatPrueba]['promociones'] = $nuevasPromos;
+
+        }
+
+
+
 
 
 
