@@ -1116,7 +1116,9 @@ class PromocionesMostrarController extends Controller
                     if($productoSeleccionado == $arrProductoTotal['sku']){
                         $nuevasPromos[] = $promocion;
                     }else{
-                        $nuevasPromos[] = array();
+                        $nuevasPromos[] = array(
+                            "sku" => $productoSeleccionado
+                        );
                     }
 
                 }
