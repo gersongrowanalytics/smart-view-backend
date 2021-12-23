@@ -1022,6 +1022,8 @@ class PromocionesMostrarController extends Controller
 
         foreach($dataPrueba as $posicionDataPrueba => $datPrueba){
 
+            $nuevasPromos = array();
+            
             foreach($dataPrueba[$posicionDataPrueba]['promociones'] as $posicionPromocion => $promocion){
 
                 $nuevasPromos = $dataPrueba[$posicionDataPrueba]['promociones'][$posicionPromocion];
