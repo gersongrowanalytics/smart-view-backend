@@ -1061,9 +1061,9 @@ class PromocionesMostrarController extends Controller
         usort(
             $arrProductosTotal,
             function ($a, $b)  {
-                if ($a['cantidad'] > $b['cantidad']) {
+                if ($a['cantidad'] < $b['cantidad']) {
                     return -1;
-                } else if ($a['cantidad'] < $b['cantidad']) {
+                } else if ($a['cantidad'] > $b['cantidad']) {
                     return 1;
                 } else {
                     return 0;
