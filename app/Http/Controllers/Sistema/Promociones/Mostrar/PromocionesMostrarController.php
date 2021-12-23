@@ -1102,7 +1102,18 @@ class PromocionesMostrarController extends Controller
 
                 foreach($promociones as $posicionPromocion => $promocion){
 
-                    if($promocion['productoInicial'] == $arrProductoTotal['sku']){
+                    $productoSeleccionado = 0;
+                    $productos = $promocion['productos'];
+
+                    foreach($productos as $posicionProducto => $producto){
+
+                        if($posicionProducto == 0){
+                            $productoSeleccionado = $producto['prosku'];
+                        }
+
+                    }
+
+                    if($productoSeleccionado == $arrProductoTotal['sku']){
                         $nuevasPromos[] = $promocion;
                     }else{
                         $nuevasPromos[] = array();
