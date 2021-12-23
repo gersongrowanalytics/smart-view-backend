@@ -1022,11 +1022,11 @@ class PromocionesMostrarController extends Controller
 
         foreach($dataPrueba as $posicionDataPrueba => $datPrueba){
 
-            $nuevasPromos = array();
-            
-            foreach($dataPrueba[$posicionDataPrueba]['promociones'] as $posicionPromocion => $promocion){
+            $promosDataPrueba = $dataPrueba[$posicionDataPrueba]['promociones'];
 
-                $nuevasPromos = $dataPrueba[$posicionDataPrueba]['promociones'][$posicionPromocion];
+            foreach($promosDataPrueba as $posicionPromocion => $promocion){
+
+                $nuevasPromos = $nuevasPromos[$posicionPromocion];
 
                 if(sizeof($promocion['productos']) > 0){
                     $nuevasPromos['productounoprincipal'] = intval($promocion['productos'][0]['proid']);
