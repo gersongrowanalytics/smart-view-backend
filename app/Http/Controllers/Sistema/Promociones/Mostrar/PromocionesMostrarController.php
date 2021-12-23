@@ -1026,7 +1026,7 @@ class PromocionesMostrarController extends Controller
 
             foreach($promosDataPrueba as $posicionPromocion => $promocion){
 
-                $nuevasPromos = $nuevasPromos[$posicionPromocion];
+                $nuevasPromos = $promosDataPrueba[$posicionPromocion];
 
                 if(sizeof($promocion['productos']) > 0){
                     $nuevasPromos['productounoprincipal'] = intval($promocion['productos'][0]['proid']);
