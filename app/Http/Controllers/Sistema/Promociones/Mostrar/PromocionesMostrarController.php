@@ -1033,9 +1033,9 @@ class PromocionesMostrarController extends Controller
                 }else{
                     $nuevasPromos['productounoprincipal'] = intval(0);
                 }
+                $nuevasPromos['productos'] = $dataPrueba[$posicionDataPrueba]['promociones'][$posicionPromocion]['productos'];
 
                 $dataPrueba[$posicionDataPrueba]['promociones'] = $nuevasPromos;
-                $dataPrueba[$posicionDataPrueba]['promociones'][$posicionPromocion]['productos'] = $dataPrueba[$posicionDataPrueba]['promociones'][$posicionPromocion]['productos'];
             }
 
         }
