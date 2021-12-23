@@ -1044,9 +1044,9 @@ class PromocionesMostrarController extends Controller
             usort(
                 $promocionesPrincipales,
                 function ($a, $b)  {
-                    if ($a['productounoprincipal'] > $b['productounoprincipal']) {
+                    if ($a['productos'][0]['proid'] > $b['productos'][0]['proid']) {
                         return -1;
-                    } else if ($a['productounoprincipal'] < $b['productounoprincipal']) {
+                    } else if ($a['productos'][0]['proid'] < $b['productos'][0]['proid']) {
                         return 1;
                     } else {
                         return 0;
