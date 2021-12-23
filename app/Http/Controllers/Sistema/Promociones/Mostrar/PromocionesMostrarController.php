@@ -1099,6 +1099,8 @@ class PromocionesMostrarController extends Controller
             $nuevasPromos = array();
 
             foreach($arrProductosTotal as $arrProductoTotal){
+                
+                $promocionesEncontradas = 0;
 
                 foreach($promociones as $posicionPromocion => $promocion){
 
@@ -1113,14 +1115,20 @@ class PromocionesMostrarController extends Controller
 
                     }
 
+
                     if($productoSeleccionado == $arrProductoTotal['sku']){
+                        $promocionesEncontradas = $promocionesEncontradas + 1;
                         $nuevasPromos[] = $promocion;
-                    }else{
-                        $nuevasPromos[] = array(
-                            "sku" => $productoSeleccionado
-                        );
                     }
 
+                }
+
+                $diferenciaPromocionesEncontradas = $arrProductoTotal['cantidad'] - $promocionesEncontradas;
+
+                if( $diferenciaPromocionesEncontradas != 0){
+                    for($i = 0; $i < $diferenciaPromocionesEncontradas; $i++){
+                        $nuevasPromos[] = array();
+                    }
                 }
 
             }
