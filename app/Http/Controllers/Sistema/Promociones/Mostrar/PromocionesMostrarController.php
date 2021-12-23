@@ -1020,41 +1020,41 @@ class PromocionesMostrarController extends Controller
 
 
 
-        // foreach($dataPrueba as $posicionDataPrueba => $datPrueba){
+        foreach($dataPrueba as $posicionDataPrueba => $datPrueba){
 
-        //     foreach($dataPrueba[$posicionDataPrueba]['promociones'] as $posicionPromocion => $promocion){
+            foreach($dataPrueba[$posicionDataPrueba]['promociones'] as $posicionPromocion => $promocion){
 
-        //         $nuevasPromos = $promocion;
+                $nuevasPromos = $promocion;
 
-        //         if(sizeof($promocion['productos']) > 0){
-        //             $nuevasPromos['productounoprincipal'] = intval($promocion['productos'][0]['prosku']);
-        //         }
+                if(sizeof($promocion['productos']) > 0){
+                    $nuevasPromos['productounoprincipal'] = intval($promocion['productos'][0]['proid']);
+                }
 
-        //         $dataPrueba[$posicionDataPrueba]['promociones'] = $nuevasPromos;
-        //     }
+                $dataPrueba[$posicionDataPrueba]['promociones'] = $nuevasPromos;
+            }
 
-        // }
+        }
 
-        // foreach($dataPrueba as $posicionDataPrueba => $datPrueba){
+        foreach($dataPrueba as $posicionDataPrueba => $datPrueba){
             
-        //     $promocionesPrincipales = $datPrueba['promociones'];
+            $promocionesPrincipales = $datPrueba['promociones'];
 
-        //     usort(
-        //         $promocionesPrincipales,
-        //         function ($a, $b)  {
-        //             if ($a['productounoprincipal'] > $b['productounoprincipal']) {
-        //                 return -1;
-        //             } else if ($a['productounoprincipal'] < $b['productounoprincipal']) {
-        //                 return 1;
-        //             } else {
-        //                 return 0;
-        //             }
-        //         }
-        //     );
+            usort(
+                $promocionesPrincipales,
+                function ($a, $b)  {
+                    if ($a['productounoprincipal'] > $b['productounoprincipal']) {
+                        return -1;
+                    } else if ($a['productounoprincipal'] < $b['productounoprincipal']) {
+                        return 1;
+                    } else {
+                        return 0;
+                    }
+                }
+            );
 
-        //     $dataPrueba[$posicionDataPrueba]['promociones'] = $promocionesPrincipales;
+            $dataPrueba[$posicionDataPrueba]['promociones'] = $promocionesPrincipales;
 
-        // }
+        }
 
 
 
