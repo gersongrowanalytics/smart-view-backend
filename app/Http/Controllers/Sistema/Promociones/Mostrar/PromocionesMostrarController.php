@@ -1033,9 +1033,11 @@ class PromocionesMostrarController extends Controller
                 }else{
                     $nuevasPromos['productounoprincipal'] = intval(0);
                 }
-                
+
                 if(isset($dataPrueba[$posicionDataPrueba]['promociones'][$posicionPromocion]['productos'])){
                     $nuevasPromos['productos'] = $dataPrueba[$posicionDataPrueba]['promociones'][$posicionPromocion]['productos'];
+                }else{
+                    $nuevasPromos['productos'] = array();;
                 }
 
                 $dataPrueba[$posicionDataPrueba]['promociones'] = $nuevasPromos;
