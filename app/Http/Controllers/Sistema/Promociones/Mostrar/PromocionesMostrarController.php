@@ -1020,30 +1020,30 @@ class PromocionesMostrarController extends Controller
 
 
 
-        foreach($dataPrueba as $posicionDataPrueba => $datPrueba){
+        // foreach($dataPrueba as $posicionDataPrueba => $datPrueba){
 
-            $promosDataPrueba = $dataPrueba[$posicionDataPrueba]['promociones'];
+        //     $promosDataPrueba = $dataPrueba[$posicionDataPrueba]['promociones'];
 
-            foreach($promosDataPrueba as $posicionPromocion => $promocion){
+        //     foreach($promosDataPrueba as $posicionPromocion => $promocion){
 
-                $nuevasPromos = $promosDataPrueba[$posicionPromocion];
+        //         $nuevasPromos = $promosDataPrueba[$posicionPromocion];
 
-                if(sizeof($promocion['productos']) > 0){
-                    $nuevasPromos['productounoprincipal'] = intval($promocion['productos'][0]['proid']);
-                }else{
-                    $nuevasPromos['productounoprincipal'] = intval(0);
-                }
+        //         if(sizeof($promocion['productos']) > 0){
+        //             $nuevasPromos['productounoprincipal'] = intval($promocion['productos'][0]['proid']);
+        //         }else{
+        //             $nuevasPromos['productounoprincipal'] = intval(0);
+        //         }
 
-                if(isset($dataPrueba[$posicionDataPrueba]['promociones'][$posicionPromocion]['productos'])){
-                    $nuevasPromos['productos'] = $dataPrueba[$posicionDataPrueba]['promociones'][$posicionPromocion]['productos'];
-                }else{
-                    $nuevasPromos['productos'] = array();;
-                }
+        //         if(isset($dataPrueba[$posicionDataPrueba]['promociones'][$posicionPromocion]['productos'])){
+        //             $nuevasPromos['productos'] = $dataPrueba[$posicionDataPrueba]['promociones'][$posicionPromocion]['productos'];
+        //         }else{
+        //             $nuevasPromos['productos'] = array();;
+        //         }
 
-                $dataPrueba[$posicionDataPrueba]['promociones'] = $nuevasPromos;
-            }
+        //         $dataPrueba[$posicionDataPrueba]['promociones'] = $nuevasPromos;
+        //     }
 
-        }
+        // }
 
         // foreach($dataPrueba as $posicionDataPrueba => $datPrueba){
             
