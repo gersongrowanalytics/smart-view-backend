@@ -1316,29 +1316,29 @@ class PromocionesMostrarController extends Controller
         //     }
         // }
 
-        $productosCsc = [];
-        foreach($cscs as $posicionCsc => $csc){
+        // $productosCsc = [];
+        // foreach($cscs as $posicionCsc => $csc){
 
-            $csccanalessucursalescategorias = $cscs;
-            $cspcanalessucursalespromociones = $cscs[$posicionCsc]["promociones"];
+        //     $csccanalessucursalescategorias = $cscs;
+        //     $cspcanalessucursalespromociones = $cscs[$posicionCsc]["promociones"];
 
-            $rptaArmarPromociones = $this->ArmarPromociones($cspcanalessucursalespromociones, $productosCsc, $posicionCsc, $csccanalessucursalescategorias);
-            $cscs[$posicionCsc]["promocionesOrdenadas"] = $rptaArmarPromociones['nuevoArrayCsp'];
-            $productosCsc = $rptaArmarPromociones['productosCsc'];
-            $cscs = $rptaArmarPromociones['csccanalessucursalescategorias'];
-            // $cscs[$posicionCsc]["promocionesOrdenadas"] = $csps;
+        //     $rptaArmarPromociones = $this->ArmarPromociones($cspcanalessucursalespromociones, $productosCsc, $posicionCsc, $csccanalessucursalescategorias);
+        //     $cscs[$posicionCsc]["promocionesOrdenadas"] = $rptaArmarPromociones['nuevoArrayCsp'];
+        //     $productosCsc = $rptaArmarPromociones['productosCsc'];
+        //     $cscs = $rptaArmarPromociones['csccanalessucursalescategorias'];
+        //     // $cscs[$posicionCsc]["promocionesOrdenadas"] = $csps;
 
-            $cscsDoble[] = array(
-                "canid" => $csc->canid,
-                "cannombre" => $csc->cannombre,
-                "cscid" => 0,
-                "porcentaje" => 0,
-                "promociones" => $csc->promociones,
-                "cantidadPromociones" => sizeof($rptaArmarPromociones['nuevoArrayCsp']),
-                "promocionesOrdenadas" => $rptaArmarPromociones['nuevoArrayCsp']
-            );
+        //     $cscsDoble[] = array(
+        //         "canid" => $csc->canid,
+        //         "cannombre" => $csc->cannombre,
+        //         "cscid" => 0,
+        //         "porcentaje" => 0,
+        //         "promociones" => $csc->promociones,
+        //         "cantidadPromociones" => sizeof($rptaArmarPromociones['nuevoArrayCsp']),
+        //         "promocionesOrdenadas" => $rptaArmarPromociones['nuevoArrayCsp']
+        //     );
 
-        }
+        // }
 
 
         // usort(
