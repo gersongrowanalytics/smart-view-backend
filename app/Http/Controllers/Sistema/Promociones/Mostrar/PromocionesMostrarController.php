@@ -1351,7 +1351,8 @@ class PromocionesMostrarController extends Controller
             'datos'          => $datos,
             'linea'          => $linea,
             'mensajeDetalle' => $mensajeDetalle,
-            'mensajedev'     => $mensajedev
+            'mensajedev'     => $mensajedev,
+            'dataPrueba'     => $dataPrueba,
         ]);
         
         return $requestsalida;
