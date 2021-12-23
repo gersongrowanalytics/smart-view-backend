@@ -1462,7 +1462,8 @@ class PromocionesMostrarController extends Controller
         $requestsalida = response()->json([
             'respuesta'      => $respuesta,
             'mensaje'        => $mensaje,
-            'datos'          => $datos,
+            // 'datos'          => $datos,
+            'datos'          => $dataPrueba,
             'linea'          => $linea,
             'mensajeDetalle' => $mensajeDetalle,
             'mensajedev'     => $mensajedev,
