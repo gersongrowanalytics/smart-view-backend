@@ -1032,7 +1032,7 @@ class PromocionesMostrarController extends Controller
 
         foreach($dataPrueba as $posicionDataPrueba => $datPrueba){
             
-            $promocionesPrincipales = $columnaPrincipal['promociones'];
+            $promocionesPrincipales = $datPrueba['promociones'];
 
             usort(
                 $promocionesPrincipales,
