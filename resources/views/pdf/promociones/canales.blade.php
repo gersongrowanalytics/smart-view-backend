@@ -173,7 +173,7 @@
                                                         >
                                                         <div class="text1_product1">{{$producto['prpproductoppt']}}</div>
                                                         <div class="text2_product1">{{$producto['prpcomprappt']}}</div>
-                                                        <div class="text2_product1">{{$producto['prosku']}}</div>
+                                                        <!-- <div class="text2_product1">{{$producto['prosku']}}</div> -->
                                                     </div>
                                                     @endif
                                                     @endforeach
@@ -194,7 +194,7 @@
                                                         >
                                                         <div class="text1_product2">{{$productobonificado['prbproductoppt']}}</div>
                                                         <div class="text2_product2">{{$productobonificado['prbcomprappt']}}</div>
-                                                        <div class="text2_product2">{{$productobonificado['prosku']}}</div>
+                                                        <!-- <div class="text2_product2">{{$productobonificado['prosku']}}</div> -->
                                                     </div>
                                                     @endif
                                                     @endforeach
@@ -297,26 +297,28 @@
                                         <div 
                                             class="text1" 
                                             id="text1_color_page3"
-                                            style="color:{{$categoria['catcolor']}}"
+                                            style="color: transparent"
                                         >
-                                            @if(isset($promocion['cspcantidadplancha']))
+                                            a
+                                            <!-- @if(isset($promocion['cspcantidadplancha']))
                                                 {{ number_format(round($promocion['cspcantidadplancha'])) }} Planchas 
                                             @else
                                                 {{ number_format(round($promocion['csptotalplancha'])) }} Planchas
 
-                                            @endif
+                                            @endif -->
 
                                         </div> 
                                         <div 
                                             class="text2" 
                                             id="text2_color_page3"
-                                            style="color:{{$categoria['catcolor']}}"
+                                            style="color: transparent"
                                         >
-                                            @if(isset($promocion['cspcantidadcombo']))
+                                            a
+                                            <!-- @if(isset($promocion['cspcantidadcombo']))
                                                 Total de Combos: {{ number_format(round($promocion['cspcantidadcombo'])) }}
                                             @else
                                                 Total de Combos: {{ number_format(round($promocion['csptotalcombo'])) }}
-                                            @endif
+                                            @endif -->
                                         </div> 
                                         <div class="text3">Sell Out</div>
                                     </div>
@@ -335,7 +337,7 @@
                                                         >
                                                         <div class="text1_product1">{{$producto['prpproductoppt']}}</div>
                                                         <div class="text2_product1">{{$producto['prpcomprappt']}}</div>
-                                                        <div class="text2_product1">{{$producto['prosku']}}</div>
+                                                        <!-- <div class="text2_product1">{{$producto['prosku']}}</div> -->
                                                     </div>
                                                     @endif
                                                     @endforeach
@@ -356,7 +358,7 @@
                                                         >
                                                         <div class="text1_product2">{{$productobonificado['prbproductoppt']}}</div>
                                                         <div class="text2_product2">{{$productobonificado['prbcomprappt']}}</div>
-                                                        <div class="text2_product2">{{$productobonificado['prosku']}}</div>
+                                                        <!-- <div class="text2_product2">{{$productobonificado['prosku']}}</div> -->
                                                     </div>
                                                     @endif
                                                     @endforeach
@@ -456,26 +458,28 @@
                                         <div 
                                             class="text1" 
                                             id="text1_color_page3"
-                                            style="color:{{$categoria['catcolor']}}"
+                                            style="color: transparent"
                                         >
-                                            @if(isset($promocion['cspcantidadplancha']))
+                                            a
+                                            <!-- @if(isset($promocion['cspcantidadplancha']))
                                                 {{ number_format(round($promocion['cspcantidadplancha'])) }} Planchas 
                                             @else
                                                 {{ number_format(round($promocion['csptotalplancha'])) }} Planchas
 
-                                            @endif
+                                            @endif -->
 
                                         </div> 
                                         <div 
                                             class="text2" 
                                             id="text2_color_page3"
-                                            style="color:{{$categoria['catcolor']}}"
+                                            style="color: transparent"
                                         >
-                                            @if(isset($promocion['cspcantidadcombo']))
+                                            a
+                                            <!-- @if(isset($promocion['cspcantidadcombo']))
                                                 Total de Combos: {{ number_format(round($promocion['cspcantidadcombo'])) }}
                                             @else
                                                 Total de Combos: {{ number_format(round($promocion['csptotalcombo'])) }}
-                                            @endif
+                                            @endif -->
                                         </div> 
                                         <div class="text3">Sell Out</div>
                                     </div>
@@ -494,7 +498,7 @@
                                                         >
                                                         <div class="text1_product1">{{$producto['prpproductoppt']}}</div>
                                                         <div class="text2_product1">{{$producto['prpcomprappt']}}</div>
-                                                        <div class="text2_product1">{{$producto['prosku']}}</div>
+                                                        <!-- <div class="text2_product1">{{$producto['prosku']}}</div> -->
                                                     </div>
                                                     @endif
                                                     @endforeach
@@ -515,7 +519,7 @@
                                                         >
                                                         <div class="text1_product2">{{$productobonificado['prbproductoppt']}}</div>
                                                         <div class="text2_product2">{{$productobonificado['prbcomprappt']}}</div>
-                                                        <div class="text2_product2">{{$productobonificado['prosku']}}</div>
+                                                        <!-- <div class="text2_product2">{{$productobonificado['prosku']}}</div> -->
                                                     </div>
                                                     @endif
                                                     @endforeach
@@ -615,26 +619,28 @@
                                         <div 
                                             class="text1" 
                                             id="text1_color_page3"
-                                            style="color:{{$categoria['catcolor']}}"
+                                            style="color: transparent"
                                         >
-                                            @if(isset($promocion['cspcantidadplancha']))
+                                            a
+                                            <!-- @if(isset($promocion['cspcantidadplancha']))
                                                 {{ number_format(round($promocion['cspcantidadplancha'])) }} Planchas 
                                             @else
                                                 {{ number_format(round($promocion['csptotalplancha'])) }} Planchas
 
-                                            @endif
+                                            @endif -->
 
                                         </div> 
                                         <div 
                                             class="text2" 
                                             id="text2_color_page3"
-                                            style="color:{{$categoria['catcolor']}}"
+                                            style="color: transparent"
                                         >
-                                            @if(isset($promocion['cspcantidadcombo']))
+                                            a
+                                            <!-- @if(isset($promocion['cspcantidadcombo']))
                                                 Total de Combos: {{ number_format(round($promocion['cspcantidadcombo'])) }}
                                             @else
                                                 Total de Combos: {{ number_format(round($promocion['csptotalcombo'])) }}
-                                            @endif
+                                            @endif -->
                                         </div> 
                                         <div class="text3">Sell Out</div>
                                     </div>
@@ -653,7 +659,7 @@
                                                         >
                                                         <div class="text1_product1">{{$producto['prpproductoppt']}}</div>
                                                         <div class="text2_product1">{{$producto['prpcomprappt']}}</div>
-                                                        <div class="text2_product1">{{$producto['prosku']}}</div>
+                                                        <!-- <div class="text2_product1">{{$producto['prosku']}}</div> -->
                                                     </div>
                                                     @endif
                                                     @endforeach
@@ -674,7 +680,7 @@
                                                         >
                                                         <div class="text1_product2">{{$productobonificado['prbproductoppt']}}</div>
                                                         <div class="text2_product2">{{$productobonificado['prbcomprappt']}}</div>
-                                                        <div class="text2_product2">{{$productobonificado['prosku']}}</div>
+                                                        <!-- <div class="text2_product2">{{$productobonificado['prosku']}}</div> -->
                                                     </div>
                                                     @endif
                                                     @endforeach
