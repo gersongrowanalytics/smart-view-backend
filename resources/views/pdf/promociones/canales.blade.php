@@ -131,8 +131,9 @@
                                         <div 
                                             class="text1" 
                                             id="text1_color_page3"
-                                            style="color:{{$categoria['catcolor']}}"
+                                            style="color: white"
                                         >
+                                        <!-- style="color:{{$categoria['catcolor']}}" -->
                                             a
                                             <!-- @if(isset($promocion['cspcantidadplancha']))
                                                 {{ number_format(round($promocion['cspcantidadplancha'])) }} Planchas 
@@ -145,8 +146,9 @@
                                         <div 
                                             class="text2" 
                                             id="text2_color_page3"
-                                            style="color:{{$categoria['catcolor']}}"
+                                            style="color: white"
                                         >
+                                        <!-- style="color:{{$categoria['catcolor']}}" -->
                                             a
                                             <!-- @if(isset($promocion['cspcantidadcombo']))
                                                 Total de Combos: {{ number_format(round($promocion['cspcantidadcombo'])) }}
