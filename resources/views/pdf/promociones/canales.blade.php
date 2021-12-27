@@ -131,7 +131,7 @@
                                         <div 
                                             class="text1" 
                                             id="text1_color_page3"
-                                            style="color: white"
+                                            style="color: transparent"
                                         >
                                         <!-- style="color:{{$categoria['catcolor']}}" -->
                                             a
@@ -146,7 +146,7 @@
                                         <div 
                                             class="text2" 
                                             id="text2_color_page3"
-                                            style="color: white"
+                                            style="color: transparent"
                                         >
                                         <!-- style="color:{{$categoria['catcolor']}}" -->
                                             a
