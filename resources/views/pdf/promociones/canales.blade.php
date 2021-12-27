@@ -128,17 +128,17 @@
                                     </div>
                                 
                                     <div class="big_text">
-                                        <!-- <div 
+                                        <div 
                                             class="text1" 
                                             id="text1_color_page3"
                                             style="color:{{$categoria['catcolor']}}"
                                         >
-                                            @if(isset($promocion['cspcantidadplancha']))
+                                            <!-- @if(isset($promocion['cspcantidadplancha']))
                                                 {{ number_format(round($promocion['cspcantidadplancha'])) }} Planchas 
                                             @else
                                                 {{ number_format(round($promocion['csptotalplancha'])) }} Planchas
 
-                                            @endif
+                                            @endif -->
 
                                         </div> 
                                         <div 
@@ -146,12 +146,12 @@
                                             id="text2_color_page3"
                                             style="color:{{$categoria['catcolor']}}"
                                         >
-                                            @if(isset($promocion['cspcantidadcombo']))
+                                            <!-- @if(isset($promocion['cspcantidadcombo']))
                                                 Total de Combos: {{ number_format(round($promocion['cspcantidadcombo'])) }}
                                             @else
                                                 Total de Combos: {{ number_format(round($promocion['csptotalcombo'])) }}
-                                            @endif
-                                        </div>  -->
+                                            @endif -->
+                                        </div> 
                                         <div class="text3">Sell Out</div>
                                     </div>
                                     <div class="box_table_img">
