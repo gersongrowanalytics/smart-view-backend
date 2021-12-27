@@ -195,7 +195,7 @@ body, html{
 }
 .big_text{
     /* background-color: tomato; */
-    margin-top: 0px;
+    margin-top: -10px;
     margin-bottom: 10px;
 }
 .text1{
