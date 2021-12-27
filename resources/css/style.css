@@ -679,7 +679,7 @@ body, html{
     height: 31px;
     border-radius: 9px 9px 9px 9px;
     position: absolute;
-    left: 50%;
+    left: 45%;
     z-index: 1;
     top: 18px;
 }
