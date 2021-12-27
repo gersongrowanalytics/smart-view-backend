@@ -128,7 +128,7 @@
                                     </div>
                                 
                                     <div class="big_text">
-                                        <div 
+                                        <!-- <div 
                                             class="text1" 
                                             id="text1_color_page3"
                                             style="color:{{$categoria['catcolor']}}"
@@ -151,7 +151,7 @@
                                             @else
                                                 Total de Combos: {{ number_format(round($promocion['csptotalcombo'])) }}
                                             @endif
-                                        </div> 
+                                        </div>  -->
                                         <div class="text3">Sell Out</div>
                                     </div>
                                     <div class="box_table_img">

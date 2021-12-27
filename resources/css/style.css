@@ -677,9 +677,9 @@ body, html{
 .Fecha-Expiracion-Promocion-Pdf{
     width: 95px;
     height: 31px;
-    border-radius: 9px 0px 0px 9px;
+    border-radius: 9px 9px 9px 9px;
     position: absolute;
-    right: 0;
+    left: 50%;
     z-index: 1;
     top: 18px;
 }
