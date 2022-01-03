@@ -111,9 +111,8 @@
                                         </div>
                                         <div class="Segunda-Mitad-Fecha-Expiracion-Promocion-Pdf">
                                             <div class="Texto-Inicio-Fecha-Expiracion-Pdf">
-                                                Ini
                                                 @if(isset($promocion['fechainicio']))
-                                                {{$promocion['fechainicio']}}
+                                                Ini {{$promocion['fechainicio']}}
                                                 @else
                                                 01/12
                                                 @endif
