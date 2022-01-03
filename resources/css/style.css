@@ -696,7 +696,7 @@ body, html{
     width: 80%;
     height: 31px;
     position: absolute;
-    right: 60px;
+    left: 0px;
     top: 0;
 }
 
