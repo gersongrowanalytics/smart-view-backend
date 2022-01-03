@@ -675,11 +675,11 @@ body, html{
 /* EXPIRACION FECHA */
 
 .Fecha-Expiracion-Promocion-Pdf{
-    width: 130px;
+    width: 140px;
     height: 31px;
     border-radius: 9px 9px 9px 9px;
     position: absolute;
-    left: 33%;
+    left: 32%;
     z-index: 1;
     top: 30px;
 }
