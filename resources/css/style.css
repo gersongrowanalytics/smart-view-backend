@@ -846,3 +846,15 @@ body, html{
     bottom: 109px;
     right: 100px;
 }
+
+.Texto-Numeros-Pagina-Pdf{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 18px;
+    line-height: 16px;
+    /* color: #E41A37; */
+    position: absolute;
+    bottom: 109px;
+    right: 90px;
+}

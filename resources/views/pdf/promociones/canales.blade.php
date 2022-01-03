@@ -711,7 +711,18 @@
         @endif
     @endforeach
 
-    <div class="Texto-Numero-Pagina-Pdf" style="color:{{$categoria['catcolor']}}" >{{$pagina+1}}</div>
+    <!-- <div class="Texto-Numero-Pagina-Pdf" style="color:{{$categoria['catcolor']}}" > -->
+        
+        @if(strlen($pagina+1) == 1)
+        <div class="Texto-Numero-Pagina-Pdf" style="color:{{$categoria['catcolor']}}" >
+            {{$pagina+1}}
+        </div>
+        @else
+        <div class="Texto-Numeros-Pagina-Pdf" style="color:{{$categoria['catcolor']}}" >
+            {{$pagina+1}}
+        </div>
+        @endif
+    <!-- </div> -->
 </div>
 
 
