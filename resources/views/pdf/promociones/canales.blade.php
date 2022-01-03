@@ -719,7 +719,7 @@
         </div>
         @else
         <div class="Texto-Numeros-Pagina-Pdf" style="color:{{$categoria['catcolor']}}" >
-            {{$pagina+1}}
+            {{$pagina+1}}a
         </div>
         @endif
     <!-- </div> -->
