@@ -111,10 +111,18 @@
                                         </div>
                                         <div class="Segunda-Mitad-Fecha-Expiracion-Promocion-Pdf">
                                             <div class="Texto-Inicio-Fecha-Expiracion-Pdf">
+                                                Ini
                                                 @if(isset($promocion['fechainicio']))
                                                 {{$promocion['fechainicio']}}
                                                 @else
                                                 01/12
+                                                @endif
+                                                -
+                                                Fin
+                                                @if(isset($promocion['fechafinal']))
+                                                {{$promocion['fechafinal']}}
+                                                @else
+                                                30/12
                                                 @endif
                                             </div>
                                             <!-- <div class="Texto-Fin-Fecha-Expiracion-Pdf">
@@ -126,7 +134,7 @@
                                             </div> -->
                                         </div>
 
-                                        <div class="Tercera-Mitad-Fecha-Expiracion-Promocion-Pdf">
+                                        <!-- <div class="Tercera-Mitad-Fecha-Expiracion-Promocion-Pdf">
                                             <div class="Texto-Fin-Fecha-Expiracion-Pdf">
                                                 @if(isset($promocion['fechafinal']))
                                                 {{$promocion['fechafinal']}}
@@ -134,7 +142,7 @@
                                                 30/12
                                                 @endif
                                             </div>
-                                        </div>
+                                        </div> -->
                                     </div>
                                 
                                     <div class="big_text">
