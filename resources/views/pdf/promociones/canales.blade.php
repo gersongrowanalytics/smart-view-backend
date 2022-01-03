@@ -117,6 +117,16 @@
                                                 01/12
                                                 @endif
                                             </div>
+                                            <!-- <div class="Texto-Fin-Fecha-Expiracion-Pdf">
+                                                @if(isset($promocion['fechafinal']))
+                                                {{$promocion['fechafinal']}}
+                                                @else
+                                                30/12
+                                                @endif
+                                            </div> -->
+                                        </div>
+
+                                        <div class="Tercera-Mitad-Fecha-Expiracion-Promocion-Pdf">
                                             <div class="Texto-Fin-Fecha-Expiracion-Pdf">
                                                 @if(isset($promocion['fechafinal']))
                                                 {{$promocion['fechafinal']}}
