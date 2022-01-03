@@ -693,20 +693,14 @@ body, html{
 }
 
 .Segunda-Mitad-Fecha-Expiracion-Promocion-Pdf{
-    width: 40%;
+    width: 80%;
     height: 31px;
     position: absolute;
     right: 60px;
     top: 0;
 }
 
-.Tercera-Mitad-Fecha-Expiracion-Promocion-Pdf{
-    width: 40%;
-    height: 31px;
-    position: absolute;
-    right: 5px;
-    top: 0;
-}
+
 
 .Texto-Inicio-Fecha-Expiracion-Pdf{
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
