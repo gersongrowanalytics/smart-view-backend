@@ -10,6 +10,7 @@ use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use App\carcargasarchivos;
 use App\usuusuarios;
+use App\ltplistaprecios;
 use Illuminate\Support\Facades\DB;
 
 class CargarListaPreciosController extends Controller
@@ -53,22 +54,34 @@ class CargarListaPreciosController extends Controller
                 $objPHPExcel->setActiveSheetIndex(2);
                 $numRows        = $objPHPExcel->setActiveSheetIndex(2)->getHighestRow();
                 $ultimaColumna  = $objPHPExcel->setActiveSheetIndex(2)->getHighestColumn();
-                
 
-                for ($i=6; $i <= $numRows ; $i++) {
-                    $dia = '01';
 
-                    $ex_categoria = $objPHPExcel->getActiveSheet()->getCell('C'.$i)->getCalculatedValue();
-                    $ex_marcaje_mayorista = $objPHPExcel->getActiveSheet()->getCell('S'.$i)->getCalculatedValue();
-                    $ex_pvp       = $objPHPExcel->getActiveSheet()->getCell('AG'.$i)->getCalculatedValue();
-                    
-                    $log["categorias"][] = $ex_categoria;
-                    $log["marcaje"][] = $ex_marcaje_mayorista;
-                    $log["pvp"][] = $ex_pvp;
-   
+                $fechaSeleccionada = 69;
 
-                }
-                
+                // AGREGAR LISTA DE PRECIOS DE ZA
+                $treidSeleccionado = 26;
+                $this->AgregarDataGrupo($numRows, $objPHPExcel, $fechaSeleccionada, $treidSeleccionado);
+
+
+                $objPHPExcel->setActiveSheetIndex(3);
+                $numRows        = $objPHPExcel->setActiveSheetIndex(3)->getHighestRow();
+                $ultimaColumna  = $objPHPExcel->setActiveSheetIndex(3)->getHighestColumn();
+
+                // AGREGAR LISTA DE PRECIOS DE ZB
+                $treidSeleccionado = 15;
+                $this->AgregarDataGrupo($numRows, $objPHPExcel, $fechaSeleccionada, $treidSeleccionado);
+
+
+                $objPHPExcel->setActiveSheetIndex(4);
+                $numRows        = $objPHPExcel->setActiveSheetIndex(4)->getHighestRow();
+                $ultimaColumna  = $objPHPExcel->setActiveSheetIndex(4)->getHighestColumn();
+
+                // AGREGAR LISTA DE PRECIOS DE ZC
+                $treidSeleccionado = 24;
+                $this->AgregarDataGrupo($numRows, $objPHPExcel, $fechaSeleccionada, $treidSeleccionado);
+
+
+
                 $exitoSubirExcel = true;
 
                 DB::commit();
@@ -138,5 +151,66 @@ class CargarListaPreciosController extends Controller
         }
         
         return $requestsalida;
+    }
+
+
+    public function AgregarDataGrupo($numRows, $objPHPExcel, $fechaSeleccionada, $treidSeleccionado)
+    {
+
+
+        for ($i=6; $i <= $numRows ; $i++) {
+            $dia = '01';
+
+            $ex_categoria           = $objPHPExcel->getActiveSheet()->getCell('C'.$i)->getCalculatedValue();
+            $ex_subcategoria        = $objPHPExcel->getActiveSheet()->getCell('D'.$i)->getCalculatedValue();
+            $ex_codigosap           = $objPHPExcel->getActiveSheet()->getCell('E'.$i)->getCalculatedValue();
+            $ex_ean                 = $objPHPExcel->getActiveSheet()->getCell('F'.$i)->getCalculatedValue();
+            $ex_descripcionproducto = $objPHPExcel->getActiveSheet()->getCell('G'.$i)->getCalculatedValue();
+            $ex_unidadventa         = $objPHPExcel->getActiveSheet()->getCell('H'.$i)->getCalculatedValue();
+            $ex_preciolistasinigv   = $objPHPExcel->getActiveSheet()->getCell('J'.$i)->getCalculatedValue();
+            $ex_alza                = $objPHPExcel->getActiveSheet()->getCell('K'.$i)->getCalculatedValue();
+            $ex_sdtpr               = $objPHPExcel->getActiveSheet()->getCell('L'.$i)->getCalculatedValue();
+            $ex_preciolistaconigv   = $objPHPExcel->getActiveSheet()->getCell('M'.$i)->getCalculatedValue();
+            $ex_mfrutamayorista     = $objPHPExcel->getActiveSheet()->getCell('N'.$i)->getCalculatedValue();
+            $ex_reventamayorista    = $objPHPExcel->getActiveSheet()->getCell('P'.$i)->getCalculatedValue();
+            $ex_margenmayorista     = $objPHPExcel->getActiveSheet()->getCell('Q'.$i)->getCalculatedValue();
+            $ex_marcajemayorista    = $objPHPExcel->getActiveSheet()->getCell('S'.$i)->getCalculatedValue();
+            $ex_mfrutaminorista     = $objPHPExcel->getActiveSheet()->getCell('U'.$i)->getCalculatedValue();
+            $ex_reventaminorista    = $objPHPExcel->getActiveSheet()->getCell('W'.$i)->getCalculatedValue();
+            $ex_margenminorista     = $objPHPExcel->getActiveSheet()->getCell('X'.$i)->getCalculatedValue();
+            $ex_marcajeminorista    = $objPHPExcel->getActiveSheet()->getCell('Z'.$i)->getCalculatedValue();
+            $ex_mfrutahorizontal    = $objPHPExcel->getActiveSheet()->getCell('AB'.$i)->getCalculatedValue();
+            $ex_reventabodega       = $objPHPExcel->getActiveSheet()->getCell('AD'.$i)->getCalculatedValue();
+            $ex_margenbodega        = $objPHPExcel->getActiveSheet()->getCell('AE'.$i)->getCalculatedValue();
+            $ex_pvp                 = $objPHPExcel->getActiveSheet()->getCell('AG'.$i)->getCalculatedValue();
+            
+            $ltpn = new ltplistaprecios;
+            $ltpn->treid = $fechaSeleccionada;
+            $ltpn->fecid = $treidSeleccionado;
+            $ltpn->ltpcategoria             = $ex_categoria;
+            $ltpn->ltpsubcategoria          = $ex_subcategoria;
+            $ltpn->ltpcodigosap             = $ex_codigosap;
+            $ltpn->ltpean                   = $ex_ean;
+            $ltpn->ltpdescripcionproducto   = $ex_descripcionproducto;
+            $ltpn->ltpunidadventa           = $ex_unidadventa;
+            $ltpn->ltppreciolistasinigv     = $ex_preciolistasinigv;
+            $ltpn->ltpalza                  = $ex_alza;
+            $ltpn->ltpsdtpr                 = $ex_sdtpr;
+            $ltpn->ltppreciolistaconigv     = $ex_preciolistaconigv;
+            $ltpn->ltpmfrutamayorista       = $ex_mfrutamayorista;
+            $ltpn->ltpreventamayorista      = $ex_reventamayorista;
+            $ltpn->ltpmargenmayorista       = $ex_margenmayorista;
+            $ltpn->ltpmarcajemayorista      = $ex_marcajemayorista;
+            $ltpn->ltpmfrutaminorista       = $ex_mfrutaminorista;
+            $ltpn->ltpreventaminorista      = $ex_reventaminorista;
+            $ltpn->ltpmargenminorista       = $ex_margenminorista;
+            $ltpn->ltpmarcajeminorista      = $ex_marcajeminorista;
+            $ltpn->ltpmfrutahorizontal      = $ex_mfrutahorizontal;
+            $ltpn->ltpreventabodega         = $ex_reventabodega;
+            $ltpn->ltpmargenbodega          = $ex_margenbodega;
+            $ltpn->ltppvp                   = $ex_pvp;
+            $ltpn->save();
+        }
+
     }
 }
