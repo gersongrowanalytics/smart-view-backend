@@ -51,8 +51,8 @@ class CargarListaPreciosController extends Controller
 
                 $objPHPExcel    = IOFactory::load($fichero_subido);
                 $objPHPExcel->setActiveSheetIndex(2);
-                $numRows        = $objPHPExcel->setActiveSheetIndex(0)->getHighestRow();
-                $ultimaColumna  = $objPHPExcel->setActiveSheetIndex(0)->getHighestColumn();
+                $numRows        = $objPHPExcel->setActiveSheetIndex(2)->getHighestRow();
+                $ultimaColumna  = $objPHPExcel->setActiveSheetIndex(2)->getHighestColumn();
                 
 
                 for ($i=6; $i <= $numRows ; $i++) {
