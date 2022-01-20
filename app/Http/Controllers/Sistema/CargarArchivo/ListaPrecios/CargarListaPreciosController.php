@@ -185,8 +185,8 @@ class CargarListaPreciosController extends Controller
             $ex_pvp                 = $objPHPExcel->getActiveSheet()->getCell('AG'.$i)->getCalculatedValue();
             
             $ltpn = new ltplistaprecios;
-            $ltpn->treid = $fechaSeleccionada;
-            $ltpn->fecid = $treidSeleccionado;
+            $ltpn->treid = $treidSeleccionado;
+            $ltpn->fecid = $fechaSeleccionada;
             $ltpn->ltpcategoria             = $ex_categoria;
             $ltpn->ltpsubcategoria          = $ex_subcategoria;
             $ltpn->ltpcodigosap             = $ex_codigosap;
