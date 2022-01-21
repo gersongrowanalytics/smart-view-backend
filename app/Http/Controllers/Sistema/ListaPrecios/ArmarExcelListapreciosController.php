@@ -239,6 +239,48 @@ class ArmarExcelListapreciosController extends Controller
                 $arrayFilaExcel = array(); // FILA 5
 
                 foreach($cabeceras as $cabecera){
+
+                    $coloLetra = "FFFFFFFF";
+                    $colorFondo = "FF44546A";
+                    
+                    if($cabecera == "MF Ruta Mayorista"){
+                        $coloLetra = "FFFFFFFF";
+                        $colorFondo = "FF70AD47";
+                    }else if($cabecera == "Reventa Mayorista"){
+                        $coloLetra = "FFFFFFFF";
+                        $colorFondo = "FF70AD47";
+                    }else if($cabecera == "Margen Mayorista"){
+                        $coloLetra = "FFFFFFFF";
+                        $colorFondo = "FF4472C4";
+                    }else if($cabecera == "Marcaje Mayorista"){
+                        $coloLetra = "FFFFFFFF";
+                        $colorFondo = "FF4472C4";
+                    }else if($cabecera == "MF Ruta Minorista"){
+                        $coloLetra = "FFFFFFFF";
+                        $colorFondo = "FF70AD47";
+                    }else if($cabecera == "Reventa Minorista"){
+                        $coloLetra = "FFFFFFFF";
+                        $colorFondo = "FF70AD47";
+                    }else if($cabecera == "Margen Minorista"){
+                        $coloLetra = "FFFFFFFF";
+                        $colorFondo = "FF4472C4";
+                    }else if($cabecera == "Marcaje Minorista"){
+                        $coloLetra = "FFFFFFFF";
+                        $colorFondo = "FF4472C4";
+                    }else if($cabecera == "MF Ruta Horizontal"){
+                        $coloLetra = "FFFFFFFF";
+                        $colorFondo = "FF70AD47";
+                    }else if($cabecera == "Reventa Bodega"){
+                        $coloLetra = "FFFFFFFF";
+                        $colorFondo = "FF70AD47";
+                    }else if($cabecera == "Margen Bodega"){
+                        $coloLetra = "FFFFFFFF";
+                        $colorFondo = "FF4472C4";
+                    }else if($cabecera == "PVP"){
+                        $coloLetra = "FFFFFFFF";
+                        $colorFondo = "FF4472C4";
+                    }
+
                     $arrayFilaExcel[] = array(
                         "value" => $cabecera,
                         "style" => array(
@@ -246,14 +288,18 @@ class ArmarExcelListapreciosController extends Controller
                                 "sz" => "11",
                                 "bold" => true,
                                 "color" => array(
-                                    "rgb" => "FFFFFFFF"
+                                    "rgb" => $coloLetra
                                 )
                             ),
                             "fill" => array(
                                 "patternType" => 'solid',
                                 "fgColor" => array(
-                                    "rgb" => "FF44546A"
+                                    "rgb" => $colorFondo
                                 )
+                            ),
+                            "alignment" => array(
+                                "vertical" => "center",
+                                "horizontal" => "center"
                             )
                             
                         )
@@ -278,6 +324,10 @@ class ArmarExcelListapreciosController extends Controller
                             "fgColor" => array(
                                 "rgb" => "FFFFFFFF"
                             )
+                        ),
+                        "alignment" => array(
+                            "vertical" => "center",
+                            "horizontal" => "center"
                         )
                         
                     )
@@ -320,8 +370,11 @@ class ArmarExcelListapreciosController extends Controller
                             "fgColor" => array(
                                 "rgb" => "FFFFFFFF"
                             )
+                        ),
+                        "alignment" => array(
+                            "vertical" => "center",
+                            "horizontal" => "center"
                         )
-                        
                     )
                 ),
                 array(
@@ -339,6 +392,10 @@ class ArmarExcelListapreciosController extends Controller
                             "fgColor" => array(
                                 "rgb" => "FFFFFFFF"
                             )
+                        ),
+                        "alignment" => array(
+                            "vertical" => "center",
+                            "horizontal" => "center"
                         )
                         
                     )
@@ -358,6 +415,10 @@ class ArmarExcelListapreciosController extends Controller
                             "fgColor" => array(
                                 "rgb" => "FFFFFFFF"
                             )
+                        ),
+                        "alignment" => array(
+                            "vertical" => "center",
+                            "horizontal" => "center"
                         )
                         
                     )
@@ -377,6 +438,10 @@ class ArmarExcelListapreciosController extends Controller
                             "fgColor" => array(
                                 "rgb" => "FFFFFFFF"
                             )
+                        ),
+                        "alignment" => array(
+                            "vertical" => "center",
+                            "horizontal" => "center"
                         )
                         
                     )
@@ -396,6 +461,10 @@ class ArmarExcelListapreciosController extends Controller
                             "fgColor" => array(
                                 "rgb" => "FFFFFFFF"
                             )
+                        ),
+                        "alignment" => array(
+                            "vertical" => "center",
+                            "horizontal" => "center"
                         )
                         
                     )
@@ -415,6 +484,10 @@ class ArmarExcelListapreciosController extends Controller
                             "fgColor" => array(
                                 "rgb" => "FFFFFFFF"
                             )
+                        ),
+                        "alignment" => array(
+                            "vertical" => "center",
+                            "horizontal" => "center"
                         )
                         
                     )
@@ -434,6 +507,10 @@ class ArmarExcelListapreciosController extends Controller
                             "fgColor" => array(
                                 "rgb" => "FFFFFFFF"
                             )
+                        ),
+                        "alignment" => array(
+                            "vertical" => "center",
+                            "horizontal" => "center"
                         )
                         
                     )
@@ -453,6 +530,10 @@ class ArmarExcelListapreciosController extends Controller
                             "fgColor" => array(
                                 "rgb" => "FFFFFFFF"
                             )
+                        ),
+                        "alignment" => array(
+                            "vertical" => "center",
+                            "horizontal" => "center"
                         )
                         
                     )
@@ -472,6 +553,10 @@ class ArmarExcelListapreciosController extends Controller
                             "fgColor" => array(
                                 "rgb" => "FFFFFFFF"
                             )
+                        ),
+                        "alignment" => array(
+                            "vertical" => "center",
+                            "horizontal" => "center"
                         )
                         
                     )
@@ -491,6 +576,10 @@ class ArmarExcelListapreciosController extends Controller
                             "fgColor" => array(
                                 "rgb" => "FFFFFFFF"
                             )
+                        ),
+                        "alignment" => array(
+                            "vertical" => "center",
+                            "horizontal" => "center"
                         )
                         
                     )
@@ -510,6 +599,10 @@ class ArmarExcelListapreciosController extends Controller
                             "fgColor" => array(
                                 "rgb" => "FFE2EFDA"
                             )
+                        ),
+                        "alignment" => array(
+                            "vertical" => "center",
+                            "horizontal" => "center"
                         )
                         
                     )
@@ -529,6 +622,10 @@ class ArmarExcelListapreciosController extends Controller
                             "fgColor" => array(
                                 "rgb" => "FFFFFFFF"
                             )
+                        ),
+                        "alignment" => array(
+                            "vertical" => "center",
+                            "horizontal" => "center"
                         )
                         
                     )
@@ -548,6 +645,10 @@ class ArmarExcelListapreciosController extends Controller
                             "fgColor" => array(
                                 "rgb" => "FFD9E1F2"
                             )
+                        ),
+                        "alignment" => array(
+                            "vertical" => "center",
+                            "horizontal" => "center"
                         )
                         
                     )
@@ -567,6 +668,10 @@ class ArmarExcelListapreciosController extends Controller
                             "fgColor" => array(
                                 "rgb" => "FFFFFFFF"
                             )
+                        ),
+                        "alignment" => array(
+                            "vertical" => "center",
+                            "horizontal" => "center"
                         )
                     )
                 ),
@@ -585,6 +690,10 @@ class ArmarExcelListapreciosController extends Controller
                             "fgColor" => array(
                                 "rgb" => "FFFFFFFF"
                             )
+                        ),
+                        "alignment" => array(
+                            "vertical" => "center",
+                            "horizontal" => "center"
                         )
                         
                     )
@@ -604,6 +713,10 @@ class ArmarExcelListapreciosController extends Controller
                             "fgColor" => array(
                                 "rgb" => "FFE2EFDA"
                             )
+                        ),
+                        "alignment" => array(
+                            "vertical" => "center",
+                            "horizontal" => "center"
                         )
                         
                     )
@@ -623,6 +736,10 @@ class ArmarExcelListapreciosController extends Controller
                             "fgColor" => array(
                                 "rgb" => "FFFFFFFF"
                             )
+                        ),
+                        "alignment" => array(
+                            "vertical" => "center",
+                            "horizontal" => "center"
                         )
                         
                     )
@@ -642,6 +759,10 @@ class ArmarExcelListapreciosController extends Controller
                             "fgColor" => array(
                                 "rgb" => "FFD9E1F2"
                             )
+                        ),
+                        "alignment" => array(
+                            "vertical" => "center",
+                            "horizontal" => "center"
                         )
                         
                     )
@@ -661,6 +782,10 @@ class ArmarExcelListapreciosController extends Controller
                             "fgColor" => array(
                                 "rgb" => "FFFFFFFF"
                             )
+                        ),
+                        "alignment" => array(
+                            "vertical" => "center",
+                            "horizontal" => "center"
                         )
                     )
                 ),
@@ -679,6 +804,10 @@ class ArmarExcelListapreciosController extends Controller
                             "fgColor" => array(
                                 "rgb" => "FFFFFFFF"
                             )
+                        ),
+                        "alignment" => array(
+                            "vertical" => "center",
+                            "horizontal" => "center"
                         )
                         
                     )
@@ -698,6 +827,10 @@ class ArmarExcelListapreciosController extends Controller
                             "fgColor" => array(
                                 "rgb" => "FFE2EFDA"
                             )
+                        ),
+                        "alignment" => array(
+                            "vertical" => "center",
+                            "horizontal" => "center"
                         )
                         
                     )
@@ -717,6 +850,10 @@ class ArmarExcelListapreciosController extends Controller
                             "fgColor" => array(
                                 "rgb" => "FFFFFFFF"
                             )
+                        ),
+                        "alignment" => array(
+                            "vertical" => "center",
+                            "horizontal" => "center"
                         )
                         
                     )
@@ -736,6 +873,10 @@ class ArmarExcelListapreciosController extends Controller
                             "fgColor" => array(
                                 "rgb" => "FFD9E1F2"
                             )
+                        ),
+                        "alignment" => array(
+                            "vertical" => "center",
+                            "horizontal" => "center"
                         )
                         
                     )
