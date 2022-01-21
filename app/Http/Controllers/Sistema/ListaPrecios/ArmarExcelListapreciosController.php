@@ -180,7 +180,7 @@ class ArmarExcelListapreciosController extends Controller
                                 "wrapText" => true,
                                 "vertical" => "right",
                                 "horizontal" => "right",
-                                "readingOrder" => 1
+                                "readingOrder" => 3
                             )
                             
                         )
