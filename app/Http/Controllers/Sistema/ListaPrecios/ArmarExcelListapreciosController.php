@@ -62,12 +62,11 @@ class ArmarExcelListapreciosController extends Controller
         $cabeceras = [
             "CAMBIO",
             "Categoría",
-            "Categoría",
+            "Subcategoría",
             "Código SAP",
             "EAN",
             "Descripción de producto",
             "Unidad de venta",
-            "Precio Lista Sin IGV Anterior",
             "Precio Lista Sin IGV",
             "% Alza",
             "SD / TPR",
@@ -264,7 +263,25 @@ class ArmarExcelListapreciosController extends Controller
             }
 
             $arrayFilaExcel = array(
-                array(),
+                array(
+                    "value" => "-",
+                    "style" => array(
+                        "font" => array(
+                            "sz" => "11",
+                            "bold" => false,
+                            "color" => array(
+                                "rgb" => "FFFFFFFF"
+                            )
+                        ),
+                        "fill" => array(
+                            "patternType" => 'solid',
+                            "fgColor" => array(
+                                "rgb" => "FFFFFFFF"
+                            )
+                        )
+                        
+                    )
+                ),
                 array(
                     "value" => $ltp->ltpcategoria,
                     "style" => array(
