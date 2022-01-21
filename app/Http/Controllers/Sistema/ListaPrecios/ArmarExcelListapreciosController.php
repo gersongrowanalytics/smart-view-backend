@@ -175,6 +175,9 @@ class ArmarExcelListapreciosController extends Controller
                                 "fgColor" => array(
                                     "rgb" => "FF000000"
                                 )
+                            ),
+                            "alignment" => array(
+                                "wrapText" => true
                             )
                             
                         )
