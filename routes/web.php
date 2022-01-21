@@ -137,6 +137,7 @@ $router->group(['middleware' => ['permisos']], function() use($router) {
     $router->get('/quitarGratisPromociones/{fecid}', 'Sistema\Promociones\Editar\PromocionEditarGratisController@QuitarGratisPromociones');
 
     // LISTA DE PRECIOS
+    $router->post('/obtener-grupos-disponibles', 'Sistema\ListaPrecios\ArmarExcelListapreciosController@ObtenerGruposPermitidos');
     $router->post('/exportar-excel-lista-precios', 'Sistema\ListaPrecios\ArmarExcelListapreciosController@ArmarExcelListaprecios');
 
 

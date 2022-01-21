@@ -21,6 +21,10 @@ class ArmarExcelListapreciosController extends Controller
                                         'treid'
                                     ]);
 
+        return response()->json([
+            'data' => $uss
+        ]);
+
                                     
     }
     
@@ -331,7 +335,6 @@ class ArmarExcelListapreciosController extends Controller
                                 "horizontal" => "right",
                                 "readingOrder" => 3
                             )
-                            
                         )
                     ),
                     array(
