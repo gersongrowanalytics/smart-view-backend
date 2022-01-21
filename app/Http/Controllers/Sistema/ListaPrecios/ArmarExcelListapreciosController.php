@@ -447,7 +447,7 @@ class ArmarExcelListapreciosController extends Controller
                     )
                 ),
                 array(
-                    "value" => $ltp->ltpunidadventa,
+                    "value" => floatval($ltp->ltpunidadventa),
                     "style" => array(
                         "font" => array(
                             "sz" => "11",
@@ -465,12 +465,13 @@ class ArmarExcelListapreciosController extends Controller
                         "alignment" => array(
                             "vertical" => "center",
                             "horizontal" => "center"
-                        )
+                        ),
+                        "numFmt" => "#,##0.00"
                         
                     )
                 ),
                 array(
-                    "value" => $ltp->ltppreciolistasinigv,
+                    "value" => floatval($ltp->ltppreciolistasinigv),
                     "style" => array(
                         "font" => array(
                             "sz" => "11",
@@ -488,12 +489,13 @@ class ArmarExcelListapreciosController extends Controller
                         "alignment" => array(
                             "vertical" => "center",
                             "horizontal" => "center"
-                        )
+                        ),
+                        "numFmt" => "#,##0.00"
                         
                     )
                 ),
                 array(
-                    "value" => $ltp->ltpalza,
+                    "value" => floatval($ltp->ltpalza),
                     "style" => array(
                         "font" => array(
                             "sz" => "11",
@@ -511,12 +513,13 @@ class ArmarExcelListapreciosController extends Controller
                         "alignment" => array(
                             "vertical" => "center",
                             "horizontal" => "center"
-                        )
+                        ),
+                        "numFmt" => "#,##0.00"
                         
                     )
                 ),
                 array(
-                    "value" => $ltp->ltpsdtpr,
+                    "value" => floatval($ltp->ltpsdtpr),
                     "style" => array(
                         "font" => array(
                             "sz" => "11",
@@ -534,12 +537,13 @@ class ArmarExcelListapreciosController extends Controller
                         "alignment" => array(
                             "vertical" => "center",
                             "horizontal" => "center"
-                        )
+                        ),
+                        "numFmt" => "#,##0.00"
                         
                     )
                 ),
                 array(
-                    "value" => $ltp->ltppreciolistaconigv,
+                    "value" => floatval($ltp->ltppreciolistaconigv),
                     "style" => array(
                         "font" => array(
                             "sz" => "11",
@@ -557,12 +561,13 @@ class ArmarExcelListapreciosController extends Controller
                         "alignment" => array(
                             "vertical" => "center",
                             "horizontal" => "center"
-                        )
+                        ),
+                        "numFmt" => "#,##0.00"
                         
                     )
                 ),
                 array(
-                    "value" => $ltp->ltpmfrutamayorista,
+                    "value" => floatval($ltp->ltpmfrutamayorista),
                     "style" => array(
                         "font" => array(
                             "sz" => "11",
@@ -580,12 +585,13 @@ class ArmarExcelListapreciosController extends Controller
                         "alignment" => array(
                             "vertical" => "center",
                             "horizontal" => "center"
-                        )
+                        ),
+                        "numFmt" => "#,##0.00"
                         
                     )
                 ),
                 array(
-                    "value" => $ltp->ltpreventamayorista,
+                    "value" => floatval($ltp->ltpreventamayorista),
                     "style" => array(
                         "font" => array(
                             "sz" => "11",
@@ -603,12 +609,13 @@ class ArmarExcelListapreciosController extends Controller
                         "alignment" => array(
                             "vertical" => "center",
                             "horizontal" => "center"
-                        )
+                        ),
+                        "numFmt" => "#,##0.00"
                         
                     )
                 ),
                 array(
-                    "value" => $ltp->ltpmargenmayorista,
+                    "value" => floatval($ltp->ltpmargenmayorista),
                     "style" => array(
                         "font" => array(
                             "sz" => "11",
@@ -626,12 +633,13 @@ class ArmarExcelListapreciosController extends Controller
                         "alignment" => array(
                             "vertical" => "center",
                             "horizontal" => "center"
-                        )
+                        ),
+                        "numFmt" => "#,##0.00"
                         
                     )
                 ),
                 array(
-                    "value" => $ltp->ltpmarcajemayorista,
+                    "value" => floatval($ltp->ltpmarcajemayorista),
                     "style" => array(
                         "font" => array(
                             "sz" => "11",
@@ -649,7 +657,8 @@ class ArmarExcelListapreciosController extends Controller
                         "alignment" => array(
                             "vertical" => "center",
                             "horizontal" => "center"
-                        )
+                        ),
+                        "numFmt" => "#,##0.00"
                         
                     )
                 ),
@@ -676,7 +685,7 @@ class ArmarExcelListapreciosController extends Controller
                     )
                 ),
                 array(
-                    "value" => $ltp->ltpmfrutaminorista,
+                    "value" => floatval($ltp->ltpmfrutaminorista),
                     "style" => array(
                         "font" => array(
                             "sz" => "11",
@@ -694,12 +703,13 @@ class ArmarExcelListapreciosController extends Controller
                         "alignment" => array(
                             "vertical" => "center",
                             "horizontal" => "center"
-                        )
+                        ),
+                        "numFmt" => "#,##0.00"
                         
                     )
                 ),
                 array(
-                    "value" => $ltp->ltpreventaminorista,
+                    "value" => floatval($ltp->ltpreventaminorista),
                     "style" => array(
                         "font" => array(
                             "sz" => "11",
@@ -717,12 +727,13 @@ class ArmarExcelListapreciosController extends Controller
                         "alignment" => array(
                             "vertical" => "center",
                             "horizontal" => "center"
-                        )
+                        ),
+                        "numFmt" => "#,##0.00"
                         
                     )
                 ),
                 array(
-                    "value" => $ltp->ltpmargenminorista,
+                    "value" => floatval($ltp->ltpmargenminorista),
                     "style" => array(
                         "font" => array(
                             "sz" => "11",
@@ -740,12 +751,13 @@ class ArmarExcelListapreciosController extends Controller
                         "alignment" => array(
                             "vertical" => "center",
                             "horizontal" => "center"
-                        )
+                        ),
+                        "numFmt" => "#,##0.00"
                         
                     )
                 ),
                 array(
-                    "value" => $ltp->ltpmarcajeminorista,
+                    "value" => floatval($ltp->ltpmarcajeminorista),
                     "style" => array(
                         "font" => array(
                             "sz" => "11",
@@ -763,7 +775,8 @@ class ArmarExcelListapreciosController extends Controller
                         "alignment" => array(
                             "vertical" => "center",
                             "horizontal" => "center"
-                        )
+                        ),
+                        "numFmt" => "#,##0.00"
                         
                     )
                 ),
@@ -790,7 +803,7 @@ class ArmarExcelListapreciosController extends Controller
                     )
                 ),
                 array(
-                    "value" => $ltp->ltpmfrutahorizontal,
+                    "value" => floatval($ltp->ltpmfrutahorizontal),
                     "style" => array(
                         "font" => array(
                             "sz" => "11",
@@ -808,12 +821,13 @@ class ArmarExcelListapreciosController extends Controller
                         "alignment" => array(
                             "vertical" => "center",
                             "horizontal" => "center"
-                        )
+                        ),
+                        "numFmt" => "#,##0.00"
                         
                     )
                 ),
                 array(
-                    "value" => $ltp->ltpreventabodega,
+                    "value" => floatval($ltp->ltpreventabodega),
                     "style" => array(
                         "font" => array(
                             "sz" => "11",
@@ -831,12 +845,13 @@ class ArmarExcelListapreciosController extends Controller
                         "alignment" => array(
                             "vertical" => "center",
                             "horizontal" => "center"
-                        )
+                        ),
+                        "numFmt" => "#,##0.00"
                         
                     )
                 ),
                 array(
-                    "value" => $ltp->ltpmargenbodega,
+                    "value" => floatval($ltp->ltpmargenbodega),
                     "style" => array(
                         "font" => array(
                             "sz" => "11",
@@ -854,12 +869,13 @@ class ArmarExcelListapreciosController extends Controller
                         "alignment" => array(
                             "vertical" => "center",
                             "horizontal" => "center"
-                        )
+                        ),
+                        "numFmt" => "#,##0.00"
                         
                     )
                 ),
                 array(
-                    "value" => $ltp->ltppvp,
+                    "value" => floatval($ltp->ltppvp),
                     "style" => array(
                         "font" => array(
                             "sz" => "11",
@@ -877,7 +893,8 @@ class ArmarExcelListapreciosController extends Controller
                         "alignment" => array(
                             "vertical" => "center",
                             "horizontal" => "center"
-                        )
+                        ),
+                        "numFmt" => "#,##0.00"
                         
                     )
                 ),
