@@ -93,7 +93,32 @@ class ArmarExcelListapreciosController extends Controller
             if($posicionLtp == 0){
 
                 $arrayTitulos = array(
-                    array("title" => "", "width" => array("wpx" => 100)),
+                    array("title" => "", "width" => array("wpx" => 0)),
+                    array("title" => "", "width" => array("wpx" => 110)),
+                    array("title" => "", "width" => array("wpx" => 110)),
+                    array("title" => "", "width" => array("wpx" => 110)),
+                    array("title" => "", "width" => array("wpx" => 110)),
+                    array("title" => "", "width" => array("wpx" => 110)),
+                    array("title" => "", "width" => array("wpx" => 110)),
+                    array("title" => "", "width" => array("wpx" => 110)),
+                    array("title" => "", "width" => array("wpx" => 110)),
+                    array("title" => "", "width" => array("wpx" => 110)),
+                    array("title" => "", "width" => array("wpx" => 110)),
+                    array("title" => "", "width" => array("wpx" => 110)),
+                    array("title" => "", "width" => array("wpx" => 110)),
+                    array("title" => "", "width" => array("wpx" => 110)),
+                    array("title" => "", "width" => array("wpx" => 110)),
+                    array("title" => "", "width" => array("wpx" => 20)),
+                    array("title" => "", "width" => array("wpx" => 110)),
+                    array("title" => "", "width" => array("wpx" => 110)),
+                    array("title" => "", "width" => array("wpx" => 110)),
+                    array("title" => "", "width" => array("wpx" => 110)),
+                    array("title" => "", "width" => array("wpx" => 20)),
+                    array("title" => "", "width" => array("wpx" => 110)),
+                    array("title" => "", "width" => array("wpx" => 110)),
+                    array("title" => "", "width" => array("wpx" => 110)),
+                    array("title" => "", "width" => array("wpx" => 110)),
+
                 );
 
                 $nuevoArray[0]['columns'] = $arrayTitulos;
@@ -506,7 +531,24 @@ class ArmarExcelListapreciosController extends Controller
                         
                     )
                 ),
-                array(),
+                array(
+                    "value" => "-",
+                    "style" => array(
+                        "font" => array(
+                            "sz" => "11",
+                            "bold" => true,
+                            "color" => array(
+                                "rgb" => "FF4472C4"
+                            )
+                        ),
+                        "fill" => array(
+                            "patternType" => 'solid',
+                            "fgColor" => array(
+                                "rgb" => "FFFFFFFF"
+                            )
+                        )
+                    )
+                ),
                 array(
                     "value" => $ltp->ltpmfrutaminorista,
                     "style" => array(
@@ -583,7 +625,24 @@ class ArmarExcelListapreciosController extends Controller
                         
                     )
                 ),
-                array(),
+                array(
+                    "value" => "-",
+                    "style" => array(
+                        "font" => array(
+                            "sz" => "11",
+                            "bold" => true,
+                            "color" => array(
+                                "rgb" => "FF4472C4"
+                            )
+                        ),
+                        "fill" => array(
+                            "patternType" => 'solid',
+                            "fgColor" => array(
+                                "rgb" => "FFFFFFFF"
+                            )
+                        )
+                    )
+                ),
                 array(
                     "value" => $ltp->ltpmfrutahorizontal,
                     "style" => array(
