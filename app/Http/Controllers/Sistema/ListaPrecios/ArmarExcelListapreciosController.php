@@ -226,7 +226,20 @@ class ArmarExcelListapreciosController extends Controller
                         )
                     ),
                     array(),
-                    array(),
+                    array(
+                        "value" => "",
+                        "style" => array(
+                            "fill" => array(
+                                "patternType" => 'solid',
+                                "fgColor" => array(
+                                    "rgb" => "FF000000"
+                                )
+                            ),
+                            "alignment" => array(
+                                "wrapText" => true,
+                            )
+                        )
+                    ),
                     array(
                         "value" => "MINORISTA",
                         "style" => array(
@@ -242,15 +255,60 @@ class ArmarExcelListapreciosController extends Controller
                                 "fgColor" => array(
                                     "rgb" => "FF000000"
                                 )
+                            ),
+                            "alignment" => array(
+                                "wrapText" => true,
+                                "vertical" => "right",
+                                "horizontal" => "right",
+                                "readingOrder" => 3
                             )
                             
                         )
                     ),
 
+                    array(
+                        "value" => "",
+                        "style" => array(
+                            "fill" => array(
+                                "patternType" => 'solid',
+                                "fgColor" => array(
+                                    "rgb" => "FF000000"
+                                )
+                            ),
+                            "alignment" => array(
+                                "wrapText" => true,
+                            )
+                        )
+                    ),
+                    array(
+                        "value" => "",
+                        "style" => array(
+                            "fill" => array(
+                                "patternType" => 'solid',
+                                "fgColor" => array(
+                                    "rgb" => "FF000000"
+                                )
+                            ),
+                            "alignment" => array(
+                                "wrapText" => true,
+                            )
+                        )
+                    ),
                     array(),
-                    array(),
-                    array(),
-                    array(),
+                    array(
+                        "value" => "",
+                        "style" => array(
+                            "fill" => array(
+                                "patternType" => 'solid',
+                                "fgColor" => array(
+                                    "rgb" => "FF000000"
+                                )
+                            ),
+                            "alignment" => array(
+                                "wrapText" => true,
+                            )
+                        )
+                    ),
                     array(
                         "value" => "BODEGA",
                         "style" => array(
@@ -266,8 +324,42 @@ class ArmarExcelListapreciosController extends Controller
                                 "fgColor" => array(
                                     "rgb" => "FF000000"
                                 )
+                            ),
+                            "alignment" => array(
+                                "wrapText" => true,
+                                "vertical" => "right",
+                                "horizontal" => "right",
+                                "readingOrder" => 3
                             )
                             
+                        )
+                    ),
+                    array(
+                        "value" => "",
+                        "style" => array(
+                            "fill" => array(
+                                "patternType" => 'solid',
+                                "fgColor" => array(
+                                    "rgb" => "FF000000"
+                                )
+                            ),
+                            "alignment" => array(
+                                "wrapText" => true,
+                            )
+                        )
+                    ),
+                    array(
+                        "value" => "",
+                        "style" => array(
+                            "fill" => array(
+                                "patternType" => 'solid',
+                                "fgColor" => array(
+                                    "rgb" => "FF000000"
+                                )
+                            ),
+                            "alignment" => array(
+                                "wrapText" => true,
+                            )
                         )
                     ),
 
