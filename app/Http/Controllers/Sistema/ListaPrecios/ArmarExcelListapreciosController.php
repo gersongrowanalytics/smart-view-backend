@@ -107,12 +107,12 @@ class ArmarExcelListapreciosController extends Controller
                     array("title" => "", "width" => array("wpx" => 110)),
                     array("title" => "", "width" => array("wpx" => 110)),
                     array("title" => "", "width" => array("wpx" => 110)),
-                    array("title" => "", "width" => array("wpx" => 20)),
+                    array("title" => "", "width" => array("wpx" => 40)),
                     array("title" => "", "width" => array("wpx" => 110)),
                     array("title" => "", "width" => array("wpx" => 110)),
                     array("title" => "", "width" => array("wpx" => 110)),
                     array("title" => "", "width" => array("wpx" => 110)),
-                    array("title" => "", "width" => array("wpx" => 20)),
+                    array("title" => "", "width" => array("wpx" => 40)),
                     array("title" => "", "width" => array("wpx" => 110)),
                     array("title" => "", "width" => array("wpx" => 110)),
                     array("title" => "", "width" => array("wpx" => 110)),
@@ -555,7 +555,7 @@ class ArmarExcelListapreciosController extends Controller
                             "sz" => "11",
                             "bold" => true,
                             "color" => array(
-                                "rgb" => "FF4472C4"
+                                "rgb" => "FFFFFFFF"
                             )
                         ),
                         "fill" => array(
@@ -649,7 +649,7 @@ class ArmarExcelListapreciosController extends Controller
                             "sz" => "11",
                             "bold" => true,
                             "color" => array(
-                                "rgb" => "FF4472C4"
+                                "rgb" => "FFFFFFFF"
                             )
                         ),
                         "fill" => array(
