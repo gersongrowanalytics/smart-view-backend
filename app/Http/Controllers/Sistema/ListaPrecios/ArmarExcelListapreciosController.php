@@ -18,11 +18,13 @@ class ArmarExcelListapreciosController extends Controller
 
         $tres = ussusuariossucursales::join('usuusuarios as usu', 'usu.usuid', 'ussusuariossucursales.usuid')
                                     ->join('sucsucursales as suc', 'suc.sucid', 'ussusuariossucursales.sucid')
+                                    ->join('tretiposrebates as tre', 'suc.treid', 'tre.treid')
                                     ->where('usu.usutoken', $usutoken)
                                     ->distinct('suc.treid')
                                     ->get([
                                         'treid',
-                                        'usu.tpuid'
+                                        'usu.tpuid',
+                                        'trenombre'
                                     ]);
 
         $usu = usuusuarios::where('usutoken', $usutoken)->first();
@@ -63,8 +65,8 @@ class ArmarExcelListapreciosController extends Controller
     public function ArmarExcelListaprecios(Request $request)
     {
 
-        // $re_treid = $request['treid'];
-        $re_treid = 26;
+        $re_treid = $request['treid'];
+        // $re_treid = 26;
         $usutoken = $request->header('api_token');
         $re_anio = $request['anio'];
         $re_mes  = $request['mes'];
