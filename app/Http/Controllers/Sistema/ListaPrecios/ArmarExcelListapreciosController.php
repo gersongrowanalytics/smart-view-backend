@@ -177,7 +177,9 @@ class ArmarExcelListapreciosController extends Controller
                                 )
                             ),
                             "alignment" => array(
-                                "wrapText" => true
+                                "wrapText" => true,
+                                "vertical" => "right",
+                                "horizontal" => "right",
                             )
                             
                         )
