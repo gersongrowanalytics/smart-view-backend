@@ -6,6 +6,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\ltplistaprecios;
 use App\ussusuariossucursales;
+use App\usuusuarios;
+use App\tretiposrebates;
+use App\tuptiposusuariospermisos;
 
 class ArmarExcelListapreciosController extends Controller
 {
@@ -13,16 +16,45 @@ class ArmarExcelListapreciosController extends Controller
     {
         $usutoken = $request->header('api_token');
 
-        $uss = ussusuariossucursales::join('usuusuarios as usu', 'usu.usuid', 'ussusuariossucursales.usuid')
+        $tres = ussusuariossucursales::join('usuusuarios as usu', 'usu.usuid', 'ussusuariossucursales.usuid')
                                     ->join('sucsucursales as suc', 'suc.sucid', 'ussusuariossucursales.sucid')
                                     ->where('usu.usutoken', $usutoken)
                                     ->distinct('suc.treid')
                                     ->get([
-                                        'treid'
+                                        'treid',
+                                        'usu.tpuid'
                                     ]);
 
+        $usu = usuusuarios::where('usutoken', $usutoken)->first();
+
+        if($usu){
+
+            if($usu->tpuid == 1){
+                $tres = tretiposrebates::orwhere('trenombre', 'ZA')
+                                        ->orwhere('trenombre', 'ZB')
+                                        ->orwhere('trenombre', 'ZC')
+                                        ->get();
+
+            }else{
+
+                $tup = tuptiposusuariospermisos::join('pempermisos as pem', 'pem.pemid', 'tuptiposusuariospermisos.pemid')
+                                                ->where('tpuid', $usu->tpuid)
+                                                ->where('pemslug', 'listaprecios.mostrar.todos.grupostres')
+                                                ->first();
+
+                if($tup){
+                    $tres = tretiposrebates::orwhere('trenombre', 'ZA')
+                                        ->orwhere('trenombre', 'ZB')
+                                        ->orwhere('trenombre', 'ZC')
+                                        ->get();
+                }
+
+            }
+
+        }
+
         return response()->json([
-            'data' => $uss
+            'data' => $tres
         ]);
 
                                     
