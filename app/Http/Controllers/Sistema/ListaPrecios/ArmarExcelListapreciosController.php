@@ -299,7 +299,8 @@ class ArmarExcelListapreciosController extends Controller
                             )
                         ),
                         "alignment" => array(
-                            "vertical" => "center"
+                            "vertical" => "center",
+                            "horizontal" => "center"
                         )
                         
                     )
