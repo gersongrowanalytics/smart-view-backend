@@ -47,7 +47,7 @@ class ReconocimientoPagosController extends Controller
         $fecid = 1;
         $exitoSubirExcel = false;
 
-        DB::beginTransaction();
+        // DB::beginTransaction();
         try{
 
             $fichero_subido = base_path().'/public/Sistema/cargaArchivos/reconocimientopagos/'.basename($usuusuario->usuid.'-'.$usuusuario->usuusuario.'-'.$fechaActual.'-'.$_FILES['file']['name']);
@@ -152,18 +152,18 @@ class ReconocimientoPagosController extends Controller
             $nuevoCargaArchivo->carnombrearchivo = $archivo;
             $nuevoCargaArchivo->carubicacion     = $fichero_subido;
             $nuevoCargaArchivo->carexito         = $exitoSubirExcel;
-            $nuevoCargaArchivo->carurl           = env('APP_URL').'/Sistema/cargaArchivos/reconocimientopagos/'.$archivo;
+            $nuevoCargaArchivo->carurl           = env('APP_URL').'/Sistema/cargaArchivos/reconocimientopagos/'.basename($usuusuario->usuid.'-'.$usuusuario->usuusuario.'-'.$fechaActual.'-'.$_FILES['file']['name']);
             if($nuevoCargaArchivo->save()){
                 $pkid = "CAR-".$nuevoCargaArchivo->carid;
             }else{
 
             }
 
-            DB::commit();
+            // DB::commit();
 
         } catch (Exception $e) {
             $respuesta = false;
-            DB::rollBack();
+            // DB::rollBack();
             $mensajedev = $e->getMessage();
             $log["MENSAJE_DEV"] = $mensajedev;
         }

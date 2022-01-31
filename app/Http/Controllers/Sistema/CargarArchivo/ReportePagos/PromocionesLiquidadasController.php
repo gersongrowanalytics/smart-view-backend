@@ -48,7 +48,8 @@ class PromocionesLiquidadasController extends Controller
         );
 
         $exitoSubirExcel = false;
-        
+        $fecid = 1;
+
         DB::beginTransaction();
 
         try{
@@ -163,6 +164,21 @@ class PromocionesLiquidadasController extends Controller
                 //         $respuesta = false;
                 //     }
                 // }
+            }
+
+
+            $nuevoCargaArchivo = new carcargasarchivos;
+            $nuevoCargaArchivo->tcaid            = 16; // Carga Reconocimiento de Pagos
+            $nuevoCargaArchivo->fecid            = $fecid;
+            $nuevoCargaArchivo->usuid            = $usuusuario->usuid;
+            $nuevoCargaArchivo->carnombrearchivo = $archivo;
+            $nuevoCargaArchivo->carubicacion     = $fichero_subido;
+            $nuevoCargaArchivo->carexito         = $exitoSubirExcel;
+            $nuevoCargaArchivo->carurl           = env('APP_URL').'/Sistema/cargaArchivos/promocionesliquidadas/'.basename($usuusuario->usuid.'-'.$usuusuario->usuusuario.'-'.$fechaActual.'-'.$_FILES['file']['name']);
+            if($nuevoCargaArchivo->save()){
+                $pkid = "CAR-".$nuevoCargaArchivo->carid;
+            }else{
+
             }
 
             DB::commit();
