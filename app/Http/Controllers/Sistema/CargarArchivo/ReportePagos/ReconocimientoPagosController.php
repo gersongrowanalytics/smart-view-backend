@@ -54,89 +54,89 @@ class ReconocimientoPagosController extends Controller
 
             if (move_uploaded_file($_FILES['file']['tmp_name'], $fichero_subido)) {
 
-                $objPHPExcel    = IOFactory::load($fichero_subido);
-                $objPHPExcel->setActiveSheetIndex(0);
-                $numRows        = $objPHPExcel->setActiveSheetIndex(0)->getHighestRow();
-                $ultimaColumna  = $objPHPExcel->setActiveSheetIndex(0)->getHighestColumn();
+                // $objPHPExcel    = IOFactory::load($fichero_subido);
+                // $objPHPExcel->setActiveSheetIndex(0);
+                // $numRows        = $objPHPExcel->setActiveSheetIndex(0)->getHighestRow();
+                // $ultimaColumna  = $objPHPExcel->setActiveSheetIndex(0)->getHighestColumn();
 
-                for ($i=2; $i <= $numRows ; $i++) {
-                    $dia = '01';
+                // for ($i=2; $i <= $numRows ; $i++) {
+                //     $dia = '01';
 
-                    $gbaZona         = $objPHPExcel->getActiveSheet()->getCell('A'.$i)->getCalculatedValue();
-                    $anioPromocion   = $objPHPExcel->getActiveSheet()->getCell('B'.$i)->getCalculatedValue();
-                    $mesPromocion    = $objPHPExcel->getActiveSheet()->getCell('C'.$i)->getCalculatedValue();
-                    $concepto        = $objPHPExcel->getActiveSheet()->getCell('D'.$i)->getCalculatedValue();
-                    $soldto          = $objPHPExcel->getActiveSheet()->getCell('E'.$i)->getCalculatedValue();
-                    $tipoDocumento   = $objPHPExcel->getActiveSheet()->getCell('G'.$i)->getCalculatedValue();
-                    $fechaDocumento  = $objPHPExcel->getActiveSheet()->getCell('H'.$i)->getCalculatedValue();
-                    $numeroDocumento = $objPHPExcel->getActiveSheet()->getCell('I'.$i)->getCalculatedValue();
-                    $importeSinIgv   = $objPHPExcel->getActiveSheet()->getCell('J'.$i)->getCalculatedValue();
-                    $monedaLocal     = $objPHPExcel->getActiveSheet()->getCell('K'.$i)->getCalculatedValue();
-                    $categoria       = $objPHPExcel->getActiveSheet()->getCell('L'.$i)->getCalculatedValue();
-                    $texto           = $objPHPExcel->getActiveSheet()->getCell('M'.$i)->getCalculatedValue();
+                //     $gbaZona         = $objPHPExcel->getActiveSheet()->getCell('A'.$i)->getCalculatedValue();
+                //     $anioPromocion   = $objPHPExcel->getActiveSheet()->getCell('B'.$i)->getCalculatedValue();
+                //     $mesPromocion    = $objPHPExcel->getActiveSheet()->getCell('C'.$i)->getCalculatedValue();
+                //     $concepto        = $objPHPExcel->getActiveSheet()->getCell('D'.$i)->getCalculatedValue();
+                //     $soldto          = $objPHPExcel->getActiveSheet()->getCell('E'.$i)->getCalculatedValue();
+                //     $tipoDocumento   = $objPHPExcel->getActiveSheet()->getCell('G'.$i)->getCalculatedValue();
+                //     $fechaDocumento  = $objPHPExcel->getActiveSheet()->getCell('H'.$i)->getCalculatedValue();
+                //     $numeroDocumento = $objPHPExcel->getActiveSheet()->getCell('I'.$i)->getCalculatedValue();
+                //     $importeSinIgv   = $objPHPExcel->getActiveSheet()->getCell('J'.$i)->getCalculatedValue();
+                //     $monedaLocal     = $objPHPExcel->getActiveSheet()->getCell('K'.$i)->getCalculatedValue();
+                //     $categoria       = $objPHPExcel->getActiveSheet()->getCell('L'.$i)->getCalculatedValue();
+                //     $texto           = $objPHPExcel->getActiveSheet()->getCell('M'.$i)->getCalculatedValue();
 
-                    $fechaDocumento = Date::excelToDateTimeObject($fechaDocumento);
-                    $fechaDocumento = json_encode($fechaDocumento);
-                    $fechaDocumento = json_decode($fechaDocumento);
-                    $fechaDocumento = date("Y-m-d", strtotime($fechaDocumento->date));
+                //     $fechaDocumento = Date::excelToDateTimeObject($fechaDocumento);
+                //     $fechaDocumento = json_encode($fechaDocumento);
+                //     $fechaDocumento = json_decode($fechaDocumento);
+                //     $fechaDocumento = date("Y-m-d", strtotime($fechaDocumento->date));
 
-                    $fec = fecfechas::where('fecdia', $dia)
-                                        ->where('fecmes', 'LIKE', "%".$mesPromocion."%")
-                                        ->where('fecano', $anioPromocion)
-                                        ->first(['fecid']);
+                //     $fec = fecfechas::where('fecdia', $dia)
+                //                         ->where('fecmes', 'LIKE', "%".$mesPromocion."%")
+                //                         ->where('fecano', $anioPromocion)
+                //                         ->first(['fecid']);
                                         
-                    $fecid = 0;
-                    if($fec){
+                //     $fecid = 0;
+                //     if($fec){
 
-                        if($i == 2){
-                            // repreconocimientopago::where('fecid', $fec->fecid)->delete();
-                            // repreconocimientopago::where('repid', '>', 0)->delete();
-                        }
+                //         if($i == 2){
+                //             // repreconocimientopago::where('fecid', $fec->fecid)->delete();
+                //             // repreconocimientopago::where('repid', '>', 0)->delete();
+                //         }
 
-                        $fecid = $fec->fecid;
+                //         $fecid = $fec->fecid;
 
-                        $suc = sucsucursales::where('sucsoldto', $soldto)->first(['sucid']);
+                //         $suc = sucsucursales::where('sucsoldto', $soldto)->first(['sucid']);
 
-                        $sucid = 1;
-                        if($suc){
+                //         $sucid = 1;
+                //         if($suc){
 
-                            if($suc->sucestado != 1){
-                                $suc->sucestado = 1;
-                                $suc->update();
-                            }
+                //             if($suc->sucestado != 1){
+                //                 $suc->sucestado = 1;
+                //                 $suc->update();
+                //             }
 
-                            $sucid = $suc->sucid;
+                //             $sucid = $suc->sucid;
 
 
-                        }else{
-                            $log["NO_SE_ENCONTRO_SUCURSAL"][] = "No se encontro la sucursal: ".$soldto." en la linea: ".$i;
-                            $mensaje = 'Lo sentimos, se encontraron algunas observaciones en la columna de soldto';
-                            $respuesta = false;
-                        }
+                //         }else{
+                //             $log["NO_SE_ENCONTRO_SUCURSAL"][] = "No se encontro la sucursal: ".$soldto." en la linea: ".$i;
+                //             $mensaje = 'Lo sentimos, se encontraron algunas observaciones en la columna de soldto';
+                //             $respuesta = false;
+                //         }
 
-                        $repn = new repreconocimientopago;
-                        $repn->fecid              = $fecid;
-                        $repn->sucid              = $sucid;
-                        $repn->repsoldto          = $soldto;
-                        $repn->sucid              = $sucid;
-                        $repn->repconcepto        = $concepto;
-                        $repn->reptipodocumento   = $tipoDocumento;
-                        $repn->repnumerodocumento = $numeroDocumento;
-                        $repn->repfechadocumento  = $fechaDocumento;
-                        $repn->repcategoria       = $categoria;
-                        $repn->repimporte         = $importeSinIgv;
-                        $repn->repmonedalocal     = $monedaLocal;
-                        $repn->reptexto           = $texto;
-                        $repn->save();
+                //         $repn = new repreconocimientopago;
+                //         $repn->fecid              = $fecid;
+                //         $repn->sucid              = $sucid;
+                //         $repn->repsoldto          = $soldto;
+                //         $repn->sucid              = $sucid;
+                //         $repn->repconcepto        = $concepto;
+                //         $repn->reptipodocumento   = $tipoDocumento;
+                //         $repn->repnumerodocumento = $numeroDocumento;
+                //         $repn->repfechadocumento  = $fechaDocumento;
+                //         $repn->repcategoria       = $categoria;
+                //         $repn->repimporte         = $importeSinIgv;
+                //         $repn->repmonedalocal     = $monedaLocal;
+                //         $repn->reptexto           = $texto;
+                //         $repn->save();
 
-                    }else{
-                        $log["NO_SE_ENCONTRO_FECHA"][] = "En la linea: ".$i.", registrado con el mes: ".$mesPromocion." en el año: ".$anioPromocion;
-                        $mensaje = 'Lo sentimos, se encontraron algunas observaciones en las columnas de mes y año';
-                        $respuesta = false;
-                    }
-                }
+                //     }else{
+                //         $log["NO_SE_ENCONTRO_FECHA"][] = "En la linea: ".$i.", registrado con el mes: ".$mesPromocion." en el año: ".$anioPromocion;
+                //         $mensaje = 'Lo sentimos, se encontraron algunas observaciones en las columnas de mes y año';
+                //         $respuesta = false;
+                //     }
+                // }
 
-                $exitoSubirExcel = true;
+                // $exitoSubirExcel = true;
 
             }else{
                 $respuesta       = false;
