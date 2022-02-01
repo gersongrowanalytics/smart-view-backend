@@ -35,7 +35,7 @@ class PromocionEditarGratisController extends Controller
         $csps = cspcanalessucursalespromociones::join('prmpromociones as prm', 'prm.prmid', 'cspcanalessucursalespromociones.prmid')
                                                 ->join('prbpromocionesbonificaciones as prb', 'prb.prmid', 'prm.prmid')
                                                 ->where('cspcanalessucursalespromociones.fecid', $fecid)
-                                                ->where('prbproductoppt' , 'LIKE', 'Reconocimiento')
+                                                ->where('prbproductoppt' , 'LIKE', '%Reconocimiento%')
                                                 ->get([
                                                     'cspcanalessucursalespromociones.cspid',
                                                     'cspgratis'
