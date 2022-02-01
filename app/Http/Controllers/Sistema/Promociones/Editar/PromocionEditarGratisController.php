@@ -174,7 +174,10 @@ class PromocionEditarGratisController extends Controller
 
             $mystring = $csp->prbproductoppt;
 
-            if (strpos($mystring, "%") !== false) {
+
+            $pos = strpos($mystring, "%");
+
+            if($pos !== false){
                 // $cspe = cspcanalessucursalespromociones::find($csp->cspid);
                 // $cspe->cspgratis = 0;
                 // if($cspe->update()){
