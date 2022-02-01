@@ -76,6 +76,9 @@ class ReconocimientoPagosController extends Controller
                         $categoria       = $objPHPExcel->getActiveSheet()->getCell('L'.$i)->getCalculatedValue();
                         $texto           = $objPHPExcel->getActiveSheet()->getCell('M'.$i)->getCalculatedValue();
 
+                        $anioPromocion = trim($anioPromocion);
+                        $mesPromocion  = trim($mesPromocion);
+
                         $fechaDocumento = Date::excelToDateTimeObject($fechaDocumento);
                         $fechaDocumento = json_encode($fechaDocumento);
                         $fechaDocumento = json_decode($fechaDocumento);
