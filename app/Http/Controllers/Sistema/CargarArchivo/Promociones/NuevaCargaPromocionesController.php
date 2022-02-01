@@ -211,12 +211,19 @@ class NuevaCargaPromocionesController extends Controller
 
                         // COLUMNAS CALCULADAS
                         if(isset($precXtodo)){
-                            if($precXtodo > 0){
-                                $precXplanc = $precXtodo / $planchas;
-                                $precXcombo = $precXtodo / $combos;
+                            if(is_numeric($precXtodo)){
+                                if($precXtodo > 0){
+                                    if(is_numeric($planchas)){
+                                        $precXplanc = $precXtodo / $planchas;
+                                    }
+    
+                                    if(is_numeric($combos)){
+                                        $precXcombo = $precXtodo / $combos;
+                                    }
+                                }
                             }
                         }
-                        
+
                         $arrayFecha = explode(".", $ex_iniciopromo);
 
                         if(sizeof($arrayFecha) == 3){
