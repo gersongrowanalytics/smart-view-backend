@@ -200,6 +200,8 @@ class NuevaCargaPromocionesController extends Controller
                         $tipoClien  = $objPHPExcel->getActiveSheet()->getCell('AF'.$i)->getCalculatedValue(); // AK
                         $planchas   = $objPHPExcel->getActiveSheet()->getCell('AG'.$i)->getCalculatedValue(); // AN
                         $combos     = $objPHPExcel->getActiveSheet()->getCell('AH'.$i)->getCalculatedValue(); // AO
+
+
                         $precXcombo = $objPHPExcel->getActiveSheet()->getCell('AI'.$i)->getCalculatedValue(); // AP
                         $precXplanc = $objPHPExcel->getActiveSheet()->getCell('AJ'.$i)->getCalculatedValue(); // AQ
                         $precXtodo  = $objPHPExcel->getActiveSheet()->getCell('AK'.$i)->getCalculatedValue(); // AR
@@ -207,7 +209,14 @@ class NuevaCargaPromocionesController extends Controller
                         $ex_finpromo    = $objPHPExcel->getActiveSheet()->getCell('AM'.$i)->getCalculatedValue(); // AR
                         $nuevoProm      = $objPHPExcel->getActiveSheet()->getCell('AO'.$i)->getCalculatedValue();
 
-
+                        // COLUMNAS CALCULADAS
+                        if(isset($precXtodo)){
+                            if($precXtodo > 0){
+                                $precXplanc = $precXtodo / $planchas;
+                                $precXcombo = $precXtodo / $combos;
+                            }
+                        }
+                        
                         $arrayFecha = explode(".", $ex_iniciopromo);
 
                         if(sizeof($arrayFecha) == 3){
