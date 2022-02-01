@@ -163,7 +163,7 @@ class PromocionEditarGratisController extends Controller
         $csps = cspcanalessucursalespromociones::join('prmpromociones as prm', 'prm.prmid', 'cspcanalessucursalespromociones.prmid')
                                                 ->join('prbpromocionesbonificaciones as prb', 'prb.prmid', 'prm.prmid')
                                                 ->where('cspcanalessucursalespromociones.fecid', $fecid)
-                                                ->where('cspgratis' , true)
+                                                ->where('cspgratis', true)
                                                 ->get([
                                                     'cspcanalessucursalespromociones.cspid',
                                                     'cspgratis',
@@ -185,6 +185,8 @@ class PromocionEditarGratisController extends Controller
                 // }else{
                 //     $logs["CSP_NO_EDITADO"][] = $cspe->cspid;
                 // }   
+            }else{
+                $logs["CSP_NO_EDITADO"][] = $csp->cspid." TIENE PORCENTAJE EN PRBPRODUCTOPPT: ".$csp->prbproductoppt;
             }
         }
 
