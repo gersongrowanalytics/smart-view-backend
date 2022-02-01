@@ -96,11 +96,29 @@ class PromocionEditarGratisController extends Controller
 
         // ---------PRB
 
+        $csps = cspcanalessucursalespromociones::join('prmpromociones as prm', 'prm.prmid', 'cspcanalessucursalespromociones.prmid')
+                                                ->join('prbpromocionesbonificaciones as prb', 'prb.prmid', 'prm.prmid')
+                                                ->where('cspcanalessucursalespromociones.fecid', $fecid)
+                                                ->where('prbproductoppt' , 'LIKE', '%Descto%')
+                                                ->get([
+                                                    'cspcanalessucursalespromociones.cspid',
+                                                    'cspgratis'
+                                                ]);
+
+        foreach($csps as $csp){
+            $cspe = cspcanalessucursalespromociones::find($csp->cspid);
+            $cspe->cspgratis = 0;
+            if($cspe->update()){
+                $logs["CSP_EDITADO"][] = $cspe->cspid;
+            }else{
+                $logs["CSP_NO_EDITADO"][] = $cspe->cspid;
+            }
+        }
 
         $csps = cspcanalessucursalespromociones::join('prmpromociones as prm', 'prm.prmid', 'cspcanalessucursalespromociones.prmid')
                                                 ->join('prbpromocionesbonificaciones as prb', 'prb.prmid', 'prm.prmid')
                                                 ->where('cspcanalessucursalespromociones.fecid', $fecid)
-                                                ->where('prbcomprappt' , 'LIKE', 'Descto')
+                                                ->where('prbcomprappt' , 'LIKE', '%Descto%')
                                                 ->get([
                                                     'cspcanalessucursalespromociones.cspid',
                                                     'cspgratis'
