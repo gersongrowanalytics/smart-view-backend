@@ -167,12 +167,12 @@ class PromocionEditarGratisController extends Controller
                                                 ->get([
                                                     'cspcanalessucursalespromociones.cspid',
                                                     'cspgratis',
-                                                    'prbproductoppt'
+                                                    'prbcomprappt'
                                                 ]);
 
         foreach($csps as $csp){
 
-            $mystring = $csp->prbproductoppt;
+            $mystring = $csp->prbcomprappt;
 
 
             $pos = strpos($mystring, "%");
@@ -181,12 +181,12 @@ class PromocionEditarGratisController extends Controller
                 // $cspe = cspcanalessucursalespromociones::find($csp->cspid);
                 // $cspe->cspgratis = 0;
                 // if($cspe->update()){
-                    $logs["CSP_EDITADO"][] = $csp->cspid." TIENE PORCENTAJE EN PRBPRODUCTOPPT: ".$csp->prbproductoppt;
+                    $logs["CSP_EDITADO"][] = $csp->cspid." TIENE PORCENTAJE EN PRBCOMPRAPPT: ".$csp->prbcomprappt;
                 // }else{
                 //     $logs["CSP_NO_EDITADO"][] = $cspe->cspid;
                 // }   
             }else{
-                $logs["CSP_NO_EDITADO"][] = $csp->cspid." TIENE PORCENTAJE EN PRBPRODUCTOPPT: ".$csp->prbproductoppt;
+                $logs["CSP_NO_EDITADO"][] = $csp->cspid." TIENE PORCENTAJE EN PRBCOMPRAPPT: ".$csp->prbcomprappt;
             }
         }
 
