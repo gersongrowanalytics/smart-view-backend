@@ -58,127 +58,135 @@ class PromocionesLiquidadasController extends Controller
 
             if (move_uploaded_file($_FILES['file']['tmp_name'], $fichero_subido)) {
 
-                // $objPHPExcel    = IOFactory::load($fichero_subido);
-                // $objPHPExcel->setActiveSheetIndex(0);
-                // $numRows        = $objPHPExcel->setActiveSheetIndex(0)->getHighestRow();
-                // $ultimaColumna  = $objPHPExcel->setActiveSheetIndex(0)->getHighestColumn();
+                if($usuusuario->usuid == 1){
 
-                // for ($i=2; $i <= $numRows ; $i++) {
-                //     $dia = '01';
+                    $objPHPExcel    = IOFactory::load($fichero_subido);
+                    $objPHPExcel->setActiveSheetIndex(0);
+                    $numRows        = $objPHPExcel->setActiveSheetIndex(0)->getHighestRow();
+                    $ultimaColumna  = $objPHPExcel->setActiveSheetIndex(0)->getHighestColumn();
 
-                //     $anioPromocion = $objPHPExcel->getActiveSheet()->getCell('B'.$i)->getCalculatedValue();
-                //     $mesPromocion  = $objPHPExcel->getActiveSheet()->getCell('C'.$i)->getCalculatedValue();
-                //     $concepto      = $objPHPExcel->getActiveSheet()->getCell('D'.$i)->getCalculatedValue();
-                //     $ejecutivo     = $objPHPExcel->getActiveSheet()->getCell('E'.$i)->getCalculatedValue();
-                //     $grupo         = $objPHPExcel->getActiveSheet()->getCell('F'.$i)->getCalculatedValue();
-                //     $soldto        = $objPHPExcel->getActiveSheet()->getCell('G'.$i)->getCalculatedValue();
-                //     $compra        = $objPHPExcel->getActiveSheet()->getCell('I'.$i)->getCalculatedValue();
-                //     $bonificacion  = $objPHPExcel->getActiveSheet()->getCell('J'.$i)->getCalculatedValue();
-                //     $mecanica      = $objPHPExcel->getActiveSheet()->getCell('K'.$i)->getCalculatedValue();
-                //     $categoria     = $objPHPExcel->getActiveSheet()->getCell('L'.$i)->getCalculatedValue();
+                    for ($i=2; $i <= $numRows ; $i++) {
+                        $dia = '01';
 
-                //     $sku           = $objPHPExcel->getActiveSheet()->getCell('M'.$i)->getCalculatedValue();
-                //     $skuproducto   = $objPHPExcel->getActiveSheet()->getCell('N'.$i)->getCalculatedValue();
-                //     $skubonificado = $objPHPExcel->getActiveSheet()->getCell('O'.$i)->getCalculatedValue();
-                //     $productoBonif = $objPHPExcel->getActiveSheet()->getCell('P'.$i)->getCalculatedValue();
+                        $anioPromocion = $objPHPExcel->getActiveSheet()->getCell('B'.$i)->getCalculatedValue();
+                        $mesPromocion  = $objPHPExcel->getActiveSheet()->getCell('C'.$i)->getCalculatedValue();
+                        $concepto      = $objPHPExcel->getActiveSheet()->getCell('D'.$i)->getCalculatedValue();
+                        $ejecutivo     = $objPHPExcel->getActiveSheet()->getCell('E'.$i)->getCalculatedValue();
+                        $grupo         = $objPHPExcel->getActiveSheet()->getCell('F'.$i)->getCalculatedValue();
+                        $soldto        = $objPHPExcel->getActiveSheet()->getCell('G'.$i)->getCalculatedValue();
+                        $compra        = $objPHPExcel->getActiveSheet()->getCell('I'.$i)->getCalculatedValue();
+                        $bonificacion  = $objPHPExcel->getActiveSheet()->getCell('J'.$i)->getCalculatedValue();
+                        $mecanica      = $objPHPExcel->getActiveSheet()->getCell('K'.$i)->getCalculatedValue();
+                        $categoria     = $objPHPExcel->getActiveSheet()->getCell('L'.$i)->getCalculatedValue();
 
-                //     $plancha       = $objPHPExcel->getActiveSheet()->getCell('Q'.$i)->getCalculatedValue();
-                //     $combo         = $objPHPExcel->getActiveSheet()->getCell('R'.$i)->getCalculatedValue();
-                //     $reconocerxcombo       = $objPHPExcel->getActiveSheet()->getCell('S'.$i)->getCalculatedValue();
-                //     $reconocerxplancha     = $objPHPExcel->getActiveSheet()->getCell('T'.$i)->getCalculatedValue();
-                //     $totalsoles            = $objPHPExcel->getActiveSheet()->getCell('U'.$i)->getCalculatedValue();
-                //     $liquidacionso         = $objPHPExcel->getActiveSheet()->getCell('V'.$i)->getCalculatedValue();
-                //     $liquidacioncombo      = $objPHPExcel->getActiveSheet()->getCell('W'.$i)->getCalculatedValue();
-                //     $liquidacionvalorizado = $objPHPExcel->getActiveSheet()->getCell('X'.$i)->getCalculatedValue();
-                //     $liquidaciontotal      = $objPHPExcel->getActiveSheet()->getCell('Y'.$i)->getCalculatedValue();
+                        $sku           = $objPHPExcel->getActiveSheet()->getCell('M'.$i)->getCalculatedValue();
+                        $skuproducto   = $objPHPExcel->getActiveSheet()->getCell('N'.$i)->getCalculatedValue();
+                        $skubonificado = $objPHPExcel->getActiveSheet()->getCell('O'.$i)->getCalculatedValue();
+                        $productoBonif = $objPHPExcel->getActiveSheet()->getCell('P'.$i)->getCalculatedValue();
 
-                //     if($plancha == "-"){
-                //         $plancha = "0";
-                //     }
+                        $plancha       = $objPHPExcel->getActiveSheet()->getCell('Q'.$i)->getCalculatedValue();
+                        $combo         = $objPHPExcel->getActiveSheet()->getCell('R'.$i)->getCalculatedValue();
+                        $reconocerxcombo       = $objPHPExcel->getActiveSheet()->getCell('S'.$i)->getCalculatedValue();
+                        $reconocerxplancha     = $objPHPExcel->getActiveSheet()->getCell('T'.$i)->getCalculatedValue();
+                        $totalsoles            = $objPHPExcel->getActiveSheet()->getCell('U'.$i)->getCalculatedValue();
+                        $liquidacionso         = $objPHPExcel->getActiveSheet()->getCell('V'.$i)->getCalculatedValue();
+                        $liquidacioncombo      = $objPHPExcel->getActiveSheet()->getCell('W'.$i)->getCalculatedValue();
+                        $liquidacionvalorizado = $objPHPExcel->getActiveSheet()->getCell('X'.$i)->getCalculatedValue();
+                        $liquidaciontotal      = $objPHPExcel->getActiveSheet()->getCell('Y'.$i)->getCalculatedValue();
 
-                //     $fec = fecfechas::where('fecdia', $dia)
-                //                         ->where('fecmes', 'LIKE', "%".$mesPromocion."%")
-                //                         ->where('fecano', $anioPromocion)
-                //                         ->first(['fecid']);
-                                        
-                //     $fecid = 0;
-                //     if($fec){
+                        if($plancha == "-"){
+                            $plancha = "0";
+                        }
 
-                //         if($i == 2){
-                //             // prlpromocionesliquidadas::where('fecid', $fec->fecid)->delete(); 
-                //             // prlpromocionesliquidadas::where('prlid', '>', 0)->delete(); 
-                //         }
+                        $fec = fecfechas::where('fecdia', $dia)
+                                            ->where('fecmes', 'LIKE', "%".$mesPromocion."%")
+                                            ->where('fecano', $anioPromocion)
+                                            ->first(['fecid']);
+                                            
+                        $fecid = 0;
+                        if($fec){
 
-                //         $fecid = $fec->fecid;
+                            if($i == 2){
+                                // prlpromocionesliquidadas::where('fecid', $fec->fecid)->delete(); 
+                                // prlpromocionesliquidadas::where('prlid', '>', 0)->delete(); 
+                            }
 
-                //         $suc = sucsucursales::where('sucsoldto', $soldto)->first(['sucid']);
+                            $fecid = $fec->fecid;
 
-                //         $sucid = 1;
-                //         if($suc){
+                            $suc = sucsucursales::where('sucsoldto', $soldto)->first(['sucid']);
 
-                //             if($suc->sucestado != 1){
-                //                 $suc->sucestado = 1;
-                //                 $suc->update();
-                //             }
+                            $sucid = 1;
+                            if($suc){
 
-                //             $sucid = $suc->sucid;
+                                if($suc->sucestado != 1){
+                                    $suc->sucestado = 1;
+                                    $suc->update();
+                                }
 
-                //         }else{
-                //             $log["NO_SE_ENCONTRO_SUCURSAL"][] = "No se encontro la sucursal: ".$soldto." en la linea: ".$i;
-                //             $mensaje = 'Lo sentimos, se encontraron algunas observaciones en la columna de soldto';
-                //             $respuesta = true;
-                //         }
+                                $sucid = $suc->sucid;
+
+                            }else{
+                                $log["NO_SE_ENCONTRO_SUCURSAL"][] = "No se encontro la sucursal: ".$soldto." en la linea: ".$i;
+                                $mensaje = 'Lo sentimos, se encontraron algunas observaciones en la columna de soldto';
+                                $respuesta = true;
+                            }
 
 
-                //         $prln = new prlpromocionesliquidadas;
-                //         $prln->fecid            = $fecid;
-                //         $prln->sucid            = $sucid;
-                //         $prln->prlsoldto        = $soldto;
+                            $prln = new prlpromocionesliquidadas;
+                            $prln->fecid            = $fecid;
+                            $prln->sucid            = $sucid;
+                            $prln->prlsoldto        = $soldto;
 
-                //         $prln->prlsku           = $sku;
-                //         $prln->prlproducto      = $skuproducto;
-                //         $prln->prlskubonificado = $skubonificado;
-                //         $prln->prlproductobonificado = $productoBonif;
+                            $prln->prlsku           = $sku;
+                            $prln->prlproducto      = $skuproducto;
+                            $prln->prlskubonificado = $skubonificado;
+                            $prln->prlproductobonificado = $productoBonif;
 
-                //         $prln->prlconcepto      = $concepto;
-                //         $prln->prlejecutivo     = $ejecutivo;
-                //         $prln->prlgrupo         = $grupo;
-                //         $prln->prlcompra        = $compra;
-                //         $prln->prlbonificacion  = $bonificacion;
-                //         $prln->prlmecanica      = $mecanica;
-                //         $prln->prlcategoria     = $categoria;
-                //         $prln->prlplancha       = $plancha;
-                //         $prln->prlcombo         = $combo;
-                //         $prln->prlreconocerxcombo   = $reconocerxcombo;
-                //         $prln->prlreconocerxplancha = $reconocerxplancha;
-                //         $prln->prltotal             = $totalsoles;
-                //         $prln->prlliquidacionso     = $liquidacionso;
-                //         $prln->prlliquidacioncombo  = $liquidacioncombo;
-                //         $prln->prlliquidacionvalorizado = $liquidacionvalorizado;
-                //         $prln->prlliquidaciontotalpagar = $liquidaciontotal;
-                //         $prln->save();
+                            $prln->prlconcepto      = $concepto;
+                            $prln->prlejecutivo     = $ejecutivo;
+                            $prln->prlgrupo         = $grupo;
+                            $prln->prlcompra        = $compra;
+                            $prln->prlbonificacion  = $bonificacion;
+                            $prln->prlmecanica      = $mecanica;
+                            $prln->prlcategoria     = $categoria;
+                            $prln->prlplancha       = $plancha;
+                            $prln->prlcombo         = $combo;
+                            $prln->prlreconocerxcombo   = $reconocerxcombo;
+                            $prln->prlreconocerxplancha = $reconocerxplancha;
+                            $prln->prltotal             = $totalsoles;
+                            $prln->prlliquidacionso     = $liquidacionso;
+                            $prln->prlliquidacioncombo  = $liquidacioncombo;
+                            $prln->prlliquidacionvalorizado = $liquidacionvalorizado;
+                            $prln->prlliquidaciontotalpagar = $liquidaciontotal;
+                            $prln->save();
 
-                //     }else{
-                //         $log["NO_SE_ENCONTRO_FECHA"][] = "En la linea: ".$i.", registrado con el mes: ".$mesPromocion." en el año: ".$anioPromocion;
-                //         $mensaje = 'Lo sentimos, se encontraron algunas observaciones en las columnas de mes y año';
-                //         $respuesta = false;
-                //     }
-                // }
+                        }else{
+                            $log["NO_SE_ENCONTRO_FECHA"][] = "En la linea: ".$i.", registrado con el mes: ".$mesPromocion." en el año: ".$anioPromocion;
+                            $mensaje = 'Lo sentimos, se encontraron algunas observaciones en las columnas de mes y año';
+                            $respuesta = false;
+                        }
+                    }
+
+                }
             }
 
 
-            $nuevoCargaArchivo = new carcargasarchivos;
-            $nuevoCargaArchivo->tcaid            = 16; // Carga Reconocimiento de Pagos
-            $nuevoCargaArchivo->fecid            = $fecid;
-            $nuevoCargaArchivo->usuid            = $usuusuario->usuid;
-            $nuevoCargaArchivo->carnombrearchivo = $archivo;
-            $nuevoCargaArchivo->carubicacion     = $fichero_subido;
-            $nuevoCargaArchivo->carexito         = $exitoSubirExcel;
-            $nuevoCargaArchivo->carurl           = env('APP_URL').'/Sistema/cargaArchivos/promocionesliquidadas/'.basename($usuusuario->usuid.'-'.$usuusuario->usuusuario.'-'.$fechaActual.'-'.$_FILES['file']['name']);
-            if($nuevoCargaArchivo->save()){
-                $pkid = "CAR-".$nuevoCargaArchivo->carid;
+            if($usuusuario->usuid == 1){
+                
             }else{
+                $nuevoCargaArchivo = new carcargasarchivos;
+                $nuevoCargaArchivo->tcaid            = 16; // Carga Reconocimiento de Pagos
+                $nuevoCargaArchivo->fecid            = $fecid;
+                $nuevoCargaArchivo->usuid            = $usuusuario->usuid;
+                $nuevoCargaArchivo->carnombrearchivo = $archivo;
+                $nuevoCargaArchivo->carubicacion     = $fichero_subido;
+                $nuevoCargaArchivo->carexito         = $exitoSubirExcel;
+                $nuevoCargaArchivo->carurl           = env('APP_URL').'/Sistema/cargaArchivos/promocionesliquidadas/'.basename($usuusuario->usuid.'-'.$usuusuario->usuusuario.'-'.$fechaActual.'-'.$_FILES['file']['name']);
+                if($nuevoCargaArchivo->save()){
+                    $pkid = "CAR-".$nuevoCargaArchivo->carid;
+                }else{
 
+                }
             }
 
             DB::commit();
