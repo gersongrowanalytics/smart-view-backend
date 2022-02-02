@@ -1279,7 +1279,7 @@ class ObjetivoCargarController extends Controller
                         $producto    = $objPHPExcel->getActiveSheet()->getCell('K'.$i)->getCalculatedValue();
                         $objetivo    = $objPHPExcel->getActiveSheet()->getCell('L'.$i)->getCalculatedValue();
 
-                        $fecid = 0;
+                        $fecid = 71;
 
                         if($i == 2){
 
