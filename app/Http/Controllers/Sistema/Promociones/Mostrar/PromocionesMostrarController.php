@@ -487,11 +487,339 @@ class PromocionesMostrarController extends Controller
 
         $contador = 0;
 
+        foreach($datos as $posicionDat => $dat){
+            $contadorDat = sizeof($dat['promocionesOrdenadas']);
+            $datos[$posicionDat]['cont'] = $contadorDat;
+
+            if($contadorDat > $contador){
+                $contador =  $contadorDat;
+            }
+
+
+
+
+            // LOGICA LIMPIAR LAS MECANICAS IGUALES Y REEMPLAZAR POR PROMOCIONES EN 0
+            $promocionesOrdenadas = $dat['promocionesOrdenadas'];
+
+            $mecanicasUtilizadas = array();
+
+            foreach($promocionesOrdenadas as $posicionPromocionesOrdenadas => $promocionOrdenada){
+
+                if($promocionOrdenada['prmmecanica'] != ""){
+                    
+                    if(sizeof($mecanicasUtilizadas) > 0){
+
+                        $productos = $promocionOrdenada['productos'];
+                        $productoBuscar = "";
+                        foreach($productos as $posicionProducto => $producto){
+                            if($posicionProducto == 0){
+                                $productoBuscar = $producto['prosku'];
+                                
+                            }
+                        }
+
+                        $encontroMecanica = false;
+
+                        foreach($mecanicasUtilizadas as $mecanicaUtilizada){
+
+
+                            if($mecanicaUtilizada['mecanica'] == $promocionOrdenada['prmmecanica'] && $productoBuscar == $mecanicaUtilizada['sku'] ){
+                                $encontroMecanica = true;
+                                // $datos[$posicionDat]['promocionesOrdenadas'][$posicionPromocionesOrdenadas] = $promocionVacia;
+                                $promocionesOrdenadas[$posicionPromocionesOrdenadas] = $promocionVacia;
+                            }
+
+
+                        }
+
+                        if($encontroMecanica == false){
+                            // $mecanicasUtilizadas[] = $promocionOrdenada['prmmecanica'];
+                            $mecanicasUtilizadas[] = array(
+                                "mecanica" => $promocionOrdenada['prmmecanica'],
+                                "sku" => $productoBuscar
+                            );
+                        }
+
+                    }else{
+                        // $mecanicasUtilizadas[] = $promocionOrdenada['prmmecanica'];
+                        $productos = $promocionOrdenada['productos'];
+
+                        foreach($productos as $posicionProducto => $producto){
+                            if($posicionProducto == 0){
+                                $mecanicasUtilizadas[] = array(
+                                    "mecanica" => $promocionOrdenada['prmmecanica'],
+                                    "sku" => $producto['prosku']
+                                );
+                            }
+                        }
+                    }   
+                }
+            }
+
+            $datos[$posicionDat]['promocionesOrdenadas'] = $promocionesOrdenadas;
+
+        }
+
+        foreach($datos as $contadorDat => $dat){
+            
+            if($contador > $dat['cont'] ){
+
+                $nuevasPromos = $dat['promocionesOrdenadas'];
+
+                $cuadrarPromos = $contador - $dat['cont'];
+
+                for($i = 0; $i <= $cuadrarPromos; $i++){
+                    $fechaInicio = date("m", strtotime($fechaActual));
+                    $fechaInicio = "01/".$fechaInicio;
+                    $fechaFinal = date("m", strtotime($fechaActual));
+                    $fechafinal = "30/".$fechaFinal;
+
+                    $nuevasPromos[] = array(
+                        'cspid'              => 0,
+                        'prmid'              => "",
+                        'prmcodigo'          => "",
+                        'cspvalorizado'      => "",
+                        'cspplanchas'        => "",
+                        'cspcompletado'      => "",
+                        'cspcantidadcombo'   => "",
+                        'prmmecanica'        => "",
+                        'cspcantidadplancha' => "",
+                        'csptotalcombo'      => "",
+                        'csptotalplancha'    => "",
+                        'csptotal'           => "",
+                        'cspgratis'          => "",
+                        'prmaccion'          => "",
+                        'tprnombre'          => "",
+                        'cspnuevo'           => "",
+                        'productos'          => [],
+                        'productoPrincipal'  => "0",
+                        'productosbonificados' => [],
+                        'fechainicio' => $fechaInicio,
+                        'fechafinal'  => $fechafinal,
+                    );
+
+                }
+
+                $datos[$contadorDat]['promocionesOrdenadas'] = $nuevasPromos;
+
+            }
+
+
+        }
+
+
+
+
+
 
 
 
 
         $dataPrueba = array();
+
+        foreach($datos as $dato){
+            $dataPrueba[] = $dato;
+        }
+
+        foreach($dataPrueba as $posicionDat => $datPrueba){
+
+            $dataPrueba[$posicionDat]['cantidadPromociones'] = sizeof($datPrueba['promociones']);
+
+        }
+        
+
+        if(sizeof($dataPrueba) > 0){
+            usort(
+                $dataPrueba,
+                function ($a, $b)  {
+                    if ($a['cantidadPromociones'] > $b['cantidadPromociones']) {
+                        return -1;
+                    } else if ($a['cantidadPromociones'] < $b['cantidadPromociones']) {
+                        return 1;
+                    } else {
+                        return 0;
+                    }
+                }
+            );
+        }
+
+        $arrProductosTotal = array();
+
+        foreach($dataPrueba as $posicionDatPrueba => $datPrueba){
+            
+            $promociones = $datPrueba['promociones'];
+
+            $arrProductos = array();
+
+            foreach($promociones as $posicionPromocion => $promocion){
+
+                $productos = $promocion['productos'];
+                $productoSeleccionado = 0;
+
+                foreach($productos as $posicionProducto => $producto){
+
+                    if($posicionProducto == 0){
+                        $productoSeleccionado = $producto['prosku'];
+                    }
+
+                }
+
+                if(sizeof($arrProductos) > 0){
+                    $encontroProducto = false;
+                    foreach($arrProductos as $posicionArr => $arrProducto){
+                        if($arrProducto['sku'] == $productoSeleccionado){
+
+                            $arrProductos[$posicionArr]['cantidad'] = $arrProductos[$posicionArr]['cantidad'] + 1;
+
+                            $encontroProducto = true;
+                        }
+                    }
+                    
+                    if($encontroProducto == false){
+                        $arrProductos[] = array(
+                            "sku" => $productoSeleccionado,
+                            "cantidad" => 1
+                        );
+                    }
+
+                }else{
+                    $arrProductos[] = array(
+                        "sku" => $productoSeleccionado,
+                        "cantidad" => 1
+                    );
+                }
+
+
+            }
+
+            $dataPrueba[$posicionDatPrueba]['arrProductos'] = $arrProductos;
+
+        }
+
+        usort(
+            $arrProductosTotal,
+            function ($a, $b)  {
+                if ($a['cantidad'] < $b['cantidad']) {
+                    return -1;
+                } else if ($a['cantidad'] > $b['cantidad']) {
+                    return 1;
+                } else {
+                    return 0;
+                }
+            }
+        );
+
+        foreach($dataPrueba as $posicionDatPrueba => $datPrueba){
+
+            $arrProductos = $datPrueba['arrProductos'];
+            
+            foreach($arrProductos as $arrProducto){
+                if(sizeof($arrProductosTotal) > 0){
+                    
+                    $encontroProducto = false;
+
+                    foreach($arrProductosTotal as $posicionArrProductoTotal => $arrProductoTotal){
+                        if($arrProductoTotal['sku'] == $arrProducto['sku']){
+                            if($arrProducto['cantidad'] > $arrProductoTotal['cantidad']){
+                                $arrProductosTotal[$posicionArrProductoTotal]['cantidad'] = $arrProducto['cantidad'];
+                            }
+                            $encontroProducto = true;
+                        }
+                    }
+
+                    if($encontroProducto == false){
+                        $arrProductosTotal[] = array(
+                            "sku"      => $arrProducto['sku'],
+                            "cantidad" => $arrProducto['cantidad']
+                        );
+                    }
+
+                }else{
+                    $arrProductosTotal[] = array(
+                        "sku" => $arrProducto['sku'],
+                        "cantidad" => $arrProducto['cantidad']
+                    );
+                }
+            }
+
+        }
+
+        $fechaInicio = date("m", strtotime($fechaActual));
+        $fechaInicio = "01/".$fechaInicio;
+        $fechaFinal = date("m", strtotime($fechaActual));
+        $fechafinal = "30/".$fechaFinal;
+
+        $promoVacia = array(
+            'cspid'              => 0,
+            'prmid'              => "",
+            'prmcodigo'          => "",
+            'cspvalorizado'      => "",
+            'cspplanchas'        => "",
+            'cspcompletado'      => "",
+            'cspcantidadcombo'   => "",
+            'prmmecanica'        => "",
+            'cspcantidadplancha' => "",
+            'csptotalcombo'      => "",
+            'csptotalplancha'    => "",
+            'csptotal'           => "",
+            'cspgratis'          => "",
+            'prmaccion'          => "",
+            'tprnombre'          => "",
+            'cspnuevo'           => "",
+            'productos'          => [],
+            'productoPrincipal'  => "0",
+            'productosbonificados' => [],
+            'fechainicio' => $fechaInicio,
+            'fechafinal'  => $fechafinal,
+        );
+
+        foreach($dataPrueba as $posicionDatPrueba => $datPrueba){
+
+            $promociones = $datPrueba['promociones'];
+            $nuevasPromos = array();
+
+            foreach($arrProductosTotal as $arrProductoTotal){
+                
+                $promocionesEncontradas = 0;
+
+                foreach($promociones as $posicionPromocion => $promocion){
+
+                    $productoSeleccionado = 0;
+                    $productos = $promocion['productos'];
+
+                    foreach($productos as $posicionProducto => $producto){
+
+                        if($posicionProducto == 0){
+                            $productoSeleccionado = $producto['prosku'];
+                        }
+
+                    }
+
+
+                    if($productoSeleccionado == $arrProductoTotal['sku']){
+                        $promocionesEncontradas = $promocionesEncontradas + 1;
+                        $nuevasPromos[] = $promocion;
+                    }
+
+                }
+
+                $diferenciaPromocionesEncontradas = $arrProductoTotal['cantidad'] - $promocionesEncontradas;
+
+                if( $diferenciaPromocionesEncontradas != 0){
+                    for($i = 0; $i < $diferenciaPromocionesEncontradas; $i++){
+                        $nuevasPromos[] = $promoVacia;
+                    }
+                }
+
+            }
+            
+            $dataPrueba[$posicionDatPrueba]['promociones'] = $nuevasPromos;
+            $dataPrueba[$posicionDatPrueba]['promocionesOrdenadas'] = $nuevasPromos;
+
+        }
+
+
+
 
 
 
