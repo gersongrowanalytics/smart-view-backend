@@ -617,13 +617,6 @@ class PromocionesMostrarController extends Controller
 
         $dataPrueba = array();
 
-        foreach($datos as $dato){
-            $dataPrueba[] = $dato;
-        }
-
-
-
-
 
 
 
