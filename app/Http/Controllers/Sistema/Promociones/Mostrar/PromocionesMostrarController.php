@@ -159,7 +159,21 @@ class PromocionesMostrarController extends Controller
                                                                                     'prpoimagen',
                                                                                 ]);
 
-                            
+                            if($prppromocionesproductos){
+                                $cspcanalessucursalespromociones[$posicionPromociones]['productos'] = $prppromocionesproductos;
+
+                                if($posicion == 0){
+                                    $productosCsc[] = $prppromocionesproductos[0]['prosku'];
+                                }else{
+                                    $productosCscMomento[] = $prppromocionesproductos[0]['prosku'];
+                                }
+
+                                $cspcanalessucursalespromociones[$posicionPromociones]['productoPrincipal'] = $prppromocionesproductos[0]['prosku'];
+
+                            }else{
+                                $cspcanalessucursalespromociones[$posicionPromociones]['productos'] = [];
+                            }
+
     
                             $prbpromocionesbonificaciones = prbpromocionesbonificaciones::join('proproductos as pro', 'pro.proid', 'prbpromocionesbonificaciones.proid')
                                                                                         ->where('prbpromocionesbonificaciones.prmid', $cspcanalesucursalpromocion->prmid )
@@ -175,7 +189,11 @@ class PromocionesMostrarController extends Controller
                                                                                             'prboimagen',
                                                                                         ]);
                             
-                            
+                            if(sizeof($prbpromocionesbonificaciones) > 0){
+                                $cspcanalessucursalespromociones[$posicionPromociones]['productosbonificados'] = $prbpromocionesbonificaciones;
+                            }else{
+                                $cspcanalessucursalespromociones[$posicionPromociones]['productosbonificados'] = [];
+                            }
                         }
 
 
