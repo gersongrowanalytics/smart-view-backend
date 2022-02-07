@@ -163,12 +163,12 @@ class PromocionesMostrarController extends Controller
                                 $cspcanalessucursalespromociones[$posicionPromociones]['productos'] = $prppromocionesproductos;
 
                                 if($posicion == 0){
-                                    $productosCsc[] = "123";
+                                    $productosCsc[] = $prppromocionesproductos[0]['prosku'];
                                 }else{
-                                    $productosCscMomento[] = "123";
+                                    $productosCscMomento[] = $prppromocionesproductos[0]['prosku'];
                                 }
 
-                                $cspcanalessucursalespromociones[$posicionPromociones]['productoPrincipal'] = "123";
+                                $cspcanalessucursalespromociones[$posicionPromociones]['productoPrincipal'] = $prppromocionesproductos[0]['prosku'];
 
                             }else{
                                 $cspcanalessucursalespromociones[$posicionPromociones]['productos'] = [];
