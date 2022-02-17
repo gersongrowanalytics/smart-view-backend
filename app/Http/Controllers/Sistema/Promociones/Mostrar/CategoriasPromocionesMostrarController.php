@@ -537,13 +537,14 @@ class CategoriasPromocionesMostrarController extends Controller
     public function MostrarSucursalesDescargarPromocionesExcelbk(Request $request)
     {
 
-        $usutoken   = $request['usutoken'];
-        $sucs       = $request['sucs'];
-        $dia        = "01";
-        $mes        = $request['mes'];
-        $anio       = $request['ano'];
+        $usutoken    = $request['usutoken'];
+        $sucs        = $request['sucs'];
+        $re_columnas = $request['columnas'];
+        $dia         = "01";
+        $mes         = $request['mes'];
+        $anio        = $request['ano'];
         
-        $usuusuario = usuusuarios::where('usutoken', $usutoken)->first(['ususoldto']);
+        $usuusuario  = usuusuarios::where('usutoken', $usutoken)->first(['ususoldto']);
 
         $respuesta      = false;
         $mensaje        = '';
@@ -696,281 +697,601 @@ class CategoriasPromocionesMostrarController extends Controller
 
                     if($posicionCsp == 0){
 
-                        $arrayTitulos = array(
-                            array(
-                                "title" => "Inicio Promo",
-                                "style" => array(
-                                    "fill" => array(
-                                        "patternType" => "solid",
-                                        "fgColor" => array(
-                                            "rgb" => $colorAzul
-                                        )
-                                    ),
-                                    "font" => array(
-                                        "color" => array(
-                                            "rgb" => $colorBlanco
-                                        )
-                                    )
-                                )
-                            ),
-                            array(
-                                "title" => "Fin Promo",
-                                "style" => array(
-                                    "fill" => array(
-                                        "patternType" => "solid",
-                                        "fgColor" => array(
-                                            "rgb" => $colorAzul
-                                        )
-                                    ),
-                                    "font" => array(
-                                        "color" => array(
-                                            "rgb" => $colorBlanco
-                                        )
-                                    )
-                                )
-                            ),
-                            array(
-                                "title" => "Región",
-                                "style" => array(
-                                    "fill" => array(
-                                        "patternType" => "solid",
-                                        "fgColor" => array(
-                                            "rgb" => $colorAzul
-                                        )
-                                    ),
-                                    "font" => array(
-                                        "color" => array(
-                                            "rgb" => $colorBlanco
-                                        )
-                                    )
-                                )
-                            ),
-                            array(
-                                "title" => "Zona",
-                                "style" => array(
-                                    "fill" => array(
-                                        "patternType" => "solid",
-                                        "fgColor" => array(
-                                            "rgb" => $colorAzul
-                                        )
-                                    ),
-                                    "font" => array(
-                                        "color" => array(
-                                            "rgb" => $colorBlanco
-                                        )
-                                    )
-                                )
-                            ),
-                            array(
-                                "title" => "Grupo",
-                                "style" => array(
-                                    "fill" => array(
-                                        "patternType" => "solid",
-                                        "fgColor" => array(
-                                            "rgb" => $colorAzul
-                                        )
-                                    ),
-                                    "font" => array(
-                                        "color" => array(
-                                            "rgb" => $colorBlanco
-                                        )
-                                    )
-                                )
-                            ),
-                            array(
-                                "title" => "Cliente Hml",
-                                "style" => array(
-                                    "fill" => array(
-                                        "patternType" => "solid",
-                                        "fgColor" => array(
-                                            "rgb" => $colorAzul
-                                        )
-                                    ),
-                                    "font" => array(
-                                        "color" => array(
-                                            "rgb" => $colorBlanco
-                                        )
-                                    )
-                                )
-                            ),
-                            array(
-                                "title" => "Sold To",
-                                "style" => array(
-                                    "fill" => array(
-                                        "patternType" => "solid",
-                                        "fgColor" => array(
-                                            "rgb" => $colorAzul
-                                        )
-                                    ),
-                                    "font" => array(
-                                        "color" => array(
-                                            "rgb" => $colorBlanco
-                                        )
-                                    )
-                                )
-                            ),
-                            array(
-                                "title" => "Cliente",
-                                "style" => array(
-                                    "fill" => array(
-                                        "patternType" => "solid",
-                                        "fgColor" => array(
-                                            "rgb" => $colorAzul
-                                        )
-                                    ),
-                                    "font" => array(
-                                        "color" => array(
-                                            "rgb" => $colorBlanco
-                                        )
-                                    )
-                                )
-                            ),
-                            array(
-                                "title" => "Tipo de Cliente",
-                                "style" => array(
-                                    "fill" => array(
-                                        "patternType" => "solid",
-                                        "fgColor" => array(
-                                            "rgb" => $colorAzul
-                                        )
-                                    ),
-                                    "font" => array(
-                                        "color" => array(
-                                            "rgb" => $colorBlanco
-                                        )
-                                    )
-                                )
-                            ),
-                            array(
-                                "title" => "Categoría",
-                                "style" => array(
-                                    "fill" => array(
-                                        "patternType" => "solid",
-                                        "fgColor" => array(
-                                            "rgb" => $colorAzul
-                                        )
-                                    ),
-                                    "font" => array(
-                                        "color" => array(
-                                            "rgb" => $colorBlanco
-                                        )
-                                    )
-                                )
-                            ),
-                            array(
-                                "title" => "Sku",
-                                "style" => array(
-                                    "fill" => array(
-                                        "patternType" => "solid",
-                                        "fgColor" => array(
-                                            "rgb" => $colorAzul
-                                        )
-                                    ),
-                                    "font" => array(
-                                        "color" => array(
-                                            "rgb" => $colorBlanco
-                                        )
-                                    )
-                                )
-                            ),
-                            array(
-                                "title" => "Producto",
-                                "style" => array(
-                                    "fill" => array(
-                                        "patternType" => "solid",
-                                        "fgColor" => array(
-                                            "rgb" => $colorAzul
-                                        )
-                                    ),
-                                    "font" => array(
-                                        "color" => array(
-                                            "rgb" => $colorBlanco
-                                        )
-                                    )
-                                )
-                            ),
-                            array(
-                                "title" => "Mecánica",
-                                "style" => array(
-                                    "fill" => array(
-                                        "patternType" => "solid",
-                                        "fgColor" => array(
-                                            "rgb" => $colorAzul
-                                        )
-                                    ),
-                                    "font" => array(
-                                        "color" => array(
-                                            "rgb" => $colorBlanco
-                                        )
-                                    )
-                                )
-                            ),
+                        $arrayTitulos = array();
 
-                            array(
-                                "title" => "Planchas a rotar o (Sell Out)",
-                                "style" => array(
-                                    "fill" => array(
-                                        "patternType" => "solid",
-                                        "fgColor" => array(
-                                            "rgb" => $colorNaranjaClaro
+                        if(isset($re_columnas)){
+
+                            foreach($re_columnas as $re_columna){
+
+                                if($re_columna['columna'] == "Inicio Promoción"){
+                                    
+                                    $arrayTitulos[] = array(
+                                        "title" => "Inicio Promo",
+                                        "style" => array(
+                                            "fill" => array(
+                                                "patternType" => "solid",
+                                                "fgColor" => array(
+                                                    "rgb" => $colorAzul
+                                                )
+                                            ),
+                                            "font" => array(
+                                                "color" => array(
+                                                    "rgb" => $colorBlanco
+                                                )
+                                            )
                                         )
-                                    ),
-                                    "font" => array(
-                                        "color" => array(
-                                            "rgb" => $colorNegro
+                                    );
+
+                                }else if($re_columna['columna'] == "Fin Promoción"){
+
+                                    $arrayTitulos[] = array(
+                                        "title" => "Fin Promo",
+                                        "style" => array(
+                                            "fill" => array(
+                                                "patternType" => "solid",
+                                                "fgColor" => array(
+                                                    "rgb" => $colorAzul
+                                                )
+                                            ),
+                                            "font" => array(
+                                                "color" => array(
+                                                    "rgb" => $colorBlanco
+                                                )
+                                            )
+                                        )
+                                    );
+
+                                }else if($re_columna['columna'] == "Región"){
+
+                                    $arrayTitulos[] = array(
+                                        "title" => "Región",
+                                        "style" => array(
+                                            "fill" => array(
+                                                "patternType" => "solid",
+                                                "fgColor" => array(
+                                                    "rgb" => $colorAzul
+                                                )
+                                            ),
+                                            "font" => array(
+                                                "color" => array(
+                                                    "rgb" => $colorBlanco
+                                                )
+                                            )
+                                        )
+                                    );
+
+                                }else if($re_columna['columna'] == "Zona"){
+
+                                    $arrayTitulos[] = array(
+                                        "title" => "Zona",
+                                        "style" => array(
+                                            "fill" => array(
+                                                "patternType" => "solid",
+                                                "fgColor" => array(
+                                                    "rgb" => $colorAzul
+                                                )
+                                            ),
+                                            "font" => array(
+                                                "color" => array(
+                                                    "rgb" => $colorBlanco
+                                                )
+                                            )
+                                        )
+                                    );
+
+                                }else if($re_columna['columna'] == "Grupo"){
+
+                                    $arrayTitulos[] = array(
+                                        "title" => "Grupo",
+                                        "style" => array(
+                                            "fill" => array(
+                                                "patternType" => "solid",
+                                                "fgColor" => array(
+                                                    "rgb" => $colorAzul
+                                                )
+                                            ),
+                                            "font" => array(
+                                                "color" => array(
+                                                    "rgb" => $colorBlanco
+                                                )
+                                            )
+                                        )
+                                    );
+
+                                }else if($re_columna['columna'] == "Cliente Hml"){
+
+                                    $arrayTitulos[] = array(
+                                        "title" => "Cliente Hml",
+                                        "style" => array(
+                                            "fill" => array(
+                                                "patternType" => "solid",
+                                                "fgColor" => array(
+                                                    "rgb" => $colorAzul
+                                                )
+                                            ),
+                                            "font" => array(
+                                                "color" => array(
+                                                    "rgb" => $colorBlanco
+                                                )
+                                            )
+                                        )
+                                    );
+
+                                }else if($re_columna['columna'] == "Sold To"){
+
+                                    $arrayTitulos[] = array(
+                                        "title" => "Sold To",
+                                        "style" => array(
+                                            "fill" => array(
+                                                "patternType" => "solid",
+                                                "fgColor" => array(
+                                                    "rgb" => $colorAzul
+                                                )
+                                            ),
+                                            "font" => array(
+                                                "color" => array(
+                                                    "rgb" => $colorBlanco
+                                                )
+                                            )
+                                        )
+                                    );
+
+                                }else if($re_columna['columna'] == "Tipo de Cliente"){
+
+                                    $arrayTitulos[] = array(
+                                        "title" => "Tipo de Cliente",
+                                        "style" => array(
+                                            "fill" => array(
+                                                "patternType" => "solid",
+                                                "fgColor" => array(
+                                                    "rgb" => $colorAzul
+                                                )
+                                            ),
+                                            "font" => array(
+                                                "color" => array(
+                                                    "rgb" => $colorBlanco
+                                                )
+                                            )
+                                        )
+                                    );
+
+                                }else if($re_columna['columna'] == "Categoría"){
+
+                                    $arrayTitulos[] = array(
+                                        "title" => "Categoría",
+                                        "style" => array(
+                                            "fill" => array(
+                                                "patternType" => "solid",
+                                                "fgColor" => array(
+                                                    "rgb" => $colorAzul
+                                                )
+                                            ),
+                                            "font" => array(
+                                                "color" => array(
+                                                    "rgb" => $colorBlanco
+                                                )
+                                            )
+                                        )
+                                    );
+
+                                }else if($re_columna['columna'] == "Sku"){
+
+                                    $arrayTitulos[] = array(
+                                        "title" => "Sku",
+                                        "style" => array(
+                                            "fill" => array(
+                                                "patternType" => "solid",
+                                                "fgColor" => array(
+                                                    "rgb" => $colorAzul
+                                                )
+                                            ),
+                                            "font" => array(
+                                                "color" => array(
+                                                    "rgb" => $colorBlanco
+                                                )
+                                            )
+                                        )
+                                    );
+
+                                }else if($re_columna['columna'] == "Producto"){
+
+                                    $arrayTitulos[] = array(
+                                        "title" => "Producto",
+                                        "style" => array(
+                                            "fill" => array(
+                                                "patternType" => "solid",
+                                                "fgColor" => array(
+                                                    "rgb" => $colorAzul
+                                                )
+                                            ),
+                                            "font" => array(
+                                                "color" => array(
+                                                    "rgb" => $colorBlanco
+                                                )
+                                            )
+                                        )
+                                    );
+
+                                }else if($re_columna['columna'] == "Mecánica"){
+
+                                    $arrayTitulos[] = array(
+                                        "title" => "Mecánica",
+                                        "style" => array(
+                                            "fill" => array(
+                                                "patternType" => "solid",
+                                                "fgColor" => array(
+                                                    "rgb" => $colorAzul
+                                                )
+                                            ),
+                                            "font" => array(
+                                                "color" => array(
+                                                    "rgb" => $colorBlanco
+                                                )
+                                            )
+                                        )
+                                    );
+
+                                }else if($re_columna['columna'] == "Planchas a rotar"){
+
+                                    $arrayTitulos[] = array(
+                                        "title" => "Planchas a rotar o (Sell Out)",
+                                        "style" => array(
+                                            "fill" => array(
+                                                "patternType" => "solid",
+                                                "fgColor" => array(
+                                                    "rgb" => $colorNaranjaClaro
+                                                )
+                                            ),
+                                            "font" => array(
+                                                "color" => array(
+                                                    "rgb" => $colorNegro
+                                                )
+                                            )
+                                        )
+                                    );
+
+                                }else if($re_columna['columna'] == "Reconocer x PL S/IGV"){
+
+                                    $arrayTitulos[] = array(
+                                        "title" => "Reconocer x PL S/IGV",
+                                        "style" => array(
+                                            "fill" => array(
+                                                "patternType" => "solid",
+                                                "fgColor" => array(
+                                                    "rgb" => $colorNaranjaClaro
+                                                )
+                                            ),
+                                            "font" => array(
+                                                "color" => array(
+                                                    "rgb" => $colorNegro
+                                                )
+                                            )
+                                        )
+                                    );
+
+                                }else if($re_columna['columna'] == "# Combos"){
+
+                                    $arrayTitulos[] = array(
+                                        "title" => "# Combos",
+                                        "style" => array(
+                                            "fill" => array(
+                                                "patternType" => "solid",
+                                                "fgColor" => array(
+                                                    "rgb" => $colorNaranjaClaro
+                                                )
+                                            ),
+                                            "font" => array(
+                                                "color" => array(
+                                                    "rgb" => $colorNegro
+                                                )
+                                            )
+                                        )
+                                    );
+
+                                }else if($re_columna['columna'] == "Reconocer x Combo S/"){
+
+                                    $arrayTitulos[] = array(
+                                        "title" => "Reconocer x Combo S/",
+                                        "style" => array(
+                                            "fill" => array(
+                                                "patternType" => "solid",
+                                                "fgColor" => array(
+                                                    "rgb" => $colorNaranjaClaro
+                                                )
+                                            ),
+                                            "font" => array(
+                                                "color" => array(
+                                                    "rgb" => $colorNegro
+                                                )
+                                            )
+                                        )
+                                    );
+
+                                }else{
+
+                                }
+
+                            }
+
+                        }else{
+
+                            $arrayTitulos = array(
+                                array(
+                                    "title" => "Inicio Promo",
+                                    "style" => array(
+                                        "fill" => array(
+                                            "patternType" => "solid",
+                                            "fgColor" => array(
+                                                "rgb" => $colorAzul
+                                            )
+                                        ),
+                                        "font" => array(
+                                            "color" => array(
+                                                "rgb" => $colorBlanco
+                                            )
                                         )
                                     )
-                                )
-                            ),
-                            array(
-                                "title" => "Reconocer x PL S/IGV",
-                                "style" => array(
-                                    "fill" => array(
-                                        "patternType" => "solid",
-                                        "fgColor" => array(
-                                            "rgb" => $colorNaranjaClaro
-                                        )
-                                    ),
-                                    "font" => array(
-                                        "color" => array(
-                                            "rgb" => $colorNegro
-                                        )
-                                    )
-                                )
-                            ),
-                            array(
-                                "title" => "# Combos",
-                                "style" => array(
-                                    "fill" => array(
-                                        "patternType" => "solid",
-                                        "fgColor" => array(
-                                            "rgb" => $colorNaranjaClaro
-                                        )
-                                    ),
-                                    "font" => array(
-                                        "color" => array(
-                                            "rgb" => $colorNegro
+                                ),
+                                array(
+                                    "title" => "Fin Promo",
+                                    "style" => array(
+                                        "fill" => array(
+                                            "patternType" => "solid",
+                                            "fgColor" => array(
+                                                "rgb" => $colorAzul
+                                            )
+                                        ),
+                                        "font" => array(
+                                            "color" => array(
+                                                "rgb" => $colorBlanco
+                                            )
                                         )
                                     )
-                                )
-                            ),
-                            array(
-                                "title" => "Reconocer x Combo S/",
-                                "style" => array(
-                                    "fill" => array(
-                                        "patternType" => "solid",
-                                        "fgColor" => array(
-                                            "rgb" => $colorNaranjaClaro
-                                        )
-                                    ),
-                                    "font" => array(
-                                        "color" => array(
-                                            "rgb" => $colorNegro
+                                ),
+                                array(
+                                    "title" => "Región",
+                                    "style" => array(
+                                        "fill" => array(
+                                            "patternType" => "solid",
+                                            "fgColor" => array(
+                                                "rgb" => $colorAzul
+                                            )
+                                        ),
+                                        "font" => array(
+                                            "color" => array(
+                                                "rgb" => $colorBlanco
+                                            )
                                         )
                                     )
-                                )
-                            ),
-                        );
+                                ),
+                                array(
+                                    "title" => "Zona",
+                                    "style" => array(
+                                        "fill" => array(
+                                            "patternType" => "solid",
+                                            "fgColor" => array(
+                                                "rgb" => $colorAzul
+                                            )
+                                        ),
+                                        "font" => array(
+                                            "color" => array(
+                                                "rgb" => $colorBlanco
+                                            )
+                                        )
+                                    )
+                                ),
+                                array(
+                                    "title" => "Grupo",
+                                    "style" => array(
+                                        "fill" => array(
+                                            "patternType" => "solid",
+                                            "fgColor" => array(
+                                                "rgb" => $colorAzul
+                                            )
+                                        ),
+                                        "font" => array(
+                                            "color" => array(
+                                                "rgb" => $colorBlanco
+                                            )
+                                        )
+                                    )
+                                ),
+                                array(
+                                    "title" => "Cliente Hml",
+                                    "style" => array(
+                                        "fill" => array(
+                                            "patternType" => "solid",
+                                            "fgColor" => array(
+                                                "rgb" => $colorAzul
+                                            )
+                                        ),
+                                        "font" => array(
+                                            "color" => array(
+                                                "rgb" => $colorBlanco
+                                            )
+                                        )
+                                    )
+                                ),
+                                array(
+                                    "title" => "Sold To",
+                                    "style" => array(
+                                        "fill" => array(
+                                            "patternType" => "solid",
+                                            "fgColor" => array(
+                                                "rgb" => $colorAzul
+                                            )
+                                        ),
+                                        "font" => array(
+                                            "color" => array(
+                                                "rgb" => $colorBlanco
+                                            )
+                                        )
+                                    )
+                                ),
+                                array(
+                                    "title" => "Cliente",
+                                    "style" => array(
+                                        "fill" => array(
+                                            "patternType" => "solid",
+                                            "fgColor" => array(
+                                                "rgb" => $colorAzul
+                                            )
+                                        ),
+                                        "font" => array(
+                                            "color" => array(
+                                                "rgb" => $colorBlanco
+                                            )
+                                        )
+                                    )
+                                ),
+                                array(
+                                    "title" => "Tipo de Cliente",
+                                    "style" => array(
+                                        "fill" => array(
+                                            "patternType" => "solid",
+                                            "fgColor" => array(
+                                                "rgb" => $colorAzul
+                                            )
+                                        ),
+                                        "font" => array(
+                                            "color" => array(
+                                                "rgb" => $colorBlanco
+                                            )
+                                        )
+                                    )
+                                ),
+                                array(
+                                    "title" => "Categoría",
+                                    "style" => array(
+                                        "fill" => array(
+                                            "patternType" => "solid",
+                                            "fgColor" => array(
+                                                "rgb" => $colorAzul
+                                            )
+                                        ),
+                                        "font" => array(
+                                            "color" => array(
+                                                "rgb" => $colorBlanco
+                                            )
+                                        )
+                                    )
+                                ),
+                                array(
+                                    "title" => "Sku",
+                                    "style" => array(
+                                        "fill" => array(
+                                            "patternType" => "solid",
+                                            "fgColor" => array(
+                                                "rgb" => $colorAzul
+                                            )
+                                        ),
+                                        "font" => array(
+                                            "color" => array(
+                                                "rgb" => $colorBlanco
+                                            )
+                                        )
+                                    )
+                                ),
+                                array(
+                                    "title" => "Producto",
+                                    "style" => array(
+                                        "fill" => array(
+                                            "patternType" => "solid",
+                                            "fgColor" => array(
+                                                "rgb" => $colorAzul
+                                            )
+                                        ),
+                                        "font" => array(
+                                            "color" => array(
+                                                "rgb" => $colorBlanco
+                                            )
+                                        )
+                                    )
+                                ),
+                                array(
+                                    "title" => "Mecánica",
+                                    "style" => array(
+                                        "fill" => array(
+                                            "patternType" => "solid",
+                                            "fgColor" => array(
+                                                "rgb" => $colorAzul
+                                            )
+                                        ),
+                                        "font" => array(
+                                            "color" => array(
+                                                "rgb" => $colorBlanco
+                                            )
+                                        )
+                                    )
+                                ),
+    
+                                array(
+                                    "title" => "Planchas a rotar o (Sell Out)",
+                                    "style" => array(
+                                        "fill" => array(
+                                            "patternType" => "solid",
+                                            "fgColor" => array(
+                                                "rgb" => $colorNaranjaClaro
+                                            )
+                                        ),
+                                        "font" => array(
+                                            "color" => array(
+                                                "rgb" => $colorNegro
+                                            )
+                                        )
+                                    )
+                                ),
+                                array(
+                                    "title" => "Reconocer x PL S/IGV",
+                                    "style" => array(
+                                        "fill" => array(
+                                            "patternType" => "solid",
+                                            "fgColor" => array(
+                                                "rgb" => $colorNaranjaClaro
+                                            )
+                                        ),
+                                        "font" => array(
+                                            "color" => array(
+                                                "rgb" => $colorNegro
+                                            )
+                                        )
+                                    )
+                                ),
+                                array(
+                                    "title" => "# Combos",
+                                    "style" => array(
+                                        "fill" => array(
+                                            "patternType" => "solid",
+                                            "fgColor" => array(
+                                                "rgb" => $colorNaranjaClaro
+                                            )
+                                        ),
+                                        "font" => array(
+                                            "color" => array(
+                                                "rgb" => $colorNegro
+                                            )
+                                        )
+                                    )
+                                ),
+                                array(
+                                    "title" => "Reconocer x Combo S/",
+                                    "style" => array(
+                                        "fill" => array(
+                                            "patternType" => "solid",
+                                            "fgColor" => array(
+                                                "rgb" => $colorNaranjaClaro
+                                            )
+                                        ),
+                                        "font" => array(
+                                            "color" => array(
+                                                "rgb" => $colorNegro
+                                            )
+                                        )
+                                    )
+                                ),
+                            );
+
+                        }
 
                         $nuevoArray[0]['columns'] = $arrayTitulos;
 
@@ -1072,150 +1393,345 @@ class CategoriasPromocionesMostrarController extends Controller
                         $desc_cspfinpromo = "30-".$fechaFinal;
                     }
 
+                    $arrayFilaExcel = array();
 
-                    $arrayFilaExcel = array(
-                        array(
-                            "value" => $csp->cspiniciopromo,
-                            "style" => array(
-                                "font" => array(
-                                    "sz" => "9"
-                                )
-                            )
-                        ),
-                        array(
-                            "value" => $csp->cspfinpromo,
-                            "style" => array(
-                                "font" => array(
-                                    "sz" => "9"
-                                )
-                            )
-                        ),
-                        array(
-                            "value" => $desc_casnombre,
-                            "style" => array(
-                                "font" => array(
-                                    "sz" => "9"
-                                )
-                            )
-                        ),
-                        array(
-                            "value" => $desc_zonnombre,
-                            "style" => array(
-                                "font" => array(
-                                    "sz" => "9"
-                                )
-                            )
-                        ),
-                        array(
-                            "value" => $desc_gsunombre,
-                            "style" => array(
-                                "font" => array(
-                                    "sz" => "9"
-                                )
-                            )
-                        ),
-                        array(
-                            "value" => $desc_sucnombre,
-                            "style" => array(
-                                "font" => array(
-                                    "sz" => "9"
-                                )
-                            )
-                        ),
-                        array(
-                            "value" => $desc_sucsoldto,
-                            "style" => array(
-                                "font" => array(
-                                    "sz" => "9"
-                                )
-                            )
-                        ),
-                        array(
-                            "value" => $desc_sucnombre,
-                            "style" => array(
-                                "font" => array(
-                                    "sz" => "9"
-                                )
-                            )
-                        ),
-                        array(
-                            "value" => $desc_cannombre,
-                            "style" => array(
-                                "font" => array(
-                                    "sz" => "9"
-                                )
-                            )
-                        ),
-                        array(
-                            "value" => $desc_catnombre,
-                            "style" => array(
-                                "font" => array(
-                                    "sz" => "9"
-                                )
-                            )
-                        ),
-                        array(
-                            "value" => $desc_prmsku,
-                            "style" => array(
-                                "font" => array(
-                                    "sz" => "9"
-                                )
-                            )
-                        ),
-                        array(
-                            "value" => $desc_pronombre,
-                            "style" => array(
-                                "font" => array(
-                                    "sz" => "9"
-                                )
-                            )
-                        ),
-                        array(
-                            "value" => $desc_prmmecanica,
-                            "style" => array(
-                                "font" => array(
-                                    "sz" => "9"
-                                )
-                            )
-                        ),
-                        array(
-                            "value" => $desc_cspcantidadplancha,
-                            "style" => array(
-                                "font" => array(
-                                    "sz" => "9"
-                                ),
-                                "numFmt" => "#,##0.00"
-                            )
-                        ),
-                        array(
-                            "value" => $desc_csptotalplancha,
-                            "style" => array(
-                                "font" => array(
-                                    "sz" => "9"
-                                ),
-                                "numFmt" => "#,##0.00"
-                            )
-                        ),
-                        array(
-                            "value" => $desc_cspcantidadcombo,
-                            "style" => array(
-                                "font" => array(
-                                    "sz" => "9"
-                                ),
-                                "numFmt" => "#,##0.00"
-                            )
-                        ),
-                        array(
-                            "value" => $desc_csptotalcombo,
-                            "style" => array(
-                                "font" => array(
-                                    "sz" => "9"
-                                ),
-                                "numFmt" => "#,##0.00"
-                            )
-                        ),
+                    if(isset($re_columnas)){
 
-                    );
+                        foreach($re_columnas as $re_columna){
+
+                            if($re_columna['columna'] == "Inicio Promoción"){
+                                
+                                $arrayFilaExcel[] = array(
+                                    "value" => $csp->cspiniciopromo,
+                                    "style" => array(
+                                        "font" => array(
+                                            "sz" => "9"
+                                        )
+                                    )
+                                );
+
+                            }else if($re_columna['columna'] == "Fin Promoción"){
+                                
+                                $arrayFilaExcel[] = array(
+                                    "value" => $csp->cspfinpromo,
+                                    "style" => array(
+                                        "font" => array(
+                                            "sz" => "9"
+                                        )
+                                    )
+                                );
+
+                            }else if($re_columna['columna'] == "Región"){
+
+                                $arrayFilaExcel[] = array(
+                                    "value" => $desc_casnombre,
+                                    "style" => array(
+                                        "font" => array(
+                                            "sz" => "9"
+                                        )
+                                    )
+                                );
+
+                            }else if($re_columna['columna'] == "Zona"){
+
+                                $arrayFilaExcel[] = array(
+                                    "value" => $desc_zonnombre,
+                                    "style" => array(
+                                        "font" => array(
+                                            "sz" => "9"
+                                        )
+                                    )
+                                );
+
+                            }else if($re_columna['columna'] == "Grupo"){
+
+                                $arrayFilaExcel[] = array(
+                                    "value" => $desc_gsunombre,
+                                    "style" => array(
+                                        "font" => array(
+                                            "sz" => "9"
+                                        )
+                                    )
+                                );
+
+                            }else if($re_columna['columna'] == "Cliente Hml"){
+
+                                $arrayFilaExcel[] = array(
+                                    "value" => $desc_sucnombre,
+                                    "style" => array(
+                                        "font" => array(
+                                            "sz" => "9"
+                                        )
+                                    )
+                                );
+
+                            }else if($re_columna['columna'] == "Sold To"){
+
+                                $arrayFilaExcel[] = array(
+                                    "value" => $desc_sucsoldto,
+                                    "style" => array(
+                                        "font" => array(
+                                            "sz" => "9"
+                                        )
+                                    )
+                                );
+
+                            }else if($re_columna['columna'] == "Tipo de Cliente"){
+
+                                $arrayFilaExcel[] = array(
+                                    "value" => $desc_cannombre,
+                                    "style" => array(
+                                        "font" => array(
+                                            "sz" => "9"
+                                        )
+                                    )
+                                );
+
+                            }else if($re_columna['columna'] == "Categoría"){
+
+                                $arrayFilaExcel[] = array(
+                                    "value" => $desc_catnombre,
+                                    "style" => array(
+                                        "font" => array(
+                                            "sz" => "9"
+                                        )
+                                    )
+                                );
+
+                            }else if($re_columna['columna'] == "Sku"){
+
+                                $arrayFilaExcel[] = array(
+                                    "value" => $desc_prmsku,
+                                    "style" => array(
+                                        "font" => array(
+                                            "sz" => "9"
+                                        )
+                                    )
+                                );
+
+                            }else if($re_columna['columna'] == "Producto"){
+
+                                $arrayFilaExcel[] = array(
+                                    "value" => $desc_pronombre,
+                                    "style" => array(
+                                        "font" => array(
+                                            "sz" => "9"
+                                        )
+                                    )
+                                );
+
+                            }else if($re_columna['columna'] == "Mecánica"){
+
+                                $arrayFilaExcel[] = array(
+                                    "value" => $desc_prmmecanica,
+                                    "style" => array(
+                                        "font" => array(
+                                            "sz" => "9"
+                                        )
+                                    )
+                                );
+
+                            }else if($re_columna['columna'] == "Planchas a rotar"){
+
+                                $arrayFilaExcel[] = array(
+                                    "value" => $desc_cspcantidadplancha,
+                                    "style" => array(
+                                        "font" => array(
+                                            "sz" => "9"
+                                        ),
+                                        "numFmt" => "#,##0.00"
+                                    )
+                                );
+
+                            }else if($re_columna['columna'] == "Reconocer x PL S/IGV"){
+
+                                $arrayFilaExcel[] = array(
+                                    "value" => $desc_csptotalplancha,
+                                    "style" => array(
+                                        "font" => array(
+                                            "sz" => "9"
+                                        ),
+                                        "numFmt" => "#,##0.00"
+                                    )
+                                );
+
+                            }else if($re_columna['columna'] == "# Combos"){
+
+                                $arrayFilaExcel[] = array(
+                                    "value" => $desc_cspcantidadcombo,
+                                    "style" => array(
+                                        "font" => array(
+                                            "sz" => "9"
+                                        ),
+                                        "numFmt" => "#,##0.00"
+                                    )
+                                );
+                                
+                            }else if($re_columna['columna'] == "Reconocer x Combo S/"){
+
+                                $arrayFilaExcel[] = array(
+                                    "value" => $desc_csptotalcombo,
+                                    "style" => array(
+                                        "font" => array(
+                                            "sz" => "9"
+                                        ),
+                                        "numFmt" => "#,##0.00"
+                                    )
+                                );
+
+                            }else{
+
+                            }
+
+                        }
+
+                    }else{
+
+                        $arrayFilaExcel = array(
+                            array(
+                                "value" => $csp->cspiniciopromo,
+                                "style" => array(
+                                    "font" => array(
+                                        "sz" => "9"
+                                    )
+                                )
+                            ),
+                            array(
+                                "value" => $csp->cspfinpromo,
+                                "style" => array(
+                                    "font" => array(
+                                        "sz" => "9"
+                                    )
+                                )
+                            ),
+                            array(
+                                "value" => $desc_casnombre,
+                                "style" => array(
+                                    "font" => array(
+                                        "sz" => "9"
+                                    )
+                                )
+                            ),
+                            array(
+                                "value" => $desc_zonnombre,
+                                "style" => array(
+                                    "font" => array(
+                                        "sz" => "9"
+                                    )
+                                )
+                            ),
+                            array(
+                                "value" => $desc_gsunombre,
+                                "style" => array(
+                                    "font" => array(
+                                        "sz" => "9"
+                                    )
+                                )
+                            ),
+                            array(
+                                "value" => $desc_sucnombre,
+                                "style" => array(
+                                    "font" => array(
+                                        "sz" => "9"
+                                    )
+                                )
+                            ),
+                            array(
+                                "value" => $desc_sucsoldto,
+                                "style" => array(
+                                    "font" => array(
+                                        "sz" => "9"
+                                    )
+                                )
+                            ),
+                            array(
+                                "value" => $desc_sucnombre,
+                                "style" => array(
+                                    "font" => array(
+                                        "sz" => "9"
+                                    )
+                                )
+                            ),
+                            array(
+                                "value" => $desc_cannombre,
+                                "style" => array(
+                                    "font" => array(
+                                        "sz" => "9"
+                                    )
+                                )
+                            ),
+                            array(
+                                "value" => $desc_catnombre,
+                                "style" => array(
+                                    "font" => array(
+                                        "sz" => "9"
+                                    )
+                                )
+                            ),
+                            array(
+                                "value" => $desc_prmsku,
+                                "style" => array(
+                                    "font" => array(
+                                        "sz" => "9"
+                                    )
+                                )
+                            ),
+                            array(
+                                "value" => $desc_pronombre,
+                                "style" => array(
+                                    "font" => array(
+                                        "sz" => "9"
+                                    )
+                                )
+                            ),
+                            array(
+                                "value" => $desc_prmmecanica,
+                                "style" => array(
+                                    "font" => array(
+                                        "sz" => "9"
+                                    )
+                                )
+                            ),
+                            array(
+                                "value" => $desc_cspcantidadplancha,
+                                "style" => array(
+                                    "font" => array(
+                                        "sz" => "9"
+                                    ),
+                                    "numFmt" => "#,##0.00"
+                                )
+                            ),
+                            array(
+                                "value" => $desc_csptotalplancha,
+                                "style" => array(
+                                    "font" => array(
+                                        "sz" => "9"
+                                    ),
+                                    "numFmt" => "#,##0.00"
+                                )
+                            ),
+                            array(
+                                "value" => $desc_cspcantidadcombo,
+                                "style" => array(
+                                    "font" => array(
+                                        "sz" => "9"
+                                    ),
+                                    "numFmt" => "#,##0.00"
+                                )
+                            ),
+                            array(
+                                "value" => $desc_csptotalcombo,
+                                "style" => array(
+                                    "font" => array(
+                                        "sz" => "9"
+                                    ),
+                                    "numFmt" => "#,##0.00"
+                                )
+                            ),
+    
+                        );
+
+                    }
                     
                     $nuevoArray[0]['data'][] = $arrayFilaExcel;
                 }
