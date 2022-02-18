@@ -55,7 +55,7 @@ class recuperarController extends Controller
             // $data = ['correo' => $correo, 'usuario' => $usu->usuusuario];
             // Mail::to($correo)->send(new TestMail($data));
 
-            $data = ['token' => $nuevoToken];
+            $data = ['token' => $usu->usutoken];
             Mail::to($correo)->send(new MailRecuperarContrasenaNuevo($data));
 
             $respuesta = true;
