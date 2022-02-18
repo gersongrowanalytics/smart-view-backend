@@ -87,7 +87,7 @@ class CargarArchivoController extends Controller
                 $ultimaColumna  = $objPHPExcel->setActiveSheetIndex(0)->getHighestColumn();
                 
                 if($cargarData == true){
-                    for ($i=3; $i <= $numRows; $i++) {
+                    for ($i=2; $i <= $numRows; $i++) {
                         $dia = '01';
     
                         // $ano        = $objPHPExcel->getActiveSheet()->getCell('D'.$i)->getCalculatedValue();
@@ -437,95 +437,10 @@ class CargarArchivoController extends Controller
                                             $mensaje   = "Hay algunos soldtos no identificados";
                                             $linea     = __LINE__;
                                         }
-
-                                        // VERIFICAR SI EXISTE LA PERSONA PARA EL CLIENTE
-                                        // $clienteperpersona = perpersonas::where('pernombrecompleto', $cliente)->first(['perid']);
-                                        // $clienteperid = 0;
-                                        // if($clienteperpersona){
-                                        //     $clienteperid = $clienteperpersona->perid;
-                                        // }else{
-                                        //     $clienteNuevaPersona = new perpersonas;
-                                        //     $clienteNuevaPersona->tdiid                         = 2;
-                                        //     $clienteNuevaPersona->pernombrecompleto             = $cliente;
-                                        //     $clienteNuevaPersona->pernumerodocumentoidentidad   = null;
-                                        //     $clienteNuevaPersona->pernombre                     = null;
-                                        //     $clienteNuevaPersona->perapellidopaterno            = null;
-                                        //     $clienteNuevaPersona->perapellidomaterno            = null;
-                                        //     if($clienteNuevaPersona->save()){
-                                        //         $clienteperid = $clienteNuevaPersona->perid;
-                                        //     }else{
-                            
-                                        //     }
-                                        // }
-
-                                        // $usuCliente = usuusuarios::where('tpuid', 2)
-                                        //                             // ->where('perid', $clienteperid)
-                                        //                             ->where('ususoldto', 'LIKE', '%'.$soldto)
-                                        //                             ->first(['usuid']);
-                                        // $clienteusuid = 0;
-                                        // $sucursalClienteId = 0;
-                                        // if($usuCliente){
-                                        //     $clienteusuid = $usuCliente->usuid;
-                                            
-                                        //     $sucursalesCliente = ussusuariossucursales::where('usuid', $clienteusuid)->first(['sucid']);
-                                        //     if($sucursalesCliente){
-                                        //         $sucursalClienteId = $sucursalesCliente->sucid;
-                                        //     }else{
-                                        //         $nuevaSucursal = new sucsucursales;
-                                        //         $nuevaSucursal->sucnombre = $cliente;
-                                        //         if($nuevaSucursal->save()){
-                                        //             $sucursalClienteId = $nuevaSucursal->sucid;
-            
-                                        //             $sucursalUsuario = new ussusuariossucursales;
-                                        //             $sucursalUsuario->usuid = $clienteusuid;
-                                        //             $sucursalUsuario->suci  = $sucursalClienteId;
-                                        //             if($sucursalUsuario->save()){
-            
-                                        //             }else{
-            
-                                        //             }
-            
-                                        //         }else{
-            
-                                        //         }
-                                        //     }
-            
-                                        // }else{
-                                        //     $clienteNuevoUsuario = new usuusuarios;
-                                        //     $clienteNuevoUsuario->tpuid         = 2; // tipo de usuario (cliente)
-                                        //     $clienteNuevoUsuario->perid         = $clienteperid;
-                                        //     $clienteNuevoUsuario->ususoldto     = $soldto;
-                                        //     $clienteNuevoUsuario->usuusuario    = null;
-                                        //     $clienteNuevoUsuario->usucorreo     = null;
-                                        //     $clienteNuevoUsuario->usucontrasena = null;
-                                        //     $clienteNuevoUsuario->usutoken      = Str::random(60);
-                                        //     if($clienteNuevoUsuario->save()){
-                                        //         $clienteusuid = $clienteNuevoUsuario->usuid;
-                                        //         $nuevaSucursal = new sucsucursales;
-                                        //         $nuevaSucursal->sucnombre = $cliente;
-                                        //         if($nuevaSucursal->save()){
-                                        //             $sucursalClienteId = $nuevaSucursal->sucid;
-            
-                                        //             $sucursalUsuario = new ussusuariossucursales;
-                                        //             $sucursalUsuario->usuid = $clienteusuid;
-                                        //             $sucursalUsuario->sucid = $sucursalClienteId;
-                                        //             if($sucursalUsuario->save()){
-            
-                                        //             }else{
-            
-                                        //             }
-            
-                                        //         }else{
-            
-                                        //         }
-                                        //     }else{
-                            
-                                        //     }
-                                        // }
-
                                         
                                     }else{
-                                        $skusNoExisten[] = $sku;
+                                        // $skusNoExisten[] = $sku;
+                                        $skusNoExisten = $this->EliminarDuplicidad( $skusNoExisten, $sku, $i);
                                         $respuesta = false;
                                         $mensaje   = "Hay algunos skus no identificados";
                                         $linea     = __LINE__;
@@ -1236,5 +1151,22 @@ class CargarArchivoController extends Controller
         }
         
         return $requestsalida;
+    }
+
+    private function EliminarDuplicidad($array, $dato, $linea)
+    {
+        $encontroDato = false;
+        foreach($array as $arr){
+            if($arr['codigo'] == $dato){
+                $encontroDato = true;
+                break;
+            }
+        }
+
+        if($encontroDato == false){
+            $array[] = array("codigo" => $dato, "linea" => $linea);
+        }
+
+        return $array;
     }
 }
