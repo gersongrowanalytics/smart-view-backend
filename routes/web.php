@@ -24,6 +24,7 @@ $router->get('/mail', 'MailController@getMail');
 $router->post('/recuperar/contrasena', 'MailController@recuperarContrasena');
 
 $router->post('/recuperar/contrasena/nuevo', 'Sistema\recuperarController@EnviarCorreoRecuperar');
+$router->post('/cambiar/contrasenia/nuevo', 'Sistema\recuperarController@CambiarContraseniaRecuperar');
 
 $router->post('/login', 'Sistema\loginController@login');
 

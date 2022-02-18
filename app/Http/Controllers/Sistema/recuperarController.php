@@ -9,6 +9,7 @@ use App\Mail\TestMail;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\MailRecuperarContrasenaNuevo;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Hash;
 
 class recuperarController extends Controller
 {
@@ -69,6 +70,32 @@ class recuperarController extends Controller
             'respuesta'      => $respuesta,
             'mensaje'        => $mensaje,
             'datos'          => [],
+        ]);
+
+    }
+
+    public function CambiarContraseniaRecuperar(Request $request)
+    {
+
+        $respuesta = true;
+        $mensaje   = "La contraseña del usuario se actualizo correctamente";
+
+        $nuevaContrasenia = $request['nuevaContrasenia'];
+        $token = $request['token'];
+
+        $usu = usuusuarios::where('usutoken', $token)->first();
+        if($usu){
+            $usu->usucontrasena = Hash::make($nuevaContrasenia);
+            $usu->usutoken      = Str::random(60);
+            $usu->update();
+        }else{
+            $respuesta = false;
+            $mensaje   = "Lo sentimos, el codigo ingresado ha expirado, porfavor vuelva a solicitar otra recuperación de este";
+        }
+        
+        return response()->json([
+            'respuesta' => $respuesta,
+            'mensaje'   => $mensaje,
         ]);
 
     }
