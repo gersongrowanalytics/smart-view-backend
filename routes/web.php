@@ -23,7 +23,7 @@ $router->get('/actualizarimagenessellinout', 'salvacionController@CambiarImagenS
 $router->get('/mail', 'MailController@getMail');
 $router->post('/recuperar/contrasena', 'MailController@recuperarContrasena');
 
-$router->post('/recuperar/contrasena/nuevo', 'Sistema/recuperarController@EnviarCorreoRecuperar');
+$router->post('/recuperar/contrasena/nuevo', 'Sistema\recuperarController@EnviarCorreoRecuperar');
 
 $router->post('/login', 'Sistema\loginController@login');
 
