@@ -42,7 +42,7 @@ class recuperarController extends Controller
     {
 
         $correo     = $request['correo'];
-        $usu        = usuusuarios::where('usucorreo', $correo)->first(['usuusuario']);
+        $usu        = usuusuarios::where('usucorreo', $correo)->first(['usuusuario', 'usutoken']);
         $mensaje    = "";
         $respuesta  = false;
 
