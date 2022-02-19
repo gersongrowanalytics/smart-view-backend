@@ -50,16 +50,17 @@ class recuperarController extends Controller
 
             $nuevoToken    = Str::random(60);
             $usu->usutoken = $nuevoToken;
-            $usu->update();
+            if($usu->update()){
+                $respuesta = true;
+                $mensaje   = "El correo fue enviado satisfactoriamente";
 
-            // $data = ['correo' => $correo, 'usuario' => $usu->usuusuario];
-            // Mail::to($correo)->send(new TestMail($data));
+                $data = ['token' => $usu->usutoken];
+                Mail::to($correo)->send(new MailRecuperarContrasenaNuevo($data));
 
-            $data = ['token' => $usu->usutoken];
-            Mail::to($correo)->send(new MailRecuperarContrasenaNuevo($data));
-
-            $respuesta = true;
-            $mensaje   = "El correo fue enviado satisfactoriamente";
+            }else{
+                $respuesta = false;
+                $mensaje   = "Lo sentimos, no se pudo actualizar el token del usuario";
+            }
 
         }else{
             $mensaje = "Lo sentimos ese usuario no esta registrado";
