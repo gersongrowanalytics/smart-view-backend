@@ -56,8 +56,8 @@ class recuperarController extends Controller
                 $respuesta = true;
                 $mensaje   = "El correo fue enviado satisfactoriamente";
 
-                // $data = ['token' => $usu->usutoken];
-                // Mail::to($correo)->send(new MailRecuperarContrasenaNuevo($data));
+                $data = ['token' => $nuevoToken];
+                Mail::to($correo)->send(new MailRecuperarContrasenaNuevo($data));
 
             }else{
                 $respuesta = false;
