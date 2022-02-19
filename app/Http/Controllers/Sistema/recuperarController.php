@@ -47,15 +47,15 @@ class recuperarController extends Controller
         $respuesta  = false;
 
         if($usu){
-
+            $usue = usuusuarios::find($usu->usuid);
             $nuevoToken    = Str::random(60);
-            $usu->usutoken = $nuevoToken;
-            if($usu->update()){
+            $usue->usutoken = $nuevoToken;
+            if($usue->update()){
                 $respuesta = true;
                 $mensaje   = "El correo fue enviado satisfactoriamente";
 
-                $data = ['token' => $usu->usutoken];
-                Mail::to($correo)->send(new MailRecuperarContrasenaNuevo($data));
+                // $data = ['token' => $usu->usutoken];
+                // Mail::to($correo)->send(new MailRecuperarContrasenaNuevo($data));
 
             }else{
                 $respuesta = false;
