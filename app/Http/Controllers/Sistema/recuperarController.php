@@ -42,13 +42,15 @@ class recuperarController extends Controller
     {
 
         $correo     = $request['correo'];
-        $usu        = usuusuarios::where('usucorreo', $correo)->first(['usuusuario', 'usutoken']);
+        $usu        = usuusuarios::where('usucorreo', $correo)->first(['usuid', 'usuusuario', 'usutoken']);
         $mensaje    = "";
         $respuesta  = false;
 
         if($usu){
-            $usue = usuusuarios::find($usu->usuid);
+            
             $nuevoToken    = Str::random(60);
+
+            $usue = usuusuarios::find($usu->usuid);
             $usue->usutoken = $nuevoToken;
             if($usue->update()){
                 $respuesta = true;
