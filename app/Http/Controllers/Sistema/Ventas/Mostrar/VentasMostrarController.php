@@ -232,6 +232,7 @@ class VentasMostrarController extends Controller
                                                                         'cat.catimagenfondo',
                                                                         'cat.catimagenfondoopaco',
                                                                         'cat.caticono',
+                                                                        'cat.catimagenfondocompleto',
                                                                         'scasucursalescategorias.scavalorizadoobjetivo',
                                                                         'scasucursalescategorias.scavalorizadoreal',
                                                                         'scasucursalescategorias.scavalorizadotogo',
@@ -375,6 +376,7 @@ class VentasMostrarController extends Controller
                         $dataVacia[$posicionTpr]['categorias'][$posicion]['catimagenfondo']         = $categoria->catimagenfondo;
                         $dataVacia[$posicionTpr]['categorias'][$posicion]['catimagenfondoopaco']    = $categoria->catimagenfondoopaco;
                         $dataVacia[$posicionTpr]['categorias'][$posicion]['caticono']               = $categoria->caticono;
+                        $dataVacia[$posicionTpr]['categorias'][$posicion]['catimagenfondocompleto'] = $categoria->catimagenfondocompleto;
                         $dataVacia[$posicionTpr]['categorias'][$posicion]['scavalorizadoobjetivo']  = 0;
                         $dataVacia[$posicionTpr]['categorias'][$posicion]['scavalorizadoreal']      = 0;
                         $dataVacia[$posicionTpr]['categorias'][$posicion]['scavalorizadotogo']      = 0;
