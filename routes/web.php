@@ -31,6 +31,7 @@ $router->post('/login', 'Sistema\loginController@login');
 $router->group(['middleware' => ['permisos']], function() use($router) {
     
     $router->post('/ventas/mostrar', 'Sistema\Ventas\Mostrar\VentasMostrarController@mostrarVentas');
+    $router->post('/ventas/mostrar/acumulado', 'Sistema\Ventas\Mostrar\VentasMostrarAcumuladoController@mostrarVentasAcumuladas');
     $router->post('/ventas/mostrar/porzona', 'Sistema\Ventas\Mostrar\VentasMostrarController@mostrarVentasXZona');
     $router->post('/ventas/mostrar/porzona/prueba', 'Sistema\Ventas\Mostrar\VentasMostrarController@mostrarVentasXZonaPruebaSO');
 
