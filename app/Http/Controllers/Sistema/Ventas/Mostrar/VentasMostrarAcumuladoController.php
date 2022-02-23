@@ -284,6 +284,7 @@ class VentasMostrarAcumuladoController extends Controller
                             "catnombre"             => "",
                             "catimagenfondo"        => "",
                             "catimagenfondoopaco"   => "",
+                            "catimagenfondocompleto"   => "",
                             "caticono"              => "",
                             "scavalorizadoobjetivo" => "",
                             "scavalorizadoreal"     => "",
@@ -692,7 +693,7 @@ class VentasMostrarAcumuladoController extends Controller
                             
                             $categorias = catcategorias::where('catnombre', '!=', 'MultiCategoria')
                                                         ->where('catid', '<', 6)
-                                                        ->orderBy('catid')->get(['catid', 'catnombre', 'catimagenfondo', 'catimagenfondoopaco', 'caticono']);
+                                                        ->orderBy('catid')->get(['catid', 'catnombre', 'catimagenfondo', 'catimagenfondoopaco', 'caticono', 'catimagenfondocompleto']);
 
                             if(sizeof($categorias) > 0){
 
@@ -701,6 +702,7 @@ class VentasMostrarAcumuladoController extends Controller
                                     $dataarray[$posicionTpr]['categorias'][$posicionCat]['catnombre']             = $categoria->catnombre;
                                     $dataarray[$posicionTpr]['categorias'][$posicionCat]['catimagenfondo']        = $categoria->catimagenfondo;
                                     $dataarray[$posicionTpr]['categorias'][$posicionCat]['catimagenfondoopaco']   = $categoria->catimagenfondoopaco;
+                                    $dataarray[$posicionTpr]['categorias'][$posicionCat]['catimagenfondocompleto']  = $categoria->catimagenfondocompleto;
                                     $dataarray[$posicionTpr]['categorias'][$posicionCat]['caticono']              = $categoria->caticono;
 
                                     if(!isset($dataarray[$posicionTpr]['categorias'][$posicionCat]['scavalorizadoobjetivo'])){
@@ -852,7 +854,7 @@ class VentasMostrarAcumuladoController extends Controller
 
                             $categorias = catcategorias::where('catnombre', '!=', 'MultiCategoria')
                                                         ->where('catid', '<', 6)
-                                                        ->orderBy('catid')->get(['catid', 'catnombre', 'catimagenfondo', 'catimagenfondoopaco', 'caticono']);
+                                                        ->orderBy('catid')->get(['catid', 'catnombre', 'catimagenfondo', 'catimagenfondoopaco', 'caticono', 'catimagenfondocompleto']);
 
                             if(sizeof($categorias) > 0){
 
@@ -861,6 +863,7 @@ class VentasMostrarAcumuladoController extends Controller
                                     $dataarray[$posicionTpr]['categorias'][$posicionCat]['catnombre']             = $categoria->catnombre;
                                     $dataarray[$posicionTpr]['categorias'][$posicionCat]['catimagenfondo']        = $categoria->catimagenfondo;
                                     $dataarray[$posicionTpr]['categorias'][$posicionCat]['catimagenfondoopaco']   = $categoria->catimagenfondoopaco;
+                                    $dataarray[$posicionTpr]['categorias'][$posicionCat]['catimagenfondocompleto']   = $categoria->catimagenfondocompleto;
                                     $dataarray[$posicionTpr]['categorias'][$posicionCat]['caticono']              = $categoria->caticono;
 
                                     if(!isset($dataarray[$posicionTpr]['categorias'][$posicionCat]['scavalorizadoobjetivo'])){
@@ -942,6 +945,7 @@ class VentasMostrarAcumuladoController extends Controller
                         $dataVacia[$posicionTpr]['categorias'][$posicion]['catnombre']              = $categoria->catnombre;
                         $dataVacia[$posicionTpr]['categorias'][$posicion]['catimagenfondo']         = $categoria->catimagenfondo;
                         $dataVacia[$posicionTpr]['categorias'][$posicion]['catimagenfondoopaco']    = $categoria->catimagenfondoopaco;
+                        $dataVacia[$posicionTpr]['categorias'][$posicion]['catimagenfondocompleto']    = $categoria->catimagenfondocompleto;
                         $dataVacia[$posicionTpr]['categorias'][$posicion]['caticono']               = $categoria->caticono;
                         $dataVacia[$posicionTpr]['categorias'][$posicion]['scavalorizadoobjetivo']  = 0;
                         $dataVacia[$posicionTpr]['categorias'][$posicion]['scavalorizadoreal']      = 0;
