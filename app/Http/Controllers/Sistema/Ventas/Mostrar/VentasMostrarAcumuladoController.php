@@ -304,25 +304,25 @@ class VentasMostrarAcumuladoController extends Controller
                                     if($re_aplicandoFiltroZona == true){
                                         foreach($re_zonas as $re_zona){
                                             if($re_zona['check'] == true){
-                                                $query->orwhere('suc.zonid', $re_zona['zonid']);
+                                                $query->orwhere('zonid', $re_zona['zonid']);
                                             }
                                         }
                                     }else if($re_aplicandoFiltroCanal == true){
                                         foreach($re_cass as $re_cas){
                                             if($re_cas['check'] == true){
-                                                $query->orwhere('suc.casid', $re_cas['casid']);
+                                                $query->orwhere('casid', $re_cas['casid']);
                                             }
                                         }
                                     }else if($re_aplicandoFiltroGrupo == true){
                                         foreach($re_gsus as $re_gsu){
                                             if($re_gsu['check'] == true){
-                                                $query->orwhere('suc.gsuid', $re_gsu['gsuid']);
+                                                $query->orwhere('gsuid', $re_gsu['gsuid']);
                                             }
                                         }
                                     }else if($re_aplicandoFiltroDt == true){
                                         foreach($re_sucursalesUsuario as $re_sucursalUsuario){
                                             if($re_sucursalUsuario['check'] == true){
-                                                $query->orwhere('suc.sucid', $re_sucursalUsuario['sucid']);
+                                                $query->orwhere('sucid', $re_sucursalUsuario['sucid']);
                                             }
                                         }
                                     }
