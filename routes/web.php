@@ -47,6 +47,7 @@ $router->group(['middleware' => ['permisos']], function() use($router) {
 
     $router->post('/promociones/mostrar/promociones', 'Sistema\Promociones\Mostrar\PromocionesMostrarController@mostrarPromociones');
     $router->post('/promociones/mostrar/promociones/xzona', 'Sistema\Promociones\Mostrar\PromocionesMostrarController@mostrarPromocionesXZona');
+    $router->post('/promociones/mostrar/promociones/promos-acumuladas', 'Sistema\Promociones\Mostrar\PromocionesMostrarAcumuladoController@PromocionesMostrarAcumulado');
 
     $router->post('/promociones/mostrar/pdf-generar', 'Sistema\Promociones\Mostrar\PdfPromocionesController@MostrarPdfPromociones');
 
