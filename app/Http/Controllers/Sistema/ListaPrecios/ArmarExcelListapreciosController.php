@@ -22,7 +22,7 @@ class ArmarExcelListapreciosController extends Controller
                                     ->where('usu.usutoken', $usutoken)
                                     ->distinct('suc.treid')
                                     ->get([
-                                        'treid',
+                                        'suc.treid',
                                         'usu.tpuid',
                                         'trenombre'
                                     ]);
