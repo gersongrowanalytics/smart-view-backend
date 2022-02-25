@@ -8,7 +8,7 @@
     <div style="width: 100%; ">
         <center>
             <div style="width: 560px;">
-                <div id="piesCorreo" style="background: #558CFF; margin-top:30px; height: 40px; width: 450px; padding-top: 0px; position:relative">
+                <div id="piesCorreo" style="background: #558CFF; margin-top:30px; height: 40px; width: 550px; padding-top: 0px; position:relative">
                     <table border="0" cellspacing="0" cellpadding="0" style="width: 100%; position:absolute;" >
                         <tr style="width: 100%;">
                             <td style="width: 12.5%; height:5px; background: #558CFF"></td>
@@ -24,7 +24,7 @@
                     <div 
                         id="" 
                         style=" font-style: normal; font-weight: 900; font-size: 18px; line-height: 21px; color: #FFFFFF; padding-top:10px;">
-                        Grow Analytics
+                        Creciendo Juntos
                     </div>
                 </div>
                 <table>
@@ -36,9 +36,9 @@
                         </td>
                     </tr>
 
-                    <tr>
+                    <tr style="margin-bottom: 10px">
                         <td align="center" style=" width: 100000px">
-                            <div style="margin-left: 60px; margin-right: 60px; margin-bottom:10px; margin-top:20px">
+                            <div style="margin-left: 60px; margin-right: 60px; margin-bottom:15px; margin-top:20px">
                                 <span style=" font-style: normal; font-weight: normal; font-size: 10px; line-height: 12px; color: #9C9B9B;">
                                     <!-- Para cualquier consulta, escríbenos a <span id="direccionCorreo" style="color: #70AAFF;">consultasxxxx@xxxx.com.pe</span> -->
                                     Puedes hacerlo a través del siguiente enlace:
@@ -47,12 +47,14 @@
                         </td>
                     </tr>
                     <tr>
-                        <td align="center" style=" width: 100000px">
-                            <a 
-                                id="btnPlataforma" 
-                                href="http://localhost:3000/cambiar-contrasenia/{{$token}}"
-                                style="text-decoration: none; color: white; background: #558CFF; padding-top: 10px; padding-bottom: 10px; padding-left: 35px; padding-right: 35px; border-radius: 22px; margin-top: 50px;  font-style: normal; font-weight: bold; font-size: 10px; line-height: 12px;"
-                            >Cambiar Contraseña</a>
+                        <td align="center" style=" width: 100000px; margin-bottom:15px">
+                            <div style="margin-bottom:15px">
+                                <a 
+                                    id="btnPlataforma" 
+                                    href="http://localhost:3000/cambiar-contrasenia/{{$token}}"
+                                    style="text-decoration: none; color: white; background: #3946AB; padding-top: 10px; padding-bottom: 10px; padding-left: 35px; padding-right: 35px; border-radius: 22px; margin-top: 50px;  font-style: normal; font-weight: bold; font-size: 10px; line-height: 12px;margin-bottom:15px"
+                                >Cambiar Contraseña</a>
+                            </div>
                         </td>
                     </tr>
 
@@ -74,10 +76,15 @@
                         </td>
                     </tr>
                 </table>
-                <div id="piesCorreo" style="background: #ECF1FA; margin-top:30px; height: 40px; width: 450px;">
+                <div id="piesCorreo" style="background: #F1F1F1; margin-top:30px; height: 80px; width: 550px;">
+                    <div
+                        style=" font-style: normal; font-weight: bold; font-size: 9px; line-height: 11px; color: black; padding-top:15px; padding-left:40px; padding-right:40px;"
+                    >
+                        Te hemos enviado este correo para informarte de cambios importantes en tu cuenta y en los servicios de Creciendo Juntos
+                    </div>
                     <div 
                         id="" 
-                        style=" font-style: normal; font-weight: bold; font-size: 9px; line-height: 11px; color: #4157BD; padding-top:15px"
+                        style=" font-style: normal; font-weight: bold; font-size: 9px; line-height: 11px; color: black; padding-top:15px"
                     >
                         © <span id="anioactual"></span> GROW ANALYTICS</div>
                 </div>
