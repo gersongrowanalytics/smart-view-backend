@@ -25,9 +25,33 @@ class loginController extends Controller
         $usuario    = $request['usuario'];
         $contrasena = $request['contrasena'];
 
+        $re_logintoken = $request['logintoken'];
+        $re_token      = $request['token'];
+
         try{
             
-            $usuusaurio = usuusuarios::join('tputiposusuarios as tpu', 'tpu.tpuid', 'usuusuarios.tpuid')
+            if($re_logintoken == true){
+                $usuusaurio = usuusuarios::join('tputiposusuarios as tpu', 'tpu.tpuid', 'usuusuarios.tpuid')
+                                        ->join('perpersonas as per', 'per.perid', 'usuusuarios.perid')
+                                        ->where('usuusuarios.usutoken', $re_token)
+                                        ->first([
+                                            'usuusuarios.usuid',
+                                            'usuusuarios.usuusuario',
+                                            'usuusuarios.usucorreo',
+                                            'usuusuarios.usutoken',
+                                            'usuusuarios.usucontrasena',
+                                            'usuusuarios.tpuid',
+                                            'tpu.tpunombre',
+                                            'tpu.tpuprivilegio',
+                                            'per.pernombre',
+                                            'per.pernombrecompleto',
+                                            'per.perdireccion',
+                                            'per.perfechanacimiento',
+                                            'per.percelular',
+                                            'usuusuarios.usuorganizacion'
+                                        ]);
+            }else{
+                $usuusaurio = usuusuarios::join('tputiposusuarios as tpu', 'tpu.tpuid', 'usuusuarios.tpuid')
                                         ->join('perpersonas as per', 'per.perid', 'usuusuarios.perid')
                                         ->where('usuusuarios.usuusuario', $usuario)
                                         ->first([
@@ -46,6 +70,7 @@ class loginController extends Controller
                                             'per.percelular',
                                             'usuusuarios.usuorganizacion'
                                         ]);
+            }
 
             if($usuusaurio){
 
