@@ -86,20 +86,35 @@ class recuperarController extends Controller
         $nuevaContrasenia = $request['nuevaContrasenia'];
         $token = $request['token'];
 
+        $nuevoToken = "";
+
         $usu = usuusuarios::where('usutoken', $token)->first();
         if($usu){
+
+            $nuevoToken = Str::random(60);
+
             $usu->usucontrasena = Hash::make($nuevaContrasenia);
-            $usu->usutoken      = Str::random(60);
+            $usu->usutoken      = $nuevoToken;
             $usu->update();
+
+
         }else{
             $respuesta = false;
             $mensaje   = "Lo sentimos, el codigo ingresado ha expirado, porfavor vuelva a solicitar otra recuperación de este";
         }
         
         return response()->json([
-            'respuesta' => $respuesta,
-            'mensaje'   => $mensaje,
+            'respuesta'  => $respuesta,
+            'mensaje'    => $mensaje,
+            'nuevoToken' => $nuevoToken
         ]);
+
+    }
+
+    public function EnviarCorreoVista(Request $request)
+    {
+        
+        return view('CorreoRecupearContrasenaNuevo', ['token' => 'http://localhost:3000/cambiar-contrasenia/Yv8FvjoV1sfIzzNaZsTiWmCUt5RLy2MJT1y1HlyJucOfQMbXYsTRHeJwWvAj']);
 
     }
 }
