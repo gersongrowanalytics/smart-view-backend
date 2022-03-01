@@ -16,6 +16,7 @@ use App\catcategorias;
 use App\vsoventassso;
 use App\cspcanalessucursalespromociones;
 use App\prmpromociones;
+use App\ltplistaprecios;
 
 class salvacionController extends Controller
 {
