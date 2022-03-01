@@ -538,6 +538,62 @@ class salvacionController extends Controller
             $prme->update();
         }
     }
+
+    public function OrganizarListaPreciosMaestras($fecid)
+    {
+
+        $ltps = ltplistaprecios::where('fecid', $fecid)->get();
+
+        $arr_productos = array(
+            array(
+                "sku" => "",
+                "proid" => 0
+            )
+        );
+
+        $logs = array(
+            "PRODUCTOS_NO_ENCONTRADOS" => []
+        );
+
+        foreach($ltps as $ltp){
+
+            $encontroProducto = false;
+
+            $proidSeleccionado = 0;
+
+            foreach($arr_productos as $arr_producto){
+                if($ltp->ltpcodigosap == $arr_producto['sku']){
+                    $encontroProducto = true;
+                    $proidSeleccionado = $arr_producto['proid'];
+                }
+            }
+
+            if($encontroProducto == false){
+                $pro = proproductos::where('prosku', $ltp->ltpcodigosap)->first();
+                if($pro){
+                    $proidSeleccionado = $pro->proid;
+                    $arr_productos[] = array(
+                        "sku" => $ltp->ltpcodigosap,
+                        "proid" => $pro->proid
+                    );
+                }
+            }
+
+            if($proidSeleccionado != 0){
+                $ltpe = ltplistaprecios::find($ltp->ltpid);
+                $ltpe->proid = $proidSeleccionado;
+                $ltpe->update();
+            }else{
+                $logs["PRODUCTOS_NO_ENCONTRADOS"][] = $ltp->ltpcodigosap;
+            }
+
+
+        }
+
+        dd($logs);
+
+    }
+
 }
 
 

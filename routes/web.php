@@ -27,6 +27,7 @@ $router->post('/recuperar/contrasena/nuevo', 'Sistema\recuperarController@Enviar
 $router->post('/cambiar/contrasenia/nuevo', 'Sistema\recuperarController@CambiarContraseniaRecuperar');
 
 $router->post('/login', 'Sistema\loginController@login');
+$router->get('/correo-recuperar', 'Sistema\recuperarController@EnviarCorreoVista');
 
 $router->group(['middleware' => ['permisos']], function() use($router) {
     
@@ -203,3 +204,7 @@ $router->post('/cargarArchivo/promociones-liquidadas', 'Sistema\CargarArchivo\Re
 $router->get('/actualizar-si-distribuidoras-activas/{fecid}', 'salvacionController@AsignarSi');
 
 $router->get('/mostrar-promociones-pdf', 'Sistema\Promociones\Mostrar\PdfPromocionesController@MostrarPdfPromociones');
+
+
+// SALVACION
+$router->get('/organizar-lista-precios-maestra/{fecid}', 'salvacionController@OrganizarListaPreciosMaestras');
