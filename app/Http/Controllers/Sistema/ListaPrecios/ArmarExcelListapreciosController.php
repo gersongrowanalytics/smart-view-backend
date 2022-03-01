@@ -1078,7 +1078,8 @@ class ArmarExcelListapreciosController extends Controller
         }
 
         return response()->json([
-            'excel' => $nuevoArray
+            'excel' => $nuevoArray,
+            'data' => $ltps
         ]);
 
     }
