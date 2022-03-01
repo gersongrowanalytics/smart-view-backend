@@ -73,11 +73,44 @@ class ArmarExcelListapreciosController extends Controller
         $re_dia  = $request['dia'];
 
         $ltps = ltplistaprecios::join('fecfechas as fec', 'fec.fecid', 'ltplistaprecios.fecid')
+                                ->join('proproductos as pro', 'pro.proid', 'ltplistaprecios.proid')
+                                ->join('catcategorias as cat', 'cat.catid', 'pro.catid')
                                 ->where('fecano', $re_anio)
                                 ->where('fecmes', $re_mes)
                                 ->where('fecdia', $re_dia)
                                 ->where('treid', $re_treid)
-                                ->get();
+                                ->get([
+                                    'cat.catnombre',
+                                    'pronombre',
+                                    'ltpid',
+                                    'ltpcategoria',
+                                    'ltpsubcategoria',
+                                    'ltpcodigosap',
+                                    'ltpean',
+                                    'ltpdescripcionproducto',
+                                    'ltpunidadventa',
+                                    'ltppreciolistasinigv',
+                                    'ltpalza',
+                                    'ltpsdtpr',
+                                    'ltppreciolistaconigv',
+                                    
+                                    'ltpmfrutamayorista',
+                                    'ltpreventamayorista',
+                                    'ltpmargenmayorista',
+                                    'ltpmarcajemayorista',
+
+                                    'ltpmfrutaminorista',
+                                    'ltpreventaminorista',
+                                    'ltpmargenminorista',
+                                    'ltpmarcajeminorista',
+
+                                    'ltpmfrutahorizontal',
+                                    'ltpreventabodega',
+                                    'ltpmargenbodega',
+                                    'ltppvp',
+                                    'ltplistaprecios.treid',
+                                    'ltplistaprecios.fecid'
+                                ]);
 
         $nuevoArray = array(
             array(
