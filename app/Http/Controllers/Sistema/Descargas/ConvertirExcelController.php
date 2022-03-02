@@ -39,8 +39,10 @@ class ConvertirExcelController extends Controller
 
             $hoja->setCellValue($abc[$posicionColumna]."1", $re_data_columna['title']);
 
-            // $hoja->getStyle($abc[$posicionColumna]."1")->getFont()->getColor()->setARGB($re_data_columna['style']['font']['color']['rgb'] );
-            $hoja->getStyle($abc[$posicionColumna]."1")->getFont()->getColor()->setARGB('FFFF0000');
+            $hoja->getStyle($abc[$posicionColumna]."1")->getFont()->getColor()->setARGB($re_data_columna['style']['font']['color']['rgb']);
+            $hoja->getStyle($abc[$posicionColumna]."1")->getFill()
+                ->setFillType(Fill::FILL_SOLID)
+                ->getStartColor()->setARGB($re_data_columna['style']['fill']['fgColor']['rgb']);
         }
 
         foreach($re_data_cuerpos as $posicionCuerpo => $re_data_cuerpo){
