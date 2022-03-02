@@ -118,11 +118,19 @@ class ConvertirExcelController extends Controller
 
     public function EnviarCorreo(Request $request)
     {
+        $usutoken = $request->header('api_token');
 
         $asunto       = $request['asunto'];
         $destinatario = $request['destinatario'];
         $mensaje      = $request['mensaje'];
         $excel        = $request['excel'];
+        $re_espdf     = $request['espdf'];
+
+        if($re_espdf == true){
+            $excel = '/Sistema/Pdf/'.$usutoken.".pdf";
+        }else{
+            $excel = '/Sistema/ExcelCorreo/'.$excel;
+        }
 
 
         Mail::to($destinatario)->send(new CorreConArchivos($mensaje, $asunto, $excel));
