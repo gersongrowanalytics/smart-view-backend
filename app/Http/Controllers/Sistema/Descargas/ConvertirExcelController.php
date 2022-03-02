@@ -22,6 +22,7 @@ class ConvertirExcelController extends Controller
         $abc = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
 
         $re_data = $request['data'];
+        $re_nombreexcel = $request['nombreexcel'];
         $re_titulo = $request['titulo'];
 
         $re_data_columnas = $re_data[0]['columns'];
@@ -70,11 +71,7 @@ class ConvertirExcelController extends Controller
 
         }
 
-        $worksheet1 = $documento->createSheet();
-        $worksheet1->setTitle('Another sheet')
-                    ->getTabColor()->setRGB('FF0000');
-
-        $fileNameExcel="test PROMOS.xlsx";
+        $fileNameExcel=$re_nombreexcel.".xlsx";
         $writer = new Xlsx($documento);
         $writer->save($fileNameExcel);
 
