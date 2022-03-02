@@ -1,1 +1,1 @@
-<div>{!! $mensaje !! }</div>
+<div>{!! $mensaje !!}</div>

@@ -126,7 +126,7 @@ class ConvertirExcelController extends Controller
         $excel        = $request['excel'];
         $re_espdf     = $request['espdf'];
 
-        $mensajenuevo = str_replace('\n', "<br>", $mensaje);
+        $mensaje = str_replace('\n', "<br>", $mensaje);
 
         // if($re_espdf == true){
         //     $excel = '/Sistema/Pdf/'.$usutoken.".pdf";
