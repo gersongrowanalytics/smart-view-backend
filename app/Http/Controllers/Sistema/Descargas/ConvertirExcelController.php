@@ -52,6 +52,16 @@ class ConvertirExcelController extends Controller
             foreach($re_data_cuerpo as $posicionReData => $re_data){
 
                 $hoja->setCellValue($abc[$posicionReData].$numeroFila, $re_data['value']);
+
+                $hoja->getStyle($abc[$posicionReData].$numeroFila)
+                    ->getFont()
+                    ->setSize($re_data['style']['font']['sz'])
+                    ->setName('Arial');
+
+                if($re_data['style']['numFmt'] == "#,##0.00"){
+                    $hoja->getStyle($abc[$posicionReData].$numeroFila)->getNumberFormat()
+                        ->setFormatCode(NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED1);   
+                }
             }
 
         }
