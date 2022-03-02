@@ -135,7 +135,7 @@ class ConvertirExcelController extends Controller
         // }
 
 
-        Mail::to($destinatario)->send(new CorreConArchivos($mensajenuevo, $asunto, $excel));
+        Mail::to($destinatario)->send(new CorreConArchivos($mensaje, $asunto, $excel));
     }
 
 }
