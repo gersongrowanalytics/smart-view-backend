@@ -58,9 +58,13 @@ class ConvertirExcelController extends Controller
                     ->setSize($re_data['style']['font']['sz'])
                     ->setName('Arial');
 
-                if($re_data['style']['numFmt'] == "#,##0.00"){
-                    $hoja->getStyle($abc[$posicionReData].$numeroFila)->getNumberFormat()
-                        ->setFormatCode(NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED1);   
+                if(isset($re_data['style'])){
+                    if(isset($re_data['style']['numFmt'])){
+                        if($re_data['style']['numFmt'] == "#,##0.00"){
+                            $hoja->getStyle($abc[$posicionReData].$numeroFila)->getNumberFormat()
+                                ->setFormatCode(NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED1);   
+                        }
+                    }
                 }
             }
 
