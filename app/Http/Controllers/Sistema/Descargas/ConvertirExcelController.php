@@ -126,6 +126,8 @@ class ConvertirExcelController extends Controller
         $excel        = $request['excel'];
         $re_espdf     = $request['espdf'];
 
+        $mensajenuevo = str_replace('\n', "<br>", $mensaje);
+
         // if($re_espdf == true){
         //     $excel = '/Sistema/Pdf/'.$usutoken.".pdf";
         // }else{
@@ -133,7 +135,7 @@ class ConvertirExcelController extends Controller
         // }
 
 
-        Mail::to($destinatario)->send(new CorreConArchivos($mensaje, $asunto, $excel));
+        Mail::to($destinatario)->send(new CorreConArchivos($mensajenuevo, $asunto, $excel));
     }
 
 }
