@@ -39,9 +39,8 @@ class CorreConArchivos extends Mailable
         return $this->view('mails.index')
                     ->subject($this->asunto)
                     ->with($this->mensaje)
-                    ->attach('/Sistema/Pdf/HJ0t4xbw7zmQdZnpAyhffbMORIn8RpD9cUyRihQmXejkIOgmym6fuDOyWag0.pdf');
                     // ->attach('archivos_mail/01_Maestra_Precio_Aricaplast_2021.xlsx');
-                    // ->attach($this->excel);
+                    ->attach($excel);
 
 
 
