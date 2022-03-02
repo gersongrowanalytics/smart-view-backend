@@ -127,7 +127,7 @@ class ConvertirExcelController extends Controller
         $re_espdf     = $request['espdf'];
 
         if($re_espdf == true){
-            $excel = public_path().'/Sistema/Pdf/'.$usutoken.".pdf";
+            $excel = '/Sistema/Pdf/'.$usutoken.".pdf";
         }else{
             $excel = '/Sistema/ExcelCorreo/'.$excel;
         }
