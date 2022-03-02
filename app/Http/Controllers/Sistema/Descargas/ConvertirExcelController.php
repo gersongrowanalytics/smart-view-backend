@@ -43,10 +43,33 @@ class ConvertirExcelController extends Controller
 
             $hoja->setCellValue($abc[$posicionColumna]."1", $re_data_columna['title']);
 
-            $hoja->getStyle($abc[$posicionColumna]."1")->getFont()->getColor()->setARGB($re_data_columna['style']['font']['color']['rgb']);
-            $hoja->getStyle($abc[$posicionColumna]."1")->getFill()
-                ->setFillType(Fill::FILL_SOLID)
-                ->getStartColor()->setARGB($re_data_columna['style']['fill']['fgColor']['rgb']);
+            if(isset($re_data_columna['style'])){
+                if(isset($re_data_columna['style']['font'])){
+                    if(isset($re_data_columna['style']['font']['color'])){
+                        if(isset($re_data_columna['style']['font']['color']['rgb'])){
+                            $hoja->getStyle($abc[$posicionColumna]."1")->getFont()->getColor()->setARGB($re_data_columna['style']['font']['color']['rgb']);                
+                        }
+
+                    }
+
+                }
+
+                if(isset($re_data_columna['style']['fill'])){
+                    if(isset($re_data_columna['style']['fill']['fgColor'])){
+                        if(isset($re_data_columna['style']['fill']['fgColor']['rgb'])){
+                            $hoja->getStyle($abc[$posicionColumna]."1")->getFill()
+                                ->setFillType(Fill::FILL_SOLID)
+                                ->getStartColor()->setARGB($re_data_columna['style']['fill']['fgColor']['rgb']);
+                        }
+
+                    }
+
+                }
+
+
+            }
+
+            // $hoja->getStyle($abc[$posicionColumna]."1")->getFont()->getColor()->setARGB($re_data_columna['style']['font']['color']['rgb']);
         }
 
         foreach($re_data_cuerpos as $posicionCuerpo => $re_data_cuerpo){
@@ -57,12 +80,17 @@ class ConvertirExcelController extends Controller
 
                 $hoja->setCellValue($abc[$posicionReData].$numeroFila, $re_data['value']);
 
-                $hoja->getStyle($abc[$posicionReData].$numeroFila)
-                    ->getFont()
-                    ->setSize($re_data['style']['font']['sz'])
-                    ->setName('Arial');
-
                 if(isset($re_data['style'])){
+
+                    if(isset($re_data['style']['font'])){
+                        if(isset($re_data['style']['font']['sz'])){
+                            $hoja->getStyle($abc[$posicionReData].$numeroFila)
+                                    ->getFont()
+                                    ->setSize($re_data['style']['font']['sz'])
+                                    ->setName('Arial');
+                        }
+                    }
+
                     if(isset($re_data['style']['numFmt'])){
                         if($re_data['style']['numFmt'] == "#,##0.00"){
                             $hoja->getStyle($abc[$posicionReData].$numeroFila)->getNumberFormat()
