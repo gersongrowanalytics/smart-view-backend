@@ -79,6 +79,7 @@ class ConvertirExcelController extends Controller
         $writer->save("Sistema/ExcelCorreo/".$fileNameExcel);
 
         return response()->json([
+            'ubicacion' => '/Sistema/ExcelCorreo/'.$fileNameExcel,
             'excel' => $fileNameExcel 
         ]);
 
