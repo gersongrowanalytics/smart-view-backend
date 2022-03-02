@@ -15,6 +15,7 @@ use PhpOffice\PhpSpreadsheet\Writer\Xls;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 use App\Mail\CorreConArchivos;
+use App\Mail\CorreConArchivosPdf;
 use Illuminate\Support\Facades\Mail;
 
 class ConvertirExcelController extends Controller
@@ -128,14 +129,15 @@ class ConvertirExcelController extends Controller
 
         $mensaje = str_replace('\n', "<br>", $mensaje);
 
-        // if($re_espdf == true){
-        //     $excel = '/Sistema/Pdf/'.$usutoken.".pdf";
-        // }else{
-        //     $excel = '/Sistema/ExcelCorreo/'.$excel;
-        // }
+        if($re_espdf == true){
+            
+            $excel = $usutoken.".pdf";
+            Mail::to($destinatario)->send(new CorreConArchivosPdf($mensaje, $asunto, $excel));
 
+        }else{
+            Mail::to($destinatario)->send(new CorreConArchivos($mensaje, $asunto, $excel));
 
-        Mail::to($destinatario)->send(new CorreConArchivos($mensaje, $asunto, $excel));
+        }        
     }
 
 }
