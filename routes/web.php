@@ -150,6 +150,8 @@ $router->group(['middleware' => ['permisos']], function() use($router) {
     $router->post('/obtener-grupos-disponibles', 'Sistema\ListaPrecios\ArmarExcelListapreciosController@ObtenerGruposPermitidos');
     $router->post('/exportar-excel-lista-precios', 'Sistema\ListaPrecios\ArmarExcelListapreciosController@ArmarExcelListaprecios');
 
+    // DESCARGAS ENVIAR ARCHIVO CORREO
+    $router->post('/descargas-enviar-correo', 'Sistema\Descargas\ConvertirExcelController@ConvertirExcel');
 
 });
 
