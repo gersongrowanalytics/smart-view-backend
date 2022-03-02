@@ -634,6 +634,14 @@ class CategoriasPromocionesMostrarController extends Controller
         $colorVerdeLimon    = "FFCCFFCC";
         $colorNegro    = "FF000000";
 
+        $repetidas_mecanicas = array(
+            array(
+                "mecanica" => "",
+                "sku" => "",
+                "soldto" => ""
+            )
+        );
+
         try{
 
             $nuevoArray = array(
@@ -1297,243 +1305,426 @@ class CategoriasPromocionesMostrarController extends Controller
 
                     }
 
-                    $desc_casnombre = $csp->casnombre;
-                    $desc_zonnombre = $csp->zonnombre;
-                    $desc_gsunombre = $csp->gsunombre;
-                    $desc_sucnombre = $csp->sucnombre;
-                    $desc_sucsoldto = $csp->sucsoldto;
-                    $desc_cannombre = $csp->cannombre;
-                    $desc_catnombre = $csp->catnombre;
-                    $desc_prmsku    = $csp->prmsku;
-                    $desc_pronombre = $csp->pronombre;
-                    $desc_prmmecanica = $csp->prmmecanica;
+                    $encontroMecanicaDup = false;
 
-                    $desc_cspcantidadcombo   = $csp->cspcantidadcombo;
-                    $desc_cspcantidadplancha = $csp->cspcantidadplancha;
-                    $desc_csptotalcombo      = $csp->csptotalcombo;
-                    $desc_csptotalplancha    = $csp->csptotalplancha;
-                    $desc_csptotal           = $csp->csptotal;
+                    foreach($repetidas_mecanicas as $repetidas_mecanica){
+                        if($csp->prmmecanica == $repetidas_mecanica['mecanica']){
+                            if($csp->prmsku == $repetidas_mecanica['sku']){
+                                if($csp->sucsoldto == $repetidas_mecanica['soldto']){
 
-                    $desc_cspiniciopromo     = $csp->cspiniciopromo;
-                    $desc_cspfinpromo        = $csp->cspfinpromo;
+                                    $encontroMecanicaDup = true;
 
-                    if($desc_casnombre == null || $desc_casnombre == " " || $desc_casnombre == "-" ){
-                        $desc_casnombre = "0";
-                    }
-                    if($desc_zonnombre == null || $desc_zonnombre == " " || $desc_zonnombre == "-" ){
-                        $desc_zonnombre = "0";
-                    }
-                    if($desc_gsunombre == null || $desc_gsunombre == " " || $desc_gsunombre == "-" ){
-                        $desc_gsunombre = "0";
-                    }
-                    if($desc_sucnombre == null || $desc_sucnombre == " " || $desc_sucnombre == "-" ){
-                        $desc_sucnombre = "0";
-                    }
-                    if($desc_sucsoldto == null || $desc_sucsoldto == " " || $desc_sucsoldto == "-" ){
-                        $desc_sucsoldto = "0";
-                    }
-                    if($desc_cannombre == null || $desc_cannombre == " " || $desc_cannombre == "-" ){
-                        $desc_cannombre = "0";
-                    }
-                    if($desc_catnombre == null || $desc_catnombre == " " || $desc_catnombre == "-" ){
-                        $desc_catnombre = "0";
-                    }
-                    if($desc_prmsku == null || $desc_prmsku == " " || $desc_prmsku == "-" ){
-                        $desc_prmsku = "0";
-                    }
-                    if($desc_pronombre == null || $desc_pronombre == " " || $desc_pronombre == "-" ){
-                        $desc_pronombre = "0";
-                    }
-                    if($desc_prmmecanica == null || $desc_prmmecanica == " " || $desc_prmmecanica == "-" ){
-                        $desc_prmmecanica = "0";
-                    }
-                    if($desc_cspcantidadcombo == null || $desc_cspcantidadcombo == " " || $desc_cspcantidadcombo == "-" ){
-                        $desc_cspcantidadcombo = "0";
-                    }
-                    if($desc_cspcantidadplancha == null || $desc_cspcantidadplancha == " " || $desc_cspcantidadplancha == "-" ){
-                        $desc_cspcantidadplancha = "0";
-                    }
-                    if($desc_csptotalcombo == null || $desc_csptotalcombo == " " || $desc_csptotalcombo == "-" ){
-                        $desc_csptotalcombo = "0";
-                    }
-                    if($desc_csptotalplancha == null || $desc_csptotalplancha == " " || $desc_csptotalplancha == "-" ){
-                        $desc_csptotalplancha = "0";
-                    }
-                    if($desc_csptotal == null || $desc_csptotal == " " || $desc_csptotal == "-" ){
-                        $desc_csptotal = "0";
+                                }
+                            }
+                        }
                     }
 
-                    if(is_numeric($desc_cspcantidadcombo)){
-                        $desc_cspcantidadcombo = floatval($desc_cspcantidadcombo);
-                    }
+                    if($encontroMecanicaDup == true){
 
-                    if(is_numeric($desc_cspcantidadplancha)){
-                        $desc_cspcantidadplancha = floatval($desc_cspcantidadplancha);
-                    }
+                    }else{
 
-                    if(is_numeric($desc_csptotalcombo)){
-                        $desc_csptotalcombo = floatval($desc_csptotalcombo);
-                    }
+                        $repetidas_mecanicas[] = array(
+                            "mecanica" => $csp->prmmecanica,
+                            "sku"      => $csp->prmsku,
+                            "soldto"   => $csp->sucsoldto
+                        );
 
-                    if(is_numeric($desc_csptotalplancha)){
-                        $desc_csptotalplancha = floatval($desc_csptotalplancha);
-                    }
+                        $desc_casnombre = $csp->casnombre;
+                        $desc_zonnombre = $csp->zonnombre;
+                        $desc_gsunombre = $csp->gsunombre;
+                        $desc_sucnombre = $csp->sucnombre;
+                        $desc_sucsoldto = $csp->sucsoldto;
+                        $desc_cannombre = $csp->cannombre;
+                        $desc_catnombre = $csp->catnombre;
+                        $desc_prmsku    = $csp->prmsku;
+                        $desc_pronombre = $csp->pronombre;
+                        $desc_prmmecanica = $csp->prmmecanica;
 
-                    if(is_numeric($desc_csptotal)){
-                        $desc_csptotal = floatval($desc_csptotal);
-                    }
+                        $desc_cspcantidadcombo   = $csp->cspcantidadcombo;
+                        $desc_cspcantidadplancha = $csp->cspcantidadplancha;
+                        $desc_csptotalcombo      = $csp->csptotalcombo;
+                        $desc_csptotalplancha    = $csp->csptotalplancha;
+                        $desc_csptotal           = $csp->csptotal;
+
+                        $desc_cspiniciopromo     = $csp->cspiniciopromo;
+                        $desc_cspfinpromo        = $csp->cspfinpromo;
+
+                        if($desc_casnombre == null || $desc_casnombre == " " || $desc_casnombre == "-" ){
+                            $desc_casnombre = "0";
+                        }
+                        if($desc_zonnombre == null || $desc_zonnombre == " " || $desc_zonnombre == "-" ){
+                            $desc_zonnombre = "0";
+                        }
+                        if($desc_gsunombre == null || $desc_gsunombre == " " || $desc_gsunombre == "-" ){
+                            $desc_gsunombre = "0";
+                        }
+                        if($desc_sucnombre == null || $desc_sucnombre == " " || $desc_sucnombre == "-" ){
+                            $desc_sucnombre = "0";
+                        }
+                        if($desc_sucsoldto == null || $desc_sucsoldto == " " || $desc_sucsoldto == "-" ){
+                            $desc_sucsoldto = "0";
+                        }
+                        if($desc_cannombre == null || $desc_cannombre == " " || $desc_cannombre == "-" ){
+                            $desc_cannombre = "0";
+                        }
+                        if($desc_catnombre == null || $desc_catnombre == " " || $desc_catnombre == "-" ){
+                            $desc_catnombre = "0";
+                        }
+                        if($desc_prmsku == null || $desc_prmsku == " " || $desc_prmsku == "-" ){
+                            $desc_prmsku = "0";
+                        }
+                        if($desc_pronombre == null || $desc_pronombre == " " || $desc_pronombre == "-" ){
+                            $desc_pronombre = "0";
+                        }
+                        if($desc_prmmecanica == null || $desc_prmmecanica == " " || $desc_prmmecanica == "-" ){
+                            $desc_prmmecanica = "0";
+                        }
+                        if($desc_cspcantidadcombo == null || $desc_cspcantidadcombo == " " || $desc_cspcantidadcombo == "-" ){
+                            $desc_cspcantidadcombo = "0";
+                        }
+                        if($desc_cspcantidadplancha == null || $desc_cspcantidadplancha == " " || $desc_cspcantidadplancha == "-" ){
+                            $desc_cspcantidadplancha = "0";
+                        }
+                        if($desc_csptotalcombo == null || $desc_csptotalcombo == " " || $desc_csptotalcombo == "-" ){
+                            $desc_csptotalcombo = "0";
+                        }
+                        if($desc_csptotalplancha == null || $desc_csptotalplancha == " " || $desc_csptotalplancha == "-" ){
+                            $desc_csptotalplancha = "0";
+                        }
+                        if($desc_csptotal == null || $desc_csptotal == " " || $desc_csptotal == "-" ){
+                            $desc_csptotal = "0";
+                        }
+
+                        if(is_numeric($desc_cspcantidadcombo)){
+                            $desc_cspcantidadcombo = floatval($desc_cspcantidadcombo);
+                        }
+
+                        if(is_numeric($desc_cspcantidadplancha)){
+                            $desc_cspcantidadplancha = floatval($desc_cspcantidadplancha);
+                        }
+
+                        if(is_numeric($desc_csptotalcombo)){
+                            $desc_csptotalcombo = floatval($desc_csptotalcombo);
+                        }
+
+                        if(is_numeric($desc_csptotalplancha)){
+                            $desc_csptotalplancha = floatval($desc_csptotalplancha);
+                        }
+
+                        if(is_numeric($desc_csptotal)){
+                            $desc_csptotal = floatval($desc_csptotal);
+                        }
 
 
-                    if($desc_cspiniciopromo == null){
-                        $fechaInicio = date("d-m-Y", strtotime($fec->fecfecha));
-                        $desc_cspiniciopromo = $fechaInicio;
-                    }
-                    if($desc_cspfinpromo == null){
-                        $fechaFinal = date("m-Y", strtotime($fec->fecfecha));
-                        $desc_cspfinpromo = "30-".$fechaFinal;
-                    }
+                        if($desc_cspiniciopromo == null){
+                            $fechaInicio = date("d-m-Y", strtotime($fec->fecfecha));
+                            $desc_cspiniciopromo = $fechaInicio;
+                        }
+                        if($desc_cspfinpromo == null){
+                            $fechaFinal = date("m-Y", strtotime($fec->fecfecha));
+                            $desc_cspfinpromo = "30-".$fechaFinal;
+                        }
 
-                    $arrayFilaExcel = array();
+                        $arrayFilaExcel = array();
 
-                    if(isset($re_columnas)){
+                        if(isset($re_columnas)){
 
-                        foreach($re_columnas as $re_columna){
+                            foreach($re_columnas as $re_columna){
 
-                            if($re_columna['columna'] == "Inicio Promoción"){
-                                
-                                $arrayFilaExcel[] = array(
+                                if($re_columna['columna'] == "Inicio Promoción"){
+                                    
+                                    $arrayFilaExcel[] = array(
+                                        "value" => $csp->cspiniciopromo,
+                                        "style" => array(
+                                            "font" => array(
+                                                "sz" => "9"
+                                            )
+                                        )
+                                    );
+
+                                }else if($re_columna['columna'] == "Fin Promoción"){
+                                    
+                                    $arrayFilaExcel[] = array(
+                                        "value" => $csp->cspfinpromo,
+                                        "style" => array(
+                                            "font" => array(
+                                                "sz" => "9"
+                                            )
+                                        )
+                                    );
+
+                                }else if($re_columna['columna'] == "Región"){
+
+                                    $arrayFilaExcel[] = array(
+                                        "value" => $desc_casnombre,
+                                        "style" => array(
+                                            "font" => array(
+                                                "sz" => "9"
+                                            )
+                                        )
+                                    );
+
+                                }else if($re_columna['columna'] == "Zona"){
+
+                                    $arrayFilaExcel[] = array(
+                                        "value" => $desc_zonnombre,
+                                        "style" => array(
+                                            "font" => array(
+                                                "sz" => "9"
+                                            )
+                                        )
+                                    );
+
+                                }else if($re_columna['columna'] == "Grupo"){
+
+                                    $arrayFilaExcel[] = array(
+                                        "value" => $desc_gsunombre,
+                                        "style" => array(
+                                            "font" => array(
+                                                "sz" => "9"
+                                            )
+                                        )
+                                    );
+
+                                }else if($re_columna['columna'] == "Cliente Hml"){
+
+                                    $arrayFilaExcel[] = array(
+                                        "value" => $desc_sucnombre,
+                                        "style" => array(
+                                            "font" => array(
+                                                "sz" => "9"
+                                            )
+                                        )
+                                    );
+
+                                }else if($re_columna['columna'] == "Sold To"){
+
+                                    $arrayFilaExcel[] = array(
+                                        "value" => $desc_sucsoldto,
+                                        "style" => array(
+                                            "font" => array(
+                                                "sz" => "9"
+                                            )
+                                        )
+                                    );
+
+                                }else if($re_columna['columna'] == "Tipo de Cliente"){
+
+                                    $arrayFilaExcel[] = array(
+                                        "value" => $desc_cannombre,
+                                        "style" => array(
+                                            "font" => array(
+                                                "sz" => "9"
+                                            )
+                                        )
+                                    );
+
+                                }else if($re_columna['columna'] == "Categoría"){
+
+                                    $arrayFilaExcel[] = array(
+                                        "value" => $desc_catnombre,
+                                        "style" => array(
+                                            "font" => array(
+                                                "sz" => "9"
+                                            )
+                                        )
+                                    );
+
+                                }else if($re_columna['columna'] == "Sku"){
+
+                                    $arrayFilaExcel[] = array(
+                                        "value" => $desc_prmsku,
+                                        "style" => array(
+                                            "font" => array(
+                                                "sz" => "9"
+                                            )
+                                        )
+                                    );
+
+                                }else if($re_columna['columna'] == "Producto"){
+
+                                    $arrayFilaExcel[] = array(
+                                        "value" => $desc_pronombre,
+                                        "style" => array(
+                                            "font" => array(
+                                                "sz" => "9"
+                                            )
+                                        )
+                                    );
+
+                                }else if($re_columna['columna'] == "Mecánica"){
+
+                                    $arrayFilaExcel[] = array(
+                                        "value" => $desc_prmmecanica,
+                                        "style" => array(
+                                            "font" => array(
+                                                "sz" => "9"
+                                            )
+                                        )
+                                    );
+
+                                }else if($re_columna['columna'] == "Planchas a rotar"){
+
+                                    $arrayFilaExcel[] = array(
+                                        "value" => $desc_cspcantidadplancha,
+                                        "style" => array(
+                                            "font" => array(
+                                                "sz" => "9"
+                                            ),
+                                            "numFmt" => "#,##0.00"
+                                        )
+                                    );
+
+                                }else if($re_columna['columna'] == "Reconocer x PL S/IGV"){
+
+                                    $arrayFilaExcel[] = array(
+                                        "value" => $desc_csptotalplancha,
+                                        "style" => array(
+                                            "font" => array(
+                                                "sz" => "9"
+                                            ),
+                                            "numFmt" => "#,##0.00"
+                                        )
+                                    );
+
+                                }else if($re_columna['columna'] == "# Combos"){
+
+                                    $arrayFilaExcel[] = array(
+                                        "value" => $desc_cspcantidadcombo,
+                                        "style" => array(
+                                            "font" => array(
+                                                "sz" => "9"
+                                            ),
+                                            "numFmt" => "#,##0.00"
+                                        )
+                                    );
+                                    
+                                }else if($re_columna['columna'] == "Reconocer x Combo S/"){
+
+                                    $arrayFilaExcel[] = array(
+                                        "value" => $desc_csptotalcombo,
+                                        "style" => array(
+                                            "font" => array(
+                                                "sz" => "9"
+                                            ),
+                                            "numFmt" => "#,##0.00"
+                                        )
+                                    );
+
+                                }else{
+
+                                }
+
+                            }
+
+                        }else{
+
+                            $arrayFilaExcel = array(
+                                array(
                                     "value" => $csp->cspiniciopromo,
                                     "style" => array(
                                         "font" => array(
                                             "sz" => "9"
                                         )
                                     )
-                                );
-
-                            }else if($re_columna['columna'] == "Fin Promoción"){
-                                
-                                $arrayFilaExcel[] = array(
+                                ),
+                                array(
                                     "value" => $csp->cspfinpromo,
                                     "style" => array(
                                         "font" => array(
                                             "sz" => "9"
                                         )
                                     )
-                                );
-
-                            }else if($re_columna['columna'] == "Región"){
-
-                                $arrayFilaExcel[] = array(
+                                ),
+                                array(
                                     "value" => $desc_casnombre,
                                     "style" => array(
                                         "font" => array(
                                             "sz" => "9"
                                         )
                                     )
-                                );
-
-                            }else if($re_columna['columna'] == "Zona"){
-
-                                $arrayFilaExcel[] = array(
+                                ),
+                                array(
                                     "value" => $desc_zonnombre,
                                     "style" => array(
                                         "font" => array(
                                             "sz" => "9"
                                         )
                                     )
-                                );
-
-                            }else if($re_columna['columna'] == "Grupo"){
-
-                                $arrayFilaExcel[] = array(
+                                ),
+                                array(
                                     "value" => $desc_gsunombre,
                                     "style" => array(
                                         "font" => array(
                                             "sz" => "9"
                                         )
                                     )
-                                );
-
-                            }else if($re_columna['columna'] == "Cliente Hml"){
-
-                                $arrayFilaExcel[] = array(
+                                ),
+                                array(
                                     "value" => $desc_sucnombre,
                                     "style" => array(
                                         "font" => array(
                                             "sz" => "9"
                                         )
                                     )
-                                );
-
-                            }else if($re_columna['columna'] == "Sold To"){
-
-                                $arrayFilaExcel[] = array(
+                                ),
+                                array(
                                     "value" => $desc_sucsoldto,
                                     "style" => array(
                                         "font" => array(
                                             "sz" => "9"
                                         )
                                     )
-                                );
-
-                            }else if($re_columna['columna'] == "Tipo de Cliente"){
-
-                                $arrayFilaExcel[] = array(
+                                ),
+                                array(
+                                    "value" => $desc_sucnombre,
+                                    "style" => array(
+                                        "font" => array(
+                                            "sz" => "9"
+                                        )
+                                    )
+                                ),
+                                array(
                                     "value" => $desc_cannombre,
                                     "style" => array(
                                         "font" => array(
                                             "sz" => "9"
                                         )
                                     )
-                                );
-
-                            }else if($re_columna['columna'] == "Categoría"){
-
-                                $arrayFilaExcel[] = array(
+                                ),
+                                array(
                                     "value" => $desc_catnombre,
                                     "style" => array(
                                         "font" => array(
                                             "sz" => "9"
                                         )
                                     )
-                                );
-
-                            }else if($re_columna['columna'] == "Sku"){
-
-                                $arrayFilaExcel[] = array(
+                                ),
+                                array(
                                     "value" => $desc_prmsku,
                                     "style" => array(
                                         "font" => array(
                                             "sz" => "9"
                                         )
                                     )
-                                );
-
-                            }else if($re_columna['columna'] == "Producto"){
-
-                                $arrayFilaExcel[] = array(
+                                ),
+                                array(
                                     "value" => $desc_pronombre,
                                     "style" => array(
                                         "font" => array(
                                             "sz" => "9"
                                         )
                                     )
-                                );
-
-                            }else if($re_columna['columna'] == "Mecánica"){
-
-                                $arrayFilaExcel[] = array(
+                                ),
+                                array(
                                     "value" => $desc_prmmecanica,
                                     "style" => array(
                                         "font" => array(
                                             "sz" => "9"
                                         )
                                     )
-                                );
-
-                            }else if($re_columna['columna'] == "Planchas a rotar"){
-
-                                $arrayFilaExcel[] = array(
+                                ),
+                                array(
                                     "value" => $desc_cspcantidadplancha,
                                     "style" => array(
                                         "font" => array(
@@ -1541,11 +1732,8 @@ class CategoriasPromocionesMostrarController extends Controller
                                         ),
                                         "numFmt" => "#,##0.00"
                                     )
-                                );
-
-                            }else if($re_columna['columna'] == "Reconocer x PL S/IGV"){
-
-                                $arrayFilaExcel[] = array(
+                                ),
+                                array(
                                     "value" => $desc_csptotalplancha,
                                     "style" => array(
                                         "font" => array(
@@ -1553,11 +1741,8 @@ class CategoriasPromocionesMostrarController extends Controller
                                         ),
                                         "numFmt" => "#,##0.00"
                                     )
-                                );
-
-                            }else if($re_columna['columna'] == "# Combos"){
-
-                                $arrayFilaExcel[] = array(
+                                ),
+                                array(
                                     "value" => $desc_cspcantidadcombo,
                                     "style" => array(
                                         "font" => array(
@@ -1565,11 +1750,8 @@ class CategoriasPromocionesMostrarController extends Controller
                                         ),
                                         "numFmt" => "#,##0.00"
                                     )
-                                );
-                                
-                            }else if($re_columna['columna'] == "Reconocer x Combo S/"){
-
-                                $arrayFilaExcel[] = array(
+                                ),
+                                array(
                                     "value" => $desc_csptotalcombo,
                                     "style" => array(
                                         "font" => array(
@@ -1577,164 +1759,17 @@ class CategoriasPromocionesMostrarController extends Controller
                                         ),
                                         "numFmt" => "#,##0.00"
                                     )
-                                );
-
-                            }else{
-
-                            }
+                                ),
+        
+                            );
 
                         }
-
-                    }else{
-
-                        $arrayFilaExcel = array(
-                            array(
-                                "value" => $csp->cspiniciopromo,
-                                "style" => array(
-                                    "font" => array(
-                                        "sz" => "9"
-                                    )
-                                )
-                            ),
-                            array(
-                                "value" => $csp->cspfinpromo,
-                                "style" => array(
-                                    "font" => array(
-                                        "sz" => "9"
-                                    )
-                                )
-                            ),
-                            array(
-                                "value" => $desc_casnombre,
-                                "style" => array(
-                                    "font" => array(
-                                        "sz" => "9"
-                                    )
-                                )
-                            ),
-                            array(
-                                "value" => $desc_zonnombre,
-                                "style" => array(
-                                    "font" => array(
-                                        "sz" => "9"
-                                    )
-                                )
-                            ),
-                            array(
-                                "value" => $desc_gsunombre,
-                                "style" => array(
-                                    "font" => array(
-                                        "sz" => "9"
-                                    )
-                                )
-                            ),
-                            array(
-                                "value" => $desc_sucnombre,
-                                "style" => array(
-                                    "font" => array(
-                                        "sz" => "9"
-                                    )
-                                )
-                            ),
-                            array(
-                                "value" => $desc_sucsoldto,
-                                "style" => array(
-                                    "font" => array(
-                                        "sz" => "9"
-                                    )
-                                )
-                            ),
-                            array(
-                                "value" => $desc_sucnombre,
-                                "style" => array(
-                                    "font" => array(
-                                        "sz" => "9"
-                                    )
-                                )
-                            ),
-                            array(
-                                "value" => $desc_cannombre,
-                                "style" => array(
-                                    "font" => array(
-                                        "sz" => "9"
-                                    )
-                                )
-                            ),
-                            array(
-                                "value" => $desc_catnombre,
-                                "style" => array(
-                                    "font" => array(
-                                        "sz" => "9"
-                                    )
-                                )
-                            ),
-                            array(
-                                "value" => $desc_prmsku,
-                                "style" => array(
-                                    "font" => array(
-                                        "sz" => "9"
-                                    )
-                                )
-                            ),
-                            array(
-                                "value" => $desc_pronombre,
-                                "style" => array(
-                                    "font" => array(
-                                        "sz" => "9"
-                                    )
-                                )
-                            ),
-                            array(
-                                "value" => $desc_prmmecanica,
-                                "style" => array(
-                                    "font" => array(
-                                        "sz" => "9"
-                                    )
-                                )
-                            ),
-                            array(
-                                "value" => $desc_cspcantidadplancha,
-                                "style" => array(
-                                    "font" => array(
-                                        "sz" => "9"
-                                    ),
-                                    "numFmt" => "#,##0.00"
-                                )
-                            ),
-                            array(
-                                "value" => $desc_csptotalplancha,
-                                "style" => array(
-                                    "font" => array(
-                                        "sz" => "9"
-                                    ),
-                                    "numFmt" => "#,##0.00"
-                                )
-                            ),
-                            array(
-                                "value" => $desc_cspcantidadcombo,
-                                "style" => array(
-                                    "font" => array(
-                                        "sz" => "9"
-                                    ),
-                                    "numFmt" => "#,##0.00"
-                                )
-                            ),
-                            array(
-                                "value" => $desc_csptotalcombo,
-                                "style" => array(
-                                    "font" => array(
-                                        "sz" => "9"
-                                    ),
-                                    "numFmt" => "#,##0.00"
-                                )
-                            ),
-    
-                        );
-
+                        
+                        $nuevoArray[0]['data'][] = $arrayFilaExcel;
                     }
-                    
-                    $nuevoArray[0]['data'][] = $arrayFilaExcel;
                 }
+
+
 
                 $respuesta = true;
                 $datos     = $nuevoArray;
@@ -1759,6 +1794,7 @@ class CategoriasPromocionesMostrarController extends Controller
             'linea'          => $linea,
             'mensajeDetalle' => $mensajeDetalle,
             'mensajedev'     => $mensajedev,
+            'repetidas_mecanicas'     => $repetidas_mecanicas,
             // 'archivo'        => $archivo
         ]);
 
