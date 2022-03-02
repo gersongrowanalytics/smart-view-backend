@@ -71,9 +71,16 @@ class ConvertirExcelController extends Controller
 
         }
 
-        $fileNameExcel=$re_nombreexcel.".xlsx";
+        $codigoArchivoAleatorio = mt_rand(1, mt_getrandmax())/mt_getrandmax();
+        $codigoArchivoAleatorio = substr($codigoArchivoAleatorio, -4);
+
+        $fileNameExcel=$re_nombreexcel."-".$codigoArchivoAleatorio.".xlsx";
         $writer = new Xlsx($documento);
-        $writer->save($fileNameExcel);
+        $writer->save("Sistema/ExcelCorreo/".$fileNameExcel);
+
+        return response()->json([
+            'excel' => $fileNameExcel 
+        ]);
 
     }
 }
