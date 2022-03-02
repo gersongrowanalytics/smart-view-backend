@@ -40,7 +40,7 @@ class CorreConArchivos extends Mailable
                     ->subject($this->asunto)
                     ->with($this->mensaje)
                     // ->attach('archivos_mail/01_Maestra_Precio_Aricaplast_2021.xlsx');
-                    ->attach($this->excel);
+                    ->attach('Sistema/ExcelCorreo/'.$this->excel);
 
 
 
