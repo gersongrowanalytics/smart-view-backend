@@ -152,6 +152,7 @@ $router->group(['middleware' => ['permisos']], function() use($router) {
 
     // DESCARGAS ENVIAR ARCHIVO CORREO
     $router->post('/descargas-enviar-correo', 'Sistema\Descargas\ConvertirExcelController@ConvertirExcel');
+    $router->post('/enviar-correo-adjunto', 'Sistema\Descargas\ConvertirExcelController@EnviarCorreo');
 
 });
 

@@ -14,6 +14,9 @@ use PhpOffice\PhpSpreadsheet\Worksheet\Drawing;
 use PhpOffice\PhpSpreadsheet\Writer\Xls;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
+use App\Mail\CorreConArchivos;
+use Illuminate\Support\Facades\Mail;
+
 class ConvertirExcelController extends Controller
 {
     public function ConvertirExcel(Request $request)
@@ -84,4 +87,17 @@ class ConvertirExcelController extends Controller
         ]);
 
     }
+
+    public function EnviarCorreo(Request $request)
+    {
+
+        $asunto       = $request['asunto'];
+        $destinatario = $request['destinatario'];
+        $mensaje      = $request['mensaje'];
+        $excel        = $request['excel'];
+
+
+        Mail::to($destinatario)->send(new CorreConArchivos($mensaje, $asunto, $excel));
+    }
+
 }
