@@ -638,7 +638,8 @@ class CategoriasPromocionesMostrarController extends Controller
             array(
                 "mecanica" => "",
                 "sku" => "",
-                "soldto" => ""
+                "soldto" => "",
+                "cannombre" => "",
             )
         );
 
@@ -1311,8 +1312,9 @@ class CategoriasPromocionesMostrarController extends Controller
                         if($csp->prmmecanica == $repetidas_mecanica['mecanica']){
                             if($csp->prmsku == $repetidas_mecanica['sku']){
                                 if($csp->sucsoldto == $repetidas_mecanica['soldto']){
-
-                                    $encontroMecanicaDup = true;
+                                    if($csp->cannombre == $repetidas_mecanica['cannombre']){
+                                        $encontroMecanicaDup = true;
+                                    }
 
                                 }
                             }
@@ -1326,7 +1328,8 @@ class CategoriasPromocionesMostrarController extends Controller
                         $repetidas_mecanicas[] = array(
                             "mecanica" => $csp->prmmecanica,
                             "sku"      => $csp->prmsku,
-                            "soldto"   => $csp->sucsoldto
+                            "soldto"   => $csp->sucsoldto,
+                            "cannombre"   => $csp->cannombre,
                         );
 
                         $desc_casnombre = $csp->casnombre;
