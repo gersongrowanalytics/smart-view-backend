@@ -716,6 +716,8 @@ class MostrarDescargaSiSoController extends Controller
         $mes        = $request['mes'];
         $anio       = $request['ano'];
         
+        $re_columnas = $request['columnas'];
+
         $usuusuario = usuusuarios::where('usutoken', $usutoken)->first(['ususoldto']);
 
         $respuesta      = false;
@@ -811,22 +813,86 @@ class MostrarDescargaSiSoController extends Controller
                     $respuesta = true;
 
                     if($posicionOso == 0){
-                        $arrayTitulos = array(
-                            array("title" => "INDICADOR"),
-                            array("title" => "AÑO"),
-                            array("title" => "MES"),
-                            array("title" => "REGIÓN"),
-                            array("title" => "ZONA"),
-                            array("title" => "GRUPO"),
-                            array("title" => "SOLD TO"),
-                            array("title" => "CLIENTE"),
-                            array("title" => "CATEGORIA"),
-                            array("title" => "SKU"),
-                            array("title" => "MATERIAL"),
-                            array("title" => "CUOTA"),
-                            // array("title" => "REAL"),
-                            array("title" => "NIV"),
-                        );
+
+                        $arrayTitulos = array();
+
+                        if(isset($re_columnas)){
+                            $arrayTitulos[] = array(
+                                "title" => "INDICADOR"
+                            );
+                            foreach($re_columnas as $re_columna){
+                                if($re_columna['columna'] == "Año"){
+                                    $arrayTitulos[] = array(
+                                        "title" => "AÑO"
+                                    );
+                                }else if($re_columna['columna'] == "Mes"){
+                                    $arrayTitulos[] = array(
+                                        "title" => "MES"
+                                    );
+                                }else if($re_columna['columna'] == "Región"){
+                                    $arrayTitulos[] = array(
+                                        "title" => "REGIÓN"
+                                    );
+                                }else if($re_columna['columna'] == "Zona"){
+                                    $arrayTitulos[] = array(
+                                        "title" => "ZONA"
+                                    );
+                                }else if($re_columna['columna'] == "Grupo"){
+                                    $arrayTitulos[] = array(
+                                        "title" => "GRUPO"
+                                    );
+                                }else if($re_columna['columna'] == "Sold To"){
+                                    $arrayTitulos[] = array(
+                                        "title" => "SOLD TO"
+                                    );
+                                }else if($re_columna['columna'] == "Cliente Hml"){
+                                    $arrayTitulos[] = array(
+                                        "title" => "CLIENTE"
+                                    );
+                                }else if($re_columna['columna'] == "Categoría"){
+                                    $arrayTitulos[] = array(
+                                        "title" => "CATEGORIA"
+                                    );
+                                }else if($re_columna['columna'] == "Sku"){
+                                    $arrayTitulos[] = array(
+                                        "title" => "SKU"
+                                    );
+                                }else if($re_columna['columna'] == "Producto"){
+                                    $arrayTitulos[] = array(
+                                        "title" => "MATERIAL"
+                                    );
+                                }else if($re_columna['columna'] == "Cuota"){
+                                    $arrayTitulos[] = array(
+                                        "title" => "CUOTA"
+                                    );
+                                }else if($re_columna['columna'] == "NIV"){
+                                    $arrayTitulos[] = array(
+                                        "title" => "NIV"
+                                    );
+                                }else{
+                                    
+                                }
+                                
+                            }
+                        }else{
+                            $arrayTitulos = array(
+                                array("title" => "INDICADOR"),
+                                array("title" => "AÑO"),
+                                array("title" => "MES"),
+                                array("title" => "REGIÓN"),
+                                array("title" => "ZONA"),
+                                array("title" => "GRUPO"),
+                                array("title" => "SOLD TO"),
+                                array("title" => "CLIENTE"),
+                                array("title" => "CATEGORIA"),
+                                array("title" => "SKU"),
+                                array("title" => "MATERIAL"),
+                                array("title" => "CUOTA"),
+                                // array("title" => "REAL"),
+                                array("title" => "NIV"),
+                            );
+                        }
+
                         $nuevoArray[0]['columns'] = $arrayTitulos;
                     }
 
@@ -900,37 +966,103 @@ class MostrarDescargaSiSoController extends Controller
                         $prosku = "0";
                     }
 
-                    $arrayFilaExcel = array(
-                        array("value" => "Sell Out"),
-                        array("value" => $anio),
-                        array("value" => $mes),
-                        array("value" => $casnombre),
-                        array("value" => $zonnombre),
-                        array("value" => $gsunombre),
-                        array("value" => $sucsoldto),
-                        array("value" => $sucnombre),
-                        array("value" => $catnombre),
-                        array("value" => $prosku),
-                        array("value" => $pronombre),
-                        array(
-                            "value" => floatval($oso->osovalorizado),
-                            "style" => array(
-                                "numFmt" => "#,##0.00"
-                            )
-                        ),
-                        // array(
-                        //     "value" => floatval($real),
-                        //     "style" => array(
-                        //         "numFmt" => "#,##0.00"
-                        //     )
-                        // ),
-                        array(
-                            "value" => floatval($realniv),
-                            "style" => array(
-                                "numFmt" => "#,##0.00"
-                            )
-                        ),
-                    );
+                    $arrayFilaExcel = array();
+
+                    if(isset($re_columnas)){
+
+                        $arrayFilaExcel[] = array(
+                            "value" => "Sell Out"
+                        );
+
+                        foreach($re_columnas as $re_columna){
+                            if($re_columna['columna'] == "Año"){
+                                $arrayFilaExcel[] = array(
+                                    "value" => $anio
+                                );
+                            }else if($re_columna['columna'] == "Mes"){
+                                $arrayFilaExcel[] = array(
+                                    "value" => $mes
+                                );
+                            }else if($re_columna['columna'] == "Región"){
+                                $arrayFilaExcel[] = array(
+                                    "value" => $casnombre
+                                );
+                            }else if($re_columna['columna'] == "Zona"){
+                                $arrayFilaExcel[] = array(
+                                    "value" => $zonnombre
+                                );
+                            }else if($re_columna['columna'] == "Grupo"){
+                                $arrayFilaExcel[] = array(
+                                    "value" => $gsunombre
+                                );
+                            }else if($re_columna['columna'] == "Sold To"){
+                                $arrayFilaExcel[] = array(
+                                    "value" => $sucsoldto
+                                );
+                            }else if($re_columna['columna'] == "Cliente Hml"){
+                                $arrayFilaExcel[] = array(
+                                    "value" => $sucnombre
+                                );
+                            }else if($re_columna['columna'] == "Categoría"){
+                                $arrayFilaExcel[] = array(
+                                    "value" => $catnombre
+                                );
+                            }else if($re_columna['columna'] == "Sku"){
+                                $arrayFilaExcel[] = array(
+                                    "value" => $prosku
+                                );
+                            }else if($re_columna['columna'] == "Producto"){
+                                $arrayFilaExcel[] = array(
+                                    "value" => $pronombre
+                                );
+                            }else if($re_columna['columna'] == "Cuota"){
+                                $arrayFilaExcel[] = array(
+                                    "value" => floatval($oso->osovalorizado),
+                                    "style" => array(
+                                        "numFmt" => "#,##0.00"
+                                    )
+                                );
+                            }else if($re_columna['columna'] == "NIV"){
+                                $arrayFilaExcel[] = array(
+                                    "value" => floatval($realniv),
+                                    "style" => array(
+                                        "numFmt" => "#,##0.00"
+                                    )
+                                );
+                            }else{
+                                
+                            }
+                            
+                        }
+
+
+                    }else{
+                        $arrayFilaExcel = array(
+                            array("value" => "Sell Out"),
+                            array("value" => $anio),
+                            array("value" => $mes),
+                            array("value" => $casnombre),
+                            array("value" => $zonnombre),
+                            array("value" => $gsunombre),
+                            array("value" => $sucsoldto),
+                            array("value" => $sucnombre),
+                            array("value" => $catnombre),
+                            array("value" => $prosku),
+                            array("value" => $pronombre),
+                            array(
+                                "value" => floatval($oso->osovalorizado),
+                                "style" => array(
+                                    "numFmt" => "#,##0.00"
+                                )
+                            ),
+                            array(
+                                "value" => floatval($realniv),
+                                "style" => array(
+                                    "numFmt" => "#,##0.00"
+                                )
+                            ),
+                        );
+                    }
 
                     $nuevoArray[0]['data'][] = $arrayFilaExcel;
                 }
@@ -1659,4 +1791,259 @@ class MostrarDescargaSiSoController extends Controller
 
     }
     
+    public function MostrarSucursalesDescargarVentasSoExcelBk(Request $request)
+    {
+
+        $usutoken   = $request['usutoken'];
+        $sucs       = $request['sucs'];
+        $dia        = "01";
+        $mes        = $request['mes'];
+        $anio       = $request['ano'];
+        
+        $usuusuario = usuusuarios::where('usutoken', $usutoken)->first(['ususoldto']);
+
+        $respuesta      = false;
+        $mensaje        = '';
+        $datos          = [];
+        $linea          = __LINE__;
+        $mensajeDetalle = '';
+        $mensajedev     = null;
+
+
+        $columnasExcel = [
+            "A",
+            "B",
+            "C",
+            "D",
+            "E",
+            "F",
+            "G",
+            "H",
+            "I",
+            "J",
+            "K",
+        ];
+
+        $colorPlomo         = "FF595959";
+        $colorBlanco        = "FFFFFFFF";
+        $colorAzul          = "FF002060";
+        $colorVerdeClaro    = "FF66FF33";
+        $colorRosa          = "FFFF9999";
+        $colorNaranjaClaro  = "FFFFC000";
+        $colorPiel          = "FFFFF2CC";
+        $colorVerdeLimon    = "FFCCFFCC";        
+
+        try{
+
+            // $uss = sucsucursales::where(function ($query) use($sucs) {
+            //                             foreach($sucs as $suc){
+            //                                 if(isset($suc['sucpromociondescarga'])){
+            //                                     if($suc['sucpromociondescarga'] == true){
+            //                                         $query->orwhere('sucid', $suc['sucid']);
+            //                                     }
+            //                                 }
+            //                             }
+            //                         })
+            //                     ->get(['sucsoldto']);
+
+            $nuevoArray = array(
+                array(
+                    "columns" => [],
+                    "data"    => []
+                )
+            );
+
+            $fec = fecfechas::where('fecdia', 'LIKE', "%".$dia."%")
+                            ->where('fecmes', 'LIKE', "%".$mes."%")
+                            ->where('fecano', 'LIKE', "%".$anio."%")
+                            ->first(['fecid']);
+
+            if($fec){
+
+                $osos = osoobjetivossso::join('sucsucursales as suc', 'suc.sucid', 'osoobjetivossso.sucid')
+                                        ->leftjoin('cascanalessucursales as cas', 'cas.casid', 'suc.casid')
+                                        ->leftjoin('zonzonas as zon', 'zon.zonid', 'suc.zonid')
+                                        ->leftjoin('gsugrupossucursales as gsu', 'gsu.gsuid', 'suc.gsuid')
+                                        ->join('proproductos as pro', 'pro.proid', 'osoobjetivossso.proid')
+                                        ->join('catcategorias as cat', 'cat.catid', 'pro.catid')
+                                        ->where('osoobjetivossso.fecid', $fec->fecid)
+                                        // ->where('osoobjetivossso.osovalorizado', '!=', 0)
+                                        ->where(function ($query) use($sucs) {
+                                            foreach($sucs as $suc){
+                                                if(isset($suc['sucpromociondescarga'])){
+                                                    if($suc['sucpromociondescarga'] == true){
+                                                        $query->orwhere('osoobjetivossso.sucid', $suc['sucid']);
+                                                    }
+                                                }
+                                            }
+                                        })
+                                        ->get([
+                                            'osovalorizado',
+                                            'casnombre',
+                                            'zonnombre',
+                                            'gsunombre',
+                                            'suc.sucid',
+                                            'sucsoldto',
+                                            'sucnombre',
+                                            'pro.proid',
+                                            'pronombre',
+                                            'catnombre',
+                                            'prosku',
+                                        ]);
+
+                foreach($osos as $posicionOso => $oso){
+                    $respuesta = true;
+
+                    if($posicionOso == 0){
+                        $arrayTitulos = array(
+                            array("title" => "INDICADOR"),
+                            array("title" => "AÑO"),
+                            array("title" => "MES"),
+                            array("title" => "REGIÓN"),
+                            array("title" => "ZONA"),
+                            array("title" => "GRUPO"),
+                            array("title" => "SOLD TO"),
+                            array("title" => "CLIENTE"),
+                            array("title" => "CATEGORIA"),
+                            array("title" => "SKU"),
+                            array("title" => "MATERIAL"),
+                            array("title" => "CUOTA"),
+                            // array("title" => "REAL"),
+                            array("title" => "NIV"),
+                        );
+                        $nuevoArray[0]['columns'] = $arrayTitulos;
+                    }
+
+                    $vso = vsoventassso::where('fecid', $fec->fecid)
+                                    ->where('proid', $oso->proid)
+                                    ->where('sucid', $oso->sucid)
+                                    ->first();
+
+                    if($vso){
+                        $real = floatval($vso->vsovalorizado);
+                        $realniv = floatval($vso->vsovalorizadoniv);
+                    }else{
+                        $real = 0;
+                        $realniv = 0;
+                    }
+                    
+                    $casnombre = $oso->casnombre;
+                    $zonnombre = $oso->zonnombre;
+                    $gsunombre = $oso->gsunombre;
+                    $sucsoldto = $oso->sucsoldto;
+                    $sucnombre = $oso->sucnombre;
+                    $pronombre = $oso->pronombre;
+                    $catnombre = $oso->catnombre;
+                    $prosku    = $oso->prosku;
+
+                    if($casnombre == null || $casnombre == " " ){
+                        $casnombre = "0";
+                    }else if($casnombre == "-"){
+                        $casnombre = "0";
+                    }
+
+                    if($zonnombre == null || $zonnombre == " " ){
+                        $zonnombre = "0";
+                    }else if($zonnombre == "-"){
+                        $zonnombre = "0";
+                    }
+
+                    if($gsunombre == null || $gsunombre == " " ){
+                        $gsunombre = "0";
+                    }else if($gsunombre == "-"){
+                        $gsunombre = "0";
+                    }
+                    
+                    if($sucsoldto == null || $sucsoldto == " " ){
+                        $sucsoldto = "0";
+                    }else if($sucsoldto == "-"){
+                        $sucsoldto = "0";
+                    }
+
+                    if($sucnombre == null || $sucnombre == " " ){
+                        $sucnombre = "0";
+                    }else if($sucnombre == "-"){
+                        $sucnombre = "0";
+                    }
+
+                    if($pronombre == null || $pronombre == " " ){
+                        $pronombre = "0";
+                    }else if($pronombre == "-"){
+                        $pronombre = "0";
+                    }
+
+                    if($catnombre == null || $catnombre == " " ){
+                        $catnombre = "0";
+                    }else if($catnombre == "-"){
+                        $catnombre = "0";
+                    }
+
+                    if($prosku == null || $prosku == " " ){
+                        $prosku = "0";
+                    }else if($prosku == "-"){
+                        $prosku = "0";
+                    }
+
+                    $arrayFilaExcel = array(
+                        array("value" => "Sell Out"),
+                        array("value" => $anio),
+                        array("value" => $mes),
+                        array("value" => $casnombre),
+                        array("value" => $zonnombre),
+                        array("value" => $gsunombre),
+                        array("value" => $sucsoldto),
+                        array("value" => $sucnombre),
+                        array("value" => $catnombre),
+                        array("value" => $prosku),
+                        array("value" => $pronombre),
+                        array(
+                            "value" => floatval($oso->osovalorizado),
+                            "style" => array(
+                                "numFmt" => "#,##0.00"
+                            )
+                        ),
+                        // array(
+                        //     "value" => floatval($real),
+                        //     "style" => array(
+                        //         "numFmt" => "#,##0.00"
+                        //     )
+                        // ),
+                        array(
+                            "value" => floatval($realniv),
+                            "style" => array(
+                                "numFmt" => "#,##0.00"
+                            )
+                        ),
+                    );
+
+                    $nuevoArray[0]['data'][] = $arrayFilaExcel;
+                }
+
+                $datos     = $nuevoArray;
+     
+            }else{
+                $respuesta = false;
+                $mensaje = "Lo sentimos, no pudimos encontrar la fecha seleccionada";
+                $mensajeDetalle = "Vuelve a seleccionar la fecha o comunicate con soporte";
+            }
+
+
+        } catch (Exception $e) {
+            $mensajedev = $e->getMessage();
+            $linea      = __LINE__;
+        }
+
+        $requestsalida = response()->json([
+            'respuesta'      => $respuesta,
+            'mensaje'        => $mensaje,
+            'datos'          => $datos,
+            'linea'          => $linea,
+            'mensajeDetalle' => $mensajeDetalle,
+            'mensajedev'     => $mensajedev,
+        ]);
+
+        return $requestsalida;
+
+
+    }
 }
