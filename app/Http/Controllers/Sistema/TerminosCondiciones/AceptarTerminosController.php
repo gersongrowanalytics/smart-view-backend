@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Sistema\TerminosCondiciones;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\usuusuarios;
+use App\usuusuarios;
 use App\Http\Controllers\AuditoriaController;
 
 class AceptarTerminosController extends Controller
