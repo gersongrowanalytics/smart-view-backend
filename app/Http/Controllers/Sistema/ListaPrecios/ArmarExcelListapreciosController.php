@@ -225,224 +225,455 @@ class ArmarExcelListapreciosController extends Controller
 
                 $nuevoArray[0]['data'][] = $arrayFilaExcel;
 
-                $arrayFilaExcel = array( //FILA 3
-                    array(),
-                    array(),
-                    array(),
-                    array(),
-                    array(),
-                    array(),
-                    array(),
-                    array(),
-                    array(),
-                    array(),
-                    array(),
-                    array(
-                        "value" => "",
-                        "style" => array(
-                            "fill" => array(
-                                "patternType" => 'solid',
-                                "fgColor" => array(
-                                    "rgb" => "FF000000"
-                                )
-                            ),
-                            "alignment" => array(
-                                "wrapText" => true,
-                            )
-                        )
-                    ),
-                    array(
-                        "value" => "MAYORISTA",
-                        "style" => array(
-                            "font" => array(
-                                "sz" => "11",
-                                "bold" => true,
-                                "color" => array(
-                                    "rgb" => "FFFFFFFF"
-                                )
-                            ),
-                            "fill" => array(
-                                "patternType" => 'solid',
-                                "fgColor" => array(
-                                    "rgb" => "FF000000"
-                                )
-                            ),
-                            "alignment" => array(
-                                "wrapText" => true,
-                                "vertical" => "right",
-                                "horizontal" => "right",
-                                "readingOrder" => 3
-                            )
-                        )
-                    ),
-                    array(
-                        "value" => "",
-                        "style" => array(
-                            "fill" => array(
-                                "patternType" => 'solid',
-                                "fgColor" => array(
-                                    "rgb" => "FF000000"
-                                )
-                            ),
-                            "alignment" => array(
-                                "wrapText" => true,
-                            )
-                        )
-                    ),
-                    array(
-                        "value" => "",
-                        "style" => array(
-                            "fill" => array(
-                                "patternType" => 'solid',
-                                "fgColor" => array(
-                                    "rgb" => "FF000000"
-                                )
-                            ),
-                            "alignment" => array(
-                                "wrapText" => true,
-                            )
-                        )
-                    ),
-                    array(),
-                    array(
-                        "value" => "",
-                        "style" => array(
-                            "fill" => array(
-                                "patternType" => 'solid',
-                                "fgColor" => array(
-                                    "rgb" => "FF000000"
-                                )
-                            ),
-                            "alignment" => array(
-                                "wrapText" => true,
-                            )
-                        )
-                    ),
-                    array(
-                        "value" => "MINORISTA",
-                        "style" => array(
-                            "font" => array(
-                                "sz" => "11",
-                                "bold" => true,
-                                "color" => array(
-                                    "rgb" => "FFFFFFFF"
-                                )
-                            ),
-                            "fill" => array(
-                                "patternType" => 'solid',
-                                "fgColor" => array(
-                                    "rgb" => "FF000000"
-                                )
-                            ),
-                            "alignment" => array(
-                                "wrapText" => true,
-                                "vertical" => "right",
-                                "horizontal" => "right",
-                                "readingOrder" => 3
-                            )
-                            
-                        )
-                    ),
+                $arrayFilaExcel = array();
 
-                    array(
-                        "value" => "",
-                        "style" => array(
-                            "fill" => array(
-                                "patternType" => 'solid',
-                                "fgColor" => array(
-                                    "rgb" => "FF000000"
-                                )
-                            ),
-                            "alignment" => array(
-                                "wrapText" => true,
-                            )
-                        )
-                    ),
-                    array(
-                        "value" => "",
-                        "style" => array(
-                            "fill" => array(
-                                "patternType" => 'solid',
-                                "fgColor" => array(
-                                    "rgb" => "FF000000"
-                                )
-                            ),
-                            "alignment" => array(
-                                "wrapText" => true,
-                            )
-                        )
-                    ),
-                    array(),
-                    array(
-                        "value" => "",
-                        "style" => array(
-                            "fill" => array(
-                                "patternType" => 'solid',
-                                "fgColor" => array(
-                                    "rgb" => "FF000000"
-                                )
-                            ),
-                            "alignment" => array(
-                                "wrapText" => true,
-                            )
-                        )
-                    ),
-                    array(
-                        "value" => "BODEGA",
-                        "style" => array(
-                            "font" => array(
-                                "sz" => "11",
-                                "bold" => true,
-                                "color" => array(
-                                    "rgb" => "FFFFFFFF"
-                                )
-                            ),
-                            "fill" => array(
-                                "patternType" => 'solid',
-                                "fgColor" => array(
-                                    "rgb" => "FF000000"
-                                )
-                            ),
-                            "alignment" => array(
-                                "wrapText" => true,
-                                "vertical" => "right",
-                                "horizontal" => "right",
-                                "readingOrder" => 3
-                            )
-                        )
-                    ),
-                    array(
-                        "value" => "",
-                        "style" => array(
-                            "fill" => array(
-                                "patternType" => 'solid',
-                                "fgColor" => array(
-                                    "rgb" => "FF000000"
-                                )
-                            ),
-                            "alignment" => array(
-                                "wrapText" => true,
-                            )
-                        )
-                    ),
-                    array(
-                        "value" => "",
-                        "style" => array(
-                            "fill" => array(
-                                "patternType" => 'solid',
-                                "fgColor" => array(
-                                    "rgb" => "FF000000"
-                                )
-                            ),
-                            "alignment" => array(
-                                "wrapText" => true,
-                            )
-                        )
-                    ),
 
-                );
+                if(isset($re_columnas)){
+
+
+                    $esMayorista = false;
+                    $contMayorista = 0;
+
+                    foreach($re_columnas as $re_columna){
+                        if( $re_columna['agrupacion'] == "mayorista" ){
+
+                            $esMayorista = true;
+                            $contMayorista = $contMayorista + 1;
+
+                        }else{
+                            if($esMayorista == true){
+                                
+
+                                if($contMayorista == 1){
+                                    $arrayFilaExcel[] = array(
+                                        "value" => "MAYORISTA",
+                                        "style" => array(
+                                            "font" => array(
+                                                "sz" => "11",
+                                                "bold" => true,
+                                                "color" => array(
+                                                    "rgb" => "FFFFFFFF"
+                                                )
+                                            ),
+                                            "fill" => array(
+                                                "patternType" => 'solid',
+                                                "fgColor" => array(
+                                                    "rgb" => "FF000000"
+                                                )
+                                            ),
+                                            "alignment" => array(
+                                                "wrapText" => true,
+                                                "vertical" => "center",
+                                                "horizontal" => "center",
+                                            )
+                                        )
+                                    );
+                                }else if($contMayorista == 2){
+                                    
+                                    $arrayFilaExcel[] = array(
+                                        "value" => "",
+                                        "style" => array(
+                                            "fill" => array(
+                                                "patternType" => 'solid',
+                                                "fgColor" => array(
+                                                    "rgb" => "FF000000"
+                                                )
+                                            ),
+                                            "alignment" => array(
+                                                "wrapText" => true,
+                                            )
+                                        )    
+                                    );
+
+                                    $arrayFilaExcel[] = array(
+                                        "value" => "MAYORISTA",
+                                        "style" => array(
+                                            "font" => array(
+                                                "sz" => "11",
+                                                "bold" => true,
+                                                "color" => array(
+                                                    "rgb" => "FFFFFFFF"
+                                                )
+                                            ),
+                                            "fill" => array(
+                                                "patternType" => 'solid',
+                                                "fgColor" => array(
+                                                    "rgb" => "FF000000"
+                                                )
+                                            ),
+                                            "alignment" => array(
+                                                "wrapText" => true,
+                                                "vertical" => "left",
+                                                "horizontal" => "left",
+                                                "readingOrder" => 3
+                                            )
+                                        )
+                                    );
+                                    
+                                }else if($contMayorista == 3){
+                                    $arrayFilaExcel[] = array(
+                                        "value" => "",
+                                        "style" => array(
+                                            "fill" => array(
+                                                "patternType" => 'solid',
+                                                "fgColor" => array(
+                                                    "rgb" => "FF000000"
+                                                )
+                                            ),
+                                            "alignment" => array(
+                                                "wrapText" => true,
+                                            )
+                                        )    
+                                    );
+
+                                    $arrayFilaExcel[] = array(
+                                        "value" => "MAYORISTA",
+                                        "style" => array(
+                                            "font" => array(
+                                                "sz" => "11",
+                                                "bold" => true,
+                                                "color" => array(
+                                                    "rgb" => "FFFFFFFF"
+                                                )
+                                            ),
+                                            "fill" => array(
+                                                "patternType" => 'solid',
+                                                "fgColor" => array(
+                                                    "rgb" => "FF000000"
+                                                )
+                                            ),
+                                            "alignment" => array(
+                                                "wrapText" => true,
+                                                "vertical" => "center",
+                                                "horizontal" => "center",
+                                                "readingOrder" => 3
+                                            )
+                                        )
+                                    );
+
+                                    $arrayFilaExcel[] = array(
+                                        "value" => "",
+                                        "style" => array(
+                                            "fill" => array(
+                                                "patternType" => 'solid',
+                                                "fgColor" => array(
+                                                    "rgb" => "FF000000"
+                                                )
+                                            ),
+                                            "alignment" => array(
+                                                "wrapText" => true,
+                                            )
+                                        )    
+                                    );
+                                }else if($contMayorista == 4){
+
+                                    $arrayFilaExcel[] = array(
+                                        "value" => "",
+                                        "style" => array(
+                                            "fill" => array(
+                                                "patternType" => 'solid',
+                                                "fgColor" => array(
+                                                    "rgb" => "FF000000"
+                                                )
+                                            ),
+                                            "alignment" => array(
+                                                "wrapText" => true,
+                                            )
+                                        )
+                                    );
+                                    
+                                    $arrayFilaExcel[] = array(
+                                        "value" => "MAYORISTA",
+                                        "style" => array(
+                                            "font" => array(
+                                                "sz" => "11",
+                                                "bold" => true,
+                                                "color" => array(
+                                                    "rgb" => "FFFFFFFF"
+                                                )
+                                            ),
+                                            "fill" => array(
+                                                "patternType" => 'solid',
+                                                "fgColor" => array(
+                                                    "rgb" => "FF000000"
+                                                )
+                                            ),
+                                            "alignment" => array(
+                                                "wrapText" => true,
+                                                "vertical" => "right",
+                                                "horizontal" => "right",
+                                                "readingOrder" => 3
+                                            )
+                                        )
+                                    );
+
+                                    $arrayFilaExcel[] = array(
+                                        "value" => "",
+                                        "style" => array(
+                                            "fill" => array(
+                                                "patternType" => 'solid',
+                                                "fgColor" => array(
+                                                    "rgb" => "FF000000"
+                                                )
+                                            ),
+                                            "alignment" => array(
+                                                "wrapText" => true,
+                                            )
+                                        )
+                                    );
+
+                                    $arrayFilaExcel[] = array(
+                                        "value" => "",
+                                        "style" => array(
+                                            "fill" => array(
+                                                "patternType" => 'solid',
+                                                "fgColor" => array(
+                                                    "rgb" => "FF000000"
+                                                )
+                                            ),
+                                            "alignment" => array(
+                                                "wrapText" => true,
+                                            )
+                                        )
+                                    );
+
+                                }
+
+                                $contMayorista = 0;
+                                $esMayorista = false;
+
+                            }else{
+                                $arrayFilaExcel[] = array();
+                            }
+                        }
+                    }
+
+                }else{
+                    $arrayFilaExcel = array( //FILA 3
+                        array(),
+                        array(),
+                        array(),
+                        array(),
+                        array(),
+                        array(),
+                        array(),
+                        array(),
+                        array(),
+                        array(),
+                        array(),
+                        array(
+                            "value" => "",
+                            "style" => array(
+                                "fill" => array(
+                                    "patternType" => 'solid',
+                                    "fgColor" => array(
+                                        "rgb" => "FF000000"
+                                    )
+                                ),
+                                "alignment" => array(
+                                    "wrapText" => true,
+                                )
+                            )
+                        ),
+                        array(
+                            "value" => "MAYORISTA",
+                            "style" => array(
+                                "font" => array(
+                                    "sz" => "11",
+                                    "bold" => true,
+                                    "color" => array(
+                                        "rgb" => "FFFFFFFF"
+                                    )
+                                ),
+                                "fill" => array(
+                                    "patternType" => 'solid',
+                                    "fgColor" => array(
+                                        "rgb" => "FF000000"
+                                    )
+                                ),
+                                "alignment" => array(
+                                    "wrapText" => true,
+                                    "vertical" => "right",
+                                    "horizontal" => "right",
+                                    "readingOrder" => 3
+                                )
+                            )
+                        ),
+                        array(
+                            "value" => "",
+                            "style" => array(
+                                "fill" => array(
+                                    "patternType" => 'solid',
+                                    "fgColor" => array(
+                                        "rgb" => "FF000000"
+                                    )
+                                ),
+                                "alignment" => array(
+                                    "wrapText" => true,
+                                )
+                            )
+                        ),
+                        array(
+                            "value" => "",
+                            "style" => array(
+                                "fill" => array(
+                                    "patternType" => 'solid',
+                                    "fgColor" => array(
+                                        "rgb" => "FF000000"
+                                    )
+                                ),
+                                "alignment" => array(
+                                    "wrapText" => true,
+                                )
+                            )
+                        ),
+                        array(),
+                        array(
+                            "value" => "",
+                            "style" => array(
+                                "fill" => array(
+                                    "patternType" => 'solid',
+                                    "fgColor" => array(
+                                        "rgb" => "FF000000"
+                                    )
+                                ),
+                                "alignment" => array(
+                                    "wrapText" => true,
+                                )
+                            )
+                        ),
+                        array(
+                            "value" => "MINORISTA",
+                            "style" => array(
+                                "font" => array(
+                                    "sz" => "11",
+                                    "bold" => true,
+                                    "color" => array(
+                                        "rgb" => "FFFFFFFF"
+                                    )
+                                ),
+                                "fill" => array(
+                                    "patternType" => 'solid',
+                                    "fgColor" => array(
+                                        "rgb" => "FF000000"
+                                    )
+                                ),
+                                "alignment" => array(
+                                    "wrapText" => true,
+                                    "vertical" => "right",
+                                    "horizontal" => "right",
+                                    "readingOrder" => 3
+                                )
+                                
+                            )
+                        ),
+    
+                        array(
+                            "value" => "",
+                            "style" => array(
+                                "fill" => array(
+                                    "patternType" => 'solid',
+                                    "fgColor" => array(
+                                        "rgb" => "FF000000"
+                                    )
+                                ),
+                                "alignment" => array(
+                                    "wrapText" => true,
+                                )
+                            )
+                        ),
+                        array(
+                            "value" => "",
+                            "style" => array(
+                                "fill" => array(
+                                    "patternType" => 'solid',
+                                    "fgColor" => array(
+                                        "rgb" => "FF000000"
+                                    )
+                                ),
+                                "alignment" => array(
+                                    "wrapText" => true,
+                                )
+                            )
+                        ),
+                        array(),
+                        array(
+                            "value" => "",
+                            "style" => array(
+                                "fill" => array(
+                                    "patternType" => 'solid',
+                                    "fgColor" => array(
+                                        "rgb" => "FF000000"
+                                    )
+                                ),
+                                "alignment" => array(
+                                    "wrapText" => true,
+                                )
+                            )
+                        ),
+                        array(
+                            "value" => "BODEGA",
+                            "style" => array(
+                                "font" => array(
+                                    "sz" => "11",
+                                    "bold" => true,
+                                    "color" => array(
+                                        "rgb" => "FFFFFFFF"
+                                    )
+                                ),
+                                "fill" => array(
+                                    "patternType" => 'solid',
+                                    "fgColor" => array(
+                                        "rgb" => "FF000000"
+                                    )
+                                ),
+                                "alignment" => array(
+                                    "wrapText" => true,
+                                    "vertical" => "right",
+                                    "horizontal" => "right",
+                                    "readingOrder" => 3
+                                )
+                            )
+                        ),
+                        array(
+                            "value" => "",
+                            "style" => array(
+                                "fill" => array(
+                                    "patternType" => 'solid',
+                                    "fgColor" => array(
+                                        "rgb" => "FF000000"
+                                    )
+                                ),
+                                "alignment" => array(
+                                    "wrapText" => true,
+                                )
+                            )
+                        ),
+                        array(
+                            "value" => "",
+                            "style" => array(
+                                "fill" => array(
+                                    "patternType" => 'solid',
+                                    "fgColor" => array(
+                                        "rgb" => "FF000000"
+                                    )
+                                ),
+                                "alignment" => array(
+                                    "wrapText" => true,
+                                )
+                            )
+                        ),
+    
+                    );
+                }
 
                 $nuevoArray[0]['data'][] = $arrayFilaExcel;
+
+
+
+
+
+
 
                 $arrayFilaExcel = array( // FILA 4
                 );
