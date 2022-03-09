@@ -2944,6 +2944,11 @@ class ArmarExcelListapreciosController extends Controller
         $contMinorista = 0;
         $contBodega    = 0;
 
+        $camposMayorista = array();
+        $camposMinorista = array();
+        $camposBodega    = array();
+        $camposBlancos   = array();
+
         $esMayorista = false;
         $esMinorista = false;
         $esBodega    = false;
@@ -2954,14 +2959,16 @@ class ArmarExcelListapreciosController extends Controller
 
             if($re_columna['agrupacion'] == "mayorista"){
                 
-                $esMayorista = true;
+                $esMayorista   = true;
                 $contMayorista = $contMayorista + 1;
+                $camposMayorista[] = $re_columna;
 
                 if($esBodega == true){
                     $nuevoArrayCabecera[] = array(
                         "tipo"   => "data",
                         "titulo" => "BODEGA",
-                        "cont"   => $contBodega
+                        "cont"   => $contBodega,
+                        "column" => $camposBodega
                     );
                     $nuevoArrayCabecera[] = array(
                         "tipo"   => "data",
@@ -2973,7 +2980,8 @@ class ArmarExcelListapreciosController extends Controller
                     $nuevoArrayCabecera[] = array(
                         "tipo"   => "data",
                         "titulo" => "MINORISTA",
-                        "cont"   => $contMinorista
+                        "cont"   => $contMinorista,
+                        "column" => $camposMinorista
                     );
                     $nuevoArrayCabecera[] = array(
                         "tipo"   => "data",
@@ -2986,18 +2994,25 @@ class ArmarExcelListapreciosController extends Controller
                 $contBodega    = 0;
                 $esMinorista = false;
                 $esBodega    = false;
+
+                $camposMinorista = array();
+                $camposBodega    = array();
+                $camposBlancos   = array();
+
 
             }else if($re_columna['agrupacion'] == "minorista"){
 
                 $esMinorista = true;
                 $contMinorista = $contMinorista + 1;
+                $camposMinorista[] = $re_columna;
 
                 if($esMayorista == true){
 
                     $nuevoArrayCabecera[] = array(
                         "tipo"   => "data",
                         "titulo" => "MAYORISTA",
-                        "cont"   => $contMayorista
+                        "cont"   => $contMayorista,
+                        "column" => $camposMayorista
                     );
                     $nuevoArrayCabecera[] = array(
                         "tipo"   => "data",
@@ -3009,7 +3024,8 @@ class ArmarExcelListapreciosController extends Controller
                     $nuevoArrayCabecera[] = array(
                         "tipo"   => "data",
                         "titulo" => "BODEGA",
-                        "cont"   => $contBodega
+                        "cont"   => $contBodega,
+                        "column" => $camposBodega
                     );
                     $nuevoArrayCabecera[] = array(
                         "tipo"   => "data",
@@ -3022,17 +3038,23 @@ class ArmarExcelListapreciosController extends Controller
                 $contBodega    = 0;
                 $esMayorista = false;
                 $esBodega    = false;
+
+                $camposMayorista = array();
+                $camposBodega    = array();
+                $camposBlancos   = array();
 
             }else if($re_columna['agrupacion'] == "bodega"){
                 
                 $esBodega = true;
                 $contBodega = $contBodega + 1;
+                $camposBodega[] = $re_columna;
 
                 if($esMayorista == true){
                     $nuevoArrayCabecera[] = array(
                         "tipo"   => "data",
                         "titulo" => "MAYORISTA",
-                        "cont"   => $contMayorista
+                        "cont"   => $contMayorista,
+                        "column" => $camposMayorista
                     );
                     $nuevoArrayCabecera[] = array(
                         "tipo"   => "data",
@@ -3043,7 +3065,8 @@ class ArmarExcelListapreciosController extends Controller
                     $nuevoArrayCabecera[] = array(
                         "tipo"   => "data",
                         "titulo" => "MINORISTA",
-                        "cont"   => $contMinorista
+                        "cont"   => $contMinorista,
+                        "column" => $camposMinorista
                     );
                     $nuevoArrayCabecera[] = array(
                         "tipo"   => "data",
@@ -3057,13 +3080,20 @@ class ArmarExcelListapreciosController extends Controller
                 $esMayorista = false;
                 $esMinorista = false;
 
+                $camposMayorista = array();
+                $camposMinorista = array();
+                $camposBlancos   = array();
+
             }else{
+
+
 
                 if($esMayorista == true){
                     $nuevoArrayCabecera[] = array(
                         "tipo"   => "data",
                         "titulo" => "MAYORISTA",
-                        "cont"   => $contMayorista
+                        "cont"   => $contMayorista,
+                        "column" => $camposMayorista
                     );
                     $nuevoArrayCabecera[] = array(
                         "tipo"   => "data",
@@ -3074,7 +3104,8 @@ class ArmarExcelListapreciosController extends Controller
                     $nuevoArrayCabecera[] = array(
                         "tipo"   => "data",
                         "titulo" => "MINORISTA",
-                        "cont"   => $contMinorista
+                        "cont"   => $contMinorista,
+                        "column" => $camposMinorista
                     );
                     $nuevoArrayCabecera[] = array(
                         "tipo"   => "data",
@@ -3085,7 +3116,8 @@ class ArmarExcelListapreciosController extends Controller
                     $nuevoArrayCabecera[] = array(
                         "tipo"   => "data",
                         "titulo" => "BODEGA",
-                        "cont"   => $contBodega
+                        "cont"   => $contBodega,
+                        "column" => $camposBodega
                     );
                     $nuevoArrayCabecera[] = array(
                         "tipo"   => "data",
@@ -3100,10 +3132,17 @@ class ArmarExcelListapreciosController extends Controller
                 $esMayorista = false;
                 $esMinorista = false;
                 $esBodega    = false;
+                $camposMayorista = array();
+                $camposMinorista = array();
+                $camposBodega    = array();
+                $camposBlancos   = array();
+
+                $camposBlancos[] = $re_columna;
 
                 $nuevoArrayCabecera[] = array(
                     "tipo"   => "blanco",
-                    "titulo" => "",        
+                    "titulo" => "",
+                    "column" => $camposBlancos
                 );
             }
         }
@@ -3112,7 +3151,8 @@ class ArmarExcelListapreciosController extends Controller
             $nuevoArrayCabecera[] = array(
                 "tipo"   => "data",
                 "titulo" => "MAYORISTA",
-                "cont"   => $contMayorista
+                "cont"   => $contMayorista,
+                "column" => $camposMayorista
             );
             $nuevoArrayCabecera[] = array(
                 "tipo"   => "data",
@@ -3123,7 +3163,8 @@ class ArmarExcelListapreciosController extends Controller
             $nuevoArrayCabecera[] = array(
                 "tipo"   => "data",
                 "titulo" => "MINORISTA",
-                "cont"   => $contMinorista
+                "cont"   => $contMinorista,
+                "column" => $camposMinorista
             );
             $nuevoArrayCabecera[] = array(
                 "tipo"   => "data",
@@ -3134,7 +3175,8 @@ class ArmarExcelListapreciosController extends Controller
             $nuevoArrayCabecera[] = array(
                 "tipo"   => "data",
                 "titulo" => "BODEGA",
-                "cont"   => $contBodega
+                "cont"   => $contBodega,
+                "column" => $camposBodega
             );
             $nuevoArrayCabecera[] = array(
                 "tipo"   => "data",
@@ -3149,6 +3191,11 @@ class ArmarExcelListapreciosController extends Controller
         $esMayorista = false;
         $esMinorista = false;
         $esBodega    = false;
+
+        $camposMayorista = array();
+        $camposMinorista = array();
+        $camposBodega    = array();
+        $camposBlancos   = array();
 
         $nuevoArrayCabecera[] = array(
             "tipo"   => "blanco",
@@ -3361,12 +3408,16 @@ class ArmarExcelListapreciosController extends Controller
 
         }
 
-
+        // -------------------
 
         foreach($nuevoArrayCabecera as $nuevoArrayCabe){
             
             if($nuevoArrayCabe['tipo'] == "blanco"){
-                $nuevasColumnas[] = $re_columna;
+                
+                foreach($nuevoArrayCabe['column'] as $columna_recibida){
+                    $nuevasColumnas[] = $columna_recibida;
+                }
+
             }else if($nuevoArrayCabe['titulo'] == "ESPACIO"){
                 // $nuevasColumnas[] = array(
                 //     "agrupacion"   => "ESPACIO",
@@ -3374,11 +3425,11 @@ class ArmarExcelListapreciosController extends Controller
                 //     "orden"        => 0,
                 //     "seleccionado" => true
                 // );
-                $nuevasColumnas[] = $re_columna;
+                // $nuevasColumnas[] = $re_columna;
             }else{
 
-                for($i = 0; $i < $nuevoArrayCabe['cont']; $i++){                    
-                    $nuevasColumnas[] = $re_columna;
+                foreach($nuevoArrayCabe['column'] as $columna_recibida){
+                    $nuevasColumnas[] = $columna_recibida;
                 }
 
                 $nuevasColumnas[] = array(
