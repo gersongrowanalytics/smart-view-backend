@@ -209,7 +209,8 @@ class loginController extends Controller
             'datos'          => $datos,
             'linea'          => $linea,
             'mensajeDetalle' => $mensajeDetalle,
-            'mensajedev'     => $mensajedev
+            'mensajedev'     => $mensajedev,
+            'mostrarterminos' => $aparecerTerminosCondiciones,
         ]);
     }
 
