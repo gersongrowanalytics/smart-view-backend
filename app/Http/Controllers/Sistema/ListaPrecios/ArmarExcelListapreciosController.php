@@ -449,23 +449,7 @@ class ArmarExcelListapreciosController extends Controller
                 $nuevoArray[0]['data'][] = $arrayFilaExcel;
 
 
-                $arrayFilaExcel = array( // FILA 5
-                    "value" => "CAMBIO",
-                    "style" => array(
-                        "font" => array(
-                            "sz" => "11",
-                            "bold" => true,
-                        ),
-                        "fill" => array(
-                            "patternType" => 'solid',
-                        ),
-                        "alignment" => array(
-                            "vertical" => "center",
-                            "horizontal" => "center"
-                        )
-                        
-                    )
-                );
+                $arrayFilaExcel = array();// FILA 5
 
                 foreach($cabeceras as $cabecera){
 
@@ -516,6 +500,8 @@ class ArmarExcelListapreciosController extends Controller
 
                         foreach($re_columnas as $re_columna){
                             if($re_columna['columna'] == $cabecera){
+                                $agregar = true;
+                            }else if($cabecera == "CAMBIO"){
                                 $agregar = true;
                             }
                         }
