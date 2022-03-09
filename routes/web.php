@@ -30,6 +30,9 @@ $router->post('/login', 'Sistema\loginController@login');
 $router->post('/cerrar-session', 'Sistema\loginController@MetCerrarSession');
 $router->get('/correo-recuperar', 'Sistema\recuperarController@EnviarCorreoVista');
 
+// ACEPTAR TERMINOS Y CONDICIONES
+$router->post('/aceptar-terminos-condiciones', 'Sistema\TerminosCondiciones\AceptarTerminosController@AceptarTerminos');
+
 $router->group(['middleware' => ['permisos']], function() use($router) {
     
     $router->post('/ventas/mostrar', 'Sistema\Ventas\Mostrar\VentasMostrarController@mostrarVentas');
