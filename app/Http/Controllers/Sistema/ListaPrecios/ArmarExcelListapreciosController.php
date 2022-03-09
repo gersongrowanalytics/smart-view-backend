@@ -2934,7 +2934,7 @@ class ArmarExcelListapreciosController extends Controller
 
     }
 
-    private function ArmarCabecerasFilaTres($columnas, $arrayFilaExcel)
+    private function ArmarCabecerasFilaTres($re_columnas, $arrayFilaExcel)
     {
         $nuevoArrayCabecera = array();
         $contMayorista = 0;
