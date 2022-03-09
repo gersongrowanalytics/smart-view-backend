@@ -443,7 +443,29 @@ class ArmarExcelListapreciosController extends Controller
                                 $esMayorista = false;
 
                             }else{
-                                $arrayFilaExcel[] = array();
+                                $arrayFilaExcel[] = array(
+                                    "value" => "-",
+                                    "style" => array(
+                                        "font" => array(
+                                            "sz" => "11",
+                                            "bold" => true,
+                                            "color" => array(
+                                                "rgb" => "FFFFFFFF"
+                                            )
+                                        ),
+                                        "fill" => array(
+                                            "patternType" => 'solid',
+                                            "fgColor" => array(
+                                                "rgb" => "FF000000"
+                                            )
+                                        ),
+                                        "alignment" => array(
+                                            "wrapText" => true,
+                                            "vertical" => "center",
+                                            "horizontal" => "center",
+                                        )
+                                    )
+                                );
                             }
                         }
                     }
