@@ -569,6 +569,10 @@ class ArmarExcelListapreciosController extends Controller
                                     
                                 )
                             );
+                        }else{
+                            $arrayFilaExcel[] = array(
+                                "value" => "",
+                            );
                         }
 
                     }
