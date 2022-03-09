@@ -3177,7 +3177,7 @@ class ArmarExcelListapreciosController extends Controller
                     );
 
                     $arrayFilaExcel[] = array(
-                        "value" => "MAYORISTA",
+                        "value" => $nuevoArrayCabe['titulo'],
                         "style" => array(
                             "font" => array(
                                 "sz" => "11",
@@ -3234,7 +3234,7 @@ class ArmarExcelListapreciosController extends Controller
                     );
                     
                     $arrayFilaExcel[] = array(
-                        "value" => "MAYORISTA",
+                        "value" => $nuevoArrayCabe['titulo'],
                         "style" => array(
                             "font" => array(
                                 "sz" => "11",
