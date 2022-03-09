@@ -142,11 +142,13 @@ class ArmarExcelListapreciosController extends Controller
             "Código SAP",
             "EAN",
             "Descripción de producto",
-            "Unidad de venta",
-            "Precio Lista Sin IGV",
+            // "Unidad de venta",
+            "Und. Venta",
+            // "Precio Lista Sin IGV",
+            "Precio Lista S/IGV",
             "% Alza",
-            "SD / TPR",
-            "Precio Lista con IGV",
+            "SD/TPR",
+            "Precio Lista C/IGV",
             "MF Ruta Mayorista",
             "Reventa Mayorista",
             "Margen Mayorista",
@@ -492,15 +494,45 @@ class ArmarExcelListapreciosController extends Controller
                         $colorFondo = "FF4472C4";
                     }
 
-                    $agregar = false;
+                    if(isset($re_columnas)){
 
-                    foreach($re_columnas as $re_columna){
-                        if($re_columna['columna'] == $cabecera){
-                            $agregar = true;
+                        $agregar = false;
+
+                        foreach($re_columnas as $re_columna){
+                            if($re_columna['columna'] == $cabecera){
+                                $agregar = true;
+                            }
                         }
-                    }
 
-                    if($agregar == true){
+                        if($agregar == true){
+                            $arrayFilaExcel[] = array(
+                                "value" => $cabecera,
+                                "style" => array(
+                                    "font" => array(
+                                        "sz" => "11",
+                                        "bold" => true,
+                                        "color" => array(
+                                            "rgb" => $coloLetra
+                                        )
+                                    ),
+                                    "fill" => array(
+                                        "patternType" => 'solid',
+                                        "fgColor" => array(
+                                            "rgb" => $colorFondo
+                                        )
+                                    ),
+                                    "alignment" => array(
+                                        "vertical" => "center",
+                                        "horizontal" => "center"
+                                    )
+                                    
+                                )
+                            );
+                        }else{
+
+                        }
+
+                    }else{
                         $arrayFilaExcel[] = array(
                             "value" => $cabecera,
                             "style" => array(
@@ -524,16 +556,17 @@ class ArmarExcelListapreciosController extends Controller
                                 
                             )
                         );
-                    }else{
-
                     }
 
                 }
                 $nuevoArray[0]['data'][] = $arrayFilaExcel;
             }
 
-            $arrayFilaExcel = array(
-                array(
+            $arrayFilaExcel = array();
+
+            if(isset($re_columnas)){
+
+                $arrayFilaExcel[] = array(
                     "value" => "-",
                     "style" => array(
                         "font" => array(
@@ -555,574 +588,1197 @@ class ArmarExcelListapreciosController extends Controller
                         )
                         
                     )
-                ),
-                array(
-                    "value" => $ltp->ltpcategoria,
-                    "style" => array(
-                        "font" => array(
-                            "sz" => "11",
-                            "bold" => false,
-                            "color" => array(
-                                "rgb" => "FF000000"
+                );
+
+                foreach($re_columnas as $re_columna){
+                    if($re_columna['columna'] == "Categoría" ){
+    
+    
+                        $arrayFilaExcel[] = array(
+                            "value" => $ltp->ltpcategoria,
+                            "style" => array(
+                                "font" => array(
+                                    "sz" => "11",
+                                    "bold" => false,
+                                    "color" => array(
+                                        "rgb" => "FF000000"
+                                    )
+                                ),
+                                "fill" => array(
+                                    "patternType" => 'solid',
+                                    "fgColor" => array(
+                                        "rgb" => "FFFFFFFF"
+                                    )
+                                ),
+                                "alignment" => array(
+                                    "vertical" => "center",
+                                    "horizontal" => "center"
+                                )
+                                
                             )
-                        ),
-                        "fill" => array(
-                            "patternType" => 'solid',
-                            "fgColor" => array(
-                                "rgb" => "FFFFFFFF"
+                        );
+    
+    
+                    }else if($re_columna['columna'] == "Subcategoría" ){
+    
+    
+                        $arrayFilaExcel[] = array(
+                            "value" => $ltp->ltpsubcategoria,
+                            "style" => array(
+                                "font" => array(
+                                    "sz" => "11",
+                                    "bold" => false,
+                                    "color" => array(
+                                        "rgb" => "FF000000"
+                                    )
+                                ),
+                                "fill" => array(
+                                    "patternType" => 'solid',
+                                    "fgColor" => array(
+                                        "rgb" => "FFFFFFFF"
+                                    )
+                                ),
+                                "alignment" => array(
+                                    "vertical" => "center",
+                                    "horizontal" => "center"
+                                )
                             )
-                        ),
-                        "alignment" => array(
-                            "vertical" => "center",
-                            "horizontal" => "center"
+                        );
+    
+    
+                    }else if($re_columna['columna'] == "Código SAP" ){
+    
+                        $arrayFilaExcel[] = array(
+                            "value" => $ltp->ltpcodigosap,
+                            "style" => array(
+                                "font" => array(
+                                    "sz" => "11",
+                                    "bold" => false,
+                                    "color" => array(
+                                        "rgb" => "FF000000"
+                                    )
+                                ),
+                                "fill" => array(
+                                    "patternType" => 'solid',
+                                    "fgColor" => array(
+                                        "rgb" => "FFFFFFFF"
+                                    )
+                                ),
+                                "alignment" => array(
+                                    "vertical" => "center",
+                                    "horizontal" => "center"
+                                )
+                                
+                            )
+                        );
+    
+                    }else if($re_columna['columna'] == "EAN" ){
+    
+                        $arrayFilaExcel[] = array(
+                            "value" => $ltp->ltpean,
+                            "style" => array(
+                                "font" => array(
+                                    "sz" => "11",
+                                    "bold" => false,
+                                    "color" => array(
+                                        "rgb" => "FF000000"
+                                    )
+                                ),
+                                "fill" => array(
+                                    "patternType" => 'solid',
+                                    "fgColor" => array(
+                                        "rgb" => "FFFFFFFF"
+                                    )
+                                ),
+                                "alignment" => array(
+                                    "vertical" => "center",
+                                    "horizontal" => "center"
+                                )
+                                
+                            )
+                        );
+    
+                    }else if($re_columna['columna'] == "Descripción de producto" ){
+    
+                        $arrayFilaExcel[] = array(
+                            "value" => $ltp->ltpdescripcionproducto,
+                            "style" => array(
+                                "font" => array(
+                                    "sz" => "11",
+                                    "bold" => false,
+                                    "color" => array(
+                                        "rgb" => "FF000000"
+                                    )
+                                ),
+                                "fill" => array(
+                                    "patternType" => 'solid',
+                                    "fgColor" => array(
+                                        "rgb" => "FFFFFFFF"
+                                    )
+                                ),
+                                "alignment" => array(
+                                    "vertical" => "center",
+                                    "horizontal" => "center"
+                                )
+                                
+                            )
+                        );
+    
+                    }else if($re_columna['columna'] == "Und. Venta" ){
+    
+                        $arrayFilaExcel[] = array(
+                            "value" => floatval($ltp->ltpunidadventa),
+                            "style" => array(
+                                "font" => array(
+                                    "sz" => "11",
+                                    "bold" => false,
+                                    "color" => array(
+                                        "rgb" => "FF000000"
+                                    )
+                                ),
+                                "fill" => array(
+                                    "patternType" => 'solid',
+                                    "fgColor" => array(
+                                        "rgb" => "FFFFFFFF"
+                                    )
+                                ),
+                                "alignment" => array(
+                                    "vertical" => "center",
+                                    "horizontal" => "center"
+                                ),
+                                "numFmt" => "#,##0.00"
+                                
+                            )
+                        );
+    
+                    }else if($re_columna['columna'] == "Precio Lista S/IGV" ){
+    
+                        $arrayFilaExcel[] = array(
+                            "value" => floatval($ltp->ltppreciolistasinigv),
+                            "style" => array(
+                                "font" => array(
+                                    "sz" => "11",
+                                    "bold" => false,
+                                    "color" => array(
+                                        "rgb" => "FF000000"
+                                    )
+                                ),
+                                "fill" => array(
+                                    "patternType" => 'solid',
+                                    "fgColor" => array(
+                                        "rgb" => "FFFFFFFF"
+                                    )
+                                ),
+                                "alignment" => array(
+                                    "vertical" => "center",
+                                    "horizontal" => "center"
+                                ),
+                                "numFmt" => "#,##0.00"
+                                
+                            )
+                        );
+    
+                    }else if($re_columna['columna'] == "% Alza" ){
+    
+                        $arrayFilaExcel[] = array(
+                            "value" => floatval($ltp->ltpalza),
+                            "style" => array(
+                                "font" => array(
+                                    "sz" => "11",
+                                    "bold" => false,
+                                    "color" => array(
+                                        "rgb" => "FF000000"
+                                    )
+                                ),
+                                "fill" => array(
+                                    "patternType" => 'solid',
+                                    "fgColor" => array(
+                                        "rgb" => "FFFFFFFF"
+                                    )
+                                ),
+                                "alignment" => array(
+                                    "vertical" => "center",
+                                    "horizontal" => "center"
+                                ),
+                                "numFmt" => "#,##0.00"
+                                
+                            )
+                        );
+    
+                    }else if($re_columna['columna'] == "SD/TPR" ){
+    
+                        $arrayFilaExcel[] = array(
+                            "value" => floatval($ltp->ltpsdtpr),
+                            "style" => array(
+                                "font" => array(
+                                    "sz" => "11",
+                                    "bold" => false,
+                                    "color" => array(
+                                        "rgb" => "FF000000"
+                                    )
+                                ),
+                                "fill" => array(
+                                    "patternType" => 'solid',
+                                    "fgColor" => array(
+                                        "rgb" => "FFFFFFFF"
+                                    )
+                                ),
+                                "alignment" => array(
+                                    "vertical" => "center",
+                                    "horizontal" => "center"
+                                ),
+                                "numFmt" => "#,##0.00"
+                                
+                            )
+                        );
+    
+                    }else if($re_columna['columna'] == "Precio Lista C/IGV" ){
+    
+                        $arrayFilaExcel[] = array(
+                            "value" => floatval($ltp->ltppreciolistaconigv),
+                            "style" => array(
+                                "font" => array(
+                                    "sz" => "11",
+                                    "bold" => false,
+                                    "color" => array(
+                                        "rgb" => "FF000000"
+                                    )
+                                ),
+                                "fill" => array(
+                                    "patternType" => 'solid',
+                                    "fgColor" => array(
+                                        "rgb" => "FFFFFFFF"
+                                    )
+                                ),
+                                "alignment" => array(
+                                    "vertical" => "center",
+                                    "horizontal" => "center"
+                                ),
+                                "numFmt" => "#,##0.00"
+                                
+                            )
+                        );
+    
+                    }else if($re_columna['columna'] == "MF Ruta Mayorista" ){
+    
+                        $arrayFilaExcel[] = array(
+                            "value" => floatval($ltp->ltpmfrutamayorista),
+                            "style" => array(
+                                "font" => array(
+                                    "sz" => "11",
+                                    "bold" => true,
+                                    "color" => array(
+                                        "rgb" => "FF70AD47"
+                                    )
+                                ),
+                                "fill" => array(
+                                    "patternType" => 'solid',
+                                    "fgColor" => array(
+                                        "rgb" => "FFFFFFFF"
+                                    )
+                                ),
+                                "alignment" => array(
+                                    "vertical" => "center",
+                                    "horizontal" => "center"
+                                ),
+                                "numFmt" => "#,##0.00"
+                                
+                            )
+                        );
+    
+    
+                    }else if($re_columna['columna'] == "Reventa Mayorista" ){
+    
+                        $arrayFilaExcel[] = array(
+                            "value" => floatval($ltp->ltpreventamayorista),
+                            "style" => array(
+                                "font" => array(
+                                    "sz" => "11",
+                                    "bold" => true,
+                                    "color" => array(
+                                        "rgb" => "FF70AD47"
+                                    )
+                                ),
+                                "fill" => array(
+                                    "patternType" => 'solid',
+                                    "fgColor" => array(
+                                        "rgb" => "FFE2EFDA"
+                                    )
+                                ),
+                                "alignment" => array(
+                                    "vertical" => "center",
+                                    "horizontal" => "center"
+                                ),
+                                "numFmt" => "#,##0.00"
+                                
+                            )
+                        );
+    
+                    }else if($re_columna['columna'] == "Margen Mayorista" ){
+    
+                        $arrayFilaExcel[] = array(
+                            "value" => floatval($ltp->ltpmargenmayorista),
+                            "style" => array(
+                                "font" => array(
+                                    "sz" => "11",
+                                    "bold" => true,
+                                    "color" => array(
+                                        "rgb" => "FF4472C4"
+                                    )
+                                ),
+                                "fill" => array(
+                                    "patternType" => 'solid',
+                                    "fgColor" => array(
+                                        "rgb" => "FFFFFFFF"
+                                    )
+                                ),
+                                "alignment" => array(
+                                    "vertical" => "center",
+                                    "horizontal" => "center"
+                                ),
+                                "numFmt" => "#,##0.00"
+                                
+                            )
+                        );
+    
+                    }else if($re_columna['columna'] == "Marcaje Mayorista" ){
+    
+                        $arrayFilaExcel[] = array(
+                            "value" => floatval($ltp->ltpmarcajemayorista),
+                            "style" => array(
+                                "font" => array(
+                                    "sz" => "11",
+                                    "bold" => true,
+                                    "color" => array(
+                                        "rgb" => "FF4472C4"
+                                    )
+                                ),
+                                "fill" => array(
+                                    "patternType" => 'solid',
+                                    "fgColor" => array(
+                                        "rgb" => "FFD9E1F2"
+                                    )
+                                ),
+                                "alignment" => array(
+                                    "vertical" => "center",
+                                    "horizontal" => "center"
+                                ),
+                                "numFmt" => "#,##0.00"
+                                
+                            )
+                        );
+    
+                    }else if($re_columna['columna'] == "MF Ruta Minorista" ){
+    
+                        $arrayFilaExcel[] = array(
+                            "value" => floatval($ltp->ltpmfrutaminorista),
+                            "style" => array(
+                                "font" => array(
+                                    "sz" => "11",
+                                    "bold" => true,
+                                    "color" => array(
+                                        "rgb" => "FF70AD47"
+                                    )
+                                ),
+                                "fill" => array(
+                                    "patternType" => 'solid',
+                                    "fgColor" => array(
+                                        "rgb" => "FFFFFFFF"
+                                    )
+                                ),
+                                "alignment" => array(
+                                    "vertical" => "center",
+                                    "horizontal" => "center"
+                                ),
+                                "numFmt" => "#,##0.00"
+                                
+                            )
+                        );
+    
+                    }else if($re_columna['columna'] == "Reventa Minorista" ){
+    
+                        $arrayFilaExcel[] = array(
+                            "value" => floatval($ltp->ltpreventaminorista),
+                            "style" => array(
+                                "font" => array(
+                                    "sz" => "11",
+                                    "bold" => true,
+                                    "color" => array(
+                                        "rgb" => "FF70AD47"
+                                    )
+                                ),
+                                "fill" => array(
+                                    "patternType" => 'solid',
+                                    "fgColor" => array(
+                                        "rgb" => "FFE2EFDA"
+                                    )
+                                ),
+                                "alignment" => array(
+                                    "vertical" => "center",
+                                    "horizontal" => "center"
+                                ),
+                                "numFmt" => "#,##0.00"
+                                
+                            )
+                        );
+    
+                    }else if($re_columna['columna'] == "Margen Minorista" ){
+    
+                        $arrayFilaExcel[] = array(
+                            "value" => floatval($ltp->ltpmargenminorista),
+                            "style" => array(
+                                "font" => array(
+                                    "sz" => "11",
+                                    "bold" => true,
+                                    "color" => array(
+                                        "rgb" => "FF4472C4"
+                                    )
+                                ),
+                                "fill" => array(
+                                    "patternType" => 'solid',
+                                    "fgColor" => array(
+                                        "rgb" => "FFFFFFFF"
+                                    )
+                                ),
+                                "alignment" => array(
+                                    "vertical" => "center",
+                                    "horizontal" => "center"
+                                ),
+                                "numFmt" => "#,##0.00"
+                                
+                            )
+                        );
+    
+                    }else if($re_columna['columna'] == "Marcaje Minorista" ){
+    
+                        $arrayFilaExcel[] = array(
+                            "value" => floatval($ltp->ltpmarcajeminorista),
+                            "style" => array(
+                                "font" => array(
+                                    "sz" => "11",
+                                    "bold" => true,
+                                    "color" => array(
+                                        "rgb" => "FF4472C4"
+                                    )
+                                ),
+                                "fill" => array(
+                                    "patternType" => 'solid',
+                                    "fgColor" => array(
+                                        "rgb" => "FFD9E1F2"
+                                    )
+                                ),
+                                "alignment" => array(
+                                    "vertical" => "center",
+                                    "horizontal" => "center"
+                                ),
+                                "numFmt" => "#,##0.00"
+                                
+                            )
+                        );
+    
+                    }else if($re_columna['columna'] == "MF Ruta Horizontal" ){
+    
+                        $arrayFilaExcel[] = array(
+                            "value" => floatval($ltp->ltpmfrutahorizontal),
+                            "style" => array(
+                                "font" => array(
+                                    "sz" => "11",
+                                    "bold" => true,
+                                    "color" => array(
+                                        "rgb" => "FF70AD47"
+                                    )
+                                ),
+                                "fill" => array(
+                                    "patternType" => 'solid',
+                                    "fgColor" => array(
+                                        "rgb" => "FFFFFFFF"
+                                    )
+                                ),
+                                "alignment" => array(
+                                    "vertical" => "center",
+                                    "horizontal" => "center"
+                                ),
+                                "numFmt" => "#,##0.00"
+                                
+                            )
+                        );
+    
+                    }else if($re_columna['columna'] == "Reventa Bodega" ){
+    
+                        $arrayFilaExcel[] = array(
+                            "value" => floatval($ltp->ltpreventabodega),
+                            "style" => array(
+                                "font" => array(
+                                    "sz" => "11",
+                                    "bold" => true,
+                                    "color" => array(
+                                        "rgb" => "FF70AD47"
+                                    )
+                                ),
+                                "fill" => array(
+                                    "patternType" => 'solid',
+                                    "fgColor" => array(
+                                        "rgb" => "FFE2EFDA"
+                                    )
+                                ),
+                                "alignment" => array(
+                                    "vertical" => "center",
+                                    "horizontal" => "center"
+                                ),
+                                "numFmt" => "#,##0.00"
+                                
+                            )
+                        );
+    
+                    }else if($re_columna['columna'] == "Margen Bodega" ){
+    
+                        $arrayFilaExcel[] = array(
+                            "value" => floatval($ltp->ltpmargenbodega),
+                            "style" => array(
+                                "font" => array(
+                                    "sz" => "11",
+                                    "bold" => true,
+                                    "color" => array(
+                                        "rgb" => "FF4472C4"
+                                    )
+                                ),
+                                "fill" => array(
+                                    "patternType" => 'solid',
+                                    "fgColor" => array(
+                                        "rgb" => "FFFFFFFF"
+                                    )
+                                ),
+                                "alignment" => array(
+                                    "vertical" => "center",
+                                    "horizontal" => "center"
+                                ),
+                                "numFmt" => "#,##0.00"
+                                
+                            )
+                        );
+    
+                    }else if($re_columna['columna'] == "PVP" ){
+    
+                        $arrayFilaExcel[] = array(
+                            "value" => floatval($ltp->ltppvp),
+                            "style" => array(
+                                "font" => array(
+                                    "sz" => "11",
+                                    "bold" => true,
+                                    "color" => array(
+                                        "rgb" => "FF4472C4"
+                                    )
+                                ),
+                                "fill" => array(
+                                    "patternType" => 'solid',
+                                    "fgColor" => array(
+                                        "rgb" => "FFD9E1F2"
+                                    )
+                                ),
+                                "alignment" => array(
+                                    "vertical" => "center",
+                                    "horizontal" => "center"
+                                ),
+                                "numFmt" => "#,##0.00"
+                                
+                            )
+                        );
+    
+                    }
+                }
+            }else{
+                $arrayFilaExcel = array(
+                    array(
+                        "value" => "-",
+                        "style" => array(
+                            "font" => array(
+                                "sz" => "11",
+                                "bold" => false,
+                                "color" => array(
+                                    "rgb" => "FFFFFFFF"
+                                )
+                            ),
+                            "fill" => array(
+                                "patternType" => 'solid',
+                                "fgColor" => array(
+                                    "rgb" => "FFFFFFFF"
+                                )
+                            ),
+                            "alignment" => array(
+                                "vertical" => "center",
+                                "horizontal" => "center"
+                            )
+                            
                         )
-                        
-                    )
-                ),
-                array(
-                    "value" => $ltp->ltpsubcategoria,
-                    "style" => array(
-                        "font" => array(
-                            "sz" => "11",
-                            "bold" => false,
-                            "color" => array(
-                                "rgb" => "FF000000"
+                    ),
+                    array(
+                        "value" => $ltp->ltpcategoria,
+                        "style" => array(
+                            "font" => array(
+                                "sz" => "11",
+                                "bold" => false,
+                                "color" => array(
+                                    "rgb" => "FF000000"
+                                )
+                            ),
+                            "fill" => array(
+                                "patternType" => 'solid',
+                                "fgColor" => array(
+                                    "rgb" => "FFFFFFFF"
+                                )
+                            ),
+                            "alignment" => array(
+                                "vertical" => "center",
+                                "horizontal" => "center"
                             )
-                        ),
-                        "fill" => array(
-                            "patternType" => 'solid',
-                            "fgColor" => array(
-                                "rgb" => "FFFFFFFF"
-                            )
-                        ),
-                        "alignment" => array(
-                            "vertical" => "center",
-                            "horizontal" => "center"
+                            
                         )
-                    )
-                ),
-                array(
-                    "value" => $ltp->ltpcodigosap,
-                    "style" => array(
-                        "font" => array(
-                            "sz" => "11",
-                            "bold" => false,
-                            "color" => array(
-                                "rgb" => "FF000000"
+                    ),
+                    array(
+                        "value" => $ltp->ltpsubcategoria,
+                        "style" => array(
+                            "font" => array(
+                                "sz" => "11",
+                                "bold" => false,
+                                "color" => array(
+                                    "rgb" => "FF000000"
+                                )
+                            ),
+                            "fill" => array(
+                                "patternType" => 'solid',
+                                "fgColor" => array(
+                                    "rgb" => "FFFFFFFF"
+                                )
+                            ),
+                            "alignment" => array(
+                                "vertical" => "center",
+                                "horizontal" => "center"
                             )
-                        ),
-                        "fill" => array(
-                            "patternType" => 'solid',
-                            "fgColor" => array(
-                                "rgb" => "FFFFFFFF"
-                            )
-                        ),
-                        "alignment" => array(
-                            "vertical" => "center",
-                            "horizontal" => "center"
                         )
-                        
-                    )
-                ),
-                array(
-                    "value" => $ltp->ltpean,
-                    "style" => array(
-                        "font" => array(
-                            "sz" => "11",
-                            "bold" => false,
-                            "color" => array(
-                                "rgb" => "FF000000"
+                    ),
+                    array(
+                        "value" => $ltp->ltpcodigosap,
+                        "style" => array(
+                            "font" => array(
+                                "sz" => "11",
+                                "bold" => false,
+                                "color" => array(
+                                    "rgb" => "FF000000"
+                                )
+                            ),
+                            "fill" => array(
+                                "patternType" => 'solid',
+                                "fgColor" => array(
+                                    "rgb" => "FFFFFFFF"
+                                )
+                            ),
+                            "alignment" => array(
+                                "vertical" => "center",
+                                "horizontal" => "center"
                             )
-                        ),
-                        "fill" => array(
-                            "patternType" => 'solid',
-                            "fgColor" => array(
-                                "rgb" => "FFFFFFFF"
-                            )
-                        ),
-                        "alignment" => array(
-                            "vertical" => "center",
-                            "horizontal" => "center"
+                            
                         )
-                        
-                    )
-                ),
-                array(
-                    "value" => $ltp->ltpdescripcionproducto,
-                    "style" => array(
-                        "font" => array(
-                            "sz" => "11",
-                            "bold" => false,
-                            "color" => array(
-                                "rgb" => "FF000000"
+                    ),
+                    array(
+                        "value" => $ltp->ltpean,
+                        "style" => array(
+                            "font" => array(
+                                "sz" => "11",
+                                "bold" => false,
+                                "color" => array(
+                                    "rgb" => "FF000000"
+                                )
+                            ),
+                            "fill" => array(
+                                "patternType" => 'solid',
+                                "fgColor" => array(
+                                    "rgb" => "FFFFFFFF"
+                                )
+                            ),
+                            "alignment" => array(
+                                "vertical" => "center",
+                                "horizontal" => "center"
                             )
-                        ),
-                        "fill" => array(
-                            "patternType" => 'solid',
-                            "fgColor" => array(
-                                "rgb" => "FFFFFFFF"
-                            )
-                        ),
-                        "alignment" => array(
-                            "vertical" => "center",
-                            "horizontal" => "center"
+                            
                         )
-                        
-                    )
-                ),
-                array(
-                    "value" => floatval($ltp->ltpunidadventa),
-                    "style" => array(
-                        "font" => array(
-                            "sz" => "11",
-                            "bold" => false,
-                            "color" => array(
-                                "rgb" => "FF000000"
+                    ),
+                    array(
+                        "value" => $ltp->ltpdescripcionproducto,
+                        "style" => array(
+                            "font" => array(
+                                "sz" => "11",
+                                "bold" => false,
+                                "color" => array(
+                                    "rgb" => "FF000000"
+                                )
+                            ),
+                            "fill" => array(
+                                "patternType" => 'solid',
+                                "fgColor" => array(
+                                    "rgb" => "FFFFFFFF"
+                                )
+                            ),
+                            "alignment" => array(
+                                "vertical" => "center",
+                                "horizontal" => "center"
                             )
-                        ),
-                        "fill" => array(
-                            "patternType" => 'solid',
-                            "fgColor" => array(
-                                "rgb" => "FFFFFFFF"
-                            )
-                        ),
-                        "alignment" => array(
-                            "vertical" => "center",
-                            "horizontal" => "center"
-                        ),
-                        "numFmt" => "#,##0.00"
-                        
-                    )
-                ),
-                array(
-                    "value" => floatval($ltp->ltppreciolistasinigv),
-                    "style" => array(
-                        "font" => array(
-                            "sz" => "11",
-                            "bold" => false,
-                            "color" => array(
-                                "rgb" => "FF000000"
-                            )
-                        ),
-                        "fill" => array(
-                            "patternType" => 'solid',
-                            "fgColor" => array(
-                                "rgb" => "FFFFFFFF"
-                            )
-                        ),
-                        "alignment" => array(
-                            "vertical" => "center",
-                            "horizontal" => "center"
-                        ),
-                        "numFmt" => "#,##0.00"
-                        
-                    )
-                ),
-                array(
-                    "value" => floatval($ltp->ltpalza),
-                    "style" => array(
-                        "font" => array(
-                            "sz" => "11",
-                            "bold" => false,
-                            "color" => array(
-                                "rgb" => "FF000000"
-                            )
-                        ),
-                        "fill" => array(
-                            "patternType" => 'solid',
-                            "fgColor" => array(
-                                "rgb" => "FFFFFFFF"
-                            )
-                        ),
-                        "alignment" => array(
-                            "vertical" => "center",
-                            "horizontal" => "center"
-                        ),
-                        "numFmt" => "#,##0.00"
-                        
-                    )
-                ),
-                array(
-                    "value" => floatval($ltp->ltpsdtpr),
-                    "style" => array(
-                        "font" => array(
-                            "sz" => "11",
-                            "bold" => false,
-                            "color" => array(
-                                "rgb" => "FF000000"
-                            )
-                        ),
-                        "fill" => array(
-                            "patternType" => 'solid',
-                            "fgColor" => array(
-                                "rgb" => "FFFFFFFF"
-                            )
-                        ),
-                        "alignment" => array(
-                            "vertical" => "center",
-                            "horizontal" => "center"
-                        ),
-                        "numFmt" => "#,##0.00"
-                        
-                    )
-                ),
-                array(
-                    "value" => floatval($ltp->ltppreciolistaconigv),
-                    "style" => array(
-                        "font" => array(
-                            "sz" => "11",
-                            "bold" => false,
-                            "color" => array(
-                                "rgb" => "FF000000"
-                            )
-                        ),
-                        "fill" => array(
-                            "patternType" => 'solid',
-                            "fgColor" => array(
-                                "rgb" => "FFFFFFFF"
-                            )
-                        ),
-                        "alignment" => array(
-                            "vertical" => "center",
-                            "horizontal" => "center"
-                        ),
-                        "numFmt" => "#,##0.00"
-                        
-                    )
-                ),
-                array(
-                    "value" => floatval($ltp->ltpmfrutamayorista),
-                    "style" => array(
-                        "font" => array(
-                            "sz" => "11",
-                            "bold" => true,
-                            "color" => array(
-                                "rgb" => "FF70AD47"
-                            )
-                        ),
-                        "fill" => array(
-                            "patternType" => 'solid',
-                            "fgColor" => array(
-                                "rgb" => "FFFFFFFF"
-                            )
-                        ),
-                        "alignment" => array(
-                            "vertical" => "center",
-                            "horizontal" => "center"
-                        ),
-                        "numFmt" => "#,##0.00"
-                        
-                    )
-                ),
-                array(
-                    "value" => floatval($ltp->ltpreventamayorista),
-                    "style" => array(
-                        "font" => array(
-                            "sz" => "11",
-                            "bold" => true,
-                            "color" => array(
-                                "rgb" => "FF70AD47"
-                            )
-                        ),
-                        "fill" => array(
-                            "patternType" => 'solid',
-                            "fgColor" => array(
-                                "rgb" => "FFE2EFDA"
-                            )
-                        ),
-                        "alignment" => array(
-                            "vertical" => "center",
-                            "horizontal" => "center"
-                        ),
-                        "numFmt" => "#,##0.00"
-                        
-                    )
-                ),
-                array(
-                    "value" => floatval($ltp->ltpmargenmayorista),
-                    "style" => array(
-                        "font" => array(
-                            "sz" => "11",
-                            "bold" => true,
-                            "color" => array(
-                                "rgb" => "FF4472C4"
-                            )
-                        ),
-                        "fill" => array(
-                            "patternType" => 'solid',
-                            "fgColor" => array(
-                                "rgb" => "FFFFFFFF"
-                            )
-                        ),
-                        "alignment" => array(
-                            "vertical" => "center",
-                            "horizontal" => "center"
-                        ),
-                        "numFmt" => "#,##0.00"
-                        
-                    )
-                ),
-                array(
-                    "value" => floatval($ltp->ltpmarcajemayorista),
-                    "style" => array(
-                        "font" => array(
-                            "sz" => "11",
-                            "bold" => true,
-                            "color" => array(
-                                "rgb" => "FF4472C4"
-                            )
-                        ),
-                        "fill" => array(
-                            "patternType" => 'solid',
-                            "fgColor" => array(
-                                "rgb" => "FFD9E1F2"
-                            )
-                        ),
-                        "alignment" => array(
-                            "vertical" => "center",
-                            "horizontal" => "center"
-                        ),
-                        "numFmt" => "#,##0.00"
-                        
-                    )
-                ),
-                array(
-                    "value" => "-",
-                    "style" => array(
-                        "font" => array(
-                            "sz" => "11",
-                            "bold" => true,
-                            "color" => array(
-                                "rgb" => "FFFFFFFF"
-                            )
-                        ),
-                        "fill" => array(
-                            "patternType" => 'solid',
-                            "fgColor" => array(
-                                "rgb" => "FFFFFFFF"
-                            )
-                        ),
-                        "alignment" => array(
-                            "vertical" => "center",
-                            "horizontal" => "center"
+                            
                         )
-                    )
-                ),
-                array(
-                    "value" => floatval($ltp->ltpmfrutaminorista),
-                    "style" => array(
-                        "font" => array(
-                            "sz" => "11",
-                            "bold" => true,
-                            "color" => array(
-                                "rgb" => "FF70AD47"
-                            )
-                        ),
-                        "fill" => array(
-                            "patternType" => 'solid',
-                            "fgColor" => array(
-                                "rgb" => "FFFFFFFF"
-                            )
-                        ),
-                        "alignment" => array(
-                            "vertical" => "center",
-                            "horizontal" => "center"
-                        ),
-                        "numFmt" => "#,##0.00"
-                        
-                    )
-                ),
-                array(
-                    "value" => floatval($ltp->ltpreventaminorista),
-                    "style" => array(
-                        "font" => array(
-                            "sz" => "11",
-                            "bold" => true,
-                            "color" => array(
-                                "rgb" => "FF70AD47"
-                            )
-                        ),
-                        "fill" => array(
-                            "patternType" => 'solid',
-                            "fgColor" => array(
-                                "rgb" => "FFE2EFDA"
-                            )
-                        ),
-                        "alignment" => array(
-                            "vertical" => "center",
-                            "horizontal" => "center"
-                        ),
-                        "numFmt" => "#,##0.00"
-                        
-                    )
-                ),
-                array(
-                    "value" => floatval($ltp->ltpmargenminorista),
-                    "style" => array(
-                        "font" => array(
-                            "sz" => "11",
-                            "bold" => true,
-                            "color" => array(
-                                "rgb" => "FF4472C4"
-                            )
-                        ),
-                        "fill" => array(
-                            "patternType" => 'solid',
-                            "fgColor" => array(
-                                "rgb" => "FFFFFFFF"
-                            )
-                        ),
-                        "alignment" => array(
-                            "vertical" => "center",
-                            "horizontal" => "center"
-                        ),
-                        "numFmt" => "#,##0.00"
-                        
-                    )
-                ),
-                array(
-                    "value" => floatval($ltp->ltpmarcajeminorista),
-                    "style" => array(
-                        "font" => array(
-                            "sz" => "11",
-                            "bold" => true,
-                            "color" => array(
-                                "rgb" => "FF4472C4"
-                            )
-                        ),
-                        "fill" => array(
-                            "patternType" => 'solid',
-                            "fgColor" => array(
-                                "rgb" => "FFD9E1F2"
-                            )
-                        ),
-                        "alignment" => array(
-                            "vertical" => "center",
-                            "horizontal" => "center"
-                        ),
-                        "numFmt" => "#,##0.00"
-                        
-                    )
-                ),
-                array(
-                    "value" => "-",
-                    "style" => array(
-                        "font" => array(
-                            "sz" => "11",
-                            "bold" => true,
-                            "color" => array(
-                                "rgb" => "FFFFFFFF"
-                            )
-                        ),
-                        "fill" => array(
-                            "patternType" => 'solid',
-                            "fgColor" => array(
-                                "rgb" => "FFFFFFFF"
-                            )
-                        ),
-                        "alignment" => array(
-                            "vertical" => "center",
-                            "horizontal" => "center"
+                    ),
+                    array(
+                        "value" => floatval($ltp->ltpunidadventa),
+                        "style" => array(
+                            "font" => array(
+                                "sz" => "11",
+                                "bold" => false,
+                                "color" => array(
+                                    "rgb" => "FF000000"
+                                )
+                            ),
+                            "fill" => array(
+                                "patternType" => 'solid',
+                                "fgColor" => array(
+                                    "rgb" => "FFFFFFFF"
+                                )
+                            ),
+                            "alignment" => array(
+                                "vertical" => "center",
+                                "horizontal" => "center"
+                            ),
+                            "numFmt" => "#,##0.00"
+                            
                         )
-                    )
-                ),
-                array(
-                    "value" => floatval($ltp->ltpmfrutahorizontal),
-                    "style" => array(
-                        "font" => array(
-                            "sz" => "11",
-                            "bold" => true,
-                            "color" => array(
-                                "rgb" => "FF70AD47"
+                    ),
+                    array(
+                        "value" => floatval($ltp->ltppreciolistasinigv),
+                        "style" => array(
+                            "font" => array(
+                                "sz" => "11",
+                                "bold" => false,
+                                "color" => array(
+                                    "rgb" => "FF000000"
+                                )
+                            ),
+                            "fill" => array(
+                                "patternType" => 'solid',
+                                "fgColor" => array(
+                                    "rgb" => "FFFFFFFF"
+                                )
+                            ),
+                            "alignment" => array(
+                                "vertical" => "center",
+                                "horizontal" => "center"
+                            ),
+                            "numFmt" => "#,##0.00"
+                            
+                        )
+                    ),
+                    array(
+                        "value" => floatval($ltp->ltpalza),
+                        "style" => array(
+                            "font" => array(
+                                "sz" => "11",
+                                "bold" => false,
+                                "color" => array(
+                                    "rgb" => "FF000000"
+                                )
+                            ),
+                            "fill" => array(
+                                "patternType" => 'solid',
+                                "fgColor" => array(
+                                    "rgb" => "FFFFFFFF"
+                                )
+                            ),
+                            "alignment" => array(
+                                "vertical" => "center",
+                                "horizontal" => "center"
+                            ),
+                            "numFmt" => "#,##0.00"
+                            
+                        )
+                    ),
+                    array(
+                        "value" => floatval($ltp->ltpsdtpr),
+                        "style" => array(
+                            "font" => array(
+                                "sz" => "11",
+                                "bold" => false,
+                                "color" => array(
+                                    "rgb" => "FF000000"
+                                )
+                            ),
+                            "fill" => array(
+                                "patternType" => 'solid',
+                                "fgColor" => array(
+                                    "rgb" => "FFFFFFFF"
+                                )
+                            ),
+                            "alignment" => array(
+                                "vertical" => "center",
+                                "horizontal" => "center"
+                            ),
+                            "numFmt" => "#,##0.00"
+                            
+                        )
+                    ),
+                    array(
+                        "value" => floatval($ltp->ltppreciolistaconigv),
+                        "style" => array(
+                            "font" => array(
+                                "sz" => "11",
+                                "bold" => false,
+                                "color" => array(
+                                    "rgb" => "FF000000"
+                                )
+                            ),
+                            "fill" => array(
+                                "patternType" => 'solid',
+                                "fgColor" => array(
+                                    "rgb" => "FFFFFFFF"
+                                )
+                            ),
+                            "alignment" => array(
+                                "vertical" => "center",
+                                "horizontal" => "center"
+                            ),
+                            "numFmt" => "#,##0.00"
+                            
+                        )
+                    ),
+                    array(
+                        "value" => floatval($ltp->ltpmfrutamayorista),
+                        "style" => array(
+                            "font" => array(
+                                "sz" => "11",
+                                "bold" => true,
+                                "color" => array(
+                                    "rgb" => "FF70AD47"
+                                )
+                            ),
+                            "fill" => array(
+                                "patternType" => 'solid',
+                                "fgColor" => array(
+                                    "rgb" => "FFFFFFFF"
+                                )
+                            ),
+                            "alignment" => array(
+                                "vertical" => "center",
+                                "horizontal" => "center"
+                            ),
+                            "numFmt" => "#,##0.00"
+                            
+                        )
+                    ),
+                    array(
+                        "value" => floatval($ltp->ltpreventamayorista),
+                        "style" => array(
+                            "font" => array(
+                                "sz" => "11",
+                                "bold" => true,
+                                "color" => array(
+                                    "rgb" => "FF70AD47"
+                                )
+                            ),
+                            "fill" => array(
+                                "patternType" => 'solid',
+                                "fgColor" => array(
+                                    "rgb" => "FFE2EFDA"
+                                )
+                            ),
+                            "alignment" => array(
+                                "vertical" => "center",
+                                "horizontal" => "center"
+                            ),
+                            "numFmt" => "#,##0.00"
+                            
+                        )
+                    ),
+                    array(
+                        "value" => floatval($ltp->ltpmargenmayorista),
+                        "style" => array(
+                            "font" => array(
+                                "sz" => "11",
+                                "bold" => true,
+                                "color" => array(
+                                    "rgb" => "FF4472C4"
+                                )
+                            ),
+                            "fill" => array(
+                                "patternType" => 'solid',
+                                "fgColor" => array(
+                                    "rgb" => "FFFFFFFF"
+                                )
+                            ),
+                            "alignment" => array(
+                                "vertical" => "center",
+                                "horizontal" => "center"
+                            ),
+                            "numFmt" => "#,##0.00"
+                            
+                        )
+                    ),
+                    array(
+                        "value" => floatval($ltp->ltpmarcajemayorista),
+                        "style" => array(
+                            "font" => array(
+                                "sz" => "11",
+                                "bold" => true,
+                                "color" => array(
+                                    "rgb" => "FF4472C4"
+                                )
+                            ),
+                            "fill" => array(
+                                "patternType" => 'solid',
+                                "fgColor" => array(
+                                    "rgb" => "FFD9E1F2"
+                                )
+                            ),
+                            "alignment" => array(
+                                "vertical" => "center",
+                                "horizontal" => "center"
+                            ),
+                            "numFmt" => "#,##0.00"
+                            
+                        )
+                    ),
+                    array(
+                        "value" => "-",
+                        "style" => array(
+                            "font" => array(
+                                "sz" => "11",
+                                "bold" => true,
+                                "color" => array(
+                                    "rgb" => "FFFFFFFF"
+                                )
+                            ),
+                            "fill" => array(
+                                "patternType" => 'solid',
+                                "fgColor" => array(
+                                    "rgb" => "FFFFFFFF"
+                                )
+                            ),
+                            "alignment" => array(
+                                "vertical" => "center",
+                                "horizontal" => "center"
                             )
-                        ),
-                        "fill" => array(
-                            "patternType" => 'solid',
-                            "fgColor" => array(
-                                "rgb" => "FFFFFFFF"
+                        )
+                    ),
+                    array(
+                        "value" => floatval($ltp->ltpmfrutaminorista),
+                        "style" => array(
+                            "font" => array(
+                                "sz" => "11",
+                                "bold" => true,
+                                "color" => array(
+                                    "rgb" => "FF70AD47"
+                                )
+                            ),
+                            "fill" => array(
+                                "patternType" => 'solid',
+                                "fgColor" => array(
+                                    "rgb" => "FFFFFFFF"
+                                )
+                            ),
+                            "alignment" => array(
+                                "vertical" => "center",
+                                "horizontal" => "center"
+                            ),
+                            "numFmt" => "#,##0.00"
+                            
+                        )
+                    ),
+                    array(
+                        "value" => floatval($ltp->ltpreventaminorista),
+                        "style" => array(
+                            "font" => array(
+                                "sz" => "11",
+                                "bold" => true,
+                                "color" => array(
+                                    "rgb" => "FF70AD47"
+                                )
+                            ),
+                            "fill" => array(
+                                "patternType" => 'solid',
+                                "fgColor" => array(
+                                    "rgb" => "FFE2EFDA"
+                                )
+                            ),
+                            "alignment" => array(
+                                "vertical" => "center",
+                                "horizontal" => "center"
+                            ),
+                            "numFmt" => "#,##0.00"
+                            
+                        )
+                    ),
+                    array(
+                        "value" => floatval($ltp->ltpmargenminorista),
+                        "style" => array(
+                            "font" => array(
+                                "sz" => "11",
+                                "bold" => true,
+                                "color" => array(
+                                    "rgb" => "FF4472C4"
+                                )
+                            ),
+                            "fill" => array(
+                                "patternType" => 'solid',
+                                "fgColor" => array(
+                                    "rgb" => "FFFFFFFF"
+                                )
+                            ),
+                            "alignment" => array(
+                                "vertical" => "center",
+                                "horizontal" => "center"
+                            ),
+                            "numFmt" => "#,##0.00"
+                            
+                        )
+                    ),
+                    array(
+                        "value" => floatval($ltp->ltpmarcajeminorista),
+                        "style" => array(
+                            "font" => array(
+                                "sz" => "11",
+                                "bold" => true,
+                                "color" => array(
+                                    "rgb" => "FF4472C4"
+                                )
+                            ),
+                            "fill" => array(
+                                "patternType" => 'solid',
+                                "fgColor" => array(
+                                    "rgb" => "FFD9E1F2"
+                                )
+                            ),
+                            "alignment" => array(
+                                "vertical" => "center",
+                                "horizontal" => "center"
+                            ),
+                            "numFmt" => "#,##0.00"
+                            
+                        )
+                    ),
+                    array(
+                        "value" => "-",
+                        "style" => array(
+                            "font" => array(
+                                "sz" => "11",
+                                "bold" => true,
+                                "color" => array(
+                                    "rgb" => "FFFFFFFF"
+                                )
+                            ),
+                            "fill" => array(
+                                "patternType" => 'solid',
+                                "fgColor" => array(
+                                    "rgb" => "FFFFFFFF"
+                                )
+                            ),
+                            "alignment" => array(
+                                "vertical" => "center",
+                                "horizontal" => "center"
                             )
-                        ),
-                        "alignment" => array(
-                            "vertical" => "center",
-                            "horizontal" => "center"
-                        ),
-                        "numFmt" => "#,##0.00"
-                        
-                    )
-                ),
-                array(
-                    "value" => floatval($ltp->ltpreventabodega),
-                    "style" => array(
-                        "font" => array(
-                            "sz" => "11",
-                            "bold" => true,
-                            "color" => array(
-                                "rgb" => "FF70AD47"
-                            )
-                        ),
-                        "fill" => array(
-                            "patternType" => 'solid',
-                            "fgColor" => array(
-                                "rgb" => "FFE2EFDA"
-                            )
-                        ),
-                        "alignment" => array(
-                            "vertical" => "center",
-                            "horizontal" => "center"
-                        ),
-                        "numFmt" => "#,##0.00"
-                        
-                    )
-                ),
-                array(
-                    "value" => floatval($ltp->ltpmargenbodega),
-                    "style" => array(
-                        "font" => array(
-                            "sz" => "11",
-                            "bold" => true,
-                            "color" => array(
-                                "rgb" => "FF4472C4"
-                            )
-                        ),
-                        "fill" => array(
-                            "patternType" => 'solid',
-                            "fgColor" => array(
-                                "rgb" => "FFFFFFFF"
-                            )
-                        ),
-                        "alignment" => array(
-                            "vertical" => "center",
-                            "horizontal" => "center"
-                        ),
-                        "numFmt" => "#,##0.00"
-                        
-                    )
-                ),
-                array(
-                    "value" => floatval($ltp->ltppvp),
-                    "style" => array(
-                        "font" => array(
-                            "sz" => "11",
-                            "bold" => true,
-                            "color" => array(
-                                "rgb" => "FF4472C4"
-                            )
-                        ),
-                        "fill" => array(
-                            "patternType" => 'solid',
-                            "fgColor" => array(
-                                "rgb" => "FFD9E1F2"
-                            )
-                        ),
-                        "alignment" => array(
-                            "vertical" => "center",
-                            "horizontal" => "center"
-                        ),
-                        "numFmt" => "#,##0.00"
-                        
-                    )
-                ),
-            );
+                        )
+                    ),
+                    array(
+                        "value" => floatval($ltp->ltpmfrutahorizontal),
+                        "style" => array(
+                            "font" => array(
+                                "sz" => "11",
+                                "bold" => true,
+                                "color" => array(
+                                    "rgb" => "FF70AD47"
+                                )
+                            ),
+                            "fill" => array(
+                                "patternType" => 'solid',
+                                "fgColor" => array(
+                                    "rgb" => "FFFFFFFF"
+                                )
+                            ),
+                            "alignment" => array(
+                                "vertical" => "center",
+                                "horizontal" => "center"
+                            ),
+                            "numFmt" => "#,##0.00"
+                            
+                        )
+                    ),
+                    array(
+                        "value" => floatval($ltp->ltpreventabodega),
+                        "style" => array(
+                            "font" => array(
+                                "sz" => "11",
+                                "bold" => true,
+                                "color" => array(
+                                    "rgb" => "FF70AD47"
+                                )
+                            ),
+                            "fill" => array(
+                                "patternType" => 'solid',
+                                "fgColor" => array(
+                                    "rgb" => "FFE2EFDA"
+                                )
+                            ),
+                            "alignment" => array(
+                                "vertical" => "center",
+                                "horizontal" => "center"
+                            ),
+                            "numFmt" => "#,##0.00"
+                            
+                        )
+                    ),
+                    array(
+                        "value" => floatval($ltp->ltpmargenbodega),
+                        "style" => array(
+                            "font" => array(
+                                "sz" => "11",
+                                "bold" => true,
+                                "color" => array(
+                                    "rgb" => "FF4472C4"
+                                )
+                            ),
+                            "fill" => array(
+                                "patternType" => 'solid',
+                                "fgColor" => array(
+                                    "rgb" => "FFFFFFFF"
+                                )
+                            ),
+                            "alignment" => array(
+                                "vertical" => "center",
+                                "horizontal" => "center"
+                            ),
+                            "numFmt" => "#,##0.00"
+                            
+                        )
+                    ),
+                    array(
+                        "value" => floatval($ltp->ltppvp),
+                        "style" => array(
+                            "font" => array(
+                                "sz" => "11",
+                                "bold" => true,
+                                "color" => array(
+                                    "rgb" => "FF4472C4"
+                                )
+                            ),
+                            "fill" => array(
+                                "patternType" => 'solid',
+                                "fgColor" => array(
+                                    "rgb" => "FFD9E1F2"
+                                )
+                            ),
+                            "alignment" => array(
+                                "vertical" => "center",
+                                "horizontal" => "center"
+                            ),
+                            "numFmt" => "#,##0.00"
+                            
+                        )
+                    ),
+                );
+            }
 
             $nuevoArray[0]['data'][] = $arrayFilaExcel;
 
