@@ -1,1 +1,1 @@
-<div>{!! $mensaje !!}</div>
+<div>{!! nl2br($mensaje) !!}</div>
