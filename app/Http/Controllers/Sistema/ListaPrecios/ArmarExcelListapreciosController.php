@@ -72,6 +72,8 @@ class ArmarExcelListapreciosController extends Controller
         $re_mes  = $request['mes'];
         $re_dia  = $request['dia'];
 
+        $re_columnas  = $request['columnas'];
+
         $ltps = ltplistaprecios::join('fecfechas as fec', 'fec.fecid', 'ltplistaprecios.fecid')
                                 ->join('proproductos as pro', 'pro.proid', 'ltplistaprecios.proid')
                                 ->join('catcategorias as cat', 'cat.catid', 'pro.catid')
@@ -93,21 +95,24 @@ class ArmarExcelListapreciosController extends Controller
                                     'ltpalza',
                                     'ltpsdtpr',
                                     'ltppreciolistaconigv',
-                                    
+
                                     'ltpmfrutamayorista',
                                     'ltpreventamayorista',
                                     'ltpmargenmayorista',
                                     'ltpmarcajemayorista',
 
+                                    // MINORISTA
                                     'ltpmfrutaminorista',
                                     'ltpreventaminorista',
                                     'ltpmargenminorista',
                                     'ltpmarcajeminorista',
 
+                                    // BODEGA
                                     'ltpmfrutahorizontal',
                                     'ltpreventabodega',
                                     'ltpmargenbodega',
                                     'ltppvp',
+
                                     'ltplistaprecios.treid',
                                     'ltplistaprecios.fecid'
                                 ]);
@@ -448,7 +453,7 @@ class ArmarExcelListapreciosController extends Controller
 
                     $coloLetra = "FFFFFFFF";
                     $colorFondo = "FF44546A";
-                    
+
                     if($cabecera == "MF Ruta Mayorista"){
                         $coloLetra = "FFFFFFFF";
                         $colorFondo = "FF70AD47";
@@ -487,29 +492,42 @@ class ArmarExcelListapreciosController extends Controller
                         $colorFondo = "FF4472C4";
                     }
 
-                    $arrayFilaExcel[] = array(
-                        "value" => $cabecera,
-                        "style" => array(
-                            "font" => array(
-                                "sz" => "11",
-                                "bold" => true,
-                                "color" => array(
-                                    "rgb" => $coloLetra
+                    $agregar = false;
+
+                    foreach($re_columnas as $re_columna){
+                        if($re_columna['columna'] == $cabecera){
+                            $agregar = true;
+                        }
+                    }
+
+                    if($agregar == true){
+                        $arrayFilaExcel[] = array(
+                            "value" => $cabecera,
+                            "style" => array(
+                                "font" => array(
+                                    "sz" => "11",
+                                    "bold" => true,
+                                    "color" => array(
+                                        "rgb" => $coloLetra
+                                    )
+                                ),
+                                "fill" => array(
+                                    "patternType" => 'solid',
+                                    "fgColor" => array(
+                                        "rgb" => $colorFondo
+                                    )
+                                ),
+                                "alignment" => array(
+                                    "vertical" => "center",
+                                    "horizontal" => "center"
                                 )
-                            ),
-                            "fill" => array(
-                                "patternType" => 'solid',
-                                "fgColor" => array(
-                                    "rgb" => $colorFondo
-                                )
-                            ),
-                            "alignment" => array(
-                                "vertical" => "center",
-                                "horizontal" => "center"
+                                
                             )
-                            
-                        )
-                    );
+                        );
+                    }else{
+
+                    }
+
                 }
                 $nuevoArray[0]['data'][] = $arrayFilaExcel;
             }
