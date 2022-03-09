@@ -3200,6 +3200,7 @@ class ArmarExcelListapreciosController extends Controller
         $nuevoArrayCabecera[] = array(
             "tipo"   => "blanco",
             "titulo" => "",
+            "column" => []
         );
 
 
