@@ -2955,14 +2955,24 @@ class ArmarExcelListapreciosController extends Controller
                 if($esBodega == true){
                     $nuevoArrayCabecera[] = array(
                         "tipo"   => "data",
-                        "titulo" => "Bodega",
+                        "titulo" => "BODEGA",
                         "cont"   => $contBodega
+                    );
+                    $nuevoArrayCabecera[] = array(
+                        "tipo"   => "data",
+                        "titulo" => "ESPACIO",
+                        "cont"   => 1
                     );
                 }else if($esMinorista == true){
                     $nuevoArrayCabecera[] = array(
                         "tipo"   => "data",
-                        "titulo" => "Minorista",
+                        "titulo" => "MINORISTA",
                         "cont"   => $contMinorista
+                    );
+                    $nuevoArrayCabecera[] = array(
+                        "tipo"   => "data",
+                        "titulo" => "ESPACIO",
+                        "cont"   => 1
                     );
                 }
 
@@ -2980,15 +2990,25 @@ class ArmarExcelListapreciosController extends Controller
 
                     $nuevoArrayCabecera[] = array(
                         "tipo"   => "data",
-                        "titulo" => "Mayorista",
+                        "titulo" => "MAYORISTA",
                         "cont"   => $contMayorista
+                    );
+                    $nuevoArrayCabecera[] = array(
+                        "tipo"   => "data",
+                        "titulo" => "ESPACIO",
+                        "cont"   => 1
                     );
 
                 }else if($esBodega == true){
                     $nuevoArrayCabecera[] = array(
                         "tipo"   => "data",
-                        "titulo" => "Bodega",
+                        "titulo" => "BODEGA",
                         "cont"   => $contBodega
+                    );
+                    $nuevoArrayCabecera[] = array(
+                        "tipo"   => "data",
+                        "titulo" => "ESPACIO",
+                        "cont"   => 1
                     );
                 }
 
@@ -3005,14 +3025,24 @@ class ArmarExcelListapreciosController extends Controller
                 if($esMayorista == true){
                     $nuevoArrayCabecera[] = array(
                         "tipo"   => "data",
-                        "titulo" => "Mayorista",
+                        "titulo" => "MAYORISTA",
                         "cont"   => $contMayorista
+                    );
+                    $nuevoArrayCabecera[] = array(
+                        "tipo"   => "data",
+                        "titulo" => "ESPACIO",
+                        "cont"   => 1
                     );
                 }else if($esMinorista == true){
                     $nuevoArrayCabecera[] = array(
                         "tipo"   => "data",
-                        "titulo" => "Minorista",
+                        "titulo" => "MINORISTA",
                         "cont"   => $contMinorista
+                    );
+                    $nuevoArrayCabecera[] = array(
+                        "tipo"   => "data",
+                        "titulo" => "ESPACIO",
+                        "cont"   => 1
                     );
                 }
 
@@ -3026,20 +3056,35 @@ class ArmarExcelListapreciosController extends Controller
                 if($esMayorista == true){
                     $nuevoArrayCabecera[] = array(
                         "tipo"   => "data",
-                        "titulo" => "Mayorista",
+                        "titulo" => "MAYORISTA",
                         "cont"   => $contMayorista
+                    );
+                    $nuevoArrayCabecera[] = array(
+                        "tipo"   => "data",
+                        "titulo" => "ESPACIO",
+                        "cont"   => 1
                     );
                 }else if($esMinorista == true){
                     $nuevoArrayCabecera[] = array(
                         "tipo"   => "data",
-                        "titulo" => "Minorista",
+                        "titulo" => "MINORISTA",
                         "cont"   => $contMinorista
+                    );
+                    $nuevoArrayCabecera[] = array(
+                        "tipo"   => "data",
+                        "titulo" => "ESPACIO",
+                        "cont"   => 1
                     );
                 }else if($esBodega == true){
                     $nuevoArrayCabecera[] = array(
                         "tipo"   => "data",
-                        "titulo" => "Bodega",
+                        "titulo" => "BODEGA",
                         "cont"   => $contBodega
+                    );
+                    $nuevoArrayCabecera[] = array(
+                        "tipo"   => "data",
+                        "titulo" => "ESPACIO",
+                        "cont"   => 1
                     );
                 }
 
@@ -3060,20 +3105,35 @@ class ArmarExcelListapreciosController extends Controller
         if($esMayorista == true){
             $nuevoArrayCabecera[] = array(
                 "tipo"   => "data",
-                "titulo" => "Mayorista",
+                "titulo" => "MAYORISTA",
                 "cont"   => $contMayorista
+            );
+            $nuevoArrayCabecera[] = array(
+                "tipo"   => "data",
+                "titulo" => "ESPACIO",
+                "cont"   => 1
             );
         }else if($esMinorista == true){
             $nuevoArrayCabecera[] = array(
                 "tipo"   => "data",
-                "titulo" => "Minorista",
+                "titulo" => "MINORISTA",
                 "cont"   => $contMinorista
+            );
+            $nuevoArrayCabecera[] = array(
+                "tipo"   => "data",
+                "titulo" => "ESPACIO",
+                "cont"   => 1
             );
         }else if($esBodega == true){
             $nuevoArrayCabecera[] = array(
                 "tipo"   => "data",
-                "titulo" => "Bodega",
+                "titulo" => "BODEGA",
                 "cont"   => $contBodega
+            );
+            $nuevoArrayCabecera[] = array(
+                "tipo"   => "data",
+                "titulo" => "ESPACIO",
+                "cont"   => 1
             );
         }
 
@@ -3086,7 +3146,7 @@ class ArmarExcelListapreciosController extends Controller
 
         $nuevoArrayCabecera[] = array(
             "tipo"   => "blanco",
-            "titulo" => "",        
+            "titulo" => "",
         );
 
 
