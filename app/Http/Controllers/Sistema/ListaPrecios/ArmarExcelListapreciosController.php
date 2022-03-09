@@ -231,7 +231,10 @@ class ArmarExcelListapreciosController extends Controller
                 if(isset($re_columnas)){
 
                     
-                    $arrayFilaExcel = $this->ArmarCabecerasFilaTres($re_columnas, $arrayFilaExcel);
+                    $rptaArmar = $this->ArmarCabecerasFilaTres($re_columnas, $arrayFilaExcel);
+                    
+                    $arrayFilaExcel = $rptaArmar["arrayFilaExcel"];
+                    $re_columnas   = $rptaArmar["nuevasColumnas"];
 
 
                 }else{
@@ -2945,7 +2948,11 @@ class ArmarExcelListapreciosController extends Controller
         $esMinorista = false;
         $esBodega    = false;
 
+        $nuevasColumnas = array();
+
         foreach($re_columnas as $re_columna){
+
+            $nuevasColumnas[] = $re_columna;
 
             if($re_columna['agrupacion'] == "mayorista"){
                 
@@ -2963,6 +2970,14 @@ class ArmarExcelListapreciosController extends Controller
                         "titulo" => "ESPACIO",
                         "cont"   => 1
                     );
+
+                    $nuevasColumnas[] = array(
+                        "grupacion"    => "ESPACIO",
+                        "columna"      => "ESPACIO",
+                        "orden"        => 0,
+                        "seleccionado" => true
+                    );
+
                 }else if($esMinorista == true){
                     $nuevoArrayCabecera[] = array(
                         "tipo"   => "data",
@@ -2973,6 +2988,12 @@ class ArmarExcelListapreciosController extends Controller
                         "tipo"   => "data",
                         "titulo" => "ESPACIO",
                         "cont"   => 1
+                    );
+                    $nuevasColumnas[] = array(
+                        "grupacion"    => "ESPACIO",
+                        "columna"      => "ESPACIO",
+                        "orden"        => 0,
+                        "seleccionado" => true
                     );
                 }
 
@@ -2998,6 +3019,12 @@ class ArmarExcelListapreciosController extends Controller
                         "titulo" => "ESPACIO",
                         "cont"   => 1
                     );
+                    $nuevasColumnas[] = array(
+                        "grupacion"    => "ESPACIO",
+                        "columna"      => "ESPACIO",
+                        "orden"        => 0,
+                        "seleccionado" => true
+                    );
 
                 }else if($esBodega == true){
                     $nuevoArrayCabecera[] = array(
@@ -3009,6 +3036,12 @@ class ArmarExcelListapreciosController extends Controller
                         "tipo"   => "data",
                         "titulo" => "ESPACIO",
                         "cont"   => 1
+                    );
+                    $nuevasColumnas[] = array(
+                        "grupacion"    => "ESPACIO",
+                        "columna"      => "ESPACIO",
+                        "orden"        => 0,
+                        "seleccionado" => true
                     );
                 }
 
@@ -3033,6 +3066,12 @@ class ArmarExcelListapreciosController extends Controller
                         "titulo" => "ESPACIO",
                         "cont"   => 1
                     );
+                    $nuevasColumnas[] = array(
+                        "grupacion"    => "ESPACIO",
+                        "columna"      => "ESPACIO",
+                        "orden"        => 0,
+                        "seleccionado" => true
+                    );
                 }else if($esMinorista == true){
                     $nuevoArrayCabecera[] = array(
                         "tipo"   => "data",
@@ -3043,6 +3082,12 @@ class ArmarExcelListapreciosController extends Controller
                         "tipo"   => "data",
                         "titulo" => "ESPACIO",
                         "cont"   => 1
+                    );
+                    $nuevasColumnas[] = array(
+                        "grupacion"    => "ESPACIO",
+                        "columna"      => "ESPACIO",
+                        "orden"        => 0,
+                        "seleccionado" => true
                     );
                 }
 
@@ -3064,6 +3109,12 @@ class ArmarExcelListapreciosController extends Controller
                         "titulo" => "ESPACIO",
                         "cont"   => 1
                     );
+                    $nuevasColumnas[] = array(
+                        "grupacion"    => "ESPACIO",
+                        "columna"      => "ESPACIO",
+                        "orden"        => 0,
+                        "seleccionado" => true
+                    );
                 }else if($esMinorista == true){
                     $nuevoArrayCabecera[] = array(
                         "tipo"   => "data",
@@ -3075,6 +3126,12 @@ class ArmarExcelListapreciosController extends Controller
                         "titulo" => "ESPACIO",
                         "cont"   => 1
                     );
+                    $nuevasColumnas[] = array(
+                        "grupacion"    => "ESPACIO",
+                        "columna"      => "ESPACIO",
+                        "orden"        => 0,
+                        "seleccionado" => true
+                    );
                 }else if($esBodega == true){
                     $nuevoArrayCabecera[] = array(
                         "tipo"   => "data",
@@ -3085,6 +3142,12 @@ class ArmarExcelListapreciosController extends Controller
                         "tipo"   => "data",
                         "titulo" => "ESPACIO",
                         "cont"   => 1
+                    );
+                    $nuevasColumnas[] = array(
+                        "grupacion"    => "ESPACIO",
+                        "columna"      => "ESPACIO",
+                        "orden"        => 0,
+                        "seleccionado" => true
                     );
                 }
 
@@ -3113,6 +3176,12 @@ class ArmarExcelListapreciosController extends Controller
                 "titulo" => "ESPACIO",
                 "cont"   => 1
             );
+            $nuevasColumnas[] = array(
+                "grupacion"    => "ESPACIO",
+                "columna"      => "ESPACIO",
+                "orden"        => 0,
+                "seleccionado" => true
+            );
         }else if($esMinorista == true){
             $nuevoArrayCabecera[] = array(
                 "tipo"   => "data",
@@ -3124,6 +3193,12 @@ class ArmarExcelListapreciosController extends Controller
                 "titulo" => "ESPACIO",
                 "cont"   => 1
             );
+            $nuevasColumnas[] = array(
+                "grupacion"    => "ESPACIO",
+                "columna"      => "ESPACIO",
+                "orden"        => 0,
+                "seleccionado" => true
+            );
         }else if($esBodega == true){
             $nuevoArrayCabecera[] = array(
                 "tipo"   => "data",
@@ -3134,6 +3209,12 @@ class ArmarExcelListapreciosController extends Controller
                 "tipo"   => "data",
                 "titulo" => "ESPACIO",
                 "cont"   => 1
+            );
+            $nuevasColumnas[] = array(
+                "grupacion"    => "ESPACIO",
+                "columna"      => "ESPACIO",
+                "orden"        => 0,
+                "seleccionado" => true
             );
         }
 
@@ -3153,7 +3234,9 @@ class ArmarExcelListapreciosController extends Controller
         foreach($nuevoArrayCabecera as $nuevoArrayCabe){
 
             if($nuevoArrayCabe['tipo'] == "blanco"){
-                $arrayFilaExcel[] = array();   
+                $arrayFilaExcel[] = array();
+            }else if($nuevoArrayCabe['titulo'] == "ESPACIO"){
+                $arrayFilaExcel[] = array();
             }else{
                 if($nuevoArrayCabe['cont'] == 1){
                     $arrayFilaExcel[] = array(
@@ -3353,7 +3436,11 @@ class ArmarExcelListapreciosController extends Controller
 
         }
 
-        return $arrayFilaExcel;
+        return array(
+            "arrayFilaExcel" => $arrayFilaExcel,
+            "nuevasColumnas" => $nuevasColumnas
+        );
+
     }
 
 }
