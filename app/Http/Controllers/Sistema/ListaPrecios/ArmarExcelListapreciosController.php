@@ -451,90 +451,153 @@ class ArmarExcelListapreciosController extends Controller
 
                 $arrayFilaExcel = array();// FILA 5
 
-                foreach($cabeceras as $cabecera){
+
+                if(isset($re_columnas)){
 
                     $coloLetra = "FFFFFFFF";
                     $colorFondo = "FF44546A";
 
-                    if($cabecera == "MF Ruta Mayorista"){
-                        $coloLetra = "FFFFFFFF";
-                        $colorFondo = "FF70AD47";
-                    }else if($cabecera == "Reventa Mayorista"){
-                        $coloLetra = "FFFFFFFF";
-                        $colorFondo = "FF70AD47";
-                    }else if($cabecera == "Margen Mayorista"){
-                        $coloLetra = "FFFFFFFF";
-                        $colorFondo = "FF4472C4";
-                    }else if($cabecera == "Marcaje Mayorista"){
-                        $coloLetra = "FFFFFFFF";
-                        $colorFondo = "FF4472C4";
-                    }else if($cabecera == "MF Ruta Minorista"){
-                        $coloLetra = "FFFFFFFF";
-                        $colorFondo = "FF70AD47";
-                    }else if($cabecera == "Reventa Minorista"){
-                        $coloLetra = "FFFFFFFF";
-                        $colorFondo = "FF70AD47";
-                    }else if($cabecera == "Margen Minorista"){
-                        $coloLetra = "FFFFFFFF";
-                        $colorFondo = "FF4472C4";
-                    }else if($cabecera == "Marcaje Minorista"){
-                        $coloLetra = "FFFFFFFF";
-                        $colorFondo = "FF4472C4";
-                    }else if($cabecera == "MF Ruta Horizontal"){
-                        $coloLetra = "FFFFFFFF";
-                        $colorFondo = "FF70AD47";
-                    }else if($cabecera == "Reventa Bodega"){
-                        $coloLetra = "FFFFFFFF";
-                        $colorFondo = "FF70AD47";
-                    }else if($cabecera == "Margen Bodega"){
-                        $coloLetra = "FFFFFFFF";
-                        $colorFondo = "FF4472C4";
-                    }else if($cabecera == "PVP"){
-                        $coloLetra = "FFFFFFFF";
-                        $colorFondo = "FF4472C4";
+                    $arrayFilaExcel[] = array(
+                        "value" => "CAMBIO",
+                        "style" => array(
+                            "font" => array(
+                                "sz" => "11",
+                                "bold" => true,
+                                "color" => array(
+                                    "rgb" => $coloLetra
+                                )
+                            ),
+                            "fill" => array(
+                                "patternType" => 'solid',
+                                "fgColor" => array(
+                                    "rgb" => $colorFondo
+                                )
+                            ),
+                            "alignment" => array(
+                                "vertical" => "center",
+                                "horizontal" => "center"
+                            )
+                            
+                        )
+                    );
+
+
+                    foreach($re_columnas as $re_columna){
+
+                        if($re_columna['columna'] == "MF Ruta Mayorista"){
+                            $coloLetra = "FFFFFFFF";
+                            $colorFondo = "FF70AD47";
+                        }else if($re_columna['columna'] == "Reventa Mayorista"){
+                            $coloLetra = "FFFFFFFF";
+                            $colorFondo = "FF70AD47";
+                        }else if($re_columna['columna'] == "Margen Mayorista"){
+                            $coloLetra = "FFFFFFFF";
+                            $colorFondo = "FF4472C4";
+                        }else if($re_columna['columna'] == "Marcaje Mayorista"){
+                            $coloLetra = "FFFFFFFF";
+                            $colorFondo = "FF4472C4";
+                        }else if($re_columna['columna'] == "MF Ruta Minorista"){
+                            $coloLetra = "FFFFFFFF";
+                            $colorFondo = "FF70AD47";
+                        }else if($re_columna['columna'] == "Reventa Minorista"){
+                            $coloLetra = "FFFFFFFF";
+                            $colorFondo = "FF70AD47";
+                        }else if($re_columna['columna'] == "Margen Minorista"){
+                            $coloLetra = "FFFFFFFF";
+                            $colorFondo = "FF4472C4";
+                        }else if($re_columna['columna'] == "Marcaje Minorista"){
+                            $coloLetra = "FFFFFFFF";
+                            $colorFondo = "FF4472C4";
+                        }else if($re_columna['columna'] == "MF Ruta Horizontal"){
+                            $coloLetra = "FFFFFFFF";
+                            $colorFondo = "FF70AD47";
+                        }else if($re_columna['columna'] == "Reventa Bodega"){
+                            $coloLetra = "FFFFFFFF";
+                            $colorFondo = "FF70AD47";
+                        }else if($re_columna['columna'] == "Margen Bodega"){
+                            $coloLetra = "FFFFFFFF";
+                            $colorFondo = "FF4472C4";
+                        }else if($re_columna['columna'] == "PVP"){
+                            $coloLetra = "FFFFFFFF";
+                            $colorFondo = "FF4472C4";
+                        }else{
+                            $coloLetra = "FFFFFFFF";
+                            $colorFondo = "FF44546A";
+                        }
+
+                        $arrayFilaExcel[] = array(
+                            "value" => $re_columna['columna'],
+                            "style" => array(
+                                "font" => array(
+                                    "sz" => "11",
+                                    "bold" => true,
+                                    "color" => array(
+                                        "rgb" => $coloLetra
+                                    )
+                                ),
+                                "fill" => array(
+                                    "patternType" => 'solid',
+                                    "fgColor" => array(
+                                        "rgb" => $colorFondo
+                                    )
+                                ),
+                                "alignment" => array(
+                                    "vertical" => "center",
+                                    "horizontal" => "center"
+                                )
+                                
+                            )
+                        );
+
                     }
 
-                    if(isset($re_columnas)){
 
-                        $agregar = false;
 
-                        foreach($re_columnas as $re_columna){
-                            if($re_columna['columna'] == $cabecera){
-                                $agregar = true;
-                            }else if($cabecera == "CAMBIO"){
-                                $agregar = true;
-                            }
+                }else{
+                    
+                    foreach($cabeceras as $cabecera){
+
+                        $coloLetra = "FFFFFFFF";
+                        $colorFondo = "FF44546A";
+    
+                        if($cabecera == "MF Ruta Mayorista"){
+                            $coloLetra = "FFFFFFFF";
+                            $colorFondo = "FF70AD47";
+                        }else if($cabecera == "Reventa Mayorista"){
+                            $coloLetra = "FFFFFFFF";
+                            $colorFondo = "FF70AD47";
+                        }else if($cabecera == "Margen Mayorista"){
+                            $coloLetra = "FFFFFFFF";
+                            $colorFondo = "FF4472C4";
+                        }else if($cabecera == "Marcaje Mayorista"){
+                            $coloLetra = "FFFFFFFF";
+                            $colorFondo = "FF4472C4";
+                        }else if($cabecera == "MF Ruta Minorista"){
+                            $coloLetra = "FFFFFFFF";
+                            $colorFondo = "FF70AD47";
+                        }else if($cabecera == "Reventa Minorista"){
+                            $coloLetra = "FFFFFFFF";
+                            $colorFondo = "FF70AD47";
+                        }else if($cabecera == "Margen Minorista"){
+                            $coloLetra = "FFFFFFFF";
+                            $colorFondo = "FF4472C4";
+                        }else if($cabecera == "Marcaje Minorista"){
+                            $coloLetra = "FFFFFFFF";
+                            $colorFondo = "FF4472C4";
+                        }else if($cabecera == "MF Ruta Horizontal"){
+                            $coloLetra = "FFFFFFFF";
+                            $colorFondo = "FF70AD47";
+                        }else if($cabecera == "Reventa Bodega"){
+                            $coloLetra = "FFFFFFFF";
+                            $colorFondo = "FF70AD47";
+                        }else if($cabecera == "Margen Bodega"){
+                            $coloLetra = "FFFFFFFF";
+                            $colorFondo = "FF4472C4";
+                        }else if($cabecera == "PVP"){
+                            $coloLetra = "FFFFFFFF";
+                            $colorFondo = "FF4472C4";
                         }
-
-                        if($agregar == true){
-                            $arrayFilaExcel[] = array(
-                                "value" => $cabecera,
-                                "style" => array(
-                                    "font" => array(
-                                        "sz" => "11",
-                                        "bold" => true,
-                                        "color" => array(
-                                            "rgb" => $coloLetra
-                                        )
-                                    ),
-                                    "fill" => array(
-                                        "patternType" => 'solid',
-                                        "fgColor" => array(
-                                            "rgb" => $colorFondo
-                                        )
-                                    ),
-                                    "alignment" => array(
-                                        "vertical" => "center",
-                                        "horizontal" => "center"
-                                    )
-                                    
-                                )
-                            );
-                        }else{
-
-                        }
-
-                    }else{
+    
                         $arrayFilaExcel[] = array(
                             "value" => $cabecera,
                             "style" => array(
@@ -558,9 +621,11 @@ class ArmarExcelListapreciosController extends Controller
                                 
                             )
                         );
+    
                     }
 
                 }
+
                 $nuevoArray[0]['data'][] = $arrayFilaExcel;
             }
 
