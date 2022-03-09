@@ -32,6 +32,8 @@ class VentasMostrarController extends Controller
         $mes        = $request['mes'];
         $ano        = $request['ano'];
 
+        $mostrarTodasCategorias = $request['mostrarTodasCategorias'];
+
         $respuesta      = false;
         $mensaje        = '';
         $datos          = [];
@@ -71,7 +73,15 @@ class VentasMostrarController extends Controller
                         $rebatesBonus['descripcion']  = $rbb->rbbdescripcion;
                     }
 
-                    $cats = catcategorias::where('catid', '!=', 6)->get();
+                    $cats = catcategorias::where('catid', '!=', 6)
+                                        ->where(function ($query) use( $mostrarTodasCategorias) {
+                                            if($mostrarTodasCategorias == true){
+
+                                            }else{
+                                                $query->where('catid', '!=', 7);
+                                            }
+                                        })
+                                        ->get();
                     
                     foreach($cats as $posicionCat => $cat){
                         if($rbb->fecid == 3){
@@ -420,6 +430,8 @@ class VentasMostrarController extends Controller
         $mes        = $request['mes'];
         $ano        = $request['ano'];
 
+        $mostrarTodasCategorias = $request['mostrarTodasCategorias'];
+        
         $respuesta      = true;
         $mensaje        = '';
         $datos          = [];
@@ -479,7 +491,15 @@ class VentasMostrarController extends Controller
                 $rbsReal     = 0;
                 $rbsRebate   = 0;
 
-                $cats = catcategorias::where('catid', '!=', 6)->get();
+                $cats = catcategorias::where('catid', '!=', 6)
+                                    ->where(function ($query) use( $mostrarTodasCategorias) {
+                                        if($mostrarTodasCategorias == true){
+
+                                        }else{
+                                            $query->where('catid', '!=', 7);
+                                        }
+                                    })
+                                    ->get();
 
                 foreach($rbbs as $rbb){
                     $rbsSumaObjetivosActual = rbsrebatesbonussucursales::join('sucsucursales as suc', 'suc.sucid', 'rbsrebatesbonussucursales.sucid')
@@ -2075,6 +2095,8 @@ class VentasMostrarController extends Controller
         $mes        = $request['mes'];
         $ano        = $request['ano'];
 
+        $mostrarTodasCategorias = $request['mostrarTodasCategorias'];
+
         $respuesta      = true;
         $mensaje        = '';
         $datos          = [];
@@ -2121,7 +2143,15 @@ class VentasMostrarController extends Controller
                 $rbsReal     = 0;
                 $rbsRebate   = 0;
 
-                $cats = catcategorias::where('catid', '!=', 6)->get();
+                $cats = catcategorias::where('catid', '!=', 6)
+                                        ->where(function ($query) use( $mostrarTodasCategorias) {
+                                            if($mostrarTodasCategorias == true){
+
+                                            }else{
+                                                $query->where('catid', '!=', 7);
+                                            }
+                                        })
+                                        ->get();
 
                 foreach($rbbs as $rbb){
                     $rbsSumaObjetivosActual = rbsrebatesbonussucursales::join('sucsucursales as suc', 'suc.sucid', 'rbsrebatesbonussucursales.sucid')

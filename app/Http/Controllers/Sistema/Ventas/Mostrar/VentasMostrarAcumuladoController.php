@@ -31,6 +31,8 @@ class VentasMostrarAcumuladoController extends Controller
         $mes        = $request['mes'];
         $ano        = $request['ano'];
 
+        $mostrarTodasCategorias = $request['mostrarTodasCategorias'];
+
         $re_aplicandoFiltroCanal = $request['aplicandoFiltroCanal'];
         $re_aplicandoFiltroDt    = $request['aplicandoFiltroDt'];
         $re_aplicandoFiltroGrupo = $request['aplicandoFiltroGrupo'];
@@ -99,7 +101,15 @@ class VentasMostrarAcumuladoController extends Controller
                 $rbsReal     = 0;
                 $rbsRebate   = 0;
 
-                $cats = catcategorias::where('catid', '!=', 6)->get();
+                $cats = catcategorias::where('catid', '!=', 6)
+                                        ->where(function ($query) use( $mostrarTodasCategorias) {
+                                            if($mostrarTodasCategorias == true){
+
+                                            }else{
+                                                $query->where('catid', '!=', 7);
+                                            }
+                                        })
+                                        ->get();
 
                 foreach($rbbs as $rbb){
                     $rbsSumaObjetivosActual = rbsrebatesbonussucursales::join('sucsucursales as suc', 'suc.sucid', 'rbsrebatesbonussucursales.sucid')
