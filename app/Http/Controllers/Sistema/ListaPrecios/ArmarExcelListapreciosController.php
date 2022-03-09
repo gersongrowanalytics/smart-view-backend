@@ -226,7 +226,7 @@ class ArmarExcelListapreciosController extends Controller
                 $nuevoArray[0]['data'][] = $arrayFilaExcel;
 
                 $arrayFilaExcel = array();
-
+                $arrayFilaExcel[] = array();
 
                 if(isset($re_columnas)){
 
@@ -235,6 +235,9 @@ class ArmarExcelListapreciosController extends Controller
                     $contMayorista = 0;
 
                     foreach($re_columnas as $re_columna){
+
+                        
+
                         if( $re_columna['agrupacion'] == "mayorista" ){
 
                             $esMayorista = true;
@@ -444,29 +447,8 @@ class ArmarExcelListapreciosController extends Controller
 
                             }else{
                                 $arrayFilaExcel[] = array(
-                                    "value" => "-",
-                                    "style" => array(
-                                        "font" => array(
-                                            "sz" => "11",
-                                            "bold" => true,
-                                            "color" => array(
-                                                "rgb" => "FFFFFFFF"
-                                            )
-                                        ),
-                                        "fill" => array(
-                                            "patternType" => 'solid',
-                                            "fgColor" => array(
-                                                "rgb" => "FF000000"
-                                            )
-                                        ),
-                                        "alignment" => array(
-                                            "wrapText" => true,
-                                            "vertical" => "center",
-                                            "horizontal" => "center",
-                                        )
-                                    )
                                 );
-                                
+
                                 $contMayorista = 0;
                                 $esMayorista = false;
                             }
@@ -676,28 +658,9 @@ class ArmarExcelListapreciosController extends Controller
 
                     }else{
                         $arrayFilaExcel[] = array(
-                            "value" => "-",
-                            "style" => array(
-                                "font" => array(
-                                    "sz" => "11",
-                                    "bold" => true,
-                                    "color" => array(
-                                        "rgb" => "FFFFFFFF"
-                                    )
-                                ),
-                                "fill" => array(
-                                    "patternType" => 'solid',
-                                    "fgColor" => array(
-                                        "rgb" => "FF000000"
-                                    )
-                                ),
-                                "alignment" => array(
-                                    "wrapText" => true,
-                                    "vertical" => "center",
-                                    "horizontal" => "center",
-                                )
-                            )
                         );
+                        $contMayorista = 0;
+                        $esMayorista = false;
                     }
 
 
