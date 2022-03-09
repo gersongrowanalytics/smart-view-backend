@@ -169,36 +169,6 @@ class ArmarExcelListapreciosController extends Controller
 
             if($posicionLtp == 0){
 
-                $arrayTitulos = array(
-                    array("title" => "", "width" => array("wpx" => 0)),
-                    array("title" => "", "width" => array("wpx" => 110)),
-                    array("title" => "", "width" => array("wpx" => 110)),
-                    array("title" => "", "width" => array("wpx" => 110)),
-                    array("title" => "", "width" => array("wpx" => 110)),
-                    array("title" => "", "width" => array("wpx" => 110)),
-                    array("title" => "", "width" => array("wpx" => 110)),
-                    array("title" => "", "width" => array("wpx" => 110)),
-                    array("title" => "", "width" => array("wpx" => 110)),
-                    array("title" => "", "width" => array("wpx" => 110)),
-                    array("title" => "", "width" => array("wpx" => 110)),
-                    array("title" => "", "width" => array("wpx" => 110)),
-                    array("title" => "", "width" => array("wpx" => 110)),
-                    array("title" => "", "width" => array("wpx" => 110)),
-                    array("title" => "", "width" => array("wpx" => 110)),
-                    array("title" => "", "width" => array("wpx" => 110)),
-                    array("title" => "", "width" => array("wpx" => 110)),
-                    array("title" => "", "width" => array("wpx" => 110)),
-                    array("title" => "", "width" => array("wpx" => 110)),
-                    array("title" => "", "width" => array("wpx" => 110)),
-                    array("title" => "", "width" => array("wpx" => 110)),
-                    array("title" => "", "width" => array("wpx" => 110)),
-                    array("title" => "", "width" => array("wpx" => 110)),
-                    array("title" => "", "width" => array("wpx" => 110)),
-                    array("title" => "", "width" => array("wpx" => 110)),
-
-                );
-
-                $nuevoArray[0]['columns'] = $arrayTitulos;
 
                 $arrayFilaExcel = array( // FILA 2
                     array(),
@@ -653,6 +623,57 @@ class ArmarExcelListapreciosController extends Controller
                 }
 
                 $nuevoArray[0]['data'][] = $arrayFilaExcel;
+
+
+                // TITULOS
+
+                if(isset($re_columnas)){
+
+                    $arrayTitulos = array();
+                    
+                    $arrayTitulos[] = array("title" => "", "width" => array("wpx" => 0));
+
+                    foreach($re_columnas as $re_columna){
+                        if($re_columna['columna'] == "ESPACIO"){
+                            $arrayTitulos[] = array("title" => "", "width" => array("wpx" => 40));
+                        }else{
+                            $arrayTitulos[] = array("title" => "", "width" => array("wpx" => 100));
+                        }
+                    }
+
+                }else{
+                    $arrayTitulos = array(
+                        array("title" => "", "width" => array("wpx" => 0)),
+                        array("title" => "", "width" => array("wpx" => 110)),
+                        array("title" => "", "width" => array("wpx" => 110)),
+                        array("title" => "", "width" => array("wpx" => 110)),
+                        array("title" => "", "width" => array("wpx" => 110)),
+                        array("title" => "", "width" => array("wpx" => 110)),
+                        array("title" => "", "width" => array("wpx" => 110)),
+                        array("title" => "", "width" => array("wpx" => 110)),
+                        array("title" => "", "width" => array("wpx" => 110)),
+                        array("title" => "", "width" => array("wpx" => 110)),
+                        array("title" => "", "width" => array("wpx" => 110)),
+                        array("title" => "", "width" => array("wpx" => 110)),
+                        array("title" => "", "width" => array("wpx" => 110)),
+                        array("title" => "", "width" => array("wpx" => 110)),
+                        array("title" => "", "width" => array("wpx" => 110)),
+                        array("title" => "", "width" => array("wpx" => 40)),
+                        array("title" => "", "width" => array("wpx" => 110)),
+                        array("title" => "", "width" => array("wpx" => 110)),
+                        array("title" => "", "width" => array("wpx" => 110)),
+                        array("title" => "", "width" => array("wpx" => 110)),
+                        array("title" => "", "width" => array("wpx" => 40)),
+                        array("title" => "", "width" => array("wpx" => 110)),
+                        array("title" => "", "width" => array("wpx" => 110)),
+                        array("title" => "", "width" => array("wpx" => 110)),
+                        array("title" => "", "width" => array("wpx" => 110)),
+    
+                    );
+                }
+
+                $nuevoArray[0]['columns'] = $arrayTitulos;
+
             }
 
             $arrayFilaExcel = array();
