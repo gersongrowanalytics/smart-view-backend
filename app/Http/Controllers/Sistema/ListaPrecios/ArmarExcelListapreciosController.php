@@ -545,29 +545,31 @@ class ArmarExcelListapreciosController extends Controller
                             $colorFondo = "FF44546A";
                         }
 
-                        $arrayFilaExcel[] = array(
-                            "value" => $re_columna['columna'],
-                            "style" => array(
-                                "font" => array(
-                                    "sz" => "11",
-                                    "bold" => true,
-                                    "color" => array(
-                                        "rgb" => $coloLetra
+                        if($re_columna['columna'] != "ESPACIO"){
+                            $arrayFilaExcel[] = array(
+                                "value" => $re_columna['columna'],
+                                "style" => array(
+                                    "font" => array(
+                                        "sz" => "11",
+                                        "bold" => true,
+                                        "color" => array(
+                                            "rgb" => $coloLetra
+                                        )
+                                    ),
+                                    "fill" => array(
+                                        "patternType" => 'solid',
+                                        "fgColor" => array(
+                                            "rgb" => $colorFondo
+                                        )
+                                    ),
+                                    "alignment" => array(
+                                        "vertical" => "center",
+                                        "horizontal" => "center"
                                     )
-                                ),
-                                "fill" => array(
-                                    "patternType" => 'solid',
-                                    "fgColor" => array(
-                                        "rgb" => $colorFondo
-                                    )
-                                ),
-                                "alignment" => array(
-                                    "vertical" => "center",
-                                    "horizontal" => "center"
+                                    
                                 )
-                                
-                            )
-                        );
+                            );
+                        }
 
                     }
 
