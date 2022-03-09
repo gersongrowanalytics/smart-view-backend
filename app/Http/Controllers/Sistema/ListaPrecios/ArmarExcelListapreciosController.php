@@ -635,7 +635,7 @@ class ArmarExcelListapreciosController extends Controller
 
                     foreach($re_columnas as $re_columna){
                         if($re_columna['columna'] == "ESPACIO"){
-                            $arrayTitulos[] = array("title" => "", "width" => array("wpx" => 40));
+                            $arrayTitulos[] = array("title" => "", "width" => array("wpx" => 20));
                         }else{
                             $arrayTitulos[] = array("title" => "", "width" => array("wpx" => 100));
                         }
