@@ -1279,16 +1279,7 @@ class ArmarExcelListapreciosController extends Controller
     
                     }else if($re_columna['columna'] == "ESPACIO" ){
                         $arrayFilaExcel[] = array(
-                            "value" => "-",
-                            "style" => array(
-                                "font" => array(
-                                    "sz" => "11",
-                                    "bold" => true,
-                                    "color" => array(
-                                        "rgb" => "FFFFFFFF"
-                                    )
-                                ),
-                            )
+                            "value" => "",
                         );
                     }
                 }
