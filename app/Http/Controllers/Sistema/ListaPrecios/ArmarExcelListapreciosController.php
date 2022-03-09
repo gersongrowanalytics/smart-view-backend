@@ -637,7 +637,7 @@ class ArmarExcelListapreciosController extends Controller
                         if($re_columna['columna'] == "ESPACIO"){
                             $arrayTitulos[] = array("title" => "", "width" => array("wpx" => 20));
                         }else{
-                            $arrayTitulos[] = array("title" => "", "width" => array("wpx" => 100));
+                            $arrayTitulos[] = array("title" => "", "width" => array("wpx" => 120));
                         }
                     }
 
