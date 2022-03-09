@@ -442,6 +442,9 @@ class ArmarExcelListapreciosController extends Controller
 
                                 }
 
+                                $arrayFilaExcel[] = array(
+                                );
+                                
                                 $contMayorista = 0;
                                 $esMayorista = false;
 
