@@ -27,6 +27,7 @@ $router->post('/recuperar/contrasena/nuevo', 'Sistema\recuperarController@Enviar
 $router->post('/cambiar/contrasenia/nuevo', 'Sistema\recuperarController@CambiarContraseniaRecuperar');
 
 $router->post('/login', 'Sistema\loginController@login');
+$router->post('/cerrar-session', 'Sistema\loginController@MetCerrarSession');
 $router->get('/correo-recuperar', 'Sistema\recuperarController@EnviarCorreoVista');
 
 $router->group(['middleware' => ['permisos']], function() use($router) {

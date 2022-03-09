@@ -28,6 +28,8 @@ class loginController extends Controller
         $re_logintoken = $request['logintoken'];
         $re_token      = $request['token'];
 
+        $aparecerTerminosCondiciones = false;
+
         try{
             
             if($re_logintoken == true){
@@ -48,7 +50,9 @@ class loginController extends Controller
                                             'per.perdireccion',
                                             'per.perfechanacimiento',
                                             'per.percelular',
-                                            'usuusuarios.usuorganizacion'
+                                            'usuusuarios.usuorganizacion',
+                                            'usuaceptoterminos',
+                                            'usucerrosesion'
                                         ]);
             }else{
                 $usuusaurio = usuusuarios::join('tputiposusuarios as tpu', 'tpu.tpuid', 'usuusuarios.tpuid')
@@ -68,7 +72,9 @@ class loginController extends Controller
                                             'per.perdireccion',
                                             'per.perfechanacimiento',
                                             'per.percelular',
-                                            'usuusuarios.usuorganizacion'
+                                            'usuusuarios.usuorganizacion',
+                                            'usuaceptoterminos',
+                                            'usucerrosesion'
                                         ]);
             }
 
@@ -126,6 +132,51 @@ class loginController extends Controller
                     }
 
 
+                    if(isset($usuusaurio->usuaceptoterminos)){
+                        date_default_timezone_set("America/Lima");
+                        $fechaActual = new DateTime();
+                        $fechaAceptacionTerminos = new DateTime($usuusaurio->usuaceptoterminos);
+
+                        $diff = $fechaActual->diff($fechaAceptacionTerminos);
+
+                        if($usuusaurio->usucerrosesion == true){
+                            $aparecerTerminosCondiciones = true;
+                        }else{
+                            if($diff->days >= 7){
+                                $aparecerTerminosCondiciones = true;
+
+                                date_default_timezone_set("America/Lima");
+                                $fechaActual = date('Y-m-d H:i:s');
+
+                                $usue = usuusuarios::where('usuid', $usuusaurio->usuid)->first();
+                                $usue->usuaceptoterminos = $fechaActual;
+                                $usue->update();
+
+                                // $AuditoriaController = new AuditoriaController;
+                                // $registrarAuditoria  = $AuditoriaController->registrarAuditoria(
+                                //     $usutoken,
+                                //     $usuidAud,
+                                //     null,
+                                //     $request,
+                                //     [],
+                                //     "VOLVER A ACEPTAR LOS TERMINOS  Y CONDICIONES DESPUES DE 7 DIAS",
+                                //     'ACEPTAR TERMINOS Y CONDICONES',
+                                //     '/aceptar-terminos-condiciones', //ruta
+                                //     [],
+                                //     [],
+                                //     5 // Aceptar terminos y condiciones
+                                // );
+
+                            }else{
+                                $aparecerTerminosCondiciones = false;
+                            }
+                        }
+                        
+                    }else{
+                        $aparecerTerminosCondiciones = true;
+                    }
+
+
                     $respuesta      = true;
                     $mensaje        = 'Login Correcto';
                     $mensajeDetalle = 'Bienvenido.';
@@ -161,4 +212,19 @@ class loginController extends Controller
             'mensajedev'     => $mensajedev
         ]);
     }
+
+    public function MetCerrarSession(Request $request)
+    {
+
+        $usutoken = $request->header('api_token');
+
+        $usu = usuusuarios::where('usutoken', $usutoken)->first();
+
+        if($usu){
+            $usu->usucerrosesion = true;
+            $usu->update();
+        }
+
+    }
+
 }
