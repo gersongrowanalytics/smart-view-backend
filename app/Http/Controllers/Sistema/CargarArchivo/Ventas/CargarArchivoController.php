@@ -533,8 +533,12 @@ class CargarArchivoController extends Controller
             )
         );
 
+        $notificacionesLogs["MENSAJE"] = $mensaje;
+        $notificacionesLogs["RESPUESTA"] = $respuesta;
+
         $requestsalida = response()->json([
-            "respuesta"      => true,
+            // "respuesta"      => true,
+            "respuesta"      => $respuesta,
             "mensaje"        => $mensaje,
             "datos"          => $datos,
             "linea"          => $linea,
