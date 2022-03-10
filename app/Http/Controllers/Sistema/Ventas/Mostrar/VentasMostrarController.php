@@ -331,7 +331,16 @@ class VentasMostrarController extends Controller
 
                 $dataVacia = array(array());
 
-                $categorias = catcategorias::where('catnombre', '!=', 'MultiCategoria')->where('catid', '<', 6)->get();
+                $categorias = catcategorias::where('catnombre', '!=', 'MultiCategoria')
+                                            ->where('catid', '!=', 6)
+                                            ->where(function ($query) use( $mostrarTodasCategorias) {
+                                                if($mostrarTodasCategorias == true){
+    
+                                                }else{
+                                                    $query->where('catid', '!=', 7);
+                                                }
+                                            })
+                                            ->get();
                 $tprtipospromociones = tprtipospromociones::where('tprid', '<', 3)->get();;
 
                 $trrs = array(
