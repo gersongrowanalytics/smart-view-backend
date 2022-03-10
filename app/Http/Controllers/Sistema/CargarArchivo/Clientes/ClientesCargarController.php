@@ -653,7 +653,7 @@ class ClientesCargarController extends Controller
         date_default_timezone_set("America/Lima");
         $fechaActual = date('Y-m-d H:i:s');
 
-        $respuesta      = false;
+        $respuesta      = true;
         $mensaje        = '';
         $datos          = [];
         $linea          = __LINE__;
