@@ -29,6 +29,8 @@ class CargarArchivoController extends Controller
 {
     public function CargarArchivo(Request $request)
     {
+        $preproduccion = true;
+
         $respuesta      = true;
         $mensaje        = '';
         $datos          = [];
@@ -42,6 +44,14 @@ class CargarArchivoController extends Controller
         $soldtosNoExis  = [];
         $log            = [];
         $pkid           = 0;
+
+        $notificacionesLogs = array(
+            "NO_HAY_ANIO"             => [],
+            "NO_HAY_MES"              => [],
+            "NO_HAY_CLIENTES"         => [],
+            "NO_EXISTE_PRODUCTOS"     => [],
+            "NO_EXISTE_DISTRIBUIDORA" => [],
+        );
 
         $cargarData = false;
         
@@ -99,8 +109,14 @@ class CargarArchivoController extends Controller
                         // $sector     = $objPHPExcel->getActiveSheet()->getCell('L'.$i)->getCalculatedValue();
                         // $real       = $objPHPExcel->getActiveSheet()->getCell('O'.$i)->getCalculatedValue();
                         
-                        $ano        = $objPHPExcel->getActiveSheet()->getCell('E'.$i)->getCalculatedValue();
-                        $mesTxt     = $objPHPExcel->getActiveSheet()->getCell('F'.$i)->getCalculatedValue();
+                        if($preproduccion == true){
+                            $ano        = "2020";
+                            $mesTxt     = "3";
+                        }else{
+                            $ano        = $objPHPExcel->getActiveSheet()->getCell('E'.$i)->getCalculatedValue();
+                            $mesTxt     = $objPHPExcel->getActiveSheet()->getCell('F'.$i)->getCalculatedValue();
+                        }
+                        
                         $soldto     = $objPHPExcel->getActiveSheet()->getCell('G'.$i)->getCalculatedValue();
                         $cliente    = $objPHPExcel->getActiveSheet()->getCell('H'.$i)->getCalculatedValue();
                         $sku        = $objPHPExcel->getActiveSheet()->getCell('I'.$i)->getCalculatedValue();
@@ -119,52 +135,6 @@ class CargarArchivoController extends Controller
                                                         ->where('fecano', $ano)
                                                         ->first(['fecid']);
                                 $fecid = 0;
-                                // if($fecfecha){
-                                //     $fecid = $fecfecha->fecid;
-                                // }else{
-
-                                //     $mes = "0";
-
-
-                                //     if($mesTxt == "ENE"){
-                                //         $mes = "01";
-                                //     }else if($mesTxt == "FEB"){
-                                //         $mes = "02";
-                                //     }else if($mesTxt == "MAR"){
-                                //         $mes = "03";
-                                //     }else if($mesTxt == "ABR"){
-                                //         $mes = "04";
-                                //     }else if($mesTxt == "MAY"){
-                                //         $mes = "05";
-                                //     }else if($mesTxt == "JUN"){
-                                //         $mes = "06";
-                                //     }else if($mesTxt == "JUL"){
-                                //         $mes = "07";
-                                //     }else if($mesTxt == "AGO"){
-                                //         $mes = "08";
-                                //     }else if($mesTxt == "SET"){
-                                //         $mes = "09";
-                                //     }else if($mesTxt == "OCT"){
-                                //         $mes = "10";
-                                //     }else if($mesTxt == "NOV"){
-                                //         $mes = "11";
-                                //     }else if($mesTxt == "DIC"){
-                                //         $mes = "12";
-                                //     }
-            
-                                //     $nuevaFecha = new fecfechas;
-                                //     $nuevaFecha->fecfecha = new \DateTime(date("Y-m-d", strtotime($ano.'-'.$mes.'-'.$dia)));
-                                //     $nuevaFecha->fecdia   = $dia;
-                                //     $nuevaFecha->fecmes   = $mesTxt;
-                                //     $nuevaFecha->fecmesnumero = $mes;
-                                //     $nuevaFecha->fecano   = $ano;
-                                //     if($nuevaFecha->save()){
-                                //         $fecid = $nuevaFecha->fecid;
-                                //     }else{
-                    
-                                //     }
-                                // }
-
 
                                 if($fecfecha){
                                     $fecid = $fecfecha->fecid;
@@ -436,6 +406,8 @@ class CargarArchivoController extends Controller
                                             $respuesta = false;
                                             $mensaje   = "Hay algunos soldtos no identificados";
                                             $linea     = __LINE__;
+
+                                            $notificacionesLogs["NO_EXISTE_DISTRIBUIDORA"] = $this->EliminarDuplicidad( $notificacionesLogs["NO_EXISTE_DISTRIBUIDORA"], $soldto, $i);
                                         }
                                         
                                     }else{
@@ -444,24 +416,33 @@ class CargarArchivoController extends Controller
                                         $respuesta = false;
                                         $mensaje   = "Hay algunos skus no identificados";
                                         $linea     = __LINE__;
+
+                                        $notificacionesLogs["NO_EXISTE_PRODUCTOS"] = $this->EliminarDuplicidad( $notificacionesLogs["NO_EXISTE_PRODUCTOS"], $sku, $i);
                                     }  
                                 }else{
                                     $respuesta = false;
                                     $mensaje   = "No hay un cliente";
                                     $log[]     = "No hay cliente";
                                     $linea     = __LINE__;
+
+
+                                    $notificacionesLogs["NO_HAY_CLIENTES"] = $this->EliminarDuplicidad( $notificacionesLogs["NO_HAY_CLIENTES"], $cliente, $i);
                                 }
                             }else{
                                 $respuesta = false;
                                 $mensaje   = "No se encontro el año en el excel";
                                 $log[]     = "No hay año";
                                 $linea     = __LINE__;
+
+                                $notificacionesLogs["NO_HAY_ANIO"] = $this->EliminarDuplicidad( $notificacionesLogs["NO_HAY_ANIO"], $ano, $i);
                             }
                         }else{
                             $respuesta = false;
                             $mensaje   = "No se encontro el mes en el excel";
                             $log[]     = "No hay mes";
                             $linea     = __LINE__;
+
+                            $notificacionesLogs["NO_HAY_MES"] = $this->EliminarDuplicidad( $notificacionesLogs["NO_HAY_MES"], $mesTxt, $i);
                         }
                     }
                 }else{
@@ -562,6 +543,7 @@ class CargarArchivoController extends Controller
             "numeroCelda"    => $numeroCelda,
             "logs"           => $log,
             "soldtosNoExis"  => $soldtosNoExis,
+            "notificacionesLogs" => $notificacionesLogs
         ]);
         
         $descripcion = "CARGAR DATA DE UN EXCEL AL SISTEMA DE VENTAS SELL IN";
