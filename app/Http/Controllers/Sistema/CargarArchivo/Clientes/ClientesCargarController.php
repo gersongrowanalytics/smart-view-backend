@@ -703,6 +703,7 @@ class ClientesCargarController extends Controller
                     $suc = sucsucursales::where('sucsoldto', $codSoldTo)->first();
                     if($suc){
                         $suc->sucnombre = $clienteHml;
+                        $suc->sucregionalgba = $gbaRegional;
                         $suc->update();
                     }
 
