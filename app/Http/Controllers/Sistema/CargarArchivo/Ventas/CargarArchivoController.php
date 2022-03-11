@@ -29,7 +29,7 @@ class CargarArchivoController extends Controller
 {
     public function CargarArchivo(Request $request)
     {
-        $preproduccion = true;
+        $preproduccion = false;
 
         $respuesta      = true;
         $mensaje        = '';
@@ -97,7 +97,7 @@ class CargarArchivoController extends Controller
                 $ultimaColumna  = $objPHPExcel->setActiveSheetIndex(0)->getHighestColumn();
                 
                 if($cargarData == true){
-                    for ($i=2; $i <= $numRows; $i++) {
+                    for ($i=3; $i <= $numRows; $i++) {
                         $dia = '01';
     
                         // $ano        = $objPHPExcel->getActiveSheet()->getCell('D'.$i)->getCalculatedValue();
