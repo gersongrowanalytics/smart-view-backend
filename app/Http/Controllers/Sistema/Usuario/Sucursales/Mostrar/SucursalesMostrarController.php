@@ -69,11 +69,24 @@ class SucursalesMostrarController extends Controller
                     $gsus = sucsucursales::join('gsugrupossucursales as gsu', 'gsu.gsuid', 'sucsucursales.gsuid')
                                         ->where('sucestado', 1)
                                         ->distinct('gsu.gsuid')
-                                        ->orderBy('sucsucursales.sucorden', 'DESC')
                                         ->get([
                                             'gsu.gsuid',
-                                            'gsunombre'
+                                            'gsunombre',
+                                            'sucorden'
                                         ]);
+
+                    usort(
+                        $gsus,
+                        function ($a, $b)  {
+                            if ($a['sucorden'] > $b['sucorden']) {
+                                return -1;
+                            } else if ($a['sucorden'] < $b['sucorden']) {
+                                return 1;
+                            } else {
+                                return 0;
+                            }
+                        }
+                    );
 
                     foreach($gsus as $posicionGsu => $gsu){
                         $zonasGsu = [];
