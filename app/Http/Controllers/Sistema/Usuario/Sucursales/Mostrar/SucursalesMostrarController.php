@@ -69,6 +69,7 @@ class SucursalesMostrarController extends Controller
                     $gsus = sucsucursales::join('gsugrupossucursales as gsu', 'gsu.gsuid', 'sucsucursales.gsuid')
                                         ->where('sucestado', 1)
                                         ->distinct('gsu.gsuid')
+                                        ->orderBy('sucsucursales.sucorden', 'DESC')
                                         ->get([
                                             'gsu.gsuid',
                                             'gsunombre'
