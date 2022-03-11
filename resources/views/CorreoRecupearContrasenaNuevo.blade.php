@@ -51,7 +51,7 @@
                             <div style="margin-bottom:15px">
                                 <a 
                                     id="btnPlataforma" 
-                                    href="http://localhost:3000/cambiar-contrasenia/{{$token}}"
+                                    href="https://pricing.softys-leadcorporate.com/cambiar-contrasenia/{{$token}}"
                                     style="text-decoration: none; color: white; background: #3946AB; padding-top: 10px; padding-bottom: 10px; padding-left: 35px; padding-right: 35px; border-radius: 22px; margin-top: 50px;  font-style: normal; font-weight: bold; font-size: 10px; line-height: 12px;margin-bottom:15px"
                                 >Cambiar Contraseña</a>
                             </div>
@@ -62,7 +62,7 @@
                         <td align="center" style=" width: 100000px">
                             <div style="margin-left: 10px; margin-right: 10px; margin-top:10px">
                                 <span style=" font-style: normal; font-weight: normal; font-size: 10px; line-height: 12px; color: #9C9B9B;">
-                                    En caso tengas problemas para cambiar tu contraseña, ingresar al siguiente enlace:<br> <a style="text-decoration: none; color: #558CFF;" href="http://localhost:3000/cambiar-contrasenia/{{$token}}" >http://localhost:3000/cambiar-contrasenia/{{$token}}</a>
+                                    En caso tengas problemas para cambiar tu contraseña, ingresar al siguiente enlace:<br> <a style="text-decoration: none; color: #558CFF;" href="https://pricing.softys-leadcorporate.com/cambiar-contrasenia/{{$token}}" >https://pricing.softys-leadcorporate.com/cambiar-contrasenia/{{$token}}</a>
                                 </span>
                             </div>
                         </td>
