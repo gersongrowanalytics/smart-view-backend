@@ -77,7 +77,7 @@ class SucursalesMostrarController extends Controller
 
                     $gsus = gsugrupossucursales::orderBy('gsuorden', 'DESC')
                                                 ->get([
-                                                    'gsu.gsuid',
+                                                    'gsuid',
                                                     'gsunombre'
                                                 ]);
 
