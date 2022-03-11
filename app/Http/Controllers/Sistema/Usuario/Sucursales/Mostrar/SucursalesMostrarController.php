@@ -75,19 +75,6 @@ class SucursalesMostrarController extends Controller
                                             'sucorden'
                                         ]);
 
-                    usort(
-                        $gsus,
-                        function ($a, $b)  {
-                            if ($a['sucorden'] > $b['sucorden']) {
-                                return -1;
-                            } else if ($a['sucorden'] < $b['sucorden']) {
-                                return 1;
-                            } else {
-                                return 0;
-                            }
-                        }
-                    );
-
                     foreach($gsus as $posicionGsu => $gsu){
                         $zonasGsu = [];
                         $canalesGsu = [];
