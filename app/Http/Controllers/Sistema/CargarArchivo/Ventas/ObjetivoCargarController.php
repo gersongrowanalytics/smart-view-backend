@@ -29,6 +29,13 @@ class ObjetivoCargarController extends Controller
 {
     public function CargarObjetivo(Request $request)
     {
+
+        $preproduccion = false;
+        $notificacionesLogs = array(
+            "NO_EXISTE_PRODUCTOS"     => [],
+            "NO_EXISTE_DISTRIBUIDORA" => [],
+        );
+        
         date_default_timezone_set("America/Lima");
         $fechaActual = date('Y-m-d');
 
@@ -96,8 +103,14 @@ class ObjetivoCargarController extends Controller
                     for ($i=2; $i <= $numRows ; $i++) {
                         $dia = '01';
 
-                        $ano         = $objPHPExcel->getActiveSheet()->getCell('A'.$i)->getCalculatedValue();
-                        $mesTxt      = $objPHPExcel->getActiveSheet()->getCell('B'.$i)->getCalculatedValue();
+                        if($preproduccion == true){
+                            $ano        = "2020";
+                            $mesTxt     = "MAR";
+                        }else{
+                            $ano         = $objPHPExcel->getActiveSheet()->getCell('A'.$i)->getCalculatedValue();
+                            $mesTxt      = $objPHPExcel->getActiveSheet()->getCell('B'.$i)->getCalculatedValue();
+                        }
+
                         $regionExcel      = $objPHPExcel->getActiveSheet()->getCell('C'.$i)->getCalculatedValue();
 
                         $soldto      = $objPHPExcel->getActiveSheet()->getCell('D'.$i)->getCalculatedValue();
@@ -389,6 +402,10 @@ class ObjetivoCargarController extends Controller
 
                                 $respuesta  = false;
                                 $mensaje    = 'Lo sentimos hay algunos skus que no existen en nuestra maestra: '.$sku;
+                                
+                                $notificacionesLogs["NO_EXISTE_PRODUCTOS"] = $this->EliminarDuplicidad( $notificacionesLogs["NO_EXISTE_PRODUCTOS"], $sku, $i);
+
+
                             }
     
     
@@ -442,6 +459,8 @@ class ObjetivoCargarController extends Controller
                             $soldtosNoExisten[] = $soldto;
                             $respuesta      = false;
                             $mensaje        = 'Lo sentimos el soldto: '.$soldto.' no se encuentra registrado';
+
+                            $notificacionesLogs["NO_EXISTE_DISTRIBUIDORA"] = $this->EliminarDuplicidad( $notificacionesLogs["NO_EXISTE_DISTRIBUIDORA"], $soldto, $i);
                         }
                         
                     }
@@ -555,10 +574,11 @@ class ObjetivoCargarController extends Controller
             "mensajedev"     => $mensajedev,
             "numeroCelda"    => $numeroCelda,
             "skusNoExisten"  => $skusNoExisten,
-            "soldtosNoExisten"  => $soldtosNoExisten,
-            "observaciones"  => $observaciones,
-            "numRows"  => $numRows,
-            "totalObjetivo"  => $totalObjetivo,
+            "soldtosNoExisten"   => $soldtosNoExisten,
+            "observaciones"      => $observaciones,
+            "numRows"            => $numRows,
+            "totalObjetivo"      => $totalObjetivo,
+            "notificacionesLogs" => $notificacionesLogs
         ]);
 
         if($respuesta == true){
@@ -588,6 +608,12 @@ class ObjetivoCargarController extends Controller
 
     public function CargarObjetivoSellOut(Request $request)
     {
+        $preproduccion = false;
+        $notificacionesLogs = array(
+            "NO_EXISTE_PRODUCTOS"     => [],
+            "NO_EXISTE_DISTRIBUIDORA" => [],
+        );
+
         date_default_timezone_set("America/Lima");
         $fechaActual = date('Y-m-d H:i:s');
 
@@ -650,8 +676,14 @@ class ObjetivoCargarController extends Controller
                     for ($i=2; $i <= $numRows ; $i++) {
                         $dia = '01';
 
-                        $ano         = $objPHPExcel->getActiveSheet()->getCell('A'.$i)->getCalculatedValue();
-                        $mesTxt      = $objPHPExcel->getActiveSheet()->getCell('B'.$i)->getCalculatedValue();
+                        if($preproduccion == true){
+                            $ano        = "2020";
+                            $mesTxt     = "MAR";
+                        }else{
+                            $ano         = $objPHPExcel->getActiveSheet()->getCell('A'.$i)->getCalculatedValue();
+                            $mesTxt      = $objPHPExcel->getActiveSheet()->getCell('B'.$i)->getCalculatedValue();
+                        }
+
                         $regionExcel = $objPHPExcel->getActiveSheet()->getCell('C'.$i)->getCalculatedValue();
 
                         $soldto      = $objPHPExcel->getActiveSheet()->getCell('D'.$i)->getCalculatedValue();
@@ -801,23 +833,23 @@ class ObjetivoCargarController extends Controller
                         // }
 
 
-                        if($i == 2){
-                            $tsus = tsutipospromocionessucursales::where('fecid', $fecid)
-                                                                ->where('tprid', 2)
-                                                                ->get(['tsuid']);
+                        // if($i == 2){
+                        //     $tsus = tsutipospromocionessucursales::where('fecid', $fecid)
+                        //                                         ->where('tprid', 2)
+                        //                                         ->get(['tsuid']);
 
-                            foreach($tsus as $tsu){
-                                $tsue = tsutipospromocionessucursales::find($tsu->tsuid);
-                                $tsue->tsuvalorizadoobjetivo = 0;
-                                if($tsue->update()){
-                                    $scas = scasucursalescategorias::where('tsuid', $tsu->tsuid)
-                                                                    ->update(['scavalorizadoobjetivo' => 0]);
-                                }
-                            }
+                        //     foreach($tsus as $tsu){
+                        //         $tsue = tsutipospromocionessucursales::find($tsu->tsuid);
+                        //         $tsue->tsuvalorizadoobjetivo = 0;
+                        //         if($tsue->update()){
+                        //             $scas = scasucursalescategorias::where('tsuid', $tsu->tsuid)
+                        //                                             ->update(['scavalorizadoobjetivo' => 0]);
+                        //         }
+                        //     }
 
-                            osoobjetivossso::where('fecid', $fecid)->update(['osovalorizado' => 0]);
+                        //     osoobjetivossso::where('fecid', $fecid)->update(['osovalorizado' => 0]);
 
-                        }
+                        // }
 
                         $suc = sucsucursales::where('sucsoldto', $soldto)->first();
                         
@@ -1018,8 +1050,9 @@ class ObjetivoCargarController extends Controller
                                         $respuesta = false;
                                         break;
                                     }
-                                
                                 }
+
+                                $notificacionesLogs["NO_EXISTE_PRODUCTOS"] = $this->EliminarDuplicidad( $notificacionesLogs["NO_EXISTE_PRODUCTOS"], $sku, $i);
                             }
 
                             if($i == $numRows){
@@ -1069,6 +1102,8 @@ class ObjetivoCargarController extends Controller
                             $soldtosNoExisten[] = $soldto;
                             $respuesta      = false;
                             $mensaje        = 'Lo sentimos el soldto: '.$soldto.' no se encuentra registrado';
+
+                            $notificacionesLogs["NO_EXISTE_DISTRIBUIDORA"] = $this->EliminarDuplicidad( $notificacionesLogs["NO_EXISTE_DISTRIBUIDORA"], $soldto, $i);
                         }
                     }
 
@@ -1176,7 +1211,8 @@ class ObjetivoCargarController extends Controller
             "numeroCelda"    => $numeroCelda,
             "skusNoExisten"  => $skusNoExisten,
             "soldtosNoExisten" => $soldtosNoExisten,
-            "observaciones" => $observaciones
+            "observaciones" => $observaciones,
+            "notificacionesLogs" => $notificacionesLogs
         ]);
 
         if($respuesta == true){
@@ -1335,20 +1371,20 @@ class ObjetivoCargarController extends Controller
 
                         if($i == 2){
 
-                            $tsus = tsutipospromocionessucursales::where('fecid', $fecid)
-                                                                ->where('tprid', 2)
-                                                                ->get(['tsuid']);
+                            // $tsus = tsutipospromocionessucursales::where('fecid', $fecid)
+                            //                                     ->where('tprid', 2)
+                            //                                     ->get(['tsuid']);
 
-                            foreach($tsus as $tsu){
-                                $tsue = tsutipospromocionessucursales::find($tsu->tsuid);
-                                $tsue->tsuvalorizadoobjetivo = 0;
-                                if($tsue->update()){
-                                    $scas = scasucursalescategorias::where('tsuid', $tsu->tsuid)
-                                                                    ->update(['scavalorizadoobjetivo' => 0]);
-                                }
-                            }
+                            // foreach($tsus as $tsu){
+                            //     $tsue = tsutipospromocionessucursales::find($tsu->tsuid);
+                            //     $tsue->tsuvalorizadoobjetivo = 0;
+                            //     if($tsue->update()){
+                            //         $scas = scasucursalescategorias::where('tsuid', $tsu->tsuid)
+                            //                                         ->update(['scavalorizadoobjetivo' => 0]);
+                            //     }
+                            // }
 
-                            osoobjetivossso::where('fecid', $fecid)->update(['osovalorizado' => 0]);
+                            // osoobjetivossso::where('fecid', $fecid)->update(['osovalorizado' => 0]);
 
                         }
 
@@ -1915,5 +1951,22 @@ class ObjetivoCargarController extends Controller
         
         return $requestsalida;
 
+    }
+
+    private function EliminarDuplicidad($array, $dato, $linea)
+    {
+        $encontroDato = false;
+        foreach($array as $arr){
+            if($arr['codigo'] == $dato){
+                $encontroDato = true;
+                break;
+            }
+        }
+
+        if($encontroDato == false){
+            $array[] = array("codigo" => $dato, "linea" => $linea);
+        }
+
+        return $array;
     }
 }
