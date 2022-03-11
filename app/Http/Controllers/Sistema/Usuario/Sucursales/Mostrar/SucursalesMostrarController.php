@@ -10,6 +10,7 @@ use App\tuptiposusuariospermisos;
 use App\sucsucursales;
 use App\zonzonas;
 use App\zgszonasgrupossucursales;
+use App\gsugrupossucursales;
 
 class SucursalesMostrarController extends Controller
 {
@@ -66,14 +67,19 @@ class SucursalesMostrarController extends Controller
                         $zonas[$posicionZona]['gsus'] = $gsus;
                     }
 
-                    $gsus = sucsucursales::join('gsugrupossucursales as gsu', 'gsu.gsuid', 'sucsucursales.gsuid')
-                                        ->where('sucestado', 1)
-                                        ->distinct('gsu.gsuid')
-                                        ->get([
-                                            'gsu.gsuid',
-                                            'gsunombre',
-                                            'sucorden'
-                                        ]);
+                    // $gsus = sucsucursales::join('gsugrupossucursales as gsu', 'gsu.gsuid', 'sucsucursales.gsuid')
+                    //                     ->where('sucestado', 1)
+                    //                     ->distinct('gsu.gsuid')
+                    //                     ->get([
+                    //                         'gsu.gsuid',
+                    //                         'gsunombre'
+                    //                     ]);
+
+                    $gsus = gsugrupossucursales::orderBy('gsuorden', 'DESC')
+                                                ->get([
+                                                    'gsu.gsuid',
+                                                    'gsunombre'
+                                                ]);
 
                     foreach($gsus as $posicionGsu => $gsu){
                         $zonasGsu = [];
