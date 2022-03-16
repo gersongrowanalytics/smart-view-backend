@@ -86,14 +86,14 @@ class PdfPromocionesController extends Controller
                 foreach($dataCategorias[$posicionCat]['canales'][$posicionCan]['promocionesOrdenadas'] as $posicionPromoOrdn => $promOrde){
                     foreach($dataCategorias[$posicionCat]['canales'][$posicionCan]['promocionesOrdenadas'][$posicionPromoOrdn]['productos'] as $posicProdPrmOrd => $prodPrmOrd ){
                         if($dataCategorias[$posicionCat]['canales'][$posicionCan]['promocionesOrdenadas'][$posicionPromoOrdn]['productos'][$posicProdPrmOrd]['proimagen'] == "/"){
-                            $dataCategorias[$posicionCat]['canales'][$posicionCan]['promocionesOrdenadas'][$posicionPromoOrdn]['productos'][$posicProdPrmOrd]['proimagen'] = "https://pre-back.leadsmartview.com/Sistema/promociones/IMAGENES/PRODUCTOSNUEVO/fondoblanco.png";
+                            $dataCategorias[$posicionCat]['canales'][$posicionCan]['promocionesOrdenadas'][$posicionPromoOrdn]['productos'][$posicProdPrmOrd]['proimagen'] = "https://pre-back.leadsmartview.com/Sistema/promociones/IMAGENES/PRODUCTOSNUEVO/v2fondoblanco.png";
                         }
                         
                     }
 
                     foreach($dataCategorias[$posicionCat]['canales'][$posicionCan]['promocionesOrdenadas'][$posicionPromoOrdn]['productosbonificados'] as $posicProdBonPrmOrd => $prodPrmOrd ){
                         if($dataCategorias[$posicionCat]['canales'][$posicionCan]['promocionesOrdenadas'][$posicionPromoOrdn]['productosbonificados'][$posicProdBonPrmOrd]['prbimagen'] == "/"){
-                            $dataCategorias[$posicionCat]['canales'][$posicionCan]['promocionesOrdenadas'][$posicionPromoOrdn]['productosbonificados'][$posicProdBonPrmOrd]['prbimagen'] = "https://pre-back.leadsmartview.com/Sistema/promociones/IMAGENES/PRODUCTOSNUEVO/fondoblanco.png";
+                            $dataCategorias[$posicionCat]['canales'][$posicionCan]['promocionesOrdenadas'][$posicionPromoOrdn]['productosbonificados'][$posicProdBonPrmOrd]['prbimagen'] = "https://pre-back.leadsmartview.com/Sistema/promociones/IMAGENES/PRODUCTOSNUEVO/v2fondoblanco.png";
                         }
                     }
                 }
