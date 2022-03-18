@@ -18,6 +18,8 @@ class MostrarRebateController extends Controller
         $re_mes  = $request['mes'];
         $re_anio = $request['anio'];
 
+        $respuesta = true;
+
         $fec = fecfechas::where('fecmes', $re_mes)
                         ->where('fecano', $re_anio)
                         ->where('fecid', '01')
@@ -88,12 +90,12 @@ class MostrarRebateController extends Controller
             
 
         }else{
-
+            $respuesta = false;
         }
 
         return response()->json([
             "datos"     => $arr_data,
-            "respuesta" => true,
+            "respuesta" => $respuesta,
         ]);
 
     }
