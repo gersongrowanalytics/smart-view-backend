@@ -158,6 +158,11 @@ $router->group(['middleware' => ['permisos']], function() use($router) {
     $router->post('/descargas-enviar-correo', 'Sistema\Descargas\ConvertirExcelController@ConvertirExcel');
     $router->post('/enviar-correo-adjunto', 'Sistema\Descargas\ConvertirExcelController@EnviarCorreo');
 
+
+    // SMART VIEW V2
+    // REBATE
+    $router->post('/mostrar-rebates', 'Sistema\Modulos\Rebate\Mostrar\MostrarRebateController@MostrarRebate');
+
 });
 
 // CONTROL DE PRODUCTOS
