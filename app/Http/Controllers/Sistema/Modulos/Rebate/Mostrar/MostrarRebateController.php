@@ -22,7 +22,7 @@ class MostrarRebateController extends Controller
 
         $fec = fecfechas::where('fecmes', $re_mes)
                         ->where('fecano', $re_anio)
-                        ->where('fecid', '01')
+                        ->where('fecdia', '01')
                         ->first();
 
         $arr_data = array();
