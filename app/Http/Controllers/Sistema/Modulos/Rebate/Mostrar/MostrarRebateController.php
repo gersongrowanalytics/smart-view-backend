@@ -96,6 +96,7 @@ class MostrarRebateController extends Controller
         return response()->json([
             "datos"     => $arr_data,
             "respuesta" => $respuesta,
+            "datos_enviado" => [$re_mes, $re_anio]
         ]);
 
     }
