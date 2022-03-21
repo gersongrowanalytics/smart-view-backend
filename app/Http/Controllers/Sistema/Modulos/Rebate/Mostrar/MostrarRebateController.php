@@ -73,11 +73,38 @@ class MostrarRebateController extends Controller
                         }
 
                         $arr_data[] = $arr_data_agregar;
-                        $tablas_data[] = array(
-                            "treid" => $trrs_grupo->treid,
-                            "trenombre" => $trrs_grupo->trenombre,
-                            "data" => $arr_data_agregar
-                        );
+
+                        if(sizeof($tablas_data) > 0){
+
+                            $encontroData = false;
+                            $posicionTablaEncontrada = 0;
+
+                            foreach($tablas_data as $posicionTablasData => $tablaData){
+                                if($tablaData['treid'] == $trrs_grupo->treid){
+                                    $encontroData = true;
+                                    $posicionTablaEncontrada = $posicionTablasData;
+                                }
+                            }
+
+                            if($encontroData == true){
+
+                                $tablas_data[$posicionTablaEncontrada]['data'][] = $arr_data_agregar;
+
+                            }else{
+                                $tablas_data[] = array(
+                                    "treid" => $trrs_grupo->treid,
+                                    "trenombre" => $trrs_grupo->trenombre,
+                                    "data" => [$arr_data_agregar]
+                                );    
+                            }
+
+                        }else{
+                            $tablas_data[] = array(
+                                "treid" => $trrs_grupo->treid,
+                                "trenombre" => $trrs_grupo->trenombre,
+                                "data" => [$arr_data_agregar]
+                            );
+                        }
 
                     }
 
