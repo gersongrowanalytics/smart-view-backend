@@ -162,6 +162,7 @@ $router->group(['middleware' => ['permisos']], function() use($router) {
     // SMART VIEW V2
     // REBATE
     $router->post('/mostrar-rebates', 'Sistema\Modulos\Rebate\Mostrar\MostrarRebateController@MostrarRebate');
+    $router->post('/crear-varios-rebate', 'Sistema\Modulos\Rebate\Mostrar\MostrarRebateController@MostrarRebate');
 
 });
 
