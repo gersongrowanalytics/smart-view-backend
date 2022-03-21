@@ -26,10 +26,9 @@ class MostrarRebateController extends Controller
                         ->first();
 
         $arr_data = array();
+        $trrs_grupos = array();
 
         if($fec){ 
-
-            $cats = catcategorias::get(['catid', 'catnombre']);
 
             $tprs = tprtipospromociones::get(['tprid', 'tprnombre']);
 
@@ -51,7 +50,7 @@ class MostrarRebateController extends Controller
                                                         'trenombre'
                                                     ]);
 
-                    foreach($trrs_grupos as $trrs_grupo){
+                    foreach($trrs_grupos as $posicionTrr => $trrs_grupo){
                         
                         $arr_data_agregar = array();
 
@@ -73,7 +72,7 @@ class MostrarRebateController extends Controller
                             $arr_data_agregar['cat-'.$trr->catid] = $rtp->rtpporcentajerebate;
                         }
 
-
+                        $trrs_grupos[$posicionTrr]['data'] = $arr_data_agregar;
                         $arr_data[] = $arr_data_agregar;
 
                     }
@@ -95,6 +94,7 @@ class MostrarRebateController extends Controller
 
         return response()->json([
             "datos"     => $arr_data,
+            "tablas"    => $trrs_grupos,
             "respuesta" => $respuesta,
             "datos_enviado" => [$re_mes, $re_anio]
         ]);
