@@ -94,7 +94,10 @@ class MostrarRebateController extends Controller
                                 $tablas_data[] = array(
                                     "treid" => $trrs_grupo->treid,
                                     "trenombre" => $trrs_grupo->trenombre,
-                                    "data" => [$arr_data_agregar]
+                                    "data" => [$arr_data_agregar],
+                                    "retroceder" => false,
+                                    "ocultando"  => false,
+                                    "mostrando"  => false,
                                 );    
                             }
 
@@ -102,22 +105,16 @@ class MostrarRebateController extends Controller
                             $tablas_data[] = array(
                                 "treid" => $trrs_grupo->treid,
                                 "trenombre" => $trrs_grupo->trenombre,
-                                "data" => [$arr_data_agregar]
+                                "data" => [$arr_data_agregar],
+                                "retroceder" => false,
+                                "ocultando"  => false,
+                                "mostrando"  => true,
                             );
                         }
 
                     }
-
-
-
                 }
-
-
             }
-
-
-
-            
 
         }else{
             $respuesta = false;
