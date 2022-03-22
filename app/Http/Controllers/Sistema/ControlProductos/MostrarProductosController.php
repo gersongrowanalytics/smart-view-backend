@@ -130,11 +130,15 @@ class MostrarProductosController extends Controller
         if($proe){
 
             if(sizeof($req_fechas) > 0){
-                $fechaInicio = date("Y-m-d", strtotime($req_fechas[0]));
-                $fechaFinal  = date("Y-m-d", strtotime($req_fechas[1]));
 
-                $proe->profechainicio = $fechaInicio;
-                $proe->profechafinal = $fechaFinal;
+                $fechaInicio = $req_fechas[0];
+                $fechaFinal  = $req_fechas[1];
+
+                $fe_ini = explode("/", $fechaInicio);
+                $fe_fin = explode("/", $fechaInicio);
+
+                $proe->profechainicio = $fe_ini[2]."-".$fe_ini[1]."-".$fe_ini[0];
+                $proe->profechafinal  = $fe_fin[2]."-".$fe_fin[1]."-".$fe_fin[0];
             }
 
             list(, $base64) = explode(',', $req_imagen);
