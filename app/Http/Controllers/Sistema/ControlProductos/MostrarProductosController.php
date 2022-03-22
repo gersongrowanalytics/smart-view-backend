@@ -135,7 +135,7 @@ class MostrarProductosController extends Controller
                 $fechaFinal  = $req_fechas[1];
 
                 $fe_ini = explode("/", $fechaInicio);
-                $fe_fin = explode("/", $fechaInicio);
+                $fe_fin = explode("/", $fechaFinal);
 
                 $proe->profechainicio = $fe_ini[2]."-".$fe_ini[1]."-".$fe_ini[0];
                 $proe->profechafinal  = $fe_fin[2]."-".$fe_fin[1]."-".$fe_fin[0];
