@@ -8,6 +8,7 @@ use App\Http\Controllers\AuditoriaController;
 use App\rtprebatetipospromociones;
 use App\fecfechas;
 use App\trrtiposrebatesrebates;
+use App\catcategorias;
 
 class CrearRebateController extends Controller
 {
