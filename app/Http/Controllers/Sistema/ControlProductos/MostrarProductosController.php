@@ -25,7 +25,9 @@ class MostrarProductosController extends Controller
                                             'catnombre',
                                             'proimagen',
                                             'proproductos.created_at',
-                                            'proproductos.updated_at'
+                                            'proproductos.updated_at',
+                                            'profechainicio',
+                                            'profechafinal'
                                         ]);
 
         $prosConImagenes = proproductos::join('catcategorias as cat', 'cat.catid', 'proproductos.catid')
@@ -39,7 +41,9 @@ class MostrarProductosController extends Controller
                                             'catnombre',
                                             'proimagen',
                                             'proproductos.created_at',
-                                            'proproductos.updated_at'
+                                            'proproductos.updated_at',
+                                            'profechainicio',
+                                            'profechafinal'
                                         ]);
 
 
@@ -119,9 +123,19 @@ class MostrarProductosController extends Controller
         $req_prosku = $request['req_prosku'];
         $req_imagen = $request['req_imagen'];
 
+        $req_fechas = $request['req_fechas'];
+
         $proe = proproductos::where('prosku', $req_prosku)->first();
 
         if($proe){
+
+            if(sizeof($req_fechas) > 0){
+                $fechaInicio = $req_fechas[0];
+                $fechaFinal  = $req_fechas[1];
+
+                $proe->profechainicio = $fechaInicio;
+                $proe->profechafinal = $fechaFinal;
+            }
 
             list(, $base64) = explode(',', $req_imagen);
             $fichero = '/Sistema/promociones/IMAGENES/PRODUCTOSNUEVO/'.Str::random(5)."-".$fechaActual."-".$req_prosku.".png";
