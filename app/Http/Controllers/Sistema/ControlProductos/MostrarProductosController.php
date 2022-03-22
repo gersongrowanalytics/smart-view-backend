@@ -130,8 +130,8 @@ class MostrarProductosController extends Controller
         if($proe){
 
             if(sizeof($req_fechas) > 0){
-                $fechaInicio = $req_fechas[0];
-                $fechaFinal  = $req_fechas[1];
+                $fechaInicio = date("Y-m-d", strtotime($req_fechas[0]));
+                $fechaFinal  = date("Y-m-d", strtotime($req_fechas[1]));
 
                 $proe->profechainicio = $fechaInicio;
                 $proe->profechafinal = $fechaFinal;
