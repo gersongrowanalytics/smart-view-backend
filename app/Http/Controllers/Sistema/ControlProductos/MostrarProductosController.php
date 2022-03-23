@@ -8,6 +8,7 @@ use App\proproductos;
 use App\prppromocionesproductos;
 use App\prbpromocionesbonificaciones;
 use Illuminate\Support\Str;
+use \DateTime;
 
 class MostrarProductosController extends Controller
 {
