@@ -8,11 +8,16 @@ use App\proproductos;
 use App\prppromocionesproductos;
 use App\prbpromocionesbonificaciones;
 use Illuminate\Support\Str;
+use \DateTime;
 
 class MostrarProductosController extends Controller
 {
     public function MostrarProductos(Request $request)
     {
+
+        date_default_timezone_set("America/Lima");
+        $fechaActual = date('Y-m-d');
+
 
         $prosSinImagenes = proproductos::join('catcategorias as cat', 'cat.catid', 'proproductos.catid')
                                         ->where('proimagen', "/")
@@ -25,7 +30,9 @@ class MostrarProductosController extends Controller
                                             'catnombre',
                                             'proimagen',
                                             'proproductos.created_at',
-                                            'proproductos.updated_at'
+                                            'proproductos.updated_at',
+                                            'profechainicio',
+                                            'profechafinal'
                                         ]);
 
         $prosConImagenes = proproductos::join('catcategorias as cat', 'cat.catid', 'proproductos.catid')
@@ -39,13 +46,65 @@ class MostrarProductosController extends Controller
                                             'catnombre',
                                             'proimagen',
                                             'proproductos.created_at',
-                                            'proproductos.updated_at'
+                                            'proproductos.updated_at',
+                                            'profechainicio',
+                                            'profechafinal'
                                         ]);
+
+        $prosVencidos = [];
+        $prosConImagenesFormat = [];
+
+        foreach($prosConImagenes as $prosConImagen){
+            $prosConImagenesFormat[] = array(
+                "proid" => $prosConImagen->proid,
+                "prosku" => $prosConImagen->prosku,
+                "pronombre" => $prosConImagen->pronombre,
+                "catnombre" => $prosConImagen->catnombre,
+                "proimagen" => $prosConImagen->proimagen,
+                "created_at" => $prosConImagen->created_at,
+                "updated_at" => $prosConImagen->updated_at,
+                "profechainicio" => $prosConImagen->profechainicio,
+                "profechafinal" => $prosConImagen->profechafinal,
+            );
+        }
+
+        foreach($prosConImagenesFormat as $posicionProConImagen => $prosConImagen){
+
+
+            if(isset($prosConImagen['profechafinal'])){
+
+                $date1 = new DateTime($fechaActual);
+                $date2 = new DateTime($prosConImagen['profechafinal']);
+
+                $diff = $date1->diff($date2);
+
+                if($diff->invert == 1){
+                    
+                    unset($prosConImagenesFormat[$posicionProConImagen]);
+                    $prosVencidos[] = array(
+                        "proid"           => $prosConImagen['proid'],
+                        "prosku"          => $prosConImagen['prosku'],
+                        "pronombre"       => $prosConImagen['pronombre'],
+                        "catnombre"       => $prosConImagen['catnombre'],
+                        "proimagen"       => $prosConImagen['proimagen'],
+                        "created_at"      => $prosConImagen['created_at'],
+                        "updated_at"      => $prosConImagen['updated_at'],
+                        "profechainicio"  => $prosConImagen['profechainicio'],
+                        "profechafinal"   => $prosConImagen['profechafinal'],
+                    );
+
+                }else{
+                    
+                } 
+
+            }
+        }
 
 
         $requestsalida = response()->json([
             "prosSinImagenes" => $prosSinImagenes,
-            "prosConImagenes" => $prosConImagenes,
+            "prosConImagenes" => $prosConImagenesFormat,
+            "prosVencidos" => $prosVencidos,
         ]);
 
         return $requestsalida;
@@ -119,9 +178,23 @@ class MostrarProductosController extends Controller
         $req_prosku = $request['req_prosku'];
         $req_imagen = $request['req_imagen'];
 
+        $req_fechas = $request['req_fechas'];
+
         $proe = proproductos::where('prosku', $req_prosku)->first();
 
         if($proe){
+
+            if(sizeof($req_fechas) > 0){
+
+                $fechaInicio = $req_fechas[0];
+                $fechaFinal  = $req_fechas[1];
+
+                $fe_ini = explode("/", $fechaInicio);
+                $fe_fin = explode("/", $fechaFinal);
+
+                $proe->profechainicio = $fe_ini[2]."-".$fe_ini[1]."-".$fe_ini[0];
+                $proe->profechafinal  = $fe_fin[2]."-".$fe_fin[1]."-".$fe_fin[0];
+            }
 
             list(, $base64) = explode(',', $req_imagen);
             $fichero = '/Sistema/promociones/IMAGENES/PRODUCTOSNUEVO/'.Str::random(5)."-".$fechaActual."-".$req_prosku.".png";
