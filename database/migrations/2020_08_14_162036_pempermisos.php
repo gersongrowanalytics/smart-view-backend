@@ -15,10 +15,13 @@ class Pempermisos extends Migration
     {
         Schema::create('pempermisos', function (Blueprint $table) {
             $table->increments('pemid');
+            $table->unsignedInteger('tpemid');
             $table->string('pemnombre');
             $table->string('pemslug');
             $table->string('pemruta')->nullable();
             $table->timestamps();
+
+            $table->foreign('tpemid')->references('tpemid')->on('tpemtipospermisos');
         });
     }
 
