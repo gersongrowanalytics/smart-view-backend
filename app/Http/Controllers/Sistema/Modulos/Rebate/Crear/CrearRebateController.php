@@ -41,7 +41,7 @@ class CrearRebateController extends Controller
             // REINICIAR RTP Y TRR
 
             if($re_reiniciar == true){
-                $rtps = rtprebatetipospromociones::where('fecid', $fec-fecid)->get();
+                $rtps = rtprebatetipospromociones::where('fecid', $fec->fecid)->get();
 
                 foreach($rtps as $rtp){
                     
