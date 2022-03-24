@@ -24,6 +24,7 @@ class CrearRebateController extends Controller
         $re_datas = $request['data'];
         $re_mes   = $request['mes'];
         $re_anio  = $request['anio'];
+        $re_reinniciar  = $request['reinniciar'];
 
         $cats = catcategorias::where('catid', '<', 6)
                             ->get();
@@ -33,7 +34,22 @@ class CrearRebateController extends Controller
                         ->where('fecdia', '01')
                         ->first();
 
+        
+
         if($fec){
+
+            // REINICIAR RTP Y TRR
+
+            if($re_reinniciar == true){
+                $rtps = rtprebatetipospromociones::where('fecid', $fec-fecid)->get();
+
+                foreach($rtps as $rtp){
+                    
+                    trrtiposrebatesrebates::where('rtpid', $rtp->rtpid)->delete();
+                    rtprebatetipospromociones::where('rtpid', $rtp->rtpid)->delete();
+
+                }
+            }
 
             foreach($re_datas as $re_data){
 
