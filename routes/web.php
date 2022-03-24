@@ -15,6 +15,17 @@ $router->get('/', function () use ($router) {
     return $router->app->version();
 });
 
+$router->post('/usuarios/crear', 'Sistema\Administrador\Usuarios\CrearUsuariosController@CrearUsuarios');
+$router->post('/usuarios/editar', 'Sistema\Administrador\Usuarios\EditarUsuariosController@EditarUsuarios');
+$router->post('/usuarios/mostrar', 'Sistema\Administrador\Usuarios\MostrarUsuariosController@MostrarUsuarios');
+$router->post('/asignarsucursales', 'Sistema\Administrador\Usuarios\AsignarSucursalesController@AsignarSucursales');
+$router->post('/tipos-usuarios/permisos/mostrar', 'Sistema\Administrador\TiposUsuarios\MostrarPermisosTiposUsuariosController@MostrarPermisosTiposUsuarios');
+$router->post('/tipos-usuarios/permisos/editar', 'Sistema\Administrador\TiposUsuarios\EditarPermisosTiposUsuariosController@EditarPermisosTiposUsuarios');
+$router->get('/permisos/mostrar', 'Sistema\Administrador\Permisos\MostrarPermisosController@MostrarPermisos');
+$router->post('/permisos/crear', 'Sistema\Administrador\Permisos\CrearPermisosController@CrearPermisos');
+$router->post('/permisos/editar', 'Sistema\Administrador\Permisos\EditarPermisosController@EditarPermisos');
+
+
 $router->get('/actualizar', 'salvacionController@salvacion');
 $router->get('/asignarsuc', 'salvacionController@asignarzonassucursales');
 $router->get('/actualizarestadosucursales', 'salvacionController@cambiarEstadoSucursales');

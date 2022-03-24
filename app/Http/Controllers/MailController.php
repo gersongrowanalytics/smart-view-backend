@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use App\Mail\TestMail;
 use App\Mail\MailRecuperarContrasena;
 use App\Mail\MailRecuperarContrasenaOutlook;
-use App\Mail\MailCrearUsuario;
 use App\Mail\MailCrearUsuarioOutlook;
 use Illuminate\Support\Facades\Mail;
 use App\usuusuarios;
