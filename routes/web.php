@@ -141,6 +141,7 @@ $router->group(['middleware' => ['permisos']], function() use($router) {
     $router->post('/fechas/mostrar/fechas', 'Sistema\Fechas\Mostrar\FechasMostrarController@mostrarFechas');
 
     $router->post('/mostrar/controlArchivos', 'Sistema\ControlArchivos\Mostrar\ControlArchivosMostrarController@MostrarControlArchivos');
+    $router->post('/mostrar/archivos-subidos', 'Sistema\ControlArchivos\Mostrar\ControlArchivosMostrarController@MostrarArchivosSubidos');
 
     $router->post('/controlVentas/estadistica/xzona', 'Sistema\Modulos\ControlVentas\VentasXZonasController@VentasXZonas');
     $router->post('/controlVentas/estadistica/xgrafico', 'Sistema\Modulos\ControlVentas\VentasXZonasController@VentasXControl');
