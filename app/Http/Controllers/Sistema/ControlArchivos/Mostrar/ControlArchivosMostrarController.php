@@ -102,12 +102,7 @@ class ControlArchivosMostrarController extends Controller
                                     
                                 ]);
         $respuesta = true;
-        if(sizeof($cars) > 0){
-            $mensaje = sizeof($cars)." registros encontrados";
-        }else{
-            $mensaje = sizeof($cars)." registros encontrados";
-            $respuesta = false;
-        }
+        
 
         $requestsalida = response()->json([
             "respuesta" => $respuesta,
