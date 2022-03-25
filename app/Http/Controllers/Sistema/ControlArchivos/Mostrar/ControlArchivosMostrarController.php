@@ -89,7 +89,8 @@ class ControlArchivosMostrarController extends Controller
 
                                 })
                                 ->orderBy('carcargasarchivos.created_at', 'DESC')
-                                ->paginate([
+                                ->paginate(10)
+                                ->get([
                                     'carid',
                                     'tcanombre',
                                     'usuusuario',
