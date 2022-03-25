@@ -32,7 +32,7 @@ class ArmarFiltrosListaPreciosController extends Controller
 
             foreach($arr_filtro_categorias_lp as $arr_filtro){
                 
-                if($arr_filtro['data'] == $dat['catnombre']){
+                if($arr_filtro['data'] == $data['catnombre']){
                     $encontroDataCategoria = true;
                 }
 
