@@ -89,18 +89,18 @@ class ControlArchivosMostrarController extends Controller
 
                                 })
                                 ->orderBy('carcargasarchivos.created_at', 'DESC')
-                                ->paginate(10)
-                                ->get([
-                                    'carid',
-                                    'tcanombre',
-                                    'usuusuario',
-                                    'carnombrearchivo',
-                                    'carubicacion',
-                                    'carexito',
-                                    'carurl',
-                                    'carcargasarchivos.created_at'
+                                ->paginate(10);
+                                // ->get([
+                                //     'carid',
+                                //     'tcanombre',
+                                //     'usuusuario',
+                                //     'carnombrearchivo',
+                                //     'carubicacion',
+                                //     'carexito',
+                                //     'carurl',
+                                //     'carcargasarchivos.created_at'
                                     
-                                ]);
+                                // ]);
         $respuesta = true;
         
 
