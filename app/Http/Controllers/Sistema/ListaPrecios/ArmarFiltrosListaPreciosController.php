@@ -45,6 +45,58 @@ class ArmarFiltrosListaPreciosController extends Controller
                 );
             }
 
+
+            // SUBCATEGORIAS
+
+            foreach($arr_filtro_subcategorias_lp as $arr_filtro){
+                
+                if($arr_filtro['data'] == $data['ltpsubcategoria']){
+                    $encontroDataSubCatego = true;
+                }
+
+            }
+
+            if($encontroDataSubCatego == false){
+                $arr_filtro_subcategorias_lp[] = array(
+                    "data" => $data['ltpsubcategoria'],
+                    "seleccionado" => false
+                );
+            }
+
+            // COD SAP
+
+            foreach($arr_filtro_codsap_lp as $arr_filtro){
+                
+                if($arr_filtro['data'] == $data['ltpcodigosap']){
+                    $encontroDataCodSap = true;
+                }
+
+            }
+
+            if($encontroDataCodSap == false){
+                $arr_filtro_codsap_lp[] = array(
+                    "data" => $data['ltpcodigosap'],
+                    "seleccionado" => false
+                );
+            }
+
+             // MATERIAL
+
+             foreach($arr_filtro_materiales_lp as $arr_filtro){
+                
+                if($arr_filtro['data'] == $data['pronombre']){
+                    $encontroDataMaterial = true;
+                }
+
+            }
+
+            if($encontroDataMaterial == false){
+                $arr_filtro_materiales_lp[] = array(
+                    "data" => $data['pronombre'],
+                    "seleccionado" => false
+                );
+            }
+
         }
 
         return array(
