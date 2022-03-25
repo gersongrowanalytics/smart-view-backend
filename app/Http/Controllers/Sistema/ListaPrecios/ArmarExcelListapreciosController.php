@@ -9,6 +9,8 @@ use App\ussusuariossucursales;
 use App\usuusuarios;
 use App\tretiposrebates;
 use App\tuptiposusuariospermisos;
+use App\Http\Controllers\Sistema\ListaPrecios\ArmarFiltrosListaPreciosController;
+
 
 class ArmarExcelListapreciosController extends Controller
 {
@@ -1903,9 +1905,19 @@ class ArmarExcelListapreciosController extends Controller
 
         }
 
+        $armarFiltrosListaPreciosController = new ArmarFiltrosListaPreciosController;
+        $armarFiltros  = $armarFiltrosListaPreciosController->ArmarFiltrosListaPrecios($ltps);
+
+        
+
         return response()->json([
             'excel' => $nuevoArray,
-            'data' => $ltps
+            'data' => $ltps,
+            'arr_filtro_categorias_lp'    => $armarFiltros['arr_filtro_categorias_lp'],
+            'arr_filtro_subcategorias_lp' => $armarFiltros['arr_filtro_subcategorias_lp'],
+            'arr_filtro_formato_lp'       => $armarFiltros['arr_filtro_formato_lp'],
+            'arr_filtro_codsap_lp'        => $armarFiltros['arr_filtro_codsap_lp'],
+            'arr_filtro_materiales_lp'    => $armarFiltros['arr_filtro_materiales_lp'],
         ]);
 
     }
