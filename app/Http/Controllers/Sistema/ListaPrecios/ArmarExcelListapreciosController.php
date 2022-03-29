@@ -169,6 +169,8 @@ class ArmarExcelListapreciosController extends Controller
 
         foreach($ltps as $posicionLtp => $ltp){
 
+            $ltps[$posicionLtp]['mostrar'] = true;
+
             if($posicionLtp == 0){
 
 
