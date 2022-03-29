@@ -41,7 +41,7 @@ class ArmarFiltrosListaPreciosController extends Controller
             if($encontroDataCategoria == false){
                 $arr_filtro_categorias_lp[] = array(
                     "data" => $data['catnombre'],
-                    "seleccionado" => false
+                    "seleccionado" => true
                 );
             }
 
@@ -59,7 +59,7 @@ class ArmarFiltrosListaPreciosController extends Controller
             if($encontroDataSubCatego == false){
                 $arr_filtro_subcategorias_lp[] = array(
                     "data" => $data['ltpsubcategoria'],
-                    "seleccionado" => false
+                    "seleccionado" => true
                 );
             }
 
@@ -76,7 +76,7 @@ class ArmarFiltrosListaPreciosController extends Controller
             if($encontroDataCodSap == false){
                 $arr_filtro_codsap_lp[] = array(
                     "data" => $data['ltpcodigosap'],
-                    "seleccionado" => false
+                    "seleccionado" => true
                 );
             }
 
@@ -93,7 +93,7 @@ class ArmarFiltrosListaPreciosController extends Controller
             if($encontroDataMaterial == false){
                 $arr_filtro_materiales_lp[] = array(
                     "data" => $data['pronombre'],
-                    "seleccionado" => false
+                    "seleccionado" => true
                 );
             }
 
