@@ -45,6 +45,22 @@ class ArmarFiltrosListaPreciosController extends Controller
                 );
             }
 
+            // FORMATOS
+
+            foreach($arr_filtro_formato_lp as $arr_filtro){
+                
+                if($arr_filtro['data'] == $data['proformato']){
+                    $encontroDataFormato = true;
+                }
+
+            }
+
+            if($encontroDataFormato == false){
+                $arr_filtro_formato_lp[] = array(
+                    "data" => $data['proformato'],
+                    "seleccionado" => true
+                );
+            }
 
             // SUBCATEGORIAS
 

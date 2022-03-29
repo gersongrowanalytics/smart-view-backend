@@ -86,6 +86,7 @@ class ArmarExcelListapreciosController extends Controller
                                 ->get([
                                     'cat.catnombre',
                                     'pronombre',
+                                    'proformato',
                                     'ltpid',
                                     'ltpcategoria',
                                     'ltpsubcategoria',
