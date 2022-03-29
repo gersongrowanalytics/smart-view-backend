@@ -311,11 +311,11 @@ class ProductosCargarController extends Controller
                                 $anterior = $pro->catid;
                                 if($pro->catid != $categoriaid){
                                     $pro->catid = $categoriaid;
-                                    $pro->pronombre = $material;
-                                    $pro->proformato = $formato;
-                                    $pro->update();
                                     $log["EDITAR_PRODUCTO"][] = "CATEGORIA ANTERIOR: ".$anterior." NUEVA CATEGORIA: ".$categoria."(".$categoriaid.") - SKU: ".$codigoMaterial;
                                 }
+                                $pro->pronombre = $material;
+                                $pro->proformato = $formato;
+                                $pro->update();
                             }else{
                                 $nuevopro = new proproductos;
                                 $nuevopro->catid     = $categoriaid;
