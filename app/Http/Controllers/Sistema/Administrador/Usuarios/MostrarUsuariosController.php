@@ -5,11 +5,14 @@ namespace App\Http\Controllers\Sistema\Administrador\Usuarios;
 use App\Http\Controllers\Controller;
 use App\usuusuarios;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class MostrarUsuariosController extends Controller
 {
     public function MostrarUsuarios(Request $request)
     {
+        $array_usuarios = [];
+
         $respuesta      = false;
         $mensaje        = '';
 
@@ -17,17 +20,33 @@ class MostrarUsuariosController extends Controller
         
         $usuarios = usuusuarios::join('perpersonas as per', 'per.perid', 'usuusuarios.perid')
                                 ->join('tputiposusuarios as tpu', 'tpu.tpuid', 'usuusuarios.tpuid')
+                                ->join('zonzonas as zon', 'zon.zonid','usuusuarios.zonid')
+                                ->join('estestados as est', 'est.estid','usuusuarios.estid')
                                 ->orderBy('usuusuarios.created_at', 'DESC')
-                                ->get([
-                                    'usuusuarios.usuid',
-                                    'tpu.tpuid',
-                                    'tpu.tpunombre',
-                                    'per.perid',
-                                    'per.pernombrecompleto',
-                                    'usuusuarios.usucorreo',
-                                    'usuusuarios.usucontrasena',
-                                    'usuusuarios.estid'
-                                ]);
+                                ->paginate(10);
+                                // ->get([
+                                //     'usuusuarios.usuid',
+                                //     'per.pernombrecompleto',
+                                //     'per.pernombre',
+                                //     'per.perapellidopaterno',
+                                //     'usuusuarios.usucorreo',
+                                //     'usuusuarios.usucontrasena',
+                                //     'tpu.tpunombre',
+                                //     'zon.zonnombre',                                    
+                                //     'est.estnombre',
+                                // ]);
+        
+       
+        
+        foreach ($usuarios as $key => $usuario) {
+            $paises = DB::table('paupaisesusuarios')->join('paipaises as pai','pai.paiid','paupaisesusuarios.paiid')
+                                                    ->where('paupaisesusuarios.usuid', $usuario['usuid'])
+                                                    ->get([
+                                                        'pai.painombre'
+                                                    ]);
+            
+            $usuarios[$key]['painombre'] = array($paises);
+        }
 
         if(sizeof($usuarios) > 0){
             $respuesta      = true;
