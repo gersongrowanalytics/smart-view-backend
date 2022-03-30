@@ -16,6 +16,8 @@ use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 use App\Mail\CorreConArchivos;
 use App\Mail\CorreConArchivosPdf;
+use App\uceusuarioscorreosenviados;
+use App\dcedestinatarioscorreosenviados;
 use Illuminate\Support\Facades\Mail;
 
 class ConvertirExcelController extends Controller
@@ -121,6 +123,15 @@ class ConvertirExcelController extends Controller
     {
         $usutoken = $request->header('api_token');
 
+        $re_nombreexcel = $request['nombreexcel'];
+
+        $re_titulo      = $request['titulo'];
+        $re_columnas    = $request['columnas'];
+        $re_sucs        = $request['sucs'];
+        $re_anio        = $request['anio'];
+        $re_mes         = $request['mes'];
+        $re_dia         = $request['dia'];
+
         $asunto       = $request['asunto'];
         $destinatario = $request['destinatario'];
         $mensaje      = $request['mensaje'];
@@ -128,6 +139,34 @@ class ConvertirExcelController extends Controller
         $re_espdf     = $request['espdf'];
 
         $mensaje = str_replace('\n', "<br>", $mensaje);
+
+
+        $usuusuario = usuusuarios::where('usutoken', $usutoken)->first(['usuid', 'ususoldto']);
+
+        $ucen = new uceusuarioscorreosenviados;
+        $ucen->usuid          = $usuusuario->usuid;
+        $ucen->ucenombreexcel = $excel;
+        $ucen->uceasunto      = $asunto;
+        $ucen->ucecontenido   = $mensaje;
+        $ucen->ucecolumnas    = $re_columnas;
+        $ucen->ucesucursales  = $re_sucs;
+        $ucen->uceanio        = $re_anio;
+        $ucen->ucemes         = $re_mes;
+        $ucen->ucedia         = $re_dia;
+        if($re_espdf == true){
+            $ucen->ucetipo = "PDF";
+        }else{
+            $ucen->ucetipo = "EXCEL";
+        }
+        if($ucen->save()){
+
+            $dcen = new dcedestinatarioscorreosenviados;
+            $dcen->uceid = $ucen->uceid;
+            $dcen->dcedestinatario = $destinatario;
+            $dcen->save();
+
+        }
+
 
         if($re_espdf == true){
             

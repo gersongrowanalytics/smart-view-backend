@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Sistema\CargarArchivo\Ventas;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Controllers\AuditoriaController;
+use App\Http\Controllers\Sistema\CargarArchivo\RegistrarNotificacionController;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
@@ -29,7 +30,7 @@ class CargarArchivoController extends Controller
 {
     public function CargarArchivo(Request $request)
     {
-        $preproduccion = false;
+        $preproduccion = true;
 
         $respuesta      = true;
         $mensaje        = '';
@@ -400,7 +401,15 @@ class CargarArchivoController extends Controller
                 
                                                 }
                                                 
-                                            }  
+                                            }
+
+                                            $RegistrarNotificacion = new RegistrarNotificacionController;
+                                            if($RegistrarNotificacion->RegistrarNotificacion()){
+
+                                            }else{
+
+                                            }
+                                            
                                         }else{
                                             $soldtosNoExis[] = $soldto;
                                             $respuesta = false;
