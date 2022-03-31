@@ -43,8 +43,12 @@ class MostrarUsuariosController extends Controller
             $paises = paupaisesusuarios::join('paipaises as pai','pai.paiid','paupaisesusuarios.paiid')
                                         ->where('paupaisesusuarios.usuid', $usuario['usuid'])
                                         ->get([
+                                            'pai.paiid',
                                             'pai.painombre',
-                                            'pai.paiicono'
+                                            'pai.paiicono',
+                                            'pai.paiiconocircular',
+                                            'pai.paiiconomas',
+                                            'pai.estid'
                                         ]);
             
             $usuarios[$key]['paises'] = $paises;
