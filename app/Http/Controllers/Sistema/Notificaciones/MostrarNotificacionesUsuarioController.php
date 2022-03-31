@@ -16,6 +16,8 @@ class MostrarNotificacionesUsuarioController extends Controller
         $usu = usuusuarios::where('usutoken', $usutoken)->first();
 
         $nuss = array();
+        $notificaciones_nuevas   = [];
+        $notificaciones_antiguas = [];
 
         if($usu){
 
@@ -33,7 +35,15 @@ class MostrarNotificacionesUsuarioController extends Controller
 
             if(sizeof($nuss)){
 
+                foreach($nuss as $nus){
 
+                    if($nus->nusleyo == true){
+                        $notificaciones_antiguas[] = $nus;
+                    }else{
+                        $notificaciones_nuevas[] = $nus;
+                    }
+
+                }
 
             }else{
 
@@ -41,13 +51,13 @@ class MostrarNotificacionesUsuarioController extends Controller
 
         }else{
 
-
-
         }
 
         $requestsalida = response()->json([
-            "respuesta" => true,
-            "data" => $nuss,
+            "respuesta"    => true,
+            "data"         => $nuss,
+            "not_nuevas"   => $notificaciones_nuevas,
+            "not_antiguas" => $notificaciones_antiguas
         ]);
         
         return $requestsalida;
