@@ -15,19 +15,49 @@ class MostrarNotificacionesUsuarioController extends Controller
         $usutoken = $request->header('api_token');
         $usu = usuusuarios::where('usutoken', $usutoken)->first();
 
-        $nsus = array();
+        $nuss = array();
+        $notificaciones_nuevas   = [];
+        $notificaciones_antiguas = [];
 
         if($usu){
 
-            $nsus = nusnotificacionesusuarios::where('usuid', $usu->usuid)
-                                            ->get();
+            $nuss = nusnotificacionesusuarios::join('tnotiposnotificaciones as tno', 'tno.tnoid', 'nusnotificacionesusuarios.tnoid')
+                                            ->where('usuid', $usu->usuid)
+                                            ->get([
+                                                'tnotipo',
+                                                'tnotitulo',
+                                                'tnodescripcion',
+                                                'tnoimagen',
+                                                'tnolink',
+                                                'nusfechaenviada',
+                                                'nusleyo'
+                                            ]);
+
+            if(sizeof($nuss)){
+
+                foreach($nuss as $nus){
+
+                    if($nus->nusleyo == true){
+                        $notificaciones_antiguas[] = $nus;
+                    }else{
+                        $notificaciones_nuevas[] = $nus;
+                    }
+
+                }
+
+            }else{
+
+            }
 
         }else{
 
         }
 
         $requestsalida = response()->json([
-            "data" => $nsus
+            "respuesta"    => true,
+            "data"         => $nuss,
+            "not_nuevas"   => $notificaciones_nuevas,
+            "not_antiguas" => $notificaciones_antiguas
         ]);
         
         return $requestsalida;
