@@ -33,7 +33,7 @@ class MostrarNotificacionesUsuarioController extends Controller
 
             if(sizeof($nuss)){
 
-                
+
 
             }else{
 
@@ -46,7 +46,8 @@ class MostrarNotificacionesUsuarioController extends Controller
         }
 
         $requestsalida = response()->json([
-            "data" => $nuss
+            "respuesta" => true,
+            "data" => $nuss,
         ]);
         
         return $requestsalida;
