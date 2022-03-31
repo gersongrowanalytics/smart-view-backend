@@ -176,6 +176,10 @@ $router->group(['middleware' => ['permisos']], function() use($router) {
     $router->post('/mostrar-rebates', 'Sistema\Modulos\Rebate\Mostrar\MostrarRebateController@MostrarRebate');
     $router->post('/crear-varios-rebate', 'Sistema\Modulos\Rebate\Crear\CrearRebateController@CrearRebate');
 
+    // NOTIFICACIONES
+    $router->post('/mostrar-notificaciones-usuario', 'Sistema\Notificaciones\MostrarNotificacionesUsuarioController@MostrarNotificacionesUsuario');
+    
+
 });
 
 // CONTROL DE PRODUCTOS
