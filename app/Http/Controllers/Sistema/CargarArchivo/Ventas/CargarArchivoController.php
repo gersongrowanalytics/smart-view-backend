@@ -402,13 +402,6 @@ class CargarArchivoController extends Controller
                                                 }
                                                 
                                             }
-
-                                            $RegistrarNotificacion = new RegistrarNotificacionController;
-                                            if($RegistrarNotificacion->RegistrarNotificacion()){
-
-                                            }else{
-
-                                            }
                                             
                                         }else{
                                             $soldtosNoExis[] = $soldto;
@@ -512,6 +505,13 @@ class CargarArchivoController extends Controller
                     }
 
                 }
+
+                // $RegistrarNotificacion = new RegistrarNotificacionController;
+                // if($RegistrarNotificacion->RegistrarNotificacion()){
+
+                // }else{
+
+                // }
 
                 $nuevoCargaArchivo = new carcargasarchivos;
                 $nuevoCargaArchivo->tcaid            = 3;
