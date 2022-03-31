@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Sistema\Administrador\Usuarios;
 
 use App\Http\Controllers\Controller;
 use App\usuusuarios;
+use App\paupaisesusuarios;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -39,11 +40,11 @@ class MostrarUsuariosController extends Controller
        
         
         foreach ($usuarios as $key => $usuario) {
-            $paises = DB::table('paupaisesusuarios')->join('paipaises as pai','pai.paiid','paupaisesusuarios.paiid')
-                                                    ->where('paupaisesusuarios.usuid', $usuario['usuid'])
-                                                    ->get([
-                                                        'pai.painombre'
-                                                    ]);
+            $paises = paupaisesusuarios::join('paipaises as pai','pai.paiid','paupaisesusuarios.paiid')
+                                        ->where('paupaisesusuarios.usuid', $usuario['usuid'])
+                                        ->get([
+                                            'pai.painombre'
+                                        ]);
             
             $usuarios[$key]['painombre'] = array($paises);
         }
