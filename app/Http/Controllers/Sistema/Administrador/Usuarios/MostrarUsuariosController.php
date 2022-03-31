@@ -42,10 +42,11 @@ class MostrarUsuariosController extends Controller
             $paises = DB::table('paupaisesusuarios')->join('paipaises as pai','pai.paiid','paupaisesusuarios.paiid')
                                                     ->where('paupaisesusuarios.usuid', $usuario['usuid'])
                                                     ->get([
-                                                        'pai.painombre'
+                                                        'pai.painombre',
+                                                        'pai.'
                                                     ]);
             
-            $usuarios[$key]['painombre'] = array($paises);
+            $usuarios[$key]['paises'] = $paises;
         }
 
         if(sizeof($usuarios) > 0){
