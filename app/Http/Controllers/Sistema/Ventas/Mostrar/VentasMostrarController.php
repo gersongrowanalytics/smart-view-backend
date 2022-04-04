@@ -239,9 +239,9 @@ class VentasMostrarController extends Controller
                                                                     // ->where('cat.catid', '!=', 6)
                                                                     ->where(function ($query) use( $mostrarTodasCategorias) {
                                                                         if($mostrarTodasCategorias == true){
-                                                                            $query->where('catid', '!=', 6);
+                                                                            $query->where('cat.catid', '!=', 6);
                                                                         }else{
-                                                                            $query->where('catid', '<', 6);
+                                                                            $query->where('cat.catid', '<', 6);
                                                                         }
                                                                     })
                                                                     ->orderBy('cat.catid')
