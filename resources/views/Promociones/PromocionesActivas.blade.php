@@ -39,11 +39,13 @@
                 <div style="padding-top: 16px; text-align: justify;  font-style: normal; font-weight: 400; font-size: 13px; line-height: 17px; letter-spacing: -0.015em; color: #000000;">
                     Quedo atento a las activaciones de estas promociones en su sistema.
                 </div>
-                <div style="padding-top: 10px; margin-top: 10px; background: #3646C4; border-radius: 22px; width: 175px; height: 25px; font-weight: 700; font-size: 13px; line-height: 17px; color: #FFFFFF;">
-                    <center>Visitar Plataforma</center>
-                </div>
+                <a href="https://leadsmartview.com/sistema/promociones">
+                    <div style="padding-top: 10px; margin-top: 10px; background: #3646C4; border-radius: 22px; width: 175px; height: 25px; font-weight: 700; font-size: 13px; line-height: 17px; color: #FFFFFF;">
+                        <center>Visitar Plataforma</center>
+                    </div>
+                </a>
                 <div style="padding-top: 16px; text-align: justify; font-style: normal; font-weight: 400; font-size: 13px; line-height: 17px; letter-spacing: -0.015em; color: #000000;">
-                    En caso tengas problemas para ingresar en el botón, ingresar al siguiente enlace: <br>https://leadsmartview.com/sistema/promociones
+                    En caso tengas problemas para ingresar en el botón, ingresar al siguiente enlace: <br><a href="https://leadsmartview.com/sistema/promociones">https://leadsmartview.com/sistema/promociones</a>
                 </div>
                 <div style="padding-top: 10px; margin-bottom: 25px; text-align: justify; font-style: italic; font-weight: 400; font-size: 12px; line-height: 16px; letter-spacing: -0.015em; color: #000000;">
                     Este es un email automático, si tienes cualquier tipo de duda ponte en contacto con nosotros a través de nuestro servicio de atención 
