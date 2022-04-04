@@ -21,7 +21,7 @@ class MostrarUsuariosController extends Controller
         
         $usuarios = usuusuarios::join('perpersonas as per', 'per.perid', 'usuusuarios.perid')
                                 ->join('tputiposusuarios as tpu', 'tpu.tpuid', 'usuusuarios.tpuid')
-                                ->join('zonzonas as zon', 'zon.zonid','usuusuarios.zonid')
+                                ->leftJoin('zonzonas as zon', 'zon.zonid','usuusuarios.zonid')
                                 ->join('estestados as est', 'est.estid','usuusuarios.estid')
                                 ->orderBy('usuusuarios.created_at', 'DESC')
                                 ->paginate(10);

@@ -30,6 +30,8 @@ class CrearUsuariosController extends Controller
         $tipo_usuario = $request['tipo_usuario'];
         // $fecha_inicio = $request['fecha_inicio'];
         // $fecha_fin    = $request['fecha_fin'];
+        // $paises       = $request['paises'];
+        // $zonas        = $request['zonas'];
         $estado       = $request['estado'];
         
         $per = perpersonas::where('pernombre', $nombre)
