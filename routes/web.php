@@ -57,6 +57,7 @@ $router->group(['middleware' => ['permisos']], function() use($router) {
 
     // PROMOCIONES
     $router->post('/promociones/mail/enviar-correo-promociones-activas', 'Sistema\Promociones\Mail\EnviarPromocionesActivasController@EnviarPromocionesActivas');
+    $router->post('/promociones/mail/enviar-correo-promociones-nuevas', 'Sistema\Promociones\Mail\EnviarPromocionesNuevasController@EnviarPromocionesNuevas');
 
     $router->post('/promociones/mostrar/categorias', 'Sistema\Promociones\Mostrar\CategoriasController@mostrarCategorias');
     $router->post('/promociones/mostrar/categorias/xzona', 'Sistema\Promociones\Mostrar\CategoriasController@mostrarCategoriasXZona');
