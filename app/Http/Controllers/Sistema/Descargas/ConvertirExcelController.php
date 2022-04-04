@@ -18,6 +18,7 @@ use App\Mail\CorreConArchivos;
 use App\Mail\CorreConArchivosPdf;
 use App\uceusuarioscorreosenviados;
 use App\dcedestinatarioscorreosenviados;
+use App\usuusuarios;
 use Illuminate\Support\Facades\Mail;
 
 class ConvertirExcelController extends Controller
