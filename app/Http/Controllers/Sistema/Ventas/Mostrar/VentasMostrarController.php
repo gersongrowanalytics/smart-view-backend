@@ -235,7 +235,15 @@ class VentasMostrarController extends Controller
 
                     $scasucursalescategorias = scasucursalescategorias::join('catcategorias as cat', 'cat.catid', 'scasucursalescategorias.catid')
                                                                     ->where('scasucursalescategorias.tsuid', $tsutipopromocionsucursal->tsuid)
-                                                                    ->where('cat.catid', '<', 6)
+                                                                    // ->where('cat.catid', '<', 6)
+                                                                    // ->where('cat.catid', '!=', 6)
+                                                                    ->where(function ($query) use( $mostrarTodasCategorias) {
+                                                                        if($mostrarTodasCategorias == true){
+                                                                            $query->where('cat.catid', '!=', 6);
+                                                                        }else{
+                                                                            $query->where('cat.catid', '<', 6);
+                                                                        }
+                                                                    })
                                                                     ->orderBy('cat.catid')
                                                                     ->get([
                                                                         'cat.catnombre',
