@@ -142,31 +142,31 @@ class ConvertirExcelController extends Controller
         // $mensaje = str_replace('\n', "<br>", $mensaje);
 
 
-        $usuusuario = usuusuarios::where('usutoken', $usutoken)->first(['usuid', 'ususoldto']);
+        // $usuusuario = usuusuarios::where('usutoken', $usutoken)->first(['usuid', 'ususoldto']);
 
-        $ucen = new uceusuarioscorreosenviados;
-        $ucen->usuid          = $usuusuario->usuid;
-        $ucen->ucenombreexcel = $excel;
-        $ucen->uceasunto      = $asunto;
-        $ucen->ucecontenido   = $mensaje;
-        $ucen->ucecolumnas    = $re_columnas;
-        $ucen->ucesucursales  = $re_sucs;
-        $ucen->uceanio        = $re_anio;
-        $ucen->ucemes         = $re_mes;
-        $ucen->ucedia         = $re_dia;
-        if($re_espdf == true){
-            $ucen->ucetipo = "PDF";
-        }else{
-            $ucen->ucetipo = "EXCEL";
-        }
-        if($ucen->save()){
+        // $ucen = new uceusuarioscorreosenviados;
+        // $ucen->usuid          = $usuusuario->usuid;
+        // $ucen->ucenombreexcel = $excel;
+        // $ucen->uceasunto      = $asunto;
+        // $ucen->ucecontenido   = $mensaje;
+        // $ucen->ucecolumnas    = $re_columnas;
+        // $ucen->ucesucursales  = $re_sucs;
+        // $ucen->uceanio        = $re_anio;
+        // $ucen->ucemes         = $re_mes;
+        // $ucen->ucedia         = $re_dia;
+        // if($re_espdf == true){
+        //     $ucen->ucetipo = "PDF";
+        // }else{
+        //     $ucen->ucetipo = "EXCEL";
+        // }
+        // if($ucen->save()){
 
-            $dcen = new dcedestinatarioscorreosenviados;
-            $dcen->uceid = $ucen->uceid;
-            $dcen->dcedestinatario = $destinatario;
-            $dcen->save();
+        //     $dcen = new dcedestinatarioscorreosenviados;
+        //     $dcen->uceid = $ucen->uceid;
+        //     $dcen->dcedestinatario = $destinatario;
+        //     $dcen->save();
 
-        }
+        // }
 
 
         if($re_espdf == true){
