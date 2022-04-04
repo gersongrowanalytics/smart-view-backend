@@ -139,7 +139,7 @@ class ConvertirExcelController extends Controller
         $excel        = $request['excel'];
         $re_espdf     = $request['espdf'];
 
-        $mensaje = str_replace('\n', "<br>", $mensaje);
+        // $mensaje = str_replace('\n', "<br>", $mensaje);
 
 
         $usuusuario = usuusuarios::where('usutoken', $usutoken)->first(['usuid', 'ususoldto']);
