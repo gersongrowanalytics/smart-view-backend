@@ -82,43 +82,44 @@ class ArmarExcelListapreciosController extends Controller
                                 ->where('fecano', $re_anio)
                                 ->where('fecmes', $re_mes)
                                 ->where('fecdia', $re_dia)
-                                // ->where('treid', $re_treid)
-                                ->get([
-                                    'cat.catnombre',
-                                    'pronombre',
-                                    'proformato',
-                                    'ltpid',
-                                    'ltpcategoria',
-                                    'ltpsubcategoria',
-                                    'ltpcodigosap',
-                                    'ltpean',
-                                    'ltpdescripcionproducto',
-                                    'ltpunidadventa',
-                                    'ltppreciolistasinigv',
-                                    'ltpalza',
-                                    'ltpsdtpr',
-                                    'ltppreciolistaconigv',
+                                ->where('treid', $re_treid)
+                                ->paginate(10);
+                                // ->get([
+                                //     'cat.catnombre',
+                                //     'pronombre',
+                                //     'proformato',
+                                //     'ltpid',
+                                //     'ltpcategoria',
+                                //     'ltpsubcategoria',
+                                //     'ltpcodigosap',
+                                //     'ltpean',
+                                //     'ltpdescripcionproducto',
+                                //     'ltpunidadventa',
+                                //     'ltppreciolistasinigv',
+                                //     'ltpalza',
+                                //     'ltpsdtpr',
+                                //     'ltppreciolistaconigv',
 
-                                    'ltpmfrutamayorista',
-                                    'ltpreventamayorista',
-                                    'ltpmargenmayorista',
-                                    'ltpmarcajemayorista',
+                                //     'ltpmfrutamayorista',
+                                //     'ltpreventamayorista',
+                                //     'ltpmargenmayorista',
+                                //     'ltpmarcajemayorista',
 
-                                    // MINORISTA
-                                    'ltpmfrutaminorista',
-                                    'ltpreventaminorista',
-                                    'ltpmargenminorista',
-                                    'ltpmarcajeminorista',
+                                //     // MINORISTA
+                                //     'ltpmfrutaminorista',
+                                //     'ltpreventaminorista',
+                                //     'ltpmargenminorista',
+                                //     'ltpmarcajeminorista',
 
-                                    // BODEGA
-                                    'ltpmfrutahorizontal',
-                                    'ltpreventabodega',
-                                    'ltpmargenbodega',
-                                    'ltppvp',
+                                //     // BODEGA
+                                //     'ltpmfrutahorizontal',
+                                //     'ltpreventabodega',
+                                //     'ltpmargenbodega',
+                                //     'ltppvp',
 
-                                    'ltplistaprecios.treid',
-                                    'ltplistaprecios.fecid'
-                                ]);
+                                //     'ltplistaprecios.treid',
+                                //     'ltplistaprecios.fecid'
+                                // ]);
 
         $nuevoArray = array(
             array(
