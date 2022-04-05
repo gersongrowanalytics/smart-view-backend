@@ -184,6 +184,22 @@ class CategoriasAcumuladoController extends Controller
             $linea      = __LINE__;
         }
 
+
+        if(sizeof($datos) > 0){
+            usort(
+                $datos,
+                function ($a, $b)  {
+                    if ($a['cantidadCodigosPromocion'] > $b['cantidadCodigosPromocion']) {
+                        return -1;
+                    } else if ($a['cantidadCodigosPromocion'] < $b['cantidadCodigosPromocion']) {
+                        return 1;
+                    } else {
+                        return 0;
+                    }
+                }
+            );
+        }
+
         return response()->json([
             'respuesta'      => $respuesta,
             'mensaje'        => $mensaje,
