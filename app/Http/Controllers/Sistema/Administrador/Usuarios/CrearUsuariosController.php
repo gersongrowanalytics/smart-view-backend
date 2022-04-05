@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Sistema\Administrador\Usuarios;
 use App\estestados;
 use App\Http\Controllers\AuditoriaController;
 use App\Http\Controllers\Controller;
+use App\paupaisesusuarios;
 use App\perpersonas;
 use App\usuusuarios;
 use Illuminate\Http\Request;
@@ -19,18 +20,18 @@ class CrearUsuariosController extends Controller
         $mensaje        = '';
         $log            = [];
         $pkid           = [];
-
+        $usun = [];
         $usutoken   = $request->header('api_token');
         
         $nombre       = $request['nombre'];
         $apellidos    = $request['apellidos'];
         $correo       = $request['correo'];
-        // $correo_inst  = $request['correo_inst'];
+        $correo_inst  = $request['correo_inst'];
         $contrasenia  = $request['contrasenia'];
         $tipo_usuario = $request['tipo_usuario'];
-        // $fecha_inicio = $request['fecha_inicio'];
-        // $fecha_fin    = $request['fecha_fin'];
-        // $paises       = $request['paises'];
+        $fecha_inicio = $request['fecha_inicio'];
+        $fecha_fin    = $request['fecha_fin'];
+        $paises       = $request['paises'];
         // $zonas        = $request['zonas'];
         $estado       = $request['estado'];
         
@@ -42,6 +43,8 @@ class CrearUsuariosController extends Controller
         if ($per) {
             $perid = $per->perid;
             $log[] = "Esta persona ya se encuentra registrada perid: ".$perid;
+            $respuesta      = false;
+            $mensaje        = 'Esta persona ya se encuentra registrada';
         }else{
             $pern = new perpersonas;
             $pern->tdiid = 1;
@@ -51,44 +54,44 @@ class CrearUsuariosController extends Controller
             if($pern->save()){
                 $perid = $pern->perid;
                 $log[] = "La persona se registro correctamente perid: ".$perid;
+
+                $usun = new usuusuarios();
+                $usun->tpuid             = $tipo_usuario;
+                $usun->perid             = $perid;
+                $usun->estid             = $estado;
+                $usun->usucorreo         = $correo_inst;
+                $usun->usucorreopersonal = $correo;
+                $usun->usufechainicio    = $fecha_inicio;
+                $usun->usufechafinal     = $fecha_fin;
+                $usun->usucontrasena     = Hash::make($contrasenia);
+                $usun->usutoken          = Str::random(60);
+                if($usun->save()){
+                    $log[] = "El usuario se registro correctamente usuid: ".$usun->usuid;
+                   
+                    foreach ($paises as $pais) {
+                        $paun = new paupaisesusuarios();
+                        $paun->paiid = $pais['paiid'];
+                        $paun->usuid = $usun->usuid;
+                        if ($paun->save()) {
+                            $log[] = "Se registro correctamente el pais de id:".$pais['paiid'];
+                            $respuesta = true;
+                            $mensaje = "El usuario se registro correctamente";
+                        }else{
+                            $log[] = "No se registro el usuario, surgio un error al registrar el pais del usuario";
+                            $respuesta = false;
+                            $mensaje = "Lo sentimos, ocurrio un error al momento de registrar los paises del usuario";
+                        }
+                    }
+                }else{
+                    $log[] = "No se registro el usuario";
+                    $respuesta = false;
+                    $mensaje = "Lo sentimos, ocurrio un error al momento de crear el usuario";
+                }
             }else{
                 $log[] = "No se pudo registrar a la persona";
                 $respuesta = false;
                 $mensaje   = "Lo sentimos no se pudo crear el usuario, error al crear la persona";
             }
-        }
-
-        $est = estestados::where('estid', $estado)
-                            ->first(['estid']);
-        
-        $estid = 0;
-        if ($est) {
-            $estid = $est->estid;
-            $log[] = "El estid ya se encuentra registrado";
-        }else{
-            $log[] = "El estid no se encuentra registrado";
-            $respuesta = false;
-            $mensaje   = "Lo sentimos no se pudo crear el usuario, porfavor ingrese un estado válido";
-        }
-
-        if ($estid != 0 ) {
-            $usun = new usuusuarios();
-            $usun->tpuid         = $tipo_usuario;
-            $usun->perid         = $perid;
-            $usun->estid         = $estid;
-            $usun->usucorreo     = $correo;
-            $usun->usucontrasena = Hash::make($contrasenia);
-            $usun->usutoken      = Str::random(60);
-            if($usun->save()){
-                $log[] = "El usuario se registro correctamente usuid: ".$usun->usuid;
-                $respuesta      = true;
-                $mensaje        = 'El usuario se creo correctamente';
-            }else{
-                $log[] = "No se registro el usuario";
-                $respuesta = false;
-                $mensaje = "Lo sentimos, ocurrio un error al momento de crear el usuario";
-            }
-
         }
 
         $requestsalida = response()->json([
