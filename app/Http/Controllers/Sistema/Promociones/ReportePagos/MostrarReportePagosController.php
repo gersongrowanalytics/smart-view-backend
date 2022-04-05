@@ -2674,14 +2674,24 @@ class MostrarReportePagosController extends Controller
             $fecs = fecfechas::whereBetween('fecfecha', [$fechaInicio, $fechaFinal])
                             ->get(['fecid']);
 
+            $fecBuscar = fecfechas::where('fecano', $anio)
+                                    ->where('fecmes', $mes)
+                                    ->where('fecdia', $dia)
+                                    ->first();
+
             $reps = repreconocimientopago::join('sucsucursales as suc', 'suc.sucid', 'repreconocimientopago.sucid')
                                             ->leftjoin('cascanalessucursales as cas', 'cas.casid', 'suc.casid')
                                             ->join('fecfechas as fec', 'fec.fecid', 'repreconocimientopago.fecid')
                                             // ->whereBetween('fecfecha', [$fechaInicio, $fechaFinal])
-                                            ->where(function ($query) use($fecs) {
+                                            ->where(function ($query) use($fecs, $fecBuscar) {
                                                 foreach($fecs as $feca){
                                                     $query->orwhere('repreconocimientopago.fecid', $feca->fecid);
                                                 }
+
+                                                if($fecBuscar){
+                                                    $query->where('repreconocimientopago.fecid', $fecBuscar->fecid);
+                                                }
+
                                             })
                                             ->where(function ($query) use($sucs, $todasSucursales) {
                                                 if($todasSucursales == true){
@@ -3516,14 +3526,23 @@ class MostrarReportePagosController extends Controller
             $fecs = fecfechas::whereBetween('fecfecha', [$fechaInicio, $fechaFinal])
                             ->get(['fecid']);
 
+            $fecBuscar = fecfechas::where('fecano', $anio)
+                                    ->where('fecmes', $mes)
+                                    ->where('fecdia', $dia)
+                                    ->first();
+
             // PLANTILLA PARA DESCARGAR PROMOCIONES LIQUIDADAS
             $prls = prlpromocionesliquidadas::join('sucsucursales as suc', 'suc.sucid', 'prlpromocionesliquidadas.sucid')
                                             ->leftjoin('cascanalessucursales as cas', 'cas.casid', 'suc.casid')
                                             ->join('fecfechas as fec', 'fec.fecid', 'prlpromocionesliquidadas.fecid')
                                             // ->whereBetween('fecfecha', [$fechaInicio, $fechaFinal])
-                                            ->where(function ($query) use($fecs) {
+                                            ->where(function ($query) use($fecs, $fecBuscar) {
                                                 foreach($fecs as $feca){
                                                     $query->orwhere('prlpromocionesliquidadas.fecid', $feca->fecid);
+                                                }
+
+                                                if($fecBuscar){
+                                                    $query->where('prlpromocionesliquidadas.fecid', $fecBuscar->fecid);
                                                 }
                                             })
                                             ->where(function ($query) use($sucs, $todasSucursales) {

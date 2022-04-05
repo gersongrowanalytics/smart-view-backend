@@ -97,6 +97,10 @@ class NuevaCargaPromocionesController extends Controller
         );
 
         $fecActual = new \DateTime(date("Y-m-d", strtotime("2020-10-20")));
+        
+        $sucursalesSeleccionadas = [];
+
+        $fechaSeleccionadaMes = "";
 
         try{
             // file_put_contents(base_path().'/public/'.$archivo, $_FILES['file']['tmp_name']);
@@ -285,10 +289,22 @@ class NuevaCargaPromocionesController extends Controller
                         }
     
                         $suce = sucsucursales::where('sucsoldto', $soldTo)
-                                            ->where('sucestado', "!=", 1)
+                                            // ->where('sucestado', "!=", 1)
                                             ->first();
                         
                         if($suce){
+
+                            $encontroSucursal = false;
+                            foreach($sucursalesSeleccionadas as $sucursalSeleccionada){
+                                if($sucursalSeleccionada == $suce->sucnombre){
+                                    $encontroSucursal = true;
+                                }
+                            }
+
+                            if($encontroSucursal == false ){
+                                $sucursalesSeleccionadas[] = $suce->sucnombre;
+                            }
+
                             if($suce->sucestado != 1){
                                 $suce->sucestado = 1;
                                 $suce->update();
@@ -308,10 +324,12 @@ class NuevaCargaPromocionesController extends Controller
                             $fecfecha = fecfechas::where('fecdia', $dia)
                                             ->where('fecmes', $mesTxt)
                                             ->where('fecano', $ano)
-                                            ->first(['fecid']);
+                                            ->first(['fecid', 'fecmes']);
                             $fecid = 0;
                             if($fecfecha){
                                 $fecid = $fecfecha->fecid;
+                                $fechaSeleccionadaMes = $fecfecha->fecmes;
+
                             }else{
                                 $mes = "0";
                                 if($mesTxt == "ENE"){
@@ -348,6 +366,7 @@ class NuevaCargaPromocionesController extends Controller
                                 $nuevaFecha->fecano   = $ano;
                                 if($nuevaFecha->save()){
                                     $fecid = $nuevaFecha->fecid;
+                                    $fechaSeleccionadaMes = $nuevaFecha->fecmes;
                                 }else{
                 
                                 }
@@ -963,6 +982,8 @@ class NuevaCargaPromocionesController extends Controller
             "mensajedev"     => $mensajedev,
             "numeroCelda"    => $numeroCelda,
             "log"    => $log,
+            "sucursalesSeleccionadas" => $sucursalesSeleccionadas,
+            "fechaSeleccionadaMes" => $fechaSeleccionadaMes
         ]);
         
         $descripcion = "CARGAR DATA DE PROMOCIONES DE UN EXCEL AL SISTEMA";
