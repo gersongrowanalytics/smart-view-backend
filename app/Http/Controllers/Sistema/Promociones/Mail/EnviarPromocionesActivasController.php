@@ -12,7 +12,8 @@ class EnviarPromocionesActivasController extends Controller
     public function EnviarPromocionesActivas(Request $request)
     {
 
-        $correo = "gerson.vilca@grow-analytics.com.pe";
+        // $correo = "gerson.vilca@grow-analytics.com.pe";
+        $correo = "director.creativo@grow-analytics.com.pe";
 
         $re_sucursales = $request['sucursales'];
         $re_fecha = $request['fecha'];
