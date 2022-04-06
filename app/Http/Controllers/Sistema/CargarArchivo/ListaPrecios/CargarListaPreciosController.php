@@ -43,6 +43,8 @@ class CargarListaPreciosController extends Controller
 
         $exitoSubirExcel = false;
 
+        $obj = "";
+
         DB::beginTransaction();
         try{
             $nombreArchivoGuardado = basename($fechaActual."-".$_FILES['file']['name']);
@@ -72,16 +74,17 @@ class CargarListaPreciosController extends Controller
                 $this->AgregarDataGrupo($numRows, $objPHPExcel, $fechaSeleccionada, $treidSeleccionado);
 
 
-                
+
                 $objPHPExcel->setActiveSheetIndex(4);
-                // if($objPHPExcel->setActiveSheetIndex(4)->getHighestRow()){
+                $obj = $objPHPExcel->setActiveSheetIndex(4);
+                if($objPHPExcel->setActiveSheetIndex(4)->getHighestRow()){
                     $numRows        = $objPHPExcel->setActiveSheetIndex(4)->getHighestRow();
                     $ultimaColumna  = $objPHPExcel->setActiveSheetIndex(4)->getHighestColumn();
 
                     // AGREGAR LISTA DE PRECIOS DE ZC
                     $treidSeleccionado = 24;
                     $this->AgregarDataGrupo($numRows, $objPHPExcel, $fechaSeleccionada, $treidSeleccionado);
-                // }
+                }
 
 
 
@@ -130,7 +133,8 @@ class CargarListaPreciosController extends Controller
             "mensajeDetalle" => $mensajeDetalle,
             "mensajedev"     => $mensajedev,
             "numeroCelda"    => $numeroCelda,
-            "logs"           => $log
+            "logs"           => $log,
+            "obj"            => $obj,
         ]);
 
         $AuditoriaController = new AuditoriaController;
