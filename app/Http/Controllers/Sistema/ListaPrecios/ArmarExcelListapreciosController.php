@@ -79,11 +79,12 @@ class ArmarExcelListapreciosController extends Controller
         $ltps = ltplistaprecios::join('fecfechas as fec', 'fec.fecid', 'ltplistaprecios.fecid')
                                 ->join('proproductos as pro', 'pro.proid', 'ltplistaprecios.proid')
                                 ->join('catcategorias as cat', 'cat.catid', 'pro.catid')
+                                ->join('tretiposrebates as tre', 'tre.treid', 'ltplistaprecios.treid')
                                 ->where('fecano', $re_anio)
                                 ->where('fecmes', $re_mes)
                                 ->where('fecdia', $re_dia)
                                 // ->where('treid', $re_treid)
-                                ->paginate(70);
+                                ->paginate(1000);
                                 // ->get([
                                 //     'cat.catnombre',
                                 //     'pronombre',
@@ -1917,11 +1918,12 @@ class ArmarExcelListapreciosController extends Controller
         return response()->json([
             'excel' => $nuevoArray,
             'data' => $ltps,
-            'arr_filtro_categorias_lp'    => $armarFiltros['arr_filtro_categorias_lp'],
-            'arr_filtro_subcategorias_lp' => $armarFiltros['arr_filtro_subcategorias_lp'],
-            'arr_filtro_formato_lp'       => $armarFiltros['arr_filtro_formato_lp'],
-            'arr_filtro_codsap_lp'        => $armarFiltros['arr_filtro_codsap_lp'],
-            'arr_filtro_materiales_lp'    => $armarFiltros['arr_filtro_materiales_lp'],
+            'arr_filtro_customer_group_lp' => $armarFiltros['arr_filtro_customer_group_lp'],
+            'arr_filtro_categorias_lp'     => $armarFiltros['arr_filtro_categorias_lp'],
+            'arr_filtro_subcategorias_lp'  => $armarFiltros['arr_filtro_subcategorias_lp'],
+            'arr_filtro_formato_lp'        => $armarFiltros['arr_filtro_formato_lp'],
+            'arr_filtro_codsap_lp'         => $armarFiltros['arr_filtro_codsap_lp'],
+            'arr_filtro_materiales_lp'     => $armarFiltros['arr_filtro_materiales_lp'],
         ]);
 
     }

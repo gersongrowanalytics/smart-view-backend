@@ -10,12 +10,14 @@ class ArmarFiltrosListaPreciosController extends Controller
     public function ArmarFiltrosListaPrecios($datas)
     {
 
+        $arr_filtro_customer_group_lp    = [];
         $arr_filtro_categorias_lp    = [];
         $arr_filtro_subcategorias_lp = [];
         $arr_filtro_formato_lp       = [];
         $arr_filtro_codsap_lp        = [];
         $arr_filtro_materiales_lp    = [];
 
+        $encontroDataCustomerGroup = false;
         $encontroDataCategoria = false;
         $encontroDataSubCatego = false;
         $encontroDataFormato   = false;
@@ -24,11 +26,29 @@ class ArmarFiltrosListaPreciosController extends Controller
 
         foreach($datas as $data){
 
+            $encontroDataCustomerGroup = false;
             $encontroDataCategoria = false;
             $encontroDataSubCatego = false;
             $encontroDataFormato   = false;
             $encontroDataCodSap    = false;
             $encontroDataMaterial  = false;
+
+            foreach($arr_filtro_customer_group_lp as $arr_filtro){
+                
+                if($arr_filtro['data'] == $data['trenombre']){
+                    $encontroDataCustomerGroup = true;
+                }
+
+            }
+
+            if($encontroDataCustomerGroup == false){
+                $arr_filtro_customer_group_lp[] = array(
+                    "data" => $data['trenombre'],
+                    "seleccionado" => true
+                );
+            }
+
+            // CATEGORIAS
 
             foreach($arr_filtro_categorias_lp as $arr_filtro){
                 
@@ -116,6 +136,7 @@ class ArmarFiltrosListaPreciosController extends Controller
         }
 
         return array(
+            "arr_filtro_customer_group_lp" => $arr_filtro_customer_group_lp,
             "arr_filtro_categorias_lp"    => $arr_filtro_categorias_lp,
             "arr_filtro_subcategorias_lp" => $arr_filtro_subcategorias_lp,
             "arr_filtro_formato_lp"       => $arr_filtro_formato_lp,
