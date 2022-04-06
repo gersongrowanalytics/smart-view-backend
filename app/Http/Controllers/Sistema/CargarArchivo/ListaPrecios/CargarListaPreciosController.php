@@ -76,7 +76,8 @@ class CargarListaPreciosController extends Controller
 
 
                 $objPHPExcel->setActiveSheetIndex(4);
-                $obj = $objPHPExcel;
+                $obj = $objPHPExcel->getSheetCount();
+                
                 if($objPHPExcel->setActiveSheetIndex(4)->getHighestRow()){
                     $numRows        = $objPHPExcel->setActiveSheetIndex(4)->getHighestRow();
                     $ultimaColumna  = $objPHPExcel->setActiveSheetIndex(4)->getHighestColumn();
