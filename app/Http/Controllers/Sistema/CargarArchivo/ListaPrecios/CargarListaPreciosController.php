@@ -71,16 +71,17 @@ class CargarListaPreciosController extends Controller
                 $treidSeleccionado = 15;
                 $this->AgregarDataGrupo($numRows, $objPHPExcel, $fechaSeleccionada, $treidSeleccionado);
 
+
                 
-                if($objPHPExcel->setActiveSheetIndex(4)){
-                    $objPHPExcel->setActiveSheetIndex(4);
+                $objPHPExcel->setActiveSheetIndex(4);
+                // if($objPHPExcel->setActiveSheetIndex(4)->getHighestRow()){
                     $numRows        = $objPHPExcel->setActiveSheetIndex(4)->getHighestRow();
                     $ultimaColumna  = $objPHPExcel->setActiveSheetIndex(4)->getHighestColumn();
 
                     // AGREGAR LISTA DE PRECIOS DE ZC
                     $treidSeleccionado = 24;
                     $this->AgregarDataGrupo($numRows, $objPHPExcel, $fechaSeleccionada, $treidSeleccionado);
-                }
+                // }
 
 
 
