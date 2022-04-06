@@ -84,7 +84,8 @@ class ArmarExcelListapreciosController extends Controller
                                 ->where('fecmes', $re_mes)
                                 ->where('fecdia', $re_dia)
                                 // ->where('treid', $re_treid)
-                                ->paginate(1000);
+                                // ->paginate(1000);
+                                ->paginate(70);
                                 // ->get([
                                 //     'cat.catnombre',
                                 //     'pronombre',
