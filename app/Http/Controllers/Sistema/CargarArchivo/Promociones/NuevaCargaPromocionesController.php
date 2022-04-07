@@ -99,6 +99,7 @@ class NuevaCargaPromocionesController extends Controller
         $fecActual = new \DateTime(date("Y-m-d", strtotime("2020-10-20")));
         
         $sucursalesSeleccionadas = [];
+        $sucursalesSeleccionadasPromocionesNuevas = [];
 
         $fechaSeleccionadaMes = "";
 
@@ -221,6 +222,9 @@ class NuevaCargaPromocionesController extends Controller
                             }
                         }
 
+
+
+
                         // COLUMNAS CALCULADAS
                         if(isset($precXtodo)){
                             if(is_numeric($precXtodo)){
@@ -311,6 +315,20 @@ class NuevaCargaPromocionesController extends Controller
 
                             if($encontroSucursal == false ){
                                 $sucursalesSeleccionadas[] = $suce->sucnombre;
+                            }
+
+                            // SUCURSALES NUEVAS
+                            if($tienePromocionNueva == true){
+                                $encontroSucursalNueva = false;
+                                foreach($sucursalesSeleccionadasPromocionesNuevas as $sucursalSeleccionada){
+                                    if($sucursalSeleccionada == $suce->sucnombre){
+                                        $encontroSucursalNueva = true;
+                                    }
+                                }
+
+                                if($encontroSucursalNueva == false ){
+                                    $sucursalesSeleccionadasPromocionesNuevas[] = $suce->sucnombre;
+                                }
                             }
 
                             if($suce->sucestado != 1){
@@ -993,6 +1011,7 @@ class NuevaCargaPromocionesController extends Controller
             "numeroCelda"    => $numeroCelda,
             "log"    => $log,
             "sucursalesSeleccionadas" => $sucursalesSeleccionadas,
+            "sucursalesSeleccionadasPromocionesNuevas" => $sucursalesSeleccionadasPromocionesNuevas,
             "fechaSeleccionadaMes" => $fechaSeleccionadaMes
         ]);
         
