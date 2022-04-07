@@ -30,7 +30,7 @@ class CargarArchivoController extends Controller
 {
     public function CargarArchivo(Request $request)
     {
-        $preproduccion = true;
+        $preproduccion = false;
 
         $respuesta      = true;
         $mensaje        = '';
