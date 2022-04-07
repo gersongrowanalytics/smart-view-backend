@@ -72,6 +72,7 @@ $router->group(['middleware' => ['permisos']], function() use($router) {
 
     $router->post('/promociones/promocion/editar', 'Sistema\Promociones\Mostrar\PromocionesMostrarController@mostrarPromociones');
     $router->post('/usuario/mostrar/sucursales', 'Sistema\Usuario\Sucursales\Mostrar\SucursalesMostrarController@mostrarSucursales');
+    $router->post('/usuario/mostrar/sucursales-moderno', 'Sistema\Usuario\Sucursales\Mostrar\SucursalesCanalModernoController@SucursalesCanalModerno');
     $router->post('/usuario/mostrar/permisos', 'Sistema\Usuario\Permisos\Mostrar\PermisosMostrarController@mostrarPermisosUsuario');
     
     $router->post('/configuracion/usuarios/crear/usuario', 'Sistema\Usu\Crear\CrearUsuarioController@CrearUsuario');
