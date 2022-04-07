@@ -182,6 +182,9 @@ $router->group(['middleware' => ['permisos']], function() use($router) {
 
     // NOTIFICACIONES
     $router->post('/mostrar-notificaciones-usuario', 'Sistema\Notificaciones\MostrarNotificacionesUsuarioController@MostrarNotificacionesUsuario');
+
+    // ELEMENTOS ENVIADOS
+    $router->post('/mostrar-elementos-enviados', 'Sistema\ElementrosEnviados\MostrarElementosEnviadosController@MostrarElementosEnviados');
     
 
 });
