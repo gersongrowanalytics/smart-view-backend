@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\proproductos;
 use App\prppromocionesproductos;
 use App\prbpromocionesbonificaciones;
+use App\impimagenesproductos;
 use Illuminate\Support\Str;
 use \DateTime;
 
