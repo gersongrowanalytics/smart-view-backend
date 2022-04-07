@@ -195,6 +195,7 @@ $router->get('/control-promociones/modificar-imagen-productos', 'Sistema\Control
 $router->post('/control-promociones/asignar-imagen-producto', 'Sistema\ControlProductos\MostrarProductosController@AsignarImagenProducto');
 $router->post('/control-promociones/eliminar-imagenes-productos', 'Sistema\ControlProductos\MostrarProductosController@EliminarImagenProducto');
 $router->post('/control-promociones/asignar-imagen-productos-prueba', 'Sistema\ControlProductos\MostrarProductosController@AisngarImagensColumnasPrueba');
+$router->post('/control-promociones/asignar-sku-productos', 'Sistema\ControlProductos\AsignarSkuController@AsignarSku');
 
 
 $router->get('/cargarArchivo/leerpromociones/{nombreArchivo}', 'Sistema\CargarArchivo\Promociones\CargarArchivoPromocionesController@LeerCargarArchivo');
