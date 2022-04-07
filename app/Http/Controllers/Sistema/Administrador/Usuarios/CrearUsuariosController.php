@@ -28,6 +28,7 @@ class CrearUsuariosController extends Controller
         $correo       = $request['correo'];
         $correo_inst  = $request['correo_inst'];
         $contrasenia  = $request['contrasenia'];
+        $celular      = $request['celular'];
         $tipo_usuario = $request['tipo_usuario'];
         $fecha_inicio = $request['fecha_inicio'];
         $fecha_fin    = $request['fecha_fin'];
@@ -63,6 +64,7 @@ class CrearUsuariosController extends Controller
                 $usun->usucorreopersonal = $correo;
                 $usun->usufechainicio    = $fecha_inicio;
                 $usun->usufechafinal     = $fecha_fin;
+                $usun->percelular        = $celular;
                 $usun->usucontrasena     = Hash::make($contrasenia);
                 $usun->usutoken          = Str::random(60);
                 if($usun->save()){
