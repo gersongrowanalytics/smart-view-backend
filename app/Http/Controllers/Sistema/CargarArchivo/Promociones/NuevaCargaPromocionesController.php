@@ -212,6 +212,14 @@ class NuevaCargaPromocionesController extends Controller
                         $ex_iniciopromo = $objPHPExcel->getActiveSheet()->getCell('AL'.$i)->getCalculatedValue(); // AR
                         $ex_finpromo    = $objPHPExcel->getActiveSheet()->getCell('AM'.$i)->getCalculatedValue(); // AR
                         $nuevoProm      = $objPHPExcel->getActiveSheet()->getCell('AO'.$i)->getCalculatedValue();
+                        $promocionNueva = $objPHPExcel->getActiveSheet()->getCell('AN'.$i)->getCalculatedValue();
+                        $tienePromocionNueva = false;
+                        // PROMOCION NUEVA
+                        if(isset($promocionNueva)){
+                            if($promocionNueva == "X"){
+                                $tienePromocionNueva = true;
+                            }
+                        }
 
                         // COLUMNAS CALCULADAS
                         if(isset($precXtodo)){
@@ -791,6 +799,7 @@ class NuevaCargaPromocionesController extends Controller
                                                 $cspid = $csp->cspid;
                                                 // SI EL CODIGO DE LA PROMOCION SE REPITE SUMAR LA CANTIDAD DE COMBOS Y PLANCHAS
                     
+                                                $csp->cspnuevapromocion    = $tienePromocionNueva;
                                                 $csp->csptotalcombo        = $precXcombo;
                                                 $csp->csptotalplancha      = $precXplanc;
                                                 $csp->csptotal             = $precXtodo;
@@ -826,6 +835,7 @@ class NuevaCargaPromocionesController extends Controller
                                                 $nuevoCsp->fecid                = $fecid;
                                                 $nuevoCsp->prmid                = $prmid;
                                                 $nuevoCsp->cspzona              = $ex_zona;
+                                                $nuevoCsp->cspnuevapromocion    = $tienePromocionNueva;
                                                 // $nuevoCsp->cspcodigoprincipal   = $codPrinci;
                                                 $nuevoCsp->cspvalorizado        = 0;
                                                 $nuevoCsp->cspplanchas          = 0;
