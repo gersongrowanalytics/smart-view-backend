@@ -213,11 +213,13 @@ class NuevaCargaPromocionesController extends Controller
                         $ex_finpromo    = $objPHPExcel->getActiveSheet()->getCell('AM'.$i)->getCalculatedValue(); // AR
                         $nuevoProm      = $objPHPExcel->getActiveSheet()->getCell('AO'.$i)->getCalculatedValue();
                         $promocionNueva = $objPHPExcel->getActiveSheet()->getCell('AN'.$i)->getCalculatedValue();
-                        $tienePromocionNueva = false;
-                        // PROMOCION NUEVA
-                        if($promocionNueva == "X"){
-                            $tienePromocionNueva = true;
-                        }
+                        // $tienePromocionNueva = false;
+                        // // PROMOCION NUEVA
+                        // if($promocionNueva == "X"){
+                        //     $tienePromocionNueva = true;
+                        // }
+
+                        $tienePromocionNueva = true;
 
                         // COLUMNAS CALCULADAS
                         if(isset($precXtodo)){
