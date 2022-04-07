@@ -215,10 +215,8 @@ class NuevaCargaPromocionesController extends Controller
                         $promocionNueva = $objPHPExcel->getActiveSheet()->getCell('AN'.$i)->getCalculatedValue();
                         $tienePromocionNueva = false;
                         // PROMOCION NUEVA
-                        if(isset($promocionNueva)){
-                            if($promocionNueva == "X"){
-                                $tienePromocionNueva = true;
-                            }
+                        if($promocionNueva == "X"){
+                            $tienePromocionNueva = true;
                         }
 
                         // COLUMNAS CALCULADAS
