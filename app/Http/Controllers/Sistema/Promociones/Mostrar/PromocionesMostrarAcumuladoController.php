@@ -155,7 +155,8 @@ class PromocionesMostrarAcumuladoController extends Controller
                                                         'cspgratis',
                                                         'cspiniciopromo',
                                                         'cspfinpromo',
-                                                        'fecfecha'
+                                                        'fecfecha',
+                                                        'cspnuevapromocion'
                                                     ]);
 
                 foreach($cspscs as $posicionCspsc => $cspsc){
@@ -281,6 +282,7 @@ class PromocionesMostrarAcumuladoController extends Controller
                                 $csps[$cont]['prmid']           = $cspsc->prmid;
                                 $csps[$cont]['prmmecanica']     = $cspsc->prmmecanica;
                                 $csps[$cont]['tprnombre']       = $cspsc->tprnombre;
+                                $csps[$cont]['cspnuevapromocion']  = $cspsc->cspnuevapromocion;
 
                                 $prppromocionesproductos = prppromocionesproductos::join('proproductos as pro', 'pro.proid', 'prppromocionesproductos.proid')
                                                                                     ->where('prppromocionesproductos.prmid', $cspsc->prmid )
@@ -362,6 +364,7 @@ class PromocionesMostrarAcumuladoController extends Controller
                         $csps[$cont]['prmid']           = $cspsc->prmid;
                         $csps[$cont]['prmmecanica']     = $cspsc->prmmecanica;
                         $csps[$cont]['tprnombre']       = $cspsc->tprnombre;
+                        $csps[$cont]['cspnuevapromocion'] = $cspsc->cspnuevapromocion;
 
                         $prppromocionesproductos = prppromocionesproductos::join('proproductos as pro', 'pro.proid', 'prppromocionesproductos.proid')
                                                                             ->where('prppromocionesproductos.prmid', $cspsc->prmid )
@@ -575,6 +578,7 @@ class PromocionesMostrarAcumuladoController extends Controller
             'productosbonificados' => [],
             'fechainicio' => $fechaInicio,
             'fechafinal'  => $fechafinal,
+            'cspnuevapromocion'  => false,
         );
 
         foreach($dataPrueba as $posicionDatPrueba => $datPrueba){
@@ -687,6 +691,7 @@ class PromocionesMostrarAcumuladoController extends Controller
                         'productosbonificados' => [],
                         'fechainicio' => $fechaInicio,
                         'fechafinal'  => $fechafinal,
+                        'cspnuevapromocion'  => false,
                     );
 
                 }
