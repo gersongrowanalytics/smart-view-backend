@@ -14,14 +14,16 @@ class MostrarPermisosController extends Controller
         $mensaje   = '';
 
         // $pem = pempermisos::join('tpemtipospermisos as tpem', 'tpem.tpemid', 'pempermisos.tpemid')
-        $pem = pempermisos::get([
-                                'pempermisos.pemid',
-                                // 'tpem.tpemnombre',
-                                'pempermisos.pemnombre',
-                                'pempermisos.pemslug',
-                                'pempermisos.pemruta',
-                                'pempermisos.created_at'
-                            ]);
+        $pem = pempermisos::orderBy('created_at', 'DESC')
+                            ->paginate(10);
+                            // get([
+                            //     'pempermisos.pemid',
+                            //     // 'tpem.tpemnombre',
+                            //     'pempermisos.pemnombre',
+                            //     'pempermisos.pemslug',
+                            //     'pempermisos.pemruta',
+                            //     'pempermisos.created_at'
+                            // ]);
 
         if (sizeof($pem) > 0) {
             $respuesta      = true;
