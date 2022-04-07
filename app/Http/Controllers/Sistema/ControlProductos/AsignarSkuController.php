@@ -5,6 +5,11 @@ namespace App\Http\Controllers\Sistema\ControlProductos;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\impimagenesproductos;
+use App\proproductos;
+use App\prppromocionesproductos;
+use App\prbpromocionesbonificaciones;
+use Illuminate\Support\Str;
+use \DateTime;
 
 class AsignarSkuController extends Controller
 {
