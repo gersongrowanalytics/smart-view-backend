@@ -13,7 +13,7 @@ class MostrarElementosEnviadosController extends Controller
     {
 
         $uces = uceusuarioscorreosenviados::join('dcedestinatarioscorreosenviados as dce', 'dce.uceid', 'uceusuarioscorreosenviados.uceid')
-                                            ->orderBy('created_at', 'DESC')
+                                            ->orderBy('uceusuarioscorreosenviados.created_at', 'DESC')
                                             ->paginate(20);
 
         $requestsalida = response()->json([
