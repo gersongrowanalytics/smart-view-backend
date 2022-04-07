@@ -103,7 +103,7 @@ class MostrarProductosController extends Controller
 
         $requestsalida = response()->json([
             "prosSinImagenes" => $prosSinImagenes,
-            "prosConImagenes" => $prosConImagenesFormat,
+            "prosConImagenes" => $prosConImagenes,
             "prosVencidos" => $prosVencidos,
         ]);
 
