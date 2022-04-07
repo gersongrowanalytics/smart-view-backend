@@ -52,7 +52,7 @@ class MostrarProductosController extends Controller
                                         ]);
 
         $prosVencidos = [];
-        $prosConImagenesFormat = [];
+        $prosConImagenesFormat = array();
 
         foreach($prosConImagenes as $prosConImagen){
             $prosConImagenesFormat[] = array(
