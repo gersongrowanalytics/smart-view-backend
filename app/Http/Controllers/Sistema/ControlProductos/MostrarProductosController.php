@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\proproductos;
 use App\prppromocionesproductos;
 use App\prbpromocionesbonificaciones;
+use App\impimagenesproductos;
 use Illuminate\Support\Str;
 use \DateTime;
 
@@ -51,8 +52,22 @@ class MostrarProductosController extends Controller
                                             'profechafinal'
                                         ]);
 
+        $imps = impimagenesproductos::join('proproductos as pro', 'pro.proid', 'impimagenesproductos.proid')
+                                    ->join('catcategorias as cat', 'cat.catid', 'pro.catid')
+                                    ->get([
+                                        'pro.proid',
+                                        'prosku',
+                                        'pronombre',
+                                        'catnombre',
+                                        'proimagen',
+                                        'pro.created_at',
+                                        'pro.updated_at',
+                                        'profechainicio',
+                                        'profechafinal'
+                                    ]);
+
         $prosVencidos = [];
-        $prosConImagenesFormat = [];
+        $prosConImagenesFormat = array();
 
         foreach($prosConImagenes as $prosConImagen){
             $prosConImagenesFormat[] = array(
@@ -101,9 +116,24 @@ class MostrarProductosController extends Controller
         }
 
 
+        foreach($imps as $imp){
+            $prosVencidos[] = array(
+                "proid"           => $imp['proid'],
+                "prosku"          => $imp['prosku'],
+                "pronombre"       => $imp['pronombre'],
+                "catnombre"       => $imp['catnombre'],
+                "proimagen"       => $imp['proimagen'],
+                "created_at"      => $imp['created_at'],
+                "updated_at"      => $imp['updated_at'],
+                "profechainicio"  => $imp['profechainicio'],
+                "profechafinal"   => $imp['profechafinal'],
+            );
+        }
+
+
         $requestsalida = response()->json([
             "prosSinImagenes" => $prosSinImagenes,
-            "prosConImagenes" => $prosConImagenesFormat,
+            "prosConImagenes" => $prosConImagenes,
             "prosVencidos" => $prosVencidos,
         ]);
 
