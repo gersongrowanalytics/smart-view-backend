@@ -56,7 +56,7 @@ class CargarListaPreciosController extends Controller
                 $objPHPExcel->setActiveSheetIndex(2);
                 $numRows        = $objPHPExcel->setActiveSheetIndex(2)->getHighestRow();
                 $ultimaColumna  = $objPHPExcel->setActiveSheetIndex(2)->getHighestColumn();
-                $nombres[] = $objPHPExcel->getTitle();
+                // $nombres[] = $objPHPExcel->getTitle();
 
                 $fechaSeleccionada = 69;
 
