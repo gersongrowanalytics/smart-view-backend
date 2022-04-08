@@ -65,25 +65,25 @@ class CargarListaPreciosController extends Controller
                 $this->AgregarDataGrupo($numRows, $objPHPExcel, $fechaSeleccionada, $treidSeleccionado);
 
 
-                $objPHPExcel->setActiveSheetIndex(3);
-                $numRows        = $objPHPExcel->setActiveSheetIndex(3)->getHighestRow();
-                $ultimaColumna  = $objPHPExcel->setActiveSheetIndex(3)->getHighestColumn();
+                // $objPHPExcel->setActiveSheetIndex(3);
+                // $numRows        = $objPHPExcel->setActiveSheetIndex(3)->getHighestRow();
+                // $ultimaColumna  = $objPHPExcel->setActiveSheetIndex(3)->getHighestColumn();
 
-                // $nombres[] = $objPHPExcel->getSheetNames()[1];
+                // // $nombres[] = $objPHPExcel->getSheetNames()[1];
 
-                // AGREGAR LISTA DE PRECIOS DE ZB
-                $treidSeleccionado = 15;
-                $this->AgregarDataGrupo($numRows, $objPHPExcel, $fechaSeleccionada, $treidSeleccionado);
+                // // AGREGAR LISTA DE PRECIOS DE ZB
+                // $treidSeleccionado = 15;
+                // $this->AgregarDataGrupo($numRows, $objPHPExcel, $fechaSeleccionada, $treidSeleccionado);
 
 
 
-                $objPHPExcel->setActiveSheetIndex(4);
-                $numRows        = $objPHPExcel->setActiveSheetIndex(4)->getHighestRow();
-                $ultimaColumna  = $objPHPExcel->setActiveSheetIndex(4)->getHighestColumn();
-                // $nombres[] = $objPHPExcel->getSheetNames()[1];
-                // AGREGAR LISTA DE PRECIOS DE ZC
-                $treidSeleccionado = 24;
-                $this->AgregarDataGrupo($numRows, $objPHPExcel, $fechaSeleccionada, $treidSeleccionado);
+                // $objPHPExcel->setActiveSheetIndex(4);
+                // $numRows        = $objPHPExcel->setActiveSheetIndex(4)->getHighestRow();
+                // $ultimaColumna  = $objPHPExcel->setActiveSheetIndex(4)->getHighestColumn();
+                // // $nombres[] = $objPHPExcel->getSheetNames()[1];
+                // // AGREGAR LISTA DE PRECIOS DE ZC
+                // $treidSeleccionado = 24;
+                // $this->AgregarDataGrupo($numRows, $objPHPExcel, $fechaSeleccionada, $treidSeleccionado);
 
 
                 $exitoSubirExcel = true;
