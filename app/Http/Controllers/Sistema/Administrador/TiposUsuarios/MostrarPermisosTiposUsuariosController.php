@@ -23,27 +23,41 @@ class MostrarPermisosTiposUsuariosController extends Controller
         if (sizeof($tpes) > 0) {
             foreach ($tpes as $key => $tipo_permiso) {
                 $pem = pempermisos::where('tpeid', $tipo_permiso['tpeid'])
-                                                ->get(['pemid']);
+                                                ->get(['pemid','pemnombre']);
                 foreach ($pem as $item) {
                     $tup = tuptiposusuariospermisos::where('pemid', $item['pemid'])
                                                 ->where('tpuid', $re_tpuid)
                                                 ->first(['tupid']);
                     if ($tup) {
                         $array_tp[$key]['tipo_permiso'] = $tipo_permiso['tpenombre'];
+                        $array_tp[$key]['seleccionado_todo'] = true;
                         $array_tp[$key]['permisos'][] = [
                                                             "pemid" => $item['pemid'],
+                                                            "pemnombre" => $item['pemnombre'],
                                                             "seleccionado" => true
                                                         ];
 
                     }else{
                         $array_tp[$key]['tipo_permiso'] = $tipo_permiso['tpenombre'];
+                        $array_tp[$key]['seleccionado_todo'] = true;
                         $array_tp[$key]['permisos'][] = [
                                                             "pemid" => $item['pemid'],
+                                                            "pemnombre" => $item['pemnombre'],
                                                             "seleccionado" => false
                                                         ];
                     }
                 }           
             }
+            if ($array_tp) {
+                foreach ($array_tp as $key => $tpermiso) {
+                    foreach ($tpermiso['permisos'] as $permiso) {
+                        if ($permiso['seleccionado'] == false) {
+                            $array_tp[$key]['seleccionado_todo'] = false;
+                        }
+                    }
+                }
+            }
+
             $respuesta      = true;
             $mensaje        = 'Los tipos de permisos se cargaron satisfactoriamente';
         }else{
