@@ -71,15 +71,15 @@ class MostrarProductosController extends Controller
 
         foreach($prosConImagenes as $prosConImagen){
             $prosConImagenesFormat[] = array(
-                "proid" => $prosConImagen->proid,
-                "prosku" => $prosConImagen->prosku,
-                "pronombre" => $prosConImagen->pronombre,
-                "catnombre" => $prosConImagen->catnombre,
-                "proimagen" => $prosConImagen->proimagen,
-                "created_at" => $prosConImagen->created_at,
-                "updated_at" => $prosConImagen->updated_at,
-                "profechainicio" => $prosConImagen->profechainicio,
-                "profechafinal" => $prosConImagen->profechafinal,
+                "proid"          => $prosConImagen['proid'],
+                "prosku"         => $prosConImagen['prosku'],
+                "pronombre"      => $prosConImagen['pronombre'],
+                "catnombre"      => $prosConImagen['catnombre'],
+                "proimagen"      => $prosConImagen['proimagen'],
+                "created_at"     => $prosConImagen['created_at'],
+                "updated_at"     => $prosConImagen['updated_at'],
+                "profechainicio" => $prosConImagen['profechainicio'],
+                "profechafinal"  => $prosConImagen['profechafinal'],
             );
         }
 
