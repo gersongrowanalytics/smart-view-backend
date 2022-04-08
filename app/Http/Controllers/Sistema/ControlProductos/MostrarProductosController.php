@@ -39,7 +39,7 @@ class MostrarProductosController extends Controller
         $prosConImagenes = proproductos::join('catcategorias as cat', 'cat.catid', 'proproductos.catid')
                                         ->where('proimagen', "!=", "/")
                                         ->where('proespromocion', 1)
-                                        ->limit(200)
+                                        // ->limit(200)
                                         ->get([
                                             'proproductos.proid',
                                             'prosku',
