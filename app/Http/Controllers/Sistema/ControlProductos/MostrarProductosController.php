@@ -95,7 +95,7 @@ class MostrarProductosController extends Controller
 
                 if($diff->invert == 1){
                     
-                    unset($prosConImagenesFormat[$posicionProConImagen]);
+                    // unset($prosConImagenesFormat[$posicionProConImagen]);
                     $prosVencidos[] = array(
                         "proid"           => $prosConImagen['proid'],
                         "prosku"          => $prosConImagen['prosku'],
