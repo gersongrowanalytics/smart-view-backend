@@ -48,10 +48,11 @@ class CrearUsuariosController extends Controller
             $mensaje        = 'Esta persona ya se encuentra registrada';
         }else{
             $pern = new perpersonas;
-            $pern->tdiid = 1;
-            $pern->pernombrecompleto = $nombre." ".$apellidos;
-            $pern->pernombre = $nombre;
+            $pern->tdiid              = 1;
+            $pern->pernombrecompleto  = $nombre." ".$apellidos;
+            $pern->pernombre          = $nombre;
             $pern->perapellidopaterno = $apellidos;
+            $pern->percelular         = $celular;
             if($pern->save()){
                 $perid = $pern->perid;
                 $log[] = "La persona se registro correctamente perid: ".$perid;
@@ -64,7 +65,6 @@ class CrearUsuariosController extends Controller
                 $usun->usucorreopersonal = $correo;
                 $usun->usufechainicio    = $fecha_inicio;
                 $usun->usufechafinal     = $fecha_fin;
-                $usun->percelular        = $celular;
                 $usun->usucontrasena     = Hash::make($contrasenia);
                 $usun->usutoken          = Str::random(60);
                 if($usun->save()){
