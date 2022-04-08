@@ -69,21 +69,22 @@ class MostrarProductosController extends Controller
         $prosVencidos = [];
         $prosConImagenesFormat = [];
 
-        foreach($prosConImagenes as $prosConImagen){
-            $prosConImagenesFormat[] = array(
-                "proid"          => $prosConImagen['proid'],
-                "prosku"         => $prosConImagen['prosku'],
-                "pronombre"      => $prosConImagen['pronombre'],
-                "catnombre"      => $prosConImagen['catnombre'],
-                "proimagen"      => $prosConImagen['proimagen'],
-                "created_at"     => $prosConImagen['created_at'],
-                "updated_at"     => $prosConImagen['updated_at'],
-                "profechainicio" => $prosConImagen['profechainicio'],
-                "profechafinal"  => $prosConImagen['profechafinal'],
-            );
-        }
+        // foreach($prosConImagenes as $prosConImagen){
+        //     $prosConImagenesFormat[] = array(
+        //         "proid"          => $prosConImagen['proid'],
+        //         "prosku"         => $prosConImagen['prosku'],
+        //         "pronombre"      => $prosConImagen['pronombre'],
+        //         "catnombre"      => $prosConImagen['catnombre'],
+        //         "proimagen"      => $prosConImagen['proimagen'],
+        //         "created_at"     => $prosConImagen['created_at'],
+        //         "updated_at"     => $prosConImagen['updated_at'],
+        //         "profechainicio" => $prosConImagen['profechainicio'],
+        //         "profechafinal"  => $prosConImagen['profechafinal'],
+        //     );
+        // }
 
-        foreach($prosConImagenesFormat as $posicionProConImagen => $prosConImagen){
+        // foreach($prosConImagenesFormat as $posicionProConImagen => $prosConImagen){
+        foreach($prosConImagenes as $prosConImagen){
 
 
             if(isset($prosConImagen['profechafinal'])){
@@ -109,7 +110,17 @@ class MostrarProductosController extends Controller
                     );
 
                 }else{
-                    
+                    $prosConImagenesFormat[] = array(
+                        "proid"          => $prosConImagen['proid'],
+                        "prosku"         => $prosConImagen['prosku'],
+                        "pronombre"      => $prosConImagen['pronombre'],
+                        "catnombre"      => $prosConImagen['catnombre'],
+                        "proimagen"      => $prosConImagen['proimagen'],
+                        "created_at"     => $prosConImagen['created_at'],
+                        "updated_at"     => $prosConImagen['updated_at'],
+                        "profechainicio" => $prosConImagen['profechainicio'],
+                        "profechafinal"  => $prosConImagen['profechafinal'],
+                    );
                 } 
 
             }
