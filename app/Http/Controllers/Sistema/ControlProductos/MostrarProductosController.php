@@ -39,7 +39,7 @@ class MostrarProductosController extends Controller
         $prosConImagenes = proproductos::join('catcategorias as cat', 'cat.catid', 'proproductos.catid')
                                         ->where('proimagen', "!=", "/")
                                         ->where('proespromocion', 1)
-                                        ->limit(200)
+                                        // ->limit(200)
                                         ->get([
                                             'proproductos.proid',
                                             'prosku',
@@ -67,23 +67,24 @@ class MostrarProductosController extends Controller
                                     ]);
 
         $prosVencidos = [];
-        $prosConImagenesFormat = array();
+        $prosConImagenesFormat = [];
 
+        // foreach($prosConImagenes as $prosConImagen){
+        //     $prosConImagenesFormat[] = array(
+        //         "proid"          => $prosConImagen['proid'],
+        //         "prosku"         => $prosConImagen['prosku'],
+        //         "pronombre"      => $prosConImagen['pronombre'],
+        //         "catnombre"      => $prosConImagen['catnombre'],
+        //         "proimagen"      => $prosConImagen['proimagen'],
+        //         "created_at"     => $prosConImagen['created_at'],
+        //         "updated_at"     => $prosConImagen['updated_at'],
+        //         "profechainicio" => $prosConImagen['profechainicio'],
+        //         "profechafinal"  => $prosConImagen['profechafinal'],
+        //     );
+        // }
+
+        // foreach($prosConImagenesFormat as $posicionProConImagen => $prosConImagen){
         foreach($prosConImagenes as $prosConImagen){
-            $prosConImagenesFormat[] = array(
-                "proid" => $prosConImagen->proid,
-                "prosku" => $prosConImagen->prosku,
-                "pronombre" => $prosConImagen->pronombre,
-                "catnombre" => $prosConImagen->catnombre,
-                "proimagen" => $prosConImagen->proimagen,
-                "created_at" => $prosConImagen->created_at,
-                "updated_at" => $prosConImagen->updated_at,
-                "profechainicio" => $prosConImagen->profechainicio,
-                "profechafinal" => $prosConImagen->profechafinal,
-            );
-        }
-
-        foreach($prosConImagenesFormat as $posicionProConImagen => $prosConImagen){
 
 
             if(isset($prosConImagen['profechafinal'])){
@@ -95,7 +96,7 @@ class MostrarProductosController extends Controller
 
                 if($diff->invert == 1){
                     
-                    unset($prosConImagenesFormat[$posicionProConImagen]);
+                    // unset($prosConImagenesFormat[$posicionProConImagen]);
                     $prosVencidos[] = array(
                         "proid"           => $prosConImagen['proid'],
                         "prosku"          => $prosConImagen['prosku'],
@@ -109,7 +110,17 @@ class MostrarProductosController extends Controller
                     );
 
                 }else{
-                    
+                    $prosConImagenesFormat[] = array(
+                        "proid"          => $prosConImagen['proid'],
+                        "prosku"         => $prosConImagen['prosku'],
+                        "pronombre"      => $prosConImagen['pronombre'],
+                        "catnombre"      => $prosConImagen['catnombre'],
+                        "proimagen"      => $prosConImagen['proimagen'],
+                        "created_at"     => $prosConImagen['created_at'],
+                        "updated_at"     => $prosConImagen['updated_at'],
+                        "profechainicio" => $prosConImagen['profechainicio'],
+                        "profechafinal"  => $prosConImagen['profechafinal'],
+                    );
                 } 
 
             }
@@ -133,7 +144,7 @@ class MostrarProductosController extends Controller
 
         $requestsalida = response()->json([
             "prosSinImagenes" => $prosSinImagenes,
-            "prosConImagenes" => $prosConImagenes,
+            "prosConImagenes" => $prosConImagenesFormat,
             "prosVencidos" => $prosVencidos,
         ]);
 
