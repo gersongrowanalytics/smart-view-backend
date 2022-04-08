@@ -24,6 +24,7 @@ $router->post('/tipos-usuarios/permisos/editar', 'Sistema\Administrador\TiposUsu
 $router->get('/permisos/mostrar', 'Sistema\Administrador\Permisos\MostrarPermisosController@MostrarPermisos');
 $router->post('/permisos/crear', 'Sistema\Administrador\Permisos\CrearPermisosController@CrearPermisos');
 $router->post('/permisos/editar', 'Sistema\Administrador\Permisos\EditarPermisosController@EditarPermisos');
+$router->post('/tipo-permiso/crear', 'Sistema\Administrador\Permisos\CrearTipoPermisoController@CrearTipoPermiso');
 
 
 $router->get('/actualizar', 'salvacionController@salvacion');
