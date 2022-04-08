@@ -4,12 +4,62 @@ namespace App\Http\Controllers\Sistema\Administrador\TiposUsuarios;
 
 use App\Http\Controllers\Controller;
 use App\pempermisos;
+use App\tpetipopermiso;
 use App\tuptiposusuariospermisos;
 use Illuminate\Http\Request;
 
 class MostrarPermisosTiposUsuariosController extends Controller
 {
+
     public function MostrarPermisosTiposUsuarios(Request $request)
+    {
+        $respuesta = false;
+        $mensaje = "";
+        $array_tp = [];
+
+        $re_tpuid = $request['re_tpuid'];
+
+        $tpes = tpetipopermiso::get(['tpeid','tpenombre']);
+        if (sizeof($tpes) > 0) {
+            foreach ($tpes as $key => $tipo_permiso) {
+                $pem = pempermisos::where('tpeid', $tipo_permiso['tpeid'])
+                                                ->get(['pemid']);
+                foreach ($pem as $item) {
+                    $tup = tuptiposusuariospermisos::where('pemid', $item['pemid'])
+                                                ->where('tpuid', $re_tpuid)
+                                                ->first(['tupid']);
+                    if ($tup) {
+                        $array_tp[$key]['tipo_permiso'] = $tipo_permiso['tpenombre'];
+                        $array_tp[$key]['permisos'][] = [
+                                                            "pemid" => $item['pemid'],
+                                                            "seleccionado" => true
+                                                        ];
+
+                    }else{
+                        $array_tp[$key]['tipo_permiso'] = $tipo_permiso['tpenombre'];
+                        $array_tp[$key]['permisos'][] = [
+                                                            "pemid" => $item['pemid'],
+                                                            "seleccionado" => false
+                                                        ];
+                    }
+                }           
+            }
+            $respuesta      = true;
+            $mensaje        = 'Los tipos de permisos se cargaron satisfactoriamente';
+        }else{
+            $respuesta      = false;
+            $mensaje        = 'Los tipos de permisos no se cargaron satisfactoriamente';
+        }
+        $requestsalida = response()->json([
+            "respuesta" => $respuesta,
+            "mensaje"   => $mensaje,
+            "datos"  => $array_tp
+        ]);
+
+        return $requestsalida;
+    }
+    
+    public function MostrarPermisosTiposUsuarios2(Request $request)
     {
         $respuesta = false;
         $mensaje   = '';
