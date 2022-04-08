@@ -53,7 +53,7 @@ class CargarListaPreciosController extends Controller
             if (move_uploaded_file($_FILES['file']['tmp_name'], $fichero_subido)) {
 
                 $objPHPExcel    = IOFactory::load($fichero_subido);
-                $objPHPExcel->setActiveSheetIndex(2);
+                $objPHPExcel->setActiveSheetIndex(0);
                 $numRows        = $objPHPExcel->setActiveSheetIndex(2)->getHighestRow();
                 $ultimaColumna  = $objPHPExcel->setActiveSheetIndex(2)->getHighestColumn();
                 // $nombres[] = $objPHPExcel->getTitle();
