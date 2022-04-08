@@ -67,10 +67,10 @@ class MostrarProductosController extends Controller
                                     ]);
 
         $prosVencidos = [];
-        $prosConImagenesFormat = array();
+        $prosConImagenesFormat = [];
 
         foreach($prosConImagenes as $prosConImagen){
-            $prosConImagenesFormat[] = [
+            $prosConImagenesFormat[] = array(
                 "proid" => $prosConImagen->proid,
                 "prosku" => $prosConImagen->prosku,
                 "pronombre" => $prosConImagen->pronombre,
@@ -80,7 +80,7 @@ class MostrarProductosController extends Controller
                 "updated_at" => $prosConImagen->updated_at,
                 "profechainicio" => $prosConImagen->profechainicio,
                 "profechafinal" => $prosConImagen->profechafinal,
-            ];
+            );
         }
 
         foreach($prosConImagenesFormat as $posicionProConImagen => $prosConImagen){
