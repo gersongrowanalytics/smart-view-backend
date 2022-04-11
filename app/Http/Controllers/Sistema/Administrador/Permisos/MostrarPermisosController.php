@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Sistema\Administrador\Permisos;
 
 use App\Http\Controllers\Controller;
 use App\pempermisos;
+use App\tpetipopermiso;
 use Illuminate\Http\Request;
 
 class MostrarPermisosController extends Controller
@@ -13,8 +14,11 @@ class MostrarPermisosController extends Controller
         $respuesta = false;
         $mensaje   = '';
 
+        $tpes = tpetipopermiso::get();
+
         // $pem = pempermisos::join('tpemtipospermisos as tpem', 'tpem.tpemid', 'pempermisos.tpemid')
-        $pem = pempermisos::orderBy('created_at', 'DESC')
+        $pem = pempermisos::join('tpetipopermiso as tpe', 'tpe.tpeid', 'pempermisos.tpeid')
+                            ->orderBy('pempermisos.created_at', 'DESC')
                             ->paginate(10);
                             // get([
                             //     'pempermisos.pemid',
@@ -36,7 +40,8 @@ class MostrarPermisosController extends Controller
         $requestsalida = response()->json([
             "respuesta" => $respuesta,
             "mensaje"   => $mensaje,
-            "permisos"  => $pem
+            "permisos"  => $pem,
+            "tpes"  => $tpes,
         ]);
 
         return $requestsalida;
