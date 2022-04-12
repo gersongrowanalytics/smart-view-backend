@@ -192,6 +192,9 @@ $router->group(['middleware' => ['permisos']], function() use($router) {
     $router->post('/mostrar-rebate-bonus', 'Sistema\Ventas\Mostrar\MostrarRebateBonusController@MostrarRebateBonus');
     $router->post('/crear-rebate-bonus', 'Sistema\Ventas\Crear\CrearRebateBonusController@CrearRebateBonus');
 
+    // OBTENER DATA DE REBATE TRIMESTRAL
+    $router->post('/mostrar-rebate-trimestral', 'Sistema\Ventas\Mostrar\MostrarRebateTrismestralController@MostrarRebateTrismestral');
+
 });
 
 // CONTROL DE PRODUCTOS
