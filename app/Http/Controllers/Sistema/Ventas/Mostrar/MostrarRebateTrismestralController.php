@@ -30,11 +30,14 @@ class MostrarRebateTrismestralController extends Controller
             $cats = catcategorias::all();
 
             $ttrs = ttrtritre::join('tretiposrebates as tre', 'tre.treid', 'ttrtritre.treid')
+                            ->join('tprtipospromociones as tpr', 'tprid', 'ttrtritre.tprid')
                             ->where('ttrtritre.triid', $trf->triid)
                             ->distinct('treid')
                             ->get([
                                 'tre.treid',
-                                'tre.trenombre'
+                                'tre.trenombre',
+                                'tpr.tprid',
+                                'tpr.tprnombre',
                             ]);
 
             foreach($ttrs as $posicionTtr => $ttr){
@@ -51,7 +54,6 @@ class MostrarRebateTrismestralController extends Controller
                 $ttrs[$posicionTtr]['data'] = array();
                 $arr_datas = array();
 
-
                 $ttrsPorcentajes = ttrtritre::join('tretiposrebates as tre', 'tre.treid', 'ttrtritre.treid')
                             ->where('ttrtritre.triid', $trf->triid)
                             ->where('tre.treid', $ttr->treid)
@@ -64,6 +66,8 @@ class MostrarRebateTrismestralController extends Controller
 
                 foreach($ttrsPorcentajes as $ttrsPorcentaje){
                     $arr_data = array(
+                        'tprid'  => $ttr->tprid,
+                        'tprnombre'  => $ttr->tprnombre,
                         'trenombre'  => $ttr->trenombre,
                         'ttrporcentajedesde'  => $ttrsPorcentaje->ttrporcentajedesde,
                         'ttrporcentajehasta'  => $ttrsPorcentaje->ttrporcentajehasta,
