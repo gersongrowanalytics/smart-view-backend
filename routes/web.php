@@ -188,6 +188,8 @@ $router->group(['middleware' => ['permisos']], function() use($router) {
     // ELEMENTOS ENVIADOS
     $router->post('/mostrar-elementos-enviados', 'Sistema\ElementrosEnviados\MostrarElementosEnviadosController@MostrarElementosEnviados');
     
+    // OBTENER DATA DE REBATE BONUS
+    $router->post('/mostrar-rebate-bonus', 'Sistema\Ventas\Mostrar\MostrarRebateBonusController@MostrarRebateBonus');
 
 });
 
