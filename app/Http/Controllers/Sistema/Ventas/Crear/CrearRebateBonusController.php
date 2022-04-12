@@ -8,6 +8,7 @@ use App\rbbrebatesbonus;
 use App\catcategorias;
 use App\rscrbsscategorias;
 use App\usuusuarios;
+use App\fecfechas;
 
 class CrearRebateBonusController extends Controller
 {
