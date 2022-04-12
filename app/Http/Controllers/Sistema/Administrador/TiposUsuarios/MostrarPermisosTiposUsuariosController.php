@@ -42,7 +42,6 @@ class MostrarPermisosTiposUsuariosController extends Controller
                                                 ->first(['tupid']);
                     if ($tup) {
                         $array_tp[$key]['tipo_permiso'] = $tipo_permiso['tpenombre'];
-                        $array_tp[$key]['seleccionado_todo'] = true;
                         $array_tp[$key]['permisos'][] = [
                                                             "pemid" => $item['pemid'],
                                                             "pemnombre" => $item['pemnombre'],
@@ -51,7 +50,6 @@ class MostrarPermisosTiposUsuariosController extends Controller
 
                     }else{
                         $array_tp[$key]['tipo_permiso'] = $tipo_permiso['tpenombre'];
-                        $array_tp[$key]['seleccionado_todo'] = true;
                         $array_tp[$key]['permisos'][] = [
                                                             "pemid" => $item['pemid'],
                                                             "pemnombre" => $item['pemnombre'],
