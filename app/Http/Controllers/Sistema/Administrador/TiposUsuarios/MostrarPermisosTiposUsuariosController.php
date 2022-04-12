@@ -42,7 +42,6 @@ class MostrarPermisosTiposUsuariosController extends Controller
                                                 ->first(['tupid']);
                     if ($tup) {
                         $array_tp[$key]['tipo_permiso'] = $tipo_permiso['tpenombre'];
-                        $array_tp[$key]['seleccionado_todo'] = true;
                         $array_tp[$key]['permisos'][] = [
                                                             "pemid" => $item['pemid'],
                                                             "pemnombre" => $item['pemnombre'],
@@ -51,7 +50,6 @@ class MostrarPermisosTiposUsuariosController extends Controller
 
                     }else{
                         $array_tp[$key]['tipo_permiso'] = $tipo_permiso['tpenombre'];
-                        $array_tp[$key]['seleccionado_todo'] = true;
                         $array_tp[$key]['permisos'][] = [
                                                             "pemid" => $item['pemid'],
                                                             "pemnombre" => $item['pemnombre'],
@@ -59,15 +57,6 @@ class MostrarPermisosTiposUsuariosController extends Controller
                                                         ];
                     }
                 }           
-            }
-            if ($array_tp) {
-                foreach ($array_tp as $key => $tpermiso) {
-                    foreach ($tpermiso['permisos'] as $permiso) {
-                        if ($permiso['seleccionado'] == false) {
-                            $array_tp[$key]['seleccionado_todo'] = false;
-                        }
-                    }
-                }
             }
 
             $respuesta      = true;
@@ -86,52 +75,52 @@ class MostrarPermisosTiposUsuariosController extends Controller
         return $requestsalida;
     }
     
-    public function MostrarPermisosTiposUsuarios2(Request $request)
-    {
-        $respuesta = false;
-        $mensaje   = '';
-        $arrayPermisosTipoUsuario = [];
+    // public function MostrarPermisosTiposUsuarios2(Request $request)
+    // {
+    //     $respuesta = false;
+    //     $mensaje   = '';
+    //     $arrayPermisosTipoUsuario = [];
 
-        $tpuid = $request['tipo_usuario'];
+    //     $tpuid = $request['tipo_usuario'];
 
-        $permisosTipoUsuario = tuptiposusuariospermisos::join('pempermisos as pem', 'pem.pemid', 'tuptiposusuariospermisos.pemid')
-                                        ->where('tpuid', $tpuid)
-                                        ->get([
-                                            'pem.pemid'
-                                        ]);
+    //     $permisosTipoUsuario = tuptiposusuariospermisos::join('pempermisos as pem', 'pem.pemid', 'tuptiposusuariospermisos.pemid')
+    //                                     ->where('tpuid', $tpuid)
+    //                                     ->get([
+    //                                         'pem.pemid'
+    //                                     ]);
         
-        $permisos = pempermisos::get([
-                                    'pemid',
-                                    'pemslug'
-                                ]);
+    //     $permisos = pempermisos::get([
+    //                                 'pemid',
+    //                                 'pemslug'
+    //                             ]);
 
-        foreach($permisos as $key => $permiso)
-        {
-            $arrayPermisosTipoUsuario[$key]['pemid'] = $permiso['pemid'];
-            $arrayPermisosTipoUsuario[$key]['pemslug'] = $permiso['pemslug'];
-            $arrayPermisosTipoUsuario[$key]['seleccionado'] = false;             
+    //     foreach($permisos as $key => $permiso)
+    //     {
+    //         $arrayPermisosTipoUsuario[$key]['pemid'] = $permiso['pemid'];
+    //         $arrayPermisosTipoUsuario[$key]['pemslug'] = $permiso['pemslug'];
+    //         $arrayPermisosTipoUsuario[$key]['seleccionado'] = false;             
             
-            foreach ($permisosTipoUsuario as $permisoTU) {
-                if ($permiso['pemid'] == $permisoTU['pemid']) {
-                    $arrayPermisosTipoUsuario[$key]['seleccionado'] = true;
-                }
-            }
-        }
+    //         foreach ($permisosTipoUsuario as $permisoTU) {
+    //             if ($permiso['pemid'] == $permisoTU['pemid']) {
+    //                 $arrayPermisosTipoUsuario[$key]['seleccionado'] = true;
+    //             }
+    //         }
+    //     }
 
-        if(sizeof($arrayPermisosTipoUsuario) > 0){
-            $respuesta      = true;
-            $mensaje        = 'Los permisos del tipo de usuario se cargaron satisfactoriamente';
-        }else{
-            $respuesta      = false;
-            $mensaje        = 'Los permisos del tipo de usuario no se cargaron satisfactoriamente';
-        }
+    //     if(sizeof($arrayPermisosTipoUsuario) > 0){
+    //         $respuesta      = true;
+    //         $mensaje        = 'Los permisos del tipo de usuario se cargaron satisfactoriamente';
+    //     }else{
+    //         $respuesta      = false;
+    //         $mensaje        = 'Los permisos del tipo de usuario no se cargaron satisfactoriamente';
+    //     }
 
-        $requestsalida = response()->json([
-            "respuesta" => $respuesta,
-            "mensaje"   => $mensaje,
-            "permisos"  => $arrayPermisosTipoUsuario
-        ]);
+    //     $requestsalida = response()->json([
+    //         "respuesta" => $respuesta,
+    //         "mensaje"   => $mensaje,
+    //         "permisos"  => $arrayPermisosTipoUsuario
+    //     ]);
 
-        return $requestsalida;
-    }
+    //     return $requestsalida;
+    // }
 }
