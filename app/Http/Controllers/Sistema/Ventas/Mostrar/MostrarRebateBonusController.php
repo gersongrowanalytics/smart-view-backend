@@ -59,7 +59,8 @@ class MostrarRebateBonusController extends Controller
 
         return response()->json([
             "respuesta" => true,
-            "datos"     => $data
+            "datos"     => $data,
+            "rbb"     => $rbb,
         ]);
 
     }
