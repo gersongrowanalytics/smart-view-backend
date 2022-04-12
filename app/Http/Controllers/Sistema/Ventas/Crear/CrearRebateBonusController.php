@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\rbbrebatesbonus;
 use App\catcategorias;
 use App\rscrbsscategorias;
+use App\usuusuarios;
 
 class CrearRebateBonusController extends Controller
 {
