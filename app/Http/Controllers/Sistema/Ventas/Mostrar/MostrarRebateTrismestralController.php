@@ -49,6 +49,7 @@ class MostrarRebateTrismestralController extends Controller
                 $ttrs[$posicionTtr]['retroceder'] = false;
 
                 $ttrs[$posicionTtr]['data'] = array();
+                $arr_datas = array();
 
 
                 $ttrsPorcentajes = ttrtritre::join('tretiposrebates as tre', 'tre.treid', 'ttrtritre.treid')
@@ -95,8 +96,10 @@ class MostrarRebateTrismestralController extends Controller
 
                     }
 
-                    $ttrs[$posicionTtr]['data'][] = $arr_data;
+                    $arr_datas[] = $arr_data;
                 }
+
+                $ttrs[$posicionTtr]['data'] = $arr_datas;
 
 
             }
