@@ -51,7 +51,7 @@ class MostrarRebateTrismestralController extends Controller
                 $ttrs[$posicionTtr]['data'] = array();
 
 
-                $ttrs = ttrtritre::join('tretiposrebates as tre', 'tre.treid', 'ttrtritre.treid')
+                $ttrsPorcentajes = ttrtritre::join('tretiposrebates as tre', 'tre.treid', 'ttrtritre.treid')
                             ->where('ttrtritre.triid', $trf->triid)
                             ->where('tre.treid', $ttr->treid)
                             ->distinct('ttrporcentajedesde')
@@ -61,18 +61,18 @@ class MostrarRebateTrismestralController extends Controller
                                 'ttrporcentajehasta',
                             ]);
 
-                foreach($ttrs as $ttr){
+                foreach($ttrsPorcentajes as $ttrsPorcentaje){
                     $arr_data = array(
-                        'ttrporcentajedesde'  => $ttr->ttrporcentajedesde,
-                        'ttrporcentajehasta'  => $ttr->ttrporcentajehasta,
+                        'ttrporcentajedesde'  => $ttrsPorcentaje->ttrporcentajedesde,
+                        'ttrporcentajehasta'  => $ttrsPorcentaje->ttrporcentajehasta,
                         'ttrporcentajerebate' => "1",
                     );
 
                     $ttrscats = ttrtritre::join('tretiposrebates as tre', 'tre.treid', 'ttrtritre.treid')
                                         ->where('ttrtritre.triid', $trf->triid)
                                         ->where('tre.treid', $ttr->treid)
-                                        ->where('ttrporcentajedesde', $ttr->ttrporcentajedesde)
-                                        ->where('ttrporcentajehasta', $ttr->ttrporcentajehasta)
+                                        ->where('ttrporcentajedesde', $ttrsPorcentaje->ttrporcentajedesde)
+                                        ->where('ttrporcentajehasta', $ttrsPorcentaje->ttrporcentajehasta)
                                         ->get([
                                             'catid',
                                             'ttrporcentajerebate'
