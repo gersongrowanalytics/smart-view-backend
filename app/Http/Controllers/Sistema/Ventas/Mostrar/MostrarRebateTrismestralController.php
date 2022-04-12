@@ -59,11 +59,12 @@ class MostrarRebateTrismestralController extends Controller
                             ->distinct('ttrporcentajehasta')
                             ->get([
                                 'ttrporcentajedesde',
-                                'ttrporcentajehasta',
+                                'ttrporcentajehasta'
                             ]);
 
                 foreach($ttrsPorcentajes as $ttrsPorcentaje){
                     $arr_data = array(
+                        'trenombre'  => $ttr->trenombre,
                         'ttrporcentajedesde'  => $ttrsPorcentaje->ttrporcentajedesde,
                         'ttrporcentajehasta'  => $ttrsPorcentaje->ttrporcentajehasta,
                         'ttrporcentajerebate' => "1",
