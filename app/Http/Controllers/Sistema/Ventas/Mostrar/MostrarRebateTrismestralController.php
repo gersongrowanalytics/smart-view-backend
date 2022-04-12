@@ -30,7 +30,7 @@ class MostrarRebateTrismestralController extends Controller
             $cats = catcategorias::all();
 
             $ttrs = ttrtritre::join('tretiposrebates as tre', 'tre.treid', 'ttrtritre.treid')
-                            ->join('tprtipospromociones as tpr', 'tprid', 'ttrtritre.tprid')
+                            ->join('tprtipospromociones as tpr', 'tpr.tprid', 'ttrtritre.tprid')
                             ->where('ttrtritre.triid', $trf->triid)
                             ->distinct('treid')
                             ->get([
