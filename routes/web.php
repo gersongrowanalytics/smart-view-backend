@@ -190,6 +190,7 @@ $router->group(['middleware' => ['permisos']], function() use($router) {
     
     // OBTENER DATA DE REBATE BONUS
     $router->post('/mostrar-rebate-bonus', 'Sistema\Ventas\Mostrar\MostrarRebateBonusController@MostrarRebateBonus');
+    $router->post('/crear-rebate-bonus', 'Sistema\Ventas\Crear\CrearRebateBonusController@CrearRebateBonus');
 
 });
 
