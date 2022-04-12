@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Sistema\Administrador\TiposUsuarios;
 use App\Http\Controllers\Controller;
 use App\pempermisos;
 use App\tpetipopermiso;
+use App\tputiposusuarios;
 use App\tuptiposusuariospermisos;
 use Illuminate\Http\Request;
 
@@ -18,6 +19,17 @@ class MostrarPermisosTiposUsuariosController extends Controller
         $array_tp = [];
 
         $re_tpuid = $request['re_tpuid'];
+
+        $tpu = tputiposusuarios::where('tpuid', $re_tpuid)
+                                    ->get([
+                                        'tpuid',
+                                        'tpunombre',
+                                        'tpufechainicio',
+                                        'tpufechafinal',
+                                        'tpuimagen',
+                                        'tpuimagencircular',
+                                        'estid'
+                                    ]);
 
         $tpes = tpetipopermiso::get(['tpeid','tpenombre']);
         if (sizeof($tpes) > 0) {
@@ -65,9 +77,10 @@ class MostrarPermisosTiposUsuariosController extends Controller
             $mensaje        = 'Los tipos de permisos no se cargaron satisfactoriamente';
         }
         $requestsalida = response()->json([
-            "respuesta" => $respuesta,
-            "mensaje"   => $mensaje,
-            "datos"  => $array_tp
+            "respuesta"    => $respuesta,
+            "mensaje"      => $mensaje,
+            "tipo_usuario" => $tpu,
+            "datos"        => $array_tp
         ]);
 
         return $requestsalida;
