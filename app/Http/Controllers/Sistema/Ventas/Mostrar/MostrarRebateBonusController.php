@@ -16,7 +16,8 @@ class MostrarRebateBonusController extends Controller
         $re_anio = $request['re_anio'];
         $re_mes = $request['re_mes'];
 
-        $cats = catcategorias::all();
+        $cats = catcategorias::where('catid', '!=', 6)
+                            ->get();
 
         $rbb = rbbrebatesbonus::join('fecfechas as fec', 'rbbrebatesbonus.fecid', 'fec.fecid')
                                     ->where('fec.fecano', $re_anio)
@@ -30,7 +31,9 @@ class MostrarRebateBonusController extends Controller
 
             $data = $rbb;
 
-            $rscs = rscrbsscategorias::where('rbbid', $rbb->rbbid)->get();
+            $rscs = rscrbsscategorias::where('rbbid', $rbb->rbbid)
+                                    ->where('catid', '!=', 6)
+                                    ->get();
 
             foreach($cats as $posicionCat => $cat){
                 $cats[$posicionCat]['seleccionado'] = false;
