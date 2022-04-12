@@ -13,8 +13,8 @@ class MostrarRebateBonusController extends Controller
     public function MostrarRebateBonus(Request $request)
     {
 
-        $re_anio = $request['re_anio'];
-        $re_mes = $request['re_mes'];
+        $re_anio = $request['anio'];
+        $re_mes = $request['mes'];
 
         $cats = catcategorias::where('catid', '!=', 6)
                             ->get();
