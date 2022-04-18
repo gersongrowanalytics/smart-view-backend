@@ -21,15 +21,25 @@ class EditarPermisosTiposUsuariosController extends Controller
         $re_editarPermisos = $request['re_editarPermisos'];
         $re_editarTipoUsuario = $request['re_editarTipoUsuario'];
 
-        if ($re_editarPermisos == true && $re_editarTipoUsuario == false) {
-            $tupd = tuptiposusuariospermisos::where('tpuid', $re_tpuid)->delete();
-            if ($tupd >= 0) {
+        if($re_tpuid == 0){
+
+            $tpun = new tputiposusuarios;
+            $tpun->tpunombre         = $re_datosTipoUsuario['re_nombre'];
+            $tpun->estid             = $re_datosTipoUsuario['re_estado'];
+            $tpun->tpufechainicio    = $re_datosTipoUsuario['re_fechaInicio'];
+            $tpun->tpufechafinal     = $re_datosTipoUsuario['re_fechaFinal'];
+            $tpun->tpuimagen         = $re_datosTipoUsuario['re_imagen'];
+            $tpun->tpuimagencircular = $re_datosTipoUsuario['re_imagencircular'];
+            if ($tpun->save()) {
+                $respuesta = true;
+                $mensaje = "Los datos del tipo de usuario se editaron correctamente";
+
                 foreach ($re_permisos as $tipoPermiso) {
                     foreach ($tipoPermiso['permisos'] as $permiso) {
                         if ($permiso['seleccionado'] == true) {
                             $tupn = new tuptiposusuariospermisos();
                             $tupn->pemid = $permiso['pemid'];
-                            $tupn->tpuid = $re_tpuid;
+                            $tupn->tpuid = $tpun->tpuid;
                             if ($tupn->save()) {
                                 $respuesta = true;
                                 $mensaje = "Los permisos del tipo de usuario seleccionados fueron editados exitosamente";
@@ -40,24 +50,54 @@ class EditarPermisosTiposUsuariosController extends Controller
                         }
                     }
                 }
+
+
+            }else{
+                $respuesta = false;
+                $mensaje = "Lo sentimos no se pudo editar el tipo de usuario";
             }
-        }else if($re_editarTipoUsuario == true && $re_editarPermisos == false){
-            $tpue = tputiposusuarios::find($re_tpuid);
-            if ($tpue) {
-                $tpue->tpunombre         = $re_datosTipoUsuario['re_nombre'];
-                $tpue->estid             = $re_datosTipoUsuario['re_estado'];
-                $tpue->tpufechainicio    = $re_datosTipoUsuario['re_fechaInicio'];
-                $tpue->tpufechafinal     = $re_datosTipoUsuario['re_fechaFinal'];
-                $tpue->tpuimagen         = $re_datosTipoUsuario['re_imagen'];
-                $tpue->tpuimagencircular = $re_datosTipoUsuario['re_imagencircular'];
-                if ($tpue->update()) {
-                    $respuesta = true;
-                    $mensaje = "Los datos del tipo de usuario se editaron correctamente";
-                }else{
-                    $respuesta = false;
-                    $mensaje = "Lo sentimos no se pudo editar el tipo de usuario";
+
+        }else{
+
+            if ($re_editarPermisos == true && $re_editarTipoUsuario == false) {
+                $tupd = tuptiposusuariospermisos::where('tpuid', $re_tpuid)->delete();
+                if ($tupd >= 0) {
+                    foreach ($re_permisos as $tipoPermiso) {
+                        foreach ($tipoPermiso['permisos'] as $permiso) {
+                            if ($permiso['seleccionado'] == true) {
+                                $tupn = new tuptiposusuariospermisos();
+                                $tupn->pemid = $permiso['pemid'];
+                                $tupn->tpuid = $re_tpuid;
+                                if ($tupn->save()) {
+                                    $respuesta = true;
+                                    $mensaje = "Los permisos del tipo de usuario seleccionados fueron editados exitosamente";
+                                }else{
+                                    $respuesta = false;
+                                    $mensaje = "Error al momento de editar los permisos del tipo de usuario";
+                                }
+                            }
+                        }
+                    }
+                }
+            }else if($re_editarTipoUsuario == true && $re_editarPermisos == false){
+                $tpue = tputiposusuarios::find($re_tpuid);
+                if ($tpue) {
+                    $tpue->tpunombre         = $re_datosTipoUsuario['re_nombre'];
+                    $tpue->estid             = $re_datosTipoUsuario['re_estado'];
+                    $tpue->tpufechainicio    = $re_datosTipoUsuario['re_fechaInicio'];
+                    $tpue->tpufechafinal     = $re_datosTipoUsuario['re_fechaFinal'];
+                    $tpue->tpuimagen         = $re_datosTipoUsuario['re_imagen'];
+                    $tpue->tpuimagencircular = $re_datosTipoUsuario['re_imagencircular'];
+                    if ($tpue->update()) {
+                        $respuesta = true;
+                        $mensaje = "Los datos del tipo de usuario se editaron correctamente";
+                    }else{
+                        $respuesta = false;
+                        $mensaje = "Lo sentimos no se pudo editar el tipo de usuario";
+                    }
                 }
             }
+
         }
         
         $requestsalida = response()->json([
