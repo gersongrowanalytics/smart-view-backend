@@ -16,8 +16,28 @@ class TpusMostrarController extends Controller
 
         $tpus = tputiposusuarios::get(['tpuid', 'tpunombre']);
 
+        $arr_tpus = array();
+
+        foreach($tpus as $posicionTpu => $tpu){
+
+            if($posicionTpu == 0){
+                $arr_tpus[] = array(
+                    "tpuid" => 0,
+                    "tpunombre" => "Nombre Tipo Usuario"
+                );
+            }
+
+            $arr_tpus[] = array(
+                "tpuid" => 1,
+                "tpunombre" => "Administrador1"
+            );
+
+        }
+
+
         if(sizeof($tpus) > 0){
-            $data = $tpus;
+            // $data = $tpus;
+            $data = $arr_tpus;
         }else{
             $respuesta = false;
             $mensaje = "Lo sentimos, no se encontraron Tpus registrados";
