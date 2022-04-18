@@ -9,6 +9,7 @@ use App\catcategorias;
 use App\tprtipospromociones;
 use App\trrtiposrebatesrebates;
 use App\rtprebatetipospromociones;
+use App\tretiposrebates;
 
 class MostrarRebateController extends Controller
 {
@@ -114,6 +115,10 @@ class MostrarRebateController extends Controller
 
                     }
                 }
+            }
+
+            if(sizeof($tablas_data) > 0){
+                $tablas_data = $this->ObtenerDataVacia();
             }
 
         }else{
@@ -661,5 +666,44 @@ class MostrarRebateController extends Controller
             "datos_enviado" => [$re_mes, $re_anio]
         ]);
 
+    }
+
+    public function ObtenerDataVacia()
+    {
+        $data = array();
+
+        $tre = tretiposrebates::where('trenombre', 'ZB')
+                                ->first();
+
+        if($tre){
+
+            $data[] = array(
+                "treid"      => $tre->treid,
+                "trenombre"  => $tre->trenombre,
+                "mostrando"  => true,
+                "ocultando"  => false,
+                "retroceder" => false,
+                "data" => array(
+                    // array(
+                    //     "cat-1" => "1",
+                    //     "cat-2" => "1",
+                    //     "cat-3" => "1",
+                    //     "cat-4" => "1",
+                    //     "cat-5" => "1",
+                    //     "cat-6" => 0,
+                    //     "cat-7" => 0,
+                    //     "tprid" => 1,
+                    //     "tprnombre" => "Sell In",
+                    //     "trenombre" => "ZB",
+                    //     "ttrporcentajedesde"  => "100",
+                    //     "ttrporcentajehasta"  => "104",
+                    //     "ttrporcentajerebate" => "1",
+                    // )
+                )
+            );
+
+        }
+
+        return $data;
     }
 }
