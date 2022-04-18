@@ -65,6 +65,24 @@ class MostrarPermisosTiposUsuariosController extends Controller
             $respuesta      = false;
             $mensaje        = 'Los tipos de permisos no se cargaron satisfactoriamente';
         }
+
+        if($re_tpuid == 0){
+            $tpu = array(
+                array(
+                    "tpuid"          => 0,
+                    "tpunombre"      => "Nombre Tipo Usuario",
+                    "tpuprivilegio"  => null,
+                    "created_at"     => null,
+                    "updated_at"     => null,
+                    "estid"          => 1,
+                    "tpufechafinal"  => null,
+                    "tpufechainicio" => null,
+                    "tpuimagen"      => null,
+                    "tpuimagencircular"  => null,
+                )
+            );
+        }
+
         $requestsalida = response()->json([
             "respuesta"    => $respuesta,
             "mensaje"      => $mensaje,
