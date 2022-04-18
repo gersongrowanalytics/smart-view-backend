@@ -212,6 +212,7 @@ class loginController extends Controller
 
             if ($posicion_coincidencia === false) {
                 $aparecerTerminosCondiciones = false;
+                $datos['usuaceptoterminos'] = true;
             }
         }
 
