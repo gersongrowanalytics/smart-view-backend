@@ -28,8 +28,8 @@ class TpusMostrarController extends Controller
             }
 
             $arr_tpus[] = array(
-                "tpuid" => 1,
-                "tpunombre" => "Administrador1"
+                "tpuid" => $tpu->tpuid,
+                "tpunombre" => $tpu->tpunombre
             );
 
         }
