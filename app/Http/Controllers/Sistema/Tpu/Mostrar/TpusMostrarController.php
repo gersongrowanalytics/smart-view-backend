@@ -27,10 +27,7 @@ class TpusMostrarController extends Controller
                 );
             }
 
-            $arr_tpus[] = array(
-                "tpuid" => $tpu->tpuid,
-                "tpunombre" => $tpu->tpunombre
-            );
+            $arr_tpus[] = $tpu;
 
         }
 
