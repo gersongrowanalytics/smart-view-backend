@@ -20,6 +20,7 @@ class VerNotificacionesUsuarioController extends Controller
         if($usu){
 
             $nuss = nusnotificacionesusuarios::where('usuid', $usu->usuid)
+                                            ->where('nusleyo', false)
                                             ->update(['nusleyo' => true]);
 
         }else{
