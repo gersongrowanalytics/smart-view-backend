@@ -129,6 +129,23 @@ class MostrarRebateTrismestralController extends Controller
                     "retroceder" => false,
                     "tprid"      => 1,
                     "tprnombre"  => "Sell In",
+                    "data" => array(
+                        array(
+                            "cat-1" => "1",
+                            "cat-2" => "1",
+                            "cat-3" => "1",
+                            "cat-4" => "1",
+                            "cat-5" => "1",
+                            "cat-6" => 0,
+                            "cat-7" => 0,
+                            "tprid" => 1,
+                            "tprnombre" => "Sell In",
+                            "trenombre" => "ZB",
+                            "ttrporcentajedesde"  => "100",
+                            "ttrporcentajehasta"  => "104",
+                            "ttrporcentajerebate" => "1",
+                        )
+                    )
                 );
 
             }
