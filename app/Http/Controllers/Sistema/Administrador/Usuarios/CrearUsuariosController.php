@@ -64,6 +64,7 @@ class CrearUsuariosController extends Controller
         $usun->tpuid             = $tipo_usuario;
         $usun->perid             = $perid;
         $usun->estid             = $estado;
+        $usun->usuusuario        = $correo_inst;
         $usun->usucorreo         = $correo_inst;
         $usun->usucorreopersonal = $correo;
         $usun->usufechainicio    = $fecha_inicio;
