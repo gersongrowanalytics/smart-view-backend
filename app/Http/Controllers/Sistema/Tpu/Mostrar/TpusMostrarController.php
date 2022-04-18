@@ -22,8 +22,16 @@ class TpusMostrarController extends Controller
 
             if($posicionTpu == 0){
                 $arr_tpus[] = array(
-                    "tpuid" => 0,
-                    "tpunombre" => "Nombre Tipo Usuario"
+                    "tpuid"          => 0,
+                    "tpunombre"      => "Nombre Tipo Usuario",
+                    "tpuprivilegio"  => null,
+                    "created_at"     => null,
+                    "updated_at"     => null,
+                    "estid"          => 1,
+                    "tpufechafinal"  => null,
+                    "tpufechainicio" => null,
+                    "tpuimagen"      => null,
+                    "tpuimagencircular"  => null,
                 );
             }
 

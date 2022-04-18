@@ -203,6 +203,19 @@ class loginController extends Controller
             $mensajedev = $e->getMessage();
             $linea      = __LINE__;
         }
+
+        if($respuesta == true){
+            $cadena_de_texto = $usuario;
+            $cadena_buscada  = "kcc.com";
+
+            $posicion_coincidencia = strpos($cadena_de_texto, $cadena_buscada);
+
+            if ($posicion_coincidencia === false) {
+                $aparecerTerminosCondiciones = false;
+                $datos['usuaceptoterminos'] = true;
+            }
+        }
+
         
         return response()->json([
             'respuesta'      => $respuesta,
