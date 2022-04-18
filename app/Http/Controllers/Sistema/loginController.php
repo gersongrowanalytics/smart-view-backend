@@ -211,8 +211,6 @@ class loginController extends Controller
             $posicion_coincidencia = strpos($cadena_de_texto, $cadena_buscada);
 
             if ($posicion_coincidencia === false) {
-            
-            } else {
                 $aparecerTerminosCondiciones = false;
             }
         }
