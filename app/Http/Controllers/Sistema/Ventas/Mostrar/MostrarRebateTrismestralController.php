@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\ttrtritre;
 use App\trftrimestresfechas;
 use App\tritrimestres;
+use App\tretiposrebates;
 use App\catcategorias;
 
 class MostrarRebateTrismestralController extends Controller
@@ -112,6 +113,27 @@ class MostrarRebateTrismestralController extends Controller
             $data = $ttrs;
 
         }else{
+
+            $data = array();
+
+            $tre = tretiposrebates::where('trenombre', 'ZB')
+                                    ->first();
+
+            if($tre){
+
+                $data[] = array(
+                    "treid"      => $tre->treid,
+                    "trenombre"  => $tre->trenombre,
+                    "mostrando"  => true,
+                    "ocultando"  => false,
+                    "retroceder" => false,
+                    "tprid"      => 1,
+                    "tprnombre"  => "Sell In",
+                );
+
+            }
+
+            
 
         }
 
