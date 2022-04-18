@@ -32,7 +32,7 @@ class EditarPermisosTiposUsuariosController extends Controller
             $tpun->tpuimagencircular = $re_datosTipoUsuario['re_imagencircular'];
             if ($tpun->save()) {
                 $respuesta = true;
-                $mensaje = "Los datos del tipo de usuario se editaron correctamente";
+                $mensaje = "Los datos del tipo de usuario se crearon correctamente";
 
                 foreach ($re_permisos as $tipoPermiso) {
                     foreach ($tipoPermiso['permisos'] as $permiso) {
@@ -42,19 +42,17 @@ class EditarPermisosTiposUsuariosController extends Controller
                             $tupn->tpuid = $tpun->tpuid;
                             if ($tupn->save()) {
                                 $respuesta = true;
-                                $mensaje = "Los permisos del tipo de usuario seleccionados fueron editados exitosamente";
+                                $mensaje = "El tipo de usuario fue creado exitosamente";
                             }else{
                                 $respuesta = false;
-                                $mensaje = "Error al momento de editar los permisos del tipo de usuario";
+                                $mensaje = "Error al momento de crear los permisos del tipo de usuario";
                             }
                         }
                     }
                 }
-
-
             }else{
                 $respuesta = false;
-                $mensaje = "Lo sentimos no se pudo editar el tipo de usuario";
+                $mensaje = "Lo sentimos no se pudo crear el tipo de usuario";
             }
 
         }else{
