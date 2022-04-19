@@ -146,6 +146,18 @@ class CategoriasController extends Controller
 
         }
 
+        // OBTENER RESUMEN
+        $arr_resumenPromociones = array();
+        foreach($datos as $dato){
+            $arr_resumenPromociones[] = array(
+                "catnombre" => $dato['catnombre'],
+                "total"   => doubleval($dato['cantidadPromociones']),
+                "nueva"   => doubleval($dato['cantidadPromocionesNuevas']),
+                "regular" => doubleval($dato['cantidadPromociones']) - doubleval($dato['cantidadPromocionesNuevas'])
+            );
+        }
+
+
         return response()->json([
             'respuesta'      => $respuesta,
             'mensaje'        => $mensaje,
@@ -153,7 +165,8 @@ class CategoriasController extends Controller
             'linea'          => $linea,
             'mensajeDetalle' => $mensajeDetalle,
             'mensajedev'     => $mensajedev,
-            'fechaActualiza' => $fechaActualizacion
+            'fechaActualiza' => $fechaActualizacion,
+            'arr_resumenPromociones' => $arr_resumenPromociones,
         ]);
     }
 
