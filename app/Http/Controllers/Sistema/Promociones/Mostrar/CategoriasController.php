@@ -64,7 +64,16 @@ class CategoriasController extends Controller
                                                             ->where('csp.cspestado', 1)
                                                             ->count();
 
+                            $numeroPromocionesNueva = csccanalessucursalescategorias::join('cspcanalessucursalespromociones as csp', 'csp.cscid', 'csccanalessucursalescategorias.cscid')
+                                                            ->where('csccanalessucursalescategorias.scaid', $scasucursalescategorias[$posicionsca]['scaid'])
+                                                            // ->where('csp.cspcantidadcombo', "!=", 0)
+                                                            ->where('csp.cspcantidadplancha', "!=", "0")
+                                                            ->where('csp.cspestado', 1)
+                                                            ->where('csp.cspnuevapromocion', 1)
+                                                            ->count();
+
                             $scasucursalescategorias[$posicionsca]['cantidadPromociones'] = $numeroPromociones;
+                            $scasucursalescategorias[$posicionsca]['cantidadPromocionesNuevas'] = $numeroPromocionesNueva;
                             break;
                         }elseif($posicionsca == sizeof($scasucursalescategorias)-1){
                             $nuevoArray = array(
@@ -80,7 +89,8 @@ class CategoriasController extends Controller
                                 "catcolor"                   => $categoria->catcolor,
                                 "caticonoseleccionado"       => $categoria->caticonoseleccionado,
                                 "fecfecha"                   => $scasucursalescategorias[$posicionsca]['fecfecha'],
-                                "cantidadPromociones"        => 0
+                                "cantidadPromociones"        => 0,
+                                "cantidadPromocionesNuevas"  => 0,
                             );
 
                             $scasucursalescategorias[] = $nuevoArray;
