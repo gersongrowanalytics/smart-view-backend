@@ -45,7 +45,7 @@ $router->get('/correo-recuperar', 'Sistema\recuperarController@EnviarCorreoVista
 // ACEPTAR TERMINOS Y CONDICIONES
 $router->post('/aceptar-terminos-condiciones', 'Sistema\TerminosCondiciones\AceptarTerminosController@AceptarTerminos');
 
-$router->group(['middleware' => ['permisos']], function() use($router) {
+// $router->group(['middleware' => ['permisos']], function() use($router) {
     
     $router->post('/ventas/mostrar', 'Sistema\Ventas\Mostrar\VentasMostrarController@mostrarVentas');
     $router->post('/ventas/mostrar/acumulado', 'Sistema\Ventas\Mostrar\VentasMostrarAcumuladoController@mostrarVentasAcumuladas');
@@ -197,7 +197,7 @@ $router->group(['middleware' => ['permisos']], function() use($router) {
     $router->post('/mostrar-rebate-trimestral', 'Sistema\Ventas\Mostrar\MostrarRebateTrismestralController@MostrarRebateTrismestral');
     $router->post('/crear-varios-rebate-trimestral', 'Sistema\Ventas\Crear\CrearRebateTrimestralController@CrearRebateTrimestral');
 
-});
+// });
 
 // CONTROL DE PRODUCTOS
 $router->post('/control-promociones/mostrar-productos', 'Sistema\ControlProductos\MostrarProductosController@MostrarProductos');
