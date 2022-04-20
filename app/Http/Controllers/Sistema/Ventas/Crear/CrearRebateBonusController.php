@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Sistema\Ventas\Crear;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Sistema\RebatesBonus\AsignarSucursalesController;
 use App\rbbrebatesbonus;
 use App\catcategorias;
 use App\rscrbsscategorias;
@@ -76,7 +77,8 @@ class CrearRebateBonusController extends Controller
                 }
 
 
-
+                $AsignarSucursalesController = new AsignarSucursalesController;
+                $AsignarSucursalesController->AsiganarSucursales($fec->fecid);
                 
             }else{
 

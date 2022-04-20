@@ -121,7 +121,7 @@ class MostrarRebateController extends Controller
             $respuesta = false;
         }
 
-        if(sizeof($tablas_data) > 0){
+        if(sizeof($tablas_data) <= 0){
             $tablas_data = $this->ObtenerDataVacia();
         }
 
