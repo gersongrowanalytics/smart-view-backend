@@ -60,6 +60,7 @@ class EnviarPromocionesActivasController extends Controller
                 $dcen = new dcedestinatarioscorreosenviados;
                 $dcen->uceid = $ucen->uceid;
                 $dcen->dcedestinatario = $correo;
+                $dcen->dceestado = 'R';
                 $dcen->save();
             }
         }
