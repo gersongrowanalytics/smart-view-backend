@@ -17,6 +17,7 @@ use App\tritrimestres;
 use App\trftrimestresfechas;
 use App\sucsucursales;
 use App\rtprebatetipospromociones;
+use App\rscrbsscategorias;
 
 class VentasMostrarController extends Controller
 {
