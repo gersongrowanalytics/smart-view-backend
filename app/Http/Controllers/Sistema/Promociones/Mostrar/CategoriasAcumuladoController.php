@@ -177,7 +177,7 @@ class CategoriasAcumuladoController extends Controller
                     "caticonoseleccionado"       => $cat->caticonoseleccionado,
                     "fecfecha"                   => "",
                     "cantidadPromociones"        => $numeroPromociones,
-                    "numeroPromocionesNuevas"    => $numeroPromocionesNuevas,
+                    "cantidadPromocionesNuevas"  => $numeroPromocionesNuevas,
                     "cantidadCodigosPromocion"   => $numeroCodigosPromociones,
                     "cantidadCanales"            => $numeroCanales,
                 );
