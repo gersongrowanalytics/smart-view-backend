@@ -67,7 +67,7 @@ class CrearRebateBonusController extends Controller
                         $rscn = new rscrbsscategorias;
                         $rscn->fecid = $fec->fecid;
                         $rscn->rbbid = $rbbid;
-                        $rscn->sucid = 1;
+                        $rscn->sucid = 184;
                         // $rscn->rbsid = ;
                         $rscn->catid = $re_cat['catid'];
                         $rscn->rscestado = true;
