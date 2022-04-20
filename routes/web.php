@@ -171,6 +171,7 @@ $router->post('/aceptar-terminos-condiciones', 'Sistema\TerminosCondiciones\Acep
     // LISTA DE PRECIOS
     $router->post('/obtener-grupos-disponibles', 'Sistema\ListaPrecios\ArmarExcelListapreciosController@ObtenerGruposPermitidos');
     $router->post('/exportar-excel-lista-precios', 'Sistema\ListaPrecios\ArmarExcelListapreciosController@ArmarExcelListaprecios');
+    $router->post('/eliminar-lista-precio', 'Sistema\ListaPrecios\EliminarListaPreciosController@EliminarListaPrecios');
 
     // DESCARGAS ENVIAR ARCHIVO CORREO
     $router->post('/descargas-enviar-correo', 'Sistema\Descargas\ConvertirExcelController@ConvertirExcel');
