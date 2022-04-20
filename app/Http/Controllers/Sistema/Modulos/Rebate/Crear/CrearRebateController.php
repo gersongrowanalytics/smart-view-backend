@@ -116,10 +116,14 @@ class CrearRebateController extends Controller
     
             }
 
+            $RebateActualizar = new RebateActualizarController;
+            $RebateActualizar->ActualizarValorizadoRebateFechaGet($fec->fecid, $usutoken);
+            
         }else{
             $respuesta = false;
             $mensaje = "Lo sentimos el mes seleccionado no ha sido aperturado";
         }
+
 
 
         $requestsalida = response()->json([
