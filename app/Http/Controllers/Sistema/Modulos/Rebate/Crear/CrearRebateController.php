@@ -10,6 +10,12 @@ use App\fecfechas;
 use App\trrtiposrebatesrebates;
 use App\catcategorias;
 
+use Illuminate\Support\Facades\DB;
+use App\scasucursalescategorias;
+use App\tretiposrebates;
+use App\tsutipospromocionessucursales;
+use App\sucsucursales;
+
 class CrearRebateController extends Controller
 {
     public function CrearRebate(Request $request)
@@ -156,7 +162,7 @@ class CrearRebateController extends Controller
 
 
     // use App\Http\Controllers\Sistema\Configuracion\Rebate\Actualizar\RebateActualizarController;
-    
+
     public function actualizarValorizadoRebateFechaGet($fecid, $usutoken)
     {
         // $fecid      = $request['fecha']; 
