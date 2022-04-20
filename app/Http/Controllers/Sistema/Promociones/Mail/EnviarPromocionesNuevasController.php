@@ -13,7 +13,8 @@ class EnviarPromocionesNuevasController extends Controller
     {
 
         // $correo = "gerson.vilca@grow-analytics.com.pe";
-        $correo = "director.creativo@grow-analytics.com.pe";
+        // $correo = "director.creativo@grow-analytics.com.pe";
+        $correo = "jeanmarcoe@gmail.com";
 
         $re_sucursales = $request['sucursales'];
         $re_fecha = $request['fecha'];
