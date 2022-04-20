@@ -74,8 +74,6 @@ class ArmarExcelListapreciosController extends Controller
         $re_mes  = $request['mes'];
         $re_dia  = $request['dia'];
 
-        $re_duplicados = $request['duplicados'];
-
         $re_columnas  = $request['columnas'];
 
         $ltps = ltplistaprecios::join('fecfechas as fec', 'fec.fecid', 'ltplistaprecios.fecid')
@@ -85,13 +83,6 @@ class ArmarExcelListapreciosController extends Controller
                                 ->where('fecano', $re_anio)
                                 ->where('fecmes', $re_mes)
                                 ->where('fecdia', $re_dia)
-                                ->where(function ($query) use($re_duplicados) {
-
-                                    if($re_duplicados == true) {
-                                        $query->where('ltplistaprecios.ltpduplicadocomplejo', true);
-                                    }
-
-                                })
                                 // ->where('treid', $re_treid)
                                 // ->paginate(1000);
                                 ->paginate(70);
