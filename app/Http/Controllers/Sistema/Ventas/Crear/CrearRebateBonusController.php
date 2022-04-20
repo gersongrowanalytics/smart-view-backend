@@ -78,7 +78,7 @@ class CrearRebateBonusController extends Controller
 
 
                 $AsignarSucursalesController = new AsignarSucursalesController;
-                $AsignarSucursalesController->armarRebateBonus($fec->fecid);
+                $AsignarSucursalesController->AsiganarSucursales($fec->fecid);
                 
             }else{
 
