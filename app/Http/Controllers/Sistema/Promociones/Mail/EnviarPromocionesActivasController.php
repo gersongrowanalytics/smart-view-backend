@@ -14,6 +14,8 @@ class EnviarPromocionesActivasController extends Controller
 {
     public function EnviarPromocionesActivas(Request $request)
     {
+        $respuesta = true;
+        $mensaje = 'El correo se envio exitosamente';
 
         $usutoken   = $request->header('api_token');
         $re_sucursales = $request['sucursales'];
@@ -79,5 +81,11 @@ class EnviarPromocionesActivasController extends Controller
 
         Mail::to($correo)->send(new MailPromocionesActivas($data));
 
+        $requestsalida = response()->json([
+            "respuesta" => $respuesta,
+            "mensaje"   => $mensaje,
+        ]);
+
+        return $requestsalida;
     }
 }

@@ -11,6 +11,8 @@ class EnviarPromocionesNuevasController extends Controller
 {
     public function EnviarPromocionesNuevas(Request $request)
     {
+        $respuesta = true;
+        $mensaje = 'El correo se envio exitosamente';
 
         // $correo = "gerson.vilca@grow-analytics.com.pe";
         // $correo = "director.creativo@grow-analytics.com.pe";
@@ -36,5 +38,11 @@ class EnviarPromocionesNuevasController extends Controller
 
         Mail::to($correo)->send(new MailPromocionesNuevas($data));
 
+        $requestsalida = response()->json([
+            "respuesta" => $respuesta,
+            "mensaje"   => $mensaje,
+        ]);
+
+        return $requestsalida;
     }
 }
