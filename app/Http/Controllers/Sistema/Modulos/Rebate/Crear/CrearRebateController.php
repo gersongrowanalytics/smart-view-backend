@@ -117,8 +117,8 @@ class CrearRebateController extends Controller
     
             }
 
-            $RebateActualizar = new RebateActualizarController;
-            $actRebate = $RebateActualizar->actualizarValorizadoRebateFechaGet($fec->fecid, $usutoken);
+            $RebateActualizarController = new RebateActualizarController;
+            $actRebate = $RebateActualizarController->actualizarValorizadoRebateFechaGet($fec->fecid, $usutoken);
             
         }else{
             $respuesta = false;
