@@ -82,6 +82,7 @@ class CategoriasAcumuladoController extends Controller
                                                                 ->get();
 
                 $numeroPromociones = 0;
+                $numeroPromocionesNuevas = 0;
                 $numeroCodigosPromociones = 0;
                 $numeroCanales = 0;
                 
@@ -147,7 +148,16 @@ class CategoriasAcumuladoController extends Controller
                                                             ->where('csp.cspestado', 1)
                                                             ->count();
 
+                    $countCscNuevas = csccanalessucursalescategorias::join('cspcanalessucursalespromociones as csp', 'csp.cscid', 'csccanalessucursalescategorias.cscid')
+                                                            ->where('csccanalessucursalescategorias.scaid', $sca->scaid)
+                                                            // ->where('csp.cspcantidadcombo', "!=", 0)
+                                                            ->where('csp.cspcantidadplancha', "!=", "0")
+                                                            ->where('csp.cspestado', 1)
+                                                            ->where('csp.cspnuevapromocion', 1)
+                                                            ->count();
+
                     $numeroPromociones = $numeroPromociones + $countCsc;
+                    $numeroPromocionesNuevas = $numeroPromocionesNuevas + $countCscNuevas;
                 }
 
                 
@@ -167,6 +177,7 @@ class CategoriasAcumuladoController extends Controller
                     "caticonoseleccionado"       => $cat->caticonoseleccionado,
                     "fecfecha"                   => "",
                     "cantidadPromociones"        => $numeroPromociones,
+                    "numeroPromocionesNuevas"    => $numeroPromocionesNuevas,
                     "cantidadCodigosPromocion"   => $numeroCodigosPromociones,
                     "cantidadCanales"            => $numeroCanales,
                 );
@@ -200,10 +211,22 @@ class CategoriasAcumuladoController extends Controller
             );
         }
 
+        // OBTENER RESUMEN
+        $arr_resumenPromociones = array();
+        foreach($datos as $dato){
+            $arr_resumenPromociones[] = array(
+                "catnombre" => $dato['catnombre'],
+                "total"   => doubleval($dato['cantidadPromociones']),
+                "nueva"   => doubleval($dato['cantidadPromocionesNuevas']),
+                "regular" => doubleval($dato['cantidadPromociones']) - doubleval($dato['cantidadPromocionesNuevas'])
+            );
+        }
+
         return response()->json([
             'respuesta'      => $respuesta,
             'mensaje'        => $mensaje,
             'datos'          => $datos,
+            'arr_resumenPromociones' => $arr_resumenPromociones,
             'linea'          => $linea,
             'mensajeDetalle' => $mensajeDetalle,
             'mensajedev'     => $mensajedev,
