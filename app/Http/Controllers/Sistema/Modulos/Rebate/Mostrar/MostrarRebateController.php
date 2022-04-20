@@ -121,9 +121,9 @@ class MostrarRebateController extends Controller
             $respuesta = false;
         }
 
-        // if(sizeof($tablas_data) > 0){
-        //     $tablas_data = $this->ObtenerDataVacia();
-        // }
+        if(sizeof($tablas_data) <= 0){
+            $tablas_data = $this->ObtenerDataVacia();
+        }
 
         $descargar_data = $this->ArmarGeneradorExcelRebate($re_anio, $re_mes, $arr_data);
 
