@@ -82,6 +82,10 @@ class VentasMostrarController extends Controller
                                             }
                                         })
                                         ->get();
+
+                    $rscs = rscrbsscategorias::where('rbbid', $rbb->rbbid)
+                                                ->where('sucid', $sucid)
+                                                ->get();
                     
                     foreach($cats as $posicionCat => $cat){
                         if($rbb->fecid == 3){
@@ -107,13 +111,16 @@ class VentasMostrarController extends Controller
                                 $cats[$posicionCat]['caticono'] = env('APP_URL')."/Sistema/categorias/img/iconos/iconosDesactivados/".$cat->catnombre.".png";
                             }
                         }else{
-                            if($cat->catid == 1){
-                                $cats[$posicionCat]['estado'] = 1;
-                            }else{
-                                $cats[$posicionCat]['estado'] = 0;
-                                // $cats[$posicionCat]['caticono'] = "http://backend.leadsmartview.com/Sistema/categorias/img/iconos/iconosDesactivados/".$cat->catnombre.".png";
-                                $cats[$posicionCat]['caticono'] = env('APP_URL')."/Sistema/categorias/img/iconos/iconosDesactivados/".$cat->catnombre.".png";
+
+                            $cats[$posicionCat]['estado'] = 0;
+                            // $cats[$posicionCat]['caticono'] = env('APP_URL')."/Sistema/categorias/img/iconos/iconosDesactivados/".$cat->catnombre.".png";
+                            foreach($rscs as $rsc){
+                                if($cat->catid == $rsc->catid){
+                                    $cats[$posicionCat]['estado'] = 1;
+                                    // $cats[$posicionCat]['caticono'] = env('APP_URL')."/Sistema/categorias/img/iconos/iconosDesactivados/".$cat->catnombre.".png";
+                                }
                             }
+
                         }
                     }
 
