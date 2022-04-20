@@ -524,20 +524,6 @@ class CrearRebateController extends Controller
             "mensajedev"     => $mensajedev,
             "logs"           => $log
         ]);
-
-        $AuditoriaController = new AuditoriaController;
-        $registrarAuditoria  = $AuditoriaController->registrarAuditoria(
-            $usutoken,
-            null,
-            null,
-            $request,
-            $requestsalida,
-            'ACTUALIZAR EL VALORIZADO REBATE EN LOS SCA Y TSU',
-            'ACTUALIZAR',
-            '/configuracion/rebate/actualizar/Rebate', //ruta
-            '',
-            $log
-        );
         
         return $requestsalida;   
     }
