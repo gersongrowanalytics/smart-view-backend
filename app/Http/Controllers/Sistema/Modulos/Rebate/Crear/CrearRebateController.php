@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Sistema\Modulos\Rebate\Crear;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Controllers\AuditoriaController;
+use App\Http\Controllers\Sistema\Configuracion\Rebate\Actualizar\RebateActualizarController;
 use App\rtprebatetipospromociones;
 use App\fecfechas;
 use App\trrtiposrebatesrebates;
