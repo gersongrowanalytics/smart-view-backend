@@ -14,7 +14,7 @@ class TpusMostrarController extends Controller
         $mensaje    = "Se cargaron todos los tpus satisfactoriamente";
         $data       = [];
 
-        $tpus = tputiposusuarios::get(['tpuid', 'tpunombre']);
+        $tpus = tputiposusuarios::get(['tpuid', 'tpunombre', 'tpuimagencircular']);
 
         $arr_tpus = array();
 
