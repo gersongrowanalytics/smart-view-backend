@@ -399,7 +399,7 @@ class RebateActualizarController extends Controller
 
 
     // ESTA FUNCION ES LA MISMA DE ARRIBA SOLO QUE EN MEETODO GET PARA RECIBIR PARAMETROS
-    public function ActualizarValorizadoRebateFechaGet($fecid, $usutoken)
+    public function actualizarValorizadoRebateFechaGet($fecid, $usutoken)
     {
         // $fecid      = $request['fecha']; 
         // $usutoken   = $request->header('api_token');
