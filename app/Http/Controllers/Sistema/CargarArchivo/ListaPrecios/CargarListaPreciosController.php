@@ -46,11 +46,14 @@ class CargarListaPreciosController extends Controller
         $exitoSubirExcel = false;
 
         $nombres = [];
+        $fechaSeleccionada = 153;
 
         DB::beginTransaction();
         try{
             $nombreArchivoGuardado = basename($fechaActual."-".$_FILES['file']['name']);
             $fichero_subido = base_path().'/public/Sistema/cargaArchivos/listaprecios/'.$nombreArchivoGuardado;
+
+            ltplistaprecios::where('ltpid', '>', 0)->delete();
 
             if (move_uploaded_file($_FILES['file']['tmp_name'], $fichero_subido)) {
 
@@ -60,15 +63,42 @@ class CargarListaPreciosController extends Controller
                     $nombres = $objPHPExcel->getSheetNames();
                     $nombresHojas = $objPHPExcel->getSheetNames();
 
-                    foreach($nombresHojas as $nombresHoja){
+                    $grupoSeleccionado = 0;
 
-                        // $foo = 'Hola mundo';
+                    // 15 -> ZB
+                    // 26 -> ZA
+                    // 24 -> ZC
 
-                        // if (strpos($nombresHoja, 'mundo') !== false) {
-                        //     echo 'true';
-                        // }
+                    foreach($nombresHojas as $posicionHoja => $nombresHoja){
+
+                        $grupoA = 'TRATEGICO';
+                        $grupoB = 'CTICO';
+                        $grupoC = 'BROKER';
+
+                        if (strpos($nombresHoja, $grupoA) !== false) {
+                            $grupoSeleccionado = 26;
+                        }else if(strpos($nombresHoja, $grupoB) !== false){
+                            $grupoSeleccionado = 15;
+                        }else if(strpos($nombresHoja, $grupoC) !== false){
+                            $grupoSeleccionado = 24;
+                        }else{
+                            $grupoSeleccionado = 0;
+                        }
+
+                        if($grupoSeleccionado != 0){
+                            $objPHPExcel->setActiveSheetIndex($posicionHoja);
+                            $numRows        = $objPHPExcel->setActiveSheetIndex($posicionHoja)->getHighestRow();
+                            $ultimaColumna  = $objPHPExcel->setActiveSheetIndex($posicionHoja)->getHighestColumn();
+
+                            $treidSeleccionado = $grupoSeleccionado;
+
+                            $this->AgregarDataGrupo($numRows, $objPHPExcel, $fechaSeleccionada, $treidSeleccionado);
+                        }
+
 
                     }
+
+                    
 
                     
 
@@ -187,59 +217,59 @@ class CargarListaPreciosController extends Controller
     {
 
 
-        // for ($i=6; $i <= $numRows ; $i++) {
-        //     $dia = '01';
+        for ($i=6; $i <= $numRows ; $i++) {
+            $dia = '01';
 
-        //     $ex_categoria           = $objPHPExcel->getActiveSheet()->getCell('C'.$i)->getCalculatedValue();
-        //     $ex_subcategoria        = $objPHPExcel->getActiveSheet()->getCell('D'.$i)->getCalculatedValue();
-        //     $ex_codigosap           = $objPHPExcel->getActiveSheet()->getCell('E'.$i)->getCalculatedValue();
-        //     $ex_ean                 = $objPHPExcel->getActiveSheet()->getCell('F'.$i)->getCalculatedValue();
-        //     $ex_descripcionproducto = $objPHPExcel->getActiveSheet()->getCell('G'.$i)->getCalculatedValue();
-        //     $ex_unidadventa         = $objPHPExcel->getActiveSheet()->getCell('H'.$i)->getCalculatedValue();
-        //     $ex_preciolistasinigv   = $objPHPExcel->getActiveSheet()->getCell('J'.$i)->getCalculatedValue();
-        //     $ex_alza                = $objPHPExcel->getActiveSheet()->getCell('K'.$i)->getCalculatedValue();
-        //     $ex_sdtpr               = $objPHPExcel->getActiveSheet()->getCell('L'.$i)->getCalculatedValue();
-        //     $ex_preciolistaconigv   = $objPHPExcel->getActiveSheet()->getCell('M'.$i)->getCalculatedValue();
-        //     $ex_mfrutamayorista     = $objPHPExcel->getActiveSheet()->getCell('N'.$i)->getCalculatedValue();
-        //     $ex_reventamayorista    = $objPHPExcel->getActiveSheet()->getCell('P'.$i)->getCalculatedValue();
-        //     $ex_margenmayorista     = $objPHPExcel->getActiveSheet()->getCell('Q'.$i)->getCalculatedValue();
-        //     $ex_marcajemayorista    = $objPHPExcel->getActiveSheet()->getCell('S'.$i)->getCalculatedValue();
-        //     $ex_mfrutaminorista     = $objPHPExcel->getActiveSheet()->getCell('U'.$i)->getCalculatedValue();
-        //     $ex_reventaminorista    = $objPHPExcel->getActiveSheet()->getCell('W'.$i)->getCalculatedValue();
-        //     $ex_margenminorista     = $objPHPExcel->getActiveSheet()->getCell('X'.$i)->getCalculatedValue();
-        //     $ex_marcajeminorista    = $objPHPExcel->getActiveSheet()->getCell('Z'.$i)->getCalculatedValue();
-        //     $ex_mfrutahorizontal    = $objPHPExcel->getActiveSheet()->getCell('AB'.$i)->getCalculatedValue();
-        //     $ex_reventabodega       = $objPHPExcel->getActiveSheet()->getCell('AD'.$i)->getCalculatedValue();
-        //     $ex_margenbodega        = $objPHPExcel->getActiveSheet()->getCell('AE'.$i)->getCalculatedValue();
-        //     $ex_pvp                 = $objPHPExcel->getActiveSheet()->getCell('AG'.$i)->getCalculatedValue();
+            $ex_categoria           = $objPHPExcel->getActiveSheet()->getCell('C'.$i)->getCalculatedValue();
+            $ex_subcategoria        = $objPHPExcel->getActiveSheet()->getCell('D'.$i)->getCalculatedValue();
+            $ex_codigosap           = $objPHPExcel->getActiveSheet()->getCell('E'.$i)->getCalculatedValue();
+            $ex_ean                 = $objPHPExcel->getActiveSheet()->getCell('F'.$i)->getCalculatedValue();
+            $ex_descripcionproducto = $objPHPExcel->getActiveSheet()->getCell('G'.$i)->getCalculatedValue();
+            $ex_unidadventa         = $objPHPExcel->getActiveSheet()->getCell('H'.$i)->getCalculatedValue();
+            $ex_preciolistasinigv   = $objPHPExcel->getActiveSheet()->getCell('J'.$i)->getCalculatedValue();
+            $ex_alza                = $objPHPExcel->getActiveSheet()->getCell('K'.$i)->getCalculatedValue();
+            $ex_sdtpr               = $objPHPExcel->getActiveSheet()->getCell('L'.$i)->getCalculatedValue();
+            $ex_preciolistaconigv   = $objPHPExcel->getActiveSheet()->getCell('M'.$i)->getCalculatedValue();
+            $ex_mfrutamayorista     = $objPHPExcel->getActiveSheet()->getCell('N'.$i)->getCalculatedValue();
+            $ex_reventamayorista    = $objPHPExcel->getActiveSheet()->getCell('P'.$i)->getCalculatedValue();
+            $ex_margenmayorista     = $objPHPExcel->getActiveSheet()->getCell('Q'.$i)->getCalculatedValue();
+            $ex_marcajemayorista    = $objPHPExcel->getActiveSheet()->getCell('S'.$i)->getCalculatedValue();
+            $ex_mfrutaminorista     = $objPHPExcel->getActiveSheet()->getCell('U'.$i)->getCalculatedValue();
+            $ex_reventaminorista    = $objPHPExcel->getActiveSheet()->getCell('W'.$i)->getCalculatedValue();
+            $ex_margenminorista     = $objPHPExcel->getActiveSheet()->getCell('X'.$i)->getCalculatedValue();
+            $ex_marcajeminorista    = $objPHPExcel->getActiveSheet()->getCell('Z'.$i)->getCalculatedValue();
+            $ex_mfrutahorizontal    = $objPHPExcel->getActiveSheet()->getCell('AB'.$i)->getCalculatedValue();
+            $ex_reventabodega       = $objPHPExcel->getActiveSheet()->getCell('AD'.$i)->getCalculatedValue();
+            $ex_margenbodega        = $objPHPExcel->getActiveSheet()->getCell('AE'.$i)->getCalculatedValue();
+            $ex_pvp                 = $objPHPExcel->getActiveSheet()->getCell('AG'.$i)->getCalculatedValue();
             
-        //     $ltpn = new ltplistaprecios;
-        //     $ltpn->treid = $treidSeleccionado;
-        //     $ltpn->fecid = $fechaSeleccionada;
-        //     $ltpn->ltpcategoria             = $ex_categoria;
-        //     $ltpn->ltpsubcategoria          = $ex_subcategoria;
-        //     $ltpn->ltpcodigosap             = $ex_codigosap;
-        //     $ltpn->ltpean                   = $ex_ean;
-        //     $ltpn->ltpdescripcionproducto   = $ex_descripcionproducto;
-        //     $ltpn->ltpunidadventa           = $ex_unidadventa;
-        //     $ltpn->ltppreciolistasinigv     = $ex_preciolistasinigv;
-        //     $ltpn->ltpalza                  = $ex_alza;
-        //     $ltpn->ltpsdtpr                 = $ex_sdtpr;
-        //     $ltpn->ltppreciolistaconigv     = $ex_preciolistaconigv;
-        //     $ltpn->ltpmfrutamayorista       = $ex_mfrutamayorista;
-        //     $ltpn->ltpreventamayorista      = $ex_reventamayorista;
-        //     $ltpn->ltpmargenmayorista       = $ex_margenmayorista;
-        //     $ltpn->ltpmarcajemayorista      = $ex_marcajemayorista;
-        //     $ltpn->ltpmfrutaminorista       = $ex_mfrutaminorista;
-        //     $ltpn->ltpreventaminorista      = $ex_reventaminorista;
-        //     $ltpn->ltpmargenminorista       = $ex_margenminorista;
-        //     $ltpn->ltpmarcajeminorista      = $ex_marcajeminorista;
-        //     $ltpn->ltpmfrutahorizontal      = $ex_mfrutahorizontal;
-        //     $ltpn->ltpreventabodega         = $ex_reventabodega;
-        //     $ltpn->ltpmargenbodega          = $ex_margenbodega;
-        //     $ltpn->ltppvp                   = $ex_pvp;
-        //     $ltpn->save();
-        // }
+            $ltpn = new ltplistaprecios;
+            $ltpn->treid = $treidSeleccionado;
+            $ltpn->fecid = $fechaSeleccionada;
+            $ltpn->ltpcategoria             = $ex_categoria;
+            $ltpn->ltpsubcategoria          = $ex_subcategoria;
+            $ltpn->ltpcodigosap             = $ex_codigosap;
+            $ltpn->ltpean                   = $ex_ean;
+            $ltpn->ltpdescripcionproducto   = $ex_descripcionproducto;
+            $ltpn->ltpunidadventa           = $ex_unidadventa;
+            $ltpn->ltppreciolistasinigv     = $ex_preciolistasinigv;
+            $ltpn->ltpalza                  = $ex_alza;
+            $ltpn->ltpsdtpr                 = $ex_sdtpr;
+            $ltpn->ltppreciolistaconigv     = $ex_preciolistaconigv;
+            $ltpn->ltpmfrutamayorista       = $ex_mfrutamayorista;
+            $ltpn->ltpreventamayorista      = $ex_reventamayorista;
+            $ltpn->ltpmargenmayorista       = $ex_margenmayorista;
+            $ltpn->ltpmarcajemayorista      = $ex_marcajemayorista;
+            $ltpn->ltpmfrutaminorista       = $ex_mfrutaminorista;
+            $ltpn->ltpreventaminorista      = $ex_reventaminorista;
+            $ltpn->ltpmargenminorista       = $ex_margenminorista;
+            $ltpn->ltpmarcajeminorista      = $ex_marcajeminorista;
+            $ltpn->ltpmfrutahorizontal      = $ex_mfrutahorizontal;
+            $ltpn->ltpreventabodega         = $ex_reventabodega;
+            $ltpn->ltpmargenbodega          = $ex_margenbodega;
+            $ltpn->ltppvp                   = $ex_pvp;
+            $ltpn->save();
+        }
 
     }
 }
