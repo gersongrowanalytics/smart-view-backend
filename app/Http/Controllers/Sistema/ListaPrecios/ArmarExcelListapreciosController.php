@@ -68,6 +68,7 @@ class ArmarExcelListapreciosController extends Controller
     {
 
         $re_treid = $request['treid'];
+        $re_tresid = $request['tresid'];
         // $re_treid = 26;
         $usutoken = $request->header('api_token');
         $re_anio = $request['anio'];
@@ -93,6 +94,17 @@ class ArmarExcelListapreciosController extends Controller
                                         $query->where('ltplistaprecios.ltpduplicadocomplejo', true);
                                     }
 
+                                })
+                                ->where(function ($query) use($re_tresid, $re_treid) {
+                                    if(sizeof($re_tresid) > 0){
+                                        foreach($re_tresid as $tre){
+                                            if($tre['seleccionadoFiltro'] == true){
+                                                $query->orwhere('tre.treid', $tre['treid']);
+                                            }
+                                        }
+                                    }else{
+                                        $query->where('tre.treid', $re_treid);
+                                    }
                                 })
                                 ->orderby('ltpcodigosap')
                                 // ->where('treid', $re_treid)
@@ -150,6 +162,17 @@ class ArmarExcelListapreciosController extends Controller
                                         $query->where('ltplistaprecios.ltpduplicadocomplejo', true);
                                     }
 
+                                })
+                                ->where(function ($query) use($re_tresid, $re_treid) {
+                                    if(sizeof($re_tresid) > 0){
+                                        foreach($re_tresid as $tre){
+                                            if($tre['seleccionadoFiltro'] == true){
+                                                $query->orwhere('tre.treid', $tre['treid']);
+                                            }
+                                        }
+                                    }else{
+                                        $query->where('tre.treid', $re_treid);
+                                    }
                                 })
                                 // ->where('treid', $re_treid)
                                 // ->paginate(1000);
