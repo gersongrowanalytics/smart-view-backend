@@ -47,6 +47,7 @@ class CargarListaPreciosController extends Controller
 
         $nombres = [];
         $fechaSeleccionada = 153;
+        $gruposEncontrados = [];
 
         DB::beginTransaction();
         try{
@@ -78,10 +79,13 @@ class CargarListaPreciosController extends Controller
 
                         if (strpos($nombresHoja, $grupoA) !== false) {
                             $grupoSeleccionado = 26;
+                            $gruposEncontrados[] = $grupoSeleccionado;
                         }else if(strpos($nombresHoja, $grupoB) !== false){
                             $grupoSeleccionado = 15;
+                            $gruposEncontrados[] = $grupoSeleccionado;
                         }else if(strpos($nombresHoja, $grupoC) !== false){
                             $grupoSeleccionado = 24;
+                            $gruposEncontrados[] = $grupoSeleccionado;
                         }else{
                             $grupoSeleccionado = 0;
                         }
@@ -187,7 +191,8 @@ class CargarListaPreciosController extends Controller
             "mensajedev"     => $mensajedev,
             "numeroCelda"    => $numeroCelda,
             "logs"           => $log,
-            "nombres" => $nombres
+            "nombres" => $nombres,
+            "gruposEncontrados" => $gruposEncontrados,
         ]);
 
         $AuditoriaController = new AuditoriaController;
