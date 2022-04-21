@@ -57,6 +57,7 @@ class CargarListaPreciosController extends Controller
                 if($subirData == true){
                     $objPHPExcel    = IOFactory::load($fichero_subido);
 
+                    $nombres = $objPHPExcel->getSheetNames();
                     $nombresHojas = $objPHPExcel->getSheetNames();
 
                     foreach($nombresHojas as $nombresHoja){
@@ -73,16 +74,16 @@ class CargarListaPreciosController extends Controller
 
 
 
-                    $objPHPExcel->setActiveSheetIndex(0);
-                    $numRows        = $objPHPExcel->setActiveSheetIndex(0)->getHighestRow();
-                    $ultimaColumna  = $objPHPExcel->setActiveSheetIndex(0)->getHighestColumn();
+                    // $objPHPExcel->setActiveSheetIndex(0);
+                    // $numRows        = $objPHPExcel->setActiveSheetIndex(0)->getHighestRow();
+                    // $ultimaColumna  = $objPHPExcel->setActiveSheetIndex(0)->getHighestColumn();
                     
 
-                    $fechaSeleccionada = 69;
+                    // $fechaSeleccionada = 69;
 
                     // AGREGAR LISTA DE PRECIOS DE ZA
-                    $treidSeleccionado = 26;
-                    $this->AgregarDataGrupo($numRows, $objPHPExcel, $fechaSeleccionada, $treidSeleccionado);
+                    // $treidSeleccionado = 26;
+                    // $this->AgregarDataGrupo($numRows, $objPHPExcel, $fechaSeleccionada, $treidSeleccionado);
 
 
                     // $objPHPExcel->setActiveSheetIndex(3);
