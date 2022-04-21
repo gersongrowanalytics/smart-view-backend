@@ -50,7 +50,7 @@ class SucursalesMostrarController extends Controller
                                                     ]);
 
                     $zonas = zonzonas::where('zonestado', 1)
-                                        // ->where('zonregionalgba', '!=','UTT')
+                                        ->where('zonregionalgba', 'DTT')
                                         ->get([
                                             'zonid',
                                             'zonnombre',
