@@ -1930,7 +1930,7 @@ class ArmarExcelListapreciosController extends Controller
         return response()->json([
             'excel' => $nuevoArray,
             'data' => $ltps,
-            'dataRealltps' => $dataRealltps,
+            'dataReal' => $dataReal,
             'arr_filtro_customer_group_lp' => $armarFiltros['arr_filtro_customer_group_lp'],
             'arr_filtro_categorias_lp'     => $armarFiltros['arr_filtro_categorias_lp'],
             'arr_filtro_subcategorias_lp'  => $armarFiltros['arr_filtro_subcategorias_lp'],
