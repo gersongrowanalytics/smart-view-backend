@@ -699,12 +699,39 @@ class ClientesCargarController extends Controller
                     $customerGroup    = $objPHPExcel->getActiveSheet()->getCell('O'.$i)->getCalculatedValue();
                     $cg2              = $objPHPExcel->getActiveSheet()->getCell('P'.$i)->getCalculatedValue();
 
-
                     $suc = sucsucursales::where('sucsoldto', $codSoldTo)->first();
                     if($suc){
                         $suc->sucnombre = $clienteHml;
                         $suc->sucregionalgba = $gbaRegional;
-                        $suc->update();
+                        
+                        if($gbaRegional == "UTT"){
+                            
+                            $zon = zonzonas::where('zonnombre', 'LIKE', '%'.$zona.'%')
+                                            ->first();
+
+                            $zonid = 0;
+                            if($zon){
+                                $zonid = $zon->zonid;
+                            }else{
+                                $zonid = null;
+                            }
+                            
+                            $cas = cascanalessucursales::where('casnombre', 'LIKE', "%".$canal."%")
+                                                        ->first();
+
+                            $casid = 0;
+                            if($cas){
+                                $casid = $cas->casid;
+                            }else{
+                                $casid = null;
+                            }
+
+                            $suc->zonid = $zonid;
+                            $suc->casid = $casid;
+
+                            $suc->update();
+
+                        }   
                     }
 
                     // VERIFICAR SI EXISTE LA PERSONA DEL EJECUTIVO
