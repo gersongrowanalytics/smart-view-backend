@@ -259,6 +259,7 @@ class CargarListaPreciosController extends Controller
 
             $ltpn = new ltplistaprecios;
             $ltpn->treid = $treidSeleccionado;
+            $ltpn->proid = $proid;
             $ltpn->fecid = $fechaSeleccionada;
             $ltpn->ltpcategoria             = $ex_categoria;
             $ltpn->ltpsubcategoria          = $ex_subcategoria;
