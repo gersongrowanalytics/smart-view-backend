@@ -253,7 +253,8 @@ class CargarListaPreciosController extends Controller
             
             $encontroSku = false;
             $noAgregarFila = false;
-            
+            $zonaSeleccionada = "LIMA";
+
             foreach($skus as $sku){
                 if($sku['sku'] == $ex_codigosap){
 
@@ -268,9 +269,22 @@ class CargarListaPreciosController extends Controller
 
                         $noAgregarFila = true;
 
+                    }else if($sku['nombre'] != $ex_descripcionproducto){
+
+                        $zonaLim  = 'LIMA';
+                        $zonaProv = 'PROVINCIA';
+
+                        if (strpos($ex_descripcionproducto, $zonaLim) !== false) {
+                            $zonaSeleccionada = "LIMA";
+                        }else if(strpos($ex_descripcionproducto, $zonaProv) !== false){
+                            $zonaSeleccionada = "PROVINCIA";
+                        }
+
+                    }else{
+                        $encontroSku = true;
                     }
 
-                    $encontroSku = true;
+                    
                 }
             }
 
@@ -302,6 +316,8 @@ class CargarListaPreciosController extends Controller
                 $ltpn->fecid = $fechaSeleccionada;
 
                 $ltpn->ltpduplicadocomplejo = $encontroSku;
+
+                $ltpn->ltpzona = $zonaSeleccionada;
 
                 $ltpn->ltpcategoria             = $ex_categoria;
                 $ltpn->ltpsubcategoria          = $ex_subcategoria;
