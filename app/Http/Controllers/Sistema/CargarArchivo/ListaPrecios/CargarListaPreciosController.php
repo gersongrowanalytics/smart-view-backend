@@ -252,9 +252,23 @@ class CargarListaPreciosController extends Controller
             $ex_pvp                 = $objPHPExcel->getActiveSheet()->getCell('AG'.$i)->getCalculatedValue();
             
             $encontroSku = false;
+            $noAgregarFila = false;
             
             foreach($skus as $sku){
                 if($sku['sku'] == $ex_codigosap){
+
+                    if(
+                        $sku['ean'] == $ex_ean && 
+                        $sku['nombre'] == $ex_descripcionproducto && 
+                        $sku['undventa'] == $ex_unidadventa && 
+                        $sku['precio'] == $ex_preciolistasinigv && 
+                        $sku['alza'] == $ex_alza && 
+                        $sku['precioconigv'] == $ex_preciolistaconigv
+                    ){
+
+                        $noAgregarFila = true;
+
+                    }
 
                     $encontroSku = true;
                 }
@@ -264,46 +278,55 @@ class CargarListaPreciosController extends Controller
 
             }else{
                 $skus[] = array(
-                    "sku" => $ex_codigosap
+                    "sku" => $ex_codigosap,
+                    "ean" => $ex_ean,
+                    "nombre" => $ex_descripcionproducto,
+                    "undventa" => $ex_unidadventa,
+                    "precio" => $ex_preciolistasinigv,
+                    "alza" => $ex_alza,
+                    "precioconigv" => $ex_preciolistaconigv,
                 );
             }
 
-            $pro = proproductos::where('prosku', 'LIKE', "%".$ex_codigosap."%")->first();
-            $proid = 2122;
-            if($pro){
-                $proid = $pro->proid;
+
+            if($noAgregarFila != true){
+                $pro = proproductos::where('prosku', 'LIKE', "%".$ex_codigosap."%")->first();
+                $proid = 2122;
+                if($pro){
+                    $proid = $pro->proid;
+                }
+
+                $ltpn = new ltplistaprecios;
+                $ltpn->treid = $treidSeleccionado;
+                $ltpn->proid = $proid;
+                $ltpn->fecid = $fechaSeleccionada;
+
+                $ltpn->ltpduplicadocomplejo = $encontroSku;
+
+                $ltpn->ltpcategoria             = $ex_categoria;
+                $ltpn->ltpsubcategoria          = $ex_subcategoria;
+                $ltpn->ltpcodigosap             = $ex_codigosap;
+                $ltpn->ltpean                   = $ex_ean;
+                $ltpn->ltpdescripcionproducto   = $ex_descripcionproducto;
+                $ltpn->ltpunidadventa           = $ex_unidadventa;
+                $ltpn->ltppreciolistasinigv     = $ex_preciolistasinigv;
+                $ltpn->ltpalza                  = $ex_alza;
+                $ltpn->ltpsdtpr                 = $ex_sdtpr;
+                $ltpn->ltppreciolistaconigv     = $ex_preciolistaconigv;
+                $ltpn->ltpmfrutamayorista       = $ex_mfrutamayorista;
+                $ltpn->ltpreventamayorista      = $ex_reventamayorista;
+                $ltpn->ltpmargenmayorista       = $ex_margenmayorista;
+                $ltpn->ltpmarcajemayorista      = $ex_marcajemayorista;
+                $ltpn->ltpmfrutaminorista       = $ex_mfrutaminorista;
+                $ltpn->ltpreventaminorista      = $ex_reventaminorista;
+                $ltpn->ltpmargenminorista       = $ex_margenminorista;
+                $ltpn->ltpmarcajeminorista      = $ex_marcajeminorista;
+                $ltpn->ltpmfrutahorizontal      = $ex_mfrutahorizontal;
+                $ltpn->ltpreventabodega         = $ex_reventabodega;
+                $ltpn->ltpmargenbodega          = $ex_margenbodega;
+                $ltpn->ltppvp                   = $ex_pvp;
+                $ltpn->save();
             }
-
-            $ltpn = new ltplistaprecios;
-            $ltpn->treid = $treidSeleccionado;
-            $ltpn->proid = $proid;
-            $ltpn->fecid = $fechaSeleccionada;
-
-            $ltpn->ltpduplicadocomplejo = $encontroSku;
-
-            $ltpn->ltpcategoria             = $ex_categoria;
-            $ltpn->ltpsubcategoria          = $ex_subcategoria;
-            $ltpn->ltpcodigosap             = $ex_codigosap;
-            $ltpn->ltpean                   = $ex_ean;
-            $ltpn->ltpdescripcionproducto   = $ex_descripcionproducto;
-            $ltpn->ltpunidadventa           = $ex_unidadventa;
-            $ltpn->ltppreciolistasinigv     = $ex_preciolistasinigv;
-            $ltpn->ltpalza                  = $ex_alza;
-            $ltpn->ltpsdtpr                 = $ex_sdtpr;
-            $ltpn->ltppreciolistaconigv     = $ex_preciolistaconigv;
-            $ltpn->ltpmfrutamayorista       = $ex_mfrutamayorista;
-            $ltpn->ltpreventamayorista      = $ex_reventamayorista;
-            $ltpn->ltpmargenmayorista       = $ex_margenmayorista;
-            $ltpn->ltpmarcajemayorista      = $ex_marcajemayorista;
-            $ltpn->ltpmfrutaminorista       = $ex_mfrutaminorista;
-            $ltpn->ltpreventaminorista      = $ex_reventaminorista;
-            $ltpn->ltpmargenminorista       = $ex_margenminorista;
-            $ltpn->ltpmarcajeminorista      = $ex_marcajeminorista;
-            $ltpn->ltpmfrutahorizontal      = $ex_mfrutahorizontal;
-            $ltpn->ltpreventabodega         = $ex_reventabodega;
-            $ltpn->ltpmargenbodega          = $ex_margenbodega;
-            $ltpn->ltppvp                   = $ex_pvp;
-            $ltpn->save();
         }
 
     }
