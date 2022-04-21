@@ -132,6 +132,8 @@ class ArmarExcelListapreciosController extends Controller
                                 //     'ltplistaprecios.fecid'
                                 // ]);
 
+        $dataReal = $ltps;
+
         $nuevoArray = array(
             array(
                 "columns" => [],
@@ -1928,6 +1930,7 @@ class ArmarExcelListapreciosController extends Controller
         return response()->json([
             'excel' => $nuevoArray,
             'data' => $ltps,
+            'dataRealltps' => $dataRealltps,
             'arr_filtro_customer_group_lp' => $armarFiltros['arr_filtro_customer_group_lp'],
             'arr_filtro_categorias_lp'     => $armarFiltros['arr_filtro_categorias_lp'],
             'arr_filtro_subcategorias_lp'  => $armarFiltros['arr_filtro_subcategorias_lp'],
