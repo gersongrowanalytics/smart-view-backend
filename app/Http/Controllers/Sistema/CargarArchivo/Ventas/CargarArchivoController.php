@@ -180,7 +180,7 @@ class CargarArchivoController extends Controller
                                     }
                                 }
             
-                                if($i == 2){
+                                if($i == 3){
                                     // $scas = scasucursalescategorias::join('tsutipospromocionessucursales as tsu', 'tsu.tsuid', 'scasucursalescategorias.tsuid')
                                     //                                 ->where('tsu.fecid', $fecid)
                                     //                                 ->where('tsu.tprid', 1)

@@ -15,8 +15,8 @@ class EnviarPromocionesNuevasController extends Controller
         $mensaje = 'El correo se envio exitosamente';
 
         // $correo = "gerson.vilca@grow-analytics.com.pe";
-        // $correo = "director.creativo@grow-analytics.com.pe";
-        $correo = "jeanmarcoe@gmail.com";
+        $correo = "director.creativo@grow-analytics.com.pe";
+        // $correo = "jeanmarcoe@gmail.com";
 
         $re_sucursales = $request['sucursales'];
         $re_fecha = $request['fecha'];

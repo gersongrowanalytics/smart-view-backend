@@ -171,23 +171,23 @@ class ObjetivoCargarController extends Controller
                             }
                         }
 
-                        // if($i == 2){
-                        //     $tsus = tsutipospromocionessucursales::where('fecid', $fecid)
-                        //                                         ->where('tprid', 1)
-                        //                                         ->get(['tsuid']);
+                        if($i == 2){
+                            $tsus = tsutipospromocionessucursales::where('fecid', $fecid)
+                                                                ->where('tprid', 1)
+                                                                ->get(['tsuid']);
 
-                        //     foreach($tsus as $tsu){
-                        //         $tsue = tsutipospromocionessucursales::find($tsu->tsuid);
-                        //         $tsue->tsuvalorizadoobjetivo = 0;
-                        //         if($tsue->update()){
-                        //             $scas = scasucursalescategorias::where('tsuid', $tsu->tsuid)
-                        //                                             ->update(['scavalorizadoobjetivo' => 0]);
-                        //         }
-                        //     }
+                            foreach($tsus as $tsu){
+                                $tsue = tsutipospromocionessucursales::find($tsu->tsuid);
+                                $tsue->tsuvalorizadoobjetivo = 0;
+                                if($tsue->update()){
+                                    $scas = scasucursalescategorias::where('tsuid', $tsu->tsuid)
+                                                                    ->update(['scavalorizadoobjetivo' => 0]);
+                                }
+                            }
 
-                        //     osiobjetivosssi::where('fecid', $fecid)->update(['osivalorizado' => 0]);
+                            osiobjetivosssi::where('fecid', $fecid)->update(['osivalorizado' => 0]);
 
-                        // }
+                        }
 
                         $suc = sucsucursales::where('sucsoldto', $soldto)->first();
                         
@@ -1371,20 +1371,20 @@ class ObjetivoCargarController extends Controller
 
                         if($i == 2){
 
-                            // $tsus = tsutipospromocionessucursales::where('fecid', $fecid)
-                            //                                     ->where('tprid', 2)
-                            //                                     ->get(['tsuid']);
+                            $tsus = tsutipospromocionessucursales::where('fecid', $fecid)
+                                                                ->where('tprid', 2)
+                                                                ->get(['tsuid']);
 
-                            // foreach($tsus as $tsu){
-                            //     $tsue = tsutipospromocionessucursales::find($tsu->tsuid);
-                            //     $tsue->tsuvalorizadoobjetivo = 0;
-                            //     if($tsue->update()){
-                            //         $scas = scasucursalescategorias::where('tsuid', $tsu->tsuid)
-                            //                                         ->update(['scavalorizadoobjetivo' => 0]);
-                            //     }
-                            // }
+                            foreach($tsus as $tsu){
+                                $tsue = tsutipospromocionessucursales::find($tsu->tsuid);
+                                $tsue->tsuvalorizadoobjetivo = 0;
+                                if($tsue->update()){
+                                    $scas = scasucursalescategorias::where('tsuid', $tsu->tsuid)
+                                                                    ->update(['scavalorizadoobjetivo' => 0]);
+                                }
+                            }
 
-                            // osoobjetivossso::where('fecid', $fecid)->update(['osovalorizado' => 0]);
+                            osoobjetivossso::where('fecid', $fecid)->update(['osovalorizado' => 0]);
 
                         }
 

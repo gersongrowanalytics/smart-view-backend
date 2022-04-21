@@ -517,14 +517,14 @@ class CrearRebateController extends Controller
             $mensajedev = $e->getMessage();
         }
 
-        $requestsalida = response()->json([
-            "respuesta"      => $respuesta,
-            "mensaje"        => $mensaje,
-            "mensajeDetalle" => $mensajeDetalle,
-            "mensajedev"     => $mensajedev,
-            "logs"           => $log
-        ]);
+        // $requestsalida = response()->json([
+        //     "respuesta"      => $respuesta,
+        //     "mensaje"        => $mensaje,
+        //     "mensajeDetalle" => $mensajeDetalle,
+        //     "mensajedev"     => $mensajedev,
+        //     "logs"           => $log
+        // ]);
         
-        return $requestsalida;   
+        // return $requestsalida;   
     }
 }

@@ -24,8 +24,8 @@ class EnviarPromocionesActivasController extends Controller
         $usu = usuusuarios::where('usutoken', $usutoken)->first();
 
         // $correo = "gerson.vilca@grow-analytics.com.pe";
-        // $correo = "director.creativo@grow-analytics.com.pe";
-        $correo = "jeanmarcoe@gmail.com";
+        $correo = "director.creativo@grow-analytics.com.pe";
+        // $correo = "jeanmarcoe@gmail.com";
 
         if($usu){
 
@@ -60,6 +60,7 @@ class EnviarPromocionesActivasController extends Controller
                 $dcen = new dcedestinatarioscorreosenviados;
                 $dcen->uceid = $ucen->uceid;
                 $dcen->dcedestinatario = $correo;
+                $dcen->dceestado = 'R';
                 $dcen->save();
             }
         }
