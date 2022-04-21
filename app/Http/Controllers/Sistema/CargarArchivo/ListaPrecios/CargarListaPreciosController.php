@@ -55,7 +55,7 @@ class CargarListaPreciosController extends Controller
             $fichero_subido = base_path().'/public/Sistema/cargaArchivos/listaprecios/'.$nombreArchivoGuardado;
 
             // ltplistaprecios::where('ltpid', '>', 0)->delete();
-            ltplistaprecios::where('fecid', '>', $fechaSeleccionada)->delete();
+            ltplistaprecios::where('fecid', $fechaSeleccionada)->delete();
 
             if (move_uploaded_file($_FILES['file']['tmp_name'], $fichero_subido)) {
 
