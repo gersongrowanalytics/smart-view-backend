@@ -30,7 +30,7 @@ class CargarListaPreciosController extends Controller
         $usutoken       = $request->header('api_token');
         $archivo        = $_FILES['file']['name'];
 
-        $subirData = false;
+        $subirData = true;
 
         $usuusuario = usuusuarios::where('usutoken', $usutoken)->first(['usuid', 'usuusuario']);
 
@@ -61,11 +61,11 @@ class CargarListaPreciosController extends Controller
 
                     foreach($nombresHojas as $nombresHoja){
 
-                        $foo = 'Hola mundo';
+                        // $foo = 'Hola mundo';
 
-                        if (strpos($nombresHoja, 'mundo') !== false) {
-                            echo 'true';
-                        }
+                        // if (strpos($nombresHoja, 'mundo') !== false) {
+                        //     echo 'true';
+                        // }
 
                     }
 
