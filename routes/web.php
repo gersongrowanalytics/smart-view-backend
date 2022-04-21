@@ -190,6 +190,7 @@ $router->post('/aceptar-terminos-condiciones', 'Sistema\TerminosCondiciones\Acep
 
     // ELEMENTOS ENVIADOS
     $router->post('/mostrar-elementos-enviados', 'Sistema\ElementrosEnviados\MostrarElementosEnviadosController@MostrarElementosEnviados');
+    $router->post('/eliminar-elementos-enviados', 'Sistema\ElementrosEnviados\EliminarElementosEnviadosController@EliminarElementosEnviados');
     
     // OBTENER DATA DE REBATE BONUS
     $router->post('/mostrar-rebate-bonus', 'Sistema\Ventas\Mostrar\MostrarRebateBonusController@MostrarRebateBonus');
