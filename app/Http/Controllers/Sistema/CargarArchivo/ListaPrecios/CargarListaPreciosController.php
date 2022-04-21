@@ -258,32 +258,32 @@ class CargarListaPreciosController extends Controller
             foreach($skus as $sku){
                 if($sku['sku'] == $ex_codigosap){
 
-                    if(
-                        $sku['ean'] == $ex_ean && 
-                        $sku['nombre'] == $ex_descripcionproducto && 
-                        $sku['undventa'] == $ex_unidadventa && 
-                        $sku['precio'] == $ex_preciolistasinigv && 
-                        $sku['alza'] == $ex_alza && 
-                        $sku['precioconigv'] == $ex_preciolistaconigv
-                    ){
+                    // if(
+                    //     $sku['ean'] == $ex_ean && 
+                    //     $sku['nombre'] == $ex_descripcionproducto && 
+                    //     $sku['undventa'] == $ex_unidadventa && 
+                    //     $sku['precio'] == $ex_preciolistasinigv && 
+                    //     $sku['alza'] == $ex_alza && 
+                    //     $sku['precioconigv'] == $ex_preciolistaconigv
+                    // ){
 
-                        $noAgregarFila = true;
+                    //     $noAgregarFila = true;
 
-                    }else if($sku['nombre'] != $ex_descripcionproducto){
+                    // }else if($sku['nombre'] != $ex_descripcionproducto){
 
-                        $zonaLim  = 'LIMA';
-                        $zonaProv = 'PROVINCIA';
+                    //     $zonaLim  = 'LIMA';
+                    //     $zonaProv = 'PROVINCIA';
 
-                        if (strpos($ex_descripcionproducto, $zonaLim) !== false) {
-                            $zonaSeleccionada = "LIMA";
-                        }else if(strpos($ex_descripcionproducto, $zonaProv) !== false){
-                            $zonaSeleccionada = "PROVINCIA";
-                        }
+                    //     if (strpos($ex_descripcionproducto, $zonaLim) !== false) {
+                    //         $zonaSeleccionada = "LIMA";
+                    //     }else if(strpos($ex_descripcionproducto, $zonaProv) !== false){
+                    //         $zonaSeleccionada = "PROVINCIA";
+                    //     }
 
-                    }else{
-                        $encontroSku = true;
-                    }
-
+                    // }else{
+                    //     $encontroSku = true;
+                    // }
+                    $encontroSku = true;
                     
                 }
             }
