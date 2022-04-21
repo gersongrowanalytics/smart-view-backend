@@ -11,6 +11,7 @@ use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use App\carcargasarchivos;
 use App\usuusuarios;
 use App\ltplistaprecios;
+use App\proproductos;
 use Illuminate\Support\Facades\DB;
 
 class CargarListaPreciosController extends Controller
