@@ -223,6 +223,7 @@ class CargarListaPreciosController extends Controller
     public function AgregarDataGrupo($numRows, $objPHPExcel, $fechaSeleccionada, $treidSeleccionado)
     {
 
+        $skus = array();
 
         for ($i=6; $i <= $numRows ; $i++) {
             $dia = '01';
@@ -250,6 +251,22 @@ class CargarListaPreciosController extends Controller
             $ex_margenbodega        = $objPHPExcel->getActiveSheet()->getCell('AE'.$i)->getCalculatedValue();
             $ex_pvp                 = $objPHPExcel->getActiveSheet()->getCell('AG'.$i)->getCalculatedValue();
             
+            $encontroSku = false;
+            
+            foreach($skus as $sku){
+                if($sku['sku'] == $ex_codigosap){
+
+                    $encontroSku = true;
+                }
+            }
+
+            if($encontroSku == true){
+
+            }else{
+                $skus[] = array(
+                    "sku" => $ex_codigosap
+                );
+            }
 
             $pro = proproductos::where('prosku', 'LIKE', "%".$ex_codigosap."%")->first();
             $proid = 2122;
@@ -261,6 +278,9 @@ class CargarListaPreciosController extends Controller
             $ltpn->treid = $treidSeleccionado;
             $ltpn->proid = $proid;
             $ltpn->fecid = $fechaSeleccionada;
+
+            $ltpn->ltpduplicadocomplejo = $encontroSku;
+
             $ltpn->ltpcategoria             = $ex_categoria;
             $ltpn->ltpsubcategoria          = $ex_subcategoria;
             $ltpn->ltpcodigosap             = $ex_codigosap;
