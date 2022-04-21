@@ -249,6 +249,13 @@ class CargarListaPreciosController extends Controller
             $ex_margenbodega        = $objPHPExcel->getActiveSheet()->getCell('AE'.$i)->getCalculatedValue();
             $ex_pvp                 = $objPHPExcel->getActiveSheet()->getCell('AG'.$i)->getCalculatedValue();
             
+
+            $pro = proproductos::where('prosku', 'LIKE', "%".$ex_codigosap."%")->first();
+            $proid = 2122;
+            if($pro){
+                $proid = $pro->proid;
+            }
+
             $ltpn = new ltplistaprecios;
             $ltpn->treid = $treidSeleccionado;
             $ltpn->fecid = $fechaSeleccionada;
