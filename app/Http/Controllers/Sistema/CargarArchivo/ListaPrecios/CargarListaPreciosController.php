@@ -30,6 +30,8 @@ class CargarListaPreciosController extends Controller
         $usutoken       = $request->header('api_token');
         $archivo        = $_FILES['file']['name'];
 
+        $subirData = false;
+
         $usuusuario = usuusuarios::where('usutoken', $usutoken)->first(['usuid', 'usuusuario']);
 
         $fichero_subido = '';
@@ -52,41 +54,62 @@ class CargarListaPreciosController extends Controller
 
             if (move_uploaded_file($_FILES['file']['tmp_name'], $fichero_subido)) {
 
-                $objPHPExcel    = IOFactory::load($fichero_subido);
-                $objPHPExcel->setActiveSheetIndex(0);
-                $numRows        = $objPHPExcel->setActiveSheetIndex(0)->getHighestRow();
-                $ultimaColumna  = $objPHPExcel->setActiveSheetIndex(0)->getHighestColumn();
-                $nombres[] = $objPHPExcel->getSheetNames();
+                if($subirData == true){
+                    $objPHPExcel    = IOFactory::load($fichero_subido);
 
-                $fechaSeleccionada = 69;
+                    $nombresHojas = $objPHPExcel->getSheetNames();
 
-                // AGREGAR LISTA DE PRECIOS DE ZA
-                $treidSeleccionado = 26;
-                $this->AgregarDataGrupo($numRows, $objPHPExcel, $fechaSeleccionada, $treidSeleccionado);
+                    foreach($nombresHojas as $nombresHoja){
 
+                        $foo = 'Hola mundo';
 
-                // $objPHPExcel->setActiveSheetIndex(3);
-                // $numRows        = $objPHPExcel->setActiveSheetIndex(3)->getHighestRow();
-                // $ultimaColumna  = $objPHPExcel->setActiveSheetIndex(3)->getHighestColumn();
+                        if (strpos($nombresHoja, 'mundo') !== false) {
+                            echo 'true';
+                        }
 
-                // // $nombres[] = $objPHPExcel->getSheetNames()[1];
+                    }
 
-                // // AGREGAR LISTA DE PRECIOS DE ZB
-                // $treidSeleccionado = 15;
-                // $this->AgregarDataGrupo($numRows, $objPHPExcel, $fechaSeleccionada, $treidSeleccionado);
+                    
 
 
 
-                // $objPHPExcel->setActiveSheetIndex(4);
-                // $numRows        = $objPHPExcel->setActiveSheetIndex(4)->getHighestRow();
-                // $ultimaColumna  = $objPHPExcel->setActiveSheetIndex(4)->getHighestColumn();
-                // // $nombres[] = $objPHPExcel->getSheetNames()[1];
-                // // AGREGAR LISTA DE PRECIOS DE ZC
-                // $treidSeleccionado = 24;
-                // $this->AgregarDataGrupo($numRows, $objPHPExcel, $fechaSeleccionada, $treidSeleccionado);
+                    $objPHPExcel->setActiveSheetIndex(0);
+                    $numRows        = $objPHPExcel->setActiveSheetIndex(0)->getHighestRow();
+                    $ultimaColumna  = $objPHPExcel->setActiveSheetIndex(0)->getHighestColumn();
+                    
+
+                    $fechaSeleccionada = 69;
+
+                    // AGREGAR LISTA DE PRECIOS DE ZA
+                    $treidSeleccionado = 26;
+                    $this->AgregarDataGrupo($numRows, $objPHPExcel, $fechaSeleccionada, $treidSeleccionado);
 
 
-                $exitoSubirExcel = true;
+                    // $objPHPExcel->setActiveSheetIndex(3);
+                    // $numRows        = $objPHPExcel->setActiveSheetIndex(3)->getHighestRow();
+                    // $ultimaColumna  = $objPHPExcel->setActiveSheetIndex(3)->getHighestColumn();
+
+                    // // $nombres[] = $objPHPExcel->getSheetNames()[1];
+
+                    // // AGREGAR LISTA DE PRECIOS DE ZB
+                    // $treidSeleccionado = 15;
+                    // $this->AgregarDataGrupo($numRows, $objPHPExcel, $fechaSeleccionada, $treidSeleccionado);
+
+
+
+                    // $objPHPExcel->setActiveSheetIndex(4);
+                    // $numRows        = $objPHPExcel->setActiveSheetIndex(4)->getHighestRow();
+                    // $ultimaColumna  = $objPHPExcel->setActiveSheetIndex(4)->getHighestColumn();
+                    // // $nombres[] = $objPHPExcel->getSheetNames()[1];
+                    // // AGREGAR LISTA DE PRECIOS DE ZC
+                    // $treidSeleccionado = 24;
+                    // $this->AgregarDataGrupo($numRows, $objPHPExcel, $fechaSeleccionada, $treidSeleccionado);
+
+
+                    $exitoSubirExcel = true;
+                }else{
+
+                }
 
                 DB::commit();
 
