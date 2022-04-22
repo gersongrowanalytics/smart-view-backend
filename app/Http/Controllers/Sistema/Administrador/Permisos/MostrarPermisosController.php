@@ -20,6 +20,7 @@ class MostrarPermisosController extends Controller
         $pem = pempermisos::join('tpetipopermiso as tpe', 'tpe.tpeid', 'pempermisos.tpeid')
                             ->orderBy('pempermisos.created_at', 'DESC')
                             ->where('pempermisos.tpeid', '!=', 6)
+                            ->where('pempermisos.estid', 1)
                             ->paginate(10);
                             // get([
                             //     'pempermisos.pemid',
