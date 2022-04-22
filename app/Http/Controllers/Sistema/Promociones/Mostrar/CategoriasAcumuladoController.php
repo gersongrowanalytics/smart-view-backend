@@ -216,9 +216,9 @@ class CategoriasAcumuladoController extends Controller
         foreach($datos as $dato){
             $arr_resumenPromociones[] = array(
                 "catnombre" => $dato['catnombre'],
-                "total"   => doubleval($dato['cantidadPromociones']),
+                "total"   => doubleval($dato['cantidadCodigosPromocion']),
                 "nueva"   => doubleval($dato['cantidadPromocionesNuevas']),
-                "regular" => doubleval($dato['cantidadPromociones']) - doubleval($dato['cantidadPromocionesNuevas'])
+                "regular" => doubleval($dato['cantidadCodigosPromocion']) - doubleval($dato['cantidadPromocionesNuevas'])
             );
         }
 
