@@ -16,7 +16,7 @@ class MostrarPermisosTiposUsuariosController extends Controller
     {
         $respuesta = false;
         $mensaje = "";
-        $array_tp = [];
+        $array_tp = array();
 
         $re_tpuid = $request['re_tpuid'];
 
@@ -36,27 +36,52 @@ class MostrarPermisosTiposUsuariosController extends Controller
             foreach ($tpes as $key => $tipo_permiso) {
                 $pem = pempermisos::where('tpeid', $tipo_permiso['tpeid'])
                                                 ->get(['pemid','pemnombre']);
+
+                $permisos = array();
+
                 foreach ($pem as $item) {
                     $tup = tuptiposusuariospermisos::where('pemid', $item['pemid'])
                                                 ->where('tpuid', $re_tpuid)
                                                 ->first(['tupid']);
+
+
                     if ($tup) {
-                        $array_tp[$key]['tipo_permiso'] = $tipo_permiso['tpenombre'];
-                        $array_tp[$key]['permisos'][] = [
-                                                            "pemid" => $item['pemid'],
-                                                            "pemnombre" => $item['pemnombre'],
-                                                            "seleccionado" => true
-                                                        ];
+                        // $array_tp[$key]['tipo_permiso'] = $tipo_permiso['tpenombre'];
+
+                        $permisos[] = array(
+                            "pemid" => $item['pemid'],
+                            "pemnombre" => $item['pemnombre'],
+                            "seleccionado" => true
+                        );
+
+                        // $array_tp[$key]['permisos'][] = [
+                        //                                     "pemid" => $item['pemid'],
+                        //                                     "pemnombre" => $item['pemnombre'],
+                        //                                     "seleccionado" => true
+                        //                                 ];
 
                     }else{
-                        $array_tp[$key]['tipo_permiso'] = $tipo_permiso['tpenombre'];
-                        $array_tp[$key]['permisos'][] = [
-                                                            "pemid" => $item['pemid'],
-                                                            "pemnombre" => $item['pemnombre'],
-                                                            "seleccionado" => false
-                                                        ];
+                        // $array_tp[$key]['tipo_permiso'] = $tipo_permiso['tpenombre'];
+                        // $array_tp[$key]['permisos'][] = [
+                        //                                     "pemid" => $item['pemid'],
+                        //                                     "pemnombre" => $item['pemnombre'],
+                        //                                     "seleccionado" => false
+                        //                                 ];
+                        $permisos[] = array(
+                            "pemid" => $item['pemid'],
+                            "pemnombre" => $item['pemnombre'],
+                            "seleccionado" => false
+                        );
                     }
-                }           
+
+                }
+                
+                $array_tp[] = array(
+                    "tipo_permiso" => $tipo_permiso['tpenombre'],
+                    "permisos" => $permisos
+                );
+
+                
             }
 
             $respuesta      = true;

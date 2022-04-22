@@ -21,7 +21,11 @@ $router->post('/usuarios/mostrar', 'Sistema\Administrador\Usuarios\MostrarUsuari
 $router->post('/asignarsucursales', 'Sistema\Administrador\Usuarios\AsignarSucursalesController@AsignarSucursales');
 $router->post('/tipos-usuarios/permisos/mostrar', 'Sistema\Administrador\TiposUsuarios\MostrarPermisosTiposUsuariosController@MostrarPermisosTiposUsuarios');
 $router->post('/tipos-usuarios/permisos/editar', 'Sistema\Administrador\TiposUsuarios\EditarPermisosTiposUsuariosController@EditarPermisosTiposUsuarios');
+
 $router->get('/permisos/mostrar', 'Sistema\Administrador\Permisos\MostrarPermisosController@MostrarPermisos');
+$router->post('/permisos-editar', 'Sistema\Administrador\Permisos\EditarPermisosController@EditarPermisos');
+$router->post('/permisos-eliminar', 'Sistema\Administrador\Permisos\EditarPermisosController@EditarEliminarPermiso');
+
 $router->post('/permisos/crear', 'Sistema\Administrador\Permisos\CrearPermisosController@CrearPermisos');
 $router->post('/permisos/editar', 'Sistema\Administrador\Permisos\EditarPermisosController@EditarPermisos');
 $router->post('/tipo-permiso/crear', 'Sistema\Administrador\Permisos\CrearTipoPermisoController@CrearTipoPermiso');
