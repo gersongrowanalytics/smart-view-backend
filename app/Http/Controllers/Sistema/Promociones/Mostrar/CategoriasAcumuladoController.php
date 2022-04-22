@@ -160,11 +160,13 @@ class CategoriasAcumuladoController extends Controller
                                                             ->count();
 
                     $countCscNuevas = csccanalessucursalescategorias::join('cspcanalessucursalespromociones as csp', 'csp.cscid', 'csccanalessucursalescategorias.cscid')
+                                                            ->join('prmpromociones as prm', 'prm.prmid', 'csp.prmid')
                                                             ->where('csccanalessucursalescategorias.scaid', $sca->scaid)
                                                             // ->where('csp.cspcantidadcombo', "!=", 0)
                                                             ->where('csp.cspcantidadplancha', "!=", "0")
                                                             ->where('csp.cspestado', 1)
                                                             ->where('csp.cspnuevapromocion', 1)
+                                                            ->distinct('prmmecanica')
                                                             ->count();
 
                     $numeroPromociones = $numeroPromociones + $countCsc;
