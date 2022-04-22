@@ -84,6 +84,7 @@ class CategoriasAcumuladoController extends Controller
                 $numeroPromociones = 0;
                 $numeroPromocionesNuevas = 0;
                 $numeroCodigosPromociones = 0;
+                $numeroCodigosPromocionesNuevas = 0;
                 $numeroCanales = 0;
                 
                 $promociones = [];
@@ -100,7 +101,8 @@ class CategoriasAcumuladoController extends Controller
                                                             ->get([
                                                                 'prmcodigo',
                                                                 'can.cannombre',
-                                                                'prmmecanica'
+                                                                'prmmecanica',
+                                                                'cspnuevapromocion'
                                                             ]);
 
                     foreach($cscs as $csc){
@@ -115,12 +117,21 @@ class CategoriasAcumuladoController extends Controller
                                     // $promociones[] = $csc->prmcodigo;
                                     $promociones[] = $csc->prmmecanica;
                                     $numeroCodigosPromociones = $numeroCodigosPromociones+1;
+
+                                    if($csc->cspnuevapromocion == true){
+                                        $numeroCodigosPromocionesNuevas = $numeroCodigosPromocionesNuevas + 1;
+                                    }
+
                                 }
                             }
                         }else{
                             // $promociones[] = $csc->prmcodigo;
                             $promociones[] = $csc->prmmecanica;
                             $numeroCodigosPromociones = $numeroCodigosPromociones+1;
+
+                            if($csc->cspnuevapromocion == true){
+                                $numeroCodigosPromocionesNuevas = $numeroCodigosPromocionesNuevas + 1;
+                            }
                         }
 
                         if(sizeof($canales) > 0){
@@ -179,6 +190,7 @@ class CategoriasAcumuladoController extends Controller
                     "cantidadPromociones"        => $numeroPromociones,
                     "cantidadPromocionesNuevas"  => $numeroPromocionesNuevas,
                     "cantidadCodigosPromocion"   => $numeroCodigosPromociones,
+                    "cantidadCodigosPromocionNuevas"   => $numeroCodigosPromocionesNuevas,
                     "cantidadCanales"            => $numeroCanales,
                 );
 
@@ -217,8 +229,8 @@ class CategoriasAcumuladoController extends Controller
             $arr_resumenPromociones[] = array(
                 "catnombre" => $dato['catnombre'],
                 "total"   => doubleval($dato['cantidadCodigosPromocion']),
-                "nueva"   => doubleval($dato['cantidadPromocionesNuevas']),
-                "regular" => doubleval($dato['cantidadCodigosPromocion']) - doubleval($dato['cantidadPromocionesNuevas'])
+                "nueva"   => doubleval($dato['cantidadCodigosPromocionNuevas']),
+                "regular" => doubleval($dato['cantidadCodigosPromocion']) - doubleval($dato['cantidadCodigosPromocionNuevas'])
             );
         }
 
