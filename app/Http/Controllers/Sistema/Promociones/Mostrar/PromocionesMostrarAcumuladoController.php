@@ -282,12 +282,7 @@ class PromocionesMostrarAcumuladoController extends Controller
                                 $csps[$cont]['prmid']           = $cspsc->prmid;
                                 $csps[$cont]['prmmecanica']     = $cspsc->prmmecanica;
                                 $csps[$cont]['tprnombre']       = $cspsc->tprnombre;
-
-                                if($csps[$posicionCsp]['cspnuevapromocion'] == true){
-                                    $csps[$cont]['cspnuevapromocion']  = true;
-                                }else{
-                                    $csps[$cont]['cspnuevapromocion']  = $cspsc->cspnuevapromocion;
-                                }
+                                $csps[$cont]['cspnuevapromocion']  = $cspsc->cspnuevapromocion;
 
                                 $prppromocionesproductos = prppromocionesproductos::join('proproductos as pro', 'pro.proid', 'prppromocionesproductos.proid')
                                                                                     ->where('prppromocionesproductos.prmid', $cspsc->prmid )
