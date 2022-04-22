@@ -23,6 +23,7 @@ class EditarListaPreciosController extends Controller
             
             $ltp->ltpeditandonombre = true;
             $ltp->ltpdescripcionproducto = $re_descproducto;
+            $ltp->ltpduplicadocomplejo = false;
             if($ltp->update()){
                 
             }else{

@@ -68,6 +68,7 @@ class ArmarExcelListapreciosController extends Controller
     {
 
         $re_treid = $request['treid'];
+        $re_tresid = $request['tresid'];
         // $re_treid = 26;
         $usutoken = $request->header('api_token');
         $re_anio = $request['anio'];
@@ -78,7 +79,9 @@ class ArmarExcelListapreciosController extends Controller
 
         $re_columnas  = $request['columnas'];
 
-        $ltps = ltplistaprecios::join('fecfechas as fec', 'fec.fecid', 'ltplistaprecios.fecid')
+        if($re_duplicados == true){
+
+            $ltps = ltplistaprecios::join('fecfechas as fec', 'fec.fecid', 'ltplistaprecios.fecid')
                                 ->join('proproductos as pro', 'pro.proid', 'ltplistaprecios.proid')
                                 ->join('catcategorias as cat', 'cat.catid', 'pro.catid')
                                 ->join('tretiposrebates as tre', 'tre.treid', 'ltplistaprecios.treid')
@@ -91,6 +94,90 @@ class ArmarExcelListapreciosController extends Controller
                                         $query->where('ltplistaprecios.ltpduplicadocomplejo', true);
                                     }
 
+                                })
+                                ->where(function ($query) use($re_tresid, $re_treid) {
+                                    if(sizeof($re_tresid) > 0){
+                                        foreach($re_tresid as $tre){
+
+                                            if(isset($tre['seleccionadoFiltro'])){
+                                                if($tre['seleccionadoFiltro'] == true){
+                                                    $query->orwhere('tre.treid', $tre['treid']);
+                                                }
+                                            }
+                                        }
+                                    }else{
+                                        $query->where('tre.treid', $re_treid);
+                                    }
+                                })
+                                ->orderby('ltpcodigosap')
+                                // ->where('treid', $re_treid)
+                                // ->paginate(1000);
+                                ->paginate(70);
+                                // ->get([
+                                //     'cat.catnombre',
+                                //     'pronombre',
+                                //     'proformato',
+                                //     'ltpid',
+                                //     'ltpcategoria',
+                                //     'ltpsubcategoria',
+                                //     'ltpcodigosap',
+                                //     'ltpean',
+                                //     'ltpdescripcionproducto',
+                                //     'ltpunidadventa',
+                                //     'ltppreciolistasinigv',
+                                //     'ltpalza',
+                                //     'ltpsdtpr',
+                                //     'ltppreciolistaconigv',
+
+                                //     'ltpmfrutamayorista',
+                                //     'ltpreventamayorista',
+                                //     'ltpmargenmayorista',
+                                //     'ltpmarcajemayorista',
+
+                                //     // MINORISTA
+                                //     'ltpmfrutaminorista',
+                                //     'ltpreventaminorista',
+                                //     'ltpmargenminorista',
+                                //     'ltpmarcajeminorista',
+
+                                //     // BODEGA
+                                //     'ltpmfrutahorizontal',
+                                //     'ltpreventabodega',
+                                //     'ltpmargenbodega',
+                                //     'ltppvp',
+
+                                //     'ltplistaprecios.treid',
+                                //     'ltplistaprecios.fecid'
+                                // ]);
+
+        }else{
+
+            $ltps = ltplistaprecios::join('fecfechas as fec', 'fec.fecid', 'ltplistaprecios.fecid')
+                                ->join('proproductos as pro', 'pro.proid', 'ltplistaprecios.proid')
+                                ->join('catcategorias as cat', 'cat.catid', 'pro.catid')
+                                ->join('tretiposrebates as tre', 'tre.treid', 'ltplistaprecios.treid')
+                                ->where('fecano', $re_anio)
+                                ->where('fecmes', $re_mes)
+                                ->where('fecdia', $re_dia)
+                                ->where(function ($query) use($re_duplicados) {
+
+                                    if($re_duplicados == true) {
+                                        $query->where('ltplistaprecios.ltpduplicadocomplejo', true);
+                                    }
+
+                                })
+                                ->where(function ($query) use($re_tresid, $re_treid) {
+                                    if(sizeof($re_tresid) > 0){
+                                        foreach($re_tresid as $tre){
+                                            if(isset($tre['seleccionadoFiltro'])){
+                                                if($tre['seleccionadoFiltro'] == true){
+                                                    $query->orwhere('tre.treid', $tre['treid']);
+                                                }
+                                            }
+                                        }
+                                    }else{
+                                        $query->where('tre.treid', $re_treid);
+                                    }
                                 })
                                 // ->where('treid', $re_treid)
                                 // ->paginate(1000);
@@ -131,6 +218,12 @@ class ArmarExcelListapreciosController extends Controller
                                 //     'ltplistaprecios.treid',
                                 //     'ltplistaprecios.fecid'
                                 // ]);
+
+        }
+
+        
+
+        $dataReal = $ltps;
 
         $nuevoArray = array(
             array(
@@ -1928,6 +2021,7 @@ class ArmarExcelListapreciosController extends Controller
         return response()->json([
             'excel' => $nuevoArray,
             'data' => $ltps,
+            'dataReal' => $dataReal,
             'arr_filtro_customer_group_lp' => $armarFiltros['arr_filtro_customer_group_lp'],
             'arr_filtro_categorias_lp'     => $armarFiltros['arr_filtro_categorias_lp'],
             'arr_filtro_subcategorias_lp'  => $armarFiltros['arr_filtro_subcategorias_lp'],

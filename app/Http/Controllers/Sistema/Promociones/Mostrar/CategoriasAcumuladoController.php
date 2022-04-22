@@ -84,6 +84,7 @@ class CategoriasAcumuladoController extends Controller
                 $numeroPromociones = 0;
                 $numeroPromocionesNuevas = 0;
                 $numeroCodigosPromociones = 0;
+                $numeroCodigosPromocionesNuevas = 0;
                 $numeroCanales = 0;
                 
                 $promociones = [];
@@ -100,7 +101,8 @@ class CategoriasAcumuladoController extends Controller
                                                             ->get([
                                                                 'prmcodigo',
                                                                 'can.cannombre',
-                                                                'prmmecanica'
+                                                                'prmmecanica',
+                                                                'cspnuevapromocion'
                                                             ]);
 
                     foreach($cscs as $csc){
@@ -115,12 +117,21 @@ class CategoriasAcumuladoController extends Controller
                                     // $promociones[] = $csc->prmcodigo;
                                     $promociones[] = $csc->prmmecanica;
                                     $numeroCodigosPromociones = $numeroCodigosPromociones+1;
+
+                                    if($csc->cspnuevapromocion == true){
+                                        $numeroCodigosPromocionesNuevas = $numeroCodigosPromocionesNuevas + 1;
+                                    }
+
                                 }
                             }
                         }else{
                             // $promociones[] = $csc->prmcodigo;
                             $promociones[] = $csc->prmmecanica;
                             $numeroCodigosPromociones = $numeroCodigosPromociones+1;
+
+                            if($csc->cspnuevapromocion == true){
+                                $numeroCodigosPromocionesNuevas = $numeroCodigosPromocionesNuevas + 1;
+                            }
                         }
 
                         if(sizeof($canales) > 0){
@@ -149,11 +160,13 @@ class CategoriasAcumuladoController extends Controller
                                                             ->count();
 
                     $countCscNuevas = csccanalessucursalescategorias::join('cspcanalessucursalespromociones as csp', 'csp.cscid', 'csccanalessucursalescategorias.cscid')
+                                                            ->join('prmpromociones as prm', 'prm.prmid', 'csp.prmid')
                                                             ->where('csccanalessucursalescategorias.scaid', $sca->scaid)
                                                             // ->where('csp.cspcantidadcombo', "!=", 0)
                                                             ->where('csp.cspcantidadplancha', "!=", "0")
                                                             ->where('csp.cspestado', 1)
                                                             ->where('csp.cspnuevapromocion', 1)
+                                                            ->distinct('prmmecanica')
                                                             ->count();
 
                     $numeroPromociones = $numeroPromociones + $countCsc;
@@ -179,6 +192,7 @@ class CategoriasAcumuladoController extends Controller
                     "cantidadPromociones"        => $numeroPromociones,
                     "cantidadPromocionesNuevas"  => $numeroPromocionesNuevas,
                     "cantidadCodigosPromocion"   => $numeroCodigosPromociones,
+                    "cantidadCodigosPromocionNuevas"   => $numeroCodigosPromocionesNuevas,
                     "cantidadCanales"            => $numeroCanales,
                 );
 
@@ -216,9 +230,9 @@ class CategoriasAcumuladoController extends Controller
         foreach($datos as $dato){
             $arr_resumenPromociones[] = array(
                 "catnombre" => $dato['catnombre'],
-                "total"   => doubleval($dato['cantidadPromociones']),
+                "total"   => doubleval($dato['cantidadCodigosPromocion']),
                 "nueva"   => doubleval($dato['cantidadPromocionesNuevas']),
-                "regular" => doubleval($dato['cantidadPromociones']) - doubleval($dato['cantidadPromocionesNuevas'])
+                "regular" => doubleval($dato['cantidadCodigosPromocion']) - doubleval($dato['cantidadPromocionesNuevas'])
             );
         }
 
