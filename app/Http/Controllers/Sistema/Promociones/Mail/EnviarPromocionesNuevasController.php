@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\Promociones\MailPromocionesNuevas;
+use App\uceusuarioscorreosenviados;
+use App\dcedestinatarioscorreosenviados;
 
 class EnviarPromocionesNuevasController extends Controller
 {
@@ -20,6 +22,7 @@ class EnviarPromocionesNuevasController extends Controller
 
         $re_sucursales = $request['sucursales'];
         $re_fecha = $request['fecha'];
+        $re_reenviado = $request['reenviado'];
 
         $txtSucursales = "";
 
@@ -33,6 +36,55 @@ class EnviarPromocionesNuevasController extends Controller
             
         }
 
+        $usu = usuusuarios::where('usutoken', $usutoken)->first();
+
+        if($usu){
+
+            // OBTENER FECHAS
+
+            date_default_timezone_set("America/Lima");
+            $meses = array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
+            $fecha = date('Y-m-d');
+            $hora  = date('H:i:s');
+
+            $anioActualizacion = date("Y", strtotime($fecha));
+            $mesActualizacion = $meses[date('n', strtotime($fecha))-1];
+            $diaActualizacion = date("j", strtotime($fecha));
+
+            $horaActualizacion = date("H", strtotime($hora));
+            $minutoActualizacion = date("i", strtotime($hora));
+
+            $ucen = new uceusuarioscorreosenviados;
+            $ucen->usuid = $usu->usuid;
+            $ucen->ucetipo        = "Promociones Nuevas";
+            // $ucen->ucenombreexcel = ;
+            $ucen->uceasunto      = "Promociones Nuevas";
+            // $ucen->ucecontenido   = ;
+            // $ucen->ucecolumnas    = ;
+            $ucen->ucesucursales  = json_encode($re_sucursales);
+            $ucen->uceanio        = $anioActualizacion;
+            $ucen->ucemes         = $mesActualizacion;
+            $ucen->ucedia         = $diaActualizacion;
+            $ucen->ucehora        = $horaActualizacion.":".$minutoActualizacion;
+            $ucen->ucefecha       = $fecha;
+            if($ucen->save()){
+                $dcen = new dcedestinatarioscorreosenviados;
+                $dcen->uceid = $ucen->uceid;
+                $dcen->dcedestinatario = $correo;
+                if(isset($re_reenviado)){
+                    if($re_reenviado == true){
+                        $dcen->dceestado = 'R';
+                    }else{
+                        $dcen->dceestado = 'E';
+                    }
+                }else{
+                    $dcen->dceestado = 'E';
+                }
+                
+                $dcen->save();
+            }
+        }
+ 
 
         $data = ['txtSucursales' => $txtSucursales, 're_fecha' => $re_fecha];
 
