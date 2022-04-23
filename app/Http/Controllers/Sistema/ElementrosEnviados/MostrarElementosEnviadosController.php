@@ -18,7 +18,7 @@ class MostrarElementosEnviadosController extends Controller
                                                 foreach($re_tiposEnvio as $te){
                                                     if(isset($te['seleccionado'])){
                                                         if($te['seleccionado'] == true){
-                                                            $query->orwhere('uceusuarioscorreosenviados.ucetipo', $te['tnotipo']);
+                                                            $query->orwhere('uceusuarioscorreosenviados.ucetipo', $te['ucetipo']);
                                                         }
                                                     }
                                                 }
