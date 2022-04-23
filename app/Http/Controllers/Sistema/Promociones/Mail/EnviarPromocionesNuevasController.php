@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Mail;
 use App\Mail\Promociones\MailPromocionesNuevas;
 use App\uceusuarioscorreosenviados;
 use App\dcedestinatarioscorreosenviados;
+use App\usuusuarios;
 
 class EnviarPromocionesNuevasController extends Controller
 {
