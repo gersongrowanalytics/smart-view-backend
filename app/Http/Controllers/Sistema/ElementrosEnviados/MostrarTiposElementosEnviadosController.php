@@ -15,8 +15,8 @@ class MostrarTiposElementosEnviadosController extends Controller
         $mensaje = "";
 
         $tno = uceusuarioscorreosenviados::where('uceid', '>', 0)
-                                        ->distinct('ucetipo')
-                                        ->get();
+                                        ->distinct()
+                                        ->get(['ucetipo']);
 
         // if (sizeof($tno) > 0) {
         //     $respuesta      = true;
