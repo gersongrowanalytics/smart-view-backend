@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Sistema\ElementrosEnviados;
 
 use App\Http\Controllers\Controller;
 use App\tnotiposnotificaciones;
+use App\uceusuarioscorreosenviados;
 use Illuminate\Http\Request;
 
 class MostrarTiposElementosEnviadosController extends Controller
