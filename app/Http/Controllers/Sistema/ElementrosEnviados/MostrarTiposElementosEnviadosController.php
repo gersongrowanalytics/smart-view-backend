@@ -13,7 +13,7 @@ class MostrarTiposElementosEnviadosController extends Controller
         $respuesta = false;
         $mensaje = "";
 
-        $tno = tnotiposnotificaciones::get();
+        $tno = uceusuarioscorreosenviados::distinct('ucetipo')->get();
 
         if (sizeof($tno) > 0) {
             $respuesta      = true;
