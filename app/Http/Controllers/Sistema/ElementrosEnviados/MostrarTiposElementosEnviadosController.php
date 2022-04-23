@@ -16,13 +16,16 @@ class MostrarTiposElementosEnviadosController extends Controller
 
         $tno = uceusuarioscorreosenviados::distinct('ucetipo');
 
-        if (sizeof($tno) > 0) {
-            $respuesta      = true;
-            $mensaje        = 'Los tipos de notificaciones se cargaron satisfactoriamente';
-        }else{
-            $respuesta      = false;
-            $mensaje        = 'Los tipos de notificaciones no se cargaron satisfactoriamente';
-        }
+        // if (sizeof($tno) > 0) {
+        //     $respuesta      = true;
+        //     $mensaje        = 'Los tipos de notificaciones se cargaron satisfactoriamente';
+        // }else{
+        //     $respuesta      = false;
+        //     $mensaje        = 'Los tipos de notificaciones no se cargaron satisfactoriamente';
+        // }
+
+        $respuesta      = true;
+        $mensaje        = 'Los tipos de notificaciones se cargaron satisfactoriamente';
 
         $requestsalida = response()->json([
             "respuesta" => $respuesta,
