@@ -91,7 +91,7 @@ class CrearUsuariosController extends Controller
                     if ($paun->save()) {
                         $log[] = "Se registro correctamente el pais de id:".$pais['paiid'];
                         $respuesta = true;
-                        $mensaje = "El usuario se registro correctamente";
+                        $mensaje = "El usuario se edito correctamente";
                     }else{
                         $log[] = "No se registro el usuario, surgio un error al registrar el pais del usuario";
                         $respuesta = false;
