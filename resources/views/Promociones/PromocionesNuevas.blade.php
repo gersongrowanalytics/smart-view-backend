@@ -39,9 +39,9 @@
                                             </div>
                                         </td>
                                     </tr>
-                                    <tr style="padding-top: 5px;">
+                                    <tr style="padding: 0">
                                         <td></td>
-                                        <td align="center" style="width: 100%">
+                                        <td align="center" style="width: 175px; padding: 0px 30px;" >
                                             <a href="https://leadsmartview.com/sistema/promociones">
                                                 <div style="text-align:center; padding-top: 10px; margin-top: 17px; background: #FEDD34; border-radius: 22px; width: 175px; height: 25px; font-weight: 700; font-size: 13px; line-height: 17px; color: #1E1E1E;">
                                                     Visitar Plataforma

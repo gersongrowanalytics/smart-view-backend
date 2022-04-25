@@ -26,8 +26,8 @@
                                     <tr>
                                         <td colspan="3" align="center">
                                             <div style="font-style: normal; font-weight: 700; font-size: 13px; line-height: 17px; letter-spacing: -0.015em; color: #1E1E1E;">
-                                                <!-- Estimado cliente NORDISAC, -->
-                                                Estimado cliente {{$txtSucursales}},
+                                                Estimado cliente NORDISAC,
+                                                {{-- Estimado cliente {{$txtSucursales}}, --}}
                                             </div>
                                         </td>
                                     </tr>
@@ -35,13 +35,13 @@
                                         <td colspan="3" align="center">
                                             <div style="font-style: normal; font-weight: 400; font-size: 13px; line-height: 17px; letter-spacing: -0.015em; color: #1E1E1E; margin-top: 12px">
                                                 Por el presente correo, cumplo con informarle que cuenta con <span style="font-weight: 700;">Nuevas Promociones</span> para este mes de
-                                                <span style="font-weight: 700;"> {{$re_fecha}}</span>
+                                                <span style="font-weight: 700;"> asdasd</span>
                                             </div>
                                         </td>
                                     </tr>
-                                    <tr style="padding-top: 5px;">
+                                    <tr style="padding: 0">
                                         <td></td>
-                                        <td align="center" style="width: 100%">
+                                        <td align="center" style="width: 175px; padding: 0px 30px;" >
                                             <a href="https://leadsmartview.com/sistema/promociones">
                                                 <div style="text-align:center; padding-top: 10px; margin-top: 17px; background: #FEDD34; border-radius: 22px; width: 175px; height: 25px; font-weight: 700; font-size: 13px; line-height: 17px; color: #1E1E1E;">
                                                     Visitar Plataforma
