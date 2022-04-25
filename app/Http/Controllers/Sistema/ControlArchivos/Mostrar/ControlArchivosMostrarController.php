@@ -73,6 +73,7 @@ class ControlArchivosMostrarController extends Controller
 
         $cars = carcargasarchivos::join('usuusuarios as usu', 'usu.usuid', 'carcargasarchivos.usuid')
                                 ->join('tcatiposcargasarchivos as tca', 'tca.tcaid', 'carcargasarchivos.tcaid')
+                                ->join('perpersonas as per', 'per.perid', 'usu.perid')
                                 ->where(function ($query) use($request, $fecfecha) {
 
                                     if($request['fecha'] != '' && $request['fecha'] != null) {
