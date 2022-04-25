@@ -87,7 +87,7 @@ class CrearUsuariosController extends Controller
                 foreach ($paises as $pais) {
                     $paun = new paupaisesusuarios();
                     $paun->paiid = $pais['paiid'];
-                    $paun->usuid = $usun->usuid;
+                    $paun->usuid = $usu->usuid;
                     if ($paun->save()) {
                         $log[] = "Se registro correctamente el pais de id:".$pais['paiid'];
                         $respuesta = true;
