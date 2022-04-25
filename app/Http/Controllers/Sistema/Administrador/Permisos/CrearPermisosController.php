@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Sistema\Administrador\Permisos;
 use App\Http\Controllers\AuditoriaController;
 use App\Http\Controllers\Controller;
 use App\pempermisos;
+use App\tpetipopermiso;
 use Illuminate\Http\Request;
 
 class CrearPermisosController extends Controller
@@ -18,7 +19,8 @@ class CrearPermisosController extends Controller
 
         $usutoken  = $request->header('api_token');
 
-        $categoria = $request['categoria_id'];
+        // $categoria = $request['categoria_id'];
+        $categoriaNombre = $request['categoriaNueva'];
         $permiso   = $request['permiso'];
         $slug      = $request['slug'];
         $ruta      = $request['ruta'];
@@ -26,12 +28,35 @@ class CrearPermisosController extends Controller
         $existencia_pem = pempermisos::where('pemnombre', $permiso)
                                         ->where('pemslug', $slug)
                                         ->where('pemruta', $ruta)
-                                        // ->where('tpemid', $categoria)
+                                        // ->where('tpeid', $categoria)
                                         ->first(['pemid']);
                                     
         if (!$existencia_pem) {
+
+            $tpeid = 0;
+
+            if(isset($categoriaNombre)){
+
+                $tpe = tpetipopermiso::where('tpenombre', $categoriaNombre)
+                                        ->first();
+
+                if($tpe){
+                    $tpeid = $tpe->tpeid;
+                }else{
+                    $tpen = new tpetipopermiso;
+                    $tpen->tpenombre = $categoriaNombre;
+                    if($tpen->save()){
+                        $tpeid = $tpen->tpeid;
+                    }
+                    
+                }
+
+            }else{ 
+                $tpeid = 6; // OTROS
+            }
+
             $pemn = new pempermisos();
-            // $pemn->tpemid = $categoria;
+            $pemn->tpeid = $tpeid;
             $pemn->pemnombre = $permiso;
             $pemn->pemslug = $slug;
             $pemn->pemruta = $ruta;

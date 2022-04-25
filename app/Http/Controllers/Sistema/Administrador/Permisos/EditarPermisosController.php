@@ -15,10 +15,10 @@ class EditarPermisosController extends Controller
         $respuesta = true;
         $mensaje = "El permiso se edito correctamente";
 
-        $re_pemid = $request['pemid'];
+        $re_pemid  = $request['pemid'];
         $re_nombre = $request['nombreEditando'];
-        $re_slug = $request['slugEditado'];
-        $re_ruta = $request['rutaEditada'];
+        $re_slug   = $request['slugEditado'];
+        $re_ruta   = $request['rutaEditada'];
 
         $pem = pempermisos::find($re_pemid);
 
@@ -55,7 +55,7 @@ class EditarPermisosController extends Controller
 
         if($tup){
 
-            $pem = pempermisos::find();
+            $pem = pempermisos::find($re_pemid);
 
             if($pem){
                 
@@ -70,7 +70,7 @@ class EditarPermisosController extends Controller
 
         }else{
 
-            $pem = pempermisos::find();
+            $pem = pempermisos::find($re_pemid);
 
             if($pem){
                 

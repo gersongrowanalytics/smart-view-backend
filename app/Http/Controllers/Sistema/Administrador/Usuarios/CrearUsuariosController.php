@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\paupaisesusuarios;
 use App\perpersonas;
 use App\usuusuarios;
+use App\ussusuariossucursales;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
@@ -35,6 +36,8 @@ class CrearUsuariosController extends Controller
         $paises       = $request['paises'];
         // $zonas        = $request['zonas'];
         $estado       = $request['estado'];
+
+        $sucursales   = $request['sucursales'];
         
         $per = perpersonas::where('pernombre', $nombre)
                                 ->where('perapellidopaterno',$apellidos)
@@ -60,40 +63,100 @@ class CrearUsuariosController extends Controller
             }
         }
 
-        $usun = new usuusuarios();
-        $usun->tpuid             = $tipo_usuario;
-        $usun->perid             = $perid;
-        $usun->estid             = $estado;
-        $usun->usuusuario        = $correo_inst;
-        $usun->usucorreo         = $correo_inst;
-        $usun->usucorreopersonal = $correo;
-        $usun->usufechainicio    = $fecha_inicio;
-        $usun->usufechafinal     = $fecha_fin;
-        $usun->usucontrasena     = Hash::make($contrasenia);
-        $usun->usutoken          = Str::random(60);
-        if($usun->save()){
-            $log[] = "El usuario se registro correctamente usuid: ".$usun->usuid;
+        $usuid = 0;
+
+        $usu = usuusuarios::where('usuusuario', $correo_inst)->first();
+
+        if($usu){
             
-            foreach ($paises as $pais) {
-                $paun = new paupaisesusuarios();
-                $paun->paiid = $pais['paiid'];
-                $paun->usuid = $usun->usuid;
-                if ($paun->save()) {
-                    $log[] = "Se registro correctamente el pais de id:".$pais['paiid'];
-                    $respuesta = true;
-                    $mensaje = "El usuario se registro correctamente";
-                }else{
-                    $log[] = "No se registro el usuario, surgio un error al registrar el pais del usuario";
-                    $respuesta = false;
-                    $mensaje = "Lo sentimos, ocurrio un error al momento de registrar los paises del usuario";
+            $usuid = $usu->usuid;
+            $usu->tpuid             = $tipo_usuario;
+            $usu->perid             = $perid;
+            $usu->estid             = $estado;
+            $usu->usuusuario        = $correo_inst;
+            $usu->usucorreo         = $correo_inst;
+            $usu->usucorreopersonal = $correo;
+            $usu->usufechainicio    = $fecha_inicio;
+            $usu->usufechafinal     = $fecha_fin;
+            $usu->usucontrasena     = Hash::make($contrasenia);
+            if($usu->update()){
+                $log[] = "El usuario se edito correctamente usuid: ".$usun->usuid;
+
+                paupaisesusuarios::where('usuid', $usu->usuid)->delete();
+
+                foreach ($paises as $pais) {
+                    $paun = new paupaisesusuarios();
+                    $paun->paiid = $pais['paiid'];
+                    $paun->usuid = $usun->usuid;
+                    if ($paun->save()) {
+                        $log[] = "Se registro correctamente el pais de id:".$pais['paiid'];
+                        $respuesta = true;
+                        $mensaje = "El usuario se registro correctamente";
+                    }else{
+                        $log[] = "No se registro el usuario, surgio un error al registrar el pais del usuario";
+                        $respuesta = false;
+                        $mensaje = "Lo sentimos, ocurrio un error al momento de registrar los paises del usuario";
+                    }
                 }
             }
+
         }else{
-            $log[] = "No se registro el usuario";
-            $respuesta = false;
-            $mensaje = "Lo sentimos, ocurrio un error al momento de crear el usuario";
+
+            $usun = new usuusuarios();
+            $usun->tpuid             = $tipo_usuario;
+            $usun->perid             = $perid;
+            $usun->estid             = $estado;
+            $usun->usuusuario        = $correo_inst;
+            $usun->usucorreo         = $correo_inst;
+            $usun->usucorreopersonal = $correo;
+            $usun->usufechainicio    = $fecha_inicio;
+            $usun->usufechafinal     = $fecha_fin;
+            $usun->usucontrasena     = Hash::make($contrasenia);
+            $usun->usutoken          = Str::random(60);
+            if($usun->save()){
+                $usuid = $usun->usuid;
+                $log[] = "El usuario se registro correctamente usuid: ".$usun->usuid;
+                
+                foreach ($paises as $pais) {
+                    $paun = new paupaisesusuarios();
+                    $paun->paiid = $pais['paiid'];
+                    $paun->usuid = $usun->usuid;
+                    if ($paun->save()) {
+                        $log[] = "Se registro correctamente el pais de id:".$pais['paiid'];
+                        $respuesta = true;
+                        $mensaje = "El usuario se registro correctamente";
+                    }else{
+                        $log[] = "No se registro el usuario, surgio un error al registrar el pais del usuario";
+                        $respuesta = false;
+                        $mensaje = "Lo sentimos, ocurrio un error al momento de registrar los paises del usuario";
+                    }
+                }
+            }else{
+                $log[] = "No se registro el usuario";
+                $respuesta = false;
+                $mensaje = "Lo sentimos, ocurrio un error al momento de crear el usuario";
+            }
+
         }
 
+
+        if($usuid != 0){
+
+            ussusuariossucursales::where('usuid', $usuid)->delete();
+
+            foreach($sucursales as $sucursal){
+
+                if(isset($sucursal['sucpromocioncrear'])){
+                    if($sucursal['sucpromocioncrear'] == true){
+                        $ussn = new ussusuariossucursales;
+                        $ussn->usuid = $usuid;
+                        $ussn->sucid = $sucursal['sucid'];
+                        $ussn->save();
+                    }
+                }
+
+            }
+        }
 
 
 

@@ -20,11 +20,12 @@ class EnviarPromocionesActivasController extends Controller
         $usutoken   = $request->header('api_token');
         $re_sucursales = $request['sucursales'];
         $re_fecha = $request['fecha'];
+        $re_reenviado = $request['reenviado'];
 
         $usu = usuusuarios::where('usutoken', $usutoken)->first();
 
-        // $correo = "gerson.vilca@grow-analytics.com.pe";
-        $correo = "director.creativo@grow-analytics.com.pe";
+        $correo = "gerson.vilca@grow-analytics.com.pe";
+        // $correo = "director.creativo@grow-analytics.com.pe";
         // $correo = "jeanmarcoe@gmail.com";
 
         if($usu){
@@ -60,7 +61,16 @@ class EnviarPromocionesActivasController extends Controller
                 $dcen = new dcedestinatarioscorreosenviados;
                 $dcen->uceid = $ucen->uceid;
                 $dcen->dcedestinatario = $correo;
-                $dcen->dceestado = 'R';
+
+                if(isset($re_reenviado)){
+                    if($re_reenviado == true){
+                        $dcen->dceestado = 'R';
+                    }else{
+                        $dcen->dceestado = 'E';
+                    }
+                }else{
+                    $dcen->dceestado = 'E';
+                }
                 $dcen->save();
             }
         }

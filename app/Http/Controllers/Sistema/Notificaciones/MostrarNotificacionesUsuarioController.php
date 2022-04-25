@@ -24,6 +24,7 @@ class MostrarNotificacionesUsuarioController extends Controller
 
             $nuss = nusnotificacionesusuarios::join('tnotiposnotificaciones as tno', 'tno.tnoid', 'nusnotificacionesusuarios.tnoid')
                                             ->where('usuid', $usu->usuid)
+                                            ->orderBy('nusnotificacionesusuarios.created_at', 'DESC')
                                             ->get([
                                                 'tnotipo',
                                                 'tnotitulo',
