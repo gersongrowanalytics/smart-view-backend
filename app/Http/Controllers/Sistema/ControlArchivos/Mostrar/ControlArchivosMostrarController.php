@@ -90,6 +90,7 @@ class ControlArchivosMostrarController extends Controller
 
                                 })
                                 ->orderBy('carcargasarchivos.created_at', 'DESC')
+                                ->select('carcargasarchivos.created_at', 'pernombrecompleto', 'tcanombre', 'carurl', 'carnombrearchivo')
                                 ->paginate(10);
                                 // ->get([
                                 //     'carid',
