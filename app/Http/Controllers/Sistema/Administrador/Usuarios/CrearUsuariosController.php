@@ -80,7 +80,7 @@ class CrearUsuariosController extends Controller
             $usu->usufechafinal     = $fecha_fin;
             $usu->usucontrasena     = Hash::make($contrasenia);
             if($usu->update()){
-                $log[] = "El usuario se edito correctamente usuid: ".$usun->usuid;
+                $log[] = "El usuario se edito correctamente usuid: ".$usu->usuid;
 
                 paupaisesusuarios::where('usuid', $usu->usuid)->delete();
 
