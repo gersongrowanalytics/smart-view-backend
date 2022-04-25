@@ -80,18 +80,18 @@ class CrearUsuariosController extends Controller
             $usu->usufechafinal     = $fecha_fin;
             $usu->usucontrasena     = Hash::make($contrasenia);
             if($usu->update()){
-                $log[] = "El usuario se edito correctamente usuid: ".$usun->usuid;
+                $log[] = "El usuario se edito correctamente usuid: ".$usu->usuid;
 
                 paupaisesusuarios::where('usuid', $usu->usuid)->delete();
 
                 foreach ($paises as $pais) {
                     $paun = new paupaisesusuarios();
                     $paun->paiid = $pais['paiid'];
-                    $paun->usuid = $usun->usuid;
+                    $paun->usuid = $usu->usuid;
                     if ($paun->save()) {
                         $log[] = "Se registro correctamente el pais de id:".$pais['paiid'];
                         $respuesta = true;
-                        $mensaje = "El usuario se registro correctamente";
+                        $mensaje = "El usuario se edito correctamente";
                     }else{
                         $log[] = "No se registro el usuario, surgio un error al registrar el pais del usuario";
                         $respuesta = false;
