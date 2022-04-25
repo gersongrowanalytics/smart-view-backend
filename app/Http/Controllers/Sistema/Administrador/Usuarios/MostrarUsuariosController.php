@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Sistema\Administrador\Usuarios;
 use App\Http\Controllers\Controller;
 use App\usuusuarios;
 use App\paupaisesusuarios;
+use App\ussusuariossucursales;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -50,8 +51,13 @@ class MostrarUsuariosController extends Controller
                                             'pai.paiiconomas',
                                             'pai.estid'
                                         ]);
+
+            $uss = ussusuariossucursales::where('usuid', $usuario['usuid'])
+                                        ->get();
             
             $usuarios[$key]['paises'] = $paises;
+
+            $usuarios[$key]['uss'] = $uss;
         }
 
         if(sizeof($usuarios) > 0){
