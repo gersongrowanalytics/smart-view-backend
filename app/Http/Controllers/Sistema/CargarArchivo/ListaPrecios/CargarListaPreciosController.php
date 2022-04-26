@@ -276,11 +276,13 @@ class CargarListaPreciosController extends Controller
                         $zonaProv = 'PROVINCIA';
 
                         $encontroSku = false;
+
                         
-                        if (strpos($ex_descripcionproducto, $zonaLim) !== false) {
+
+                        if (strpos( strtoupper($ex_descripcionproducto) , $zonaLim) !== false) {
                             $zonaSeleccionada = "LIMA";
                             $tieneZona = true;
-                        }else if(strpos($ex_descripcionproducto, $zonaProv) !== false){
+                        }else if(strpos( strtoupper($ex_descripcionproducto) , $zonaProv) !== false){
                             $zonaSeleccionada = "PROVINCIA";
                             $tieneZona = true;
                         }else{
