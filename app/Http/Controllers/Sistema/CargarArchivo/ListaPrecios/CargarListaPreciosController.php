@@ -356,6 +356,21 @@ class CargarListaPreciosController extends Controller
 
     public function IdentificarDuplicadosComplejos($fechaSeleccionada)
     {
+
+        $ltps = ltplistaprecios::where('fecid', $fechaSeleccionada)
+                                ->where('ltptienezona', true)
+                                ->get();
+
+        foreach($ltps as $ltp){
+            
+            $ltp = ltplistaprecios::where('fecid', $fechaSeleccionada)
+                                    ->where('treid', $ltp->treid)
+                                    ->where('ltpcodigosap', $ltp->ltpcodigosap)
+                                    ->update(['ltptienezona' => true]);
+
+
+        }
+
         $ltps = ltplistaprecios::where('fecid', $fechaSeleccionada)
                                 ->where('ltpduplicadocomplejo', true)
                                 ->get();
