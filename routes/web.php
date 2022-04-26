@@ -152,6 +152,7 @@ $router->post('/aceptar-terminos-condiciones', 'Sistema\TerminosCondiciones\Acep
 
     $router->post('/mostrar/controlArchivos', 'Sistema\ControlArchivos\Mostrar\ControlArchivosMostrarController@MostrarControlArchivos');
     $router->post('/mostrar/archivos-subidos', 'Sistema\ControlArchivos\Mostrar\ControlArchivosMostrarController@MostrarArchivosSubidos');
+    $router->post('/eliminar/archivos-subidos', 'Sistema\ControlArchivos\Eliminar\EliminarControlArchivosController@EliminarControlArchivos');
 
     $router->post('/controlVentas/estadistica/xzona', 'Sistema\Modulos\ControlVentas\VentasXZonasController@VentasXZonas');
     $router->post('/controlVentas/estadistica/xgrafico', 'Sistema\Modulos\ControlVentas\VentasXZonasController@VentasXControl');
