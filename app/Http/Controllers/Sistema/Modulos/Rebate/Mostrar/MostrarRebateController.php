@@ -60,6 +60,8 @@ class MostrarRebateController extends Controller
                         $arr_data_agregar['rtpporcentajehasta'] = $rtp->rtpporcentajehasta;
                         $arr_data_agregar['rtpporcentajerebate'] = $rtp->rtpporcentajerebate;
                         $arr_data_agregar['tprnombre'] = $tpr->tprnombre;
+                        $arr_data_agregar['tprid'] = $tpr->tprid;
+                        $arr_data_agregar['treid'] = $trrs_grupo->treid;
 
 
 

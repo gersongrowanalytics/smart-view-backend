@@ -47,7 +47,7 @@ class CargarListaPreciosController extends Controller
         $exitoSubirExcel = false;
 
         $nombres = [];
-        $fechaSeleccionada = 153;
+        $fechaSeleccionada = 69;
         $gruposEncontrados = [];
 
         DB::beginTransaction();
@@ -275,15 +275,21 @@ class CargarListaPreciosController extends Controller
                         $zonaLim  = 'LIMA';
                         $zonaProv = 'PROVINCIA';
 
-                        if (strpos($ex_descripcionproducto, $zonaLim) !== false) {
+                        $encontroSku = false;
+
+                        
+
+                        if (strpos( strtoupper($ex_descripcionproducto) , $zonaLim) !== false) {
                             $zonaSeleccionada = "LIMA";
                             $tieneZona = true;
-                        }else if(strpos($ex_descripcionproducto, $zonaProv) !== false){
+                        }else if(strpos( strtoupper($ex_descripcionproducto) , $zonaProv) !== false){
                             $zonaSeleccionada = "PROVINCIA";
                             $tieneZona = true;
+                        }else{
+                            $encontroSku = true;    
                         }
 
-                        $encontroSku = false;
+                        
                         break;
 
                     }else{
