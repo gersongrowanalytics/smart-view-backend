@@ -275,15 +275,19 @@ class CargarListaPreciosController extends Controller
                         $zonaLim  = 'LIMA';
                         $zonaProv = 'PROVINCIA';
 
+                        $encontroSku = false;
+                        
                         if (strpos($ex_descripcionproducto, $zonaLim) !== false) {
                             $zonaSeleccionada = "LIMA";
                             $tieneZona = true;
                         }else if(strpos($ex_descripcionproducto, $zonaProv) !== false){
                             $zonaSeleccionada = "PROVINCIA";
                             $tieneZona = true;
+                        }else{
+                            $encontroSku = true;    
                         }
 
-                        $encontroSku = false;
+                        
                         break;
 
                     }else{
