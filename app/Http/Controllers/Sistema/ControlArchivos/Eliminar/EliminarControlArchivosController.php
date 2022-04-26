@@ -16,10 +16,16 @@ class EliminarControlArchivosController extends Controller
         $re_carid = $request['re_carid'];
 
         $car = carcargasarchivos::where('carid', $re_carid)->first();
-
         if ($car->delete()) {
             $respuesta = true;
-            $mensaje = "El item de la lista de archivos subidos se eliminó correctamente";
+            $mensaje = "El registro de la lista de archivos subidos se eliminó correctamente";
+            if (unlink($car->carubicacion)) {
+                $respuesta = true;
+                $mensaje = "El registro y archivo de la lista de archivos subidos se eliminó correctamente";
+            }else{
+                $respuesta = false;
+                $mensaje = "Error al eliminar el archivo del servidor";
+            }
         }else{
             $respuesta = false;
             $mensaje = "Ingrese un id válido";
