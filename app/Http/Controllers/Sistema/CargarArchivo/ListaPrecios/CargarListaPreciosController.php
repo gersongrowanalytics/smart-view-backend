@@ -253,6 +253,7 @@ class CargarListaPreciosController extends Controller
             
             $encontroSku = false;
             $noAgregarFila = false;
+            $tieneZona = false;
             $zonaSeleccionada = "LIMA";
 
             foreach($skus as $sku){
@@ -268,7 +269,7 @@ class CargarListaPreciosController extends Controller
                     ){
 
                         $noAgregarFila = true;
-
+                        break;
                     }else if($sku['nombre'] != $ex_descripcionproducto){
 
                         $zonaLim  = 'LIMA';
@@ -276,9 +277,14 @@ class CargarListaPreciosController extends Controller
 
                         if (strpos($ex_descripcionproducto, $zonaLim) !== false) {
                             $zonaSeleccionada = "LIMA";
+                            $tieneZona = true;
                         }else if(strpos($ex_descripcionproducto, $zonaProv) !== false){
                             $zonaSeleccionada = "PROVINCIA";
+                            $tieneZona = true;
                         }
+
+                        $encontroSku = false;
+                        break;
 
                     }else{
                         $encontroSku = true;
@@ -288,7 +294,7 @@ class CargarListaPreciosController extends Controller
                 }
             }
 
-            if($encontroSku == true){
+            if($encontroSku == true || $noAgregarFila == true){
 
             }else{
                 $skus[] = array(
@@ -318,6 +324,7 @@ class CargarListaPreciosController extends Controller
                 $ltpn->ltpduplicadocomplejo = $encontroSku;
 
                 $ltpn->ltpzona = $zonaSeleccionada;
+                $ltpn->ltptienezona = $tieneZona;
 
                 $ltpn->ltpcategoria             = $ex_categoria;
                 $ltpn->ltpsubcategoria          = $ex_subcategoria;
@@ -349,6 +356,21 @@ class CargarListaPreciosController extends Controller
 
     public function IdentificarDuplicadosComplejos($fechaSeleccionada)
     {
+
+        $ltps = ltplistaprecios::where('fecid', $fechaSeleccionada)
+                                ->where('ltptienezona', true)
+                                ->get();
+
+        foreach($ltps as $ltp){
+            
+            $ltp = ltplistaprecios::where('fecid', $fechaSeleccionada)
+                                    ->where('treid', $ltp->treid)
+                                    ->where('ltpcodigosap', $ltp->ltpcodigosap)
+                                    ->update(['ltptienezona' => true]);
+
+
+        }
+
         $ltps = ltplistaprecios::where('fecid', $fechaSeleccionada)
                                 ->where('ltpduplicadocomplejo', true)
                                 ->get();
