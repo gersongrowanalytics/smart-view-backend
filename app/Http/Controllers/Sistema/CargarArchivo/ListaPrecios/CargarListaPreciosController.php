@@ -47,7 +47,7 @@ class CargarListaPreciosController extends Controller
         $exitoSubirExcel = false;
 
         $nombres = [];
-        $fechaSeleccionada = 152;
+        $fechaSeleccionada = 153;
         $gruposEncontrados = [];
 
         DB::beginTransaction();
