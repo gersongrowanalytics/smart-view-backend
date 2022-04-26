@@ -36,6 +36,6 @@ class EliminarControlArchivosController extends Controller
             "mensaje"   => $mensaje,
         ]);
         
-        // return $requestsalida;
+        return $requestsalida;
     }
 }
