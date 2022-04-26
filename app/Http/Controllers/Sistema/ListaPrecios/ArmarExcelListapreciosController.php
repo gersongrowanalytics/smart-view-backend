@@ -308,6 +308,10 @@ class ArmarExcelListapreciosController extends Controller
             "PVP"
         ];
 
+        foreach($ltps as $posicionLtp => $ltp){
+            $ltps[$posicionLtp]['mostrar'] = true;
+        }
+
         foreach($ltpsExcel as $posicionLtp => $ltp){
 
             // $ltps[$posicionLtp]['mostrar'] = true;
