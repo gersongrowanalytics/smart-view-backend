@@ -96,18 +96,14 @@ class ArmarExcelListapreciosController extends Controller
 
                                 })
                                 ->where(function ($query) use($re_tresid, $re_treid) {
-                                    if(isset($re_tresid)){
-                                        if(sizeof($re_tresid) > 0){
-                                            foreach($re_tresid as $tre){
-    
-                                                if(isset($tre['seleccionadoFiltro'])){
-                                                    if($tre['seleccionadoFiltro'] == true){
-                                                        $query->orwhere('tre.treid', $tre['treid']);
-                                                    }
+                                    if(sizeof($re_tresid) > 0){
+                                        foreach($re_tresid as $tre){
+
+                                            if(isset($tre['seleccionadoFiltro'])){
+                                                if($tre['seleccionadoFiltro'] == true){
+                                                    $query->orwhere('tre.treid', $tre['treid']);
                                                 }
                                             }
-                                        }else{
-                                            $query->where('tre.treid', $re_treid);
                                         }
                                     }else{
                                         $query->where('tre.treid', $re_treid);
@@ -171,17 +167,13 @@ class ArmarExcelListapreciosController extends Controller
 
                                 })
                                 ->where(function ($query) use($re_tresid, $re_treid) {
-                                    if(isset($re_tresid)){
-                                        if(sizeof($re_tresid) > 0){
-                                            foreach($re_tresid as $tre){
-                                                if(isset($tre['seleccionadoFiltro'])){
-                                                    if($tre['seleccionadoFiltro'] == true){
-                                                        $query->orwhere('tre.treid', $tre['treid']);
-                                                    }
+                                    if(sizeof($re_tresid) > 0){
+                                        foreach($re_tresid as $tre){
+                                            if(isset($tre['seleccionadoFiltro'])){
+                                                if($tre['seleccionadoFiltro'] == true){
+                                                    $query->orwhere('tre.treid', $tre['treid']);
                                                 }
                                             }
-                                        }else{
-                                            $query->where('tre.treid', $re_treid);
                                         }
                                     }else{
                                         $query->where('tre.treid', $re_treid);
@@ -247,18 +239,14 @@ class ArmarExcelListapreciosController extends Controller
 
                                 })
                                 ->where(function ($query) use($re_tresid, $re_treid) {
-                                    if(isset($re_tresid)){
-                                        if(sizeof($re_tresid) > 0){
-                                            foreach($re_tresid as $tre){
-    
-                                                if(isset($tre['seleccionadoFiltro'])){
-                                                    if($tre['seleccionadoFiltro'] == true){
-                                                        $query->orwhere('tre.treid', $tre['treid']);
-                                                    }
+                                    if(sizeof($re_tresid) > 0){
+                                        foreach($re_tresid as $tre){
+
+                                            if(isset($tre['seleccionadoFiltro'])){
+                                                if($tre['seleccionadoFiltro'] == true){
+                                                    $query->orwhere('tre.treid', $tre['treid']);
                                                 }
                                             }
-                                        }else{
-                                            $query->where('tre.treid', $re_treid);
                                         }
                                     }else{
                                         $query->where('tre.treid', $re_treid);
