@@ -25,15 +25,15 @@ class MostrarUsuariosController extends Controller
                                 ->join('tputiposusuarios as tpu', 'tpu.tpuid', 'usuusuarios.tpuid')
                                 ->leftJoin('zonzonas as zon', 'zon.zonid','usuusuarios.zonid')
                                 ->join('estestados as est', 'est.estid','usuusuarios.estid')
-                                // ->where(function ($query) use($re_tipoUsuario) {
-                                //     foreach($re_tipoUsuario as $tu){
-                                //         if(isset($tu['seleccionado'])){
-                                //             if($tu['seleccionado'] == true){
-                                //                 $query->orwhere('usuusuarios.tpuid', $tu['tpuid']);
-                                //             }
-                                //         }
-                                //     }
-                                // })
+                                ->where(function ($query) use($re_tipoUsuario) {
+                                    foreach($re_tipoUsuario as $tu){
+                                        if(isset($tu['seleccionado'])){
+                                            if($tu['seleccionado'] == true){
+                                                $query->orwhere('usuusuarios.tpuid', $tu['tpuid']);
+                                            }
+                                        }
+                                    }
+                                })
                                 ->orderBy('usuusuarios.created_at', 'DESC')
                                 ->paginate(10);
                                 // ->get([
