@@ -40,25 +40,25 @@ class MostrarUsuariosController extends Controller
         
        
         
-        foreach ($usuarios as $key => $usuario) {
-            $paises = paupaisesusuarios::join('paipaises as pai','pai.paiid','paupaisesusuarios.paiid')
-                                        ->where('paupaisesusuarios.usuid', $usuario['usuid'])
-                                        ->get([
-                                            'pai.paiid',
-                                            'pai.painombre',
-                                            'pai.paiicono',
-                                            'pai.paiiconocircular',
-                                            'pai.paiiconomas',
-                                            'pai.estid'
-                                        ]);
+        // foreach ($usuarios as $key => $usuario) {
+        //     $paises = paupaisesusuarios::join('paipaises as pai','pai.paiid','paupaisesusuarios.paiid')
+        //                                 ->where('paupaisesusuarios.usuid', $usuario['usuid'])
+        //                                 ->get([
+        //                                     'pai.paiid',
+        //                                     'pai.painombre',
+        //                                     'pai.paiicono',
+        //                                     'pai.paiiconocircular',
+        //                                     'pai.paiiconomas',
+        //                                     'pai.estid'
+        //                                 ]);
 
-            $uss = ussusuariossucursales::where('usuid', $usuario['usuid'])
-                                        ->get();
+        //     $uss = ussusuariossucursales::where('usuid', $usuario['usuid'])
+        //                                 ->get();
             
-            $usuarios[$key]['paises'] = $paises;
+        //     $usuarios[$key]['paises'] = $paises;
 
-            $usuarios[$key]['uss'] = $uss;
-        }
+        //     $usuarios[$key]['uss'] = $uss;
+        // }
 
         if(sizeof($usuarios) > 0){
             $respuesta      = true;
