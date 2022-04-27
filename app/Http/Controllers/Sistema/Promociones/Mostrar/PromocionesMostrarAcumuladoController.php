@@ -631,6 +631,21 @@ class PromocionesMostrarAcumuladoController extends Controller
         //FIN ORDENAR LAS PROMOS POR PRODUCTO 23/12
 
 
+        // CALCULAR EL NUMERO DE PROMOCIOENS NUEVAS
+
+        foreach($dataPrueba as $posicionDatPrueba => $datPrueba){
+
+            $numeroPromocionesNuevas = 0;
+
+            foreach($datPrueba['promocionesOrdenadas'] as $promocionesOrdenadas){
+                if($promocionesOrdenadas['cspnuevapromocion'] == true){
+                    $numeroPromocionesNuevas = $numeroPromocionesNuevas + 1;
+                }
+            }
+
+            $dataPrueba[$posicionDatPrueba]['cantidadPromocionesNuevas'] = $numeroPromocionesNuevas;
+        }
+
 
 
 
