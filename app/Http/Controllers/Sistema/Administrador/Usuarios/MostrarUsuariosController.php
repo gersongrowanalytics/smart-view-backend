@@ -25,15 +25,15 @@ class MostrarUsuariosController extends Controller
                                 ->join('tputiposusuarios as tpu', 'tpu.tpuid', 'usuusuarios.tpuid')
                                 ->leftJoin('zonzonas as zon', 'zon.zonid','usuusuarios.zonid')
                                 ->join('estestados as est', 'est.estid','usuusuarios.estid')
-                                ->where(function ($query) use($re_tipoUsuario) {
-                                    foreach($re_tipoUsuario as $tu){
-                                        if(isset($tu['seleccionado'])){
-                                            if($tu['seleccionado'] == true){
-                                                $query->orwhere('usuusuarios.tpuid', $tu['tpuid']);
-                                            }
-                                        }
-                                    }
-                                })
+                                // ->where(function ($query) use($re_tipoUsuario) {
+                                //     foreach($re_tipoUsuario as $tu){
+                                //         if(isset($tu['seleccionado'])){
+                                //             if($tu['seleccionado'] == true){
+                                //                 $query->orwhere('usuusuarios.tpuid', $tu['tpuid']);
+                                //             }
+                                //         }
+                                //     }
+                                // })
                                 ->orderBy('usuusuarios.created_at', 'DESC')
                                 ->paginate(10);
                                 // ->get([
@@ -50,25 +50,25 @@ class MostrarUsuariosController extends Controller
         
        
         
-        // foreach ($usuarios as $key => $usuario) {
-        //     $paises = paupaisesusuarios::join('paipaises as pai','pai.paiid','paupaisesusuarios.paiid')
-        //                                 ->where('paupaisesusuarios.usuid', $usuario['usuid'])
-        //                                 ->get([
-        //                                     'pai.paiid',
-        //                                     'pai.painombre',
-        //                                     'pai.paiicono',
-        //                                     'pai.paiiconocircular',
-        //                                     'pai.paiiconomas',
-        //                                     'pai.estid'
-        //                                 ]);
+        foreach ($usuarios as $key => $usuario) {
+            $paises = paupaisesusuarios::join('paipaises as pai','pai.paiid','paupaisesusuarios.paiid')
+                                        ->where('paupaisesusuarios.usuid', $usuario['usuid'])
+                                        ->get([
+                                            'pai.paiid',
+                                            'pai.painombre',
+                                            'pai.paiicono',
+                                            'pai.paiiconocircular',
+                                            'pai.paiiconomas',
+                                            'pai.estid'
+                                        ]);
 
-        //     $uss = ussusuariossucursales::where('usuid', $usuario['usuid'])
-        //                                 ->get();
+            $uss = ussusuariossucursales::where('usuid', $usuario['usuid'])
+                                        ->get();
             
-        //     $usuarios[$key]['paises'] = $paises;
+            $usuarios[$key]['paises'] = $paises;
 
-        //     $usuarios[$key]['uss'] = $uss;
-        // }
+            $usuarios[$key]['uss'] = $uss;
+        }
 
         if(sizeof($usuarios) > 0){
             $respuesta      = true;
