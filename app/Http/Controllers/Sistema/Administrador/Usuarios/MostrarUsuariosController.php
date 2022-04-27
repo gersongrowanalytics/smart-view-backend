@@ -19,11 +19,21 @@ class MostrarUsuariosController extends Controller
         $mensaje        = '';
 
         $usutoken = $request->header('api_token');
-        
+        $re_tipoUsuario = $request['re_tipoUsuario'];
+
         $usuarios = usuusuarios::join('perpersonas as per', 'per.perid', 'usuusuarios.perid')
                                 ->join('tputiposusuarios as tpu', 'tpu.tpuid', 'usuusuarios.tpuid')
                                 ->leftJoin('zonzonas as zon', 'zon.zonid','usuusuarios.zonid')
                                 ->join('estestados as est', 'est.estid','usuusuarios.estid')
+                                ->where(function ($query) use($re_tipoUsuario) {
+                                    foreach($re_tipoUsuario as $tu){
+                                        if(isset($tu['seleccionado'])){
+                                            if($tu['seleccionado'] == true){
+                                                $query->orwhere('usuusuarios.tpuid', $tu['tpuid']);
+                                            }
+                                        }
+                                    }
+                                })
                                 ->orderBy('usuusuarios.created_at', 'DESC')
                                 ->paginate(10);
                                 // ->get([
