@@ -223,6 +223,41 @@ class ArmarExcelListapreciosController extends Controller
 
         
 
+        // QUERY PARA EL EXCEL
+        $ltpsExcel = ltplistaprecios::join('fecfechas as fec', 'fec.fecid', 'ltplistaprecios.fecid')
+                                ->join('proproductos as pro', 'pro.proid', 'ltplistaprecios.proid')
+                                ->join('catcategorias as cat', 'cat.catid', 'pro.catid')
+                                ->join('tretiposrebates as tre', 'tre.treid', 'ltplistaprecios.treid')
+                                ->where('fecano', $re_anio)
+                                ->where('fecmes', $re_mes)
+                                ->where('fecdia', $re_dia)
+                                ->where(function ($query) use($re_duplicados) {
+
+                                    if($re_duplicados == true) {
+                                        $query->where('ltplistaprecios.ltpduplicadocomplejo', true);
+                                    }
+
+                                })
+                                ->where(function ($query) use($re_tresid, $re_treid) {
+                                    if(sizeof($re_tresid) > 0){
+                                        foreach($re_tresid as $tre){
+
+                                            if(isset($tre['seleccionadoFiltro'])){
+                                                if($tre['seleccionadoFiltro'] == true){
+                                                    $query->orwhere('tre.treid', $tre['treid']);
+                                                }
+                                            }
+                                        }
+                                    }else{
+                                        $query->where('tre.treid', $re_treid);
+                                    }
+                                })
+                                ->orderby('ltpcodigosap')
+                                ->paginate(500);
+
+
+
+
         $dataReal = $ltps;
 
         $nuevoArray = array(
@@ -274,8 +309,12 @@ class ArmarExcelListapreciosController extends Controller
         ];
 
         foreach($ltps as $posicionLtp => $ltp){
-
             $ltps[$posicionLtp]['mostrar'] = true;
+        }
+
+        foreach($ltpsExcel as $posicionLtp => $ltp){
+
+            // $ltps[$posicionLtp]['mostrar'] = true;
 
             if($posicionLtp == 0){
 

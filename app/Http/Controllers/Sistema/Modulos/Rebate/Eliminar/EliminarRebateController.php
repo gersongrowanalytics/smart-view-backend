@@ -14,7 +14,7 @@ class EliminarRebateController extends Controller
     public function EliminarRebate(Request $request)
     {
         $respuesta = true;
-        $mensaje = "";
+        $mensaje = "El rebate fue eliminado correctamente";
         $usutoken  = $request->header('api_token');
         $pkid = array();
         $log  = array();
