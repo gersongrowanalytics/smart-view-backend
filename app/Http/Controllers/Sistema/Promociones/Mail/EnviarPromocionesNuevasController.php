@@ -41,7 +41,7 @@ class EnviarPromocionesNuevasController extends Controller
                                 ->first(['gsu.gsunombre']);
                 if ($gsu) {
                     $nombre = $gsu->nombre;
-                    if ($gsu->nombre == 'Cliente') {
+                    if ($gsu->nombre == 'Clientes') {
                         $nombre = $sucursal;
                     }
                 }
