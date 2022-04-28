@@ -67,6 +67,7 @@ class ControlArchivosMostrarController extends Controller
     {
         $fecha = $request['fecha'];
         $tcaid = $request['tcaid'];
+        $re_tiposCarga = $request['re_tiposCarga'];
 
         $fecha = new \DateTime(date("Y-m-d", strtotime($fecha)));
         $fecfecha = fecfechas::where('fecfecha', $fecha)->first(['fecid']);
@@ -88,6 +89,15 @@ class ControlArchivosMostrarController extends Controller
                                         
                                     }
 
+                                })
+                                ->where(function ($query) use($re_tiposCarga) {
+                                    foreach($re_tiposCarga as $tca){
+                                        if(isset($tca['seleccionado'])){
+                                            if($tca['seleccionado'] == true){
+                                                $query->orwhere('carcargasarchivos.tcaid', $tca['tcaid']);
+                                            }
+                                        }
+                                    }
                                 })
                                 ->orderBy('carcargasarchivos.created_at', 'DESC')
                                 ->select('carcargasarchivos.carid','carcargasarchivos.created_at', 'pernombrecompleto', 'tcanombre', 'carurl', 'carnombrearchivo')
