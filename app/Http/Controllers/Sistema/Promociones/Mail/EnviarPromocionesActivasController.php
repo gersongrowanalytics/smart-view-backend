@@ -17,7 +17,6 @@ class EnviarPromocionesActivasController extends Controller
     {
         $respuesta = true;
         $mensaje = 'El correo se envio exitosamente';
-        $meses = ["ENE.","FEB.","MAR.","ABR.","MAY.","JUN.","JUL.","AGO.","SET.","OCT.","NOV.","DIC."];
 
         $usutoken   = $request->header('api_token');
         $re_sucursales = $request['sucursales'];
@@ -26,9 +25,9 @@ class EnviarPromocionesActivasController extends Controller
 
         $usu = usuusuarios::where('usutoken', $usutoken)->first();
 
-        // $correo = "gerson.vilca@grow-analytics.com.pe";
+        $correo = "gerson.vilca@grow-analytics.com.pe";
         // $correo = "director.creativo@grow-analytics.com.pe";
-        $correo = "jeanmarcoe@gmail.com";
+        // $correo = "jeanmarcoe@gmail.com";
 
         if($usu){
 
@@ -83,9 +82,15 @@ class EnviarPromocionesActivasController extends Controller
 
             if($posicionSucursal == 0){
                 $txtSucursales = $sucursal;
-                $nombre = sucsucursales::where('sucnombre',$sucursal)
+                $gsu = sucsucursales::where('sucnombre',$sucursal)
                                 ->join('gsugrupossucursales as gsu', 'gsu.gsuid', 'sucsucursales.gsuid')
                                 ->first(['gsu.gsunombre']);
+                if ($gsu) {
+                    $nombre = $gsu->nombre;
+                    if ($gsu->nombre == 'Cliente') {
+                        $nombre = $sucursal;
+                    }
+                }
             }else{
                 $txtSucursales = $txtSucursales.", ".$sucursal;
             }
@@ -93,11 +98,11 @@ class EnviarPromocionesActivasController extends Controller
         }
 
         $anio = date("Y");
-        $mes = explode("-",$re_fecha);
-        $mesSinCerosIzquierda = ltrim($mes[1], "0");
 
-        $data = ['txtSucursales' => $txtSucursales, 're_fecha' => $re_fecha];
-        $asunto = "Kimberly Clark (PE): PROMOCIONES ".$meses[$mesSinCerosIzquierda]." ".$anio." (".$nombre->gsunombre.")";
+        // $data = ['txtSucursales' => $txtSucursales, 're_fecha' => $re_fecha];
+
+        $data = ['txtSucursales' => $nombre, 're_fecha' => $re_fecha];
+        $asunto = "Kimberly Clark (PE): PROMOCIONES ".$re_fecha." ".$anio." (".$nombre.")";
 
         Mail::to($correo)->send(new MailPromocionesActivas($data, $asunto));
 

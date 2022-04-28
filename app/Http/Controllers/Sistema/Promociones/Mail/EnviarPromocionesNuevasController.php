@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Mail;
 use App\Mail\Promociones\MailPromocionesNuevas;
 use App\uceusuarioscorreosenviados;
 use App\dcedestinatarioscorreosenviados;
+use App\sucsucursales;
 use App\usuusuarios;
 
 class EnviarPromocionesNuevasController extends Controller
@@ -27,11 +28,21 @@ class EnviarPromocionesNuevasController extends Controller
         $re_reenviado = $request['reenviado'];
 
         $txtSucursales = "";
+        $nombre = "";
 
         foreach($re_sucursales as $posicionSucursal => $sucursal){
 
             if($posicionSucursal == 0){
                 $txtSucursales = $sucursal;
+                $gsu = sucsucursales::where('sucnombre',$sucursal)
+                                ->join('gsugrupossucursales as gsu', 'gsu.gsuid', 'sucsucursales.gsuid')
+                                ->first(['gsu.gsunombre']);
+                if ($gsu) {
+                    $nombre = $gsu->nombre;
+                    if ($gsu->nombre == 'Cliente') {
+                        $nombre = $sucursal;
+                    }
+                }
             }else{
                 $txtSucursales = $txtSucursales.", ".$sucursal;
             }
@@ -86,11 +97,14 @@ class EnviarPromocionesNuevasController extends Controller
                 $dcen->save();
             }
         }
- 
 
-        $data = ['txtSucursales' => $txtSucursales, 're_fecha' => $re_fecha];
+        $anio = date("Y");
 
-        Mail::to($correo)->send(new MailPromocionesNuevas($data));
+        // $data = ['txtSucursales' => $txtSucursales, 're_fecha' => $re_fecha];
+        $data = ['txtSucursales' => $nombre, 're_fecha' => $re_fecha];
+        $asunto = "Kimberly Clark (PE): PROMOCIONES NUEVAS ".$re_fecha." ".$anio." (".$nombre.")";
+
+        Mail::to($correo)->send(new MailPromocionesNuevas($data, $asunto));
 
         $requestsalida = response()->json([
             "respuesta" => $respuesta,

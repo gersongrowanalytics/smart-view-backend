@@ -17,9 +17,11 @@ class MailPromocionesNuevas extends Mailable
      * @return void
      */
     public $data;
-    public function __construct($data)
+    public $asunto;
+    public function __construct($data, $asunto)
     {
         $this->data = $data;
+        $this->asunto = $asunto;
     }
 
     /**
@@ -31,7 +33,8 @@ class MailPromocionesNuevas extends Mailable
     {
         return $this->from('SmartView@grow-analytics.com', 'SmartView')
                     ->view('Promociones.PromocionesNuevas')
-                    ->subject('Promociones Nuevas')
+                    // ->subject('Promociones Nuevas')
+                    ->subject($this->asunto)
                     ->with($this->data);
     }
 }
