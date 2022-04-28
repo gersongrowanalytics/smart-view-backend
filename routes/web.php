@@ -118,6 +118,7 @@ $router->post('/aceptar-terminos-condiciones', 'Sistema\TerminosCondiciones\Acep
     $router->post('/mostrar/cats', 'Sistema\Cat\Mostrar\CatsMostrarController@MostrarCats');
     $router->post('/mostrar/pais', 'Sistema\Pai\Mostrar\PaisMostrarController@MostrarPais');
     $router->post('/mostrar/sucs/xzona', 'Sistema\Tablas\Suc\Mostrar\SucsMostrarController@MostrarSucsXZona');
+    $router->post('/mostrar/tcas', 'Sistema\Tca\Mostrar\TcasMostrarController@MostrarTcas');
 
     // $router->post('/cargarArchivo/promociones', 'Sistema\CargarArchivo\Promociones\CargarArchivoController@CargarArchivo');
     $router->post('/cargarArchivo/promociones', 'Sistema\CargarArchivo\Promociones\CargarArchivoPromocionesController@CargarArchivo');
