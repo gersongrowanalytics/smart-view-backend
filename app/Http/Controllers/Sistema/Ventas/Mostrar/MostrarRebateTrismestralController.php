@@ -34,6 +34,7 @@ class MostrarRebateTrismestralController extends Controller
                             ->join('tprtipospromociones as tpr', 'tpr.tprid', 'ttrtritre.tprid')
                             ->where('ttrtritre.triid', $trf->triid)
                             ->distinct('treid')
+                            ->orderBy('trenombre')
                             ->get([
                                 'tre.treid',
                                 'tre.trenombre',
