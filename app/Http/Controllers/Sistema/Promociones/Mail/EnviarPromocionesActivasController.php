@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Mail;
 use App\Mail\Promociones\MailPromocionesActivas;
 use App\uceusuarioscorreosenviados;
 use App\dcedestinatarioscorreosenviados;
+use App\sucsucursales;
 use App\usuusuarios;
 
 class EnviarPromocionesActivasController extends Controller
@@ -16,6 +17,7 @@ class EnviarPromocionesActivasController extends Controller
     {
         $respuesta = true;
         $mensaje = 'El correo se envio exitosamente';
+        $meses = ["ENE.","FEB.","MAR.","ABR.","MAY.","JUN.","JUL.","AGO.","SET.","OCT.","NOV.","DIC."];
 
         $usutoken   = $request->header('api_token');
         $re_sucursales = $request['sucursales'];
@@ -24,9 +26,9 @@ class EnviarPromocionesActivasController extends Controller
 
         $usu = usuusuarios::where('usutoken', $usutoken)->first();
 
-        $correo = "gerson.vilca@grow-analytics.com.pe";
+        // $correo = "gerson.vilca@grow-analytics.com.pe";
         // $correo = "director.creativo@grow-analytics.com.pe";
-        // $correo = "jeanmarcoe@gmail.com";
+        $correo = "jeanmarcoe@gmail.com";
 
         if($usu){
 
@@ -76,21 +78,28 @@ class EnviarPromocionesActivasController extends Controller
         }
 
         $txtSucursales = "";
-
+        $nombre = "";
         foreach($re_sucursales as $posicionSucursal => $sucursal){
 
             if($posicionSucursal == 0){
                 $txtSucursales = $sucursal;
+                $nombre = sucsucursales::where('sucnombre',$sucursal)
+                                ->join('gsugrupossucursales as gsu', 'gsu.gsuid', 'sucsucursales.gsuid')
+                                ->first(['gsu.gsunombre']);
             }else{
                 $txtSucursales = $txtSucursales.", ".$sucursal;
             }
             
         }
 
+        $anio = date("Y");
+        $mes = explode("-",$re_fecha);
+        $mesSinCerosIzquierda = ltrim($mes[1], "0");
 
         $data = ['txtSucursales' => $txtSucursales, 're_fecha' => $re_fecha];
+        $asunto = "Kimberly Clark (PE): PROMOCIONES ".$meses[$mesSinCerosIzquierda]." ".$anio." (".$nombre->gsunombre.")";
 
-        Mail::to($correo)->send(new MailPromocionesActivas($data));
+        Mail::to($correo)->send(new MailPromocionesActivas($data, $asunto));
 
         $requestsalida = response()->json([
             "respuesta" => $respuesta,
@@ -99,4 +108,12 @@ class EnviarPromocionesActivasController extends Controller
 
         return $requestsalida;
     }
+
+    // public function EnviarPromocionesActivas(Request $request){
+    //     $asunto = "ASUNTO-1";
+    //     $data = ['txtSucursales' => "HOLA", 're_fecha' => "2021-10-12"];
+    //     Mail::to("jeanmarcoe2@gmail.com")->send(new MailPromocionesActivas($data, $asunto));
+    // }
 }
+
+

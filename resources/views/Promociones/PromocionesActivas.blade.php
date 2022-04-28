@@ -21,7 +21,7 @@
                 <tr style="padding-top: 16px;">
                     <td colspan="4">
                         <div style="padding-top: 16px;font-style: normal; font-weight: 700; font-size: 13px; line-height: 17px; letter-spacing: -0.015em; color: #1E1E1E;">
-                            {{-- Estimado cliente NORDISAC, --}}
+                            <!-- Estimado cliente NORDISAC, -->
                             Estimado cliente {{$txtSucursales}},
                         </div>
                     </td>
@@ -31,7 +31,7 @@
                         <div style="padding-top: 16px;text-align: justify; font-style: normal; font-weight: 400; font-size: 13px; line-height: 17px; letter-spacing: -0.015em; color: #000000;">
                             Por el presente correo, cumplo con informarle las tácticas promocionales para este mes con el número de combos/soles a reconocer por actividad y 
                             monto máximo de reconocimiento en valor por actividad respectivos por cada mecánica. Dichos montos no podrán excederse de no recibir una aprobación 
-                            formal del área de Trade copiando al buzón _KC, Cuida tu negocio (Cuidatunegocio.kc@kcc.com), dejando claro que yo como ejecutivo 
+                            formal del área de Trade copiando al buzón _KC, Cuida tu negocio (<a href="Cuidatunegocio.kc@kcc.com">Cuidatunegocio.kc@kcc.com</a>), dejando claro que yo como ejecutivo 
                             no podré aprobar acciones adicionales sin antes pasar por las aprobaciones respectivas.
                         </div>
                     </td>
@@ -48,7 +48,7 @@
                 <tr style="padding-top: 8px;">
                     <td colspan="4">
                         <div style="padding-top: 16px;text-align: justify; font-style: normal; font-weight: 400; font-size: 13px; line-height: 17px; letter-spacing: -0.015em; color: #000000;">
-                            De acuerdo a la nueva política de KC pongo en copia al correo interno _KC, Cuida tu negocio (Cuidatunegocio.kc@kcc.com), y estas acciones entran 
+                            De acuerdo a la nueva política de KC pongo en copia al correo interno _KC, Cuida tu negocio (<a href="Cuidatunegocio.kc@kcc.com">Cuidatunegocio.kc@kcc.com</a>), y estas acciones entran 
                             <!-- en validez desde la fecha <span style="font-weight: bold">01 de DICIEMBRE hasta fin de mes.</span>  -->
                             en validez desde la fecha <span style="font-weight: bold">{{$re_fecha}} hasta fin de mes.</span> 
                         </div>
@@ -81,7 +81,7 @@
                     <td colspan="4">
                         <div style="padding-top: 10px; text-align: justify; font-style: italic; font-weight: 400; font-size: 12px; line-height: 16px; letter-spacing: -0.015em; color: #000000;">
                             Este es un email automático, si tienes cualquier tipo de duda ponte en contacto con nosotros a través de nuestro servicio de atención 
-                            al cliente al Cuidatunegocio.kc@kcc.com, por favor no respondas a este mensaje.
+                            al cliente al <a href="Cuidatunegocio.kc@kcc.com">Cuidatunegocio.kc@kcc.com</a>, por favor no respondas a este mensaje.
                         </div>
                     </td>
                 </tr>
