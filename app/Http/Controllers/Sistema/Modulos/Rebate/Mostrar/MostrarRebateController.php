@@ -46,6 +46,7 @@ class MostrarRebateController extends Controller
                     $trrs_grupos = trrtiposrebatesrebates::join('tretiposrebates as tre', 'trrtiposrebatesrebates.treid', 'tre.treid')
                                                     ->where('rtpid', $rtp->rtpid)
                                                     ->distinct('trrtiposrebatesrebates.treid')
+                                                    ->orderBy('trenombre')
                                                     ->get([
                                                         'trrtiposrebatesrebates.treid',
                                                         'trenombre'
