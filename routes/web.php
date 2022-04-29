@@ -267,4 +267,5 @@ $router->get('/mostrar-promociones-pdf', 'Sistema\Promociones\Mostrar\PdfPromoci
 // SALVACION
 $router->get('/organizar-lista-precios-maestra/{fecid}', 'salvacionController@OrganizarListaPreciosMaestras');
 
-$router->get('/armar-excel','GenerarExcelController@GenerarExcel');
+$router->post('/generar-excel-auditoria-login','GenerarExcelController@GenerarExcelAuditoriaLogin');
+$router->get('/generar-excel-usuario','GenerarExcelController@GenerarExcelUsuario');
