@@ -213,6 +213,8 @@ class PdfPromocionesController extends Controller
                 if(sizeof($dataCategoria['canales']) > 0){
                     $cantidadCategorias = $cantidadCategorias + 1;
                 }
+            }else{
+                $dataCategorias[$posicionDataCategoria]['canales'] = [];
             }
 
             if($dataCategoria['scaid'] == 1){
