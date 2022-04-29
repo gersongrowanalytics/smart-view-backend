@@ -31,8 +31,11 @@
         <img class="Icono-Indice-Promociones-Pdf" src='../public/images/pdf/iconoindice/indicewipes.jpg' alt="">
         @elseif($categoria['catid'] == 5 && sizeof($categoria['canales']) > 0)
         <img class="Icono-Indice-Promociones-Pdf" src='../public/images/pdf/iconoindice/indicefem.jpg' alt=""><br>
-        @elseif($categoria['catid'] == 6 && sizeof($categoria['canales']) > 0)
-        <img class="Icono-Indice-Promociones-Pdf" src='../public/images/pdf/iconoindice/indicemulticategoria.jpg' alt=""><br>
+
+        @elseif(isset($categoria['canales']) && $categoria['catid'] == 6)
+            @if($categoria['catid'] == 6 && sizeof($categoria['canales']) > 0)
+            <img class="Icono-Indice-Promociones-Pdf" src='../public/images/pdf/iconoindice/indicemulticategoria.jpg' alt=""><br>
+            @endif
         @endif
     @endforeach
 </div>
