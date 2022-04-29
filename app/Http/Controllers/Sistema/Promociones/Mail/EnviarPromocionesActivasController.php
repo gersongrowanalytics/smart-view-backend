@@ -25,8 +25,10 @@ class EnviarPromocionesActivasController extends Controller
 
         $usu = usuusuarios::where('usutoken', $usutoken)->first();
 
-        $correo = "gerson.vilca@grow-analytics.com.pe";
-        // $correo = "director.creativo@grow-analytics.com.pe";
+        // $correo = "gerson.vilca@grow-analytics.com.pe";
+        // $correo = "euni_tkm@hotmail.com";
+        // $correo = "eunicecallecahuana@gmail.com";
+        $correo = "director.creativo@grow-analytics.com.pe";
         // $correo = "jeanmarcoe@gmail.com";
 
         if($usu){
@@ -87,7 +89,7 @@ class EnviarPromocionesActivasController extends Controller
                                 ->first(['gsu.gsunombre']);
                 if ($gsu) {
                     $nombre = $gsu->nombre;
-                    if ($gsu->nombre == 'Cliente') {
+                    if ($gsu->nombre == 'Clientes') {
                         $nombre = $sucursal;
                     }
                 }
