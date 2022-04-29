@@ -208,8 +208,11 @@ class PdfPromocionesController extends Controller
         $pdfxgrupo = false;
 
         foreach($dataCategorias as $posicionDataCategoria => $dataCategoria){
-            if(sizeof($dataCategoria['canales']) > 0){
-                $cantidadCategorias = $cantidadCategorias + 1;
+
+            if(isset($dataCategoria['canales'])){
+                if(sizeof($dataCategoria['canales']) > 0){
+                    $cantidadCategorias = $cantidadCategorias + 1;
+                }
             }
 
             if($dataCategoria['scaid'] == 1){
