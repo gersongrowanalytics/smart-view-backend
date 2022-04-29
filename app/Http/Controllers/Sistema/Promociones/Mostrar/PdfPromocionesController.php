@@ -81,23 +81,25 @@ class PdfPromocionesController extends Controller
 
         foreach($dataCategorias as $posicionCat => $categoria){
 
-            foreach($dataCategorias[$posicionCat]['canales'] as $posicionCan => $canalTec){
+            if(isset($dataCategorias[$posicionCat]['canales'])){
+                foreach($dataCategorias[$posicionCat]['canales'] as $posicionCan => $canalTec){
 
-                foreach($dataCategorias[$posicionCat]['canales'][$posicionCan]['promocionesOrdenadas'] as $posicionPromoOrdn => $promOrde){
-                    foreach($dataCategorias[$posicionCat]['canales'][$posicionCan]['promocionesOrdenadas'][$posicionPromoOrdn]['productos'] as $posicProdPrmOrd => $prodPrmOrd ){
-                        if($dataCategorias[$posicionCat]['canales'][$posicionCan]['promocionesOrdenadas'][$posicionPromoOrdn]['productos'][$posicProdPrmOrd]['proimagen'] == "/"){
-                            $dataCategorias[$posicionCat]['canales'][$posicionCan]['promocionesOrdenadas'][$posicionPromoOrdn]['productos'][$posicProdPrmOrd]['proimagen'] = "https://pre-back.leadsmartview.com/Sistema/promociones/IMAGENES/PRODUCTOSNUEVO/v2fondoblanco.png";
+                    foreach($dataCategorias[$posicionCat]['canales'][$posicionCan]['promocionesOrdenadas'] as $posicionPromoOrdn => $promOrde){
+                        foreach($dataCategorias[$posicionCat]['canales'][$posicionCan]['promocionesOrdenadas'][$posicionPromoOrdn]['productos'] as $posicProdPrmOrd => $prodPrmOrd ){
+                            if($dataCategorias[$posicionCat]['canales'][$posicionCan]['promocionesOrdenadas'][$posicionPromoOrdn]['productos'][$posicProdPrmOrd]['proimagen'] == "/"){
+                                $dataCategorias[$posicionCat]['canales'][$posicionCan]['promocionesOrdenadas'][$posicionPromoOrdn]['productos'][$posicProdPrmOrd]['proimagen'] = "https://pre-back.leadsmartview.com/Sistema/promociones/IMAGENES/PRODUCTOSNUEVO/v2fondoblanco.png";
+                            }
+                            
                         }
-                        
-                    }
-
-                    foreach($dataCategorias[$posicionCat]['canales'][$posicionCan]['promocionesOrdenadas'][$posicionPromoOrdn]['productosbonificados'] as $posicProdBonPrmOrd => $prodPrmOrd ){
-                        if($dataCategorias[$posicionCat]['canales'][$posicionCan]['promocionesOrdenadas'][$posicionPromoOrdn]['productosbonificados'][$posicProdBonPrmOrd]['prbimagen'] == "/"){
-                            $dataCategorias[$posicionCat]['canales'][$posicionCan]['promocionesOrdenadas'][$posicionPromoOrdn]['productosbonificados'][$posicProdBonPrmOrd]['prbimagen'] = "https://pre-back.leadsmartview.com/Sistema/promociones/IMAGENES/PRODUCTOSNUEVO/v2fondoblanco.png";
+    
+                        foreach($dataCategorias[$posicionCat]['canales'][$posicionCan]['promocionesOrdenadas'][$posicionPromoOrdn]['productosbonificados'] as $posicProdBonPrmOrd => $prodPrmOrd ){
+                            if($dataCategorias[$posicionCat]['canales'][$posicionCan]['promocionesOrdenadas'][$posicionPromoOrdn]['productosbonificados'][$posicProdBonPrmOrd]['prbimagen'] == "/"){
+                                $dataCategorias[$posicionCat]['canales'][$posicionCan]['promocionesOrdenadas'][$posicionPromoOrdn]['productosbonificados'][$posicProdBonPrmOrd]['prbimagen'] = "https://pre-back.leadsmartview.com/Sistema/promociones/IMAGENES/PRODUCTOSNUEVO/v2fondoblanco.png";
+                            }
                         }
                     }
-                }
-
+    
+                }   
             }
 
         }
