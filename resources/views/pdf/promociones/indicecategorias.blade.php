@@ -25,6 +25,7 @@
         @elseif(isset($categoria['canales']) && $categoria['catid'] == 3)
             @if($categoria['catid'] == 3 && sizeof($categoria['canales']) > 0)
             <img class="Icono-Indice-Promociones-Pdf" src='../public/images/pdf/iconoindice/indiceadult.jpg' alt=""><br>
+            @endif
 
         @elseif($categoria['catid'] == 4 && sizeof($categoria['canales']) > 0)
         <img class="Icono-Indice-Promociones-Pdf" src='../public/images/pdf/iconoindice/indicewipes.jpg' alt="">
