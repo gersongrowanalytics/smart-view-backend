@@ -9,6 +9,7 @@ use App\usuusuarios;
 use App\tuptiposusuariospermisos;
 use App\ussusuariossucursales;
 use App\cejclientesejecutivos;
+use App\Http\Controllers\AuditoriaController;
 use DateTime;
 
 class loginController extends Controller
@@ -22,7 +23,9 @@ class loginController extends Controller
         $linea          = __LINE__;
         $mensajeDetalle = '';
         $mensajedev     = null;
-
+        $log            = [];
+        $pkid           = [];
+        
         $usuario    = $request['usuario'];
         $contrasena = $request['contrasena'];
 
@@ -217,15 +220,37 @@ class loginController extends Controller
         }
 
         
-        return response()->json([
-            'respuesta'      => $respuesta,
-            'mensaje'        => $mensaje,
-            'datos'          => $datos,
-            'linea'          => $linea,
-            'mensajeDetalle' => $mensajeDetalle,
-            'mensajedev'     => $mensajedev,
+        $requestsalida = response()->json([
+            'respuesta'       => $respuesta,
+            'mensaje'         => $mensaje,
+            'datos'           => $datos,
+            'linea'           => $linea,
+            'mensajeDetalle'  => $mensajeDetalle,
+            'mensajedev'      => $mensajedev,
             'mostrarterminos' => $aparecerTerminosCondiciones,
         ]);
+
+        $AuditoriaController = new AuditoriaController;
+        $registrarAuditoria  = $AuditoriaController->registrarAuditoria(
+            $re_token,
+            $usuusaurio->usuid,
+            null,
+            $request,
+            $requestsalida,
+            'LOGIN DE USUARIO AL SISTEMA ',
+            'LOGIN',
+            '/login', //ruta
+            $pkid,
+            $log
+        );
+
+        if($registrarAuditoria == true){
+
+        }else{
+            
+        }
+        
+        return $requestsalida;
     }
 
     public function MetCerrarSession(Request $request)
