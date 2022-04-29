@@ -219,7 +219,12 @@ class PdfPromocionesController extends Controller
                 $pdfxgrupo = true; 
             }
 
-            $canalesPromociones = $dataCategoria['canales'];
+            if(isset($dataCategoria['canales'])){
+                $canalesPromociones = $dataCategoria['canales'];   
+            }else{
+                $canalesPromociones = null;
+            }
+
             foreach($canalesPromociones as $posicionCanal => $canal){
                 if($posicionCanal == 0){
                     $cantidadPromociones = sizeof($canal['promocionesOrdenadas']);
