@@ -21,8 +21,11 @@
         <img class="Icono-Indice-Promociones-Pdf" src='../public/images/pdf/iconoindice/indicefamily.jpg' alt=""><br>
         @elseif($categoria['catid'] == 2 && sizeof($categoria['canales']) > 0)
         <img class="Icono-Indice-Promociones-Pdf" src='../public/images/pdf/iconoindice/indiceinfant.jpg' alt=""><br>
-        @elseif($categoria['catid'] == 3 && sizeof($categoria['canales']) > 0)
-        <img class="Icono-Indice-Promociones-Pdf" src='../public/images/pdf/iconoindice/indiceadult.jpg' alt=""><br>
+
+        @elseif(isset($categoria['canales']) && $categoria['catid'] == 3)
+            @if($categoria['catid'] == 3 && sizeof($categoria['canales']) > 0)
+            <img class="Icono-Indice-Promociones-Pdf" src='../public/images/pdf/iconoindice/indiceadult.jpg' alt=""><br>
+
         @elseif($categoria['catid'] == 4 && sizeof($categoria['canales']) > 0)
         <img class="Icono-Indice-Promociones-Pdf" src='../public/images/pdf/iconoindice/indicewipes.jpg' alt="">
         @elseif($categoria['catid'] == 5 && sizeof($categoria['canales']) > 0)
