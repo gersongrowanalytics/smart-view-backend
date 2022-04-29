@@ -222,7 +222,7 @@ class PdfPromocionesController extends Controller
             if(isset($dataCategoria['canales'])){
                 $canalesPromociones = $dataCategoria['canales'];   
             }else{
-                $canalesPromociones = null;
+                $canalesPromociones = [];
             }
 
             foreach($canalesPromociones as $posicionCanal => $canal){
