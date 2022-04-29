@@ -171,6 +171,13 @@ class ArmarExcelListapreciosController extends Controller
                                 ->where('fecano', $re_anio)
                                 ->where('fecmes', $re_mes)
                                 ->where('fecdia', $re_dia)
+                                ->where(function ($query) use($re_duplicados_productos) {
+
+                                    if($re_duplicados_productos == true) {
+                                        $query->where('ltplistaprecios.ltptienezona', true);
+                                    }
+
+                                })
                                 ->where(function ($query) use($re_duplicados) {
 
                                     if($re_duplicados == true) {
