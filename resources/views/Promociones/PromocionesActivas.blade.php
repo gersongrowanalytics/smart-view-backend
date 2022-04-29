@@ -50,7 +50,7 @@
                         <div style="padding-top: 16px;text-align: justify; font-style: normal; font-weight: 400; font-size: 13px; line-height: 17px; letter-spacing: -0.015em; color: #000000;">
                             De acuerdo a la nueva política de KC pongo en copia al correo interno _KC, Cuida tu negocio (<a href="Cuidatunegocio.kc@kcc.com">Cuidatunegocio.kc@kcc.com</a>), y estas acciones entran 
                             <!-- en validez desde la fecha <span style="font-weight: bold">01 de DICIEMBRE hasta fin de mes.</span>  -->
-                            en validez desde la fecha <span style="font-weight: bold">{{$re_fecha}} hasta fin de mes.</span> 
+                            en validez desde la fecha <span style="font-weight: bold">01 de {{$re_fecha}} hasta fin de mes.</span> 
                         </div>
                     </td>
                 </tr>
