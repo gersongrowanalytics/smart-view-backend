@@ -53,7 +53,7 @@ class GenerarExcelUsuariosController extends Controller
                 }   
             }
 
-            $datos = array(
+            $datos = [array(
                 "columns" => [
                     [ "title" => "Nombres y Apellidos"],
                     [ "title" => "Tipo Usuario"],
@@ -61,7 +61,7 @@ class GenerarExcelUsuariosController extends Controller
                     [ "title" => "Distribuidoras"]
                 ],
                 "data" => $arrayUsuarios
-            );
+            )];
 
             $respuesta = true;
             $mensaje = "Se retorno los datos de usuarios con exito";

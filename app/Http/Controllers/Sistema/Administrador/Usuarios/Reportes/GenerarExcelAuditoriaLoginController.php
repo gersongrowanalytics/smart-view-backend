@@ -41,7 +41,7 @@ class GenerarExcelAuditoriaLoginController extends Controller
                 $arrayAuditoria[$key][]['value'] = $auditoria->created_at;
             }
             
-            $datos = array(
+            $datos = [array(
                 "columns" => [
                     [ "title" => "Nombres y Apellidos"],
                     [ "title" => "Usuario"],
@@ -49,7 +49,7 @@ class GenerarExcelAuditoriaLoginController extends Controller
                     [ "title" => "Fecha de Creación"]
                 ],
                 "data" => $arrayAuditoria
-            );
+            )];
             $respuesta = true;
             $mensaje = "Se retorno los datos de auditoria del login con exito";
         }else{
