@@ -76,14 +76,16 @@ class GenerarExcelUsuariosController extends Controller
                         )
                     ],
                     [ 
-                        "title" => "Usuario", "width" => array("wpx"=>"322"),
+                        "title" => "Usuario", 
+                        "width" => array("wpx"=>"322"),
                         "style" => array(
                             "font" => array("sz" => "12", "bold" => true, "color" => array("rgb" => "FFFFFFFF")),
                             "fill" => array("fgColor" => array("rgb" => "FF366092"))
                         )
                     ],
                     [ 
-                        "title" => "Distribuidoras", "width" => array("wpx"=>"269"),
+                        "title" => "Distribuidoras", 
+                        "width" => array("wpx"=>"269"),
                         "style" => array(
                             "font" => array("sz" => "12", "bold" => true, "color" => array("rgb" => "FFFFFFFF")),
                             "fill" => array("fgColor" => array("rgb" => "FF366092"))

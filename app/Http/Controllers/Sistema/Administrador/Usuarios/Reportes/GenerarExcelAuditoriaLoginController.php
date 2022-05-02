@@ -35,18 +35,50 @@ class GenerarExcelAuditoriaLoginController extends Controller
                         ]);
         if($aud){
             foreach ($aud as $key =>$auditoria) {
-                $arrayAuditoria[$key][]['value'] = $auditoria->pernombrecompleto;
-                $arrayAuditoria[$key][]['value'] = $auditoria->usuusuario;
-                $arrayAuditoria[$key][]['value'] = $auditoria->tpunombre;
-                $arrayAuditoria[$key][]['value'] = $auditoria->created_at;
+                $arrayAuditoria[$key][0]['value'] = $auditoria->pernombrecompleto;
+                $arrayAuditoria[$key][0]['style'] = array("fill" => array("fgColor" => array("rgb" => "FFDAEEF3")));
+                $arrayAuditoria[$key][1]['value'] = $auditoria->usuusuario;
+                $arrayAuditoria[$key][1]['style'] = array("fill" => array("fgColor" => array("rgb" => "FFDAEEF3")));
+                $arrayAuditoria[$key][2]['value'] = $auditoria->tpunombre;
+                $arrayAuditoria[$key][2]['style'] = array("fill" => array("fgColor" => array("rgb" => "FFDAEEF3")));
+                $arrayAuditoria[$key][3]['value'] = $auditoria->created_at;
+                $arrayAuditoria[$key][3]['style'] = array("fill" => array("fgColor" => array("rgb" => "FFDAEEF3")));
             }
             
             $datos = [array(
                 "columns" => [
-                    [ "title" => "Nombres y Apellidos"],
-                    [ "title" => "Usuario"],
-                    [ "title" => "Tipo de Usuario"],
-                    [ "title" => "Fecha de Creación"]
+                    [ 
+                        "title" => "Nombres y Apellidos",
+                        "width" => array("wpx" => "223"),
+                        "style" => array(
+                            "font" => array("sz" => "12", "bold" => true, "color" => array("rgb" => "FFFFFFFF")),
+                            "fill" => array("fgColor" => array("rgb" => "FF366092"))
+                        )
+                    ],
+                    [ 
+                        "title" => "Usuario",
+                        "width" => array("wpx" => "322"),
+                        "style" => array(
+                            "font" => array("sz" => "12", "bold" => true, "color" => array("rgb" => "FFFFFFFF")),
+                            "fill" => array("fgColor" => array("rgb" => "FF366092"))
+                        )
+                    ],
+                    [ 
+                        "title" => "Tipo de Usuario",
+                        "width" => array("wpx" => "193"),
+                        "style" => array(
+                            "font" => array("sz" => "12", "bold" => true, "color" => array("rgb" => "FFFFFFFF")),
+                            "fill" => array("fgColor" => array("rgb" => "FF366092"))
+                        )
+                    ],
+                    [ 
+                        "title" => "Fecha de Creación",
+                        "width" => array("wpx" => "150"),
+                        "style" => array(
+                            "font" => array("sz" => "12", "bold" => true, "color" => array("rgb" => "FFFFFFFF")),
+                            "fill" => array("fgColor" => array("rgb" => "FF366092"))
+                        )
+                    ]
                 ],
                 "data" => $arrayAuditoria
             )];
