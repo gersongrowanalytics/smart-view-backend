@@ -19,10 +19,10 @@ class EnviarPromocionesNuevasController extends Controller
         $mensaje = 'El correo se envio exitosamente';
 
         $usutoken   = $request->header('api_token');
-        // $correo = "gerson.vilca@grow-analytics.com.pe";
+        $correo = "gerson.vilca@grow-analytics.com.pe";
         // $correo = "euni_tkm@hotmail.com";
         // $correo = "eunicecallecahuana@gmail.com";
-        $correo = "director.creativo@grow-analytics.com.pe";
+        // $correo = "director.creativo@grow-analytics.com.pe";
         // $correo = "jeanmarcoe@gmail.com";
 
         $re_sucursales = $request['sucursales'];
