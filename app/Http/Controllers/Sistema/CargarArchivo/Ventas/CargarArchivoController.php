@@ -84,7 +84,8 @@ class CargarArchivoController extends Controller
             }
         }
 
-        // $cargarData = false;
+        // NO SUBIR DATA
+        $cargarData = false;
         
         
         try{
