@@ -46,19 +46,49 @@ class GenerarExcelUsuariosController extends Controller
                         $sucursalesUsuario .= $sucursal['sucnombre'].",";
                     }
                     // $usuario['distribuidoras'] = $sucursalesUsuario;
-                    $arrayUsuarios[$key][]['value'] = $usuario->pernombrecompleto;
-                    $arrayUsuarios[$key][]['value'] = $usuario->tpunombre;
-                    $arrayUsuarios[$key][]['value'] = $usuario->usuusuario;
-                    $arrayUsuarios[$key][]['value'] = $sucursalesUsuario;
+                    $arrayUsuarios[$key][0]['value'] = $usuario->pernombrecompleto;
+                    $arrayUsuarios[$key][0]['style'] = array("fill" => array("fgColor" => array("rgb" => "FFDAEEF3")));
+                    $arrayUsuarios[$key][1]['value'] = $usuario->tpunombre;
+                    $arrayUsuarios[$key][1]['style'] = array("fill" => array("fgColor" => array("rgb" => "FFDAEEF3")));
+                    $arrayUsuarios[$key][2]['value'] = $usuario->usuusuario;
+                    $arrayUsuarios[$key][2]['style'] = array("fill" => array("fgColor" => array("rgb" => "FFDAEEF3")));
+                    $arrayUsuarios[$key][3]['value'] = $sucursalesUsuario;
+                    $arrayUsuarios[$key][3]['style'] = array("fill" => array("fgColor" => array("rgb" => "FFDAEEF3")));
                 }   
             }
 
             $datos = [array(
                 "columns" => [
-                    [ "title" => "Nombres y Apellidos"],
-                    [ "title" => "Tipo Usuario"],
-                    [ "title" => "Usuario"],
-                    [ "title" => "Distribuidoras"]
+                    [ 
+                        "title" => "Nombres y Apellidos", 
+                        "width" => array("wpx" => "223"),
+                        "style" => array(
+                            "font" => array("sz" => "12", "bold" => true, "color" => array("rgb" => "FFFFFFFF")),
+                            "fill" => array("fgColor" => array("rgb" => "FF366092"))
+                        )
+                    ],
+                    [ 
+                        "title" => "Tipo Usuario", 
+                        "width" => array("wpx"=>"193"),
+                        "style" => array(
+                            "font" => array("sz" => "12", "bold" => true, "color" => array("rgb" => "FFFFFFFF")),
+                            "fill" => array("fgColor" => array("rgb" => "FF366092"))
+                        )
+                    ],
+                    [ 
+                        "title" => "Usuario", "width" => array("wpx"=>"322"),
+                        "style" => array(
+                            "font" => array("sz" => "12", "bold" => true, "color" => array("rgb" => "FFFFFFFF")),
+                            "fill" => array("fgColor" => array("rgb" => "FF366092"))
+                        )
+                    ],
+                    [ 
+                        "title" => "Distribuidoras", "width" => array("wpx"=>"269"),
+                        "style" => array(
+                            "font" => array("sz" => "12", "bold" => true, "color" => array("rgb" => "FFFFFFFF")),
+                            "fill" => array("fgColor" => array("rgb" => "FF366092"))
+                        )
+                    ]
                 ],
                 "data" => $arrayUsuarios
             )];
