@@ -117,7 +117,7 @@ class EditarPerfilController extends Controller
         $usu = usuusuarios::join('perpersonas as per', 'per.perid', 'usuusuarios.perid')
                                 ->where('usutoken', $usutoken)
                                 ->first();
-
+        // dd($usu);
         if($usu){
             $perid = $usu->perid;
             $pere = perpersonas::find($perid);
@@ -131,11 +131,11 @@ class EditarPerfilController extends Controller
                 $respuesta      = true;
                 $mensaje        = 'Los datos de la persona se actualizaron correctamente';
 
-                $usuid = $usu->usuid;
-                $usue = usuusuarios::find($usuid);
-                $usue->usuusuario = $re_correo;
+                // $usuid = $usu->usuid;
+                // $usue = usuusuarios::find($usuid);
+                $usu->usuusuario = $re_correo;
                 
-                if ($usue->update()) {
+                if ($usu->update()) {
                     $datos = usuusuarios::join('perpersonas as per', 'per.perid', 'usuusuarios.perid')
                                             ->where('usutoken', $usutoken)
                                             ->first();
