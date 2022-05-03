@@ -95,7 +95,71 @@ class EditarPerfilController extends Controller
         }
         
         return $requestsalida;
+    }
 
+    public function EditarPerfilNuevo (Request $request)
+    {
+        $respuesta      = false;
+        $mensaje        = '';
+        $datos          = [];
 
+        $usutoken           = $request->header('api_token');
+        // $re_imagen          = $request['re_imagen'];
+        $re_nombre          = $request['re_nombre'];//ok
+        $re_apellidoPaterno = $request['re_apellidoPaterno'];//ok
+        $re_apellidoMaterno = $request['re_apellidoMaterno']; //ok
+        $re_correo          = $request['re_correo'];//ok
+        $re_telefono        = $request['re_telefono'];//ok
+        // $re_idioma          = $request['re_idioma'];
+        // $re_pais            = $request['re_pais'];
+        $re_direccion       = $request['re_direccion'];//ok
+
+        $usu = usuusuarios::join('perpersonas as per', 'per.perid', 'usuusuarios.perid')
+                                ->where('usutoken', $usutoken)
+                                ->first();
+
+        if($usu){
+            $perid = $usu->perid;
+            $pere = perpersonas::find($perid);
+            $pere->pernombre          = $re_nombre;
+            $pere->perapellidopaterno = $re_apellidoPaterno;
+            $pere->perapellidomaterno = $re_apellidoMaterno;
+            $pere->pernombrecompleto  = $re_nombre." ".$re_apellidoPaterno." ".$re_apellidoMaterno;
+            $pere->perdireccion       = $re_direccion;
+            $pere->percelular         = $re_telefono;
+            if ($pere->update()) {
+                $respuesta      = true;
+                $mensaje        = 'Los datos de la persona se actualizaron correctamente';
+
+                $usuid = $usu->usuid;
+                $usue = usuusuarios::find($usuid);
+                $usue->usuusuario = $re_correo;
+                
+                if ($usue->update()) {
+                    $datos = usuusuarios::join('perpersonas as per', 'per.perid', 'usuusuarios.perid')
+                                            ->where('usutoken', $usutoken)
+                                            ->first();
+                    $respuesta = true;
+                    $mensaje   = 'Los datos del usuario se actualizaron correctamente';
+                }else{
+                    $respuesta = false;
+                    $mensaje   = 'Lo siento, hubo un error al actualizar los datos del usuario';
+                }
+            } else {
+                $respuesta = false;
+                $mensaje   = 'Lo siento, hubo un error al momento de actualizar los datos de la persona';
+            }
+        } else {
+            $respuesta = false;
+            $mensaje   = 'No existen datos del usuario';
+        }
+
+        $requestsalida = response()->json([
+            "respuesta" => $respuesta,
+            "mensaje"   => $mensaje,
+            "datos"     => $datos
+        ]);
+
+        return $requestsalida;
     }
 }
