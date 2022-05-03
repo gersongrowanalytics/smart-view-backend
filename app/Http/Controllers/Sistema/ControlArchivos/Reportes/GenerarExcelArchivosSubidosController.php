@@ -5,21 +5,24 @@ namespace App\Http\Controllers\Sistema\ControlArchivos\Reportes;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\carcargasarchivos;
+use App\paupaisesusuarios;
 
 class GenerarExcelArchivosSubidosController extends Controller
 {
-    public function GenerarExcelArchivosSubidos () 
+    public function GenerarExcelArchivosSubidos (Request $request) 
     {
         $respuesta = false;
         $mensaje = "";
         $arrayArchivosSubidos = [];
 
+        $re_fechaInicio = $request['re_fechaInicio'];
+        $re_fechaFinal  = $request['re_fechaFinal'];
+
         $car = carcargasarchivos::join('usuusuarios as usu', 'usu.usuid', 'carcargasarchivos.usuid')
                         ->join('tputiposusuarios as tpu', 'tpu.tpuid', 'usu.tpuid')
                         ->join('tcatiposcargasarchivos as tca', 'tca.tcaid', 'carcargasarchivos.tcaid')
                         ->join('perpersonas as per', 'per.perid', 'usu.perid')
-                        // ->join('paupaisesusuarios as pau', 'pau.usuid', 'usu.usuid')
-                        ->orderBy('usu.usuid', 'DESC')
+                        ->orderBy('carcargasarchivos.created_at', 'DESC')
                         ->where('usu.usuid', '!=', 1)
                         ->where('usu.tpuid', '!=', 1)
                         ->whereNotNull('usu.usuusuario')
@@ -28,6 +31,7 @@ class GenerarExcelArchivosSubidosController extends Controller
                         ->where('usu.usuusuario','not like','%eunice%')
                         ->where('usu.usuusuario','not like','%gerson%')
                         ->where('usu.usuusuario','not like','%usuario%')
+                        ->whereBetween('carcargasarchivos.created_at', [$re_fechaInicio, $re_fechaFinal])
                         ->get([
                             'carcargasarchivos.carid',
                             'carcargasarchivos.carnombrearchivo',
@@ -35,22 +39,21 @@ class GenerarExcelArchivosSubidosController extends Controller
                             'tca.tcanombre',
                             'per.pernombrecompleto',
                             'usu.usuusuario',
+                            'carcargasarchivos.usuid',
                             'carcargasarchivos.created_at'
                         ]);
 
-        // dd($car[0]);
-
         if($car){
             foreach ($car as $key => $archivo) {
-                // $uss = ussusuariossucursales::join('sucsucursales as suc', 'suc.sucid', 'ussusuariossucursales.sucid')
-                //                                 ->where('ussusuariossucursales.usuid', $usuario->usuid)
-                //                                 ->get(['ussusuariossucursales.ussid','suc.sucnombre']);
+                $pau = paupaisesusuarios::join('paipaises as pai', 'pai.paiid', 'paupaisesusuarios.paiid')
+                                            ->where('usuid', $archivo->usuid)
+                                            ->get(['pai.painombre']);
 
-                // if ($uss) {
-                //     $paisesUsuario = "";
-                //     foreach ($uss as $sucursal) {
-                //         $paisesUsuario .= $sucursal['sucnombre'].",";
-                //     }
+                if ($pau) {
+                    $paisesUsuario = "";
+                    foreach ($pau as $pais) {
+                        $paisesUsuario .= $pais['painombre'].",";
+                    }
                     
                     $arrayArchivosSubidos[$key][0]['value'] = $archivo->carnombrearchivo;
                     $arrayArchivosSubidos[$key][0]['style'] = array("fill" => array("fgColor" => array("rgb" => "FFDAEEF3")));
@@ -62,18 +65,19 @@ class GenerarExcelArchivosSubidosController extends Controller
                     $arrayArchivosSubidos[$key][3]['style'] = array("fill" => array("fgColor" => array("rgb" => "FFDAEEF3")));
                     $arrayArchivosSubidos[$key][4]['value'] = $archivo->usuusuario;
                     $arrayArchivosSubidos[$key][4]['style'] = array("fill" => array("fgColor" => array("rgb" => "FFDAEEF3")));
-                    $arrayArchivosSubidos[$key][5]['value'] = $archivo->created_at;
+                    $arrayArchivosSubidos[$key][5]['value'] = $paisesUsuario;
                     $arrayArchivosSubidos[$key][5]['style'] = array("fill" => array("fgColor" => array("rgb" => "FFDAEEF3")));
-                    // $arrayArchivosSubidos[$key][3]['value'] = $paisesUsuario;
-                    // $arrayArchivosSubidos[$key][3]['style'] = array("fill" => array("fgColor" => array("rgb" => "FFDAEEF3")));
-                // }   
+                    $arrayArchivosSubidos[$key][6]['value'] = $archivo->created_at;
+                    $arrayArchivosSubidos[$key][6]['style'] = array("fill" => array("fgColor" => array("rgb" => "FFDAEEF3")));
+                    
+                }   
             }
 
             $datos = [array(
                 "columns" => [
                     [ 
                         "title" => "Nombre del archivo", 
-                        "width" => array("wpx" => "223"),
+                        "width" => array("wpx" => "360"),
                         "style" => array(
                             "font" => array("sz" => "12", "bold" => true, "color" => array("rgb" => "FFFFFFFF")),
                             "fill" => array("fgColor" => array("rgb" => "FF366092"))
@@ -81,7 +85,7 @@ class GenerarExcelArchivosSubidosController extends Controller
                     ],
                     [ 
                         "title" => "URL del archivo", 
-                        "width" => array("wpx"=>"193"),
+                        "width" => array("wpx" => "325"),
                         "style" => array(
                             "font" => array("sz" => "12", "bold" => true, "color" => array("rgb" => "FFFFFFFF")),
                             "fill" => array("fgColor" => array("rgb" => "FF366092"))
@@ -89,7 +93,7 @@ class GenerarExcelArchivosSubidosController extends Controller
                     ],
                     [ 
                         "title" => "Tipo de carga del archivo", 
-                        "width" => array("wpx"=>"322"),
+                        "width" => array("wpx"=>"230"),
                         "style" => array(
                             "font" => array("sz" => "12", "bold" => true, "color" => array("rgb" => "FFFFFFFF")),
                             "fill" => array("fgColor" => array("rgb" => "FF366092"))
@@ -105,7 +109,15 @@ class GenerarExcelArchivosSubidosController extends Controller
                     ],
                     [ 
                         "title" => "Usuario", 
-                        "width" => array("wpx"=>"269"),
+                        "width" => array("wpx"=>"230"),
+                        "style" => array(
+                            "font" => array("sz" => "12", "bold" => true, "color" => array("rgb" => "FFFFFFFF")),
+                            "fill" => array("fgColor" => array("rgb" => "FF366092"))
+                        )
+                    ],
+                    [ 
+                        "title" => "Paises del usuario", 
+                        "width" => array("wpx"=>"230"),
                         "style" => array(
                             "font" => array("sz" => "12", "bold" => true, "color" => array("rgb" => "FFFFFFFF")),
                             "fill" => array("fgColor" => array("rgb" => "FF366092"))
@@ -113,7 +125,7 @@ class GenerarExcelArchivosSubidosController extends Controller
                     ],
                     [ 
                         "title" => "Fecha de creación", 
-                        "width" => array("wpx"=>"269"),
+                        "width" => array("wpx"=>"230"),
                         "style" => array(
                             "font" => array("sz" => "12", "bold" => true, "color" => array("rgb" => "FFFFFFFF")),
                             "fill" => array("fgColor" => array("rgb" => "FF366092"))
