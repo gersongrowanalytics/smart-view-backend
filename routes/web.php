@@ -166,6 +166,7 @@ $router->post('/aceptar-terminos-condiciones', 'Sistema\TerminosCondiciones\Acep
 
     $router->post('/perfil/editar/editarPerfil', 'Sistema\Perfil\Editar\EditarPerfilController@EditarPerfil');
     $router->post('/perfil/mostrar/novedades', 'Sistema\Perfil\Mostrar\MostrarNovedadesController@MostrarNovedades');
+    $router->post('/perfil/editar', 'Sistema\Perfil\Editar\EditarPerfilController@EditarPerfilNuevo');
 
     // CONTROL SELL OUT
     $router->post('/obtenerSellOutExcelMesAcutal', 'Sistema\SellOut\CargarExcelMesActualController@CargarExcelMesActual');
@@ -269,3 +270,4 @@ $router->get('/organizar-lista-precios-maestra/{fecid}', 'salvacionController@Or
 
 $router->post('/reporte-auditoria-login','Sistema\Administrador\Usuarios\Reportes\GenerarExcelAuditoriaLoginController@GenerarReporteAuditoriaLogin');
 $router->post('/reporte-usuarios','Sistema\Administrador\Usuarios\Reportes\GenerarExcelUsuariosController@GenerarExcelUsuario');
+$router->post('/reporte-archivos-subidos', 'Sistema\ControlArchivos\Reportes\GenerarExcelArchivosSubidosController@GenerarExcelArchivosSubidos');

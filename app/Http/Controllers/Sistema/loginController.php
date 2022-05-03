@@ -51,6 +51,8 @@ class loginController extends Controller
                                             'tpu.tpuprivilegio',
                                             'per.pernombre',
                                             'per.pernombrecompleto',
+                                            'per.perapellidopaterno',
+                                            'per.perapellidomaterno',
                                             'per.perdireccion',
                                             'per.perfechanacimiento',
                                             'per.percelular',
@@ -73,6 +75,8 @@ class loginController extends Controller
                                             'tpu.tpuprivilegio',
                                             'per.pernombre',
                                             'per.pernombrecompleto',
+                                            'per.perapellidopaterno',
+                                            'per.perapellidomaterno',
                                             'per.perdireccion',
                                             'per.perfechanacimiento',
                                             'per.percelular',
@@ -82,8 +86,10 @@ class loginController extends Controller
                                         ]);
             }
 
-            if($usuusaurio){
+            $usuidAud = 0;
 
+            if($usuusaurio){
+                $usuidAud = $usuusaurio->usuid;
                 if (Hash::check($contrasena, $usuusaurio->usucontrasena)) {
 
                     $tuptiposusuariospermisos = tuptiposusuariospermisos::join('pempermisos as pem', 'pem.pemid', 'tuptiposusuariospermisos.pemid')
@@ -233,7 +239,7 @@ class loginController extends Controller
         $AuditoriaController = new AuditoriaController;
         $registrarAuditoria  = $AuditoriaController->registrarAuditoria(
             $re_token,
-            $usuusaurio->usuid,
+            $usuidAud,
             null,
             $request,
             $requestsalida,
