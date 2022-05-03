@@ -299,6 +299,8 @@ class ProductosCargarController extends Controller
                             $categoriaid = 5;
                         }else if($categoria == 'Infant + Child'){
                             $categoriaid = 2;
+                        }else if( $categoria == 'Toiletries'){
+                            $categoriaid = 7;
                         }else{
                             $categoriaEncontrada = false;
                         }
