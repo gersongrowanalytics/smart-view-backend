@@ -154,9 +154,9 @@ class EnviarPromocionesActivasController extends Controller
         usort(
             $arr_listaNombreGrupos,
             function ($a, $b)  {
-                if ($a['orden'] > $b['orden']) {
+                if ($a['orden'] < $b['orden']) {
                     return -1;
-                } else if ($a['orden'] < $b['orden']) {
+                } else if ($a['orden'] > $b['orden']) {
                     return 1;
                 } else {
                     return 0;
