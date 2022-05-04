@@ -63,7 +63,7 @@
                 </tr>
                 <tr style="padding-top: 5px; margin-top: 10px;  height: 33px;">
                     <td style=" height: 100%;">
-                        <a href="https://leadsmartview.com/sistema/promociones">
+                        <a href="https://smartview.grow-corporate.com/promociones">
                             <div style="height: 100%; text-align:center; padding-top: 10px; margin-top: 10px; background: #3646C4; border-radius: 22px; width: 175px; height: 25px; font-weight: 700; font-size: 13px; line-height: 17px; color: #FFFFFF;">
                                 Visitar Plataforma
                             </div>
@@ -73,7 +73,7 @@
                 <tr style="padding-top: 8px;">
                     <td colspan="4">
                         <div style="padding-top: 16px; text-align: justify; font-style: normal; font-weight: 400; font-size: 13px; line-height: 17px; letter-spacing: -0.015em; color: #000000;">
-                            En caso tengas problemas para ingresar en el botón, ingresar al siguiente enlace: <br><a href="https://leadsmartview.com/sistema/promociones">https://leadsmartview.com/sistema/promociones</a>
+                            En caso tengas problemas para ingresar en el botón, ingresar al siguiente enlace: <br><a href="https://smartview.grow-corporate.com/promociones">https://smartview.grow-corporate.com/promociones</a>
                         </div>
                     </td>
                 </tr>
@@ -90,7 +90,7 @@
                 <tr style="height: 57px;">
                     <td align="center">
                         <div style=" font-style: normal; font-weight: bold; font-size: 9px; line-height: 11px; color: black;">
-                            © 2021 GROW ANALYTICS
+                            © 2022 GROW ANALYTICS
                         </div>
                     </td>
                 </tr>

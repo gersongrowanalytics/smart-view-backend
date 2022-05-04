@@ -25,11 +25,14 @@ class EnviarPromocionesActivasController extends Controller
 
         $usu = usuusuarios::where('usutoken', $usutoken)->first();
 
-        $correo = "gerson.vilca@grow-analytics.com.pe";
         // $correo = "euni_tkm@hotmail.com";
         // $correo = "eunicecallecahuana@gmail.com";
-        // $correo = "director.creativo@grow-analytics.com.pe";
         // $correo = "jeanmarcoe@gmail.com";
+
+        $correo = "gerson.vilca@grow-analytics.com.pe";
+        // $correo = "director.creativo@grow-analytics.com.pe";
+        // $correo = "miguel.caballero@grow-analytics.com.pe";
+        // $correo = "mzorrilla@kcc.com";
 
         if($usu){
 
@@ -80,31 +83,113 @@ class EnviarPromocionesActivasController extends Controller
 
         $txtSucursales = "";
         $nombre = "";
+
+        $arr_nombreGrupos = [];
+        $arr_listaNombreGrupos = array();
+        $nombreGrupos = "";
+
         foreach($re_sucursales as $posicionSucursal => $sucursal){
 
-            if($posicionSucursal == 0){
-                $txtSucursales = $sucursal;
-                $gsu = sucsucursales::where('sucnombre',$sucursal)
-                                ->join('gsugrupossucursales as gsu', 'gsu.gsuid', 'sucsucursales.gsuid')
-                                ->first(['gsu.gsunombre']);
-                if ($gsu) {
-                    $nombre = $gsu->nombre;
-                    if ($gsu->nombre == 'Clientes') {
-                        $nombre = $sucursal;
-                    }
+            // if($posicionSucursal == 0){
+            //     $txtSucursales = $sucursal;
+            //     $gsu = sucsucursales::where('sucnombre', 'LIKE', "%".$sucursal."%")
+            //                     ->join('gsugrupossucursales as gsu', 'gsu.gsuid', 'sucsucursales.gsuid')
+            //                     ->first(['gsu.gsunombre']);
+
+            //     if ($gsu) {
+            //         $nombre = $gsu->nombre;
+            //         if ($gsu->nombre == 'Clientes') {
+            //             $nombre = $sucursal;
+            //         }
+            //     }else{
+            //         $nombre = $sucursal;
+            //     }
+
+            // }else{
+            //     $txtSucursales = $txtSucursales.", ".$sucursal;
+            // }
+
+
+            
+            $gsu = sucsucursales::where('sucnombre', 'LIKE', "%".$sucursal."%")
+                            ->join('gsugrupossucursales as gsu', 'gsu.gsuid', 'sucsucursales.gsuid')
+                            ->first(['gsu.gsunombre']);
+                            
+            $grupoSeleccionado = "";
+            $ordenSeleccionado = 9;
+
+            if ($gsu) {
+                
+                $grupoSeleccionado = $gsu->gsunombre;
+                
+                if ($gsu->gsunombre == 'Clientes') {
+                    $grupoSeleccionado = $sucursal;
+                }else{
+                    $ordenSeleccionado = 1;
                 }
+
             }else{
-                $txtSucursales = $txtSucursales.", ".$sucursal;
+                
+                $grupoSeleccionado = $sucursal;
+            }
+
+            $encontroGrupo = false;
+
+            foreach($arr_nombreGrupos as $arr_nombreGrupo){
+                if($arr_nombreGrupo == $grupoSeleccionado){
+                    $encontroGrupo = true;
+                }
+            }
+
+            if($encontroGrupo == false){
+                $arr_nombreGrupos[] = $grupoSeleccionado;
+                $arr_listaNombreGrupos[] = array(
+                    "grupo" => $grupoSeleccionado,
+                    "orden" => $ordenSeleccionado
+                );
             }
             
         }
 
+        usort(
+            $arr_listaNombreGrupos,
+            function ($a, $b)  {
+                if ($a['orden'] < $b['orden']) {
+                    return -1;
+                } else if ($a['orden'] > $b['orden']) {
+                    return 1;
+                } else {
+                    return 0;
+                }
+            }
+        );
+
+        foreach($arr_listaNombreGrupos as $posArr_NombreGrupos => $arr_nombreGrupo){
+            if($posArr_NombreGrupos == 0){
+                $nombreGrupos = $arr_nombreGrupo['grupo'];
+            }else{
+                $nombreGrupos = $nombreGrupos.", ".$arr_nombreGrupo['grupo'];
+            }
+        }
+
+        // foreach($arr_nombreGrupos as $posArr_NombreGrupos => $arr_nombreGrupo){
+        //     if($posArr_NombreGrupos == 0){
+        //         $nombreGrupos = $arr_nombreGrupo;
+        //     }else{
+        //         $nombreGrupos = $nombreGrupos.", ".$arr_nombreGrupo;
+        //     }
+        // }
+
+        
+
+
         $anio = date("Y");
 
         // $data = ['txtSucursales' => $txtSucursales, 're_fecha' => $re_fecha];
+        // $data = ['txtSucursales' => $nombre, 're_fecha' => $re_fecha];
+        $data = ['txtSucursales' => $nombreGrupos, 're_fecha' => $re_fecha, "anio" => $anio];
 
-        $data = ['txtSucursales' => $nombre, 're_fecha' => $re_fecha];
-        $asunto = "Kimberly Clark (PE): PROMOCIONES ".$re_fecha." ".$anio." (".$nombre.")";
+        $asunto = "Kimberly Clark (PE): PROMOCIONES ".$re_fecha." ".$anio." (".$nombreGrupos.")";
 
         Mail::to($correo)->send(new MailPromocionesActivas($data, $asunto));
 

@@ -31,7 +31,7 @@
                         <div style="padding-top: 16px;text-align: justify; font-style: normal; font-weight: 400; font-size: 13px; line-height: 17px; letter-spacing: -0.015em; color: #000000;">
                             Por el presente correo, cumplo con informarle las tácticas promocionales para este mes con el número de combos/soles a reconocer por actividad y 
                             monto máximo de reconocimiento en valor por actividad respectivos por cada mecánica. Dichos montos no podrán excederse de no recibir una aprobación 
-                            formal del área de Trade copiando al buzón _KC, Cuida tu negocio (<a href="Cuidatunegocio.kc@kcc.com">Cuidatunegocio.kc@kcc.com</a>), dejando claro que yo como ejecutivo 
+                            formal del área de Trade copiando al buzón _KC, Cuida tu negocio (<a href="mailto:Cuidatunegocio.kc@kcc.com">Cuidatunegocio.kc@kcc.com</a>), dejando claro que yo como ejecutivo 
                             no podré aprobar acciones adicionales sin antes pasar por las aprobaciones respectivas.
                         </div>
                     </td>
@@ -48,9 +48,9 @@
                 <tr style="padding-top: 8px;">
                     <td colspan="4">
                         <div style="padding-top: 16px;text-align: justify; font-style: normal; font-weight: 400; font-size: 13px; line-height: 17px; letter-spacing: -0.015em; color: #000000;">
-                            De acuerdo a la nueva política de KC pongo en copia al correo interno _KC, Cuida tu negocio (<a href="Cuidatunegocio.kc@kcc.com">Cuidatunegocio.kc@kcc.com</a>), y estas acciones entran 
+                            De acuerdo a la nueva política de KC pongo en copia al correo interno _KC, Cuida tu negocio ( <a href="mailto:Cuidatunegocio.kc@kcc.com">Cuidatunegocio.kc@kcc.com</a> ), y estas acciones entran 
                             <!-- en validez desde la fecha <span style="font-weight: bold">01 de DICIEMBRE hasta fin de mes.</span>  -->
-                            en validez desde la fecha <span style="font-weight: bold">01 de {{$re_fecha}} hasta fin de mes.</span> 
+                            en validez desde la fecha <span style="font-weight: bold">01 de {{$re_fecha}} hasta fin de mes del {{$anio}}.</span> 
                         </div>
                     </td>
                 </tr>
@@ -63,7 +63,7 @@
                 </tr>
                 <tr style="padding-top: 5px; margin-top: 10px;  height: 33px;">
                     <td style=" height: 100%;">
-                        <a href="https://leadsmartview.com/sistema/promociones">
+                        <a href="https://smartview.grow-corporate.com/promociones">
                             <div style="height: 100%; text-align:center; padding-top: 10px; margin-top: 10px; background: #3646C4; border-radius: 22px; width: 175px; height: 25px; font-weight: 700; font-size: 13px; line-height: 17px; color: #FFFFFF;">
                                 Visitar Plataforma
                             </div>
@@ -73,7 +73,7 @@
                 <tr style="padding-top: 8px;">
                     <td colspan="4">
                         <div style="padding-top: 16px; text-align: justify; font-style: normal; font-weight: 400; font-size: 13px; line-height: 17px; letter-spacing: -0.015em; color: #000000;">
-                            En caso tengas problemas para ingresar en el botón, ingresar al siguiente enlace: <br><a href="https://leadsmartview.com/sistema/promociones">https://leadsmartview.com/sistema/promociones</a>
+                            En caso tengas problemas para ingresar en el botón, ingresar al siguiente enlace: <br><a href="https://smartview.grow-corporate.com/promociones">https://smartview.grow-corporate.com/promociones</a>
                         </div>
                     </td>
                 </tr>
@@ -81,7 +81,7 @@
                     <td colspan="4">
                         <div style="padding-top: 10px; text-align: justify; font-style: italic; font-weight: 400; font-size: 12px; line-height: 16px; letter-spacing: -0.015em; color: #000000;">
                             Este es un email automático, si tienes cualquier tipo de duda ponte en contacto con nosotros a través de nuestro servicio de atención 
-                            al cliente al <a href="Cuidatunegocio.kc@kcc.com">Cuidatunegocio.kc@kcc.com</a>, por favor no respondas a este mensaje.
+                            al cliente al <a href="mailto:Cuidatunegocio.kc@kcc.com">Cuidatunegocio.kc@kcc.com</a>, por favor no respondas a este mensaje.
                         </div>
                     </td>
                 </tr>
@@ -89,8 +89,8 @@
             <table style="width: 100%; background: #F1F1F1;">
                 <tr style="height: 57px;">
                     <td align="center">
-                        <div style=" font-style: normal; font-weight: bold; font-size: 9px; line-height: 11px; color: black;">
-                            © 2021 GROW ANALYTICS
+                        <div style=" font-style: normal; font-weight: bold; font-size: 13px; line-height: 11px; color: black;">
+                            © 2022 GROW ANALYTICS
                         </div>
                     </td>
                 </tr>
