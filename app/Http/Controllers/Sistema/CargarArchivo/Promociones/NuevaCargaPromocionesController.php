@@ -59,7 +59,14 @@ class NuevaCargaPromocionesController extends Controller
                                     'usuusuarios.tpuid', 
                                     'tpu.tpuprivilegio'
                                 ]);
+
+        if($usuusuario){
+            if($usuusuario->usuid == 1){
+                $cargarData = true;
+            }
+        }
         // if($usuusuario->tpuprivilegio == "todo"){
+            
         //     $cargarData = true;
         // }else{
         //     $tup = tuptiposusuariospermisos::join('pempermisos as pem', 'pem.pemid', 'tuptiposusuariospermisos.pemid')
