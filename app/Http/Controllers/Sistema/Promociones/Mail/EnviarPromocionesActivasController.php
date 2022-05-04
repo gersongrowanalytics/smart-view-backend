@@ -85,6 +85,7 @@ class EnviarPromocionesActivasController extends Controller
         $nombre = "";
 
         $arr_nombreGrupos = [];
+        $arr_listaNombreGrupos = array();
         $nombreGrupos = "";
 
         foreach($re_sucursales as $posicionSucursal => $sucursal){
@@ -115,13 +116,16 @@ class EnviarPromocionesActivasController extends Controller
                             ->first(['gsu.gsunombre']);
                             
             $grupoSeleccionado = "";
+            $ordenSeleccionado = 9;
 
             if ($gsu) {
                 
                 $grupoSeleccionado = $gsu->gsunombre;
                 
                 if ($gsu->gsunombre == 'Clientes') {
-                    $grupoSeleccionado = $sucursal;    
+                    $grupoSeleccionado = $sucursal;
+                }else{
+                    $ordenSeleccionado = 1;
                 }
 
             }else{
@@ -139,17 +143,42 @@ class EnviarPromocionesActivasController extends Controller
 
             if($encontroGrupo == false){
                 $arr_nombreGrupos[] = $grupoSeleccionado;
+                $arr_listaNombreGrupos[] = array(
+                    "grupo" => $grupoSeleccionado,
+                    "orden" => $ordenSeleccionado
+                );
             }
             
         }
 
-        foreach($arr_nombreGrupos as $posArr_NombreGrupos => $arr_nombreGrupo){
+        usort(
+            $arr_listaNombreGrupos,
+            function ($a, $b)  {
+                if ($a['orden'] > $b['orden']) {
+                    return -1;
+                } else if ($a['orden'] < $b['orden']) {
+                    return 1;
+                } else {
+                    return 0;
+                }
+            }
+        );
+
+        foreach($arr_listaNombreGrupos as $posArr_NombreGrupos => $arr_nombreGrupo){
             if($posArr_NombreGrupos == 0){
-                $nombreGrupos = $arr_nombreGrupo;
+                $nombreGrupos = $arr_nombreGrupo['grupo'];
             }else{
-                $nombreGrupos = $nombreGrupos.", ".$arr_nombreGrupo;
+                $nombreGrupos = $nombreGrupos.", ".$arr_nombreGrupo['grupo'];
             }
         }
+
+        // foreach($arr_nombreGrupos as $posArr_NombreGrupos => $arr_nombreGrupo){
+        //     if($posArr_NombreGrupos == 0){
+        //         $nombreGrupos = $arr_nombreGrupo;
+        //     }else{
+        //         $nombreGrupos = $nombreGrupos.", ".$arr_nombreGrupo;
+        //     }
+        // }
 
         
 
