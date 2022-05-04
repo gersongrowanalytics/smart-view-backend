@@ -45,7 +45,7 @@
                                 <tr style="padding: 0">
                                     <td></td>
                                     <td align="center" style="width: 175px; padding: 0px 30px;">
-                                        <a href="https://leadsmartview.com/sistema/promociones">
+                                        <a href="https://smartview.grow-corporate.com/sistema/promociones">
                                             <div style="text-align:center; padding-top: 10px; margin-top: 17px; background: #FEDD34; border-radius: 22px; width: 175px; height: 25px; font-weight: 700; font-size: 13px; line-height: 17px; color: #1E1E1E;">
                                                 Visitar Plataforma
                                             </div>
@@ -57,7 +57,7 @@
                                     <td colspan="3" align="center">
                                         <div style="padding-top: 23px; font-style: normal; font-weight: 400; font-size: 11px; line-height: 15px; color: #1E1E1E;">
                                             En caso tengas problemas para ingresar en el botón, ingresar al siguiente
-                                            enlace: <a href="https://leadsmartview.com/sistema/promociones">https://leadsmartview.com/sistema/promociones</a>
+                                            enlace: <a href="https://smartview.grow-corporate.com/sistema/promociones">https://smartview.grow-corporate.com/sistema/promociones</a>
                                         </div>
                                     </td>
                                 </tr>
