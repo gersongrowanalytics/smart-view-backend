@@ -84,7 +84,7 @@
                     </td>
                 </tr>
                 <tr style="padding-top: 5px; margin-top: 10px;  height: 33px;">
-                    <td style=" height: 100%;">
+                    <td>
                         <a href="https://smartview.grow-corporate.com/promociones">
                             <div style="height: 100%; text-align:center; padding-top: 10px; margin-top: 10px; background: #3646C4; border-radius: 22px; width: 175px; height: 25px; font-weight: 700; font-size: 13px; line-height: 17px; color: #FFFFFF;">
                                 Visitar Plataforma
