@@ -31,8 +31,8 @@ class EnviarPromocionesActivasController extends Controller
 
         // $correo = "gerson.vilca@grow-analytics.com.pe";
         // $correo = "director.creativo@grow-analytics.com.pe";
-        // $correo = "miguel.caballero@grow-analytics.com.pe";
-        $correo = "mzorrilla@kcc.com";
+        $correo = "miguel.caballero@grow-analytics.com.pe";
+        // $correo = "mzorrilla@kcc.com";
 
         if($usu){
 
