@@ -24,23 +24,22 @@ class CrearUsuariosController extends Controller
         $usun = [];
         $usutoken   = $request->header('api_token');
         
-        $nombre       = $request['nombre'];
-        $apellidos    = $request['apellidos'];
-        $correo       = $request['correo'];
-        $correo_inst  = $request['correo_inst'];
-        $contrasenia  = $request['contrasenia'];
-        $celular      = $request['celular'];
-        $tipo_usuario = $request['tipo_usuario'];
-        $fecha_inicio = $request['fecha_inicio'];
-        $fecha_fin    = $request['fecha_fin'];
-        $paises       = $request['paises'];
+        $re_nombre       = $request['re_nombre'];
+        $re_apellidos    = $request['re_apellidos'];
+        $re_usuario      = $request['re_usuario'];
+        $re_correo       = $request['re_correo'];
+        $re_contrasenia  = $request['re_contrasenia'];
+        $re_celular      = $request['re_celular'];
+        $re_tipo_usuario = $request['re_tipo_usuario'];
+        $re_fecha_inicio = $request['re_fecha_inicio'];
+        $re_fecha_fin    = $request['re_fecha_fin'];
+        $re_paises       = $request['re_paises'];
         // $zonas        = $request['zonas'];
-        $estado       = $request['estado'];
+        $re_estado       = $request['re_estado'];
+        $re_sucursales   = $request['re_sucursales'];
 
-        $sucursales   = $request['sucursales'];
-        
-        $per = perpersonas::where('pernombre', $nombre)
-                                ->where('perapellidopaterno',$apellidos)
+        $per = perpersonas::where('pernombre', $re_nombre)
+                                ->where('perapellidopaterno',$re_apellidos)
                                 ->first(['perid']);
         
         $perid = 0;
@@ -49,10 +48,10 @@ class CrearUsuariosController extends Controller
         }else{
             $pern = new perpersonas;
             $pern->tdiid              = 1;
-            $pern->pernombrecompleto  = $nombre." ".$apellidos;
-            $pern->pernombre          = $nombre;
-            $pern->perapellidopaterno = $apellidos;
-            $pern->percelular         = $celular;
+            $pern->pernombrecompleto  = $re_nombre." ".$re_apellidos;
+            $pern->pernombre          = $re_nombre;
+            $pern->perapellidopaterno = $re_apellidos;
+            $pern->percelular         = $re_celular;
             if($pern->save()){
                 $perid = $pern->perid;
                 $log[] = "La persona se registro correctamente perid: ".$perid;
@@ -65,26 +64,25 @@ class CrearUsuariosController extends Controller
 
         $usuid = 0;
 
-        $usu = usuusuarios::where('usuusuario', $correo_inst)->first();
+        $usu = usuusuarios::where('usuusuario', $re_usuario)->first();
 
         if($usu){
             
             $usuid = $usu->usuid;
-            $usu->tpuid             = $tipo_usuario;
+            $usu->tpuid             = $re_tipo_usuario;
             $usu->perid             = $perid;
-            $usu->estid             = $estado;
-            $usu->usuusuario        = $correo_inst;
-            $usu->usucorreo         = $correo_inst;
-            $usu->usucorreopersonal = $correo;
-            $usu->usufechainicio    = $fecha_inicio;
-            $usu->usufechafinal     = $fecha_fin;
-            $usu->usucontrasena     = Hash::make($contrasenia);
+            $usu->estid             = $re_estado;
+            $usu->usuusuario        = $re_usuario;
+            $usu->usucorreo         = $re_correo;
+            $usu->usufechainicio    = $re_fecha_inicio;
+            $usu->usufechafinal     = $re_fecha_fin;
+            $usu->usucontrasena     = Hash::make($re_contrasenia);
             if($usu->update()){
                 $log[] = "El usuario se edito correctamente usuid: ".$usu->usuid;
 
                 paupaisesusuarios::where('usuid', $usu->usuid)->delete();
 
-                foreach ($paises as $pais) {
+                foreach ($re_paises as $pais) {
                     $paun = new paupaisesusuarios();
                     $paun->paiid = $pais['paiid'];
                     $paun->usuid = $usu->usuid;
@@ -103,21 +101,20 @@ class CrearUsuariosController extends Controller
         }else{
 
             $usun = new usuusuarios();
-            $usun->tpuid             = $tipo_usuario;
+            $usun->tpuid             = $re_tipo_usuario;
             $usun->perid             = $perid;
-            $usun->estid             = $estado;
-            $usun->usuusuario        = $correo_inst;
-            $usun->usucorreo         = $correo_inst;
-            $usun->usucorreopersonal = $correo;
-            $usun->usufechainicio    = $fecha_inicio;
-            $usun->usufechafinal     = $fecha_fin;
-            $usun->usucontrasena     = Hash::make($contrasenia);
+            $usun->estid             = $re_estado;
+            $usun->usuusuario        = $re_usuario;
+            $usun->usucorreo         = $re_correo;
+            $usun->usufechainicio    = $re_fecha_inicio;
+            $usun->usufechafinal     = $re_fecha_fin;
+            $usun->usucontrasena     = Hash::make($re_contrasenia);
             $usun->usutoken          = Str::random(60);
             if($usun->save()){
                 $usuid = $usun->usuid;
                 $log[] = "El usuario se registro correctamente usuid: ".$usun->usuid;
                 
-                foreach ($paises as $pais) {
+                foreach ($re_paises as $pais) {
                     $paun = new paupaisesusuarios();
                     $paun->paiid = $pais['paiid'];
                     $paun->usuid = $usun->usuid;
@@ -144,7 +141,7 @@ class CrearUsuariosController extends Controller
 
             ussusuariossucursales::where('usuid', $usuid)->delete();
 
-            foreach($sucursales as $sucursal){
+            foreach($re_sucursales as $sucursal){
 
                 if(isset($sucursal['sucpromocioncrear'])){
                     if($sucursal['sucpromocioncrear'] == true){
