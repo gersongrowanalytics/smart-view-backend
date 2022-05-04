@@ -81,7 +81,7 @@ class EnviarPromocionesActivasController extends Controller
         $txtSucursales = "";
         $nombre = "";
 
-        $arr_nombreGrupos = "";
+        $arr_nombreGrupos = [];
         $nombreGrupos = "";
 
         foreach($re_sucursales as $posicionSucursal => $sucursal){
