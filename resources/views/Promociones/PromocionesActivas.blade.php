@@ -50,7 +50,7 @@
                         <div style="padding-top: 16px;text-align: justify; font-style: normal; font-weight: 400; font-size: 13px; line-height: 17px; letter-spacing: -0.015em; color: #000000;">
                             De acuerdo a la nueva política de KC pongo en copia al correo interno _KC, Cuida tu negocio ( <a href="mailto:Cuidatunegocio.kc@kcc.com">Cuidatunegocio.kc@kcc.com</a> ), y estas acciones entran 
                             <!-- en validez desde la fecha <span style="font-weight: bold">01 de DICIEMBRE hasta fin de mes.</span>  -->
-                            en validez desde la fecha <span style="font-weight: bold">01 de {{$re_fecha}} hasta fin de mes.</span> 
+                            en validez desde la fecha <span style="font-weight: bold">01 de {{$re_fecha}} hasta fin de mes del {{$anio}}.</span> 
                         </div>
                     </td>
                 </tr>
@@ -89,7 +89,7 @@
             <table style="width: 100%; background: #F1F1F1;">
                 <tr style="height: 57px;">
                     <td align="center">
-                        <div style=" font-style: normal; font-weight: bold; font-size: 12px; line-height: 11px; color: black;">
+                        <div style=" font-style: normal; font-weight: bold; font-size: 13px; line-height: 11px; color: black;">
                             © 2022 GROW ANALYTICS
                         </div>
                     </td>

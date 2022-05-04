@@ -187,7 +187,7 @@ class EnviarPromocionesActivasController extends Controller
 
         // $data = ['txtSucursales' => $txtSucursales, 're_fecha' => $re_fecha];
         // $data = ['txtSucursales' => $nombre, 're_fecha' => $re_fecha];
-        $data = ['txtSucursales' => $nombreGrupos, 're_fecha' => $re_fecha];
+        $data = ['txtSucursales' => $nombreGrupos, 're_fecha' => $re_fecha, "anio" => $anio];
 
         $asunto = "Kimberly Clark (PE): PROMOCIONES ".$re_fecha." ".$anio." (".$nombreGrupos.")";
 
