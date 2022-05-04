@@ -120,7 +120,7 @@ class EnviarPromocionesActivasController extends Controller
                 
                 $grupoSeleccionado = $gsu->gsunombre;
                 
-                if ($gsu->nombre == 'Clientes') {
+                if ($gsu->gsunombre == 'Clientes') {
                     $grupoSeleccionado = $sucursal;    
                 }
 
@@ -149,7 +149,6 @@ class EnviarPromocionesActivasController extends Controller
             }else{
                 $nombreGrupos = $nombreGrupos.", ".$arr_nombreGrupo;
             }
-            
         }
 
         
