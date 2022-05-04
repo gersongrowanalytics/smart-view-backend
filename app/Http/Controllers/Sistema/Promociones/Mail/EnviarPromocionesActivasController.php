@@ -81,37 +81,79 @@ class EnviarPromocionesActivasController extends Controller
         $txtSucursales = "";
         $nombre = "";
 
-        $grupos = "";
+        $arr_nombreGrupos = "";
+        $nombreGrupos = "";
 
         foreach($re_sucursales as $posicionSucursal => $sucursal){
 
-            if($posicionSucursal == 0){
-                $txtSucursales = $sucursal;
-                $gsu = sucsucursales::where('sucnombre', 'LIKE', "%".$sucursal."%")
-                                ->join('gsugrupossucursales as gsu', 'gsu.gsuid', 'sucsucursales.gsuid')
-                                ->first(['gsu.gsunombre']);
+            // if($posicionSucursal == 0){
+            //     $txtSucursales = $sucursal;
+            //     $gsu = sucsucursales::where('sucnombre', 'LIKE', "%".$sucursal."%")
+            //                     ->join('gsugrupossucursales as gsu', 'gsu.gsuid', 'sucsucursales.gsuid')
+            //                     ->first(['gsu.gsunombre']);
 
-                if ($gsu) {
-                    $nombre = $gsu->nombre;
-                    if ($gsu->nombre == 'Clientes') {
-                        $nombre = $sucursal;
-                    }
-                }else{
-                    $nombre = $sucursal;
+            //     if ($gsu) {
+            //         $nombre = $gsu->nombre;
+            //         if ($gsu->nombre == 'Clientes') {
+            //             $nombre = $sucursal;
+            //         }
+            //     }else{
+            //         $nombre = $sucursal;
+            //     }
+
+            // }else{
+            //     $txtSucursales = $txtSucursales.", ".$sucursal;
+            // }
+
+
+            
+            $gsu = sucsucursales::where('sucnombre', 'LIKE', "%".$sucursal."%")
+                            ->join('gsugrupossucursales as gsu', 'gsu.gsuid', 'sucsucursales.gsuid')
+                            ->first(['gsu.gsunombre']);
+                            
+            $grupoSeleccionado = "";
+
+            if ($gsu) {
+                
+                $grupoSeleccionado = $gsu->gsunombre;
+                
+                if ($gsu->nombre == 'Clientes') {
+                    $grupoSeleccionado = $sucursal;    
                 }
 
             }else{
-                $txtSucursales = $txtSucursales.", ".$sucursal;
+                
+                $grupoSeleccionado = $sucursal;
+            }
+
+            $encontroGrupo = false;
+
+            foreach($arr_nombreGrupos as $arr_nombreGrupo){
+                if($arr_nombreGrupo == $grupoSeleccionado){
+                    $encontroGrupo = true;
+                }
+            }
+
+            if($encontroGrupo == false){
+                $arr_nombreGrupos[] = $grupoSeleccionado;
             }
             
         }
 
+        foreach($arr_nombreGrupos as $arr_nombreGrupo){
+            $nombreGrupos = $nombreGrupos.", ".$arr_nombreGrupo;
+        }
+
+        
+
+
         $anio = date("Y");
 
-        $data = ['txtSucursales' => $txtSucursales, 're_fecha' => $re_fecha];
-
+        // $data = ['txtSucursales' => $txtSucursales, 're_fecha' => $re_fecha];
         // $data = ['txtSucursales' => $nombre, 're_fecha' => $re_fecha];
-        $asunto = "Kimberly Clark (PE): PROMOCIONES ".$re_fecha." ".$anio." (".$nombre.")";
+        $data = ['txtSucursales' => $nombreGrupos, 're_fecha' => $re_fecha];
+
+        $asunto = "Kimberly Clark (PE): PROMOCIONES ".$re_fecha." ".$anio." (".$nombreGrupos.")";
 
         Mail::to($correo)->send(new MailPromocionesActivas($data, $asunto));
 
