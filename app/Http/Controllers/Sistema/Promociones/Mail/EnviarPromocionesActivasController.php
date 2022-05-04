@@ -81,7 +81,7 @@ class EnviarPromocionesActivasController extends Controller
         $txtSucursales = "";
         $nombre = "";
 
-        // $grupos "";
+        $grupos = "";
 
         foreach($re_sucursales as $posicionSucursal => $sucursal){
 
@@ -90,11 +90,14 @@ class EnviarPromocionesActivasController extends Controller
                 $gsu = sucsucursales::where('sucnombre', 'LIKE', "%".$sucursal."%")
                                 ->join('gsugrupossucursales as gsu', 'gsu.gsuid', 'sucsucursales.gsuid')
                                 ->first(['gsu.gsunombre']);
+
                 if ($gsu) {
                     $nombre = $gsu->nombre;
                     if ($gsu->nombre == 'Clientes') {
                         $nombre = $sucursal;
                     }
+                }else{
+                    $nombre = $sucursal;
                 }
 
             }else{
