@@ -108,9 +108,9 @@ class EnviarPromocionesActivasController extends Controller
 
         $anio = date("Y");
 
-        // $data = ['txtSucursales' => $txtSucursales, 're_fecha' => $re_fecha];
+        $data = ['txtSucursales' => $txtSucursales, 're_fecha' => $re_fecha];
 
-        $data = ['txtSucursales' => $nombre, 're_fecha' => $re_fecha];
+        // $data = ['txtSucursales' => $nombre, 're_fecha' => $re_fecha];
         $asunto = "Kimberly Clark (PE): PROMOCIONES ".$re_fecha." ".$anio." (".$nombre.")";
 
         Mail::to($correo)->send(new MailPromocionesActivas($data, $asunto));
