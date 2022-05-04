@@ -140,8 +140,13 @@ class EnviarPromocionesActivasController extends Controller
             
         }
 
-        foreach($arr_nombreGrupos as $arr_nombreGrupo){
-            $nombreGrupos = $nombreGrupos.", ".$arr_nombreGrupo;
+        foreach($arr_nombreGrupos as $posArr_NombreGrupos => $arr_nombreGrupo){
+            if($posArr_NombreGrupos == 0){
+                $nombreGrupos = $arr_nombreGrupo;
+            }else{
+                $nombreGrupos = $nombreGrupos.", ".$arr_nombreGrupo;
+            }
+            
         }
 
         
