@@ -65,7 +65,7 @@
                                     <td colspan="3" align="justify">
                                         <div style="padding-top: 15px; font-style: italic; font-weight: 400; font-size: 12px; line-height: 16px; text-align: justify; letter-spacing: -0.015em; color: #000000">
                                             Este es un email automático, si tienes cualquier tipo de duda ponte en contacto con nosotros a través de nuestro
-                                            servicio de atención al cliente al <a href="Cuidatunegocio.kc@kcc.com">Cuidatunegocio.kc@kcc.com</a>, por favor no respondas a este mensaje.
+                                            servicio de atención al cliente al <a href="mailto:Cuidatunegocio.kc@kcc.com">Cuidatunegocio.kc@kcc.com</a>, por favor no respondas a este mensaje.
                                         </div>
                                     </td>
                                 </tr>
