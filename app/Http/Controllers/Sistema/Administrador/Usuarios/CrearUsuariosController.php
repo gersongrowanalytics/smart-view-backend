@@ -24,6 +24,7 @@ class CrearUsuariosController extends Controller
         $usun = [];
         $usutoken   = $request->header('api_token');
         
+        $re_imagen       = $request['re_imagen'];
         $re_nombre       = $request['re_nombre'];
         $re_apellidos    = $request['re_apellidos'];
         $re_usuario      = $request['re_usuario'];
@@ -69,6 +70,7 @@ class CrearUsuariosController extends Controller
         if($usu){
             
             $usuid = $usu->usuid;
+            $usu->usuimagen         = $re_imagen;
             $usu->tpuid             = $re_tipo_usuario;
             $usu->perid             = $perid;
             $usu->estid             = $re_estado;
@@ -101,6 +103,7 @@ class CrearUsuariosController extends Controller
         }else{
 
             $usun = new usuusuarios();
+            $usun->usuimagen         = $re_imagen;
             $usun->tpuid             = $re_tipo_usuario;
             $usun->perid             = $perid;
             $usun->estid             = $re_estado;
