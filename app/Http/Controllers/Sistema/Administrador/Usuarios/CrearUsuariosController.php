@@ -70,7 +70,6 @@ class CrearUsuariosController extends Controller
         if($usu){
             
             $usuid = $usu->usuid;
-            $usu->usuimagen         = $re_imagen;
             $usu->tpuid             = $re_tipo_usuario;
             $usu->perid             = $perid;
             $usu->estid             = $re_estado;
@@ -79,6 +78,14 @@ class CrearUsuariosController extends Controller
             $usu->usufechainicio    = $re_fecha_inicio;
             $usu->usufechafinal     = $re_fecha_fin;
             $usu->usucontrasena     = Hash::make($re_contrasenia);
+
+            list(, $base64) = explode(',', $re_imagen);
+            $fichero = '/Sistema/Administrador/Imagenes/Usuarios/'.Str::random(5).".png";
+            $archivo = base64_decode($base64);
+            file_put_contents(base_path().'/public'.$fichero, $archivo);
+
+            $usu->usuimagen = env('APP_URL').$fichero;
+
             if($usu->update()){
                 $log[] = "El usuario se edito correctamente usuid: ".$usu->usuid;
 
@@ -103,7 +110,6 @@ class CrearUsuariosController extends Controller
         }else{
 
             $usun = new usuusuarios();
-            $usun->usuimagen         = $re_imagen;
             $usun->tpuid             = $re_tipo_usuario;
             $usun->perid             = $perid;
             $usun->estid             = $re_estado;
