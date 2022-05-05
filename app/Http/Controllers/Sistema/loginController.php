@@ -42,6 +42,7 @@ class loginController extends Controller
                                         ->where('usuusuarios.usutoken', $re_token)
                                         ->first([
                                             'usuusuarios.usuid',
+                                            'usuusuarios.usuimagen',
                                             'usuusuarios.usuusuario',
                                             'usuusuarios.usucorreo',
                                             'usuusuarios.usutoken',
@@ -66,6 +67,7 @@ class loginController extends Controller
                                         ->where('usuusuarios.usuusuario', $usuario)
                                         ->first([
                                             'usuusuarios.usuid',
+                                            'usuusuarios.usuimagen',
                                             'usuusuarios.usuusuario',
                                             'usuusuarios.usucorreo',
                                             'usuusuarios.usutoken',
