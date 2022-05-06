@@ -104,7 +104,7 @@ class EditarPerfilController extends Controller
         $datos          = [];
 
         $usutoken           = $request->header('api_token');
-        // $re_imagen          = $request['re_imagen'];
+        $re_imagen          = $request['re_imagen'];
         $re_nombre          = $request['re_nombre'];//ok
         $re_apellidoPaterno = $request['re_apellidoPaterno'];//ok
         $re_apellidoMaterno = $request['re_apellidoMaterno']; //ok
@@ -117,7 +117,7 @@ class EditarPerfilController extends Controller
         $usu = usuusuarios::join('perpersonas as per', 'per.perid', 'usuusuarios.perid')
                                 ->where('usutoken', $usutoken)
                                 ->first();
-        // dd($usu);
+      
         if($usu){
             $perid = $usu->perid;
             $pere = perpersonas::find($perid);
@@ -131,10 +131,15 @@ class EditarPerfilController extends Controller
                 $respuesta      = true;
                 $mensaje        = 'Los datos de la persona se actualizaron correctamente';
 
-                // $usuid = $usu->usuid;
-                // $usue = usuusuarios::find($usuid);
                 $usu->usuusuario = $re_correo;
-                
+
+                list(, $base64) = explode(',', $re_imagen);
+                $fichero = '/Sistema/Administrador/Imagenes/Usuarios/'.Str::random(5).".png";
+                $archivo = base64_decode($base64);
+                file_put_contents(base_path().'/public'.$fichero, $archivo);
+
+                $usu->usuimagen = env('APP_URL').$fichero;
+
                 if ($usu->update()) {
                     $datos = usuusuarios::join('perpersonas as per', 'per.perid', 'usuusuarios.perid')
                                             ->where('usutoken', $usutoken)

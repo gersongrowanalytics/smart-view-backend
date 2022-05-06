@@ -24,7 +24,6 @@ class CrearUsuariosController extends Controller
         $usun = [];
         $usutoken   = $request->header('api_token');
         
-        $re_imagen       = $request['re_imagen'];
         $re_nombre       = $request['re_nombre'];
         $re_apellidos    = $request['re_apellidos'];
         $re_usuario      = $request['re_usuario'];
@@ -78,13 +77,6 @@ class CrearUsuariosController extends Controller
             $usu->usufechainicio    = $re_fecha_inicio;
             $usu->usufechafinal     = $re_fecha_fin;
             $usu->usucontrasena     = Hash::make($re_contrasenia);
-
-            list(, $base64) = explode(',', $re_imagen);
-            $fichero = '/Sistema/Administrador/Imagenes/Usuarios/'.Str::random(5).".png";
-            $archivo = base64_decode($base64);
-            file_put_contents(base_path().'/public'.$fichero, $archivo);
-
-            $usu->usuimagen = env('APP_URL').$fichero;
 
             if($usu->update()){
                 $log[] = "El usuario se edito correctamente usuid: ".$usu->usuid;
