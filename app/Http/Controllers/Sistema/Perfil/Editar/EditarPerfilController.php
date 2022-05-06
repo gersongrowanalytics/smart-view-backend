@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Hash;
 use App\Http\Controllers\AuditoriaController;
 use App\usuusuarios;
 use App\perpersonas;
+use Illuminate\Support\Str;
 
 class EditarPerfilController extends Controller
 {
