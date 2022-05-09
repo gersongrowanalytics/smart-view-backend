@@ -77,6 +77,7 @@ class CrearUsuariosController extends Controller
             $usu->usufechainicio    = $re_fecha_inicio;
             $usu->usufechafinal     = $re_fecha_fin;
             $usu->usucontrasena     = Hash::make($re_contrasenia);
+
             if($usu->update()){
                 $log[] = "El usuario se edito correctamente usuid: ".$usu->usuid;
 
