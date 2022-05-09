@@ -122,53 +122,20 @@ class EditarPerfilController extends Controller
                                 ->where('usutoken', $usutoken)
                                 ->first();
       
+
         if($usu){
+            $editando = true;
             if ($re_editarContrasenia == true) {
                 if (Hash::check($re_contrasenia, $usu->usucontrasena)) {
-
-                    $perid = $usu->perid;
-                    $pere = perpersonas::find($perid);
-                    $pere->pernombre          = $re_nombre;
-                    $pere->perapellidopaterno = $re_apellidoPaterno;
-                    $pere->perapellidomaterno = $re_apellidoMaterno;
-                    $pere->pernombrecompleto  = $re_nombre." ".$re_apellidoPaterno." ".$re_apellidoMaterno;
-                    $pere->perdireccion       = $re_direccion;
-                    $pere->percelular         = $re_telefono;
-                    if ($pere->update()) {
-                        $respuesta      = true;
-                        $mensaje        = 'Los datos de la persona se actualizaron correctamente';
-
-                        $usu->usuusuario = $re_correo;
-                        $usu->usucontrasena = Hash::make($re_nuevaContrasenia);
-
-                        if (strstr($re_imagen, env('APP_URL')) == false) {
-                            list(, $base64) = explode(',', $re_imagen);
-                            $fichero = '/Sistema/Administrador/Imagenes/Usuarios/'.Str::random(5).".png";
-                            $archivo = base64_decode($base64);
-                            file_put_contents(base_path().'/public'.$fichero, $archivo);
-
-                            $usu->usuimagen = env('APP_URL').$fichero;
-                        }
-                        
-                        if ($usu->update()) {
-                            $datos = usuusuarios::join('perpersonas as per', 'per.perid', 'usuusuarios.perid')
-                                                    ->where('usutoken', $usutoken)
-                                                    ->first();
-                            $respuesta = true;
-                            $mensaje   = 'Los datos del usuario se actualizaron correctamente';
-                        }else{
-                            $respuesta = false;
-                            $mensaje   = 'Lo siento, hubo un error al actualizar los datos del usuario';
-                        }
-                    } else {
-                        $respuesta = false;
-                        $mensaje   = 'Lo siento, hubo un error al momento de actualizar los datos de la persona';
-                    }
+                    $editando = true;
                 }else{
+                    $editando = false;
                     $respuesta = false;
                     $mensaje   = 'Su contraseña es incorrecta, vuelva a ingresar su contraseña';
                 }
-            }else{
+            }
+
+            if($editando == true){
                 $perid = $usu->perid;
                 $pere = perpersonas::find($perid);
                 $pere->pernombre          = $re_nombre;
@@ -183,6 +150,10 @@ class EditarPerfilController extends Controller
 
                     $usu->usuusuario = $re_correo;
 
+                    if($re_editarContrasenia == true){
+                        $usu->usucontrasena = Hash::make($re_nuevaContrasenia);
+                    }
+
                     if (strstr($re_imagen, env('APP_URL')) == false) {
                         list(, $base64) = explode(',', $re_imagen);
                         $fichero = '/Sistema/Administrador/Imagenes/Usuarios/'.Str::random(5).".png";
@@ -191,9 +162,7 @@ class EditarPerfilController extends Controller
 
                         $usu->usuimagen = env('APP_URL').$fichero;
                     }
-
-                    $usu->usuimagen = env('APP_URL').$fichero;
-
+                    
                     if ($usu->update()) {
                         $datos = usuusuarios::join('perpersonas as per', 'per.perid', 'usuusuarios.perid')
                                                 ->where('usutoken', $usutoken)
