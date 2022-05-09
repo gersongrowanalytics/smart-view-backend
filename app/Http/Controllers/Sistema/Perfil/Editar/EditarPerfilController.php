@@ -98,7 +98,7 @@ class EditarPerfilController extends Controller
         return $requestsalida;
     }
 
-    public function EditarPerfilNuevo2 (Request $request)
+    public function EditarPerfilNuevo (Request $request)
     {
         $respuesta      = false;
         $mensaje        = '';
@@ -221,14 +221,5 @@ class EditarPerfilController extends Controller
         ]);
 
         return $requestsalida;
-    }
-
-    public function EditarPerfilNuevo (Request $request){
-        $re_imagen = "https://http://localhost/Sistema/Administrador/Imagenes/Usuarios/CBhd2.png";
-        if (strstr($re_imagen, env('APP_URL')) == false) {
-            dd("NO ENCONTRO NADA");
-        }else{
-            dd("SI ENCONTRO");
-        }
     }
 }
