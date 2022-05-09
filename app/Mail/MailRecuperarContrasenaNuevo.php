@@ -30,7 +30,7 @@ class MailRecuperarContrasenaNuevo extends Mailable
      */
     public function build()
     {
-        return $this->from('SmartView@grow-analytics.com.pe', 'SmartView')
+        return $this->from('SmartView@grow-analytics.com.pe', 'Grow: TeamSupport')
                     ->view('CorreoRecupearContrasenaNuevo')
                     ->subject('Kimberly Clarck (PE): Recuperar Contraseña SmartView')
                     ->with($this->data);

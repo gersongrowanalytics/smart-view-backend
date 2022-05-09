@@ -29,7 +29,7 @@ class MailRecuperarContrasena extends Mailable
      */
     public function build()
     {
-        return $this->from('smartview@grow-analytics.com', 'SmartView')
+        return $this->from('smartview@grow-analytics.com', 'Grow: TeamSupport')
                     ->view('CorreoRecuperarContrasena')
                     ->subject('RECUPERAR CUENTA SMART VIEW')
                     ->with($this->data);

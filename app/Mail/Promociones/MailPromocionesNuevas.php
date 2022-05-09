@@ -31,7 +31,7 @@ class MailPromocionesNuevas extends Mailable
      */
     public function build()
     {
-        return $this->from('SmartView@grow-analytics.com', 'SmartView')
+        return $this->from('SmartView@grow-analytics.com', 'Grow: TeamSupport')
                     ->view('Promociones.PromocionesNuevas')
                     // ->subject('Promociones Nuevas')
                     ->subject($this->asunto)
