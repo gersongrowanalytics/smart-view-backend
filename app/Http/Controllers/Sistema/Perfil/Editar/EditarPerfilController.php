@@ -104,56 +104,104 @@ class EditarPerfilController extends Controller
         $mensaje        = '';
         $datos          = [];
 
-        $usutoken           = $request->header('api_token');
-        $re_imagen          = $request['re_imagen'];
-        $re_nombre          = $request['re_nombre'];//ok
-        $re_apellidoPaterno = $request['re_apellidoPaterno'];//ok
-        $re_apellidoMaterno = $request['re_apellidoMaterno']; //ok
-        $re_correo          = $request['re_correo'];//ok
-        $re_telefono        = $request['re_telefono'];//ok
+        $usutoken             = $request->header('api_token');
+        $re_imagen            = $request['re_imagen'];
+        $re_nombre            = $request['re_nombre'];//ok
+        $re_apellidoPaterno   = $request['re_apellidoPaterno'];//ok
+        $re_apellidoMaterno   = $request['re_apellidoMaterno']; //ok
+        $re_correo            = $request['re_correo'];//ok
+        $re_telefono          = $request['re_telefono'];//ok
         // $re_idioma          = $request['re_idioma'];
         // $re_pais            = $request['re_pais'];
-        $re_direccion       = $request['re_direccion'];//ok
+        $re_direccion         = $request['re_direccion'];//ok
+        $re_contrasenia       = $request['re_contrasenia'];
+        $re_nuevaContrasenia  = $request['re_nuevaContrasenia'];
+        $re_editarContrasenia = $request['re_editarContrasenia'];
 
         $usu = usuusuarios::join('perpersonas as per', 'per.perid', 'usuusuarios.perid')
                                 ->where('usutoken', $usutoken)
                                 ->first();
       
         if($usu){
-            $perid = $usu->perid;
-            $pere = perpersonas::find($perid);
-            $pere->pernombre          = $re_nombre;
-            $pere->perapellidopaterno = $re_apellidoPaterno;
-            $pere->perapellidomaterno = $re_apellidoMaterno;
-            $pere->pernombrecompleto  = $re_nombre." ".$re_apellidoPaterno." ".$re_apellidoMaterno;
-            $pere->perdireccion       = $re_direccion;
-            $pere->percelular         = $re_telefono;
-            if ($pere->update()) {
-                $respuesta      = true;
-                $mensaje        = 'Los datos de la persona se actualizaron correctamente';
+            if ($re_editarContrasenia == true) {
+                if (Hash::check($re_contrasenia, $usu->usucontrasena)) {
 
-                $usu->usuusuario = $re_correo;
+                    $perid = $usu->perid;
+                    $pere = perpersonas::find($perid);
+                    $pere->pernombre          = $re_nombre;
+                    $pere->perapellidopaterno = $re_apellidoPaterno;
+                    $pere->perapellidomaterno = $re_apellidoMaterno;
+                    $pere->pernombrecompleto  = $re_nombre." ".$re_apellidoPaterno." ".$re_apellidoMaterno;
+                    $pere->perdireccion       = $re_direccion;
+                    $pere->percelular         = $re_telefono;
+                    if ($pere->update()) {
+                        $respuesta      = true;
+                        $mensaje        = 'Los datos de la persona se actualizaron correctamente';
 
-                list(, $base64) = explode(',', $re_imagen);
-                $fichero = '/Sistema/Administrador/Imagenes/Usuarios/'.Str::random(5).".png";
-                $archivo = base64_decode($base64);
-                file_put_contents(base_path().'/public'.$fichero, $archivo);
+                        $usu->usuusuario = $re_correo;
+                        $usu->usucontrasena = Hash::make($re_nuevaContrasenia);
 
-                $usu->usuimagen = env('APP_URL').$fichero;
+                        list(, $base64) = explode(',', $re_imagen);
+                        $fichero = '/Sistema/Administrador/Imagenes/Usuarios/'.Str::random(5).".png";
+                        $archivo = base64_decode($base64);
+                        file_put_contents(base_path().'/public'.$fichero, $archivo);
 
-                if ($usu->update()) {
-                    $datos = usuusuarios::join('perpersonas as per', 'per.perid', 'usuusuarios.perid')
-                                            ->where('usutoken', $usutoken)
-                                            ->first();
-                    $respuesta = true;
-                    $mensaje   = 'Los datos del usuario se actualizaron correctamente';
+                        $usu->usuimagen = env('APP_URL').$fichero;
+
+                        if ($usu->update()) {
+                            $datos = usuusuarios::join('perpersonas as per', 'per.perid', 'usuusuarios.perid')
+                                                    ->where('usutoken', $usutoken)
+                                                    ->first();
+                            $respuesta = true;
+                            $mensaje   = 'Los datos del usuario se actualizaron correctamente';
+                        }else{
+                            $respuesta = false;
+                            $mensaje   = 'Lo siento, hubo un error al actualizar los datos del usuario';
+                        }
+                    } else {
+                        $respuesta = false;
+                        $mensaje   = 'Lo siento, hubo un error al momento de actualizar los datos de la persona';
+                    }
                 }else{
                     $respuesta = false;
-                    $mensaje   = 'Lo siento, hubo un error al actualizar los datos del usuario';
+                    $mensaje   = 'Su contraseña es incorrecta, vuelva a ingresar su contraseña';
                 }
-            } else {
-                $respuesta = false;
-                $mensaje   = 'Lo siento, hubo un error al momento de actualizar los datos de la persona';
+            }else{
+                $perid = $usu->perid;
+                $pere = perpersonas::find($perid);
+                $pere->pernombre          = $re_nombre;
+                $pere->perapellidopaterno = $re_apellidoPaterno;
+                $pere->perapellidomaterno = $re_apellidoMaterno;
+                $pere->pernombrecompleto  = $re_nombre." ".$re_apellidoPaterno." ".$re_apellidoMaterno;
+                $pere->perdireccion       = $re_direccion;
+                $pere->percelular         = $re_telefono;
+                if ($pere->update()) {
+                    $respuesta      = true;
+                    $mensaje        = 'Los datos de la persona se actualizaron correctamente';
+
+                    $usu->usuusuario = $re_correo;
+
+                    list(, $base64) = explode(',', $re_imagen);
+                    $fichero = '/Sistema/Administrador/Imagenes/Usuarios/'.Str::random(5).".png";
+                    $archivo = base64_decode($base64);
+                    file_put_contents(base_path().'/public'.$fichero, $archivo);
+
+                    $usu->usuimagen = env('APP_URL').$fichero;
+
+                    if ($usu->update()) {
+                        $datos = usuusuarios::join('perpersonas as per', 'per.perid', 'usuusuarios.perid')
+                                                ->where('usutoken', $usutoken)
+                                                ->first();
+                        $respuesta = true;
+                        $mensaje   = 'Los datos del usuario se actualizaron correctamente';
+                    }else{
+                        $respuesta = false;
+                        $mensaje   = 'Lo siento, hubo un error al actualizar los datos del usuario';
+                    }
+                } else {
+                    $respuesta = false;
+                    $mensaje   = 'Lo siento, hubo un error al momento de actualizar los datos de la persona';
+                }
             }
         } else {
             $respuesta = false;
