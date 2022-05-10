@@ -732,9 +732,9 @@ class ClientesCargarController extends Controller
                             $suc->zonid = $zonid;
                             $suc->casid = $casid;
 
-                            $suc->update();
+                        }
 
-                        }   
+                        $suc->update();
                     }
 
                     // VERIFICAR SI EXISTE LA PERSONA DEL EJECUTIVO
