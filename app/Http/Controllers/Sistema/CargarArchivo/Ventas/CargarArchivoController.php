@@ -12,6 +12,7 @@ use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use Illuminate\Support\Str;
 use App\carcargasarchivos;
 use App\fecfechas;
+use App\Mail\MailCargaArchivos;
 use App\usuusuarios;
 use App\perpersonas;
 use App\ussusuariossucursales;
@@ -25,6 +26,8 @@ use App\tuptiposusuariospermisos;
 use App\vsiventasssi;
 use App\vsoventassso;
 use App\osiobjetivosssi;
+use App\tcatiposcargasarchivos;
+use Illuminate\Support\Facades\Mail;
 
 class CargarArchivoController extends Controller
 {
@@ -61,6 +64,8 @@ class CargarArchivoController extends Controller
                                 ->first([
                                     'usuusuarios.usuid', 
                                     'usuusuarios.tpuid', 
+                                    'usuusuarios.usucorreo', 
+                                    'usuusuarios.usuusuario',
                                     'tpu.tpuprivilegio'
                                 ]);
 
@@ -525,6 +530,12 @@ class CargarArchivoController extends Controller
                 $nuevoCargaArchivo->carurl           = env('APP_URL').'/Sistema/cargaArchivos/ventas/sellin/'.$archivo;
                 if($nuevoCargaArchivo->save()){
                     $pkid = "CAR-".$nuevoCargaArchivo->carid;
+
+                    $tca = tcatiposcargasarchivos::where('tcaid',$nuevoCargaArchivo->tcaid)
+                                                ->first(['tcanombre']);
+
+                    $data = ['linkArchivoSubido' => $nuevoCargaArchivo->carurl , 'nombre' => $nuevoCargaArchivo->carnombrearchivo , 'tipo' => $tca->tcanombre, 'usuario' => $usuusuario->usuusuario];
+                    Mail::to('gerson.vilca@grow-analytics.com.pe')->send(new MailCargaArchivos($data));
                 }else{
 
                 }
@@ -613,6 +624,8 @@ class CargarArchivoController extends Controller
                                 ->first([
                                     'usuusuarios.usuid', 
                                     'usuusuarios.tpuid', 
+                                    'usuusuarios.usucorreo', 
+                                    'usuusuarios.usuusuario',
                                     'tpu.tpuprivilegio'
                                 ]);
 

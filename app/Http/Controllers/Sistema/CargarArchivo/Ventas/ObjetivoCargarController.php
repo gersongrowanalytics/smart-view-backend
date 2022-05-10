@@ -19,10 +19,14 @@ use App\sucsucursales;
 use Illuminate\Support\Str;
 use App\proproductos;
 use App\catcategorias;
+use App\Mail\MailCargaArchivos;
 use App\tretiposrebates;
 use App\tuptiposusuariospermisos;
 use App\osiobjetivosssi;
 use App\osoobjetivossso;
+use App\tcatiposcargasarchivos;
+use Illuminate\Support\Facades\Mail;
+
 // use Illuminate\Support\Facades\DB;
 
 class ObjetivoCargarController extends Controller
@@ -66,6 +70,8 @@ class ObjetivoCargarController extends Controller
                                 ->first([
                                     'usuusuarios.usuid', 
                                     'usuusuarios.tpuid', 
+                                    'usuusuarios.usucorreo', 
+                                    'usuusuarios.usuusuario',
                                     'tpu.tpuprivilegio'
                                 ]);
 
@@ -122,7 +128,7 @@ class ObjetivoCargarController extends Controller
                         $objetivo    = $objPHPExcel->getActiveSheet()->getCell('L'.$i)->getCalculatedValue();
 
                         $totalObjetivo = $totalObjetivo + $objetivo;
-
+                        // dd($mesTxt);
                         $fecfecha = fecfechas::where('fecdia', $dia)
                                             ->where('fecmes', $mesTxt)
                                             ->where('fecano', $ano)
@@ -538,6 +544,13 @@ class ObjetivoCargarController extends Controller
                         $nuevoCargaArchivo->carurl            = env('APP_URL').'/Sistema/cargaArchivos/objetivos/sellin/'.basename($usuusuario->usuid.'-'.$usuusuario->usuusuario.'-'.$fechaActual.'-'.$_FILES['file']['name']);;
                         if($nuevoCargaArchivo->save()){
                             $pkid = "CAR-".$nuevoCargaArchivo->carid;
+
+                            $tca = tcatiposcargasarchivos::where('tcaid',$nuevoCargaArchivo->tcaid)
+                                                            ->first(['tcanombre']);
+
+                            $data = ['linkArchivoSubido' => $nuevoCargaArchivo->carurl , 'nombre' => $nuevoCargaArchivo->carnombrearchivo , 'tipo' => $tca->tcanombre, 'usuario' => $usuusuario->usuusuario];
+                            Mail::to('gerson.vilca@grow-analytics.com.pe')->send(new MailCargaArchivos($data));
+
                         }else{
 
                         }
@@ -1243,7 +1256,7 @@ class ObjetivoCargarController extends Controller
     public function CargarObSO(Request $request)
     {
         date_default_timezone_set("America/Lima");
-        $fechaActual = date('Y-m-d H:i:s');
+        $fechaActual = date('Y-m-d');
 
         $respuesta      = true;
         $mensaje        = '';
@@ -1270,6 +1283,8 @@ class ObjetivoCargarController extends Controller
                                 ->first([
                                     'usuusuarios.usuid', 
                                     'usuusuarios.tpuid', 
+                                    'usuusuarios.usucorreo', 
+                                    'usuusuarios.usuusuario',
                                     'tpu.tpuprivilegio'
                                 ]);
 
@@ -1715,6 +1730,12 @@ class ObjetivoCargarController extends Controller
                         $nuevoCargaArchivo->carurl            = env('APP_URL').'/Sistema/cargaArchivos/objetivos/sellout/'.basename($usuusuario->usuid.'-'.$usuusuario->usuusuario.'-'.$fechaActual.'-'.$_FILES['file']['name']);
                         if($nuevoCargaArchivo->save()){
                             $pkid = "CAR-".$nuevoCargaArchivo->carid;
+                            $tca = tcatiposcargasarchivos::where('tcaid',$nuevoCargaArchivo->tcaid)
+                                                ->first(['tcanombre']);
+
+                            $data = ['linkArchivoSubido' => $nuevoCargaArchivo->carurl , 'nombre' => $nuevoCargaArchivo->carnombrearchivo , 'tipo' => $tca->tcanombre, 'usuario' => $usuusuario->usuusuario];
+                            Mail::to('gerson.vilca@grow-analytics.com.pe')->send(new MailCargaArchivos($data));
+
                         }else{
 
                         }   
@@ -1780,7 +1801,7 @@ class ObjetivoCargarController extends Controller
     {
 
         date_default_timezone_set("America/Lima");
-        $fechaActual = date('Y-m-d H:i:s');
+        $fechaActual = date('Y-m-d');
 
         $respuesta      = true;
         $mensaje        = '';
@@ -1806,7 +1827,9 @@ class ObjetivoCargarController extends Controller
                                 ->where('usuusuarios.usutoken', $usutoken)
                                 ->first([
                                     'usuusuarios.usuid', 
-                                    'usuusuarios.tpuid', 
+                                    'usuusuarios.tpuid',
+                                    'usuusuarios.usucorreo', 
+                                    'usuusuarios.usuusuario',
                                     'tpu.tpuprivilegio'
                                 ]);
 
@@ -1900,6 +1923,12 @@ class ObjetivoCargarController extends Controller
                 $nuevoCargaArchivo->carurl            = env('APP_URL').'/Sistema/cargaArchivos/objetivos/sellout/'.$archivo;
                 if($nuevoCargaArchivo->save()){
                     $pkid = "CAR-".$nuevoCargaArchivo->carid;
+                    $tca = tcatiposcargasarchivos::where('tcaid',$nuevoCargaArchivo->tcaid)
+                                        ->first(['tcanombre']);
+
+                    $data = ['linkArchivoSubido' => $nuevoCargaArchivo->carurl , 'nombre' => $nuevoCargaArchivo->carnombrearchivo , 'tipo' => $tca->tcanombre, 'usuario' => $usuusuario->usuusuario];
+                    Mail::to('gerson.vilca@grow-analytics.com.pe')->send(new MailCargaArchivos($data));
+
                 }else{
 
                 }

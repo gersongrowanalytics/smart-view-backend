@@ -23,6 +23,9 @@ use App\tretiposrebates;
 use App\trrtiposrebatesrebates;
 use App\scasucursalescategorias;
 use App\cascanalessucursales;
+use App\Mail\MailCargaArchivos;
+use App\tcatiposcargasarchivos;
+use Illuminate\Support\Facades\Mail;
 
 class ClientesCargarController extends Controller
 {
@@ -651,7 +654,7 @@ class ClientesCargarController extends Controller
     public function ActualizarNombres(Request $request)
     {   
         date_default_timezone_set("America/Lima");
-        $fechaActual = date('Y-m-d H:i:s');
+        $fechaActual = date('Y-m-d');
 
         $respuesta      = true;
         $mensaje        = '';
@@ -663,7 +666,7 @@ class ClientesCargarController extends Controller
         $usutoken       = $request->header('api_token');
         $archivo        = $_FILES['file']['name'];
 
-        $usuusuario = usuusuarios::where('usutoken', $usutoken)->first(['usuid', 'usuusuario']);
+        $usuusuario = usuusuarios::where('usutoken', $usutoken)->first(['usuid', 'usucorreo', 'usuusuario']);
         $fichero_subido = '';
 
         $pkid = 0;
@@ -886,6 +889,13 @@ class ClientesCargarController extends Controller
             $nuevoCargaArchivo->carexito = true;
             if($nuevoCargaArchivo->save()){
                 $pkid = "CAR-".$nuevoCargaArchivo->carid;
+
+                $tca = tcatiposcargasarchivos::where('tcaid',$nuevoCargaArchivo->tcaid)
+                                                ->first(['tcanombre']);
+
+                $data = ['linkArchivoSubido' => $nuevoCargaArchivo->carurl , 'nombre' => $nuevoCargaArchivo->carnombrearchivo , 'tipo' => $tca->tcanombre, 'usuario' => $usuusuario->usuusuario];
+                Mail::to('gerson.vilca@grow-analytics.com.pe')->send(new MailCargaArchivos($data));
+
             }else{
 
             }

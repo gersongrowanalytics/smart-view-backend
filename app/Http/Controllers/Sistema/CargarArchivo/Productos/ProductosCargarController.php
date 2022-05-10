@@ -12,8 +12,11 @@ use App\carcargasarchivos;
 use App\fecfechas;
 use App\proproductos;
 use App\catcategorias;
+use App\Mail\MailCargaArchivos;
+use App\tcatiposcargasarchivos;
 use App\usuusuarios;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 
 class ProductosCargarController extends Controller
 {
@@ -229,7 +232,7 @@ class ProductosCargarController extends Controller
         $usutoken       = $request->header('api_token');
         $archivo        = $_FILES['file']['name'];
 
-        $usuusuario = usuusuarios::where('usutoken', $usutoken)->first(['usuid', 'usuusuario']);
+        $usuusuario = usuusuarios::where('usutoken', $usutoken)->first(['usuid','usucorreo', 'usuusuario']);
 
         $fichero_subido = '';
 
@@ -363,6 +366,12 @@ class ProductosCargarController extends Controller
             $nuevoCargaArchivo->carurl           = env('APP_URL').'/Sistema/cargaArchivos/productos/'.$archivo;
             if($nuevoCargaArchivo->save()){
                 $pkid = "CAR-".$nuevoCargaArchivo->carid;
+                $tca = tcatiposcargasarchivos::where('tcaid',$nuevoCargaArchivo->tcaid)
+                                                ->first(['tcanombre']);
+
+                $data = ['linkArchivoSubido' => $nuevoCargaArchivo->carurl , 'nombre' => $nuevoCargaArchivo->carnombrearchivo , 'tipo' => $tca->tcanombre, 'usuario' => $usuusuario->usuusuario];
+                Mail::to('gerson.vilca@grow-analytics.com.pe')->send(new MailCargaArchivos($data));
+
             }else{
 
             }

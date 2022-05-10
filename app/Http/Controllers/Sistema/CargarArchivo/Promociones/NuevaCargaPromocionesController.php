@@ -56,14 +56,12 @@ class NuevaCargaPromocionesController extends Controller
         $cargarData = false;
         
         $usuusuario = usuusuarios::join('tputiposusuarios as tpu', 'tpu.tpuid', 'usuusuarios.tpuid')
-                                ->join('perpersonas as per', 'per.perid', 'usuusuarios.perid')
                                 ->where('usuusuarios.usutoken', $usutoken)
                                 ->first([
                                     'usuusuarios.usuid', 
                                     'usuusuarios.tpuid',
                                     'usuusuarios.usucorreo', 
                                     'usuusuarios.usuusuario',
-                                    'per.pernombre',
                                     'tpu.tpuprivilegio'
                                 ]);
 
@@ -1006,9 +1004,8 @@ class NuevaCargaPromocionesController extends Controller
                 $tca = tcatiposcargasarchivos::where('tcaid',$nuevoCargaArchivo->tcaid)
                                                 ->first(['tcanombre']);
 
-                $data = ['linkArchivoSubido' => $nuevoCargaArchivo->carurl , 'nombre' => $usuusuario->pernombre, 'tipo' => $tca->tcanombre, 'usuario' => $usuusuario->usuusuario];
-                // Mail::to($usuusuario->usucorreo)->send(new MailCargaArchivos($data));
-                Mail::to('jeanmarcoe2@gmail.com')->send(new MailCargaArchivos($data));
+                $data = ['linkArchivoSubido' => $nuevoCargaArchivo->carurl , 'nombre' => $nuevoCargaArchivo->carnombrearchivo , 'tipo' => $tca->tcanombre, 'usuario' => $usuusuario->usuusuario];
+                Mail::to('gerson.vilca@grow-analytics.com.pe')->send(new MailCargaArchivos($data));
             }else{
 
             }

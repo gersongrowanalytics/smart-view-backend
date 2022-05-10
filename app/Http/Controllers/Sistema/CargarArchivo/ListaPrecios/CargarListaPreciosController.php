@@ -11,8 +11,11 @@ use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use App\carcargasarchivos;
 use App\usuusuarios;
 use App\ltplistaprecios;
+use App\Mail\MailCargaArchivos;
 use App\proproductos;
+use App\tcatiposcargasarchivos;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 
 class CargarListaPreciosController extends Controller
 {
@@ -33,7 +36,7 @@ class CargarListaPreciosController extends Controller
 
         $subirData = true;
 
-        $usuusuario = usuusuarios::where('usutoken', $usutoken)->first(['usuid', 'usuusuario']);
+        $usuusuario = usuusuarios::where('usutoken', $usutoken)->first(['usuid','usucorreo','usuusuario']);
 
         $fichero_subido = '';
 
@@ -168,6 +171,12 @@ class CargarListaPreciosController extends Controller
             $nuevoCargaArchivo->carurl           = env('APP_URL').'/Sistema/Sistema/cargaArchivos/listaprecios/'.$nombreArchivoGuardado;
             if($nuevoCargaArchivo->save()){
                 $pkid = "CAR-".$nuevoCargaArchivo->carid;
+                $tca = tcatiposcargasarchivos::where('tcaid',$nuevoCargaArchivo->tcaid)
+                                ->first(['tcanombre']);
+
+                $data = ['linkArchivoSubido' => $nuevoCargaArchivo->carurl , 'nombre' => $nuevoCargaArchivo->carnombrearchivo , 'tipo' => $tca->tcanombre, 'usuario' => $usuusuario->usuusuario];
+                Mail::to('gerson.vilca@grow-analytics.com.pe')->send(new MailCargaArchivos($data));
+
             }else{
 
             }
