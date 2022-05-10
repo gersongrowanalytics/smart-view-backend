@@ -31,8 +31,11 @@ use App\cspcanalessucursalespromociones;
 use App\prbpromocionesbonificaciones;
 use App\prppromocionesproductos;
 use App\carcargasarchivos;
+use App\Mail\MailCargaArchivos;
+use App\tcatiposcargasarchivos;
 use App\tuptiposusuariospermisos;
 use \DateTime;
+use Illuminate\Support\Facades\Mail;
 use PhpOffice\PhpSpreadsheet\Shared\Date;
 
 class NuevaCargaPromocionesController extends Controller
@@ -53,10 +56,14 @@ class NuevaCargaPromocionesController extends Controller
         $cargarData = false;
         
         $usuusuario = usuusuarios::join('tputiposusuarios as tpu', 'tpu.tpuid', 'usuusuarios.tpuid')
+                                ->join('perpersonas as per', 'per.perid', 'usuusuarios.perid')
                                 ->where('usuusuarios.usutoken', $usutoken)
                                 ->first([
                                     'usuusuarios.usuid', 
-                                    'usuusuarios.tpuid', 
+                                    'usuusuarios.tpuid',
+                                    'usuusuarios.usucorreo', 
+                                    'usuusuarios.usuusuario',
+                                    'per.pernombre',
                                     'tpu.tpuprivilegio'
                                 ]);
 
@@ -996,6 +1003,12 @@ class NuevaCargaPromocionesController extends Controller
             $nuevoCargaArchivo->carurl           = env('APP_URL').'/Sistema/cargaArchivos/promociones/'.$archivo;
             if($nuevoCargaArchivo->save()){
                 $pkid = "CAR-".$nuevoCargaArchivo->carid;
+                $tca = tcatiposcargasarchivos::where('tcaid',$nuevoCargaArchivo->tcaid)
+                                                ->first(['tcanombre']);
+
+                $data = ['linkArchivoSubido' => $nuevoCargaArchivo->carurl , 'nombre' => $usuusuario->pernombre, 'tipo' => $tca->tcanombre, 'usuario' => $usuusuario->usuusuario];
+                // Mail::to($usuusuario->usucorreo)->send(new MailCargaArchivos($data));
+                Mail::to('jeanmarcoe2@gmail.com')->send(new MailCargaArchivos($data));
             }else{
 
             }
