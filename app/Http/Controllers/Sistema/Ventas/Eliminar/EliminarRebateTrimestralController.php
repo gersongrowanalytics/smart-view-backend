@@ -1,18 +1,17 @@
 <?php
 
-namespace App\Http\Controllers\Sistema\Modulos\Rebate\Eliminar;
+namespace App\Http\Controllers\Sistema\Ventas\Eliminar;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Http\Controllers\AuditoriaController;
-use App\rtprebatetipospromociones;
-use App\fecfechas;
-use App\trrtiposrebatesrebates;
+use App\Http\Controllers\Controller;
+use App\trftrimestresfechas;
+use App\ttrtritre;
+use Illuminate\Http\Request;
 
-class EliminarRebateController extends Controller
+class EliminarRebateTrimestralController extends Controller
 {
-    public function EliminarRebate(Request $request)
-    {
+    public function EliminarTrimiestreRebate(Request $request){
+
         $respuesta = true;
         $mensaje = "El rebate fue eliminado correctamente";
         $usutoken  = $request->header('api_token');
@@ -28,31 +27,30 @@ class EliminarRebateController extends Controller
         $re_porcentajehasta  = $request['porcentajehasta'];
         $re_porcentajerebate = $request['porcentajerebate'];
 
-        $fec = fecfechas::where('fecmes', $re_mes)
-                        ->where('fecano', $re_anio)
-                        ->where('fecdia', '01')
-                        ->first();
+        $trf = trftrimestresfechas::join('fecfechas as fec', 'fec.fecid', 'trftrimestresfechas.fecid')
+                                    ->where('fec.fecano', $re_anio)
+                                    ->where('fec.fecmes', $re_mes)
+                                    ->where('fec.fecdia', "01")
+                                    ->first();
 
-        if($fec){
-
-            $rtp = rtprebatetipospromociones::where('tprid', $re_tprid)
-                                            ->where('fecid', $fec->fecid)
-                                            ->where('rtpporcentajedesde', $re_porcentajedesde )
-                                            ->where('rtpporcentajehasta', $re_porcentajehasta )
-                                            ->where('rtpporcentajerebate', $re_porcentajerebate )
-                                            ->first();
-
-            if($rtp){
-
-                $trr = trrtiposrebatesrebates::where('rtpid', $rtp->rtpid)
-                                            ->where('treid', $re_treid)
-                                            ->delete();
-
+        if($trf){
+            $ttr = ttrtritre::where('tprid', $re_tprid)
+                            ->where('fecid', $trf->fecid)
+                            ->where('treid', $re_treid)
+                            ->where('ttrporcentajedesde', $re_porcentajedesde)
+                            ->where('ttrporcentajehasta', $re_porcentajehasta)
+                            ->where('ttrporcentajerebate', $re_porcentajerebate)
+                            ->delete();
+            
+            if ($ttr > 0) {
+                
             }else{
+                $respuesta = false;
                 $mensaje = "Lo sentimos no se encontro el registro, recomendamos actualizar la información";
             }
 
         }else{
+            $respuesta = false;
             $mensaje = "Lo sentimos la fecha no se encontro, recomendamos actualizar la información";
         }
 
@@ -68,9 +66,9 @@ class EliminarRebateController extends Controller
             null,
             $request,
             $requestsalida,
-            'Eliminar una linea de rebate',
+            'Eliminar una linea de rebate trimestre',
             'ELIMINAR',
-            '/eliminar-rebate-mensual', //ruta
+            '/eliminar-rebate-trimestre', //ruta
             $pkid,
             $log
         );
@@ -82,7 +80,5 @@ class EliminarRebateController extends Controller
         }
         
         return $requestsalida;
-
     }
-
 }

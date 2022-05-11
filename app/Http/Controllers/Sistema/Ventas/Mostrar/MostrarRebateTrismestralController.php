@@ -73,6 +73,7 @@ class MostrarRebateTrismestralController extends Controller
                             'tprid'  => $ttr->tprid,
                             'tprnombre'  => $ttr->tprnombre,
                             'trenombre'  => $ttr->trenombre,
+                            'treid' => $ttr->treid,
                             'ttrporcentajedesde'  => $ttrsPorcentaje->ttrporcentajedesde,
                             'ttrporcentajehasta'  => $ttrsPorcentaje->ttrporcentajehasta,
                             'ttrporcentajerebate' => "1",

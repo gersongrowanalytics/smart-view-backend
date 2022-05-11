@@ -208,6 +208,7 @@ $router->post('/aceptar-terminos-condiciones', 'Sistema\TerminosCondiciones\Acep
     // OBTENER DATA DE REBATE TRIMESTRAL
     $router->post('/mostrar-rebate-trimestral', 'Sistema\Ventas\Mostrar\MostrarRebateTrismestralController@MostrarRebateTrismestral');
     $router->post('/crear-varios-rebate-trimestral', 'Sistema\Ventas\Crear\CrearRebateTrimestralController@CrearRebateTrimestral');
+    $router->post('/eliminar-rebate-trimestral', 'Sistema\Ventas\Eliminar\EliminarRebateTrimestralController@EliminarTrimiestreRebate');
 
 // });
 
