@@ -25,7 +25,7 @@
                         <td align="center" style=" width: 100000px;">
                             <div id=""
                                 style=" font-style: normal; font-weight: bold; font-size: 15px; line-height: 18px; color: #004FB8; padding-top:15px">
-                                Hemos recibido un nuevo archivo en la<br> plataforma de Subsidios.
+                                Hemos detectado imagenes pendientes en la plataforma de<br> SmartView.
                             </div>
                         </td>
                     </tr>
@@ -80,7 +80,7 @@
                     </tr>
                     <tr>
                         <td align="center" style=" width: 100000px">
-                            <a id="btnPlataforma" href="https://subsidios-thanos.softys-leadcorporate.com/"
+                            <a id="btnPlataforma" href="https://smartview.grow-corporate.com/banco-imagen"
                                 style="text-decoration: none; color: white; background: #FF8023; padding-top: 10px; padding-bottom: 10px; padding-left: 35px; padding-right: 35px; border-radius: 22px; margin-top: 50px;  font-style: normal; font-weight: bold; font-size: 10px; line-height: 12px;">Ir
                                 a la plataforma</a>
                         </td>

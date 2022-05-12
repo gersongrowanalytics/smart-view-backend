@@ -249,6 +249,7 @@ class MostrarProductosController extends Controller
             $proe->proimagen = env('APP_URL').$fichero;
             if($proe->update()){
                 $pro = proproductos::where('proimagen', '/')
+                                    ->where('proespromocion', 1)
                                     ->get();
                 if ($pro) {
                     $cantidadSinImagen = count($pro);

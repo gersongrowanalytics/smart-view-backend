@@ -25,7 +25,7 @@ class EliminarRebateTrimestralController extends Controller
         $re_treid  = $request['treid'];
         $re_porcentajedesde  = $request['porcentajedesde'];
         $re_porcentajehasta  = $request['porcentajehasta'];
-        $re_porcentajerebate = $request['porcentajerebate'];
+        // $re_porcentajerebate = $request['porcentajerebate'];
 
         $trf = trftrimestresfechas::join('fecfechas as fec', 'fec.fecid', 'trftrimestresfechas.fecid')
                                     ->where('fec.fecano', $re_anio)
@@ -39,7 +39,7 @@ class EliminarRebateTrimestralController extends Controller
                             ->where('treid', $re_treid)
                             ->where('ttrporcentajedesde', $re_porcentajedesde)
                             ->where('ttrporcentajehasta', $re_porcentajehasta)
-                            ->where('ttrporcentajerebate', $re_porcentajerebate)
+                            // ->where('ttrporcentajerebate', $re_porcentajerebate)
                             ->delete();
             
             if ($ttr > 0) {
