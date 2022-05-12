@@ -15,6 +15,7 @@ $router->get('/', function () use ($router) {
     return $router->app->version();
 });
 
+$router->post('/usuarios/eliminar', 'Sistema\Administrador\Usuarios\EliminarUsuariosController@EliminarUsuarios');
 $router->post('/usuarios/crear', 'Sistema\Administrador\Usuarios\CrearUsuariosController@CrearUsuarios');
 $router->post('/usuarios/editar', 'Sistema\Administrador\Usuarios\EditarUsuariosController@EditarUsuarios');
 $router->post('/usuarios/mostrar', 'Sistema\Administrador\Usuarios\MostrarUsuariosController@MostrarUsuarios');

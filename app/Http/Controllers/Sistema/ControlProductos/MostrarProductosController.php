@@ -8,8 +8,10 @@ use App\proproductos;
 use App\prppromocionesproductos;
 use App\prbpromocionesbonificaciones;
 use App\impimagenesproductos;
+use App\Mail\MailInformarAsignacionImagenProductoController;
 use Illuminate\Support\Str;
 use \DateTime;
+use Illuminate\Support\Facades\Mail;
 
 class MostrarProductosController extends Controller
 {
@@ -245,7 +247,16 @@ class MostrarProductosController extends Controller
             file_put_contents(base_path().'/public'.$fichero, $archivo);
 
             $proe->proimagen = env('APP_URL').$fichero;
-            $proe->update();
+            if($proe->update()){
+                $pro = proproductos::where('proimagen', '/')
+                                    ->get();
+                if ($pro) {
+                    $cantidadSinImagen = count($pro);
+                
+                    $data = ['cantidad' => $cantidadSinImagen, 'registros' => $pro];
+                    Mail::to('jeanmarcoe@gmail.com')->send(new MailInformarAsignacionImagenProductoController($data));
+                }
+            }
 
             prppromocionesproductos::join('prmpromociones as prm', 'prm.prmid', 'prppromocionesproductos.prmid')
                                     ->where('proid', $proe->proid)
