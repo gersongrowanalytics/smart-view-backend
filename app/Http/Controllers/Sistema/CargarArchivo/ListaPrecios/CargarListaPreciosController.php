@@ -14,6 +14,7 @@ use App\ltplistaprecios;
 use App\Mail\MailCargaArchivos;
 use App\proproductos;
 use App\tcatiposcargasarchivos;
+use App\tretiposrebates;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 
@@ -71,9 +72,7 @@ class CargarListaPreciosController extends Controller
 
                     $grupoSeleccionado = 0;
 
-                    // 15 -> ZB
-                    // 26 -> ZA
-                    // 24 -> ZC
+                    // 
 
                     foreach($nombresHojas as $posicionHoja => $nombresHoja){
 
@@ -399,6 +398,88 @@ class CargarListaPreciosController extends Controller
 
 
         }
+    }
+
+    public function DividirCG ()
+    {
+        $respuesta = true;
+        $mensaje = "Se retornaron los registros de lista de precios exitosamente";
+        $arrayZonas = ['LIMA'];
+        // 15 -> ZB
+        // 26 -> ZA
+        // 24 -> ZC
+        $as=[];
+        $arrayLP = [];
+
+        $ltps = ltplistaprecios::where('treid', '15')
+                                ->get();
+        
+        if($ltps){
+            
+            foreach ($arrayZonas as $keyZona => $zona) {
+                
+                $ltp = ltplistaprecios::where('treid','15')
+                                        ->where('ltpzona', $zona)
+                                        ->get();
+                if (count($ltp) > 0) {
+                    foreach ($ltp as $key => $lista) {
+                        $arrayLP[$key]['0']['value'] = $lista->ltpcategoria;
+                        $arrayLP[$key]['1']['value'] = $lista->ltpsubcategoria;
+                        $arrayLP[$key]['2']['value'] = $lista->ltpcodigosap;
+                        $arrayLP[$key]['3']['value'] = $lista->ltpean;
+                        $arrayLP[$key]['4']['value'] = $lista->ltpdescripcionproducto;
+                        $arrayLP[$key]['5']['value'] = $lista->ltpunidadventa;
+                        $arrayLP[$key]['6']['value'] = $lista->ltppreciolistasinigv;
+                        $arrayLP[$key]['7']['value'] = $lista->ltppreciolistaconigv;
+                    }
+                }else{
+                    $respuesta = false;
+                    $mensaje = "Lo siento, no se encontraron registros de lista de precios de la zona ".$zona;
+                }
+            }
+
+            $datos = [array(
+                "columns" => [
+                    [ 
+                        "title" => "Categoria", 
+                    ],
+                    [ 
+                        "title" => "Subcategoria", 
+                    ],
+                    [ 
+                        "title" => "Codigo Sap", 
+                    ],
+                    [ 
+                        "title" => "EAN", 
+                    ],
+                    [ 
+                        "title" => "Descripcion del producto", 
+                    ],
+                    [ 
+                        "title" => "Unidad venta", 
+                    ],
+                    [ 
+                        "title" => "Precio sin igv", 
+                    ],
+                    [ 
+                        "title" => "Precio con igv", 
+                    ]
+                ],
+                "data" => $arrayLP
+            )];
+        }else{
+            $respuesta = false;
+            $mensaje = "Lo siento, no se encontraron registros de la lista de precios ";
+        }
+        
+
+        $requestsalida = response()->json([
+            "respuesta" => $respuesta,
+            "mensaje"   => $mensaje,
+            "data"      => $datos
+        ]);
+        
+        return $requestsalida;
     }
 
 }

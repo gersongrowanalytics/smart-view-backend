@@ -273,3 +273,4 @@ $router->get('/organizar-lista-precios-maestra/{fecid}', 'salvacionController@Or
 $router->post('/reporte-auditoria-login','Sistema\Administrador\Usuarios\Reportes\GenerarExcelAuditoriaLoginController@GenerarReporteAuditoriaLogin');
 $router->post('/reporte-usuarios','Sistema\Administrador\Usuarios\Reportes\GenerarExcelUsuariosController@GenerarExcelUsuario');
 $router->post('/reporte-archivos-subidos', 'Sistema\ControlArchivos\Reportes\GenerarExcelArchivosSubidosController@GenerarExcelArchivosSubidos');
+$router->get('/excel-automatizacion','Sistema\CargarArchivo\ListaPrecios\CargarListaPreciosController@DividirCG');
