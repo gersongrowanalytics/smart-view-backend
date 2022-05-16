@@ -405,13 +405,11 @@ class CargarListaPreciosController extends Controller
     {
         $respuesta = true;
         $mensaje = "Se retornaron los registros de lista de precios exitosamente";
-        $arrayZonas = ['LIMA'];
+        $datos = [];
         // 15 -> ZB
         // 26 -> ZA
         // 24 -> ZC
-        $as=[];
         $arrayLP = [];
-        $sucursales_datos = [];
 
         $re_tipoRebate = $request['re_tipoRebate'];
         $re_zona       = $request['re_zona'];
@@ -432,8 +430,8 @@ class CargarListaPreciosController extends Controller
                                     ->where('ltpzona', $re_zona)
                                     ->get();
         
-        if($ltp){
-            if (count($ltp) > 0) {
+        if(count($ltp) > 0 && count($suc) > 0 ){
+            // if (count($ltp) > 0) {
                 foreach ($ltp as $key => $lista) {
                     $arrayLP[$key]['0']['value'] = $lista->ltpcategoria;
                     $arrayLP[$key]['1']['value'] = $lista->ltpsubcategoria;
@@ -474,13 +472,13 @@ class CargarListaPreciosController extends Controller
                     ],
                     "data" => $arrayLP
                 )];
-            }else{
-                $respuesta = false;
-                $mensaje = "Lo siento, no se encontraron registros de lista de precios de la zona";
-            }
+            // }else{
+            //     $respuesta = false;
+            //     $mensaje = "Lo siento, no se encontraron registros de lista de precios de la zona";
+            // }
         }else{
             $respuesta = false;
-            $mensaje = "Lo siento, no se encontraron registros de la lista de precios ";
+            $mensaje = "Lo siento, no se encontraron registros de la lista de precios o sucursales";
         }
         
 
