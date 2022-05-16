@@ -15,6 +15,7 @@ use App\Mail\MailCargaArchivos;
 use App\proproductos;
 use App\tcatiposcargasarchivos;
 use App\tretiposrebates;
+use App\sucsucursales;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 
@@ -400,7 +401,7 @@ class CargarListaPreciosController extends Controller
         }
     }
 
-    public function DividirCG ()
+    public function DividirCG (Request $request)
     {
         $respuesta = true;
         $mensaje = "Se retornaron los registros de lista de precios exitosamente";
@@ -410,63 +411,73 @@ class CargarListaPreciosController extends Controller
         // 24 -> ZC
         $as=[];
         $arrayLP = [];
+        $sucursales_datos = [];
 
-        $ltps = ltplistaprecios::where('treid', '15')
+        $re_tipoRebate = $request['re_tipoRebate'];
+        $re_zona       = $request['re_zona'];
+
+
+        if($re_zona == "LIMA"){
+            $suc = sucsucursales::where('treid', $re_tipoRebate)
+                                ->where('casid', 1)
                                 ->get();
-        
-        if($ltps){
-            
-            foreach ($arrayZonas as $keyZona => $zona) {
-                
-                $ltp = ltplistaprecios::where('treid','15')
-                                        ->where('ltpzona', $zona)
-                                        ->get();
-                if (count($ltp) > 0) {
-                    foreach ($ltp as $key => $lista) {
-                        $arrayLP[$key]['0']['value'] = $lista->ltpcategoria;
-                        $arrayLP[$key]['1']['value'] = $lista->ltpsubcategoria;
-                        $arrayLP[$key]['2']['value'] = $lista->ltpcodigosap;
-                        $arrayLP[$key]['3']['value'] = $lista->ltpean;
-                        $arrayLP[$key]['4']['value'] = $lista->ltpdescripcionproducto;
-                        $arrayLP[$key]['5']['value'] = $lista->ltpunidadventa;
-                        $arrayLP[$key]['6']['value'] = $lista->ltppreciolistasinigv;
-                        $arrayLP[$key]['7']['value'] = $lista->ltppreciolistaconigv;
-                    }
-                }else{
-                    $respuesta = false;
-                    $mensaje = "Lo siento, no se encontraron registros de lista de precios de la zona ".$zona;
-                }
-            }
 
-            $datos = [array(
-                "columns" => [
-                    [ 
-                        "title" => "Categoria", 
+        }else if($re_zona == 'PROVINCIA'){
+            $suc = sucsucursales::where('treid', $re_tipoRebate)
+                                    ->where('casid', 2)
+                                    ->get();
+        }     
+
+        $ltp = ltplistaprecios::where('treid', $re_tipoRebate)
+                                    ->where('ltpzona', $re_zona)
+                                    ->get();
+        
+        if($ltp){
+            if (count($ltp) > 0) {
+                foreach ($ltp as $key => $lista) {
+                    $arrayLP[$key]['0']['value'] = $lista->ltpcategoria;
+                    $arrayLP[$key]['1']['value'] = $lista->ltpsubcategoria;
+                    $arrayLP[$key]['2']['value'] = $lista->ltpcodigosap;
+                    $arrayLP[$key]['3']['value'] = $lista->ltpean;
+                    $arrayLP[$key]['4']['value'] = $lista->ltpdescripcionproducto;
+                    $arrayLP[$key]['5']['value'] = $lista->ltpunidadventa;
+                    $arrayLP[$key]['6']['value'] = $lista->ltppreciolistasinigv;
+                    $arrayLP[$key]['7']['value'] = $lista->ltppreciolistaconigv;
+                }
+
+                $datos = [array(
+                    "columns" => [
+                        [ 
+                            "title" => "Categoria", 
+                        ],
+                        [ 
+                            "title" => "Subcategoria", 
+                        ],
+                        [ 
+                            "title" => "Codigo Sap", 
+                        ],
+                        [ 
+                            "title" => "EAN", 
+                        ],
+                        [ 
+                            "title" => "Descripcion del producto", 
+                        ],
+                        [ 
+                            "title" => "Unidad venta", 
+                        ],
+                        [ 
+                            "title" => "Precio sin igv", 
+                        ],
+                        [ 
+                            "title" => "Precio con igv", 
+                        ]
                     ],
-                    [ 
-                        "title" => "Subcategoria", 
-                    ],
-                    [ 
-                        "title" => "Codigo Sap", 
-                    ],
-                    [ 
-                        "title" => "EAN", 
-                    ],
-                    [ 
-                        "title" => "Descripcion del producto", 
-                    ],
-                    [ 
-                        "title" => "Unidad venta", 
-                    ],
-                    [ 
-                        "title" => "Precio sin igv", 
-                    ],
-                    [ 
-                        "title" => "Precio con igv", 
-                    ]
-                ],
-                "data" => $arrayLP
-            )];
+                    "data" => $arrayLP
+                )];
+            }else{
+                $respuesta = false;
+                $mensaje = "Lo siento, no se encontraron registros de lista de precios de la zona";
+            }
         }else{
             $respuesta = false;
             $mensaje = "Lo siento, no se encontraron registros de la lista de precios ";
@@ -474,9 +485,10 @@ class CargarListaPreciosController extends Controller
         
 
         $requestsalida = response()->json([
-            "respuesta" => $respuesta,
-            "mensaje"   => $mensaje,
-            "data"      => $datos
+            "respuesta"  => $respuesta,
+            "mensaje"    => $mensaje,
+            "sucursales" => $suc,
+            "data"       => $datos,
         ]);
         
         return $requestsalida;
