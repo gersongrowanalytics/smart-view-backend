@@ -40,6 +40,7 @@ class loginController extends Controller
                 $usuusaurio = usuusuarios::join('tputiposusuarios as tpu', 'tpu.tpuid', 'usuusuarios.tpuid')
                                         ->join('perpersonas as per', 'per.perid', 'usuusuarios.perid')
                                         ->where('usuusuarios.usutoken', $re_token)
+                                        ->where('usuusuarios.estid', 1)
                                         ->first([
                                             'usuusuarios.usuid',
                                             'usuusuarios.usuimagen',
@@ -65,6 +66,7 @@ class loginController extends Controller
                 $usuusaurio = usuusuarios::join('tputiposusuarios as tpu', 'tpu.tpuid', 'usuusuarios.tpuid')
                                         ->join('perpersonas as per', 'per.perid', 'usuusuarios.perid')
                                         ->where('usuusuarios.usuusuario', $usuario)
+                                        ->where('usuusuarios.estid', 1)
                                         ->first([
                                             'usuusuarios.usuid',
                                             'usuusuarios.usuimagen',
