@@ -34,6 +34,7 @@ class MostrarUsuariosController extends Controller
                                         }
                                     }
                                 })
+                                ->whereNotNull('usuusuario')
                                 ->orderBy('usuusuarios.created_at', 'DESC')
                                 ->paginate(10);
                                 // ->get([
