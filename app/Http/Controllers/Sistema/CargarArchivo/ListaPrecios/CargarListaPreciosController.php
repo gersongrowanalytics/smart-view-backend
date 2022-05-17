@@ -418,6 +418,7 @@ class CargarListaPreciosController extends Controller
         if($re_zona == "LIMA"){
             $suc = sucsucursales::where('treid', $re_tipoRebate)
                                 ->where('casid', 1)
+                                ->limit(2)
                                 ->get();
 
         }else if($re_zona == "PROVINCIA"){
@@ -428,57 +429,61 @@ class CargarListaPreciosController extends Controller
 
         $ltp = ltplistaprecios::where('treid', $re_tipoRebate)
                                     ->where('ltpzona', $re_zona)
+                                    ->limit(5)
                                     ->get();
         
         if(count($ltp) > 0 && count($suc) > 0 ){
-            foreach ($ltp as $key => $lista) {
-                $arrayLP[$key]['0']['value'] = $lista->ltpcategoria;
-                $arrayLP[$key]['1']['value'] = $lista->ltpsubcategoria;
-                $arrayLP[$key]['2']['value'] = $lista->ltpcodigosap;
-                $arrayLP[$key]['3']['value'] = $lista->ltpean;
-                $arrayLP[$key]['4']['value'] = $lista->ltpdescripcionproducto;
-                $arrayLP[$key]['5']['value'] = $lista->ltpunidadventa;
-                $arrayLP[$key]['6']['value'] = $lista->ltppreciolistasinigv;
-                $arrayLP[$key]['7']['value'] = $lista->ltppreciolistaconigv;
-                // $arrayLP[$key]['8']['value'] = $lista->ltppreciolistaconigv;
-                // $arrayLP[$key]['9']['value'] = $lista->ltppreciolistaconigv;
-            }
+            foreach($suc as $keySuc=>$sucursal){
+                foreach ($ltp as $key => $lista) {
+                    $arrayLP[$key]['0']['value'] = $lista->ltpcategoria;
+                    $arrayLP[$key]['1']['value'] = $lista->ltpsubcategoria;
+                    $arrayLP[$key]['2']['value'] = $lista->ltpcodigosap;
+                    $arrayLP[$key]['3']['value'] = $lista->ltpean;
+                    $arrayLP[$key]['4']['value'] = $lista->ltpdescripcionproducto;
+                    $arrayLP[$key]['5']['value'] = $lista->ltpunidadventa;
+                    $arrayLP[$key]['6']['value'] = $lista->ltppreciolistasinigv;
+                    $arrayLP[$key]['7']['value'] = $lista->ltppreciolistaconigv;
+                    $arrayLP[$key]['8']['value'] = $sucursal->sucsoldto;
+                    $arrayLP[$key]['9']['value'] = $sucursal->sucnombre;
+                }
 
-            $datos = [array(
-                "columns" => [
-                    [ 
-                        "title" => "Categoria", 
+                $datos[] = [array(
+                    "columns" => [
+                        [ 
+                            "title" => "Categoria", 
+                        ],
+                        [ 
+                            "title" => "Subcategoria", 
+                        ],
+                        [ 
+                            "title" => "Codigo Sap", 
+                        ],
+                        [ 
+                            "title" => "EAN", 
+                        ],
+                        [ 
+                            "title" => "Descripcion del producto", 
+                        ],
+                        [ 
+                            "title" => "Unidad venta", 
+                        ],
+                        [ 
+                            "title" => "Precio sin igv", 
+                        ],
+                        [ 
+                            "title" => "Precio con igv", 
+                        ],
+                        [ 
+                            "title" => "Soldto", 
+                        ],
+                        [ 
+                            "title" => "Sucursal", 
+                        ]
                     ],
-                    [ 
-                        "title" => "Subcategoria", 
-                    ],
-                    [ 
-                        "title" => "Codigo Sap", 
-                    ],
-                    [ 
-                        "title" => "EAN", 
-                    ],
-                    [ 
-                        "title" => "Descripcion del producto", 
-                    ],
-                    [ 
-                        "title" => "Unidad venta", 
-                    ],
-                    [ 
-                        "title" => "Precio sin igv", 
-                    ],
-                    [ 
-                        "title" => "Precio con igv", 
-                    ],
-                    [ 
-                        "title" => "Soldto", 
-                    ],
-                    [ 
-                        "title" => "Sucursal", 
-                    ]
-                ],
-                "data" => $arrayLP
-            )];
+                    "data" => $arrayLP
+                )];
+            }
+            
         }else{
             $respuesta = false;
             $mensaje = "Lo siento, no se encontraron registros de la lista de precios o sucursales";
