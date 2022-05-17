@@ -40,6 +40,7 @@ class loginController extends Controller
                 $usuusaurio = usuusuarios::join('tputiposusuarios as tpu', 'tpu.tpuid', 'usuusuarios.tpuid')
                                         ->join('perpersonas as per', 'per.perid', 'usuusuarios.perid')
                                         ->where('usuusuarios.usutoken', $re_token)
+                                        ->where('usuusuarios.estid', 1)
                                         ->first([
                                             'usuusuarios.usuid',
                                             'usuusuarios.usuimagen',
@@ -65,6 +66,7 @@ class loginController extends Controller
                 $usuusaurio = usuusuarios::join('tputiposusuarios as tpu', 'tpu.tpuid', 'usuusuarios.tpuid')
                                         ->join('perpersonas as per', 'per.perid', 'usuusuarios.perid')
                                         ->where('usuusuarios.usuusuario', $usuario)
+                                        ->where('usuusuarios.estid', 1)
                                         ->first([
                                             'usuusuarios.usuid',
                                             'usuusuarios.usuimagen',
@@ -196,7 +198,7 @@ class loginController extends Controller
                     $datos          = $usuusaurio;
                 }else{
                     $respuesta      = false;
-                    $mensaje        = 'Login Incorrecto';
+                    $mensaje        = 'Lo sentimos, el usuario o la contraseña no son correctas';
                     $mensajeDetalle = 'La contraseña es incorrecta.';
                     $linea          = __LINE__;
                     $datos          = [];
@@ -204,7 +206,7 @@ class loginController extends Controller
 
             }else{
                 $respuesta      = false;
-                $mensaje        = 'Login Incorrecto';
+                $mensaje        = 'Lo sentimos, el usuario ingresado no esta registrado o se encuentra desactivado';
                 $mensajeDetalle = 'El usuario no esta registrado.';
                 $linea          = __LINE__;
                 $datos          = [];
