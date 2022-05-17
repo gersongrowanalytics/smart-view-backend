@@ -413,12 +413,26 @@ class CargarListaPreciosController extends Controller
 
         $re_tipoRebate = $request['re_tipoRebate'];
         $re_zona       = $request['re_zona'];
+        $re_fechas     = $request['re_fechas'];
 
+        if(isset($re_fechas)){
+            if(sizeof($re_fechas) > 0){
+
+                $fechaInicio = $re_fechas[0];
+                $fechaFinal  = $re_fechas[1];
+
+                $fe_ini = explode("/", $fechaInicio);
+                $fe_fin = explode("/", $fechaFinal);
+
+                $re_fechaInicial = $fe_ini[2]."-".$fe_ini[1]."-".$fe_ini[0];
+                $re_fechaFinal  = $fe_fin[2]."-".$fe_fin[1]."-".$fe_fin[0];
+            }
+        }
 
         if($re_zona == "LIMA"){
             $suc = sucsucursales::where('treid', $re_tipoRebate)
                                 ->where('casid', 1)
-                                ->limit(2)
+                                // ->limit(2)
                                 ->get();
 
         }else if($re_zona == "PROVINCIA"){
@@ -429,7 +443,8 @@ class CargarListaPreciosController extends Controller
 
         $ltp = ltplistaprecios::where('treid', $re_tipoRebate)
                                     ->where('ltpzona', $re_zona)
-                                    ->limit(5)
+                                    ->whereBetween('created_at',[$re_fechaInicial, $re_fechaFinal])
+                                    // ->limit(5)
                                     ->get();
         
         if(count($ltp) > 0 && count($suc) > 0 ){
