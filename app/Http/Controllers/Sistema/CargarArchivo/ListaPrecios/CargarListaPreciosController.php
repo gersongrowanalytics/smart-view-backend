@@ -438,12 +438,13 @@ class CargarListaPreciosController extends Controller
         if($re_zona == "LIMA"){
             $suc = sucsucursales::where('treid', $re_tipoRebate)
                                 ->where('casid', 1)
-                                // ->limit(2)
+                                ->limit(5)
                                 ->get();
 
         }else if($re_zona == "PROVINCIA"){
             $suc = sucsucursales::where('treid', $re_tipoRebate)
                                 ->where('casid', 2)
+                                ->limit(5)
                                 ->get();
         }     
 
@@ -452,7 +453,7 @@ class CargarListaPreciosController extends Controller
                                 ->where('ltpzona', $re_zona)
                                 ->whereBetween('fec.fecmesnumero',[$re_mesInicial, $re_mesFinal])
                                 ->whereBetween('fec.fecano',[$re_anioInicial, $re_anioFinal])
-                                // ->limit(5)
+                                ->limit(10)
                                 ->get();
 
         // dd($ltp['0']);
@@ -520,7 +521,7 @@ class CargarListaPreciosController extends Controller
         $nuevoMes = "";
         $nuevoAnio = "";
         $precioIGVAnterior = "";
-        $porcentaje = "";
+        $porcentajeFinal = "";
 
         if(isset($fecha)){
             $datosFecha = explode("-",$fecha);
@@ -546,12 +547,11 @@ class CargarListaPreciosController extends Controller
             if ($ltp) {
                 $precioIGVAnterior = $ltp['ltppreciolistaconigv'];
                 $porcentaje = ($precio - $precioIGVAnterior)/100;
+                $porcentajeFinal = $porcentaje."%";
             }else{
-                
+                $porcentajeFinal = "No existe un precio del producto en el anterior mes";
             }
-            
-            return $porcentaje."%";
+            return $porcentajeFinal;
         }
-
     }
 }
