@@ -549,9 +549,13 @@ class CargarListaPreciosController extends Controller
                                     ->first(['ltplistaprecios.ltppreciolistaconigv']);
 
             if ($ltp) {
-                $precioIGVAnterior = $ltp['ltppreciolistaconigv'];
-                $porcentaje = ($precio - $precioIGVAnterior)/100;
-                $porcentajeFinal = $porcentaje."%";
+                if ($ltp['ltppreciolistaconigv']>'0') {
+                    $precioIGVAnterior = $ltp['ltppreciolistaconigv'];
+                    $porcentaje = (($precio - $precioIGVAnterior)*100)/$precioIGVAnterior;
+                    $porcentajeFinal = $porcentaje."%";
+                }else{
+                    $porcentajeFinal = "0";
+                }
             }else{
                 $porcentajeFinal = "No existe un precio del producto en el anterior mes";
             }
@@ -578,7 +582,6 @@ class CargarListaPreciosController extends Controller
             }
 
             $ltp = ltplistaprecios::join('fecfechas as fec', 'fec.fecid', 'ltplistaprecios.fecid')
-                                    // ->join("proproductos as pro", "pro.proid", "ltplistaprecios.proid")
                                     ->where('fec.fecmesnumero', $nuevoMes)
                                     ->where('fec.fecano', $nuevoAnio)
                                     ->where('treid', $rebate)
