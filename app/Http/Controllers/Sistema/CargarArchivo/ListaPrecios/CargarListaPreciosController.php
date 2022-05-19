@@ -408,7 +408,7 @@ class CargarListaPreciosController extends Controller
         $datos = [];
         $arrayLP = [];
         $ltp_zona = "";
-        
+
         $re_tipoRebate = $request['re_tipoRebate'];
         $re_zona       = $request['re_zona'];
         $re_fechas     = $request['re_fechas'];
@@ -462,8 +462,10 @@ class CargarListaPreciosController extends Controller
                     $arrayLP[$key]['0']['value'] = $this->FormatearFecha($lista->fecfecha);
                     $arrayLP[$key]['1']['value'] = $sucursal->sucsoldto;
                     $arrayLP[$key]['2']['value'] = $this->DuplicarSKU($lista->ltpcodigosap, $lista->fecfecha, $re_tipoRebate, $ltp_zona, $lista->proid);
-                    $arrayLP[$key]['3']['value'] = $lista->ltppreciolistaconigv;
+                    $arrayLP[$key]['3']['value'] = floatval($lista->ltppreciolistaconigv);
+                    $arrayLP[$key]['3']['style'] = array("numFmt" => "#,##0.00");
                     $arrayLP[$key]['4']['value'] = $this->PorcentajePrecioIGV($lista->ltppreciolistaconigv, $lista->fecfecha, $re_tipoRebate, $ltp_zona, $lista->ltpcodigosap);
+                    $arrayLP[$key]['4']['style'] = array("numFmt" => "#,##0");
                 }
 
                 $datos[] = [array(
@@ -547,7 +549,7 @@ class CargarListaPreciosController extends Controller
                 if ($ltp['ltppreciolistaconigv']>'0') {
                     $precioIGVAnterior = $ltp['ltppreciolistaconigv'];
                     $porcentaje = (($precio - $precioIGVAnterior)*100)/$precioIGVAnterior;
-                    $porcentajeFinal = $porcentaje."%";
+                    $porcentajeFinal = floatval($porcentaje);
                 }else{
                     $porcentajeFinal = "0";
                 }
