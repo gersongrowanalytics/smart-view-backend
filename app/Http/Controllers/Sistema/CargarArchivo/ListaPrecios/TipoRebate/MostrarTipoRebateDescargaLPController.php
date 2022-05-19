@@ -37,6 +37,5 @@ class MostrarTipoRebateDescargaLPController extends Controller
         ]);
         
         return $requestsalida;
-        
     }
 }

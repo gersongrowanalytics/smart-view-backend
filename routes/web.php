@@ -274,5 +274,5 @@ $router->post('/reporte-auditoria-login','Sistema\Administrador\Usuarios\Reporte
 $router->post('/reporte-usuarios','Sistema\Administrador\Usuarios\Reportes\GenerarExcelUsuariosController@GenerarExcelUsuario');
 $router->post('/reporte-archivos-subidos', 'Sistema\ControlArchivos\Reportes\GenerarExcelArchivosSubidosController@GenerarExcelArchivosSubidos');
 $router->post('/reportes-logicaLP','Sistema\CargarArchivo\ListaPrecios\CargarListaPreciosController@DividirCG');
-$router->get('/mostar-tipo-rebates','Sistema\CargarArchivo\ListaPrecios\TipoRebate\MostrarTipoRebateDescargaLPController@MostrarTipoRebate');
-
+$router->get('/mostrar-tipo-rebates','Sistema\CargarArchivo\ListaPrecios\TipoRebate\MostrarTipoRebateDescargaLPController@MostrarTipoRebate');
+$router->get('/mostrar-canales-sucursales', 'Sistema\CargarArchivo\ListaPrecios\CanalesSucursales\MostrarCanalesSucursalesDescargaLPController@MostrarCanalesSucursales');
