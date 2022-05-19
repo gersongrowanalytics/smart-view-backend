@@ -406,9 +406,6 @@ class CargarListaPreciosController extends Controller
         $respuesta = true;
         $mensaje = "Se retornaron los registros de lista de precios exitosamente";
         $datos = [];
-        // 15 -> ZB
-        // 26 -> ZA
-        // 24 -> ZC
         $arrayLP = [];
 
         $re_tipoRebate = $request['re_tipoRebate'];
@@ -435,13 +432,11 @@ class CargarListaPreciosController extends Controller
         if($re_zona == "LIMA"){
             $suc = sucsucursales::where('treid', $re_tipoRebate)
                                 ->where('casid', 1)
-                                // ->limit(5)
                                 ->get();
 
         }else if($re_zona == "PROVINCIA"){
             $suc = sucsucursales::where('treid', $re_tipoRebate)
                                 ->where('casid', 2)
-                                // ->limit(5)
                                 ->get();
         }     
 
@@ -458,7 +453,6 @@ class CargarListaPreciosController extends Controller
                                 ->where('ltpzona', $re_zona)
                                 ->whereBetween('fec.fecmesnumero',[$re_mesInicial, $re_mesFinal])
                                 ->whereBetween('fec.fecano',[$re_anioInicial, $re_anioFinal])
-                                // ->limit(10)
                                 ->get();
 
         if(count($ltp) > 0 && count($suc) > 0 ){
