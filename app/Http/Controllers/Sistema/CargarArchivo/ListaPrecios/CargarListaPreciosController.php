@@ -407,7 +407,8 @@ class CargarListaPreciosController extends Controller
         $mensaje = "Se retornaron los registros de lista de precios exitosamente";
         $datos = [];
         $arrayLP = [];
-
+        $ltp_zona = "";
+        
         $re_tipoRebate = $request['re_tipoRebate'];
         $re_zona       = $request['re_zona'];
         $re_fechas     = $request['re_fechas'];
@@ -429,16 +430,10 @@ class CargarListaPreciosController extends Controller
             }
         }
 
-        if($re_zona == "LIMA"){
-            $suc = sucsucursales::where('treid', $re_tipoRebate)
-                                ->where('casid', 1)
-                                ->get();
 
-        }else if($re_zona == "PROVINCIA"){
-            $suc = sucsucursales::where('treid', $re_tipoRebate)
-                                ->where('casid', 2)
-                                ->get();
-        }     
+        $suc = sucsucursales::where('treid', $re_tipoRebate)
+                            ->where('casid', $re_zona)
+                            ->get();  
 
         if ($suc) {
             foreach ($suc as $key => $sucursal) {
@@ -448,9 +443,15 @@ class CargarListaPreciosController extends Controller
             }
         }
 
+        if ($re_zona == "1") {
+            $ltp_zona = "LIMA";
+        }else if($re_zona == "2"){
+            $ltp_zona = "PROVINCIA";
+        }
+
         $ltp = ltplistaprecios::join('fecfechas as fec', 'fec.fecid', 'ltplistaprecios.fecid')
                                 ->where('treid', $re_tipoRebate)
-                                ->where('ltpzona', $re_zona)
+                                ->where('ltpzona', $ltp_zona)
                                 ->whereBetween('fec.fecmesnumero',[$re_mesInicial, $re_mesFinal])
                                 ->whereBetween('fec.fecano',[$re_anioInicial, $re_anioFinal])
                                 ->get();
@@ -460,9 +461,9 @@ class CargarListaPreciosController extends Controller
                 foreach ($ltp as $key => $lista) {
                     $arrayLP[$key]['0']['value'] = $this->FormatearFecha($lista->fecfecha);
                     $arrayLP[$key]['1']['value'] = $sucursal->sucsoldto;
-                    $arrayLP[$key]['2']['value'] = $this->DuplicarSKU($lista->ltpcodigosap, $lista->fecfecha, $re_tipoRebate, $re_zona, $lista->proid);
+                    $arrayLP[$key]['2']['value'] = $this->DuplicarSKU($lista->ltpcodigosap, $lista->fecfecha, $re_tipoRebate, $ltp_zona, $lista->proid);
                     $arrayLP[$key]['3']['value'] = $lista->ltppreciolistaconigv;
-                    $arrayLP[$key]['4']['value'] = $this->PorcentajePrecioIGV($lista->ltppreciolistaconigv, $lista->fecfecha, $re_tipoRebate, $re_zona, $lista->ltpcodigosap);
+                    $arrayLP[$key]['4']['value'] = $this->PorcentajePrecioIGV($lista->ltppreciolistaconigv, $lista->fecfecha, $re_tipoRebate, $ltp_zona, $lista->ltpcodigosap);
                 }
 
                 $datos[] = [array(
