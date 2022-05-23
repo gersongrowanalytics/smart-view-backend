@@ -406,78 +406,84 @@ class CargarListaPreciosController extends Controller
         $respuesta = true;
         $mensaje = "Se retornaron los registros de lista de precios exitosamente";
         $datos = [];
-        // 15 -> ZB
-        // 26 -> ZA
-        // 24 -> ZC
         $arrayLP = [];
+        $ltp_zona = "";
 
         $re_tipoRebate = $request['re_tipoRebate'];
         $re_zona       = $request['re_zona'];
+        $re_fechas     = $request['re_fechas'];
+
+        if(isset($re_fechas)){
+            if(sizeof($re_fechas) > 0){
+
+                $fechaInicio = $re_fechas[0];
+                $fechaFinal  = $re_fechas[1];
+
+                $fe_ini = explode("/", $fechaInicio);
+                $fe_fin = explode("/", $fechaFinal);
+
+                $re_mesInicial = ltrim($fe_ini[0],"0");
+                $re_anioInicial = $fe_ini[1];
+
+                $re_mesFinal = ltrim($fe_fin[0],"0");
+                $re_anioFinal = $fe_fin[1];
+            }
+        }
 
 
-        if($re_zona == "LIMA"){
-            $suc = sucsucursales::where('treid', $re_tipoRebate)
-                                ->where('casid', 1)
-                                ->limit(2)
+        $suc = sucsucursales::where('treid', $re_tipoRebate)
+                            ->where('casid', $re_zona)
+                            ->get();  
+
+        if ($suc) {
+            foreach ($suc as $key => $sucursal) {
+                if (strpos($sucursal->sucnombre, "&")) {
+                    $sucursal->sucnombre = str_replace("&","AND",$sucursal->sucnombre);
+                }
+            }
+        }
+
+        if ($re_zona == "1") {
+            $ltp_zona = "LIMA";
+        }else if($re_zona == "2"){
+            $ltp_zona = "PROVINCIA";
+        }
+
+        $ltp = ltplistaprecios::join('fecfechas as fec', 'fec.fecid', 'ltplistaprecios.fecid')
+                                ->where('treid', $re_tipoRebate)
+                                ->where('ltpzona', $ltp_zona)
+                                ->whereBetween('fec.fecmesnumero',[$re_mesInicial, $re_mesFinal])
+                                ->whereBetween('fec.fecano',[$re_anioInicial, $re_anioFinal])
                                 ->get();
 
-        }else if($re_zona == "PROVINCIA"){
-            $suc = sucsucursales::where('treid', $re_tipoRebate)
-                                    ->where('casid', 2)
-                                    ->get();
-        }     
-
-        $ltp = ltplistaprecios::where('treid', $re_tipoRebate)
-                                    ->where('ltpzona', $re_zona)
-                                    ->limit(5)
-                                    ->get();
-        
         if(count($ltp) > 0 && count($suc) > 0 ){
             foreach($suc as $keySuc=>$sucursal){
                 foreach ($ltp as $key => $lista) {
-                    $arrayLP[$key]['0']['value'] = $lista->ltpcategoria;
-                    $arrayLP[$key]['1']['value'] = $lista->ltpsubcategoria;
-                    $arrayLP[$key]['2']['value'] = $lista->ltpcodigosap;
-                    $arrayLP[$key]['3']['value'] = $lista->ltpean;
-                    $arrayLP[$key]['4']['value'] = $lista->ltpdescripcionproducto;
-                    $arrayLP[$key]['5']['value'] = $lista->ltpunidadventa;
-                    $arrayLP[$key]['6']['value'] = $lista->ltppreciolistasinigv;
-                    $arrayLP[$key]['7']['value'] = $lista->ltppreciolistaconigv;
-                    $arrayLP[$key]['8']['value'] = $sucursal->sucsoldto;
-                    $arrayLP[$key]['9']['value'] = $sucursal->sucnombre;
+                    $arrayLP[$key]['0']['value'] = $this->FormatearFecha($lista->fecfecha);
+                    $arrayLP[$key]['1']['value'] = $sucursal->sucsoldto;
+                    $arrayLP[$key]['2']['value'] = $this->DuplicarSKU($lista->ltpcodigosap, $lista->fecfecha, $re_tipoRebate, $ltp_zona, $lista->proid);
+                    $arrayLP[$key]['3']['value'] = floatval($lista->ltppreciolistaconigv);
+                    $arrayLP[$key]['3']['style'] = array("numFmt" => "#,##0.00");
+                    $arrayLP[$key]['4']['value'] = $this->PorcentajePrecioIGV($lista->ltppreciolistaconigv, $lista->fecfecha, $re_tipoRebate, $ltp_zona, $lista->ltpcodigosap);
+                    $arrayLP[$key]['4']['style'] = array("numFmt" => "#,##0");
                 }
 
                 $datos[] = [array(
                     "columns" => [
                         [ 
-                            "title" => "Categoria", 
-                        ],
-                        [ 
-                            "title" => "Subcategoria", 
-                        ],
-                        [ 
-                            "title" => "Codigo Sap", 
-                        ],
-                        [ 
-                            "title" => "EAN", 
-                        ],
-                        [ 
-                            "title" => "Descripcion del producto", 
-                        ],
-                        [ 
-                            "title" => "Unidad venta", 
-                        ],
-                        [ 
-                            "title" => "Precio sin igv", 
-                        ],
-                        [ 
-                            "title" => "Precio con igv", 
+                            "title" => "Fecha", 
                         ],
                         [ 
                             "title" => "Soldto", 
                         ],
                         [ 
-                            "title" => "Sucursal", 
+                            "title" => "Codigo Sap", 
+                        ],
+                        [ 
+                            "title" => "Precio con IGV", 
+                        ],
+                        [
+                            "title" => "Porcentaje de variación del precio con IGV"
                         ]
                     ],
                     "data" => $arrayLP
@@ -499,4 +505,91 @@ class CargarListaPreciosController extends Controller
         return $requestsalida;
     }
 
+    public function FormatearFecha($fecha)  
+    {
+        $fechaFormateada = "";
+
+        if(isset($fecha)){
+            $datosFecha = explode("-", $fecha);
+            $fechaFormateada = $datosFecha[2]."/".$datosFecha[1]."/".$datosFecha[0];
+        }
+
+        return $fechaFormateada;
+    }
+
+    public function PorcentajePrecioIGV($precio, $fecha, $rebate, $zona, $codigoSap)
+    {
+        $nuevoMes = "";
+        $nuevoAnio = "";
+        $precioIGVAnterior = "";
+        $porcentajeFinal = "";
+
+        if(isset($fecha)){
+            $datosFecha = explode("-",$fecha);
+            $anio = $datosFecha[0];
+            $mes = ltrim($datosFecha[1],"0");
+
+            if ($mes == '1') {
+                $nuevoMes = '12';
+                $nuevoAnio = $anio-1;
+            }else{
+                $nuevoMes = $mes-1;
+                $nuevoAnio = $anio;
+            }
+
+            $ltp = ltplistaprecios::join('fecfechas as fec', 'fec.fecid', 'ltplistaprecios.fecid')
+                                    ->where('fec.fecmesnumero', $nuevoMes)
+                                    ->where('fec.fecano', $nuevoAnio)
+                                    ->where('treid', $rebate)
+                                    ->where('ltpzona', $zona)
+                                    ->where('ltpcodigosap',$codigoSap)
+                                    ->first(['ltplistaprecios.ltppreciolistaconigv']);
+
+            if ($ltp) {
+                if ($ltp['ltppreciolistaconigv']>'0') {
+                    $precioIGVAnterior = $ltp['ltppreciolistaconigv'];
+                    $porcentaje = (($precio - $precioIGVAnterior)*100)/$precioIGVAnterior;
+                    $porcentajeFinal = floatval($porcentaje);
+                }else{
+                    $porcentajeFinal = "0";
+                }
+            }else{
+                $porcentajeFinal = "No existe un precio del producto en el anterior mes";
+            }
+            return $porcentajeFinal;
+        }
+    }
+
+    public function DuplicarSKU($codigo, $fecha, $rebate, $zona, $proid)
+    {
+        if (isset($codigo)) {
+            return $codigo;
+        }else{
+
+            $datosFecha = explode("-",$fecha);
+            $anio = $datosFecha[0];
+            $mes = ltrim($datosFecha[1],"0");
+
+            if ($mes == '1') {
+                $nuevoMes = '12';
+                $nuevoAnio = $anio-1;
+            }else{
+                $nuevoMes = $mes-1;
+                $nuevoAnio = $anio;
+            }
+
+            $ltp = ltplistaprecios::join('fecfechas as fec', 'fec.fecid', 'ltplistaprecios.fecid')
+                                    ->where('fec.fecmesnumero', $nuevoMes)
+                                    ->where('fec.fecano', $nuevoAnio)
+                                    ->where('treid', $rebate)
+                                    ->where('ltpzona', $zona)
+                                    ->where('proid', $proid)
+                                    ->first(['ltpcodigosap']);
+            if ($ltp) {
+                return $ltp['ltpcodigosap'];
+            }else{
+                return "No existe codigo del mes anterior";
+            }
+        }
+    }
 }
