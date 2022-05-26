@@ -50,6 +50,13 @@
                 </tr>
                 <tr style="padding-top: 16px;">
                     <td colspan="4">
+                        <div style="padding-top: 16px;font-style: normal; font-weight: 700; font-size: 13px; line-height: 17px; letter-spacing: -0.015em; color: #1E1E1E;">
+                            Usuario: {{$usuario}}
+                        </div>
+                    </td>
+                </tr>
+                <tr style="padding-top: 16px;">
+                    <td colspan="4">
                         <div style="padding-top: 16px;text-align: justify; font-style: normal; font-weight: 400; font-size: 13px; line-height: 17px; letter-spacing: -0.015em; color: #000000;">
                             Por el presente correo, cumplo con informarle las tácticas promocionales para este mes con el número de combos/soles a reconocer por actividad y 
                             monto máximo de reconocimiento en valor por actividad respectivos por cada mecánica. Dichos montos no podrán excederse de no recibir una aprobación 
