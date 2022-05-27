@@ -15,7 +15,8 @@ use App\usuusuarios;
 
 class EnviarPromocionesActivasController extends Controller
 {
-    public function EnviarPromocionesActivas2(Request $request)
+    // ENVIA TODOS LOS CORREOS
+    public function EnviarPromocionesActivas(Request $request)
     {
         $respuesta = true;
         $mensaje = 'El correo se envio exitosamente';
@@ -29,7 +30,7 @@ class EnviarPromocionesActivasController extends Controller
 
         // $correo = "euni_tkm@hotmail.com";
         // $correo = "eunicecallecahuana@gmail.com";
-        $correo = "jeanmarcoe@gmail.com";
+        $correo = "soportealcliente.grow@gmail.com";
 
         // $correo = "gerson.vilca@grow-analytics.com.pe";
         // $correo = "director.creativo@grow-analytics.com.pe";
@@ -283,7 +284,7 @@ class EnviarPromocionesActivasController extends Controller
         return $requestsalida;
     }
 
-    public function EnviarPromocionesActivas(Request $request)
+    public function EnviarPromocionesActivas2(Request $request)
     {
         $respuesta = true;
         $mensaje = 'El correo se envio exitosamente';
