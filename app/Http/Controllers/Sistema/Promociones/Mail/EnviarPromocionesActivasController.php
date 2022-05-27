@@ -15,7 +15,7 @@ use App\usuusuarios;
 
 class EnviarPromocionesActivasController extends Controller
 {
-    public function EnviarPromocionesActivas(Request $request)
+    public function EnviarPromocionesActivas2(Request $request)
     {
         $respuesta = true;
         $mensaje = 'El correo se envio exitosamente';
@@ -59,6 +59,7 @@ class EnviarPromocionesActivasController extends Controller
                                         ->whereNotNull('usu.usucorreo')
                                         ->orderBy('ussusuariossucursales.usuid', 'DESC')
                                         ->distinct('ussusuariossucursales.usuid')
+                                        // ->limit(1)
                                         ->get([
                                             'suc.gsuid',
                                             'suc.sucnombre', 
@@ -273,6 +274,121 @@ class EnviarPromocionesActivasController extends Controller
         //     $respuesta = false;
         //     $mensaje = "NO SE PUDO ENVIAR EL CORREO";
         // }
+
+        $requestsalida = response()->json([
+            "respuesta" => $respuesta,
+            "mensaje"   => $mensaje,
+        ]);
+
+        return $requestsalida;
+    }
+
+    public function EnviarPromocionesActivas(Request $request)
+    {
+        $respuesta = true;
+        $mensaje = 'El correo se envio exitosamente';
+
+        $usutoken   = $request->header('api_token');
+        $re_sucursales = $request['re_sucursales'];
+        $re_fecha = $request['re_fecha'];
+        $re_reenviado = $request['re_reenviado'];
+
+        $usu = usuusuarios::where('usutoken', $usutoken)->first();
+
+        $correo = "jeanmarcoe@gmail.com";
+
+        if ($usu) {
+            //OBTENER LA FECHA
+            date_default_timezone_set("America/Lima");
+            $meses = array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
+            $fecha = date('Y-m-d');
+            $hora  = date('H:i:s');
+
+            $anioActualizacion = date("Y", strtotime($fecha));
+            $mesActualizacion = $meses[date('n', strtotime($fecha))-1];
+            $diaActualizacion = date("j", strtotime($fecha));
+
+            $horaActualizacion = date("H", strtotime($hora));
+            $minutoActualizacion = date("i", strtotime($hora));
+
+            $usuarioCorreo = [];
+            foreach ($re_sucursales as $sucursal) {
+                $uss = ussusuariossucursales::join('sucsucursales as suc', 'suc.sucid', 'ussusuariossucursales.sucid')
+                                            ->join('usuusuarios as usu', 'usu.usuid', 'ussusuariossucursales.usuid')
+                                            ->where('usu.estid', 1)
+                                            ->where('suc.sucnombre','like', '%'.$sucursal.'%')
+                                            ->where('usu.usuusuario', 'not like', '%grow-analytics%')
+                                            ->whereNotNull('usu.usuusuario')
+                                            ->orderBy('ussusuariossucursales.usuid', 'DESC')
+                                            ->first([
+                                                'suc.gsuid',
+                                                'suc.sucnombre', 
+                                                'ussusuariossucursales.usuid',
+                                                'usu.usuusuario'
+                                            ]);
+
+                //OBTENER LOS REGISTROS DE USUARIOS PARA ENVIAR CORREO SEGUN SUCURSAL
+            
+                if ($uss) {
+                    // $usuarioCorreo[] = $uss->usuusuario;
+
+                    $ucen = new uceusuarioscorreosenviados;
+                    $ucen->usuid          = $uss->usuid;
+                    $ucen->ucetipo        = "Promociones Activas";
+                    $ucen->uceasunto      = "Promociones Activas";
+                    $ucen->ucesucursales  = $uss->sucnombre;
+                    $ucen->uceanio        = $anioActualizacion;
+                    $ucen->ucemes         = $mesActualizacion;
+                    $ucen->ucedia         = $diaActualizacion;
+                    $ucen->ucehora        = $horaActualizacion.":".$minutoActualizacion;
+                    $ucen->ucefecha       = $fecha;
+                    if($ucen->save()){
+
+                        $dcen = new dcedestinatarioscorreosenviados;
+                        $dcen->uceid = $ucen->uceid;
+                        $dcen->dcedestinatario = $correo;
+
+                        if(isset($re_reenviado)){
+                            if($re_reenviado == true){
+                                $dcen->dceestado = 'R';
+                            }else{
+                                $dcen->dceestado = 'E';
+                            }
+                        }else{
+                            $dcen->dceestado = 'E';
+                        }
+                        
+                        if ($dcen->save()) {
+                            if ($uss->gsuid == 1) {
+                                $suc = $uss->sucnombre;
+                            }else{
+                                $gsu = gsugrupossucursales::where('gsuid',$uss->gsuid)
+                                                            ->first();
+                                if ($gsu) {
+                                    $suc = $gsu->gsunombre;
+                                }
+                            }
+                            $anio = date("Y");
+
+                            $data = ['txtSucursales' => $suc, 're_fecha' => $re_fecha, "anio" => $anio, "usuario" => $uss->usuusuario];
+                            $asunto = "Kimberly Clark (PE): PROMOCIONES ".$re_fecha." ".$anio." (".$suc.")";
+                            if (in_array($uss->usuusuario,$usuarioCorreo)) {
+                               
+                            }else{
+                                Mail::to($correo)->cc(['gerson.vilca.growanalytics@gmail.com'])
+                                                 ->send(new MailPromocionesActivas($data, $asunto));
+                                $usuarioCorreo[] = $uss->usuusuario;
+                            }
+                            
+                        }
+                    }
+                    
+                }
+            }
+        }else{
+            $respuesta = false;
+            $mensaje = "Lo siento, no existe datos del usuario";
+        }
 
         $requestsalida = response()->json([
             "respuesta" => $respuesta,

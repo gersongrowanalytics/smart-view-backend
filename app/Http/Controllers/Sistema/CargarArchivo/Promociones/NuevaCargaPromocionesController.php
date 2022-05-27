@@ -35,6 +35,7 @@ use App\Mail\MailCargaArchivos;
 use App\tcatiposcargasarchivos;
 use App\tuptiposusuariospermisos;
 use \DateTime;
+use Exception;
 use Illuminate\Support\Facades\Mail;
 use PhpOffice\PhpSpreadsheet\Shared\Date;
 
@@ -70,23 +71,23 @@ class NuevaCargaPromocionesController extends Controller
                 $cargarData = true;
             }
         }
-        // if($usuusuario->tpuprivilegio == "todo"){
+        if($usuusuario->tpuprivilegio == "todo"){
             
-        //     $cargarData = true;
-        // }else{
-        //     $tup = tuptiposusuariospermisos::join('pempermisos as pem', 'pem.pemid', 'tuptiposusuariospermisos.pemid')
-        //                                     ->where('tuptiposusuariospermisos.tpuid', $usuusuario->tpuid)
-        //                                     ->where('pem.pemslug', "cargar.data.servidor.promociones")
-        //                                     ->first([
-        //                                         'tuptiposusuariospermisos.tpuid'
-        //                                     ]);
+            $cargarData = true;
+        }else{
+            $tup = tuptiposusuariospermisos::join('pempermisos as pem', 'pem.pemid', 'tuptiposusuariospermisos.pemid')
+                                            ->where('tuptiposusuariospermisos.tpuid', $usuusuario->tpuid)
+                                            ->where('pem.pemslug', "cargar.data.servidor.promociones")
+                                            ->first([
+                                                'tuptiposusuariospermisos.tpuid'
+                                            ]);
 
-        //     if($tup){
-        //         $cargarData = true;
-        //     }else{
-        //         $cargarData = false;
-        //     }
-        // }
+            if($tup){
+                $cargarData = true;
+            }else{
+                $cargarData = false;
+            }
+        }
         
 
         $fichero_subido = '';

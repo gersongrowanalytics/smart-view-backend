@@ -82,6 +82,9 @@ $app->routeMiddleware([
     'permisos' => App\Http\Middleware\Permisos::class,
 ]);
 
+$app->middleware([
+    "abilitarcor" => App\Http\Middleware\CorsMiddleware::class // Add this
+]);
 /*
 |--------------------------------------------------------------------------
 | Register Service Providers
