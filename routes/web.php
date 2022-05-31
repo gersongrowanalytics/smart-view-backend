@@ -136,7 +136,7 @@ $router->post('/aceptar-terminos-condiciones', 'Sistema\TerminosCondiciones\Acep
     $router->post('/cargarArchivo/ventas/rebate', 'Sistema\CargarArchivo\Ventas\ObjetivoCargarController@CargarRebate');
     $router->post('/cargarArchivo/ventas/sellin', 'Sistema\CargarArchivo\Ventas\CargarArchivoController@CargarArchivo');
     $router->post('/cargarArchivo/ventas/sellout', 'Sistema\CargarArchivo\Ventas\CargarArchivoController@cargarVentasSellOut');
-    $router->post('/cargarArchivo/clientes', 'Sistema\CargarArchivo\Clientes\ClientesCargarController@ActualizarNombres'); //
+    $router->post('/cargarArchivo/clientes', 'Sistema\CargarArchivo\Clientes\ClientesCargarController@CargarClientes'); //
     // $router->post('/cargarArchivo/sucursales', 'Sistema\CargarArchivo\Sucursales\ActualizarSucursalesController@ActualizarSucursales');
     $router->post('/cargarArchivo/sucursales', 'Sistema\CargarArchivo\Sucursales\ActualizarSucursalesController@ActualizarNombres');
     
