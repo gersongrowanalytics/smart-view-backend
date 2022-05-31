@@ -117,6 +117,7 @@ class ClientesCargarController extends Controller
                                 $zonid = $zon->zonid;
                             }else{
                                 $zonn = new zonzonas;
+                                $zonn->zonnombre = $zona;
                                 $zonn->zonestado = 1;
                                 $zonn->zonregionalgba = $gbaRegional;
                                 $zonn->casid = $casid;
