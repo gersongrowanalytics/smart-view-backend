@@ -90,7 +90,7 @@ class ClientesCargarController extends Controller
                         
                         if($gbaRegional == "DTT"){
                             
-                            $tre = tretiposrebates::where('trenombre', 'like', '%'.$codEjecutivo.'%')
+                            $tre = tretiposrebates::where('trenombre', 'like', $codEjecutivo)
                                                     ->first();
                             $treid = 0;
                             if($tre){
@@ -99,7 +99,7 @@ class ClientesCargarController extends Controller
                                 $treid = 0;
                             }
                             
-                            $cas = cascanalessucursales::where('casnombre', 'LIKE', "%".$canal."%")
+                            $cas = cascanalessucursales::where('casnombre', 'LIKE', $canal)
                                                         ->first();
 
                             $casid = 0;
@@ -109,7 +109,7 @@ class ClientesCargarController extends Controller
                                 $casid = null;
                             }
                             
-                            $zon = zonzonas::where('zonnombre', 'LIKE', '%'.$zona.'%')
+                            $zon = zonzonas::where('zonnombre', 'LIKE', $zona)
                                             ->first();
 
                             $zonid = 0;
