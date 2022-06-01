@@ -29,12 +29,15 @@ use Illuminate\Support\Facades\Mail;
 
 class ClientesCargarController extends Controller
 {
+
+    // ACTUALIZA LOS DATOS DE LAS SUCURSALES YA EXISTENTES Y SOLO CANAL TRADICIONAL (DTT)
+
     public function CargarClientes(Request $request)
     {   
         date_default_timezone_set("America/Lima");
-        $fechaActual = date('Y-m-d H:i:s');
+        $fechaActual = date('Y-m-d');
 
-        $respuesta      = false;
+        $respuesta      = true;
         $mensaje        = '';
         $datos          = [];
         $linea          = __LINE__;
@@ -44,7 +47,7 @@ class ClientesCargarController extends Controller
         $usutoken       = $request->header('api_token');
         $archivo        = $_FILES['file']['name'];
 
-        $usuusuario = usuusuarios::where('usutoken', $usutoken)->first(['usuid', 'usuusuario']);
+        $usuusuario = usuusuarios::where('usutoken', $usutoken)->first(['usuid', 'usucorreo', 'usuusuario']);
         $fichero_subido = '';
 
         $pkid = 0;
@@ -52,7 +55,7 @@ class ClientesCargarController extends Controller
 
         try{
 
-            $fichero_subido = base_path().'/public/Sistema/cargaArchivos/clientes/'.basename($usuusuario->usuid.'-'.$usuusuario->usuusuario.'-'.$fechaActual.'-'.$_FILES['file']['name']);
+            $fichero_subido = base_path().'/public/Sistema/cargaArchivos/clientes/'.basename($_FILES['file']['name']);
             if (move_uploaded_file($_FILES['file']['tmp_name'], $fichero_subido)) {
                 $objPHPExcel    = IOFactory::load($fichero_subido);
                 $objPHPExcel->setActiveSheetIndex(0);
@@ -65,176 +68,96 @@ class ClientesCargarController extends Controller
 
                     $codShipTo        = $objPHPExcel->getActiveSheet()->getCell('A'.$i)->getCalculatedValue();
                     $shipTo           = $objPHPExcel->getActiveSheet()->getCell('B'.$i)->getCalculatedValue();
-                    $codSoldTo        = $objPHPExcel->getActiveSheet()->getCell('C'.$i)->getCalculatedValue();
+                    $codSoldTo        = $objPHPExcel->getActiveSheet()->getCell('C'.$i)->getCalculatedValue(); //
                     $soldTo           = $objPHPExcel->getActiveSheet()->getCell('D'.$i)->getCalculatedValue();
-                    $clienteHml       = $objPHPExcel->getActiveSheet()->getCell('E'.$i)->getCalculatedValue();
+                    $clienteHml       = $objPHPExcel->getActiveSheet()->getCell('E'.$i)->getCalculatedValue(); //
                     $clienteSucHml    = $objPHPExcel->getActiveSheet()->getCell('F'.$i)->getCalculatedValue();
                     $localidad        = $objPHPExcel->getActiveSheet()->getCell('G'.$i)->getCalculatedValue();
-                    $codEjecutivo     = $objPHPExcel->getActiveSheet()->getCell('H'.$i)->getCalculatedValue();
+                    $codEjecutivo     = $objPHPExcel->getActiveSheet()->getCell('H'.$i)->getCalculatedValue(); //
                     $ejecutivo        = $objPHPExcel->getActiveSheet()->getCell('I'.$i)->getCalculatedValue();
                     $gerenciaZonal    = $objPHPExcel->getActiveSheet()->getCell('J'.$i)->getCalculatedValue();
-                    $zona             = $objPHPExcel->getActiveSheet()->getCell('K'.$i)->getCalculatedValue();
-                    $canal            = $objPHPExcel->getActiveSheet()->getCell('L'.$i)->getCalculatedValue();
+                    $zona             = $objPHPExcel->getActiveSheet()->getCell('K'.$i)->getCalculatedValue(); //
+                    $canal            = $objPHPExcel->getActiveSheet()->getCell('L'.$i)->getCalculatedValue(); //
                     $gerenciaRegional = $objPHPExcel->getActiveSheet()->getCell('M'.$i)->getCalculatedValue();
-                    $gbaRegional      = $objPHPExcel->getActiveSheet()->getCell('N'.$i)->getCalculatedValue();
+                    $gbaRegional      = $objPHPExcel->getActiveSheet()->getCell('N'.$i)->getCalculatedValue(); //
                     $customerGroup    = $objPHPExcel->getActiveSheet()->getCell('O'.$i)->getCalculatedValue();
                     $cg2              = $objPHPExcel->getActiveSheet()->getCell('P'.$i)->getCalculatedValue();
 
-
-                    // VERIFICAR SI EXISTE LA PERSONA DEL EJECUTIVO
-                    $perpersonaEjecutivo = perpersonas::where('pernombrecompleto', $ejecutivo)->first(['perid']);
-                    $perEjecutivoid = 0;
-                    if($perpersonaEjecutivo){
-                        $perEjecutivoid = $perpersonaEjecutivo->perid;
-                    }else{
-                        $nuevoEjecutivoPersona                               = new perpersonas;
-                        $nuevoEjecutivoPersona->tdiid                        = 2;
-                        $nuevoEjecutivoPersona->pernombrecompleto            = $ejecutivo;
-                        $nuevoEjecutivoPersona->pernumerodocumentoidentidad  = null;
-                        $nuevoEjecutivoPersona->pernombre                    = null;
-                        $nuevoEjecutivoPersona->perapellidopaterno           = null;
-                        $nuevoEjecutivoPersona->perapellidomaterno           = null;
-                        if($nuevoEjecutivoPersona->save()){
-                            $perEjecutivoid = $nuevoEjecutivoPersona->perid;
-                        }else{
-        
-                        }
-                    }
-
-                    // VERIFICAR SI EXISTE EL USUARIO DEL EJECUTIVO
-                    $distribuidor = usuusuarios::where('tpuid', 3)
-                                                ->where('perid', $perEjecutivoid)
-                                                ->first(['usuid']);
-                    $usuEjecutivoid = 0;
-                    if($distribuidor){
-                        $usuEjecutivoid = $distribuidor->usuid;
-                    }else{
-                        $nuevoEjecutivoUsuario = new usuusuarios;
-                        $nuevoEjecutivoUsuario->tpuid         = 3;
-                        $nuevoEjecutivoUsuario->perid         = $perEjecutivoid;
-                        $nuevoEjecutivoUsuario->ususoldto     = null;
-                        $nuevoEjecutivoUsuario->usuusuario    = null;
-                        $nuevoEjecutivoUsuario->usucorreo     = null;
-                        $nuevoEjecutivoUsuario->usucontrasena = null;
-                        $nuevoEjecutivoUsuario->usutoken      = Str::random(60);
-                        if($nuevoEjecutivoUsuario->save()){
-                            $usuEjecutivoid = $nuevoEjecutivoUsuario->usuid;
-                        }else{
-        
-                        }
-                    }
-
-                    // VERIFICAR SI EXISTE LA PERSONA
-                    $perpersona = perpersonas::where('pernombrecompleto', $soldTo)->first(['perid']);
-                    $perid = 0;
-                    if($perpersona){
-                        $perid = $perpersona->perid;
-                    }else{
-                        $nuevaPersona                               = new perpersonas;
-                        $nuevaPersona->tdiid                        = 2;
-                        $nuevaPersona->pernombrecompleto            = $soldTo;
-                        $nuevaPersona->pernumerodocumentoidentidad  = null;
-                        $nuevaPersona->pernombre                    = $clienteHml;
-                        $nuevaPersona->perapellidopaterno           = null;
-                        $nuevaPersona->perapellidomaterno           = null;
-                        if($nuevaPersona->save()){
-                            $perid = $nuevaPersona->perid;
-                        }else{
-        
-                        }
-                    }
-
-                    // VERIFICAR SI EXISTE EL USUARIO
-                    $usuCliente = usuusuarios::where('tpuid', 2)
-                                                ->where('perid', $perid)
-                                                ->where('ususoldto', $codSoldTo)
-                                                ->first(['usuid']);
-                    $clienteusuid = 0;
-                    $sucursalClienteId = 0;
-                    if($usuCliente){
-                        $clienteusuid = $usuCliente->usuid;
+                    $suc = sucsucursales::where('sucsoldto', $codSoldTo)->first();
+                    if($suc){
+                        $suc->sucnombre = $clienteHml;
+                        $suc->sucregionalgba = $gbaRegional;
                         
-                        $sucursalesCliente = ussusuariossucursales::where('usuid', $clienteusuid)->first(['sucid']);
-                        if($sucursalesCliente){
-                            $sucursalClienteId = $sucursalesCliente->sucid;
-                        }else{
-                            $nuevaSucursal            = new sucsucursales;
-                            $nuevaSucursal->sucnombre = $clienteSucHml;
-                            if($nuevaSucursal->save()){
-                                $sucursalClienteId = $nuevaSucursal->sucid;
-
-                                $sucursalUsuario        = new ussusuariossucursales;
-                                $sucursalUsuario->usuid = $clienteusuid;
-                                $sucursalUsuario->suci  = $sucursalClienteId;
-                                if($sucursalUsuario->save()){
-
-                                }else{
-
-                                }
-
+                        if($gbaRegional == "DTT"){
+                            
+                            $tre = tretiposrebates::where('trenombre', 'like', $codEjecutivo)
+                                                    ->first();
+                            $treid = 0;
+                            if($tre){
+                                $treid = $tre->treid;
                             }else{
-
+                                $treid = 0;
                             }
+                            
+                            $cas = cascanalessucursales::where('casnombre', 'LIKE', $canal)
+                                                        ->first();
+
+                            $casid = 0;
+                            if($cas){
+                                $casid = $cas->casid;
+                            }else{
+                                $casid = null;
+                            }
+                            
+                            $zon = zonzonas::where('zonnombre', 'LIKE', $zona)
+                                            ->first();
+
+                            $zonid = 0;
+                            if($zon){
+                                $zonid = $zon->zonid;
+                            }else{
+                                $zonn = new zonzonas;
+                                $zonn->zonnombre = $zona;
+                                $zonn->zonestado = 1;
+                                $zonn->zonregionalgba = $gbaRegional;
+                                $zonn->casid = $casid;
+                                if($zonn->save()){
+                                    $zonid = $zonn->zonid;  
+                                }
+                            }
+
+                            $suc->zonid = $zonid;
+                            $suc->casid = $casid;
                         }
 
-                    }else{
-                        $clienteNuevoUsuario = new usuusuarios;
-                        $clienteNuevoUsuario->tpuid         = 2; // tipo de usuario (cliente)
-                        $clienteNuevoUsuario->perid         = $perid;
-                        $clienteNuevoUsuario->ususoldto     = $codSoldTo;
-                        $clienteNuevoUsuario->usuusuario    = null;
-                        $clienteNuevoUsuario->usucorreo     = null;
-                        $clienteNuevoUsuario->usucontrasena = null;
-                        $clienteNuevoUsuario->usutoken      = Str::random(60);
-                        if($clienteNuevoUsuario->save()){
-                            $clienteusuid             = $clienteNuevoUsuario->usuid;
-                            $nuevaSucursal            = new sucsucursales;
-                            $nuevaSucursal->sucnombre = $clienteSucHml;
-                            if($nuevaSucursal->save()){
-                                $sucursalClienteId = $nuevaSucursal->sucid;
-
-                                $sucursalUsuario = new ussusuariossucursales;
-                                $sucursalUsuario->usuid = $clienteusuid;
-                                $sucursalUsuario->sucid = $sucursalClienteId;
-                                if($sucursalUsuario->save()){
-
-                                }else{
-
-                                }
-                            }else{
-
-                            }
-                        }else{
-
-                        }
+                        $suc->update();
                     }
-
-                    $nuevocej = new cejclientesejecutivos;
-                    $nuevocej->cejejecutivo = $usuEjecutivoid;
-                    $nuevocej->cejcliente   = $clienteusuid;
-                    if($nuevocej->save()){
-
-                    }else{
-
-                    }
-
 
 
                 }
             }
 
-            $nuevoCargaArchivo = new carcargasarchivos;
-            $nuevoCargaArchivo->tcaid            = 6; // Carga de Clientes
-            $nuevoCargaArchivo->fecid            = null;
-            $nuevoCargaArchivo->usuid            = $usuusuario->usuid;
-            $nuevoCargaArchivo->carnombrearchivo = $archivo;
-            $nuevoCargaArchivo->carubicacion     = $fichero_subido;
-            $nuevoCargaArchivo->carurl           = env('APP_URL').'/public/Sistema/cargaArchivos/clientes/'.$archivo;
-            $nuevoCargaArchivo->carexito = true;
-            if($nuevoCargaArchivo->save()){
-                $pkid = "CAR-".$nuevoCargaArchivo->carid;
-            }else{
+            if($usuusuario->usuid != 1){
+                $nuevoCargaArchivo = new carcargasarchivos;
+                $nuevoCargaArchivo->tcaid            = 6; // Carga de Clientes
+                $nuevoCargaArchivo->fecid            = null;
+                $nuevoCargaArchivo->usuid            = $usuusuario->usuid;
+                $nuevoCargaArchivo->carnombrearchivo = $archivo;
+                $nuevoCargaArchivo->carubicacion     = $fichero_subido;
+                $nuevoCargaArchivo->carurl           = env('APP_URL').'/public/Sistema/cargaArchivos/clientes/'.$archivo;
+                $nuevoCargaArchivo->carexito = true;
+                if($nuevoCargaArchivo->save()){
+                    $pkid = "CAR-".$nuevoCargaArchivo->carid;
 
+                    $tca = tcatiposcargasarchivos::where('tcaid',$nuevoCargaArchivo->tcaid)
+                                                    ->first(['tcanombre']);
+
+                    $data = ['linkArchivoSubido' => $nuevoCargaArchivo->carurl , 'nombre' => $nuevoCargaArchivo->carnombrearchivo , 'tipo' => $tca->tcanombre, 'usuario' => $usuusuario->usuusuario];
+                    Mail::to('gerson.vilca@grow-analytics.com.pe')->send(new MailCargaArchivos($data));
+
+                }else{
+
+                }
             }
 
         } catch (Exception $e) {

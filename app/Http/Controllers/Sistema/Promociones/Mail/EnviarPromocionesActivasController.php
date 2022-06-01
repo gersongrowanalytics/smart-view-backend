@@ -30,219 +30,225 @@ class EnviarPromocionesActivasController extends Controller
 
         // $correo = "euni_tkm@hotmail.com";
         // $correo = "eunicecallecahuana@gmail.com";
-        $correo = "soportealcliente.grow@gmail.com";
+        // $correo = "gerson.vilca.growanalytics@gmail.com";
 
         // $correo = "gerson.vilca@grow-analytics.com.pe";
-        // $correo = "director.creativo@grow-analytics.com.pe";
+        $correo = "director.creativo@grow-analytics.com.pe";
         // $correo = "miguel.caballero@grow-analytics.com.pe";
         // $correo = "mzorrilla@kcc.com";
 
-        if($usu){
+        $activar_envio_correos = false;
 
-            // OBTENER FECHAS
+        if($activar_envio_correos == true){
 
-            date_default_timezone_set("America/Lima");
-            $meses = array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
-            $fecha = date('Y-m-d');
-            $hora  = date('H:i:s');
+            if($usu){
 
-            $anioActualizacion = date("Y", strtotime($fecha));
-            $mesActualizacion = $meses[date('n', strtotime($fecha))-1];
-            $diaActualizacion = date("j", strtotime($fecha));
-
-            $horaActualizacion = date("H", strtotime($hora));
-            $minutoActualizacion = date("i", strtotime($hora));
-
-            $uss = ussusuariossucursales::join('sucsucursales as suc', 'suc.sucid', 'ussusuariossucursales.sucid')
-                                        ->join('usuusuarios as usu', 'usu.usuid', 'ussusuariossucursales.usuid')
-                                        ->where('usu.estid', 1)
-                                        ->where('usu.usuusuario', 'not like', '%grow-analytics%')
-                                        ->whereNotNull('usu.usucorreo')
-                                        ->orderBy('ussusuariossucursales.usuid', 'DESC')
-                                        ->distinct('ussusuariossucursales.usuid')
-                                        // ->limit(1)
-                                        ->get([
-                                            'suc.gsuid',
-                                            'suc.sucnombre', 
-                                            'ussusuariossucursales.usuid',
-                                            'usu.usucorreo', 
-                                            'usu.usuusuario'
-                                        ]);
-
-            $uss_sinDuplicados = $uss->unique('usuid');
-            
-            if ($uss_sinDuplicados) {
-                foreach ($uss_sinDuplicados as $posicion => $usuario_sucursal) {
-                    $atributo = "";
-
-                    $sucursales = ussusuariossucursales::join('sucsucursales as suc', 'suc.sucid', 'ussusuariossucursales.sucid')
-                                                        ->where('ussusuariossucursales.usuid',$usuario_sucursal['usuid'])
-                                                        ->get(['suc.sucnombre']);
-                                                    
-                    $ucen = new uceusuarioscorreosenviados;
-                    $ucen->usuid = $usuario_sucursal['usuid'];
-                    $ucen->ucetipo        = "Promociones Activas";
-                    // $ucen->ucenombreexcel = ;
-                    $ucen->uceasunto      = "Promociones Activas";
-                    // $ucen->ucecontenido   = ;
-                    // $ucen->ucecolumnas    = ;
-                    $ucen->ucesucursales  = json_encode($re_sucursales);
-                    $ucen->uceanio        = $anioActualizacion;
-                    $ucen->ucemes         = $mesActualizacion;
-                    $ucen->ucedia         = $diaActualizacion;
-                    $ucen->ucehora        = $horaActualizacion.":".$minutoActualizacion;
-                    $ucen->ucefecha       = $fecha;
-                    if($ucen->save()){
-                        $dcen = new dcedestinatarioscorreosenviados;
-                        $dcen->uceid = $ucen->uceid;
-                        $dcen->dcedestinatario = $correo;
-
-                        if(isset($re_reenviado)){
-                            if($re_reenviado == true){
-                                $dcen->dceestado = 'R';
+                // OBTENER FECHAS
+    
+                date_default_timezone_set("America/Lima");
+                $meses = array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
+                $fecha = date('Y-m-d');
+                $hora  = date('H:i:s');
+    
+                $anioActualizacion = date("Y", strtotime($fecha));
+                $mesActualizacion = $meses[date('n', strtotime($fecha))-1];
+                $diaActualizacion = date("j", strtotime($fecha));
+    
+                $horaActualizacion = date("H", strtotime($hora));
+                $minutoActualizacion = date("i", strtotime($hora));
+    
+                $uss = ussusuariossucursales::join('sucsucursales as suc', 'suc.sucid', 'ussusuariossucursales.sucid')
+                                            ->join('usuusuarios as usu', 'usu.usuid', 'ussusuariossucursales.usuid')
+                                            ->where('usu.estid', 1)
+                                            ->where('usu.usuusuario', 'not like', '%grow-analytics%')
+                                            ->whereNotNull('usu.usucorreo')
+                                            ->orderBy('ussusuariossucursales.usuid', 'DESC')
+                                            ->distinct('ussusuariossucursales.usuid')
+                                            // ->limit(1)
+                                            ->get([
+                                                'suc.gsuid',
+                                                'suc.sucnombre', 
+                                                'ussusuariossucursales.usuid',
+                                                'usu.usucorreo', 
+                                                'usu.usuusuario'
+                                            ]);
+    
+                $uss_sinDuplicados = $uss->unique('usuid');
+                
+                if ($uss_sinDuplicados) {
+                    foreach ($uss_sinDuplicados as $posicion => $usuario_sucursal) {
+                        $atributo = "";
+    
+                        $sucursales = ussusuariossucursales::join('sucsucursales as suc', 'suc.sucid', 'ussusuariossucursales.sucid')
+                                                            ->where('ussusuariossucursales.usuid',$usuario_sucursal['usuid'])
+                                                            ->get(['suc.sucnombre']);
+                                                        
+                        $ucen = new uceusuarioscorreosenviados;
+                        $ucen->usuid = $usuario_sucursal['usuid'];
+                        $ucen->ucetipo        = "Promociones Activas";
+                        // $ucen->ucenombreexcel = ;
+                        $ucen->uceasunto      = "Promociones Activas";
+                        // $ucen->ucecontenido   = ;
+                        // $ucen->ucecolumnas    = ;
+                        $ucen->ucesucursales  = json_encode($re_sucursales);
+                        $ucen->uceanio        = $anioActualizacion;
+                        $ucen->ucemes         = $mesActualizacion;
+                        $ucen->ucedia         = $diaActualizacion;
+                        $ucen->ucehora        = $horaActualizacion.":".$minutoActualizacion;
+                        $ucen->ucefecha       = $fecha;
+                        if($ucen->save()){
+                            $dcen = new dcedestinatarioscorreosenviados;
+                            $dcen->uceid = $ucen->uceid;
+                            $dcen->dcedestinatario = $correo;
+    
+                            if(isset($re_reenviado)){
+                                if($re_reenviado == true){
+                                    $dcen->dceestado = 'R';
+                                }else{
+                                    $dcen->dceestado = 'E';
+                                }
                             }else{
                                 $dcen->dceestado = 'E';
                             }
-                        }else{
-                            $dcen->dceestado = 'E';
+                            $dcen->save();
                         }
-                        $dcen->save();
-                    }
-
-                    $txtSucursales = "";
-                    $nombre = "";
-            
-                    $arr_nombreGrupos = [];
-                    $arr_listaNombreGrupos = array();
-                    $nombreGrupos = "";
-                    
-                    foreach($sucursales as $posicionSucursal => $sucursal){
-
-                        // if($posicionSucursal == 0){
-                        //     $txtSucursales = $sucursal;
-                        //     $gsu = sucsucursales::where('sucnombre', 'LIKE', "%".$sucursal."%")
-                        //                     ->join('gsugrupossucursales as gsu', 'gsu.gsuid', 'sucsucursales.gsuid')
-                        //                     ->first(['gsu.gsunombre']);
-            
-                        //     if ($gsu) {
-                        //         $nombre = $gsu->nombre;
-                        //         if ($gsu->nombre == 'Clientes') {
-                        //             $nombre = $sucursal;
-                        //         }
-                        //     }else{
-                        //         $nombre = $sucursal;
-                        //     }
-            
-                        // }else{
-                        //     $txtSucursales = $txtSucursales.", ".$sucursal;
-                        // }
-            
-            
+    
+                        $txtSucursales = "";
+                        $nombre = "";
+                
+                        $arr_nombreGrupos = [];
+                        $arr_listaNombreGrupos = array();
+                        $nombreGrupos = "";
                         
-                        $gsu = sucsucursales::where('sucnombre', 'LIKE', "%".$sucursal['sucnombre']."%")
-                                        ->join('gsugrupossucursales as gsu', 'gsu.gsuid', 'sucsucursales.gsuid')
-                                        ->first(['gsu.gsunombre']);
-                                        
-                        $grupoSeleccionado = "";
-                        $ordenSeleccionado = 9;
-            
-                        if ($gsu) {
+                        foreach($sucursales as $posicionSucursal => $sucursal){
+    
+                            // if($posicionSucursal == 0){
+                            //     $txtSucursales = $sucursal;
+                            //     $gsu = sucsucursales::where('sucnombre', 'LIKE', "%".$sucursal."%")
+                            //                     ->join('gsugrupossucursales as gsu', 'gsu.gsuid', 'sucsucursales.gsuid')
+                            //                     ->first(['gsu.gsunombre']);
+                
+                            //     if ($gsu) {
+                            //         $nombre = $gsu->nombre;
+                            //         if ($gsu->nombre == 'Clientes') {
+                            //             $nombre = $sucursal;
+                            //         }
+                            //     }else{
+                            //         $nombre = $sucursal;
+                            //     }
+                
+                            // }else{
+                            //     $txtSucursales = $txtSucursales.", ".$sucursal;
+                            // }
+                
+                
                             
-                            $grupoSeleccionado = $gsu->gsunombre;
-                            
-                            if ($gsu->gsunombre == 'Clientes') {
-                                $grupoSeleccionado = $sucursal['sucnombre'];
+                            $gsu = sucsucursales::where('sucnombre', 'LIKE', "%".$sucursal['sucnombre']."%")
+                                            ->join('gsugrupossucursales as gsu', 'gsu.gsuid', 'sucsucursales.gsuid')
+                                            ->first(['gsu.gsunombre']);
+                                            
+                            $grupoSeleccionado = "";
+                            $ordenSeleccionado = 9;
+                
+                            if ($gsu) {
+                                
+                                $grupoSeleccionado = $gsu->gsunombre;
+                                
+                                if ($gsu->gsunombre == 'Clientes') {
+                                    $grupoSeleccionado = $sucursal['sucnombre'];
+                                }else{
+                                    $ordenSeleccionado = 1;
+                                }
+                
                             }else{
-                                $ordenSeleccionado = 1;
+                                
+                                $grupoSeleccionado = $sucursal['sucnombre'];
                             }
-            
-                        }else{
+                
+                            $encontroGrupo = false;
+                
+                            foreach($arr_nombreGrupos as $arr_nombreGrupo){
+                                if($arr_nombreGrupo == $grupoSeleccionado){
+                                    $encontroGrupo = true;
+                                }
+                            }
+                
+                            if($encontroGrupo == false){
+                                $arr_nombreGrupos[] = $grupoSeleccionado;
+                                $arr_listaNombreGrupos[] = array(
+                                    "grupo" => $grupoSeleccionado,
+                                    "orden" => $ordenSeleccionado
+                                );
+                            }
                             
-                            $grupoSeleccionado = $sucursal['sucnombre'];
                         }
-            
-                        $encontroGrupo = false;
-            
-                        foreach($arr_nombreGrupos as $arr_nombreGrupo){
-                            if($arr_nombreGrupo == $grupoSeleccionado){
-                                $encontroGrupo = true;
+                
+                        usort(
+                            $arr_listaNombreGrupos,
+                            function ($a, $b)  {
+                                if ($a['orden'] < $b['orden']) {
+                                    return -1;
+                                } else if ($a['orden'] > $b['orden']) {
+                                    return 1;
+                                } else {
+                                    return 0;
+                                }
+                            }
+                        );
+                
+                        foreach($arr_listaNombreGrupos as $posArr_NombreGrupos => $arr_nombreGrupo){
+                            if($posArr_NombreGrupos == 0){
+                                $nombreGrupos = $arr_nombreGrupo['grupo'];
+                            }else{
+                                $nombreGrupos = $nombreGrupos.", ".$arr_nombreGrupo['grupo'];
                             }
                         }
-            
-                        if($encontroGrupo == false){
-                            $arr_nombreGrupos[] = $grupoSeleccionado;
-                            $arr_listaNombreGrupos[] = array(
-                                "grupo" => $grupoSeleccionado,
-                                "orden" => $ordenSeleccionado
-                            );
-                        }
+                
+                        // foreach($arr_nombreGrupos as $posArr_NombreGrupos => $arr_nombreGrupo){
+                        //     if($posArr_NombreGrupos == 0){
+                        //         $nombreGrupos = $arr_nombreGrupo;
+                        //     }else{
+                        //         $nombreGrupos = $nombreGrupos.", ".$arr_nombreGrupo;
+                        //     }
+                        // }
                         
-                    }
-            
-                    usort(
-                        $arr_listaNombreGrupos,
-                        function ($a, $b)  {
-                            if ($a['orden'] < $b['orden']) {
-                                return -1;
-                            } else if ($a['orden'] > $b['orden']) {
-                                return 1;
-                            } else {
-                                return 0;
-                            }
-                        }
-                    );
-            
-                    foreach($arr_listaNombreGrupos as $posArr_NombreGrupos => $arr_nombreGrupo){
-                        if($posArr_NombreGrupos == 0){
-                            $nombreGrupos = $arr_nombreGrupo['grupo'];
-                        }else{
-                            $nombreGrupos = $nombreGrupos.", ".$arr_nombreGrupo['grupo'];
-                        }
-                    }
-            
-                    // foreach($arr_nombreGrupos as $posArr_NombreGrupos => $arr_nombreGrupo){
-                    //     if($posArr_NombreGrupos == 0){
-                    //         $nombreGrupos = $arr_nombreGrupo;
-                    //     }else{
-                    //         $nombreGrupos = $nombreGrupos.", ".$arr_nombreGrupo;
-                    //     }
-                    // }
-                    
-            
-                    $anio = date("Y");
-            
-                    // $data = ['txtSucursales' => $txtSucursales, 're_fecha' => $re_fecha];
-                    // $data = ['txtSucursales' => $nombre, 're_fecha' => $re_fecha];
-                    // $data = ['txtSucursales' => $nombreGrupos, 're_fecha' => $re_fecha, "anio" => $anio, "correo" => $usu->usucorreo];
-            
-                    // $primerGrupo = explode(',', $nombreGrupos);
-
-                    // $asunto = "Kimberly Clark (PE): PROMOCIONES ".$re_fecha." ".$anio." (".$primerGrupo[0].")";
-
-
-                    if ($usuario_sucursal['gsuid'] == 1) {
-                        $atributo = $usuario_sucursal['sucnombre'];
-                        $data = ['txtSucursales' => $atributo, 're_fecha' => $re_fecha, "anio" => $anio, "usuario" => $usuario_sucursal['usuusuario']];
-                        $asunto = "Kimberly Clark (PE): PROMOCIONES ".$re_fecha." ".$anio." (".$atributo.")";
-                        Mail::to($correo)->cc(['gerson.vilca.growanalytics@gmail.com'])
-                                     ->send(new MailPromocionesActivas($data, $asunto));
-                    }else{
-                        $gsu = gsugrupossucursales::where('gsuid',$usuario_sucursal['gsuid'])
-                                                    ->first();
-                        if ($gsu) {
-                            $atributo = $gsu->gsunombre;
+                
+                        $anio = date("Y");
+                
+                        // $data = ['txtSucursales' => $txtSucursales, 're_fecha' => $re_fecha];
+                        // $data = ['txtSucursales' => $nombre, 're_fecha' => $re_fecha];
+                        // $data = ['txtSucursales' => $nombreGrupos, 're_fecha' => $re_fecha, "anio" => $anio, "correo" => $usu->usucorreo];
+                
+                        // $primerGrupo = explode(',', $nombreGrupos);
+    
+                        // $asunto = "Kimberly Clark (PE): PROMOCIONES ".$re_fecha." ".$anio." (".$primerGrupo[0].")";
+    
+    
+                        if ($usuario_sucursal['gsuid'] == 1) {
+                            $atributo = $usuario_sucursal['sucnombre'];
                             $data = ['txtSucursales' => $atributo, 're_fecha' => $re_fecha, "anio" => $anio, "usuario" => $usuario_sucursal['usuusuario']];
                             $asunto = "Kimberly Clark (PE): PROMOCIONES ".$re_fecha." ".$anio." (".$atributo.")";
                             Mail::to($correo)->cc(['gerson.vilca.growanalytics@gmail.com'])
                                          ->send(new MailPromocionesActivas($data, $asunto));
+                        }else{
+                            $gsu = gsugrupossucursales::where('gsuid',$usuario_sucursal['gsuid'])
+                                                        ->first();
+                            if ($gsu) {
+                                $atributo = $gsu->gsunombre;
+                                $data = ['txtSucursales' => $atributo, 're_fecha' => $re_fecha, "anio" => $anio, "usuario" => $usuario_sucursal['usuusuario']];
+                                $asunto = "Kimberly Clark (PE): PROMOCIONES ".$re_fecha." ".$anio." (".$atributo.")";
+                                Mail::to($correo)->cc(['gerson.vilca.growanalytics@gmail.com'])
+                                             ->send(new MailPromocionesActivas($data, $asunto));
+                            }
                         }
+                        
                     }
-                    
+                }else{
+                    $respuesta = false;
+                    $mensaje = "Lo siento, no se encontraron registros";
                 }
-            }else{
-                $respuesta = false;
-                $mensaje = "Lo siento, no se encontraron registros";
             }
+
         }
 
        
