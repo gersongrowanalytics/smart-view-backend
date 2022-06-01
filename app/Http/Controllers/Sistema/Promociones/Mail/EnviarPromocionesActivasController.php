@@ -312,32 +312,34 @@ class EnviarPromocionesActivasController extends Controller
             $horaActualizacion = date("H", strtotime($hora));
             $minutoActualizacion = date("i", strtotime($hora));
 
-            $usuarioCorreo = [];
+            $usuariosCorreo = [];
+
             foreach ($re_sucursales as $sucursal) {
                 $uss = ussusuariossucursales::join('sucsucursales as suc', 'suc.sucid', 'ussusuariossucursales.sucid')
                                             ->join('usuusuarios as usu', 'usu.usuid', 'ussusuariossucursales.usuid')
+                                            ->join('gsugrupossucursales as gsu', 'gsu.gsuid', 'suc.gsuid')
                                             ->where('usu.estid', 1)
                                             ->where('suc.sucnombre','like', '%'.$sucursal.'%')
                                             ->where('usu.usuusuario', 'not like', '%grow-analytics%')
                                             ->whereNotNull('usu.usuusuario')
                                             ->orderBy('ussusuariossucursales.usuid', 'DESC')
-                                            ->first([
+                                            ->get([
+                                                'usu.usuid',
                                                 'suc.gsuid',
                                                 'suc.sucnombre', 
                                                 'ussusuariossucursales.usuid',
-                                                'usu.usuusuario'
+                                                'usu.usuusuario',
+                                                'gsu.gsunombre'
                                             ]);
 
                 //OBTENER LOS REGISTROS DE USUARIOS PARA ENVIAR CORREO SEGUN SUCURSAL
-            
-                if ($uss) {
-                    // $usuarioCorreo[] = $uss->usuusuario;
-
+                foreach ($uss as $key => $usuario) {
+                    
                     $ucen = new uceusuarioscorreosenviados;
-                    $ucen->usuid          = $uss->usuid;
+                    $ucen->usuid          = $usuario['usuid'];
                     $ucen->ucetipo        = "Promociones Activas";
                     $ucen->uceasunto      = "Promociones Activas";
-                    $ucen->ucesucursales  = $uss->sucnombre;
+                    $ucen->ucesucursales  = $usuario['sucnombre'];
                     $ucen->uceanio        = $anioActualizacion;
                     $ucen->ucemes         = $mesActualizacion;
                     $ucen->ucedia         = $diaActualizacion;
@@ -360,32 +362,52 @@ class EnviarPromocionesActivasController extends Controller
                         }
                         
                         if ($dcen->save()) {
-                            if ($uss->gsuid == 1) {
-                                $suc = $uss->sucnombre;
+                            if ($usuario['gsuid'] == 1) {
+                                $suc = $usuario['sucnombre'];
                             }else{
-                                $gsu = gsugrupossucursales::where('gsuid',$uss->gsuid)
-                                                            ->first();
-                                if ($gsu) {
-                                    $suc = $gsu->gsunombre;
-                                }
+                                $suc = $usuario['gsunombre'];
                             }
                             $anio = date("Y");
 
-                            $data = ['txtSucursales' => $suc, 're_fecha' => $re_fecha, "anio" => $anio, "usuario" => $uss->usuusuario];
+                            $data = ['txtSucursales' => $suc, 're_fecha' => $re_fecha, "anio" => $anio, "usuario" => $usuario['usuusuario']];
                             $asunto = "Kimberly Clark (PE): PROMOCIONES ".$re_fecha." ".$anio." (".$suc.")";
-                            if (in_array($uss->usuusuario,$usuarioCorreo)) {
-                               
-                            }else{
-                                Mail::to($correo)->cc(['gerson.vilca.growanalytics@gmail.com'])
-                                                 ->send(new MailPromocionesActivas($data, $asunto));
-                                $usuarioCorreo[] = $uss->usuusuario;
+
+                            $anadirCorreo = true;
+
+                            foreach ($usuariosCorreo as $usuarioCorreo) {
+                                if ($usuario['usuusuario'] == $usuarioCorreo['usuario']) {
+
+                                    if($usuario['gsunombre'] == 'Clientes'){
+                                        $anadirCorreo = false;
+                                    }else if($usuarioCorreo['gsunombre'] == $usuario['gsunombre']){
+                                        $anadirCorreo = false;
+                                    }
+                                }
                             }
                             
+                            if($anadirCorreo == true){
+                                $usuariosCorreo[] = array(
+                                    "usuario"   => $usuario['usuusuario'],
+                                    "gsunombre" => $usuario['gsunombre'],
+                                    "sucnombre" => $usuario['sucnombre'],
+                                    "data"      => $data,
+                                    "asunto"    => $asunto
+                                );
+                            }                            
                         }
                     }
                     
                 }
+                
             }
+            if (sizeof($usuariosCorreo) > 0) {
+                foreach ($usuariosCorreo as $usuarioCorreo) {
+                    Mail::to($correo)->cc(['gerson.vilca.growanalytics@gmail.com'])
+                                     ->send(new MailPromocionesActivas($usuarioCorreo['data'], $usuarioCorreo['asunto']));
+                }
+            }
+
+
         }else{
             $respuesta = false;
             $mensaje = "Lo siento, no existe datos del usuario";
@@ -394,6 +416,7 @@ class EnviarPromocionesActivasController extends Controller
         $requestsalida = response()->json([
             "respuesta" => $respuesta,
             "mensaje"   => $mensaje,
+            "datos"     => $usuariosCorreo
         ]);
 
         return $requestsalida;
