@@ -16,7 +16,7 @@ use App\usuusuarios;
 class EnviarPromocionesActivasController extends Controller
 {
     // ENVIA TODOS LOS CORREOS
-    public function EnviarPromocionesActivas(Request $request)
+    public function EnviarPromocionesActivas2(Request $request)
     {
         $respuesta = true;
         $mensaje = 'El correo se envio exitosamente';
@@ -290,15 +290,15 @@ class EnviarPromocionesActivasController extends Controller
         return $requestsalida;
     }
 
-    public function EnviarPromocionesActivas2(Request $request)
+    public function EnviarPromocionesActivas(Request $request)
     {
         $respuesta = true;
         $mensaje = 'El correo se envio exitosamente';
 
         $usutoken   = $request->header('api_token');
-        $re_sucursales = $request['re_sucursales'];
-        $re_fecha = $request['re_fecha'];
-        $re_reenviado = $request['re_reenviado'];
+        $re_sucursales = $request['sucursales'];
+        $re_fecha = $request['fecha'];
+        $re_reenviado = $request['reenviado'];
 
         $usu = usuusuarios::where('usutoken', $usutoken)->first();
 
@@ -327,6 +327,7 @@ class EnviarPromocionesActivasController extends Controller
                                             ->where('usu.estid', 1)
                                             ->where('suc.sucnombre','like', '%'.$sucursal.'%')
                                             ->where('usu.usuusuario', 'not like', '%grow-analytics%')
+                                            ->where('usu.usuusuario', 'not like', '%mzorrilla%')
                                             ->whereNotNull('usu.usuusuario')
                                             ->orderBy('ussusuariossucursales.usuid', 'DESC')
                                             ->get([
@@ -408,7 +409,7 @@ class EnviarPromocionesActivasController extends Controller
             }
             if (sizeof($usuariosCorreo) > 0) {
                 foreach ($usuariosCorreo as $usuarioCorreo) {
-                    Mail::to($correo)->cc(['gerson.vilca.growanalytics@gmail.com'])
+                    Mail::to($usuarioCorreo['usuusuario'])->cc(['0540Peru.salescontrolling@kcc.com', 'Cuidatunegocio.KC@kcc.com', 'gerson.vilca@grow-analytics.com.pe', 'miguel.caballero@grow-analytics.com.pe', 'director.creativo@grow-analytics.com.pe'])
                                      ->send(new MailPromocionesActivas($usuarioCorreo['data'], $usuarioCorreo['asunto']));
                 }
             }
