@@ -304,7 +304,7 @@ class EnviarPromocionesActivasController extends Controller
 
         $correo = "jeanmarcoe@gmail.com";
 
-        if ($usu) {
+        if (true == true) {
             //OBTENER LA FECHA
             date_default_timezone_set("America/Lima");
             $meses = array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
