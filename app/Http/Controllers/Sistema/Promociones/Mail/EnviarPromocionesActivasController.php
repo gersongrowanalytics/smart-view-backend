@@ -409,7 +409,7 @@ class EnviarPromocionesActivasController extends Controller
             }
             if (sizeof($usuariosCorreo) > 0) {
                 foreach ($usuariosCorreo as $usuarioCorreo) {
-                    Mail::to($usuarioCorreo['usuusuario'])->cc(['0540Peru.salescontrolling@kcc.com', 'Cuidatunegocio.KC@kcc.com', 'gerson.vilca@grow-analytics.com.pe', 'miguel.caballero@grow-analytics.com.pe', 'director.creativo@grow-analytics.com.pe'])
+                    Mail::to($usuarioCorreo['usuario'])->cc(['0540Peru.salescontrolling@kcc.com', 'Cuidatunegocio.KC@kcc.com', 'gerson.vilca@grow-analytics.com.pe', 'miguel.caballero@grow-analytics.com.pe', 'director.creativo@grow-analytics.com.pe'])
                                      ->send(new MailPromocionesActivas($usuarioCorreo['data'], $usuarioCorreo['asunto']));
                 }
             }
