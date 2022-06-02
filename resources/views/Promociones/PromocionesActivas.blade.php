@@ -48,13 +48,13 @@
                         </div>
                     </td>
                 </tr>
-                <tr style="padding-top: 16px;">
+                <!-- <tr style="padding-top: 16px;">
                     <td colspan="4">
                         <div style="padding-top: 16px;font-style: normal; font-weight: 700; font-size: 13px; line-height: 17px; letter-spacing: -0.015em; color: #1E1E1E;">
                             Usuario: {{$usuario}}
                         </div>
                     </td>
-                </tr>
+                </tr> -->
                 <tr style="padding-top: 16px;">
                     <td colspan="4">
                         <div style="padding-top: 16px;text-align: justify; font-style: normal; font-weight: 400; font-size: 13px; line-height: 17px; letter-spacing: -0.015em; color: #000000;">
