@@ -320,97 +320,97 @@ class EnviarPromocionesActivasController extends Controller
 
             $usuariosCorreo = [];
 
-            // foreach ($re_sucursales as $sucursal) {
-            //     $uss = ussusuariossucursales::join('sucsucursales as suc', 'suc.sucid', 'ussusuariossucursales.sucid')
-            //                                 ->join('usuusuarios as usu', 'usu.usuid', 'ussusuariossucursales.usuid')
-            //                                 ->join('gsugrupossucursales as gsu', 'gsu.gsuid', 'suc.gsuid')
-            //                                 ->where('usu.estid', 1)
-            //                                 ->where('suc.sucnombre','like', '%'.$sucursal.'%')
-            //                                 ->where('usu.usuusuario', 'not like', '%grow-analytics%')
-            //                                 ->where('usu.usuusuario', 'not like', '%mzorrilla%')
-            //                                 ->whereNotNull('usu.usuusuario')
-            //                                 ->orderBy('ussusuariossucursales.usuid', 'DESC')
-            //                                 ->get([
-            //                                     'usu.usuid',
-            //                                     'suc.gsuid',
-            //                                     'suc.sucnombre', 
-            //                                     'ussusuariossucursales.usuid',
-            //                                     'usu.usuusuario',
-            //                                     'gsu.gsunombre'
-            //                                 ]);
+            foreach ($re_sucursales as $sucursal) {
+                $uss = ussusuariossucursales::join('sucsucursales as suc', 'suc.sucid', 'ussusuariossucursales.sucid')
+                                            ->join('usuusuarios as usu', 'usu.usuid', 'ussusuariossucursales.usuid')
+                                            ->join('gsugrupossucursales as gsu', 'gsu.gsuid', 'suc.gsuid')
+                                            ->where('usu.estid', 1)
+                                            ->where('suc.sucnombre','like', '%'.$sucursal.'%')
+                                            ->where('usu.usuusuario', 'not like', '%grow-analytics%')
+                                            ->where('usu.usuusuario', 'not like', '%mzorrilla%')
+                                            ->whereNotNull('usu.usuusuario')
+                                            ->orderBy('ussusuariossucursales.usuid', 'DESC')
+                                            ->get([
+                                                'usu.usuid',
+                                                'suc.gsuid',
+                                                'suc.sucnombre', 
+                                                'ussusuariossucursales.usuid',
+                                                'usu.usuusuario',
+                                                'gsu.gsunombre'
+                                            ]);
 
-            //     //OBTENER LOS REGISTROS DE USUARIOS PARA ENVIAR CORREO SEGUN SUCURSAL
-            //     foreach ($uss as $key => $usuario) {
+                //OBTENER LOS REGISTROS DE USUARIOS PARA ENVIAR CORREO SEGUN SUCURSAL
+                foreach ($uss as $key => $usuario) {
                     
-            //         $ucen = new uceusuarioscorreosenviados;
-            //         $ucen->usuid          = $usuario['usuid'];
-            //         $ucen->ucetipo        = "Promociones Activas";
-            //         $ucen->uceasunto      = "Promociones Activas";
-            //         $ucen->ucesucursales  = $usuario['sucnombre'];
-            //         $ucen->uceanio        = $anioActualizacion;
-            //         $ucen->ucemes         = $mesActualizacion;
-            //         $ucen->ucedia         = $diaActualizacion;
-            //         $ucen->ucehora        = $horaActualizacion.":".$minutoActualizacion;
-            //         $ucen->ucefecha       = $fecha;
-            //         if($ucen->save()){
+                    $ucen = new uceusuarioscorreosenviados;
+                    $ucen->usuid          = $usuario['usuid'];
+                    $ucen->ucetipo        = "Promociones Activas";
+                    $ucen->uceasunto      = "Promociones Activas";
+                    $ucen->ucesucursales  = $usuario['sucnombre'];
+                    $ucen->uceanio        = $anioActualizacion;
+                    $ucen->ucemes         = $mesActualizacion;
+                    $ucen->ucedia         = $diaActualizacion;
+                    $ucen->ucehora        = $horaActualizacion.":".$minutoActualizacion;
+                    $ucen->ucefecha       = $fecha;
+                    if($ucen->save()){
 
-            //             $dcen = new dcedestinatarioscorreosenviados;
-            //             $dcen->uceid = $ucen->uceid;
-            //             $dcen->dcedestinatario = $correo;
+                        $dcen = new dcedestinatarioscorreosenviados;
+                        $dcen->uceid = $ucen->uceid;
+                        $dcen->dcedestinatario = $correo;
 
-            //             if(isset($re_reenviado)){
-            //                 if($re_reenviado == true){
-            //                     $dcen->dceestado = 'R';
-            //                 }else{
-            //                     $dcen->dceestado = 'E';
-            //                 }
-            //             }else{
-            //                 $dcen->dceestado = 'E';
-            //             }
+                        if(isset($re_reenviado)){
+                            if($re_reenviado == true){
+                                $dcen->dceestado = 'R';
+                            }else{
+                                $dcen->dceestado = 'E';
+                            }
+                        }else{
+                            $dcen->dceestado = 'E';
+                        }
                         
-            //             if ($dcen->save()) {
-            //                 if ($usuario['gsuid'] == 1) {
-            //                     $suc = $usuario['sucnombre'];
-            //                 }else{
-            //                     $suc = $usuario['gsunombre'];
-            //                 }
-            //                 $anio = date("Y");
+                        if ($dcen->save()) {
+                            if ($usuario['gsuid'] == 1) {
+                                $suc = $usuario['sucnombre'];
+                            }else{
+                                $suc = $usuario['gsunombre'];
+                            }
+                            $anio = date("Y");
 
-            //                 $data = ['txtSucursales' => $suc, 're_fecha' => $re_fecha, "anio" => $anio, "usuario" => $usuario['usuusuario']];
-            //                 $asunto = "Kimberly Clark (PE): PROMOCIONES ".$re_fecha." ".$anio." (".$suc.")";
+                            $data = ['txtSucursales' => $suc, 're_fecha' => $re_fecha, "anio" => $anio, "usuario" => $usuario['usuusuario']];
+                            $asunto = "Kimberly Clark (PE): PROMOCIONES ".$re_fecha." ".$anio." (".$suc.")";
 
-            //                 $anadirCorreo = true;
+                            $anadirCorreo = true;
 
-            //                 foreach ($usuariosCorreo as $usuarioCorreo) {
-            //                     if ($usuario['usuusuario'] == $usuarioCorreo['usuario']) {
+                            foreach ($usuariosCorreo as $usuarioCorreo) {
+                                if ($usuario['usuusuario'] == $usuarioCorreo['usuario']) {
 
-            //                         if($usuario['gsunombre'] == 'Clientes'){
-            //                             $anadirCorreo = false;
-            //                         }else if($usuarioCorreo['gsunombre'] == $usuario['gsunombre']){
-            //                             $anadirCorreo = false;
-            //                         }
-            //                     }
-            //                 }
+                                    if($usuario['gsunombre'] == 'Clientes'){
+                                        $anadirCorreo = false;
+                                    }else if($usuarioCorreo['gsunombre'] == $usuario['gsunombre']){
+                                        $anadirCorreo = false;
+                                    }
+                                }
+                            }
                             
-            //                 if($anadirCorreo == true){
-            //                     $usuariosCorreo[] = array(
-            //                         "usuario"   => $usuario['usuusuario'],
-            //                         "gsunombre" => $usuario['gsunombre'],
-            //                         "sucnombre" => $usuario['sucnombre'],
-            //                         "data"      => $data,
-            //                         "asunto"    => $asunto
-            //                     );
-            //                 }                            
-            //             }
-            //         }
+                            if($anadirCorreo == true){
+                                $usuariosCorreo[] = array(
+                                    "usuario"   => $usuario['usuusuario'],
+                                    "gsunombre" => $usuario['gsunombre'],
+                                    "sucnombre" => $usuario['sucnombre'],
+                                    "data"      => $data,
+                                    "asunto"    => $asunto
+                                );
+                            }                            
+                        }
+                    }
                     
-            //     }
+                }
                 
-            // }
+            }
             if (sizeof($usuariosCorreo) > 0) {
                 foreach ($usuariosCorreo as $usuarioCorreo) {
-                    // Mail::to($usuarioCorreo['usuario'])->cc(['0540Peru.salescontrolling@kcc.com', 'Cuidatunegocio.KC@kcc.com', 'gerson.vilca@grow-analytics.com.pe', 'miguel.caballero@grow-analytics.com.pe', 'director.creativo@grow-analytics.com.pe'])
-                    //                  ->send(new MailPromocionesActivas($usuarioCorreo['data'], $usuarioCorreo['asunto']));
+                    Mail::to($usuarioCorreo['usuario'])->cc(['0540Peru.salescontrolling@kcc.com', 'Cuidatunegocio.KC@kcc.com', 'gerson.vilca@grow-analytics.com.pe', 'miguel.caballero@grow-analytics.com.pe', 'director.creativo@grow-analytics.com.pe'])
+                                     ->send(new MailPromocionesActivas($usuarioCorreo['data'], $usuarioCorreo['asunto']));
                 }
             }
 
