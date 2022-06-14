@@ -134,7 +134,7 @@ class CargarSellOutController extends Controller
             )
         );
 
-        $datos = json_decode( file_get_contents('http://backend-api.leadsmartview.com/ws/obtenerSellOutTodo'), true );
+        $datos = json_decode( file_get_contents('http://back-api-leadsmartview.grow-corporate.com/ws/obtenerSellOutTodo'), true );
         // foreach($datos as $posicion => $dato){
         //     $soldto    = $dato['COD_SOLD_TO'];
         //     $sku       = $dato['SKU'];
@@ -463,7 +463,7 @@ class CargarSellOutController extends Controller
             )
         );
 
-        $datos = json_decode( file_get_contents('http://backend-api.leadsmartview.com/obtenerSellOut'), true );
+        $datos = json_decode( file_get_contents('http://back-api-leadsmartview.grow-corporate.com/obtenerSellOut'), true );
 
         $mesSelec  = "";
         $anioSelec = "";
@@ -910,7 +910,7 @@ class CargarSellOutController extends Controller
         }
         
 
-        $datos = json_decode( file_get_contents('http://backend-api.leadsmartview.com/ws/obtenerSellOutEspecifico/'.$anioSelec.'/'.$mesSelec.'/'.$diaSelec), true );
+        $datos = json_decode( file_get_contents('http://back-api-leadsmartview.grow-corporate.com/ws/obtenerSellOutEspecifico/'.$anioSelec.'/'.$mesSelec.'/'.$diaSelec), true );
 
         foreach($datos as $posicion => $dato){
 
@@ -1342,7 +1342,7 @@ class CargarSellOutController extends Controller
         }
         
 
-        $datos = json_decode( file_get_contents('http://backend-api.leadsmartview.com/ws/obtenerSellOutEspecifico/'.$anioSelec.'/'.$mesTxtIngles.'/'.$diaSelec), true );
+        $datos = json_decode( file_get_contents('http://back-api-leadsmartview.grow-corporate.com/ws/obtenerSellOutEspecifico/'.$anioSelec.'/'.$mesTxtIngles.'/'.$diaSelec), true );
 
         foreach($datos as $posicion => $dato){
 
@@ -1773,7 +1773,7 @@ class CargarSellOutController extends Controller
         }
         
 
-        $datos = json_decode( file_get_contents('http://backend-api.leadsmartview.com/ws/obtenerSellOutEspecifico/'.$anioSelec.'/'.$mesTxtIngles.'/0'), true );
+        $datos = json_decode( file_get_contents('http://back-api-leadsmartview.grow-corporate.com/ws/obtenerSellOutEspecifico/'.$anioSelec.'/'.$mesTxtIngles.'/0'), true );
 
         foreach($datos as $posicion => $dato){
 

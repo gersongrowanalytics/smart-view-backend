@@ -153,7 +153,7 @@ class CargarSOXSoldtoController extends Controller
             }
         }
 
-        $datos = json_decode( file_get_contents('http://backend-api.leadsmartview.com/ws/obtenerSOconsolidado/'.$anioSelec.'/'.$mesTxtIngles), true );
+        $datos = json_decode( file_get_contents('http://back-api-leadsmartview.grow-corporate.com/ws/obtenerSOconsolidado/'.$anioSelec.'/'.$mesTxtIngles), true );
 
         if(sizeof($datos) > 0){
             foreach($datos as $posicion => $dato){

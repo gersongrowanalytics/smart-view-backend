@@ -68,7 +68,7 @@ class CargarExcelMesActualController extends Controller
 
         $cats = catcategorias::all();
 
-        $datos = json_decode( file_get_contents('http://backend-api.leadsmartview.com/ws/obtenerSellOutEspecifico/'.$anio.'/'.$mes.'/0'), true );
+        $datos = json_decode( file_get_contents('http://back-api-leadsmartview.grow-corporate.com/ws/obtenerSellOutEspecifico/'.$anio.'/'.$mes.'/0'), true );
 
         foreach($datos as $posicion => $dato){
 
@@ -255,7 +255,7 @@ class CargarExcelMesActualController extends Controller
 
 
         // for($cont = 1; $cont <= 31; $cont++){
-            $datos = json_decode( file_get_contents('http://backend-api.leadsmartview.com/ws/obtenerSellOutEspecifico/'.$anio.'/'.$mes.'/0'), true );
+            $datos = json_decode( file_get_contents('http://back-api-leadsmartview.grow-corporate.com/ws/obtenerSellOutEspecifico/'.$anio.'/'.$mes.'/0'), true );
 
             foreach($datos as $posicion => $dato){
 
