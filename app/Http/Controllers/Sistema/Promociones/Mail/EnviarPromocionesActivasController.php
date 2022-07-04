@@ -376,7 +376,12 @@ class EnviarPromocionesActivasController extends Controller
                             }
                             $anio = date("Y");
 
-                            $data = ['txtSucursales' => $suc, 're_fecha' => $re_fecha, "anio" => $anio, "usuario" => $usuario['usuusuario']];
+                            $data = [
+                                "txtSucursales" => $suc, 
+                                "re_fecha" => $re_fecha, 
+                                "anio" => $anio, 
+                                "usuario" => $usuario['usuusuario']
+                            ];
                             $asunto = "Kimberly Clark (PE): PROMOCIONES ".$re_fecha." ".$anio." (".$suc.")";
 
                             $anadirCorreo = true;
@@ -408,10 +413,33 @@ class EnviarPromocionesActivasController extends Controller
                 
             }
             if (sizeof($usuariosCorreo) > 0) {
-                foreach ($usuariosCorreo as $usuarioCorreo) {
-                    Mail::to($usuarioCorreo['usuario'])->cc(['0540Peru.salescontrolling@kcc.com', 'Cuidatunegocio.KC@kcc.com', 'gerson.vilca@grow-analytics.com.pe', 'miguel.caballero@grow-analytics.com.pe', 'director.creativo@grow-analytics.com.pe'])
-                                     ->send(new MailPromocionesActivas($usuarioCorreo['data'], $usuarioCorreo['asunto']));
+
+                foreach ($usuariosCorreo as $key => $usuarioCorreo) {
+                    $suc_correos[] = $usuarioCorreo['data']['txtSucursales'];
                 }
+
+                $suc_unicos = array_values(array_unique($suc_correos));
+
+                foreach ($suc_unicos as $key => $suc_unico) {
+                    $usuarios_correo = [];
+                    $asunto_correo = "";
+                    $data_correo = [];
+                    foreach ($usuariosCorreo as $key => $usuarioCorreo) {
+                        if ($suc_unico ==  $usuarioCorreo['data']['txtSucursales']) {
+                            $usuarios_correo[] = $usuarioCorreo['usuario'];
+                            $asunto_correo = $usuarioCorreo['asunto'];
+                            // $asunto = $asunto."/".$usuarioCorreo['usuario'];
+                            $data_correo = $usuarioCorreo['data'];
+                        }
+                    }
+
+                    Mail::to($usuarios_correo)->cc(['0540Peru.salescontrolling@kcc.com', 'Cuidatunegocio.KC@kcc.com', 'gerson.vilca@grow-analytics.com.pe', 'miguel.caballero@grow-analytics.com.pe', 'director.creativo@grow-analytics.com.pe'])
+                                                ->send(new MailPromocionesActivas($data_correo, $asunto_correo));
+                }
+                // foreach ($usuariosCorreo as $key => $usuarioCorreo) {
+                //     // Mail::to($usuarioCorreo['usuario'])->cc(['0540Peru.salescontrolling@kcc.com', 'Cuidatunegocio.KC@kcc.com', 'gerson.vilca@grow-analytics.com.pe', 'miguel.caballero@grow-analytics.com.pe', 'director.creativo@grow-analytics.com.pe'])
+                //     //                  ->send(new MailPromocionesActivas($usuarioCorreo['data'], $usuarioCorreo['asunto']));
+                // }
             }
 
 
