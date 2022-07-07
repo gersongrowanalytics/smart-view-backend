@@ -304,6 +304,8 @@ class EnviarPromocionesActivasController extends Controller
 
         $correo = "jeanmarcoe@gmail.com";
 
+        $dataEnviada = [];
+
         if (true == true) {
             //OBTENER LA FECHA
             date_default_timezone_set("America/Lima");
@@ -433,8 +435,10 @@ class EnviarPromocionesActivasController extends Controller
                         }
                     }
 
-                    Mail::to($usuarios_correo)->cc(['0540Peru.salescontrolling@kcc.com', 'Cuidatunegocio.KC@kcc.com', 'gerson.vilca@grow-analytics.com.pe', 'miguel.caballero@grow-analytics.com.pe', 'director.creativo@grow-analytics.com.pe'])
-                                                ->send(new MailPromocionesActivas($data_correo, $asunto_correo));
+                    $dataEnviada[] = $usuarios_correo;
+
+                    // Mail::to($usuarios_correo)->cc(['0540Peru.salescontrolling@kcc.com', 'Cuidatunegocio.KC@kcc.com', 'gerson.vilca@grow-analytics.com.pe', 'miguel.caballero@grow-analytics.com.pe', 'director.creativo@grow-analytics.com.pe'])
+                    //                             ->send(new MailPromocionesActivas($data_correo, $asunto_correo));
                 }
 
                 // a
