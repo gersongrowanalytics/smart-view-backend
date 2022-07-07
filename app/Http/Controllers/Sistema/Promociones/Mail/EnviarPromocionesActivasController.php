@@ -331,6 +331,7 @@ class EnviarPromocionesActivasController extends Controller
                                             ->where('usu.usuusuario', 'not like', '%grow-analytics%')
                                             ->where('usu.usuusuario', 'not like', '%mzorrilla%')
                                             ->where('usu.usuusuario', 'not like', '%pablo.alocen%')
+                                            ->where('usu.usuusuario', 'not like', '%jorge.j.testino%')
                                             ->whereNotNull('usu.usuusuario')
                                             ->orderBy('ussusuariossucursales.usuid', 'DESC')
                                             ->get([
