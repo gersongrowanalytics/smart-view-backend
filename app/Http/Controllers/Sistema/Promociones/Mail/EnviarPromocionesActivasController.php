@@ -304,6 +304,8 @@ class EnviarPromocionesActivasController extends Controller
 
         $correo = "jeanmarcoe@gmail.com";
 
+        $dataEnviada = [];
+
         if (true == true) {
             //OBTENER LA FECHA
             date_default_timezone_set("America/Lima");
@@ -328,6 +330,10 @@ class EnviarPromocionesActivasController extends Controller
                                             ->where('suc.sucnombre','like', '%'.$sucursal.'%')
                                             ->where('usu.usuusuario', 'not like', '%grow-analytics%')
                                             ->where('usu.usuusuario', 'not like', '%mzorrilla%')
+                                            ->where('usu.usuusuario', 'not like', '%pablo.alocen%')
+                                            ->where('usu.usuusuario', 'not like', '%jorge.j.testino%')
+                                            ->where('usu.usuusuario', 'not like', '%Axel.Rooth%')
+                                            ->where('usu.usuusuario', 'not like', '%gonzalo.p.cornejo%')
                                             ->whereNotNull('usu.usuusuario')
                                             ->orderBy('ussusuariossucursales.usuid', 'DESC')
                                             ->get([
@@ -454,7 +460,11 @@ class EnviarPromocionesActivasController extends Controller
         $requestsalida = response()->json([
             "respuesta" => $respuesta,
             "mensaje"   => $mensaje,
-            "datos"     => $usuariosCorreo
+            // "datos"     => $usuariosCorreo,
+            "datos" => $dataEnviada,
+            // "data_correo" => $data_correo,
+            // "asunto" => $asunto_correo
+
         ]);
 
         return $requestsalida;
