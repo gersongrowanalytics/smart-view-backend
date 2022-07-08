@@ -62,7 +62,7 @@ $router->post('/aceptar-terminos-condiciones', 'Sistema\TerminosCondiciones\Acep
     $router->post('/ventas/descargar/especificos/so', 'Sistema\Ventas\Mostrar\MostrarDescargaSiSoController@MostrarSucursalesDescargarVentasSoExcel');
 
     // PROMOCIONES
-    $router->post('/promociones/mail/enviar-correo-promociones-activas', 'Sistema\Promociones\Mail\EnviarPromocionesActivasController@EnviarPromocionesActivas');
+    $router->post('@', 'Sistema\Promociones\Mail\EnviarPromocionesActivasController@EnviarPromocionesActivas');
     $router->post('/promociones/mail/enviar-correo-promociones-nuevas', 'Sistema\Promociones\Mail\EnviarPromocionesNuevasController@EnviarPromocionesNuevas');
 
     $router->post('/promociones/mostrar/categorias', 'Sistema\Promociones\Mostrar\CategoriasController@mostrarCategorias');
@@ -276,3 +276,7 @@ $router->post('/reporte-archivos-subidos', 'Sistema\ControlArchivos\Reportes\Gen
 $router->post('/reportes-logicaLP','Sistema\CargarArchivo\ListaPrecios\CargarListaPreciosController@DividirCG');
 $router->get('/mostrar-tipo-rebates','Sistema\CargarArchivo\ListaPrecios\TipoRebate\MostrarTipoRebateDescargaLPController@MostrarTipoRebate');
 $router->get('/mostrar-canales-sucursales', 'Sistema\CargarArchivo\ListaPrecios\CanalesSucursales\MostrarCanalesSucursalesDescargaLPController@MostrarCanalesSucursales');
+
+
+$router->post('/status/obtener', 'Sistema\Status\MetObtenerStatusController@MetObtenerStatus');
+$router->post('/status/areas', 'Sistema\Status\MetObtenerAreasController@MetObtenerAreas');

@@ -11,6 +11,7 @@ use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use Illuminate\Support\Str;
 use App\carcargasarchivos;
+use App\coacontrolarchivos;
 use App\fecfechas;
 use App\Mail\MailCargaArchivos;
 use App\usuusuarios;
@@ -536,6 +537,16 @@ class CargarArchivoController extends Controller
 
                     $data = ['linkArchivoSubido' => $nuevoCargaArchivo->carurl , 'nombre' => $nuevoCargaArchivo->carnombrearchivo , 'tipo' => $tca->tcanombre, 'usuario' => $usuusuario->usuusuario];
                     Mail::to('gerson.vilca@grow-analytics.com.pe')->send(new MailCargaArchivos($data));
+
+                    $coa = coacontrolarchivos::where('coaid',11) // SELL IN REAL
+                                               ->first('coaid');
+
+                    if ($coa) {
+                        $coa->carid = $nuevoCargaArchivo->carid;
+                        $coa->estid = 3;
+                        $coa->coafechasubida = $fecid;
+                        $coa->update();
+                    }
                 }else{
 
                 }

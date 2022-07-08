@@ -19,6 +19,7 @@ use App\sucsucursales;
 use Illuminate\Support\Str;
 use App\proproductos;
 use App\catcategorias;
+use App\coacontrolarchivos;
 use App\Mail\MailCargaArchivos;
 use App\tretiposrebates;
 use App\tuptiposusuariospermisos;
@@ -550,6 +551,15 @@ class ObjetivoCargarController extends Controller
 
                             $data = ['linkArchivoSubido' => $nuevoCargaArchivo->carurl , 'nombre' => $nuevoCargaArchivo->carnombrearchivo , 'tipo' => $tca->tcanombre, 'usuario' => $usuusuario->usuusuario];
                             Mail::to('gerson.vilca@grow-analytics.com.pe')->send(new MailCargaArchivos($data));
+
+                            $coa = coacontrolarchivos::where('coaid', 1) // SELL IN OBJETIVOS 
+                                                        ->first();
+
+                            if ($coa) {
+                                $coa->carid = $nuevoCargaArchivo->carid;
+                                $coa->estid = 3;
+                                $coa->update();
+                            }
 
                         }else{
 
@@ -1736,6 +1746,14 @@ class ObjetivoCargarController extends Controller
                             $data = ['linkArchivoSubido' => $nuevoCargaArchivo->carurl , 'nombre' => $nuevoCargaArchivo->carnombrearchivo , 'tipo' => $tca->tcanombre, 'usuario' => $usuusuario->usuusuario];
                             Mail::to('gerson.vilca@grow-analytics.com.pe')->send(new MailCargaArchivos($data));
 
+                            $coa = coacontrolarchivos::where('coaid',2) // SELL OUT OBJETIVOS
+                                                        ->first();
+
+                            if ($coa) {
+                                $coa->carid = $nuevoCargaArchivo->carid;
+                                $coa->estid = 3;
+                                $coa->update();
+                            }
                         }else{
 
                         }   
@@ -1928,6 +1946,15 @@ class ObjetivoCargarController extends Controller
 
                     $data = ['linkArchivoSubido' => $nuevoCargaArchivo->carurl , 'nombre' => $nuevoCargaArchivo->carnombrearchivo , 'tipo' => $tca->tcanombre, 'usuario' => $usuusuario->usuusuario];
                     Mail::to('gerson.vilca@grow-analytics.com.pe')->send(new MailCargaArchivos($data));
+
+                    $coa = coacontrolarchivos::where('coaid', 7) // REBATE DT
+                                            ->first();
+
+                    if ($coa) {
+                        $coa->carid = $nuevoCargaArchivo->carid;
+                        $coa->estid = 3;
+                        $coa->update();
+                    }
 
                 }else{
 
