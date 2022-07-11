@@ -9,6 +9,7 @@ use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use App\carcargasarchivos;
+use App\coacontrolarchivos;
 use App\usuusuarios;
 use App\ltplistaprecios;
 use App\Mail\MailCargaArchivos;
@@ -177,6 +178,14 @@ class CargarListaPreciosController extends Controller
                 $data = ['linkArchivoSubido' => $nuevoCargaArchivo->carurl , 'nombre' => $nuevoCargaArchivo->carnombrearchivo , 'tipo' => $tca->tcanombre, 'usuario' => $usuusuario->usuusuario];
                 Mail::to('gerson.vilca@grow-analytics.com.pe')->send(new MailCargaArchivos($data));
 
+                $coa = coacontrolarchivos::where('coaid',10) // LISTA DE PRECIOS
+                                            ->first();
+
+                if ($coa) {
+                    $coa->carid = $nuevoCargaArchivo->carid;
+                    $coa->estid = 3;
+                    $coa->update();
+                }
             }else{
 
             }

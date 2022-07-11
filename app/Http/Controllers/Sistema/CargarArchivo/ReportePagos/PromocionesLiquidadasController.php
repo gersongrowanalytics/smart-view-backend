@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\DB;
 use App\proproductos;
 use App\usuusuarios;
 use App\carcargasarchivos;
+use App\coacontrolarchivos;
 use App\fecfechas;
 use App\sucsucursales;
 use App\prlpromocionesliquidadas;
@@ -184,6 +185,15 @@ class PromocionesLiquidadasController extends Controller
                 $nuevoCargaArchivo->carurl           = env('APP_URL').'/Sistema/cargaArchivos/promocionesliquidadas/'.basename($usuusuario->usuid.'-'.$usuusuario->usuusuario.'-'.$fechaActual.'-'.$_FILES['file']['name']);
                 if($nuevoCargaArchivo->save()){
                     $pkid = "CAR-".$nuevoCargaArchivo->carid;
+
+                    $coa = coacontrolarchivos::where('coaid',8) // PROMOCIONES LIQUIDADAS DT
+                                            ->first();
+
+                    if ($coa) {
+                        $coa->carid = $nuevoCargaArchivo->carid;
+                        $coa->estid = 3;
+                        $coa->update();
+                    }
                 }else{
 
                 }

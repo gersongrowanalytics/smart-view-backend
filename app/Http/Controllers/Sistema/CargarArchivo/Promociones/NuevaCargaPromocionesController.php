@@ -31,6 +31,7 @@ use App\cspcanalessucursalespromociones;
 use App\prbpromocionesbonificaciones;
 use App\prppromocionesproductos;
 use App\carcargasarchivos;
+use App\coacontrolarchivos;
 use App\Mail\MailCargaArchivos;
 use App\tcatiposcargasarchivos;
 use App\tuptiposusuariospermisos;
@@ -1007,6 +1008,29 @@ class NuevaCargaPromocionesController extends Controller
 
                 $data = ['linkArchivoSubido' => $nuevoCargaArchivo->carurl , 'nombre' => $nuevoCargaArchivo->carnombrearchivo , 'tipo' => $tca->tcanombre, 'usuario' => $usuusuario->usuusuario];
                 Mail::to('gerson.vilca@grow-analytics.com.pe')->send(new MailCargaArchivos($data));
+
+
+                if (strpos($archivo, "lima")) {
+                    $coaid = 3;
+                }else if (strpos($archivo, "norte")){
+                    $coaid = 4;
+                }else if (strpos($archivo, "sur")){
+                    $coaid = 5;
+                }else if (strpos($archivo, "centro")){
+                    $coaid = 6;
+                }
+
+                if ($coaid) {
+                    $coa = coacontrolarchivos::where('coaid', $coaid) // MECANICA PROMOCIONAL
+                                            ->first();
+
+                    if ($coa) {
+                        $coa->carid = $nuevoCargaArchivo->carid;
+                        $coa->estid = 3;
+                        $coa->update();
+                    }
+                }
+               
             }else{
 
             }

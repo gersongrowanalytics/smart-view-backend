@@ -12,6 +12,7 @@ use PhpOffice\PhpSpreadsheet\Shared\Date;
 use Illuminate\Support\Facades\DB;
 use App\usuusuarios;
 use App\carcargasarchivos;
+use App\coacontrolarchivos;
 use App\fecfechas;
 use App\repreconocimientopago;
 use App\sucsucursales;
@@ -163,6 +164,15 @@ class ReconocimientoPagosController extends Controller
                 $nuevoCargaArchivo->carurl           = env('APP_URL').'/Sistema/cargaArchivos/reconocimientopagos/'.basename($usuusuario->usuid.'-'.$usuusuario->usuusuario.'-'.$fechaActual.'-'.$_FILES['file']['name']);
                 if($nuevoCargaArchivo->save()){
                     $pkid = "CAR-".$nuevoCargaArchivo->carid;
+
+                    $coa = coacontrolarchivos::where('coaid',9) // RECONOCIMIENTO PAGOS DT
+                                                ->first();
+
+                    if ($coa) {
+                        $coa->carid = $nuevoCargaArchivo->carid;
+                        $coa->estid = 3;
+                        $coa->update();
+                    }
                 }else{
 
                 }

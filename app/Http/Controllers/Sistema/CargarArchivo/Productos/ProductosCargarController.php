@@ -12,6 +12,7 @@ use App\carcargasarchivos;
 use App\fecfechas;
 use App\proproductos;
 use App\catcategorias;
+use App\coacontrolarchivos;
 use App\Mail\MailCargaArchivos;
 use App\tcatiposcargasarchivos;
 use App\usuusuarios;
@@ -372,6 +373,14 @@ class ProductosCargarController extends Controller
                 $data = ['linkArchivoSubido' => $nuevoCargaArchivo->carurl , 'nombre' => $nuevoCargaArchivo->carnombrearchivo , 'tipo' => $tca->tcanombre, 'usuario' => $usuusuario->usuusuario];
                 Mail::to('gerson.vilca@grow-analytics.com.pe')->send(new MailCargaArchivos($data));
 
+                $coa = coacontrolarchivos::where('coaid',12) // MASTER DE PRODUCTOS
+                                            ->first();
+
+                if ($coa) {
+                    $coa->carid = $nuevoCargaArchivo->carid;
+                    $coa->estid = 3;
+                    $coa->update();
+                }
             }else{
 
             }
