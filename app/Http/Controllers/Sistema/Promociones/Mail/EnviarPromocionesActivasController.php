@@ -323,6 +323,21 @@ class EnviarPromocionesActivasController extends Controller
             $usuariosCorreo = [];
 
             foreach ($re_sucursales as $sucursal) {
+
+                // Pablo Alocen
+                // Rodrigo Balleta
+                // Romina Hernandez
+                // Jesús Medina
+                // Carlos Galagarza
+                // Jose Barbosa
+                // Melissa García
+                // Jorge Testino
+                // Jose Del Busto
+                // Axel Rooth
+                // Gonzalo Cornejo
+                // Javier Ley Almanza
+
+
                 $uss = ussusuariossucursales::join('sucsucursales as suc', 'suc.sucid', 'ussusuariossucursales.sucid')
                                             ->join('usuusuarios as usu', 'usu.usuid', 'ussusuariossucursales.usuid')
                                             ->join('gsugrupossucursales as gsu', 'gsu.gsuid', 'suc.gsuid')
@@ -441,6 +456,8 @@ class EnviarPromocionesActivasController extends Controller
                             $data_correo = $usuarioCorreo['data'];
                         }
                     }
+
+                    $dataEnviada[] = $usuarios_correo;
                     
                     // Mail::to($usuarios_correo)->cc(['0540Peru.salescontrolling@kcc.com', 'Cuidatunegocio.KC@kcc.com', 'gerson.vilca@grow-analytics.com.pe', 'miguel.caballero@grow-analytics.com.pe', 'director.creativo@grow-analytics.com.pe'])
                     //                             ->send(new MailPromocionesActivas($data_correo, $asunto_correo));
