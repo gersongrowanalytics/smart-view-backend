@@ -321,8 +321,23 @@ class EnviarPromocionesActivasController extends Controller
             $minutoActualizacion = date("i", strtotime($hora));
 
             $usuariosCorreo = [];
-
+            
             foreach ($re_sucursales as $sucursal) {
+
+                // Pablo Alocen
+                // Rodrigo Balleta
+                // Romina Hernandez x
+                // Jesús Medina
+                // Carlos Galagarza
+                // Jose Barbosa
+                // Melissa García
+                // Jorge Testino
+                // Jose Del Busto
+                // Axel Rooth
+                // Gonzalo Cornejo
+                // Javier Ley Almanza x
+
+
                 $uss = ussusuariossucursales::join('sucsucursales as suc', 'suc.sucid', 'ussusuariossucursales.sucid')
                                             ->join('usuusuarios as usu', 'usu.usuid', 'ussusuariossucursales.usuid')
                                             ->join('gsugrupossucursales as gsu', 'gsu.gsuid', 'suc.gsuid')
@@ -331,12 +346,16 @@ class EnviarPromocionesActivasController extends Controller
                                             ->where('usu.usuusuario', 'not like', '%grow-analytics%')
                                             ->where('usu.usuusuario', 'not like', '%mzorrilla%')
                                             ->where('usu.usuusuario', 'not like', '%pablo.alocen%')
+                                            ->where('usu.usuusuario', 'not like', '%rodrigo.balletta%')
+                                            ->where('usu.usuusuario', 'not like', '%jesus.medina%')
                                             ->where('usu.usuusuario', 'not like', '%jorge.j.testino%')
                                             ->where('usu.usuusuario', 'not like', '%Axel.Rooth%')
                                             ->where('usu.usuusuario', 'not like', '%gonzalo.p.cornejo%')
-                                            ->where('usu.usuusuario', 'not like', '%gonzalo.p.cornejo%')
-                                            ->where('usu.usuusuario', 'not like', '%gonzalo.p.cornejo%')
-                                            ->where('usu.usuusuario', 'not like', '%gonzalo.p.cornejo%')
+                                            ->where('usu.usuusuario', 'not like', '%carlos.galagarza%')
+                                            ->where('usu.usuusuario', 'not like', '%Jose.m.barbosa%')
+                                            ->where('usu.usuusuario', 'not like', '%jose.delbusto%')
+                                            ->where('usu.usuusuario', 'not like', '%melissa.garcia%')
+                                            ->where('usu.usuusuario', 'not like', '%pruebagrow%')
                                             ->whereNotNull('usu.usuusuario')
                                             ->orderBy('ussusuariossucursales.usuid', 'DESC')
                                             ->get([
@@ -441,9 +460,11 @@ class EnviarPromocionesActivasController extends Controller
                             $data_correo = $usuarioCorreo['data'];
                         }
                     }
+
+                    $dataEnviada[] = $usuarios_correo;
                     
-                    // Mail::to($usuarios_correo)->cc(['0540Peru.salescontrolling@kcc.com', 'Cuidatunegocio.KC@kcc.com', 'gerson.vilca@grow-analytics.com.pe', 'miguel.caballero@grow-analytics.com.pe', 'director.creativo@grow-analytics.com.pe'])
-                    //                             ->send(new MailPromocionesActivas($data_correo, $asunto_correo));
+                    Mail::to($usuarios_correo)->cc(['0540Peru.salescontrolling@kcc.com', 'Cuidatunegocio.KC@kcc.com', 'gerson.vilca@grow-analytics.com.pe', 'miguel.caballero@grow-analytics.com.pe', 'director.creativo@grow-analytics.com.pe'])
+                                                ->send(new MailPromocionesActivas($data_correo, $asunto_correo));
                     // Mail::to($correo)->send(new MailPromocionesActivas($data_correo, $asunto_correo));
                 }
 
