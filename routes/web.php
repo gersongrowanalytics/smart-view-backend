@@ -62,7 +62,7 @@ $router->post('/aceptar-terminos-condiciones', 'Sistema\TerminosCondiciones\Acep
     $router->post('/ventas/descargar/especificos/so', 'Sistema\Ventas\Mostrar\MostrarDescargaSiSoController@MostrarSucursalesDescargarVentasSoExcel');
 
     // PROMOCIONES
-    $router->post('@', 'Sistema\Promociones\Mail\EnviarPromocionesActivasController@EnviarPromocionesActivas');
+    $router->post('/promociones/mail/enviar-correo-promociones-activas', 'Sistema\Promociones\Mail\EnviarPromocionesActivasController@EnviarPromocionesActivas');
     $router->post('/promociones/mail/enviar-correo-promociones-nuevas', 'Sistema\Promociones\Mail\EnviarPromocionesNuevasController@EnviarPromocionesNuevas');
 
     $router->post('/promociones/mostrar/categorias', 'Sistema\Promociones\Mostrar\CategoriasController@mostrarCategorias');
