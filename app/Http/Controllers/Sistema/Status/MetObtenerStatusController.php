@@ -16,7 +16,7 @@ class MetObtenerStatusController extends Controller
     {
         $respuesta = false;
         $mensaje   = "";
-        $data      = [];
+        $datos      = [];
 
         $coas = coacontrolarchivos::leftJoin('carcargasarchivos as car', 'car.carid', 'coacontrolarchivos.carid')
                                     ->leftJoin('fecfechas as feccar', 'feccar.fecid', 'car.fecid')
@@ -48,18 +48,20 @@ class MetObtenerStatusController extends Controller
                                         'perresp.pernombrecompleto as pernombrecompletoresponsable', 
                                     ]);
 
+
         if (sizeof($coas) > 0) {
             $respuesta = true;
             $mensaje   = "Se obtuvieron los registros con exito";
 
             foreach ($coas as $key => $coa) {
+                $coa['fecfecha'] = $this->MetFormatearFecha($coa->fecfecha);
                 $datos[] = [
                     "areaid"       => $coa->areid,
                     "area"         => $coa->arenombre,
                     "base_datos"   => $coa->coabasedatos,
                     "responsable"  => $coa->pernombrecompletoresponsable,
                     "usuario"      => $coa->pernombrecompletosubida,
-                    "deadline"     => "24 Mayo 2022",
+                    "deadline"     => "24 May 2022",
                     "fecha_carga"  => $coa->fecfecha,
                     "dias_retraso" => $coa->coadiasretraso,
                     "status"       => $coa->estnombre
@@ -77,5 +79,16 @@ class MetObtenerStatusController extends Controller
             "mensaje"   => $mensaje,
             "datos"     => $coas
         ]);
+
+    }
+
+    public function MetFormatearFecha($fecha)
+    {
+        $meses = array("Ene","Feb","Mar","Abr","May","Jun","Jul","Ago","Sep","Oct","Nov","Dic");
+        $anioActualizacion = date("Y", strtotime($fecha));
+        $mesActualizacion = $meses[date('n', strtotime($fecha))-1];
+        $diaActualizacion = date("j", strtotime($fecha));
+        $fechaFormateada = $diaActualizacion." ".$mesActualizacion." ".$anioActualizacion;
+        return $fechaFormateada;
     }
 }

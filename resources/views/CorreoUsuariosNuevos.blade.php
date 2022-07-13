@@ -9,7 +9,7 @@
     <div style="width: 100%; ">
         <center>
             <div style="font-style: normal; font-weight: normal; font-size: 12px; line-height: 12px; color: #4d4d4d; ">
-                <span>¡Hola Glose!</span>
+                <span>¡Hola {{$nombre}}!</span>
                 <div style="margin-top: 5px">Agradecemos tu confianza e interés en conocer nuestra plataforma, y deseamos que utilizando <span style="font-weight: bold">Creciendo</br></span> </div> 
                 <div style="margin-top: 5px"><span style="font-weight: bold">Juntos </span> la visibilidad deseada de tus <span style="font-weight: bold">Promociones</span></br></div>
                 <div style="margin-top: 5px">Desde ya queremos que sepas que estamos comprometidos en darles el mejor servicio posible, por lo cual para </br></div>
@@ -43,7 +43,7 @@
                         <td style="background: #edf0f3; width: 30px"></td>
                         <td colspan="6"  align="center" >
                             <div id="" style=" font-style: normal; font-weight: bold; font-size: 15px; line-height: 18px; color: #558CFF; padding-top:15px">
-                                Hola, Gloser
+                                Hola, {{$nombre}}
                             </div>
                         </td>
                         <td style="background: #edf0f3; width: 30px"></td>

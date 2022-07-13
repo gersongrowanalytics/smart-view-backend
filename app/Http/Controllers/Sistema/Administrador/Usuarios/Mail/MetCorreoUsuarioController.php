@@ -1,0 +1,65 @@
+<?php
+
+namespace App\Http\Controllers\Sistema\Administrador\Usuarios\Mail;
+
+use App\Http\Controllers\Controller;
+use App\Mail\MailUsuariosInformacion;
+use App\usuusuarios;
+use Illuminate\Http\Request;
+use Exception;
+use Illuminate\Support\Facades\Mail;
+
+class MetCorreoUsuarioController extends Controller
+{
+    public function MetCorreoUsuario (Request $request)
+    {
+        $respuesta   = true;
+        $mensaje     = "";
+        $mensajeserv = [];
+        $estado      = 200;
+        $asunto      = "";
+
+        $req_correo      = $request['req_correo'];
+        $req_usuario     = $request['req_usuario'];
+        $req_contrasenia = $request['req_contrasenia'];
+        $req_asunto      = $request['req_asunto'];
+
+        $usu = usuusuarios::join('perpersonas as per', 'per.perid', 'usuusuarios.perid')
+                            ->where('usuusuarios.usuusuario', $req_usuario)
+                            ->first("per.pernombre");
+
+        if ($usu) {
+            try {
+                if ($req_asunto == 'true') {
+                    $asunto  = "CORREO DE BIENVENIDA";
+                    $mensaje = "El correo de bienvenida fue enviado correctamente";
+                }else{
+                    $asunto  = "CORREO DE ACTUALIZACIÓN DE USUARIO";
+                    $mensaje = "El correo de actualización de usuario fue enviado correctamente";
+                }
+
+                $data = [
+                    "usuario"     => $req_usuario,
+                    "contrasenia" => $req_contrasenia,
+                    "nombre"      => $usu->pernombre
+                ];
+                Mail::to($req_correo)->send( new MailUsuariosInformacion($data, $asunto));
+            } catch (Exception $e) {
+                $mensajeserv[]  = $e->getMessage();
+                $respuesta      = false;
+                $mensaje        = ["Lo siento, surgió un error al momento de enviar el correo"];
+                $estado         = 406;
+            }
+        }else{
+            $respuesta = false;
+            $mensaje   = ['Lo siento, los datos del usuario no se encuentran registrados'];
+            $estado    = 406;
+        }
+        
+        return response()->json([
+            "respuesta"   => $respuesta,
+            "mensaje"     => $mensaje,
+            "mensajeserv" => $mensajeserv
+        ], $estado);
+    }
+}
