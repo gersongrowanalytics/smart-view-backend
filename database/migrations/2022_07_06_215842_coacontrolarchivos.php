@@ -19,8 +19,7 @@ class Coacontrolarchivos extends Migration
             $table->unsignedInteger('carid');
             $table->unsignedInteger('fecid')->nullable();
             $table->unsignedInteger('estid');
-            $table->unsignedInteger('areid');
-            $table->string('coabasedatos');
+            $table->unsignedInteger('badid');
             $table->integer('coadiasretraso')->nullable();
             $table->string('coafechasubida')->nullable();
             $table->date('coafechacaducidad')->nullable();
@@ -30,7 +29,7 @@ class Coacontrolarchivos extends Migration
             $table->foreign('usuid')->references('usuid')->on('usuusuarios');
             $table->foreign('carid')->references('carid')->on('carcargasarchivos');
             $table->foreign('estid')->references('estid')->on('estestados');
-            $table->foreign('areid')->references('areid')->on('areareas');
+            $table->foreign('badid')->references('badid')->on('badbasedatos');
             
         });
     }

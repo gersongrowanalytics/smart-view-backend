@@ -17,9 +17,13 @@ class MailInformarStatus extends Mailable
      * @return void
      */
     public $datos;
-    public function __construct($datos)
+    public $cuadros;
+    public $fechas;
+    public function __construct($datos, $cuadros, $fechas)
     {
-        $this->datos = $datos;
+        $this->datos   = $datos;
+        $this->cuadros = $cuadros;
+        $this->fechas  = $fechas;
     }
     /**
      * Build the message.
@@ -31,6 +35,6 @@ class MailInformarStatus extends Mailable
         return $this->from('smartview@grow-analytics.com', 'Grow: TeamSupport')
                     ->view('CorreoInformarStatus')
                     ->subject('STATUS')
-                    ->with($this->datos);
+                    ->with($this->datos, $this->cuadros, $this->fechas);
     }
 }
