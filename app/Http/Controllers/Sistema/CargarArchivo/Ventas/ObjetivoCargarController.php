@@ -63,8 +63,6 @@ class ObjetivoCargarController extends Controller
         $pkid = 0;
         $log  = [];
         $observaciones  = [];
-
-        $cargarData = false;
         
         $usuusuario = usuusuarios::join('tputiposusuarios as tpu', 'tpu.tpuid', 'usuusuarios.tpuid')
                                 ->where('usuusuarios.usutoken', $usutoken)
@@ -93,6 +91,8 @@ class ObjetivoCargarController extends Controller
             }
         }
 
+        $cargarData = false;
+        
         // DB::beginTransaction();
         try{
 
@@ -1314,6 +1314,8 @@ class ObjetivoCargarController extends Controller
                 $cargarData = false;
             }
         }
+
+        $cargarData = false;
 
         // DB::beginTransaction();
         try{
