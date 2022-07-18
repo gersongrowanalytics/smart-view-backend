@@ -93,6 +93,12 @@ class ObjetivoCargarController extends Controller
 
         $cargarData = false;
 
+        if($usuusuario){
+            if($usuusuario->usuid == 1){
+                $cargarData = true;
+            }
+        }
+
         // DB::beginTransaction();
         try{
 
