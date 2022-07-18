@@ -7,7 +7,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class MailInformarStatus extends Mailable
+class MailUsuariosInformacion extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -16,15 +16,14 @@ class MailInformarStatus extends Mailable
      *
      * @return void
      */
-    public $datos;
-    public $cuadros;
-    public $fechas;
-    public function __construct($datos, $cuadros, $fechas)
+    public $data;
+    public $asunto;
+    public function __construct($data, $asunto)
     {
-        $this->datos   = $datos;
-        $this->cuadros = $cuadros;
-        $this->fechas  = $fechas;
+        $this->data = $data;
+        $this->asunto = $asunto;
     }
+
     /**
      * Build the message.
      *
@@ -33,8 +32,8 @@ class MailInformarStatus extends Mailable
     public function build()
     {
         return $this->from('smartview@grow-analytics.com', 'Grow: TeamSupport')
-                    ->view('CorreoInformarStatus')
-                    ->subject('STATUS')
-                    ->with($this->datos, $this->cuadros, $this->fechas);
+                    ->view('CorreoUsuariosNuevos')
+                    ->subject($this->asunto)
+                    ->with($this->data);
     }
 }

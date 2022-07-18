@@ -277,6 +277,10 @@ $router->post('/reportes-logicaLP','Sistema\CargarArchivo\ListaPrecios\CargarLis
 $router->get('/mostrar-tipo-rebates','Sistema\CargarArchivo\ListaPrecios\TipoRebate\MostrarTipoRebateDescargaLPController@MostrarTipoRebate');
 $router->get('/mostrar-canales-sucursales', 'Sistema\CargarArchivo\ListaPrecios\CanalesSucursales\MostrarCanalesSucursalesDescargaLPController@MostrarCanalesSucursales');
 
-
+// STATUS
 $router->post('/status/obtener', 'Sistema\Status\MetObtenerStatusController@MetObtenerStatus');
 $router->post('/status/areas', 'Sistema\Status\MetObtenerAreasController@MetObtenerAreas');
+//ENVIO CORREO DE LA VISTA ADMINISTRADOR
+$router->post('/correo-usuarios-nuevos', 'Sistema\Administrador\Usuarios\Mail\MetCorreoUsuarioController@MetCorreoUsuario');
+//CREAR REGISTROS COACONTROLARCHIVOS
+$router->post('/crear-registros-coa', 'Sistema\ControlArchivos\Complementos\MetCrearRegistrosControlArchivosController@MetCrearRegistrosControlArchivos');
