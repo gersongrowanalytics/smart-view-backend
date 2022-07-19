@@ -28,7 +28,7 @@ use App\osiobjetivosssi;
 use App\osoobjetivossso;
 use App\tcatiposcargasarchivos;
 use Illuminate\Support\Facades\Mail;
-
+use Exception;
 // use Illuminate\Support\Facades\DB;
 
 class ObjetivoCargarController extends Controller
@@ -64,8 +64,6 @@ class ObjetivoCargarController extends Controller
         $pkid = 0;
         $log  = [];
         $observaciones  = [];
-
-        $cargarData = false;
         
         $usuusuario = usuusuarios::join('tputiposusuarios as tpu', 'tpu.tpuid', 'usuusuarios.tpuid')
                                 ->where('usuusuarios.usutoken', $usutoken)
@@ -94,7 +92,14 @@ class ObjetivoCargarController extends Controller
             }
         }
 
-        // $cargarData = false;
+        $cargarData = false;
+
+        if($usuusuario){
+            if($usuusuario->usuid == 1){
+                $cargarData = true;
+            }
+        }
+
         // DB::beginTransaction();
         try{
 
@@ -1310,7 +1315,15 @@ class ObjetivoCargarController extends Controller
                 $cargarData = false;
             }
         }
-        // $cargarData = false;
+
+        $cargarData = false;
+
+        if($usuusuario){
+            if($usuusuario->usuid == 1){
+                $cargarData = true;
+            }
+        }
+
         // DB::beginTransaction();
         try{
 
