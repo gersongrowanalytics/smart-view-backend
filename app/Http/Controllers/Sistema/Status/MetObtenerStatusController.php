@@ -181,7 +181,7 @@ class MetObtenerStatusController extends Controller
                 }
                 $fechas = ["14.07.2022"];
                 foreach ($fechas as $key => $fecha) {
-                    // Mail::to(['marco.espinoza@grow-analytics.com.pe','jeanmarcoe@gmail.com','gerson.vilca@grow-analytics.com.pe'])->send(new MailInformarStatus($datos, $cuadros, $fecha));
+                    Mail::to(['marco.espinoza@grow-analytics.com.pe',])->send(new MailInformarStatus($datos, $cuadros, $fecha));
                 }
             }
         }else{

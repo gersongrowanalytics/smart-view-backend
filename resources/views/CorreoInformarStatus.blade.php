@@ -84,13 +84,13 @@
                     @foreach ($datos as $dato)
                         @if ($dato['base_datos'] == 'Sell In Objetivo')
                             <tr style="color: #EDF0FA; padding: 0px; margin: 0px">
-                                <td rowspan="11" align="center" style="border: 1px solid; color: black; background: white; border-color: #E5E5E5; font-weight: 400; font-size: 12px; line-height: 16px; font-style: normal"> {{$dato['area']}} </td>
-                                <td align="left" style="vertical-align: middle; height: 27px ;border: 1px solid; padding-left: 10px; border-color: #E5E5E5 ; color: black; background: #EDF0FA; font-weight: 400; font-size: 12px; line-height: 16px; font-style: normal"> {{$dato['base_datos']}} </td>
-                                <td align="center" style="vertical-align: middle;height: 27px ;border: 1px solid; border-color: #E5E5E5 ; background: #EDF0FA; color: black; font-weight: 400; font-size: 12px; line-height: 16px; font-style: normal"> {{$dato['responsable']}} </td>
-                                <td align="center" style="vertical-align: middle;height: 27px ;border: 1px solid; border-color: #E5E5E5 ; background: #EDF0FA; color: black; font-weight: 400; font-size: 12px; line-height: 16px; font-style: normal"> {{$dato['usuario']}} </td>
-                                <td align="center" style="vertical-align: middle;height: 27px ;border: 1px solid; border-color: #E5E5E5 ; background: #EDF0FA; color: black; font-weight: 400; font-size: 12px; line-height: 16px; font-style: normal"> {{$dato['deadline']}} </td>
-                                <td align="center" style="vertical-align: middle;height: 27px ;border: 1px solid; border-color: #E5E5E5 ; background: #EDF0FA; color: black; font-weight: 400; font-size: 12px; line-height: 16px; font-style: normal"> {{$dato['fecha_carga']}} </td>
-                                <td align="center" style="vertical-align: middle;height: 27px ;border: 1px solid; border-color: #E5E5E5 ; background: #EDF0FA; color: black; font-weight: 400; font-size: 12px; line-height: 16px; font-style: normal"> 
+                                <td rowspan="9" align="center" style="border: 1px solid; color: black; background: white; border-color: #E5E5E5; font-weight: 400; font-size: 12px; line-height: 16px; font-style: normal"> {{$dato['area']}} </td>
+                                <td align="left" style="vertical-align: middle; height: 10px ;border: 1px solid; padding-left: 10px; border-color: #E5E5E5 ; color: black; background: #EDF0FA; font-weight: 400; font-size: 12px; line-height: 16px; font-style: normal"> {{$dato['base_datos']}} </td>
+                                <td align="center" style="vertical-align: middle; height: 10px ;border: 1px solid; border-color: #E5E5E5 ; background: #EDF0FA; color: black; font-weight: 400; font-size: 12px; line-height: 16px; font-style: normal"> {{$dato['responsable']}} </td>
+                                <td align="center" style="vertical-align: middle; height: 10px ;border: 1px solid; border-color: #E5E5E5 ; background: #EDF0FA; color: black; font-weight: 400; font-size: 12px; line-height: 16px; font-style: normal"> {{$dato['usuario']}} </td>
+                                <td align="center" style="vertical-align: middle; height: 10px ;border: 1px solid; border-color: #E5E5E5 ; background: #EDF0FA; color: black; font-weight: 400; font-size: 12px; line-height: 16px; font-style: normal"> {{$dato['deadline']}} </td>
+                                <td align="center" style="vertical-align: middle; height: 10px ;border: 1px solid; border-color: #E5E5E5 ; background: #EDF0FA; color: black; font-weight: 400; font-size: 12px; line-height: 16px; font-style: normal"> {{$dato['fecha_carga']}} </td>
+                                <td align="center" style="vertical-align: middle; height: 10px ;border: 1px solid; border-color: #E5E5E5 ; background: #EDF0FA; color: black; font-weight: 400; font-size: 12px; line-height: 16px; font-style: normal"> 
                                     <table>
                                         <tr>
                                             <td style="background: #EDF0FA; color: black; font-weight: 400; font-size: 12px; line-height: 16px; font-style: normal">{{$dato['dias_retraso']}} días </td>
@@ -110,7 +110,7 @@
                                 
                             </tr>
                         @endif
-                        @if ($dato['areaid'] == '1')
+                        @if ( $dato['base_datos'] != 'Sell In Objetivo' && $dato['areaid'] == '1')
                             <tr style="color: #EDF0FA; padding: 0px; margin: 0px">
                                 <td align="left" style="border: 1px solid; padding-left: 10px; border-color: #E5E5E5 ; background: #EDF0FA; color: black; font-weight: 400; font-size: 12px; line-height: 16px; font-style: normal"> {{$dato['base_datos']}} </td>
                                 <td align="center" style="border: 1px solid; border-color: #E5E5E5 ; background: #EDF0FA; color: black; font-weight: 400; font-size: 12px; line-height: 16px; font-style: normal"> {{$dato['responsable']}} </td>
@@ -138,7 +138,7 @@
                         @endif
                         @if ($dato['base_datos'] == 'Sell In Real')
                             <tr style="color: #EDF0FA; padding: 0px; margin: 0px">
-                                <td rowspan="5" align="center" style="border: 1px solid; border-color: #E5E5E5 ; background: #ffffff; color: black; font-weight: 400; font-size: 12px; line-height: 16px; font-style: normal"> {{$dato['area']}} </td>
+                                <td rowspan="4" align="center" style="border: 1px solid; border-color: #E5E5E5 ; background: #ffffff; color: black; font-weight: 400; font-size: 12px; line-height: 16px; font-style: normal"> {{$dato['area']}} </td>
                                 <td align="left" style="border: 1px solid; padding-left: 10px; border-color: #E5E5E5; background: #ffffff; color: black; font-weight: 400; font-size: 12px; line-height: 16px; font-style: normal"> {{$dato['base_datos']}} </td>
                                 <td align="center" style="border: 1px solid; border-color: #E5E5E5 ; background: #ffffff; color: black; font-weight: 400; font-size: 12px; line-height: 16px; font-style: normal"> {{$dato['responsable']}} </td>
                                 <td align="center" style="border: 1px solid; border-color: #E5E5E5 ; background: #ffffff; color: black; font-weight: 400; font-size: 12px; line-height: 16px; font-style: normal"> {{$dato['usuario']}} </td>
@@ -163,7 +163,7 @@
                                 @endif
                             </tr>
                         @endif
-                        @if ($dato['areaid'] == '2')
+                        @if ($dato['base_datos'] != 'Sell In Real' && $dato['areaid'] == '2')
                             <tr style="color: #EDF0FA; padding: 0px; margin: 0px">
                                 <td align="left" style="border: 1px solid; padding-left: 10px; border-color: #E5E5E5 ; background: #ffffff; color: black; font-weight: 400; font-size: 12px; line-height: 16px; font-style: normal"> {{$dato['base_datos']}} </td>
                                 <td align="center" style="border: 1px solid; border-color: #E5E5E5; background: #ffffff; color: black; font-weight: 400; font-size: 12px; line-height: 16px; font-style: normal"> {{$dato['responsable']}} </td>
@@ -191,7 +191,7 @@
                         @endif
                         @if ($dato['base_datos'] == 'Sell Out Real DT')
                             <tr style="color: #EDF0FA; padding: 0px; margin: 0px">
-                                <td rowspan="4" align="center" style="border: 1px solid; border-color: #E5E5E5; background: white; color: black; font-weight: 400; font-size: 12px; line-height: 16px; font-style: normal"> {{$dato['area']}} </td>
+                                <td rowspan="3" align="center" style="border: 1px solid; border-color: #E5E5E5; background: white; color: black; font-weight: 400; font-size: 12px; line-height: 16px; font-style: normal"> {{$dato['area']}} </td>
                                 <td align="left" style="border: 1px solid; padding-left: 10px; border-color: #E5E5E5; background: #EDF0FA; color: black; font-weight: 400; font-size: 12px; line-height: 16px; font-style: normal"> {{$dato['base_datos']}} </td>
                                 <td align="center" style="border: 1px solid; border-color: #E5E5E5; background: #EDF0FA; color: black; font-weight: 400; font-size: 12px; line-height: 16px; font-style: normal"> {{$dato['responsable']}} </td>
                                 <td align="center" style="border: 1px solid; border-color: #E5E5E5; background: #EDF0FA; color: black; font-weight: 400; font-size: 12px; line-height: 16px; font-style: normal"> {{$dato['usuario']}} </td>
@@ -216,7 +216,7 @@
                                 @endif
                             </tr>
                         @endif
-                        @if ($dato['areaid'] == '3')
+                        @if ($dato['base_datos'] != 'Sell Out Real DT' && $dato['areaid'] == '3')
                             <tr style="color:#EDF0FA; padding: 0px; margin: 0px">
                                 <td align="left" style="border: 1px solid; padding-left: 10px; border-color: #E5E5E5; background: #EDF0FA; color: black; font-weight: 400; font-size: 12px; line-height: 16px; font-style: normal"> {{$dato['base_datos']}} </td>
                                 <td align="center" style="border: 1px solid; border-color: #E5E5E5; background: #EDF0FA; color: black; font-weight: 400; font-size: 12px; line-height: 16px; font-style: normal"> {{$dato['responsable']}} </td>
