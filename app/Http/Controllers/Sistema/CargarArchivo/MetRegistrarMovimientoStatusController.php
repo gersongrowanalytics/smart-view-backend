@@ -11,26 +11,27 @@ class MetRegistrarMovimientoStatusController extends Controller
 {
     public function MetRegistrarMovimientoStatus ($badid, $carid, $fecid)
     {
-        $respuesta = false;
+        // $respuesta = false;
 
-        $fec = fecfechas::where('fecid', $fecid)->first(['fecano','fecmes']);
+        // $fec = fecfechas::where('fecid', $fecid)->first(['fecano','fecmes']);
 
-        if ($fec) {
-            $coa = coacontrolarchivos::join('fecfechas as fec', 'fec.fecid', 'coacontrolarchivos.fecid')
-                                    ->where('badid', $badid)
-                                    ->where('fec.fecano', $fec->fecano)
-                                    ->where('fec.fecmes', $fec->fecmes)
-                                    ->first('coaid');
+        // if ($fec) {
+        //     // $coa = coacontrolarchivos::join('fecfechas as fec', 'fec.fecid', 'coacontrolarchivos.fecid')
+        //     //                         ->where('badid', $badid)
+        //     //                         ->where('fec.fecano', $fec->fecano)
+        //     //                         ->where('fec.fecmes', $fec->fecmes)
+        //     //                         ->first('coaid');
             
-            if ($coa) {
-                $coa->carid = $carid;
-                $coa->estid = 3;
-                if ($coa->update()) {
-                    $respuesta = true;
-                }
-            }
-        }      
-
+        //     // if ($coa) {
+        //     //     $coa->carid = $carid;
+        //     //     $coa->estid = 3;
+        //     //     if ($coa->update()) {
+        //     //         $respuesta = true;
+        //     //     }
+        //     // }
+        // }      
+        
+        $respuesta = true;
         return $respuesta;
     }
 }
