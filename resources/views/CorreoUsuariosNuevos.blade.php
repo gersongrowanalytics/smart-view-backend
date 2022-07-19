@@ -112,7 +112,7 @@
                             <div style="font-size: 10px; margin-bottom: 45px">
                                 <a 
                                     id="btnPlataforma" 
-                                    href="http://leadsmartview.com/"
+                                    href="https://smartview.grow-corporate.com/"
                                     style="text-decoration: none; color: white; background: #558CFF; padding-top: 10px; padding-bottom: 10px; padding-left: 35px; padding-right: 35px; border-radius: 22px; margin-top: 50px; font-style: normal; font-weight: bold; font-size: 10px; line-height: 12px;"
                                 >IR A PLATAFORMA</a>
                             </div>

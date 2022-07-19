@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Sistema\Status;
 
 use App\areareas;
+use App\badbasedatos;
 use App\coacontrolarchivos;
 use App\Http\Controllers\Controller;
 use App\Mail\MailInformarStatus;
+use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 
@@ -20,8 +22,10 @@ class MetObtenerStatusController extends Controller
         $datos     = [];
         $cuadros   = [];
 
+        $req_anio = $request['req_anio'];
+        $req_mes  = $request['req_mes'];
+
         $coas = coacontrolarchivos::leftJoin('carcargasarchivos as car', 'car.carid', 'coacontrolarchivos.carid')
-                                    ->leftJoin('fecfechas as feccar', 'feccar.fecid', 'car.fecid')
                                     ->leftJoin('usuusuarios as usucar', 'usucar.usuid', 'car.usuid')
                                     ->leftJoin('perpersonas as percar', 'percar.perid', 'usucar.perid')
                                     ->join('usuusuarios as usu', 'usu.usuid', 'coacontrolarchivos.usuid')
@@ -29,21 +33,21 @@ class MetObtenerStatusController extends Controller
                                     ->join('estestados as est' ,'est.estid', 'coacontrolarchivos.estid')
                                     ->join('badbasedatos as bad', 'bad.badid', 'coacontrolarchivos.badid')
                                     ->join('areareas as are', 'are.areid', 'bad.areid')
+                                    ->join('fecfechas as fec', 'fec.fecid', 'coacontrolarchivos.fecid')
+                                    ->where('fec.fecmes', $req_mes)
+                                    ->where('fec.fecano', $req_anio)
                                     ->orderby('coaid')
                                     ->get([
                                         'coaid',
                                         'bad.badnombre',
-                                        'coadiasretraso',
                                         'are.areid',
                                         'are.arenombre',
                                         'car.carid',
                                         'car.carnombrearchivo',  
                                         'car.carurl',
-                                        'usu.usuid as usuidresponsable',
-                                        'usu.usuusuario as usuusuarioresponsable',  
+                                        'usu.usuid as usuidresponsable',  
                                         'usucar.usuid as usuidsubida',
                                         'percar.pernombrecompleto as pernombrecompletosubida', 
-                                        'feccar.fecfecha',
                                         'est.estid',
                                         'est.estnombre',
                                         'coafechacaducidad',
@@ -51,47 +55,165 @@ class MetObtenerStatusController extends Controller
                                         'perresp.pernombrecompleto as pernombrecompletoresponsable', 
                                     ]);
 
-
         if (sizeof($coas) > 0) {
             $respuesta = true;
             $mensaje   = "Se obtuvieron los registros con exito";
 
-            foreach ($coas as $key => $coa) {
-                $coa['fecfecha'] = $this->MetFormatearFecha($coa->fecfecha);
-                $coa['coafechacaducidad'] = $this->MetFormatearFecha($coa->coafechacaducidad);
-                $datos[] = [
-                    "areaid"       => $coa->areid,
-                    "area"         => $coa->arenombre,
-                    "base_datos"   => $coa->badnombre,
-                    "responsable"  => $coa->pernombrecompletoresponsable,
-                    "usuario"      => $coa->pernombrecompletosubida,
-                    "deadline"     => $coa->coafechacaducidad,
-                    "fecha_carga"  => $coa->fecfecha,
-                    "dias_retraso" => $coa->coadiasretraso,
-                    "status"       => $coa->estnombre
 
-                ];
-            }
+                foreach ($coas as $posicioncoa => $coa) {
+                    $coas[$posicioncoa]['key'] = $posicioncoa;
+                    $coas[$posicioncoa]['item'] = $posicioncoa+1;
+    
+                    // CALCULAR DIAS DE RETRASO
+    
+                    if(isset($coas[$posicioncoa]['fechaCar'])){
+                        
+                        $fechaActual = date('Y-m-d');
+    
+                        if(isset( $coas[$posicioncoa]['coafechacaducidad'] )){
+                            $date1 = date("Y-m-d", strtotime($coas[$posicioncoa]['coafechacaducidad']));
+                            $date1 = new DateTime($date1);
+                        }else{
+                            $date1 = new DateTime($fechaActual);
+                        } 
+                            
+                        $fecha_carga_real = date("Y-m-d", strtotime($coas[$posicioncoa]['fechaCar']));
+    
+                        $date2 = new DateTime($fecha_carga_real);
+    
+                        if($date1 == $date2){
+                            $diaRetraso = "0";
+                        }else{
+                            if($date1 < $date2){
+                                $diff = $date1->diff($date2);
+    
+                                if($diff->days > 0){
+                                    $diaRetraso = $diff->days;
+                                }else{
+                                    $diaRetraso = "0";
+                                }
+    
+                            }else{
+                                $diaRetraso = "0";
+                            }
+                        }
+    
+                    }else{
+                        $fechaActual = date('Y-m-d');
+    
+                        if(isset( $coas[$posicioncoa]['coafechacaducidad'] )){
+                            $date1 = date("Y-m-d", strtotime($coas[$posicioncoa]['coafechacaducidad']));
+                            $date1 = new DateTime($date1);
+                        }else{
+                            $date1 = new DateTime($fechaActual);
+                        }
+
+                        $date2 = new DateTime($fechaActual);
+
+                        if($date1 == $date2){
+                            $diaRetraso = "0";
+                        }else{
+                            if($date1 < $date2){
+                                $diff = $date1->diff($date2);
+    
+                                if($diff->days > 0){
+                                    $diaRetraso = $diff->days;
+                                }else{
+                                    $diaRetraso = "0";
+                                }
+    
+                            }else{
+                                $diaRetraso = "0";
+                            }
+                        }
+                    }
+                    $coas[$posicioncoa]['diasretraso'] = $diaRetraso;
+
+                    //ALMACENANDO LOS DATOS EN UN ARRAY PARA EL ENVIO DE CORREO
+                    $coa['fechaCar'] = ($this->MetFormatearFecha($coa->fechaCar) == '1 Ene 1970') ? '': $this->MetFormatearFecha($coa->fechaCar) ;
+                    $coa['coafechacaducidad'] = $this->MetFormatearFecha($coa->coafechacaducidad);
+                    $datos[] = [
+                        "areaid"       => $coa->areid,
+                        "area"         => $coa->arenombre,
+                        "base_datos"   => $coa->badnombre,
+                        "responsable"  => $coa->pernombrecompletoresponsable,
+                        "usuario"      => $coa->pernombrecompletosubida,
+                        "deadline"     => $coa->coafechacaducidad,
+                        "fecha_carga"  => $coa->fechaCar,
+                        "dias_retraso" => $coa->diasretraso,
+                        "status"       => $coa->estnombre
+
+                    ];
+    
+                }
+
             //OBTENER LAS AREAS 
-            $ares = areareas::get(['areid', 'arenombre', 'areporcentaje']);
-            if (sizeof($ares) > 0) {
-                foreach ($ares as $key => $are) {
+
+            $areas = array();
+            $promedio = 0;
+            $ares = areareas::get(['areid','arenombre']);
+            foreach ($ares as $key => $are) {
+                $cantidad = 0;
+                $archivos_subidos = 0;
+                foreach ($coas as $key => $coa) {
+                    if ($are->arenombre == $coa->arenombre) {
+                        if ($coa->estnombre == 'Cargado') {
+                            $archivos_subidos++;
+                        }
+                        $cantidad++;
+                    }
+                }
+                $promedio = round($archivos_subidos*100/$cantidad);
+                $areas[] = array(
+                    "area"  => $are->arenombre,
+                    "archivos" => $archivos_subidos,
+                    "cantidad" => $cantidad,
+                    "promedio" => $promedio
+                );
+            }
+        
+            if (sizeof($areas) > 0) {
+                foreach ($areas as $key => $area) {
                     $cuadros[] = [
-                        "arenombre"     => $are->arenombre,
-                        "areporcentaje" => $are->areporcentaje
+                        "arenombre"     => $area['area'],
+                        "areporcentaje" => $area['promedio'] 
                     ];
                 }
-                $fechas = ["14.07.2022","15.07.2022","16.07.2022","17.07.2022"];
+                $fechas = ["14.07.2022"];
                 foreach ($fechas as $key => $fecha) {
-                    Mail::to(['marco.espinoza@grow-analytics.com.pe','jeanmarcoe@gmail.com'])->send(new MailInformarStatus($datos, $cuadros, $fecha));
+                    // Mail::to(['marco.espinoza@grow-analytics.com.pe','jeanmarcoe@gmail.com','gerson.vilca@grow-analytics.com.pe'])->send(new MailInformarStatus($datos, $cuadros, $fecha));
                 }
             }
         }else{
             $respuesta = false;
             $mensaje   = "Lo siento, no se encontraron registros";
+
+            $bads = badbasedatos::join('areareas as are', 'are.areid', 'badbasedatos.areid')
+                                    ->get([
+                                        'are.areid',
+                                        'are.arenombre',
+                                        'badid', 
+                                        'badnombre'
+                                    ]);
+
+            if (sizeof($bads) > 0) {
+                foreach ($bads as $key => $bad) {
+                    $coas[] = array(
+                        "areid"                        => $bad->areid,
+                        "arenombre"                    => $bad->arenombre,
+                        "carurl"                       => "",
+                        "badnombre"                    => $bad->badnombre,
+                        "pernombrecompletoresponsable" => "",
+                        "pernombrecompletosubida"      => "",
+                        "coafechacaducidad"            => "",
+                        "fechaCar"                     => "",
+                        "diasretraso"                  => "",
+                        "estnombre"                    => "No Cargado"
+                    );
+                }
+            }
         }
 
-        // return view('CorreoInformarStatus')->with($datos);
         return response()->json([
             "respuesta" => $respuesta,
             "mensaje"   => $mensaje,
@@ -102,11 +224,12 @@ class MetObtenerStatusController extends Controller
 
     public function MetFormatearFecha($fecha)
     {
-        $meses = array("Ene","Feb","Mar","Abr","May","Jun","Jul","Ago","Sep","Oct","Nov","Dic");
+        $meses = array("Ene","Feb","Mar","Abr","May","Jun","Jul","Ago","Set","Oct","Nov","Dic");
         $anioActualizacion = date("Y", strtotime($fecha));
         $mesActualizacion = $meses[date('n', strtotime($fecha))-1];
         $diaActualizacion = date("j", strtotime($fecha));
         $fechaFormateada = $diaActualizacion." ".$mesActualizacion." ".$anioActualizacion;
         return $fechaFormateada;
     }
+
 }

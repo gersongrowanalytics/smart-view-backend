@@ -10,6 +10,7 @@ use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use App\carcargasarchivos;
 use App\coacontrolarchivos;
+use App\Http\Controllers\Sistema\CargarArchivo\MetRegistrarMovimientoStatusController;
 use App\usuusuarios;
 use App\ltplistaprecios;
 use App\Mail\MailCargaArchivos;
@@ -178,14 +179,9 @@ class CargarListaPreciosController extends Controller
                 $data = ['linkArchivoSubido' => $nuevoCargaArchivo->carurl , 'nombre' => $nuevoCargaArchivo->carnombrearchivo , 'tipo' => $tca->tcanombre, 'usuario' => $usuusuario->usuusuario];
                 Mail::to('gerson.vilca@grow-analytics.com.pe')->send(new MailCargaArchivos($data));
 
-                $coa = coacontrolarchivos::where('coaid',10) // LISTA DE PRECIOS
-                                            ->first();
+                $registro_coa = new MetRegistrarMovimientoStatusController;
+                $registro_coa->MetRegistrarMovimientoStatus(10, $nuevoCargaArchivo->carid, 69);
 
-                if ($coa) {
-                    $coa->carid = $nuevoCargaArchivo->carid;
-                    $coa->estid = 3;
-                    $coa->update();
-                }
             }else{
 
             }
@@ -211,7 +207,7 @@ class CargarListaPreciosController extends Controller
             "numeroCelda"    => $numeroCelda,
             "logs"           => $log,
             "nombres" => $nombres,
-            "gruposEncontrados" => $gruposEncontrados,
+            "gruposEncontrados" => $gruposEncontrados
         ]);
 
         $AuditoriaController = new AuditoriaController;

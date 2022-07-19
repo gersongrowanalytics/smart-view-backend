@@ -24,6 +24,7 @@ use App\trrtiposrebatesrebates;
 use App\scasucursalescategorias;
 use App\cascanalessucursales;
 use App\coacontrolarchivos;
+use App\Http\Controllers\Sistema\CargarArchivo\MetRegistrarMovimientoStatusController;
 use App\Mail\MailCargaArchivos;
 use App\tcatiposcargasarchivos;
 use Illuminate\Support\Facades\Mail;
@@ -139,6 +140,7 @@ class ClientesCargarController extends Controller
             }
 
             if($usuusuario->usuid != 1){
+                // $fecid = 165;
                 $nuevoCargaArchivo = new carcargasarchivos;
                 $nuevoCargaArchivo->tcaid            = 6; // Carga de Clientes
                 $nuevoCargaArchivo->fecid            = null;
@@ -156,15 +158,8 @@ class ClientesCargarController extends Controller
                     $data = ['linkArchivoSubido' => $nuevoCargaArchivo->carurl , 'nombre' => $nuevoCargaArchivo->carnombrearchivo , 'tipo' => $tca->tcanombre, 'usuario' => $usuusuario->usuusuario];
                     Mail::to('gerson.vilca@grow-analytics.com.pe')->send(new MailCargaArchivos($data));
 
-                    $coa = coacontrolarchivos::where('coaid',13) // MASTER DE CLIENTES
-                                            ->first();
-
-                    if ($coa) {
-                        $coa->carid = $nuevoCargaArchivo->carid;
-                        $coa->estid = 3;
-                        $coa->coafechasubida = null;
-                        $coa->update();
-                    }
+                    $registro_coa = new MetRegistrarMovimientoStatusController;
+                    // $registro_coa->MetRegistrarMovimientoStatus(13, $nuevoCargaArchivo->carid, $fecid);
                 }else{
 
                 }

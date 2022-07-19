@@ -13,6 +13,7 @@ use Illuminate\Support\Str;
 use App\carcargasarchivos;
 use App\coacontrolarchivos;
 use App\fecfechas;
+use App\Http\Controllers\Sistema\CargarArchivo\MetRegistrarMovimientoStatusController;
 use App\Mail\MailCargaArchivos;
 use App\usuusuarios;
 use App\perpersonas;
@@ -58,7 +59,7 @@ class CargarArchivoController extends Controller
             "NO_EXISTE_DISTRIBUIDORA" => [],
         );
 
-        $cargarData = false;
+        $cargarData = true;
         
         $usuusuario = usuusuarios::join('tputiposusuarios as tpu', 'tpu.tpuid', 'usuusuarios.tpuid')
                                 ->where('usuusuarios.usutoken', $usutoken)
@@ -520,7 +521,7 @@ class CargarArchivoController extends Controller
                 // }else{
 
                 // }
-
+                    // $fecid = 165;
                 $nuevoCargaArchivo = new carcargasarchivos;
                 $nuevoCargaArchivo->tcaid            = 3;
                 $nuevoCargaArchivo->fecid            = $fecid;
@@ -538,17 +539,10 @@ class CargarArchivoController extends Controller
                     $data = ['linkArchivoSubido' => $nuevoCargaArchivo->carurl , 'nombre' => $nuevoCargaArchivo->carnombrearchivo , 'tipo' => $tca->tcanombre, 'usuario' => $usuusuario->usuusuario];
                     Mail::to('gerson.vilca@grow-analytics.com.pe')->send(new MailCargaArchivos($data));
 
-                    $coa = coacontrolarchivos::where('coaid',11) // SELL IN REAL
-                                               ->first('coaid');
-
-                    if ($coa) {
-                        $coa->carid = $nuevoCargaArchivo->carid;
-                        $coa->estid = 3;
-                        $coa->coafechasubida = $fecid;
-                        $coa->update();
-                    }
+                    $registro_coa = new MetRegistrarMovimientoStatusController;
+                    $registro_coa->MetRegistrarMovimientoStatus(11, $nuevoCargaArchivo->carid, $fecid);
+                   
                 }else{
-
                 }
             }else{
 

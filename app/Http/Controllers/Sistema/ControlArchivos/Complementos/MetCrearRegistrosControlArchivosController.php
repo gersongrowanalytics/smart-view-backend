@@ -28,7 +28,7 @@ class MetCrearRegistrosControlArchivosController extends Controller
 
         $fecn = new fecfechas();
         $fecn->fecfecha     = $fechaDate;
-        $fecn->fecdia       = 01;
+        $fecn->fecdia       = '01';
         $fecn->fecano       = $req_anio;
         $fecn->fecmes       = $mesAbrev[$req_mes-1];
         $fecn->fecmesnumero = $req_mes;
@@ -41,18 +41,11 @@ class MetCrearRegistrosControlArchivosController extends Controller
                 foreach ($bads as $key => $bad) {
 
                     $coan = new coacontrolarchivos();
-                    // $coan->usuid = 639;
-                    // $coan->carid = 15;
+                    $coan->usuid = 639;
                     $coan->fecid = $fecn->fecid;
-                    // $coan->estid = 4;
+                    $coan->estid = 4;
                     $coan->badid = $bad['badid'];
-                    // $coan->coadiasretraso = 5;
-                    if ($req_mes == '02' || $req_mes == '2') {
-                        $coan->coafechacaducidad = new DateTime('25 '.$mesAbrev[$req_mes-1].' '.$req_anio); 
-                    }else{
-                        $coan->coafechacaducidad = new DateTime('30 '.$mesAbrev[$req_mes-1].' '.$req_anio); 
-                    }
-
+                    $coan->coafechacaducidad = date("Y-m-t", strtotime($fecha));
                     if ($coan->save()) {
                         $respuesta = true;
                         $mensaje   = ["Los registros del coacontrolarchivos fueron creados exitosamente"];

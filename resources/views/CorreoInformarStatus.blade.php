@@ -37,7 +37,7 @@
                                             <td align="center" style="width: 50%;font-style: normal; font-weight: 700; font-size: 14px; line-height: 19px; letter-spacing: -0.015em;">
                                                 {{$cuadro['arenombre']}}
                                             </td>
-                                            <td style="font-style: normal; font-weight: 700; font-size: 20px; line-height: 27px; letter-spacing: -0.015em; color: #000000">{{$cuadro['areporcentaje']}}</td>
+                                            <td style="font-style: normal; font-weight: 700; font-size: 20px; line-height: 27px; letter-spacing: -0.015em; color: #000000">{{$cuadro['areporcentaje']}}%</td>
                                         </tr>
                                     </table>
                                 </td>
@@ -49,7 +49,7 @@
                                             <td align="center" style="width: 50%;font-style: normal; font-weight: 700; font-size: 14px; line-height: 19px; letter-spacing: -0.015em;">
                                                 {{$cuadro['arenombre']}}
                                             </td>
-                                            <td style="font-style: normal; font-weight: 700; font-size: 20px; line-height: 27px; letter-spacing: -0.015em; color: #000000">{{$cuadro['areporcentaje']}}</td>
+                                            <td style="font-style: normal; font-weight: 700; font-size: 20px; line-height: 27px; letter-spacing: -0.015em; color: #000000">{{$cuadro['areporcentaje']}}%</td>
                                         </tr>
                                     </table>
                                 </td>
@@ -61,7 +61,7 @@
                                             <td align="center" style="width: 50%; font-style: normal; font-weight: 700; font-size: 14px; line-height: 19px; letter-spacing: -0.015em;">
                                                 {{$cuadro['arenombre']}}
                                             </td>
-                                            <td style="font-style: normal; font-weight: 700; font-size: 20px; line-height: 27px; letter-spacing: -0.015em; color: #000000">{{$cuadro['areporcentaje']}}</td>
+                                            <td style="font-style: normal; font-weight: 700; font-size: 20px; line-height: 27px; letter-spacing: -0.015em; color: #000000">{{$cuadro['areporcentaje']}}%</td>
                                         </tr>
                                     </table>
                                 </td>
@@ -93,8 +93,12 @@
                                 <td align="center" style="vertical-align: middle;height: 27px ;border: 1px solid; border-color: #E5E5E5 ; background: #EDF0FA; color: black; font-weight: 400; font-size: 12px; line-height: 16px; font-style: normal"> 
                                     <table>
                                         <tr>
-                                            <td>{{$dato['dias_retraso']}} días </td>
-                                            <td><div style="width: 10px; height: 10px; border-radius: 8px; background: red"></div></td>
+                                            <td style="background: #EDF0FA; color: black; font-weight: 400; font-size: 12px; line-height: 16px; font-style: normal">{{$dato['dias_retraso']}} días </td>
+                                            @if ($dato['dias_retraso'] == '0')
+                                                <td><div style="width: 10px; height: 10px; border-radius: 8px; background: #2FDA36"></div></td>
+                                            @else
+                                                <td><div style="width: 10px; height: 10px; border-radius: 8px; background: red"></div></td>
+                                            @endif
                                         </tr>
                                     </table>
                                 </td>
@@ -116,8 +120,12 @@
                                 <td align="center" style="border: 1px solid; border-color: #E5E5E5 ; background: #EDF0FA; color: black; font-weight: 400; font-size: 12px; line-height: 16px; font-style: normal"> 
                                     <table>
                                         <tr>
-                                            <td>{{$dato['dias_retraso']}} días </td>
-                                            <td><div style="width: 10px; height: 10px; border-radius: 8px; background: red"></div></td>
+                                            <td style="background: #EDF0FA; color: black; font-weight: 400; font-size: 12px; line-height: 16px; font-style: normal">{{$dato['dias_retraso']}} días </td>
+                                            @if ($dato['dias_retraso'] == '0')
+                                                <td><div style="width: 10px; height: 10px; border-radius: 8px; background: #2FDA36"></div></td>
+                                            @else
+                                                <td><div style="width: 10px; height: 10px; border-radius: 8px; background: red"></div></td>
+                                            @endif
                                         </tr>
                                     </table>
                                 </td>
@@ -139,8 +147,12 @@
                                 <td align="center" style="border: 1px solid; border-color: #E5E5E5 ; background: #ffffff; color: black; font-weight: 400; font-size: 12px; line-height: 16px; font-style: normal">
                                     <table>
                                         <tr>
-                                            <td>{{$dato['dias_retraso']}} días </td>
-                                            <td><div style="width: 10px; height: 10px; border-radius: 8px; background: red"></div></td>
+                                            <td style="color: black; font-weight: 400; font-size: 12px; line-height: 16px; font-style: normal" >{{$dato['dias_retraso']}} días </td>
+                                            @if ($dato['dias_retraso'] == '0')
+                                                <td><div style="width: 10px; height: 10px; border-radius: 8px; background: #2FDA36"></div></td>
+                                            @else
+                                                <td><div style="width: 10px; height: 10px; border-radius: 8px; background: red"></div></td>
+                                            @endif
                                         </tr>
                                     </table>
                                 </td>
@@ -161,8 +173,12 @@
                                 <td align="center" style="border: 1px solid; border-color: #E5E5E5; background: #ffffff; color: black; font-weight: 400; font-size: 12px; line-height: 16px; font-style: normal">
                                     <table>
                                         <tr>
-                                            <td>{{$dato['dias_retraso']}} días </td>
-                                            <td><div style="width: 10px; height: 10px; border-radius: 8px; background: red"></div></td>
+                                            <td style="color: black; font-weight: 400; font-size: 12px; line-height: 16px; font-style: normal" >{{$dato['dias_retraso']}} días </td>
+                                            @if ($dato['dias_retraso'] == '0')
+                                                <td><div style="width: 10px; height: 10px; border-radius: 8px; background: #2FDA36"></div></td>
+                                            @else
+                                                <td><div style="width: 10px; height: 10px; border-radius: 8px; background: red"></div></td>
+                                            @endif
                                         </tr>
                                     </table> 
                                 </td>
@@ -184,8 +200,12 @@
                                 <td align="center" style="border: 1px solid; border-color: #E5E5E5; background: #EDF0FA; color: black; font-weight: 400; font-size: 12px; line-height: 16px; font-style: normal"> 
                                     <table>
                                         <tr>
-                                            <td>{{$dato['dias_retraso']}} días </td>
-                                            <td><div style="width: 10px; height: 10px; border-radius: 8px; background: red"></div></td>
+                                            <td style="background: #EDF0FA; color: black; font-weight: 400; font-size: 12px; line-height: 16px; font-style: normal" >{{$dato['dias_retraso']}} días </td>
+                                            @if ($dato['dias_retraso'] == '0')
+                                                <td><div style="width: 10px; height: 10px; border-radius: 8px; background: #2FDA36"></div></td>
+                                            @else
+                                                <td><div style="width: 10px; height: 10px; border-radius: 8px; background: red"></div></td>
+                                            @endif
                                         </tr>
                                     </table>
                                 </td>
@@ -206,8 +226,12 @@
                                 <td align="center" style="border: 1px solid; border-color: #E5E5E5; background: #EDF0FA; color: black; font-weight: 400; font-size: 12px; line-height: 16px; font-style: normal"> 
                                     <table>
                                         <tr>
-                                            <td>{{$dato['dias_retraso']}} días </td>
-                                            <td><div style="width: 10px; height: 10px; border-radius: 8px; background: red"></div></td>
+                                            <td style="background: #EDF0FA; color: black; font-weight: 400; font-size: 12px; line-height: 16px; font-style: normal" >{{$dato['dias_retraso']}} días </td>
+                                            @if ($dato['dias_retraso'] == '0')
+                                                <td><div style="width: 10px; height: 10px; border-radius: 8px; background: #2FDA36"></div></td>
+                                            @else
+                                                <td><div style="width: 10px; height: 10px; border-radius: 8px; background: red"></div></td>
+                                            @endif
                                         </tr>
                                     </table>
                                 </td>

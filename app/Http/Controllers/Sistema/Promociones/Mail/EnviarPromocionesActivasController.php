@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Mail;
 use App\Mail\Promociones\MailPromocionesActivas;
 use App\uceusuarioscorreosenviados;
 use App\dcedestinatarioscorreosenviados;
+use App\dmpdetallemecanicaspromocional;
 use App\gsugrupossucursales;
 use App\sucsucursales;
 use App\ussusuariossucursales;
@@ -468,7 +469,6 @@ class EnviarPromocionesActivasController extends Controller
                     // Mail::to($correo)->send(new MailPromocionesActivas($data_correo, $asunto_correo));
                 }
 
-                // a
                 // // foreach ($usuariosCorreo as $key => $usuarioCorreo) {
                 // //     // Mail::to($usuarioCorreo['usuario'])->cc(['0540Peru.salescontrolling@kcc.com', 'Cuidatunegocio.KC@kcc.com', 'gerson.vilca@grow-analytics.com.pe', 'miguel.caballero@grow-analytics.com.pe', 'director.creativo@grow-analytics.com.pe'])
                 // //     //                  ->send(new MailPromocionesActivas($usuarioCorreo['data'], $usuarioCorreo['asunto']));

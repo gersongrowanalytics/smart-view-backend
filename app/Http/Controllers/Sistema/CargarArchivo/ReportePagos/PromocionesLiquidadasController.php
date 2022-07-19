@@ -15,6 +15,7 @@ use App\usuusuarios;
 use App\carcargasarchivos;
 use App\coacontrolarchivos;
 use App\fecfechas;
+use App\Http\Controllers\Sistema\CargarArchivo\MetRegistrarMovimientoStatusController;
 use App\sucsucursales;
 use App\prlpromocionesliquidadas;
 
@@ -186,14 +187,9 @@ class PromocionesLiquidadasController extends Controller
                 if($nuevoCargaArchivo->save()){
                     $pkid = "CAR-".$nuevoCargaArchivo->carid;
 
-                    $coa = coacontrolarchivos::where('coaid',8) // PROMOCIONES LIQUIDADAS DT
-                                            ->first();
+                    $registro_coa = new MetRegistrarMovimientoStatusController;
+                    $registro_coa->MetRegistrarMovimientoStatus(8, $nuevoCargaArchivo->carid, $fecid);
 
-                    if ($coa) {
-                        $coa->carid = $nuevoCargaArchivo->carid;
-                        $coa->estid = 3;
-                        $coa->update();
-                    }
                 }else{
 
                 }

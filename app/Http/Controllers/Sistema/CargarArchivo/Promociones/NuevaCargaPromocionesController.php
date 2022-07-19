@@ -32,6 +32,8 @@ use App\prbpromocionesbonificaciones;
 use App\prppromocionesproductos;
 use App\carcargasarchivos;
 use App\coacontrolarchivos;
+use App\dmpdetallemecanicaspromocional;
+use App\Http\Controllers\Sistema\CargarArchivo\MetRegistrarMovimientoStatusController;
 use App\Mail\MailCargaArchivos;
 use App\tcatiposcargasarchivos;
 use App\tuptiposusuariospermisos;
@@ -1011,26 +1013,42 @@ class NuevaCargaPromocionesController extends Controller
 
 
                 if (strpos($archivo, "lima")) {
-                    $coaid = 3;
+                    $badid = 3;
                 }else if (strpos($archivo, "norte")){
-                    $coaid = 4;
+                    $badid = 4;
                 }else if (strpos($archivo, "sur")){
-                    $coaid = 5;
+                    $badid = 5;
                 }else if (strpos($archivo, "centro")){
-                    $coaid = 6;
+                    $badid = 6;
                 }
 
-                if ($coaid) {
-                    $coa = coacontrolarchivos::where('coaid', $coaid) // MECANICA PROMOCIONAL
-                                            ->first();
+                //ACTUALIZAR REGISTROS DE COA
+                $registro_coa = new MetRegistrarMovimientoStatusController;
+                $actualizacion_coa =  $registro_coa->MetRegistrarMovimientoStatus($badid, $nuevoCargaArchivo->carid, $fecid);
+                // $sucursalesSeleccionadas = ["AUREN","CODIJISA","CORP. CODIFER","SAN RAFAELITO","GUMI","ECONOMYSA","VIJISA","JIRUSA","REDIJISA","TUIN","DEHOCA","DIST. JOMER","URIAFER","TERRANORTE","TOTAL CALIDAD AMERICA","SAGRA DISTRIBUCION","MOLI","JIMENEZ NORTE"];
+                //ACTUALIZA TABLA DE DETALLES MECANICA PROMOCIONAL
+                if ($actualizacion_coa == true) {
+                    foreach ($sucursalesSeleccionadas as $key => $sucursal) {
 
-                    if ($coa) {
-                        $coa->carid = $nuevoCargaArchivo->carid;
-                        $coa->estid = 3;
-                        $coa->update();
+                        $suc = sucsucursales::where('sucnombre', $sucursal)->first(['sucid']);
+                        if ($suc) {
+                            $dmp = dmpdetallemecanicaspromocional::where('sucid', $suc->sucid)->first();
+                            if ($dmp) {
+                                $dmp->badid = $badid;
+                                $dmp->carid = $nuevoCargaArchivo->carid;
+                                $dmp->update();
+                            }else{
+                                $dmpn = new dmpdetallemecanicaspromocional();
+                                $dmpn->carid = $nuevoCargaArchivo->carid;
+                                $dmpn->sucid = $suc->sucid;
+                                $dmpn->badid = $badid;
+                                $dmpn->save();
+                            }
+                        }
+                        
                     }
                 }
-               
+
             }else{
 
             }

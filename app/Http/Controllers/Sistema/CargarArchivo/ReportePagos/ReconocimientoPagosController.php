@@ -14,6 +14,7 @@ use App\usuusuarios;
 use App\carcargasarchivos;
 use App\coacontrolarchivos;
 use App\fecfechas;
+use App\Http\Controllers\Sistema\CargarArchivo\MetRegistrarMovimientoStatusController;
 use App\repreconocimientopago;
 use App\sucsucursales;
 
@@ -165,14 +166,8 @@ class ReconocimientoPagosController extends Controller
                 if($nuevoCargaArchivo->save()){
                     $pkid = "CAR-".$nuevoCargaArchivo->carid;
 
-                    $coa = coacontrolarchivos::where('coaid',9) // RECONOCIMIENTO PAGOS DT
-                                                ->first();
-
-                    if ($coa) {
-                        $coa->carid = $nuevoCargaArchivo->carid;
-                        $coa->estid = 3;
-                        $coa->update();
-                    }
+                    $registro_coa = new MetRegistrarMovimientoStatusController;
+                    $registro_coa->MetRegistrarMovimientoStatus(9, $nuevoCargaArchivo->carid, $fecid);
                 }else{
 
                 }
@@ -194,7 +189,7 @@ class ReconocimientoPagosController extends Controller
             "mensajeDetalle" => $mensajeDetalle,
             "mensajedev"     => $mensajedev,
             "numeroCelda"    => $numeroCelda,
-            "logs"           => $log,
+            "logs"           => $log
         ]);
 
         $AuditoriaController = new AuditoriaController;

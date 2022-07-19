@@ -13,6 +13,7 @@ use App\fecfechas;
 use App\proproductos;
 use App\catcategorias;
 use App\coacontrolarchivos;
+use App\Http\Controllers\Sistema\CargarArchivo\MetRegistrarMovimientoStatusController;
 use App\Mail\MailCargaArchivos;
 use App\tcatiposcargasarchivos;
 use App\usuusuarios;
@@ -356,7 +357,7 @@ class ProductosCargarController extends Controller
                 $linea           = __LINE__;
                 $exitoSubirExcel = false;
             }
-
+            // $fecid = 165;
             $nuevoCargaArchivo = new carcargasarchivos;
             $nuevoCargaArchivo->tcaid            = 7;
             $nuevoCargaArchivo->fecid            = $fecid;
@@ -373,14 +374,9 @@ class ProductosCargarController extends Controller
                 $data = ['linkArchivoSubido' => $nuevoCargaArchivo->carurl , 'nombre' => $nuevoCargaArchivo->carnombrearchivo , 'tipo' => $tca->tcanombre, 'usuario' => $usuusuario->usuusuario];
                 Mail::to('gerson.vilca@grow-analytics.com.pe')->send(new MailCargaArchivos($data));
 
-                $coa = coacontrolarchivos::where('coaid',12) // MASTER DE PRODUCTOS
-                                            ->first();
-
-                if ($coa) {
-                    $coa->carid = $nuevoCargaArchivo->carid;
-                    $coa->estid = 3;
-                    $coa->update();
-                }
+                $registro_coa = new MetRegistrarMovimientoStatusController;
+                $registro_coa->MetRegistrarMovimientoStatus(12, $nuevoCargaArchivo->carid, $fecid);
+                
             }else{
 
             }
