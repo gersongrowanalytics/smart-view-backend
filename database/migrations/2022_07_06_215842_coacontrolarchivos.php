@@ -21,7 +21,6 @@ class Coacontrolarchivos extends Migration
             $table->unsignedInteger('estid');
             $table->unsignedInteger('badid');
             $table->integer('coadiasretraso')->nullable();
-            $table->string('coafechasubida')->nullable();
             $table->date('coafechacaducidad')->nullable();
             $table->timestamps();
 
