@@ -127,6 +127,7 @@ class CargarSOXSoldtoController extends Controller
         vsoventassso::join('fecfechas as fec', 'fec.fecid', 'vsoventassso.fecid')
                     ->where('fec.fecano', $anioSelec)
                     ->where('fec.fecmes', $mesTxtFec)
+                    ->where('vsoventassso.sucid', '!=', 137)
                     ->update(['vsovalorizado' => 0, 'vsovalorizadoniv' => 0]);
 
         // 
@@ -157,89 +158,98 @@ class CargarSOXSoldtoController extends Controller
 
         if(sizeof($datos) > 0){
             foreach($datos as $posicion => $dato){
+
                 $soldto      = $dato['COD_SOLD_TO'];
-                $categoria   = $dato['CATEGORY'];
-                $codMaterial = $dato['COD_MATERIAL'];
-                $real        = $dato['SELLS'];
-                $niv         = $dato['NIV'];
-    
-                if($dato['SELLS'] == null){
-                    $real = 0;
-                }else{
-                    $real = $dato['SELLS'];
-                }
-    
-                if($dato['NIV'] == null){
-                    $niv = 0;
-                }else{
-                    $niv = $dato['NIV'];
-                }
 
-                $pro = proproductos::where('prosku', $codMaterial)->first();
-    
-                if($pro){
-                    $proid = $pro->proid;
-    
-                    $suc = sucsucursales::where('sucsoldto', $soldto)
-                                            ->first();
-    
-                    $sucid = 0;
-    
-                    if($suc){
-                        $sucid = $suc->sucid;
-                        
-                        $vso = vsoventassso::where('fecid', $fecidFec)
-                                            ->where('proid', $proid)
-                                            ->where('sucid', $sucid)
-                                            ->where('tpmid', 1)
-                                            ->first();
-    
-                        if($vso){
-    
-                            $vso->vsovalorizado    = $real + $vso->vsovalorizado;
-                            $vso->vsovalorizadoniv = $niv + $vso->vsovalorizadoniv;
-                            $vso->update();
-    
-                        }else{
-                            $vson = new vsoventassso;
-                            $vson->fecid         = $fecidFec;
-                            $vson->proid         = $proid;
-                            $vson->sucid         = $sucid;
-                            $vson->tpmid         = 1;
-                            $vson->vsocantidad   = 0;
-                            $vson->vsovalorizado = $real;
-                            $vson->vsovalorizadoniv = $niv;
-                            $vson->save();
-                        }
-
-                        $oso = osoobjetivossso::where('fecid', $fecidFec)
-                                            ->where('proid', $proid)
-                                            ->where('sucid', $sucid)
-                                            ->where('tpmid', 1)
-                                            ->first();
-
-                        if(!$oso){
-                            $oson = new osoobjetivossso;
-                            $oson->fecid         = $fecidFec;
-                            $oson->proid         = $proid;
-                            $oson->sucid         = $sucid;
-                            $oson->tpmid         = 1;
-                            $oson->osocantidad   = 0;
-                            $oson->osovalorizado = 0;
-                            $oson->save();
-                        }
-    
+                if($soldto != "40093187"){
+                    
+                    $categoria   = $dato['CATEGORY'];
+                    $codMaterial = $dato['COD_MATERIAL'];
+                    $real        = $dato['SELLS'];
+                    $niv         = $dato['NIV'];
+        
+                    if($dato['SELLS'] == null){
+                        $real = 0;
                     }else{
-                        $logs['SUCS_FALTANTES'][] = $soldto;
-                        $respuesta = false;
-                        $mensaje = "Lo sentimos, hubieron algunas sucursales (soldto) que no se encontraron ".$soldto;
+                        $real = $dato['SELLS'];
                     }
-    
+        
+                    if($dato['NIV'] == null){
+                        $niv = 0;
+                    }else{
+                        $niv = $dato['NIV'];
+                    }
+
+                    $pro = proproductos::where('prosku', $codMaterial)->first();
+        
+                    if($pro){
+                        $proid = $pro->proid;
+        
+                        $suc = sucsucursales::where('sucsoldto', $soldto)
+                                                ->first();
+        
+                        $sucid = 0;
+        
+                        if($suc){
+                            $sucid = $suc->sucid;
+                            
+                            $vso = vsoventassso::where('fecid', $fecidFec)
+                                                ->where('proid', $proid)
+                                                ->where('sucid', $sucid)
+                                                ->where('tpmid', 1)
+                                                ->first();
+        
+                            if($vso){
+        
+                                $vso->vsovalorizado    = $real + $vso->vsovalorizado;
+                                $vso->vsovalorizadoniv = $niv + $vso->vsovalorizadoniv;
+                                $vso->update();
+        
+                            }else{
+                                $vson = new vsoventassso;
+                                $vson->fecid         = $fecidFec;
+                                $vson->proid         = $proid;
+                                $vson->sucid         = $sucid;
+                                $vson->tpmid         = 1;
+                                $vson->vsocantidad   = 0;
+                                $vson->vsovalorizado = $real;
+                                $vson->vsovalorizadoniv = $niv;
+                                $vson->save();
+                            }
+
+                            $oso = osoobjetivossso::where('fecid', $fecidFec)
+                                                ->where('proid', $proid)
+                                                ->where('sucid', $sucid)
+                                                ->where('tpmid', 1)
+                                                ->first();
+
+                            if(!$oso){
+                                $oson = new osoobjetivossso;
+                                $oson->fecid         = $fecidFec;
+                                $oson->proid         = $proid;
+                                $oson->sucid         = $sucid;
+                                $oson->tpmid         = 1;
+                                $oson->osocantidad   = 0;
+                                $oson->osovalorizado = 0;
+                                $oson->save();
+                            }
+        
+                        }else{
+                            $logs['SUCS_FALTANTES'][] = $soldto;
+                            $respuesta = false;
+                            $mensaje = "Lo sentimos, hubieron algunas sucursales (soldto) que no se encontraron ".$soldto;
+                        }
+        
+                    }else{
+                        $logs['PRODUCTO_NO_EXISTE'][] = $codMaterial;
+                        $respuesta = false;
+                        $mensaje = "Lo sentimos, hubieron algunos productos que no se encontraron ".$codMaterial;
+                    }
+                    
                 }else{
-                    $logs['PRODUCTO_NO_EXISTE'][] = $codMaterial;
-                    $respuesta = false;
-                    $mensaje = "Lo sentimos, hubieron algunos productos que no se encontraron ".$codMaterial;
+
                 }
+
             }
         }else{
             $respuesta = false;
