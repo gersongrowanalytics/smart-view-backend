@@ -130,7 +130,6 @@ class CargarSOXCategoriaController extends Controller
                                 ->where('fec.fecano', $anioSelec)
                                 ->where('fec.fecmes', $mesTxtFec)
                                 ->where('tsu.tprid', $tprid)
-                                ->where('scasucursalescategorias.sucid', '!=', 137)
                                 ->update([
                                     'scavalorizadoreal' => 0, 
                                     'scavalorizadotogo' => 0
@@ -140,7 +139,6 @@ class CargarSOXCategoriaController extends Controller
                                     ->where('tprid', $tprid)
                                     ->where('fec.fecano', $anioSelec)
                                     ->where('fec.fecmes', $mesTxtFec)
-                                    ->where('tsutipospromocionessucursales.sucid', '!=', 137)
                                     ->update([
                                         'tsuvalorizadoreal' => 0, 
                                         'tsuvalorizadotogo' => 0,
@@ -178,132 +176,126 @@ class CargarSOXCategoriaController extends Controller
             
             $soldto    = $dato['COD_SOLD_TO'];
 
-            if($soldto != "40093187"){
+            $categoria = $dato['CATEGORY'];
+            $real      = $dato['SELLS'];
 
-                $categoria = $dato['CATEGORY'];
-                $real      = $dato['SELLS'];
+            if($dato['SELLS'] == null){
+                $real = 0;
+            }else{
+                $real = $dato['SELLS'];
+            }
 
-                if($dato['SELLS'] == null){
-                    $real = 0;
-                }else{
-                    $real = $dato['SELLS'];
-                }
+            $cat = catcategorias::where('catnombreopcional', $categoria)->first();
 
-                $cat = catcategorias::where('catnombreopcional', $categoria)->first();
+            if($cat){
+                $catid = $cat->catid;
 
-                if($cat){
-                    $catid = $cat->catid;
+                $suc = sucsucursales::where('sucsoldto', $soldto)
+                                        ->first();
 
-                    $suc = sucsucursales::where('sucsoldto', $soldto)
-                                            ->first();
+                $sucid = 0;
 
-                    $sucid = 0;
+                if($suc){
+                    $sucid = $suc->sucid;
 
-                    if($suc){
-                        $sucid = $suc->sucid;
+                    $tsu = tsutipospromocionessucursales::where('fecid', $fecidFec)
+                                                ->where('sucid', $sucid)
+                                                ->where('tprid', $tprid)
+                                                ->first([
+                                                    'tsuid', 
+                                                    'tsuvalorizadoreal', 
+                                                    'tsuvalorizadoobjetivo', 
+                                                    'treid'
+                                                ]);
+                    $tsuid = 0;
+                    if($tsu){
+                        $tsuid = $tsu->tsuid;
+                        $nuevoReal = $tsu->tsuvalorizadoreal + $real;
 
-                        $tsu = tsutipospromocionessucursales::where('fecid', $fecidFec)
-                                                    ->where('sucid', $sucid)
-                                                    ->where('tprid', $tprid)
-                                                    ->first([
-                                                        'tsuid', 
-                                                        'tsuvalorizadoreal', 
-                                                        'tsuvalorizadoobjetivo', 
-                                                        'treid'
-                                                    ]);
-                        $tsuid = 0;
-                        if($tsu){
-                            $tsuid = $tsu->tsuid;
-                            $nuevoReal = $tsu->tsuvalorizadoreal + $real;
-
-                            if(intval(round($tsu->tsuvalorizadoobjetivo)) <= 0){
-                                $porcentajeCumplimiento = $nuevoReal;
-                                $togo = 0;
-                            }else{
-                                $porcentajeCumplimiento = (100*$nuevoReal)/$tsu->tsuvalorizadoobjetivo;
-                                $togo = $tsu->tsuvalorizadoobjetivo - $nuevoReal;
-                            }
-
-                            $totalRebate = 0;
-                            
-                            $tsu->tsuvalorizadoreal         = $nuevoReal;
-                            
-                            $tsu->tsuvalorizadotogo         = $togo;
-                            $tsu->tsuporcentajecumplimiento = $porcentajeCumplimiento;
-                            $tsu->tsuvalorizadorebate       = $totalRebate;
-                            if($tsu->update()){
-                                $pks['PK_TSU']["EDITADOS"][] = "TSU-".$tsuid;
-                            }
-
-
+                        if(intval(round($tsu->tsuvalorizadoobjetivo)) <= 0){
+                            $porcentajeCumplimiento = $nuevoReal;
+                            $togo = 0;
                         }else{
-                            $nuevotsu = new tsutipospromocionessucursales;
-                            $nuevotsu->fecid = $fecidFec;
-                            $nuevotsu->sucid = $sucid;
-                            $nuevotsu->tprid = $tprid;
-                            $nuevotsu->tsuporcentajecumplimiento = 0;
-                            $nuevotsu->tsuvalorizadoobjetivo     = 0;
-                            $nuevotsu->tsuvalorizadoreal         = $real;
-                            $nuevotsu->tsuvalorizadorebate       = 0;
-                            $nuevotsu->tsuvalorizadotogo         = 0;
-                            if($nuevotsu->save()){
-                                $tsuid = $nuevotsu->tsuid;
-                                $pks['PK_TSU']["NUEVOS"][] = "TSU-".$tsuid;
-                            }
+                            $porcentajeCumplimiento = (100*$nuevoReal)/$tsu->tsuvalorizadoobjetivo;
+                            $togo = $tsu->tsuvalorizadoobjetivo - $nuevoReal;
                         }
 
-
-                        $sca = scasucursalescategorias::where('tsuid', $tsuid)
-                                                    ->where('scasucursalescategorias.fecid', $fecidFec)
-                                                    ->where('sucid', $sucid)
-                                                    ->where('catid', $catid)
-                                                    ->first();
-
-                        if($sca){
-                            $scaid = $sca->scaid;
-                            $sca->scavalorizadoreal = $real;
-
-                            if(intval(round($sca->scavalorizadoobjetivo)) <= 0){
-                                $sca->scavalorizadotogo = 0;
-                            }else{
-                                $sca->scavalorizadotogo = $sca->scavalorizadoobjetivo - $real;
-                            }
-
-
-                            $sca->scaiconocategoria = env('APP_URL').'/Sistema/categorias-tiposPromociones/img/iconos/'.$cat->catnombre.'-'.$tprnombre.'.png';
-                            if($sca->update()){
-                                $pks['PK_SCA']["EDITADOS"][] = "SCA-".$scaid;
-                            }
-                        }else{
-                            $nuevosca = new scasucursalescategorias;
-                            $nuevosca->sucid                 = $sucid;
-                            $nuevosca->catid                 = $catid;
-                            $nuevosca->fecid                 = $fecidFec;
-                            $nuevosca->tsuid                 = $tsuid;
-                            $nuevosca->scavalorizadoobjetivo = 0;
-                            $nuevosca->scaiconocategoria     = env('APP_URL').'/Sistema/categorias-tiposPromociones/img/iconos/'.$cat->catnombre.'-'.$tprnombre.'.png';
-                            $nuevosca->scavalorizadoreal     = $real;
-                            $nuevosca->scavalorizadotogo     = 0;
-                            if($nuevosca->save()){
-                                $scaid = $nuevosca->scaid;
-                                $pks['PK_SCA']["NUEVO"][] = "SCA-".$scaid;
-                            }
+                        $totalRebate = 0;
+                        
+                        $tsu->tsuvalorizadoreal         = $nuevoReal;
+                        
+                        $tsu->tsuvalorizadotogo         = $togo;
+                        $tsu->tsuporcentajecumplimiento = $porcentajeCumplimiento;
+                        $tsu->tsuvalorizadorebate       = $totalRebate;
+                        if($tsu->update()){
+                            $pks['PK_TSU']["EDITADOS"][] = "TSU-".$tsuid;
                         }
+
 
                     }else{
-                        $logs['SUCS_FALTANTES'][] = $soldto;
-                        $respuesta = false;
-                        $mensaje = "Lo sentimos, hubieron algunas sucursales (soldto) que no se encontraron ".$soldto;
+                        $nuevotsu = new tsutipospromocionessucursales;
+                        $nuevotsu->fecid = $fecidFec;
+                        $nuevotsu->sucid = $sucid;
+                        $nuevotsu->tprid = $tprid;
+                        $nuevotsu->tsuporcentajecumplimiento = 0;
+                        $nuevotsu->tsuvalorizadoobjetivo     = 0;
+                        $nuevotsu->tsuvalorizadoreal         = $real;
+                        $nuevotsu->tsuvalorizadorebate       = 0;
+                        $nuevotsu->tsuvalorizadotogo         = 0;
+                        if($nuevotsu->save()){
+                            $tsuid = $nuevotsu->tsuid;
+                            $pks['PK_TSU']["NUEVOS"][] = "TSU-".$tsuid;
+                        }
+                    }
+
+
+                    $sca = scasucursalescategorias::where('tsuid', $tsuid)
+                                                ->where('scasucursalescategorias.fecid', $fecidFec)
+                                                ->where('sucid', $sucid)
+                                                ->where('catid', $catid)
+                                                ->first();
+
+                    if($sca){
+                        $scaid = $sca->scaid;
+                        $sca->scavalorizadoreal = $real;
+
+                        if(intval(round($sca->scavalorizadoobjetivo)) <= 0){
+                            $sca->scavalorizadotogo = 0;
+                        }else{
+                            $sca->scavalorizadotogo = $sca->scavalorizadoobjetivo - $real;
+                        }
+
+
+                        $sca->scaiconocategoria = env('APP_URL').'/Sistema/categorias-tiposPromociones/img/iconos/'.$cat->catnombre.'-'.$tprnombre.'.png';
+                        if($sca->update()){
+                            $pks['PK_SCA']["EDITADOS"][] = "SCA-".$scaid;
+                        }
+                    }else{
+                        $nuevosca = new scasucursalescategorias;
+                        $nuevosca->sucid                 = $sucid;
+                        $nuevosca->catid                 = $catid;
+                        $nuevosca->fecid                 = $fecidFec;
+                        $nuevosca->tsuid                 = $tsuid;
+                        $nuevosca->scavalorizadoobjetivo = 0;
+                        $nuevosca->scaiconocategoria     = env('APP_URL').'/Sistema/categorias-tiposPromociones/img/iconos/'.$cat->catnombre.'-'.$tprnombre.'.png';
+                        $nuevosca->scavalorizadoreal     = $real;
+                        $nuevosca->scavalorizadotogo     = 0;
+                        if($nuevosca->save()){
+                            $scaid = $nuevosca->scaid;
+                            $pks['PK_SCA']["NUEVO"][] = "SCA-".$scaid;
+                        }
                     }
 
                 }else{
-                    $logs['CATEGORIA_NO_EXISTE'][] = $categoria;
+                    $logs['SUCS_FALTANTES'][] = $soldto;
                     $respuesta = false;
-                    $mensaje = "Lo sentimos, hubieron algunas categorias que no se encontraron ".$categoria;
+                    $mensaje = "Lo sentimos, hubieron algunas sucursales (soldto) que no se encontraron ".$soldto;
                 }
 
             }else{
-
+                $logs['CATEGORIA_NO_EXISTE'][] = $categoria;
+                $respuesta = false;
+                $mensaje = "Lo sentimos, hubieron algunas categorias que no se encontraron ".$categoria;
             }
 
 
