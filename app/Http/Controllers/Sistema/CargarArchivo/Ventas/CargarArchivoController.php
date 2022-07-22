@@ -85,14 +85,14 @@ class CargarArchivoController extends Controller
                                             ]);
 
             if($tup){
-                $cargarData = true;
+                // $cargarData = true;
             }else{
                 $cargarData = false;
             }
         }
 
         // NO SUBIR DATA
-        $cargarData = true;
+        // $cargarData = true;
         
         
         try{
