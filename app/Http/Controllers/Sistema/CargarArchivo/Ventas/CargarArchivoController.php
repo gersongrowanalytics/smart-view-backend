@@ -195,13 +195,13 @@ class CargarArchivoController extends Controller
                                     //                                 ->where('tsu.tprid', 1)
                                     //                                 ->get(['scasucursalescategorias.scaid']);
 
-                                    $scas = scasucursalescategorias::join('tsutipospromocionessucursales as tsu', 'tsu.tsuid', 'scasucursalescategorias.tsuid')
-                                                                    ->where('tsu.fecid', $fecid)
-                                                                    ->where('tsu.tprid', 1)
-                                                                    ->update([
-                                                                        'scavalorizadoreal' => 0,
-                                                                        'scavalorizadotogo' => 0,
-                                                                    ]);
+                                    // $scas = scasucursalescategorias::join('tsutipospromocionessucursales as tsu', 'tsu.tsuid', 'scasucursalescategorias.tsuid')
+                                    //                                 ->where('tsu.fecid', $fecid)
+                                    //                                 ->where('tsu.tprid', 1)
+                                    //                                 ->update([
+                                    //                                     'scavalorizadoreal' => 0,
+                                    //                                     'scavalorizadotogo' => 0,
+                                    //                                 ]);
             
                                     // foreach($scas as $sca){
                                     //     $scae = scasucursalescategorias::find($sca->scaid);
@@ -219,14 +219,14 @@ class CargarArchivoController extends Controller
                                     //                                     ->where('tprid', 1)
                                     //                                     ->get(['tsuid']);
 
-                                    $tsus = tsutipospromocionessucursales::where('fecid', $fecid)
-                                                                        ->where('tprid', 1)
-                                                                        ->update([
-                                                                            'tsuvalorizadoreal' => 0,
-                                                                            'tsuvalorizadotogo' => 0,
-                                                                            'tsuporcentajecumplimiento' => 0,
-                                                                            'tsuvalorizadorebate' => 0,
-                                                                        ]);
+                                    // $tsus = tsutipospromocionessucursales::where('fecid', $fecid)
+                                    //                                     ->where('tprid', 1)
+                                    //                                     ->update([
+                                    //                                         'tsuvalorizadoreal' => 0,
+                                    //                                         'tsuvalorizadotogo' => 0,
+                                    //                                         'tsuporcentajecumplimiento' => 0,
+                                    //                                         'tsuvalorizadorebate' => 0,
+                                    //                                     ]);
             
                                     // foreach($tsus as $tsu){
                                     //     $tsue = tsutipospromocionessucursales::find($tsu->tsuid);
@@ -242,7 +242,7 @@ class CargarArchivoController extends Controller
             
                                     // }
 
-                                    vsiventasssi::where('fecid', $fecid)->update(['vsivalorizado' => 0]);
+                                    // vsiventasssi::where('fecid', $fecid)->update(['vsivalorizado' => 0]);
             
                                 }
             
