@@ -173,7 +173,9 @@ class CargarSOXCategoriaController extends Controller
         $datos = json_decode( file_get_contents('http://back-api-leadsmartview.grow-corporate.com/ws/obtenerSOconsolidadoXCategoria/'.$anioSelec.'/'.$mesTxtIngles), true );
 
         foreach($datos as $posicion => $dato){
+            
             $soldto    = $dato['COD_SOLD_TO'];
+
             $categoria = $dato['CATEGORY'];
             $real      = $dato['SELLS'];
 

@@ -157,6 +157,7 @@ class CargarSOXSoldtoController extends Controller
 
         if(sizeof($datos) > 0){
             foreach($datos as $posicion => $dato){
+
                 $soldto      = $dato['COD_SOLD_TO'];
                 $categoria   = $dato['CATEGORY'];
                 $codMaterial = $dato['COD_MATERIAL'];
@@ -240,6 +241,7 @@ class CargarSOXSoldtoController extends Controller
                     $respuesta = false;
                     $mensaje = "Lo sentimos, hubieron algunos productos que no se encontraron ".$codMaterial;
                 }
+
             }
         }else{
             $respuesta = false;
