@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Sistema\CargarArchivo\Ventas;
 
+use App\badbasedatos;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Controllers\AuditoriaController;
@@ -30,6 +31,7 @@ use App\vsoventassso;
 use App\osiobjetivosssi;
 use App\tcatiposcargasarchivos;
 use Illuminate\Support\Facades\Mail;
+use Exception;
 
 class CargarArchivoController extends Controller
 {
@@ -539,9 +541,13 @@ class CargarArchivoController extends Controller
                     $data = ['linkArchivoSubido' => $nuevoCargaArchivo->carurl , 'nombre' => $nuevoCargaArchivo->carnombrearchivo , 'tipo' => $tca->tcanombre, 'usuario' => $usuusuario->usuusuario];
                     Mail::to('gerson.vilca@grow-analytics.com.pe')->send(new MailCargaArchivos($data));
 
-                    $registro_coa = new MetRegistrarMovimientoStatusController;
-                    $registro_coa->MetRegistrarMovimientoStatus(11, $nuevoCargaArchivo->carid, $fecid);
-                   
+                    //ACTUALIZANDO STATUS
+                    $bad = badbasedatos::where('badnombre', 'Sell In Real')->first('badid');
+                    if ($bad) {
+                        $registro_coa = new MetRegistrarMovimientoStatusController;
+                        $registro_coa->MetRegistrarMovimientoStatus($bad->badid, $nuevoCargaArchivo->carid);
+                    }
+                    
                 }else{
                 }
             }else{

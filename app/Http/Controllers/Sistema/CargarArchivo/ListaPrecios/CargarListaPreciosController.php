@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Sistema\CargarArchivo\ListaPrecios;
 
+use App\badbasedatos;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Controllers\AuditoriaController;
@@ -20,6 +21,7 @@ use App\tretiposrebates;
 use App\sucsucursales;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
+use Exception;
 
 class CargarListaPreciosController extends Controller
 {
@@ -179,9 +181,11 @@ class CargarListaPreciosController extends Controller
                 $data = ['linkArchivoSubido' => $nuevoCargaArchivo->carurl , 'nombre' => $nuevoCargaArchivo->carnombrearchivo , 'tipo' => $tca->tcanombre, 'usuario' => $usuusuario->usuusuario];
                 Mail::to('gerson.vilca@grow-analytics.com.pe')->send(new MailCargaArchivos($data));
 
-                $registro_coa = new MetRegistrarMovimientoStatusController;
-                $registro_coa->MetRegistrarMovimientoStatus(10, $nuevoCargaArchivo->carid, 69);
-
+                $bad = badbasedatos::where('badnombre', 'Lista de Precio')->first('badid');
+                if ($bad) {
+                    $registro_coa = new MetRegistrarMovimientoStatusController;
+                    $registro_coa->MetRegistrarMovimientoStatus($bad->badid, $nuevoCargaArchivo->carid);
+                }
             }else{
 
             }

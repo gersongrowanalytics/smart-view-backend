@@ -1020,32 +1020,36 @@ class NuevaCargaPromocionesController extends Controller
                     $bad = badbasedatos::where('badnombre', 'like', '%sur%')->first('badid');
                 }
 
-                //ACTUALIZAR REGISTROS DE COA
-                $registro_coa = new MetRegistrarMovimientoStatusController;
-                $actualizacion_coa =  $registro_coa->MetRegistrarMovimientoStatus($bad->badid, $nuevoCargaArchivo->carid, $fecid);
-                // $sucursalesSeleccionadas = ["AUREN","CODIJISA","CORP. CODIFER","SAN RAFAELITO","GUMI","ECONOMYSA","VIJISA","JIRUSA","REDIJISA","TUIN","DEHOCA","DIST. JOMER","URIAFER","TERRANORTE","TOTAL CALIDAD AMERICA","SAGRA DISTRIBUCION","MOLI","JIMENEZ NORTE"];
-                //ACTUALIZA TABLA DE DETALLES MECANICA PROMOCIONAL
-                if ($actualizacion_coa == true) {
-                    foreach ($sucursalesSeleccionadas as $key => $sucursal) {
+                if ($bad) {
+                    //ACTUALIZAR REGISTROS DE COA
+                    $registro_coa = new MetRegistrarMovimientoStatusController;
+                    $actualizacion_coa =  $registro_coa->MetRegistrarMovimientoStatus($bad->badid, $nuevoCargaArchivo->carid, $fecid);
+                    // $sucursalesSeleccionadas = ["AUREN","CODIJISA","CORP. CODIFER","SAN RAFAELITO","GUMI","ECONOMYSA","VIJISA","JIRUSA","REDIJISA","TUIN","DEHOCA","DIST. JOMER","URIAFER","TERRANORTE","TOTAL CALIDAD AMERICA","SAGRA DISTRIBUCION","MOLI","JIMENEZ NORTE"];
+                   
+                    //ACTUALIZA TABLA DE DETALLES MECANICA PROMOCIONAL
+                    if ($actualizacion_coa == true) {
+                        foreach ($sucursalesSeleccionadas as $key => $sucursal) {
 
-                        $suc = sucsucursales::where('sucnombre', $sucursal)->first(['sucid']);
-                        if ($suc) {
-                            $dmp = dmpdetallemecanicaspromocional::where('sucid', $suc->sucid)->first();
-                            if ($dmp) {
-                                $dmp->badid = $bad->badid;
-                                $dmp->carid = $nuevoCargaArchivo->carid;
-                                $dmp->update();
-                            }else{
-                                $dmpn = new dmpdetallemecanicaspromocional();
-                                $dmpn->carid = $nuevoCargaArchivo->carid;
-                                $dmpn->sucid = $suc->sucid;
-                                $dmpn->badid = $bad->badid;
-                                $dmpn->save();
+                            $suc = sucsucursales::where('sucnombre', $sucursal)->first(['sucid']);
+                            if ($suc) {
+                                $dmp = dmpdetallemecanicaspromocional::where('sucid', $suc->sucid)->first();
+                                if ($dmp) {
+                                    $dmp->badid = $bad->badid;
+                                    $dmp->carid = $nuevoCargaArchivo->carid;
+                                    $dmp->update();
+                                }else{
+                                    $dmpn = new dmpdetallemecanicaspromocional();
+                                    $dmpn->carid = $nuevoCargaArchivo->carid;
+                                    $dmpn->sucid = $suc->sucid;
+                                    $dmpn->badid = $bad->badid;
+                                    $dmpn->save();
+                                }
                             }
-                        }
                         
+                        }
                     }
                 }
+                
 
             }else{
 

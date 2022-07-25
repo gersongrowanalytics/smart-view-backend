@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Sistema\CargarArchivo\Ventas;
 
+use App\badbasedatos;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Controllers\AuditoriaController;
@@ -559,9 +560,11 @@ class ObjetivoCargarController extends Controller
                             $data = ['linkArchivoSubido' => $nuevoCargaArchivo->carurl , 'nombre' => $nuevoCargaArchivo->carnombrearchivo , 'tipo' => $tca->tcanombre, 'usuario' => $usuusuario->usuusuario];
                             Mail::to('gerson.vilca@grow-analytics.com.pe')->send(new MailCargaArchivos($data));
 
-                            $registro_coa = new MetRegistrarMovimientoStatusController;
-                            $registro_coa->MetRegistrarMovimientoStatus(1, $nuevoCargaArchivo->carid, $fecid); 
-
+                            $bad = badbasedatos::where('badnombre', 'Sell In Objetivo')->first('badid');
+                            if ($bad) {
+                                $registro_coa = new MetRegistrarMovimientoStatusController;
+                                $registro_coa->MetRegistrarMovimientoStatus($bad->badid, $nuevoCargaArchivo->carid); 
+                            }
                         }else{
 
                         }
@@ -1755,8 +1758,11 @@ class ObjetivoCargarController extends Controller
                             $data = ['linkArchivoSubido' => $nuevoCargaArchivo->carurl , 'nombre' => $nuevoCargaArchivo->carnombrearchivo , 'tipo' => $tca->tcanombre, 'usuario' => $usuusuario->usuusuario];
                             Mail::to('gerson.vilca@grow-analytics.com.pe')->send(new MailCargaArchivos($data));
 
-                            $registro_coa = new MetRegistrarMovimientoStatusController;
-                            $registro_coa->MetRegistrarMovimientoStatus(2, $nuevoCargaArchivo->carid, $fecid);
+                            $bad = badbasedatos::where('badnombre', 'Sell Out Objetivo')->first('badid');
+                            if ($bad) {
+                                $registro_coa = new MetRegistrarMovimientoStatusController;
+                                $registro_coa->MetRegistrarMovimientoStatus($bad->badid, $nuevoCargaArchivo->carid);
+                            }
                         }else{
 
                         }   
@@ -1950,9 +1956,11 @@ class ObjetivoCargarController extends Controller
                     $data = ['linkArchivoSubido' => $nuevoCargaArchivo->carurl , 'nombre' => $nuevoCargaArchivo->carnombrearchivo , 'tipo' => $tca->tcanombre, 'usuario' => $usuusuario->usuusuario];
                     Mail::to('gerson.vilca@grow-analytics.com.pe')->send(new MailCargaArchivos($data));
 
-                    $registro_coa = new MetRegistrarMovimientoStatusController;
-                    $registro_coa->MetRegistrarMovimientoStatus(7, $nuevoCargaArchivo->carid, $fecid);
-
+                    $bad = badbasedatos::where('badnombre', 'Rebate DT (Carga)')->first('badid');
+                    if ($bad) {
+                        $registro_coa = new MetRegistrarMovimientoStatusController;
+                        $registro_coa->MetRegistrarMovimientoStatus( $bad->badid, $nuevoCargaArchivo->carid);
+                    }
                 }else{
 
                 }

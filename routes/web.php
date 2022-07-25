@@ -50,7 +50,7 @@ $router->get('/correo-recuperar', 'Sistema\recuperarController@EnviarCorreoVista
 // ACEPTAR TERMINOS Y CONDICIONES
 $router->post('/aceptar-terminos-condiciones', 'Sistema\TerminosCondiciones\AceptarTerminosController@AceptarTerminos');
 
-// $router->group(['middleware' => ['permisos']], function() use($router) {
+$router->group(['middleware' => ['permisos']], function() use($router) {
     
     $router->post('/ventas/mostrar', 'Sistema\Ventas\Mostrar\VentasMostrarController@mostrarVentas');
     $router->post('/ventas/mostrar/acumulado', 'Sistema\Ventas\Mostrar\VentasMostrarAcumuladoController@mostrarVentasAcumuladas');
@@ -219,7 +219,7 @@ $router->post('/aceptar-terminos-condiciones', 'Sistema\TerminosCondiciones\Acep
     //CREAR REGISTROS COACONTROLARCHIVOS
     $router->post('/crear-registros-coa', 'Sistema\ControlArchivos\Complementos\MetCrearRegistrosControlArchivosController@MetCrearRegistrosControlArchivos');
     $router->post('/obtener-detalles-promocional', 'Sistema\Status\MetObtenerDetallesMecanicaPromocionalController@MetObtenerDetallesMecanicaPromocional');
-// });
+});
 
 // CONTROL DE PRODUCTOS
 $router->post('/control-promociones/mostrar-productos', 'Sistema\ControlProductos\MostrarProductosController@MostrarProductos');
@@ -285,3 +285,4 @@ $router->post('/reportes-logicaLP','Sistema\CargarArchivo\ListaPrecios\CargarLis
 $router->get('/mostrar-tipo-rebates','Sistema\CargarArchivo\ListaPrecios\TipoRebate\MostrarTipoRebateDescargaLPController@MostrarTipoRebate');
 $router->get('/mostrar-canales-sucursales', 'Sistema\CargarArchivo\ListaPrecios\CanalesSucursales\MostrarCanalesSucursalesDescargaLPController@MostrarCanalesSucursales');
 
+// $router->post('/prueba', 'MailController@prueba');
