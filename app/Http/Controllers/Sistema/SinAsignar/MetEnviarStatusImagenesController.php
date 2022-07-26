@@ -17,7 +17,7 @@ class MetEnviarStatusImagenesController extends Controller
         $respuesta   = true;
         $mensaje     = "Se retornaron todos los registros con éxito";
         $mensajeserv = "";
-        $correo      = "jeanmarcoe@gmail.com";
+        $correo      = "gerson.vilca@grow-analytics.com.pe";
 
         try {
             $pro = proproductos::where('proimagen', '/')

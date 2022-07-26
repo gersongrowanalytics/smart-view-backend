@@ -17,7 +17,7 @@ class MetCrearRegistrosControlArchivosController extends Controller
         $respuesta = false;
         $mensaje = [];
 
-        $mesAbrev = array("ENE","FEBR","MAR","ABR","MAY","JUN","JUL","AGO","SET","OCT","NOV","DIC");
+        $mesAbrev = array("ENE","FEB","MAR","ABR","MAY","JUN","JUL","AGO","SET","OCT","NOV","DIC");
         
         $req_anio = $request['req_anio'];
         $req_mes  = $request['req_mes'];

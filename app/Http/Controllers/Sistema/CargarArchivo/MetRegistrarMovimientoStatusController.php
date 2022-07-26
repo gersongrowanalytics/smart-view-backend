@@ -9,29 +9,31 @@ use Illuminate\Http\Request;
 
 class MetRegistrarMovimientoStatusController extends Controller
 {
-    public function MetRegistrarMovimientoStatus ($badid, $carid, $fecid)
+    public function MetRegistrarMovimientoStatus ($badid, $carid)
     {
-        // $respuesta = false;
+        $respuesta = false;
 
-        // $fec = fecfechas::where('fecid', $fecid)->first(['fecano','fecmes']);
-
-        // if ($fec) {
-        //     // $coa = coacontrolarchivos::join('fecfechas as fec', 'fec.fecid', 'coacontrolarchivos.fecid')
-        //     //                         ->where('badid', $badid)
-        //     //                         ->where('fec.fecano', $fec->fecano)
-        //     //                         ->where('fec.fecmes', $fec->fecmes)
-        //     //                         ->first('coaid');
-            
-        //     // if ($coa) {
-        //     //     $coa->carid = $carid;
-        //     //     $coa->estid = 3;
-        //     //     if ($coa->update()) {
-        //     //         $respuesta = true;
-        //     //     }
-        //     // }
-        // }      
+        $meses = ["ENE", "FEB", "MAR", "ABR", "MAY", "JUN", "JUL", "AGO", "SET", "OCT", "NOV", "DIC"];
+        date_default_timezone_set("America/Lima");
+        $anioActual = date('Y');
+        $mesActual  = date('n');
+        $mesActualTexto = $meses[$mesActual - 1];
         
-        $respuesta = true;
+        $coa = coacontrolarchivos::join('fecfechas as fec', 'fec.fecid', 'coacontrolarchivos.fecid')
+                                ->where('badid', $badid)
+                                ->where('fec.fecano', $anioActual)
+                                ->where('fec.fecmes', $mesActualTexto)
+                                ->first('coaid');
+
+        if ($coa) {
+            $coa->carid = $carid;
+            $coa->estid = 3;
+            if ($coa->update()) {
+                $respuesta = true;
+            }
+        }
+             
+        // $respuesta = true;
         return $respuesta;
     }
 }

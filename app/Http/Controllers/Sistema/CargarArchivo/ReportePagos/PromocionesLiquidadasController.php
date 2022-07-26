@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Sistema\CargarArchivo\ReportePagos;
 
+use App\badbasedatos;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Controllers\AuditoriaController;
@@ -18,6 +19,7 @@ use App\fecfechas;
 use App\Http\Controllers\Sistema\CargarArchivo\MetRegistrarMovimientoStatusController;
 use App\sucsucursales;
 use App\prlpromocionesliquidadas;
+use Exception;
 
 class PromocionesLiquidadasController extends Controller
 {
@@ -187,10 +189,12 @@ class PromocionesLiquidadasController extends Controller
                 if($nuevoCargaArchivo->save()){
                     $pkid = "CAR-".$nuevoCargaArchivo->carid;
 
-                    $registro_coa = new MetRegistrarMovimientoStatusController;
-                    $registro_coa->MetRegistrarMovimientoStatus(8, $nuevoCargaArchivo->carid, $fecid);
-
-                }else{
+                    $bad = badbasedatos::where('badnombre', 'Promociones Liquidadas DT')->first('badid');
+                    if ($bad) {
+                        $registro_coa = new MetRegistrarMovimientoStatusController;
+                        $registro_coa->MetRegistrarMovimientoStatus($bad->badid, $nuevoCargaArchivo->carid);
+                    }
+                }else{  
 
                 }
             }

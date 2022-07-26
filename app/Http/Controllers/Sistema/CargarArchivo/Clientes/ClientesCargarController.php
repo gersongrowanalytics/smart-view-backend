@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Sistema\CargarArchivo\Clientes;
 
+use App\badbasedatos;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Controllers\AuditoriaController;
@@ -28,6 +29,7 @@ use App\Http\Controllers\Sistema\CargarArchivo\MetRegistrarMovimientoStatusContr
 use App\Mail\MailCargaArchivos;
 use App\tcatiposcargasarchivos;
 use Illuminate\Support\Facades\Mail;
+use Exception;
 
 class ClientesCargarController extends Controller
 {
@@ -157,9 +159,12 @@ class ClientesCargarController extends Controller
 
                     $data = ['linkArchivoSubido' => $nuevoCargaArchivo->carurl , 'nombre' => $nuevoCargaArchivo->carnombrearchivo , 'tipo' => $tca->tcanombre, 'usuario' => $usuusuario->usuusuario];
                     Mail::to('gerson.vilca@grow-analytics.com.pe')->send(new MailCargaArchivos($data));
-
-                    $registro_coa = new MetRegistrarMovimientoStatusController;
-                    // $registro_coa->MetRegistrarMovimientoStatus(13, $nuevoCargaArchivo->carid, $fecid);
+                    
+                    $bad = badbasedatos::where('badnombre', 'Maestra de Clientes')->first('badid');
+                    if ($bad) {
+                        $registro_coa = new MetRegistrarMovimientoStatusController;
+                        $registro_coa->MetRegistrarMovimientoStatus($bad->badid, $nuevoCargaArchivo->carid);
+                    }
                 }else{
 
                 }
