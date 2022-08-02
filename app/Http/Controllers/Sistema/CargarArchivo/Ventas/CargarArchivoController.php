@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Sistema\CargarArchivo\Ventas;
 
-use App\badbasedatos;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Controllers\AuditoriaController;
@@ -31,7 +30,6 @@ use App\vsoventassso;
 use App\osiobjetivosssi;
 use App\tcatiposcargasarchivos;
 use Illuminate\Support\Facades\Mail;
-use Exception;
 
 class CargarArchivoController extends Controller
 {
@@ -109,7 +107,7 @@ class CargarArchivoController extends Controller
                 $ultimaColumna  = $objPHPExcel->setActiveSheetIndex(0)->getHighestColumn();
                 
                 if($cargarData == true){
-                    for ($i=3; $i <= $numRows; $i++) {
+                    for ($i=2; $i <= $numRows; $i++) {
                         $dia = '01';
     
                         // $ano        = $objPHPExcel->getActiveSheet()->getCell('D'.$i)->getCalculatedValue();
@@ -191,60 +189,34 @@ class CargarArchivoController extends Controller
                                     }
                                 }
             
-                                if($i == 3){
-                                    // $scas = scasucursalescategorias::join('tsutipospromocionessucursales as tsu', 'tsu.tsuid', 'scasucursalescategorias.tsuid')
-                                    //                                 ->where('tsu.fecid', $fecid)
-                                    //                                 ->where('tsu.tprid', 1)
-                                    //                                 ->get(['scasucursalescategorias.scaid']);
+                                if($i == 2){
+                                    $scas = scasucursalescategorias::join('tsutipospromocionessucursales as tsu', 'tsu.tsuid', 'scasucursalescategorias.tsuid')
+                                                                    ->where('tsu.fecid', $fecid)
+                                                                    ->where('tsu.tprid', 1)
+                                                                    ->get(['scasucursalescategorias.scaid']);
 
-                                    // $scas = scasucursalescategorias::join('tsutipospromocionessucursales as tsu', 'tsu.tsuid', 'scasucursalescategorias.tsuid')
-                                    //                                 ->where('tsu.fecid', $fecid)
-                                    //                                 ->where('tsu.tprid', 1)
-                                    //                                 ->update([
-                                    //                                     'scavalorizadoreal' => 0,
-                                    //                                     'scavalorizadotogo' => 0,
-                                    //                                 ]);
+                                    $scas = scasucursalescategorias::join('tsutipospromocionessucursales as tsu', 'tsu.tsuid', 'scasucursalescategorias.tsuid')
+                                                                    ->where('tsu.fecid', $fecid)
+                                                                    ->where('tsu.tprid', 1)
+                                                                    ->update([
+                                                                        'scavalorizadoreal' => 0,
+                                                                        'scavalorizadotogo' => 0,
+                                                                    ]);
             
-                                    // foreach($scas as $sca){
-                                    //     $scae = scasucursalescategorias::find($sca->scaid);
-            
-                                    //     $scae->scavalorizadoreal = 0;
-                                    //     $scae->scavalorizadotogo = 0;
-                                    //     if($scae->update()){
-            
-                                    //     }else{
-                                    //         $log[] = "No se pudo editar el sca: ".$sca->scaid;
-                                    //     }
-                                    // }
-            
-                                    // $tsus = tsutipospromocionessucursales::where('fecid', $fecid)
-                                    //                                     ->where('tprid', 1)
-                                    //                                     ->get(['tsuid']);
+                                    $tsus = tsutipospromocionessucursales::where('fecid', $fecid)
+                                                                        ->where('tprid', 1)
+                                                                        ->get(['tsuid']);
 
-                                    // $tsus = tsutipospromocionessucursales::where('fecid', $fecid)
-                                    //                                     ->where('tprid', 1)
-                                    //                                     ->update([
-                                    //                                         'tsuvalorizadoreal' => 0,
-                                    //                                         'tsuvalorizadotogo' => 0,
-                                    //                                         'tsuporcentajecumplimiento' => 0,
-                                    //                                         'tsuvalorizadorebate' => 0,
-                                    //                                     ]);
-            
-                                    // foreach($tsus as $tsu){
-                                    //     $tsue = tsutipospromocionessucursales::find($tsu->tsuid);
-                                    //     $tsue->tsuvalorizadoreal = 0;
-                                    //     $tsue->tsuvalorizadotogo = 0;
-                                    //     $tsue->tsuporcentajecumplimiento = 0;
-                                    //     $tsue->tsuvalorizadorebate = 0;
-                                    //     if($tsue->update()){
-            
-                                    //     }else{
-                                    //         $log[] = "No se pudo editar el tsu: ".$tsu->tsuid;
-                                    //     }
-            
-                                    // }
+                                    $tsus = tsutipospromocionessucursales::where('fecid', $fecid)
+                                                                        ->where('tprid', 1)
+                                                                        ->update([
+                                                                            'tsuvalorizadoreal' => 0,
+                                                                            'tsuvalorizadotogo' => 0,
+                                                                            'tsuporcentajecumplimiento' => 0,
+                                                                            'tsuvalorizadorebate' => 0,
+                                                                        ]);
 
-                                    // vsiventasssi::where('fecid', $fecid)->update(['vsivalorizado' => 0]);
+                                    vsiventasssi::where('fecid', $fecid)->update(['vsivalorizado' => 0]);
             
                                 }
             
@@ -541,13 +513,9 @@ class CargarArchivoController extends Controller
                     $data = ['linkArchivoSubido' => $nuevoCargaArchivo->carurl , 'nombre' => $nuevoCargaArchivo->carnombrearchivo , 'tipo' => $tca->tcanombre, 'usuario' => $usuusuario->usuusuario];
                     Mail::to('gerson.vilca@grow-analytics.com.pe')->send(new MailCargaArchivos($data));
 
-                    //ACTUALIZANDO STATUS
-                    $bad = badbasedatos::where('badnombre', 'Sell In Real')->first('badid');
-                    if ($bad) {
-                        $registro_coa = new MetRegistrarMovimientoStatusController;
-                        $registro_coa->MetRegistrarMovimientoStatus($bad->badid, $nuevoCargaArchivo->carid);
-                    }
-                    
+                    $registro_coa = new MetRegistrarMovimientoStatusController;
+                    $registro_coa->MetRegistrarMovimientoStatus(11, $nuevoCargaArchivo->carid, $fecid);
+                   
                 }else{
                 }
             }else{
