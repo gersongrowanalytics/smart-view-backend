@@ -8,7 +8,6 @@ use App\fecfechas;
 use App\Http\Controllers\Controller;
 use DateTime;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Date;
 
 class MetCrearRegistrosControlArchivosController extends Controller
 {
@@ -35,13 +34,13 @@ class MetCrearRegistrosControlArchivosController extends Controller
 
         if ($fecn->save()) {
             
-            $bads = badbasedatos::get(['badid', 'badnombre', 'areid']);
+            $bads = badbasedatos::get(['badid', 'badnombre', 'areid', 'usuid']);
 
             if (sizeof($bads) > 0) {
                 foreach ($bads as $key => $bad) {
 
                     $coan = new coacontrolarchivos();
-                    $coan->usuid = 639;
+                    $coan->usuid = $bad['usuid'];
                     $coan->fecid = $fecn->fecid;
                     $coan->estid = 4;
                     $coan->badid = $bad['badid'];

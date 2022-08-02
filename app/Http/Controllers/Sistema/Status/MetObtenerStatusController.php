@@ -7,16 +7,20 @@ use App\badbasedatos;
 use App\coacontrolarchivos;
 use App\Http\Controllers\Controller;
 use App\Mail\MailInformarStatus;
+use App\Mail\MailInformarStatusV2;
 use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
-
+// use Symfony\Component\HttpFoundation\Cookie;
 use function PHPSTORM_META\map;
 
 class MetObtenerStatusController extends Controller
 {
+    
     public function MetObtenerStatus(Request $request)
     {
+        // header_remove("X-Powered-By");
+        // header_remove("Host");
         $respuesta = false;
         $mensaje   = "";
         $datos     = [];
@@ -179,9 +183,9 @@ class MetObtenerStatusController extends Controller
                         "areporcentaje" => $area['promedio'] 
                     ];
                 }
-                $fechas = ["14.07.2022"];
+                $fechas = ["25.07.2022"];
                 foreach ($fechas as $key => $fecha) {
-                    Mail::to(['marco.espinoza@grow-analytics.com.pe'])->send(new MailInformarStatus($datos, $cuadros, $fecha));
+                    Mail::to(['gerson.vilca@grow-analytics.com.pe'])->send(new MailInformarStatus($datos, $cuadros, $fecha));
                 }
             }
         }else{
@@ -232,4 +236,9 @@ class MetObtenerStatusController extends Controller
         return $fechaFormateada;
     }
 
+    public function MetObtenerStatusV2 ()
+    {
+        Mail::to(['marco.espinoza@grow-analytics.com.pe','director.creativo@grow-analytics.com.pe'])->send(new MailInformarStatusV2());
+        // return view('CorreoInformarStatusV2');
+    } 
 }

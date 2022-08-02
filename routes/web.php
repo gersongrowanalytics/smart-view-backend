@@ -50,7 +50,7 @@ $router->get('/correo-recuperar', 'Sistema\recuperarController@EnviarCorreoVista
 // ACEPTAR TERMINOS Y CONDICIONES
 $router->post('/aceptar-terminos-condiciones', 'Sistema\TerminosCondiciones\AceptarTerminosController@AceptarTerminos');
 
-$router->group(['middleware' => ['permisos']], function() use($router) {
+// $router->group(['middleware' => ['permisos']], function() use($router) {
     
     $router->post('/ventas/mostrar', 'Sistema\Ventas\Mostrar\VentasMostrarController@mostrarVentas');
     $router->post('/ventas/mostrar/acumulado', 'Sistema\Ventas\Mostrar\VentasMostrarAcumuladoController@mostrarVentasAcumuladas');
@@ -213,13 +213,14 @@ $router->group(['middleware' => ['permisos']], function() use($router) {
 
     // STATUS
     $router->post('/status/obtener', 'Sistema\Status\MetObtenerStatusController@MetObtenerStatus');
+    $router->get('/status/v2/obtener', 'Sistema\Status\MetObtenerStatusController@MetObtenerStatusV2');
     $router->post('/status/areas', 'Sistema\Status\MetObtenerAreasController@MetObtenerAreas');
     //ENVIO CORREO DE LA VISTA ADMINISTRADOR
     $router->post('/correo-usuarios-nuevos', 'Sistema\Administrador\Usuarios\Mail\MetCorreoUsuarioController@MetCorreoUsuario');
     //CREAR REGISTROS COACONTROLARCHIVOS
     $router->post('/crear-registros-coa', 'Sistema\ControlArchivos\Complementos\MetCrearRegistrosControlArchivosController@MetCrearRegistrosControlArchivos');
     $router->post('/obtener-detalles-promocional', 'Sistema\Status\MetObtenerDetallesMecanicaPromocionalController@MetObtenerDetallesMecanicaPromocional');
-});
+// });
 
 // CONTROL DE PRODUCTOS
 $router->post('/control-promociones/mostrar-productos', 'Sistema\ControlProductos\MostrarProductosController@MostrarProductos');
