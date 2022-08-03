@@ -539,12 +539,12 @@ class ObjetivoCargarController extends Controller
 
                 if($respuesta == true){
                     date_default_timezone_set("America/Lima");
-                    $fechaActual = date('Y-m-d H:i:s');
+                    $fechaActual = date('Y-m-d');
 
                     if($usuusuario->usuid != 1){
                         
                         $nuevoCargaArchivo = new carcargasarchivos;
-                        $nuevoCargaArchivo->tcaid             = 2;
+                        $nuevoCargaArchivo->tcaid             = 5;
                         $nuevoCargaArchivo->fecid             = $fecid;
                         $nuevoCargaArchivo->usuid             = $usuusuario->usuid;
                         $nuevoCargaArchivo->carnombrearchivo  = $archivo;
@@ -1738,7 +1738,7 @@ class ObjetivoCargarController extends Controller
 
                 if($respuesta == true){
                     date_default_timezone_set("America/Lima");
-                    $fechaActual = date('Y-m-d H:i:s');
+                    $fechaActual = date('Y-m-d');
 
 
                     if($usuusuario->usuid != 1){
