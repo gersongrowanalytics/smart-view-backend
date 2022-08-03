@@ -15,22 +15,22 @@
     }
     </style>
 
-        <table style="width: 100%; background: #F1F7FF">
+        <table style="width: 100%; background: #F3F4F8">
             <tr>
                 <td align="center">
-                    <div style="width: 1050px; background: #F1F7FF">
+                    <div style="width: 1050px; background: #F3F4F8">
                         <br>
-                        <div style="font-style: normal; font-weight: 500; font-size: 11px; letter-spacing: -0.051em; color: #1E1E1E; margin-bottom: 2px">
+                        <div style="font-family: 'Segoe UI', sans-serif; font-style: normal; font-weight: 500; font-size: 11px; letter-spacing: -0.051em; color: #1E1E1E; margin-bottom: 2px">
                             Equipo de Creciendo Juntos,
                         </div>
-                        <div style="font-style: normal; font-weight: 500; font-size: 11px; letter-spacing: -0.051em; color: #1E1E1E; margin-bottom: 11px">
+                        <div style="font-family: 'Segoe UI', sans-serif; font-style: normal; font-weight: 500; font-size: 11px; letter-spacing: -0.051em; color: #1E1E1E; margin-bottom: 11px">
                             Se les está compartiendo un update de información que ha sido actualizado al {{$fechas}}; con ello, se les está brindando visibilidad de los <span style="font-weight: 700"> pendientes correspondientes a cada área/usuario:</span>
                         </div>
-                        <div style="font-style: normal; font-weight: 700; font-size: 11px; letter-spacing: -0.051em; color: #3646C3">
+                        <div style="font-family: 'Segoe UI', sans-serif; font-style: normal; font-weight: 700; font-size: 11px; letter-spacing: -0.051em; color: #3646C3">
                             Nota: Ya estamos día 20 y está pendiente cargar los objetivos
                         </div>
                         <br>
-                        <table style="margin-bottom: 15px; width: 950px;">
+                        <table style="margin-bottom: 15px; width: 950px; font-family: 'Segoe UI', sans-serif;">
                             <tr style="width: 950px">
                                 @foreach ($cuadros as $cuadro)
                                     @if ($cuadro['arenombre'] == 'Trade Marketing')
@@ -79,7 +79,7 @@
                             </tr>
                         </table>
                         <br>
-                        <table border="0" cellspacing="0" cellpadding="0" style="padding-left: 30px; padding-right: 30px; width: 950px; padding-top: 15px; border-collapse: collapse; margin-bottom: 20px;">
+                        <table border="0" cellspacing="0" cellpadding="0" style="padding-left: 30px; padding-right: 30px; width: 950px; padding-top: 15px; border-collapse: collapse; margin-bottom: 20px; font-family: 'Segoe UI', sans-serif;">
                             <tr style="color: #1E1E1E; height: 38px; padding: 0px; margin: 0px">
                                 <td align="center" style=" color: #1E1E1E; background: #FFFF00; font-weight: 700; font-size: 14px; line-height: 16px; font-style: normal">Área</td>
                                 <td align="left" style=" padding-left: 10px; color: #1E1E1E; background: #FFFF00; font-weight: 700; font-size: 14px; line-height: 16px; font-style: normal">Base de datos</td>
@@ -253,19 +253,19 @@
                             @endforeach
                         </table>
                         <br>
-                        <div style="font-style: normal; font-weight: 500; font-size: 11px; letter-spacing: -0.051em; color: #1E1E1E; margin-bottom: 2px">
+                        <div style="font-family: 'Segoe UI', sans-serif; font-style: normal; font-weight: 500; font-size: 11px; letter-spacing: -0.051em; color: #8FA2BE; margin-bottom: 2px">
                             Les reiteramos nuestro apoyo en este proceso, y recordamos que, ante cualquier consulta o requerimiento, durante esta etapa, podrá ser
                         </div>
-                        <div style="font-style: normal; font-weight: 500; font-size: 11px; letter-spacing: -0.051em; color: #1E1E1E; margin-bottom: 2px">
+                        <div style="font-family: 'Segoe UI', sans-serif; font-style: normal; font-weight: 500; font-size: 11px; letter-spacing: -0.051em; color: #8FA2BE; margin-bottom: 2px">
                             canalizado al correo soporte@grow-analytics.com.pe .
                         </div>
-                        <div style="font-style: normal; font-weight: 500; font-size: 11px; letter-spacing: -0.051em; color: #1E1E1E; margin-bottom: 2px">
+                        <div style="font-family: 'Segoe UI', sans-serif; font-style: normal; font-weight: 500; font-size: 11px; letter-spacing: -0.051em; color: #8FA2BE; margin-bottom: 2px">
                             ¡Que tengan un excelente día!   
                         </div>
-                        <div style="font-style: normal; font-weight: 700; font-size: 11px; letter-spacing: -0.051em; color: #1E1E1E; margin-bottom: 2px">
+                        <div style="font-family: 'Segoe UI', sans-serif; font-style: normal; font-weight: 700; font-size: 11px; letter-spacing: -0.051em; color: #8FA2BE; margin-bottom: 2px">
                             Atte. Customer Services Prime </br>
                         </div>
-                        <div style="font-style: normal; font-weight: 700; font-size: 11px; letter-spacing: -0.051em; color: #1E1E1E; margin-bottom: 2px">
+                        <div style="font-family: 'Segoe UI', sans-serif; font-style: normal; font-weight: 700; font-size: 11px; letter-spacing: -0.051em; color: #8FA2BE; margin-bottom: 15px">
                             (Información confidencial, prohibida su divulgación de acuerdo a la Ley Peruana)
                         </div>
                         <br>
