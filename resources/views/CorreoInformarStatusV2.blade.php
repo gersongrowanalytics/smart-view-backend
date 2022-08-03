@@ -13,22 +13,22 @@
     }
     </style>
 
-        <table style="width: 100%; background: #F1F7FF">
+        <table style="width: 100%; background: #F3F4F8">
             <tr>
                 <td align="center">
-                    <div style="width: 1050px; background: #F1F7FF">
+                    <div style="width: 1050px; background: #F3F4F8">
                         <br>
-                        <div style="font-family: Calibri, sans-serif; font-style: normal; font-weight: 500; font-size: 12px; letter-spacing: -0.051em; color: #1E1E1E; margin-bottom: 2px">
+                        <div style="font-family: 'Segoe UI', sans-serif; font-style: normal; font-weight: 500; font-size: 12px; letter-spacing: -0.051em; color: #1E1E1E; margin-bottom: 2px">
                             Equipo de Softys,
                         </div>
-                        <div style="font-family: Calibri, sans-serif; font-style: normal; font-weight: 500; font-size: 12px; letter-spacing: -0.051em; color: #1E1E1E; margin-bottom: 11px">
+                        <div style="font-family: 'Segoe UI', sans-serif; font-style: normal; font-weight: 500; font-size: 12px; letter-spacing: -0.051em; color: #1E1E1E; margin-bottom: 11px">
                             Se les está compartiendo un update de información que ha sido actualizado al 25.07.2022; con ello, se les está brindando visibilidad de los <span style="font-weight: 700"> pendientes correspondientes a cada área/usuario:</span>
                         </div>
-                        <div style="font-family: Calibri, sans-serif; font-style: normal; font-weight: 700; font-size: 12px; letter-spacing: -0.051em; color: #3646C3">
+                        <div style="font-family: 'Segoe UI', sans-serif; font-style: normal; font-weight: 700; font-size: 12px; letter-spacing: -0.051em; color: #3646C3">
                             Nota: Mañana 26.06.2022 es el deadline del Sell In (Factura Efectiva), por parte de SAC.
                         </div>
                         <br>
-                        <table style="margin-bottom: 15px; width: 1050px;">
+                        <table style="margin-bottom: 15px; width: 1050px; font-family: 'Segoe UI', sans-serif;">
                             <tr>
                                 <td style="padding-right: 10px">
                                     <table style="background: #FFFFFF; width: 100%; border-radius: 9px">
@@ -297,22 +297,22 @@
                             
                         </table>
                         <br>
-                        <div style="font-family: Calibri, sans-serif; font-style: normal; font-weight: 500; font-size: 12px; letter-spacing: -0.051em; color: #1E1E1E; margin-bottom: 2px">
+                        <div style="font-family: 'Segoe UI', sans-serif; font-style: normal; font-weight: 500; font-size: 12px; letter-spacing: -0.051em; color: #8FA2BE; margin-bottom: 2px">
                             Les reiteramos nuestro apoyo en este proceso, y recordamos que, ante cualquier consulta o requerimiento, durante esta etapa, podrá ser
                         </div>
-                        <div style="font-family: Calibri, sans-serif; font-style: normal; font-weight: 500; font-size: 12px; letter-spacing: -0.051em; color: #1E1E1E; margin-bottom: 2px">
+                        <div style="font-family: 'Segoe UI', sans-serif; font-style: normal; font-weight: 500; font-size: 12px; letter-spacing: -0.051em; color: #8FA2BE; margin-bottom: 2px">
                             canalizado al correo soporte@grow-analytics.com.pe .
                         </div>
-                        <div style="font-family: Calibri, sans-serif; font-style: normal; font-weight: 500; font-size: 12px; letter-spacing: -0.051em; color: #1E1E1E; margin-bottom: 2px">
+                        <div style="font-family: 'Segoe UI', sans-serif; font-style: normal; font-weight: 500; font-size: 12px; letter-spacing: -0.051em; color: #8FA2BE; margin-bottom: 2px">
                             ¡Que tengan un excelente día!   
                         </div>
-                        <div style="font-family: Calibri, sans-serif; font-style: normal; font-weight: 500; font-size: 12px; letter-spacing: -0.051em; color: #1E1E1E; margin-bottom: 2px">
+                        <div style="font-family: 'Segoe UI', sans-serif; font-style: normal; font-weight: 500; font-size: 12px; letter-spacing: -0.051em; color: #8FA2BE; margin-bottom: 2px">
                             Saludos,   
                         </div>
-                        <div style="font-family: Calibri, sans-serif; font-style: normal; font-weight: 700; font-size: 12px; letter-spacing: -0.051em; color: #1E1E1E; margin-bottom: 2px">
+                        <div style="font-family: 'Segoe UI', sans-serif; font-style: normal; font-weight: 700; font-size: 12px; letter-spacing: -0.051em; color: #8FA2BE; margin-bottom: 2px">
                             Atte. Customer Services Prime </br>
                         </div>
-                        <div style="font-family: Calibri, sans-serif; font-style: normal; font-weight: 700; font-size: 12px; letter-spacing: -0.051em; color: #1E1E1E; margin-bottom: 2px">
+                        <div style="font-family: 'Segoe UI', sans-serif; font-style: normal; font-weight: 700; font-size: 12px; letter-spacing: -0.051em; color: #8FA2BE; margin-bottom: 15px">
                             (Información confidencial, prohibida su divulgación de acuerdo a la Ley Peruana)
                         </div>
                         <br>
