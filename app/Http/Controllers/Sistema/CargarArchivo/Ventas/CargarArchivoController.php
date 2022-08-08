@@ -107,7 +107,7 @@ class CargarArchivoController extends Controller
                 $ultimaColumna  = $objPHPExcel->setActiveSheetIndex(0)->getHighestColumn();
                 
                 if($cargarData == true){
-                    for ($i=2; $i <= $numRows; $i++) {
+                    for ($i=3; $i <= $numRows; $i++) {
                         $dia = '01';
     
                         // $ano        = $objPHPExcel->getActiveSheet()->getCell('D'.$i)->getCalculatedValue();
@@ -189,7 +189,7 @@ class CargarArchivoController extends Controller
                                     }
                                 }
             
-                                if($i == 2){
+                                if($i == 3){
                                     $scas = scasucursalescategorias::join('tsutipospromocionessucursales as tsu', 'tsu.tsuid', 'scasucursalescategorias.tsuid')
                                                                     ->where('tsu.fecid', $fecid)
                                                                     ->where('tsu.tprid', 1)
