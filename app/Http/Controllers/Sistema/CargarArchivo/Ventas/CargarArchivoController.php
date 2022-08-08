@@ -496,28 +496,34 @@ class CargarArchivoController extends Controller
 
                 // }
                     // $fecid = 165;
-                $nuevoCargaArchivo = new carcargasarchivos;
-                $nuevoCargaArchivo->tcaid            = 3;
-                $nuevoCargaArchivo->fecid            = $fecid;
-                $nuevoCargaArchivo->usuid            = $usuusuario->usuid;
-                $nuevoCargaArchivo->carnombrearchivo = $archivo;
-                $nuevoCargaArchivo->carubicacion     = $fichero_subido;
-                $nuevoCargaArchivo->carexito         = $cargarData;
-                $nuevoCargaArchivo->carurl           = env('APP_URL').'/Sistema/cargaArchivos/ventas/sellin/'.$archivo;
-                if($nuevoCargaArchivo->save()){
-                    $pkid = "CAR-".$nuevoCargaArchivo->carid;
+                
+                if( $usuusuario->usuid != 1 ){
+                    $nuevoCargaArchivo = new carcargasarchivos;
+                    $nuevoCargaArchivo->tcaid            = 3;
+                    $nuevoCargaArchivo->fecid            = $fecid;
+                    $nuevoCargaArchivo->usuid            = $usuusuario->usuid;
+                    $nuevoCargaArchivo->carnombrearchivo = $archivo;
+                    $nuevoCargaArchivo->carubicacion     = $fichero_subido;
+                    $nuevoCargaArchivo->carexito         = $cargarData;
+                    $nuevoCargaArchivo->carurl           = env('APP_URL').'/Sistema/cargaArchivos/ventas/sellin/'.$archivo;
+                    if($nuevoCargaArchivo->save()){
+                        $pkid = "CAR-".$nuevoCargaArchivo->carid;
 
-                    $tca = tcatiposcargasarchivos::where('tcaid',$nuevoCargaArchivo->tcaid)
-                                                ->first(['tcanombre']);
+                        $tca = tcatiposcargasarchivos::where('tcaid',$nuevoCargaArchivo->tcaid)
+                                                    ->first(['tcanombre']);
 
-                    $data = ['linkArchivoSubido' => $nuevoCargaArchivo->carurl , 'nombre' => $nuevoCargaArchivo->carnombrearchivo , 'tipo' => $tca->tcanombre, 'usuario' => $usuusuario->usuusuario];
-                    Mail::to('gerson.vilca@grow-analytics.com.pe')->send(new MailCargaArchivos($data));
+                        $data = ['linkArchivoSubido' => $nuevoCargaArchivo->carurl , 'nombre' => $nuevoCargaArchivo->carnombrearchivo , 'tipo' => $tca->tcanombre, 'usuario' => $usuusuario->usuusuario];
+                        Mail::to('gerson.vilca@grow-analytics.com.pe')->send(new MailCargaArchivos($data));
 
-                    $registro_coa = new MetRegistrarMovimientoStatusController;
-                    $registro_coa->MetRegistrarMovimientoStatus(11, $nuevoCargaArchivo->carid, $fecid);
-                   
-                }else{
+                        $registro_coa = new MetRegistrarMovimientoStatusController;
+                        $registro_coa->MetRegistrarMovimientoStatus(11, $nuevoCargaArchivo->carid, $fecid);
+                    
+                    }else{
+                    }
                 }
+                
+
+
             }else{
 
             }
