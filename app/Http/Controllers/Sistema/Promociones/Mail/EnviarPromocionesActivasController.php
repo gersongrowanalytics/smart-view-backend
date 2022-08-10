@@ -229,8 +229,8 @@ class EnviarPromocionesActivasController extends Controller
                             $atributo = $usuario_sucursal['sucnombre'];
                             $data = ['txtSucursales' => $atributo, 're_fecha' => $re_fecha, "anio" => $anio, "usuario" => $usuario_sucursal['usuusuario']];
                             $asunto = "Kimberly Clark (PE): PROMOCIONES ".$re_fecha." ".$anio." (".$atributo.")";
-                            Mail::to($correo)->cc(['gerson.vilca.growanalytics@gmail.com'])
-                                         ->send(new MailPromocionesActivas($data, $asunto));
+                            // Mail::to($correo)->cc(['gerson.vilca.growanalytics@gmail.com'])
+                            //              ->send(new MailPromocionesActivas($data, $asunto));
                         }else{
                             $gsu = gsugrupossucursales::where('gsuid',$usuario_sucursal['gsuid'])
                                                         ->first();
@@ -238,8 +238,8 @@ class EnviarPromocionesActivasController extends Controller
                                 $atributo = $gsu->gsunombre;
                                 $data = ['txtSucursales' => $atributo, 're_fecha' => $re_fecha, "anio" => $anio, "usuario" => $usuario_sucursal['usuusuario']];
                                 $asunto = "Kimberly Clark (PE): PROMOCIONES ".$re_fecha." ".$anio." (".$atributo.")";
-                                Mail::to($correo)->cc(['gerson.vilca.growanalytics@gmail.com'])
-                                             ->send(new MailPromocionesActivas($data, $asunto));
+                                // Mail::to($correo)->cc(['gerson.vilca.growanalytics@gmail.com'])
+                                //              ->send(new MailPromocionesActivas($data, $asunto));
                             }
                         }
                         
@@ -464,8 +464,9 @@ class EnviarPromocionesActivasController extends Controller
 
                     $dataEnviada[] = $usuarios_correo;
                     
-                    Mail::to($usuarios_correo)->cc(['0540Peru.salescontrolling@kcc.com', 'Cuidatunegocio.KC@kcc.com', 'gerson.vilca@grow-analytics.com.pe', 'miguel.caballero@grow-analytics.com.pe', 'director.creativo@grow-analytics.com.pe'])
-                                                ->send(new MailPromocionesActivas($data_correo, $asunto_correo));
+                    // Mail::to($usuarios_correo)->cc(['0540Peru.salescontrolling@kcc.com', 'Cuidatunegocio.KC@kcc.com', 'gerson.vilca@grow-analytics.com.pe', 'miguel.caballero@grow-analytics.com.pe', 'director.creativo@grow-analytics.com.pe'])
+                    //                             ->send(new MailPromocionesActivas($data_correo, $asunto_correo));
+
                     // Mail::to($correo)->send(new MailPromocionesActivas($data_correo, $asunto_correo));
                 }
 
