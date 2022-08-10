@@ -485,8 +485,8 @@ class EnviarPromocionesActivasController extends Controller
         $requestsalida = response()->json([
             "respuesta" => $respuesta,
             "mensaje"   => $mensaje,
-            // "datos"     => $usuariosCorreo,
-            "datos" => $dataEnviada,
+            "datos"     => $usuariosCorreo,
+            // "datos" => $dataEnviada,
             // "data_correo" => $data_correo,
             // "asunto" => $asunto_correo
 
