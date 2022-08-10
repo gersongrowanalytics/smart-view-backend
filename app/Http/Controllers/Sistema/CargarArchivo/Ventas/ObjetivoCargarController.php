@@ -539,12 +539,12 @@ class ObjetivoCargarController extends Controller
 
                 if($respuesta == true){
                     date_default_timezone_set("America/Lima");
-                    $fechaActual = date('Y-m-d H:i:s');
+                    $fechaActual = date('Y-m-d');
 
                     if($usuusuario->usuid != 1){
                         
                         $nuevoCargaArchivo = new carcargasarchivos;
-                        $nuevoCargaArchivo->tcaid             = 2;
+                        $nuevoCargaArchivo->tcaid             = 5;
                         $nuevoCargaArchivo->fecid             = $fecid;
                         $nuevoCargaArchivo->usuid             = $usuusuario->usuid;
                         $nuevoCargaArchivo->carnombrearchivo  = $archivo;
@@ -1737,8 +1737,8 @@ class ObjetivoCargarController extends Controller
 
 
                 if($respuesta == true){
-                    date_default_timezone_set("America/Lima");
-                    $fechaActual = date('Y-m-d H:i:s');
+                    
+                    $fechaActual = date('Y-m-d');
 
 
                     if($usuusuario->usuid != 1){
@@ -1883,7 +1883,7 @@ class ObjetivoCargarController extends Controller
         if (move_uploaded_file($_FILES['file']['tmp_name'], $fichero_subido)) {
 
             if($respuesta == true){
-                date_default_timezone_set("America/Lima");
+                
                 $fechaActual = date('Y-m-d H:i:s');
 
                 $anioActual = date('Y');
@@ -1940,6 +1940,8 @@ class ObjetivoCargarController extends Controller
                     }
                 }
 
+                $fechaActual = date('Y-m-d');
+
                 $nuevoCargaArchivo = new carcargasarchivos;
                 $nuevoCargaArchivo->tcaid             = 14;
                 $nuevoCargaArchivo->fecid             = $fecid;
@@ -1947,7 +1949,7 @@ class ObjetivoCargarController extends Controller
                 $nuevoCargaArchivo->carnombrearchivo  = $archivo;
                 $nuevoCargaArchivo->carubicacion      = $fichero_subido;
                 $nuevoCargaArchivo->carexito          = $cargarData;
-                $nuevoCargaArchivo->carurl            = env('APP_URL').'/Sistema/cargaArchivos/objetivos/sellout/'.$archivo;
+                $nuevoCargaArchivo->carurl            = env('APP_URL').'/Sistema/cargaArchivos/rebate/'.basename($usuusuario->usuid.'-'.$usuusuario->usuusuario.'-'.$fechaActual.'-'.$_FILES['file']['name']);
                 if($nuevoCargaArchivo->save()){
                     $pkid = "CAR-".$nuevoCargaArchivo->carid;
                     $tca = tcatiposcargasarchivos::where('tcaid',$nuevoCargaArchivo->tcaid)
