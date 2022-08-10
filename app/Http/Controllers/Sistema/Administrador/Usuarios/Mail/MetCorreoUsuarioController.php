@@ -31,7 +31,7 @@ class MetCorreoUsuarioController extends Controller
         if ($usu) {
             try {
                 if ($req_asunto == 'true') {
-                    $asunto  = "CORREO DE BIENVENIDA";
+                    $asunto  = "¡Bienvenido a Creciendo Juntos! ¿Listo para colaborar?";
                     $mensaje = "El correo de bienvenida fue enviado correctamente";
                 }else{
                     $asunto  = "CORREO DE ACTUALIZACIÓN DE USUARIO";
