@@ -58,7 +58,7 @@ class MetObtenerStatusController extends Controller
                                         'car.created_at as fechaCar',
                                         'perresp.pernombrecompleto as pernombrecompletoresponsable', 
                                     ]);
-
+                                    // return $coas;
         if (sizeof($coas) > 0) {
             $respuesta = true;
             $mensaje   = "Se obtuvieron los registros con exito";
@@ -185,7 +185,7 @@ class MetObtenerStatusController extends Controller
                 }
                 $fechas = ["25.07.2022"];
                 foreach ($fechas as $key => $fecha) {
-                    Mail::to(['gerson.vilca@grow-analytics.com.pe'])->send(new MailInformarStatus($datos, $cuadros, $fecha));
+                    Mail::to(['marco.espinoza@grow-analytics.com.pe','director.creativo@grow-analytics.com.pe'])->send(new MailInformarStatus($datos, $cuadros, $fecha));
                 }
             }
         }else{
