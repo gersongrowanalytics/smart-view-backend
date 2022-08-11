@@ -453,39 +453,39 @@ class NuevaCargaPromocionesController extends Controller
 
                             if($limpiarDataSoldto == true){
                                 
-                                cspcanalessucursalespromociones::join('csccanalessucursalescategorias as csc', 'csc.cscid', 'cspcanalessucursalespromociones.cscid')
-                                                                ->join('scasucursalescategorias as sca', 'sca.scaid', 'csc.scaid')
-                                                                ->join('sucsucursales as suc', 'suc.sucid', 'sca.sucid')
-                                                                ->where('cspcanalessucursalespromociones.fecid', $fecid)
-                                                                ->where('sucsoldto', $soldTo)
-                                                                ->delete();
+                                // cspcanalessucursalespromociones::join('csccanalessucursalescategorias as csc', 'csc.cscid', 'cspcanalessucursalespromociones.cscid')
+                                //                                 ->join('scasucursalescategorias as sca', 'sca.scaid', 'csc.scaid')
+                                //                                 ->join('sucsucursales as suc', 'suc.sucid', 'sca.sucid')
+                                //                                 ->where('cspcanalessucursalespromociones.fecid', $fecid)
+                                //                                 ->where('sucsoldto', $soldTo)
+                                //                                 ->delete();
 
-                                prmpromociones::join('cspcanalessucursalespromociones as csp', 'csp.prmid', 'prmpromociones.prmid')
-                                                ->join('csccanalessucursalescategorias as csc', 'csc.cscid', 'csp.cscid')
-                                                ->join('scasucursalescategorias as sca', 'sca.scaid', 'csc.scaid')
-                                                ->join('sucsucursales as suc', 'suc.sucid', 'sca.sucid')
-                                                ->where('prmpromociones.fecid', $fecid)
-                                                ->where('sucsoldto', $soldTo)
-                                                ->delete();
+                                // prmpromociones::join('cspcanalessucursalespromociones as csp', 'csp.prmid', 'prmpromociones.prmid')
+                                //                 ->join('csccanalessucursalescategorias as csc', 'csc.cscid', 'csp.cscid')
+                                //                 ->join('scasucursalescategorias as sca', 'sca.scaid', 'csc.scaid')
+                                //                 ->join('sucsucursales as suc', 'suc.sucid', 'sca.sucid')
+                                //                 ->where('prmpromociones.fecid', $fecid)
+                                //                 ->where('sucsoldto', $soldTo)
+                                //                 ->delete();
 
 
-                                prppromocionesproductos::join('prmpromociones as prm', 'prm.prmid', 'prppromocionesproductos.prmid')
-                                                        ->join('cspcanalessucursalespromociones as csp', 'csp.prmid', 'prm.prmid')
-                                                        ->join('csccanalessucursalescategorias as csc', 'csc.cscid', 'csp.cscid')
-                                                        ->join('scasucursalescategorias as sca', 'sca.scaid', 'csc.scaid')
-                                                        ->join('sucsucursales as suc', 'suc.sucid', 'sca.sucid')
-                                                        ->where('prm.fecid', $fecid)
-                                                        ->where('sucsoldto', $soldTo)
-                                                        ->delete();
+                                // prppromocionesproductos::join('prmpromociones as prm', 'prm.prmid', 'prppromocionesproductos.prmid')
+                                //                         ->join('cspcanalessucursalespromociones as csp', 'csp.prmid', 'prm.prmid')
+                                //                         ->join('csccanalessucursalescategorias as csc', 'csc.cscid', 'csp.cscid')
+                                //                         ->join('scasucursalescategorias as sca', 'sca.scaid', 'csc.scaid')
+                                //                         ->join('sucsucursales as suc', 'suc.sucid', 'sca.sucid')
+                                //                         ->where('prm.fecid', $fecid)
+                                //                         ->where('sucsoldto', $soldTo)
+                                //                         ->delete();
 
-                                prbpromocionesbonificaciones::join('prmpromociones as prm', 'prm.prmid', 'prbpromocionesbonificaciones.prmid')
-                                                            ->join('cspcanalessucursalespromociones as csp', 'csp.prmid', 'prm.prmid')
-                                                            ->join('csccanalessucursalescategorias as csc', 'csc.cscid', 'csp.cscid')
-                                                            ->join('scasucursalescategorias as sca', 'sca.scaid', 'csc.scaid')
-                                                            ->join('sucsucursales as suc', 'suc.sucid', 'sca.sucid')
-                                                            ->where('prm.fecid', $fecid)
-                                                            ->where('sucsoldto', $soldTo)
-                                                            ->delete();
+                                // prbpromocionesbonificaciones::join('prmpromociones as prm', 'prm.prmid', 'prbpromocionesbonificaciones.prmid')
+                                //                             ->join('cspcanalessucursalespromociones as csp', 'csp.prmid', 'prm.prmid')
+                                //                             ->join('csccanalessucursalescategorias as csc', 'csc.cscid', 'csp.cscid')
+                                //                             ->join('scasucursalescategorias as sca', 'sca.scaid', 'csc.scaid')
+                                //                             ->join('sucsucursales as suc', 'suc.sucid', 'sca.sucid')
+                                //                             ->where('prm.fecid', $fecid)
+                                //                             ->where('sucsoldto', $soldTo)
+                                //                             ->delete();
                             }
 
 
