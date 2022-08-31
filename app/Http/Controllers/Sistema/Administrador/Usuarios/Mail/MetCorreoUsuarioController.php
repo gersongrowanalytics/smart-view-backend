@@ -43,7 +43,9 @@ class MetCorreoUsuarioController extends Controller
                     "contrasenia" => $req_contrasenia,
                     "nombre"      => $usu->pernombre
                 ];
-                Mail::to($req_correo)->send( new MailUsuariosInformacion($data, $asunto));
+                Mail::to($req_correo)
+                    ->cc(['gerson.vilca@grow-analytics.com.pe', 'eunice.calle@grow-analytics.com.pe'])
+                    ->send( new MailUsuariosInformacion($data, $asunto));
             } catch (Exception $e) {
                 $mensajeserv[]  = $e->getMessage();
                 $respuesta      = false;
