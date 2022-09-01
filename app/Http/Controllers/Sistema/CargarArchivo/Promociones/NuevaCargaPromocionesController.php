@@ -915,9 +915,9 @@ class NuevaCargaPromocionesController extends Controller
 
                                     
                                 }else{
-                                    $log['CATEGORIAS_NO_IDENTIFICADAS'][] = "PRODUCTO DE CATEGORIA: ".$categoria." LINEA: ".$i;
+                                    $log['SKU_NO_IDENTIFICADAS'][] = "PRODUCTO: ".$sku." LINEA: ".$i;
                                     $respuesta = false;
-                                    $mensaje   = "Hay categorias que no existen (".$categoria.")";
+                                    $mensaje   = "Hay productos que no existen (".$sku.")";
                                 }
         
                             }else{
