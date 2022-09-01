@@ -1012,12 +1012,14 @@ class NuevaCargaPromocionesController extends Controller
                 Mail::to('gerson.vilca@grow-analytics.com.pe')->send(new MailCargaArchivos($data));
 
 
-                if (strpos($archivo, "lima")) {
+                if (strpos($archivo, "lima") !== false) {
                     $bad = badbasedatos::where('badnombre', 'like', '%lima%')->first('badid');
-                }else if (strpos($archivo, "norte")){
+                }else if (strpos($archivo, "norte") !== false){
                     $bad = badbasedatos::where('badnombre','like', '%norte%')->first('badid');
-                }else if (strpos($archivo, "sur")){
+                }else if (strpos($archivo, "sur") !== false){
                     $bad = badbasedatos::where('badnombre', 'like', '%sur%')->first('badid');
+                }else{
+                    $bad = null;
                 }
 
                 if ($bad) {
