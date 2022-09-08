@@ -554,21 +554,21 @@ class salvacionController extends Controller
         // ELIMINAR PRP Y PRB
         prppromocionesproductos::join('prmpromociones as prm', 'prm.prmid', 'prppromocionesproductos.prmid')
                                 ->where('prm.fecid', $fecid)
-                                // ->where('prpzona', $ex_zona)
+                                ->where('prpzona', $ex_zona)
                                 ->delete();
 
         prbpromocionesbonificaciones::join('prmpromociones as prm', 'prm.prmid', 'prbpromocionesbonificaciones.prmid')
                                     ->where('prm.fecid', $fecid)
-                                    // ->where('prbzona', $ex_zona)
+                                    ->where('prbzona', $ex_zona)
                                     ->delete();
         
         cspcanalessucursalespromociones::join('prmpromociones as prm', 'prm.prmid', 'cspcanalessucursalespromociones.prmid')
                                         ->where('cspcanalessucursalespromociones.fecid', $fecid)
-                                        // ->where('cspzona', $ex_zona)
+                                        ->where('cspzona', $ex_zona)
                                         ->delete();
 
         prmpromociones::where('fecid', $fecid)
-                        // ->where('prmzona', $ex_zona)
+                        ->where('prmzona', $ex_zona)
                         ->delete();
 
     }
