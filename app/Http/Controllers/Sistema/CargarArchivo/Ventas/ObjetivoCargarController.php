@@ -1955,8 +1955,17 @@ class ObjetivoCargarController extends Controller
                     $tca = tcatiposcargasarchivos::where('tcaid',$nuevoCargaArchivo->tcaid)
                                         ->first(['tcanombre']);
 
-                    $data = ['linkArchivoSubido' => $nuevoCargaArchivo->carurl , 'nombre' => $nuevoCargaArchivo->carnombrearchivo , 'tipo' => $tca->tcanombre, 'usuario' => $usuusuario->usuusuario];
-                    Mail::to('gerson.vilca@grow-analytics.com.pe')->send(new MailCargaArchivos($data));
+                    $data = [
+                        'linkArchivoSubido' => $nuevoCargaArchivo->carurl, 
+                        'nombre' => $nuevoCargaArchivo->carnombrearchivo, 
+                        'tipo' => $tca->tcanombre, 
+                        'usuario' => $usuusuario->usuusuario
+                    ];
+
+                    Mail::to([
+                        'gerson.vilca@grow-analytics.com.pe',
+                        'gerson.vilca.growanalytics@gmail.com'
+                    ])->send(new MailCargaArchivos($data));
 
                     $bad = badbasedatos::where('badnombre', 'Rebate DT (Carga)')->first('badid');
                     if ($bad) {
