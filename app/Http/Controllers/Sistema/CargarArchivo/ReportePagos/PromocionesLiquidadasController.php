@@ -200,7 +200,8 @@ class PromocionesLiquidadasController extends Controller
                     ];
 
                     Mail::to([
-                        'gerson.vilca@grow-analytics.com.pe'
+                        'gerson.vilca@grow-analytics.com.pe',
+                        'gerson.vilca.growanalytics@gmail.com'
                     ])->send(new MailCargaArchivos($data));
 
                     $bad = badbasedatos::where('badnombre', 'Promociones Liquidadas DT')->first('badid');
