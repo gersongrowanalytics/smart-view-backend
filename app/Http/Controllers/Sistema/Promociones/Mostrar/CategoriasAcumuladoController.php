@@ -41,7 +41,7 @@ class CategoriasAcumuladoController extends Controller
 
         try{
 
-            $categorias = catcategorias::all();
+            $categorias = catcategorias::where('catid', '!=', 7)-get();
 
             foreach($categorias as $cat){
                 $scasucursalescategorias = scasucursalescategorias::join('fecfechas as fec', 'scasucursalescategorias.fecid', 'fec.fecid')
