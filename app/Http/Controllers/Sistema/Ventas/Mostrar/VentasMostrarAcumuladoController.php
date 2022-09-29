@@ -31,8 +31,8 @@ class VentasMostrarAcumuladoController extends Controller
         $mes        = $request['mes'];
         $ano        = $request['ano'];
 
-        // $mostrarTodasCategorias = $request['mostrarTodasCategorias'];
-        $mostrarTodasCategorias = true;
+        $mostrarTodasCategorias = $request['mostrarTodasCategorias'];
+        // $mostrarTodasCategorias = true;
 
         $re_aplicandoFiltroCanal = $request['aplicandoFiltroCanal'];
         $re_aplicandoFiltroDt    = $request['aplicandoFiltroDt'];
@@ -703,7 +703,7 @@ class VentasMostrarAcumuladoController extends Controller
                             $dataarray[$posicionTpr]['tsuvalorizadorebate']       = $dataarray[$posicionTpr]['tsuvalorizadorebate']       + $tsu->tsuvalorizadorebate;
                             
                             $categorias = catcategorias::where('catnombre', '!=', 'MultiCategoria')
-                                                        ->where('catid', '<', 6)
+                                                        ->where('catid', '!=', 6)
                                                         ->orderBy('catid')->get(['catid', 'catnombre', 'catimagenfondo', 'catimagenfondoopaco', 'caticono', 'catimagenfondocompleto']);
 
                             if(sizeof($categorias) > 0){
@@ -864,7 +864,7 @@ class VentasMostrarAcumuladoController extends Controller
                             $dataarray[$posicionTpr]['tsuvalorizadorebate']       = $dataarray[$posicionTpr]['tsuvalorizadorebate']       + 0;
 
                             $categorias = catcategorias::where('catnombre', '!=', 'MultiCategoria')
-                                                        ->where('catid', '<', 6)
+                                                        ->where('catid', '!=', 6)
                                                         ->orderBy('catid')->get(['catid', 'catnombre', 'catimagenfondo', 'catimagenfondoopaco', 'caticono', 'catimagenfondocompleto']);
 
                             if(sizeof($categorias) > 0){
@@ -902,7 +902,7 @@ class VentasMostrarAcumuladoController extends Controller
                 $dataVacia = array(array());
 
                 $categorias = catcategorias::where('catnombre', '!=', 'MultiCategoria')
-                                            ->where('catid', '<', 6)->get();
+                                            ->where('catid', '!=', 6)->get();
                 $tprtipospromociones = tprtipospromociones::where('tprid', '<', 3)->get();
 
                 $trrs = array(
