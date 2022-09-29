@@ -31,7 +31,8 @@ class VentasMostrarAcumuladoController extends Controller
         $mes        = $request['mes'];
         $ano        = $request['ano'];
 
-        $mostrarTodasCategorias = $request['mostrarTodasCategorias'];
+        // $mostrarTodasCategorias = $request['mostrarTodasCategorias'];
+        $mostrarTodasCategorias = true;
 
         $re_aplicandoFiltroCanal = $request['aplicandoFiltroCanal'];
         $re_aplicandoFiltroDt    = $request['aplicandoFiltroDt'];
