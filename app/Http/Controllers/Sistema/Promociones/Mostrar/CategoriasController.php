@@ -53,7 +53,7 @@ class CategoriasController extends Controller
                                                                 ]);
 
             if(sizeof($scasucursalescategorias) > 0){
-                $categorias = catcategorias::all();
+                $categorias = catcategorias::where('catid', '!=', 7)->get();
                 foreach($categorias as $poscioncat => $categoria){
                     foreach($scasucursalescategorias as $posicionsca => $sca){
                         if($categorias[$poscioncat]['catnombre'] == $scasucursalescategorias[$posicionsca]['catnombre']){
