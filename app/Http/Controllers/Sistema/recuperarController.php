@@ -87,6 +87,7 @@ class recuperarController extends Controller
         $token = $request['token'];
 
         $nuevoToken = "";
+        $usuario = "";
 
         $usu = usuusuarios::where('usutoken', $token)->first();
         if($usu){
@@ -97,6 +98,7 @@ class recuperarController extends Controller
             $usu->usutoken      = $nuevoToken;
             $usu->update();
 
+            $usuario = $usu->usuusuario;
 
         }else{
             $respuesta = false;
@@ -106,7 +108,8 @@ class recuperarController extends Controller
         return response()->json([
             'respuesta'  => $respuesta,
             'mensaje'    => $mensaje,
-            'nuevoToken' => $nuevoToken
+            'nuevoToken' => $nuevoToken,
+            'usuario'    => $usuario
         ]);
 
     }
