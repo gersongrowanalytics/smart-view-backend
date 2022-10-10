@@ -465,8 +465,8 @@ class EnviarPromocionesActivasController extends Controller
                     $dataEnviada[] = $usuarios_correo;
                     
                     // REAL A UTILIZAR
-                    // Mail::to($usuarios_correo)->cc(['0540Peru.salescontrolling@kcc.com', 'Cuidatunegocio.KC@kcc.com', 'gerson.vilca@grow-analytics.com.pe', 'miguel.caballero@grow-analytics.com.pe', 'eunice.calle@grow-analytics.com.pe'])
-                    //                             ->send(new MailPromocionesActivas($data_correo, $asunto_correo));
+                    Mail::to($usuarios_correo)->cc(['0540Peru.salescontrolling@kcc.com', 'Cuidatunegocio.KC@kcc.com', 'gerson.vilca@grow-analytics.com.pe', 'miguel.caballero@grow-analytics.com.pe', 'eunice.calle@grow-analytics.com.pe'])
+                                                ->send(new MailPromocionesActivas($data_correo, $asunto_correo));
 
 
                     
