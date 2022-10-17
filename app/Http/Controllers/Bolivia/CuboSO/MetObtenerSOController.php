@@ -17,7 +17,7 @@ class MetObtenerSOController extends Controller
 
         // $spider = spider_view_1::limit(10);
         // $table = DB::select('DESCRIBE SmartViewSellsSO');
-        $table = SmartViewSellsSO::limit(10)->get();
+        $table = spider_view_1::limit(10)->get();
 
         return $table;
 
