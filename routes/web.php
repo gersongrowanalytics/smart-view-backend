@@ -287,3 +287,7 @@ $router->get('/mostrar-tipo-rebates','Sistema\CargarArchivo\ListaPrecios\TipoReb
 $router->get('/mostrar-canales-sucursales', 'Sistema\CargarArchivo\ListaPrecios\CanalesSucursales\MostrarCanalesSucursalesDescargaLPController@MostrarCanalesSucursales');
 
 // $router->post('/prueba', 'MailController@prueba');
+
+
+// BOLIVIA
+$router->get('/bo/mostrar-cubo-so', 'Bolivia\CuboSO\MetObtenerSOController@ObtenerSO');
