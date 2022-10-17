@@ -32,7 +32,7 @@ class MetObtenerSOController extends Controller
 
         // return $so;
 
-        $so = SmartViewSellsSO::where('YEAR', 2022)->where('MONTH', $mes)->count();
+        $so = SmartViewSellsSO::where('YEAR', 2022)->count();
 
         return $so;
 
