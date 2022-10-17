@@ -16,6 +16,9 @@ class MetObtenerSOController extends Controller
     {
 
         // $spider = spider_view_1::limit(10);
+        $table = DB::select('DESCRIBE SmartViewSellsSO');
+
+        return $table;
 
         // return $spider;
 
@@ -32,9 +35,9 @@ class MetObtenerSOController extends Controller
 
         // return $so;
 
-        $so = SmartViewSellsSO::where('YEAR', 2022)->count();
+        // $so = SmartViewSellsSO::where('YEAR', 2022)->count();
 
-        return $so;
+        // return $so;
 
 
     }
