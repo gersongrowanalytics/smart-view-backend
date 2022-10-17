@@ -15,9 +15,12 @@ class MetObtenerSOController extends Controller
     public function ObtenerSO(Request $request)
     {
 
+        $re_anio = $request['anio'];
+        $re_mes  = $request['mes'];
+
         // $spider = spider_view_1::limit(10);
         // $table = DB::select('DESCRIBE SmartViewSellsSO');
-        $table = spider_view_1::limit(10)->get();
+        $table = spider_view_1::where('fecha', 'Like', $re_anio.$re_mes.'%')->count();
 
         return $table;
 
