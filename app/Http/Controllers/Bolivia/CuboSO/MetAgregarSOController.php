@@ -17,7 +17,6 @@ class MetAgregarSOController extends Controller
         $re_dia   = $dia;
         $re_limit = $limit;
         
-
         $datos = json_decode( file_get_contents(env('APP_URL_BOLIVIA').'/bo/mostrar-cubo-so/'.$re_anio."/".$re_mes."/".$re_dia."/".$re_limit), true );
         $datas = $datos['data'];
 
@@ -35,14 +34,14 @@ class MetAgregarSOController extends Controller
             $vsbn->vsbciudad    = $data['ciudad'];
             $vsbn->vsbmaterial  = $data['material'];
             $vsbn->vsbvendedor  = $data['vendedor'];
-            $vsbn->vsbtipopago  = $data['tipopago'];
+            $vsbn->vsbtipopago  = $data['tipo_pago'];
             $vsbn->vsbmercado   = $data['mercado'];
-            $vsbn->vsbcodigosap = $data['codigosap'];
+            $vsbn->vsbcodigosap = $data['codigo_sap'];
             $vsbn->vsbcategoria = $data['categoria'];
             $vsbn->vsbsubcategoria  = $data['subcategoria'];
-            $vsbn->vsbcodigocliente = $data['codigocliente'];
-            $vsbn->vsbtiponegocio   = $data['tiponegocio'];
-            $vsbn->vsbtotalreventa  = $data['totalreventa'];
+            $vsbn->vsbcodigocliente = $data['codigo_cliente'];
+            $vsbn->vsbtiponegocio   = $data['tipo_negocio'];
+            $vsbn->vsbtotalreventa  = $data['total_reventa'];
             $vsbn->save();
 
         }
