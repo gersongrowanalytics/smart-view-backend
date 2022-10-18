@@ -290,4 +290,6 @@ $router->get('/mostrar-canales-sucursales', 'Sistema\CargarArchivo\ListaPrecios\
 
 
 // BOLIVIA
-$router->get('/bo/mostrar-cubo-so', 'Bolivia\CuboSO\MetObtenerSOController@ObtenerSO');
+$router->get('/bo/mostrar-cubo-so/{anio}/{mes}/{dia}/{limit}', 'Bolivia\CuboSO\MetObtenerSOController@ObtenerSO');
+
+$router->get('/bo/agregar-so-obtenido-cubo/{anio}/{mes}/{dia}/{limit}', 'Bolivia\CuboSO\MetAgregarSOController@MetAgregarSO');

@@ -12,18 +12,19 @@ use App\SmartViewSellsSOxMonth;
 
 class MetObtenerSOController extends Controller
 {
-    public function ObtenerSO(Request $request)
+    public function ObtenerSO($anio, $mes, $dia, $limit)
     {
 
-        $re_anio = $request['anio'];
-        $re_mes  = $request['mes'];
-        $re_dia  = $request['dia'];
-        $re_limit  = $request['limit'];
+        $re_anio  = $anio;
+        $re_mes   = $mes;
+        $re_dia   = $dia;
+        $re_limit = $limit;
 
-        // $spider = spider_view_1::limit(10);
-        // $table = DB::select('DESCRIBE SmartViewSellsSO');
-        $table = spider_view_1::where('fecha', $re_anio.$re_mes.$re_dia)->limit($re_limit)->get();
-        // dd($table);
+        if($re_limit == "NA"){
+            $table = spider_view_1::where('fecha', $re_anio.$re_mes.$re_dia)->get();
+        }else{
+            $table = spider_view_1::where('fecha', $re_anio.$re_mes.$re_dia)->limit($re_limit)->get();
+        }
 
         $requestsalida = response()->json([
             "data" => $table,
