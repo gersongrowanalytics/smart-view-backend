@@ -20,9 +20,9 @@ class MetObtenerSOController extends Controller
 
         // $spider = spider_view_1::limit(10);
         // $table = DB::select('DESCRIBE SmartViewSellsSO');
-        $table = spider_view_1::where('fecha', 'Like', $re_anio.$re_mes.'%')->count();
-
-        return $table;
+        $table = spider_view_1::where('fecha', 'Like', $re_anio.$re_mes.'%')->get();
+        dd($table);
+        // return $table;
 
         // return $spider;
 
