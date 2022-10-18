@@ -18,10 +18,11 @@ class MetObtenerSOController extends Controller
         $re_anio = $request['anio'];
         $re_mes  = $request['mes'];
         $re_dia  = $request['dia'];
+        $re_limit  = $request['limit'];
 
         // $spider = spider_view_1::limit(10);
         // $table = DB::select('DESCRIBE SmartViewSellsSO');
-        $table = spider_view_1::where('fecha', $re_anio.$re_mes.$re_dia)->limit(150)->get();
+        $table = spider_view_1::where('fecha', $re_anio.$re_mes.$re_dia)->limit($re_limit)->get();
         // dd($table);
 
         $requestsalida = response()->json([
