@@ -10,17 +10,20 @@ class MetAgregarSOController extends Controller
 {
     // EJEMPLO DE FECHA 20220901 -> vsbfecha
 
-    public function MetAgregarSO($anio, $mes, $dia, $limit)
+    // public function MetAgregarSO($anio, $mes, $dia, $limit)
+    public function MetAgregarSO($fecha)
     {
-        $re_anio  = $anio;
-        $re_mes   = $mes;
-        $re_dia   = $dia;
-        $re_limit = $limit;
+        // $re_anio  = $anio;
+        // $re_mes   = $mes;
+        // $re_dia   = $dia;
+        // $re_limit = $limit;
         
-        $datos = json_decode( file_get_contents(env('APP_URL_BOLIVIA').'/bo/mostrar-cubo-so/'.$re_anio."/".$re_mes."/".$re_dia."/".$re_limit), true );
+        // $datos = json_decode( file_get_contents(env('APP_URL_BOLIVIA').'/bo/mostrar-cubo-so/'.$re_anio."/".$re_mes."/".$re_dia."/".$re_limit), true );
+        $datos = json_decode( file_get_contents(env('APP_URL_BOLIVIA').'/bo/mostrar-cubo-so/'.$fecha), true );
         $datas = $datos['data'];
 
-        vsbventassobol::where('vsbfecha', $re_anio.$re_mes.$re_dia)->delete();
+        // vsbventassobol::where('vsbfecha', $re_anio.$re_mes.$re_dia)->delete();
+        vsbventassobol::where('vsbfecha', $fecha)->delete();
 
         foreach($datas as $posicion => $data){
 
