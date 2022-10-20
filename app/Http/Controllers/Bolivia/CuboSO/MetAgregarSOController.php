@@ -28,23 +28,24 @@ class MetAgregarSOController extends Controller
         foreach($datas as $posicion => $data){
 
             $vsbn = new vsbventassobol;
-            $vsbn->vsbmes   = $data['mes'];
-            $vsbn->vsbfecha = $data['fecha'];
-            $vsbn->vsbzona  = $data['zona'];
-            $vsbn->vsbcajas = $data['cajas'];
-            $vsbn->vsbempresa   = $data['empresa'];
-            $vsbn->vsbregion    = $data['region'];
-            $vsbn->vsbciudad    = $data['ciudad'];
-            $vsbn->vsbmaterial  = $data['material'];
-            $vsbn->vsbvendedor  = $data['vendedor'];
-            $vsbn->vsbtipopago  = $data['tipo_pago'];
-            $vsbn->vsbmercado   = $data['mercado'];
-            $vsbn->vsbcodigosap = $data['codigo_sap'];
-            $vsbn->vsbcategoria = $data['categoria'];
-            $vsbn->vsbsubcategoria  = $data['subcategoria'];
-            $vsbn->vsbcodigocliente = $data['codigo_cliente'];
-            $vsbn->vsbtiponegocio   = $data['tipo_negocio'];
-            $vsbn->vsbtotalreventa  = $data['total_reventa'];
+            $vsbn->vsbmes   = $data['mes']; //
+            $vsbn->vsbfecha = $data['fecha']; //
+            $vsbn->vsbzona  = $data['zona']; //
+            $vsbn->vsbcajas = $data['cajas']; //
+            $vsbn->vsbempresa   = $data['empresa']; //
+            $vsbn->vsbregion    = $data['region']; //
+            $vsbn->vsbciudad    = $data['ciudad']; //
+            $vsbn->vsbmaterial  = $data['MATERIAL']; //
+            $vsbn->vsbvendedor  = $data['vendedor']; //
+            $vsbn->vsbtipopago  = $data['tipo_pago']; //
+            $vsbn->vsbmercado   = $data['mercado']; //
+            $vsbn->vsbcodigosap = $data['codigo_sap']; //
+            $vsbn->vsbcategoria = $data['categoria']; //
+            $vsbn->vsbsubcategoria  = $data['subcategoria']; //
+            $vsbn->vsbcodigocliente = $data['codigo_cliente']; //
+            $vsbn->vsbtiponegocio   = $data['tipo_negocio']; // 
+            $vsbn->vsbtotalreventa  = $data['total_reventa']; //
+            $vsbn->vsbniv  = $data['niv']; //
             $vsbn->save();
 
         }
