@@ -30,5 +30,6 @@ class MetObtenerArchivoSOController extends Controller
             "data" => $nombre_archivo,
         ]);
 
+        return $requestsalida;
     }
 }
