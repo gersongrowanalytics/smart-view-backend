@@ -295,3 +295,5 @@ $router->get('/bo/mostrar-cubo-so/{fecha}', 'Bolivia\CuboSO\MetObtenerSOControll
 
 // $router->get('/bo/agregar-so-obtenido-cubo/{anio}/{mes}/{dia}/{limit}', 'Bolivia\CuboSO\MetAgregarSOController@MetAgregarSO');
 $router->get('/bo/agregar-so-obtenido-cubo/{fecha}', 'Bolivia\CuboSO\MetAgregarSOController@MetAgregarSO');
+
+$router->post('/obtener-nombre-archivo-seleccionado-descarga', 'Bolivia\CuboSO\MetObtenerArchivoSOController@MetObtenerArchivoSO');
