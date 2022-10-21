@@ -30,11 +30,11 @@ class MetAgregarSOController extends Controller
             $vsbn = new vsbventassobol;
             $vsbn->vsbmes   = $data['mes']; //
             $vsbn->vsbfecha = $data['fecha']; //
-            $vsbn->vsbzona  = $data['zona']; //
+            $vsbn->vsbzona  = $data['DISTRICT']; 
             $vsbn->vsbcajas = $data['cajas']; //
             $vsbn->vsbempresa   = $data['empresa']; //
-            $vsbn->vsbregion    = $data['region']; //
-            $vsbn->vsbciudad    = $data['ciudad']; //
+            $vsbn->vsbregion    = $data['zona']; //
+            $vsbn->vsbciudad    = $data['localidad']; //
             $vsbn->vsbmaterial  = $data['MATERIAL']; //
             $vsbn->vsbvendedor  = $data['vendedor']; //
             $vsbn->vsbtipopago  = $data['tipo_pago']; //
@@ -43,7 +43,7 @@ class MetAgregarSOController extends Controller
             $vsbn->vsbcategoria = $data['categoria']; //
             $vsbn->vsbsubcategoria  = $data['subcategoria']; //
             $vsbn->vsbcodigocliente = $data['codigo_cliente']; //
-            $vsbn->vsbtiponegocio   = $data['tipo_negocio']; // 
+            $vsbn->vsbtiponegocio   = $data['tipo_negocio']; //
             $vsbn->vsbtotalreventa  = $data['total_reventa']; //
             $vsbn->vsbniv  = $data['niv']; //
             $vsbn->save();
@@ -54,3 +54,6 @@ class MetAgregarSOController extends Controller
 
     }
 }
+
+
+
