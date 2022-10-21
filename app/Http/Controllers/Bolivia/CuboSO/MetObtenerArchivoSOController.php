@@ -10,7 +10,7 @@ class MetObtenerArchivoSOController extends Controller
 {
     public function MetObtenerArchivoSO(Request $request)
     {
-        $re_anio = $request['anio'];
+        $re_anio = strval($request['anio']);
         $re_mes  = $request['mes'];
 
         $nuevo_anio = $re_anio[strlen($re_anio)-2];
