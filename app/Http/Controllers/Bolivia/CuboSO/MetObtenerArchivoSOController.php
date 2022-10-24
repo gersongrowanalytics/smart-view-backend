@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Bolivia\CuboSO;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\carcargasarchivos;
+use App\vsbventassobol;
 
 class MetObtenerArchivoSOController extends Controller
 {
@@ -31,5 +32,26 @@ class MetObtenerArchivoSOController extends Controller
         ]);
 
         return $requestsalida;
+    }
+
+    public function MetObtenerFiltros(Request $request)
+    {
+
+        $vsb_region = vsbventassobol::distinct('vsbregion')->get(['vsbregion']);
+
+        foreach($vsb_region as $pos_region => $vsbregion){
+            $vsb_empresa = vsbventassobol::where('vsbregion', $vsbregion->vsbregion)
+                                        ->distinct('vsbempresa')
+                                        ->get(['vsbempresa']);
+
+            $vsb_region[$pos_region]['empresas'] = $vsb_empresa;
+        }
+
+        $requestsalida = response()->json([
+            "data" => $vsb_region,
+        ]);
+
+        return $requestsalida;
+
     }
 }
