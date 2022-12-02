@@ -902,6 +902,25 @@ class CategoriasPromocionesMostrarController extends Controller
                                         )
                                     );
 
+                                }else if($re_columna['columna'] == "Sku Bonificado"){
+
+                                    $arrayTitulos[] = array(
+                                        "title" => "Sku Bonificado",
+                                        "style" => array(
+                                            "fill" => array(
+                                                "patternType" => "solid",
+                                                "fgColor" => array(
+                                                    "rgb" => $colorAzul
+                                                )
+                                            ),
+                                            "font" => array(
+                                                "color" => array(
+                                                    "rgb" => $colorBlanco
+                                                )
+                                            )
+                                        )
+                                    );
+
                                 }else if($re_columna['columna'] == "Producto"){
 
                                     $arrayTitulos[] = array(
