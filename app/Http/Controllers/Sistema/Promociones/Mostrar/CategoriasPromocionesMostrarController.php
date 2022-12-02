@@ -661,6 +661,7 @@ class CategoriasPromocionesMostrarController extends Controller
                 
                 $csps = cspcanalessucursalespromociones::leftjoin('prmpromociones as prm', 'prm.prmid', 'cspcanalessucursalespromociones.prmid')
                                                         ->leftjoin('proproductos as pro', 'pro.prosku', 'prm.prmsku')
+                                                        ->leftjoin('proproductos as probonif', 'probonif.prosku', 'prm.prmskubonificado')
                                                         ->leftjoin('csccanalessucursalescategorias as csc', 'csc.cscid', 'cspcanalessucursalespromociones.cscid')
                                                         ->leftjoin('cancanales as can', 'can.canid', 'csc.canid')
                                                         ->leftjoin('scasucursalescategorias as sca', 'sca.scaid', 'csc.scaid')
@@ -689,7 +690,9 @@ class CategoriasPromocionesMostrarController extends Controller
                                                             'cannombre',
                                                             'catnombre',
                                                             'prm.prmsku',
-                                                            'pronombre',
+                                                            'pro.pronombre as pronombre',
+                                                            'prm.prmskubonificado',
+                                                            'probonif.pronombre as pronombrebonif',
                                                             'prmmecanica',
                                                             'cspcantidadcombo',
                                                             'cspcantidadplancha',
@@ -925,6 +928,25 @@ class CategoriasPromocionesMostrarController extends Controller
 
                                     $arrayTitulos[] = array(
                                         "title" => "Producto",
+                                        "style" => array(
+                                            "fill" => array(
+                                                "patternType" => "solid",
+                                                "fgColor" => array(
+                                                    "rgb" => $colorAzul
+                                                )
+                                            ),
+                                            "font" => array(
+                                                "color" => array(
+                                                    "rgb" => $colorBlanco
+                                                )
+                                            )
+                                        )
+                                    );
+
+                                }else if($re_columna['columna'] == "Producto Bonificado"){
+
+                                    $arrayTitulos[] = array(
+                                        "title" => "Producto Bonificado",
                                         "style" => array(
                                             "fill" => array(
                                                 "patternType" => "solid",
@@ -1253,6 +1275,22 @@ class CategoriasPromocionesMostrarController extends Controller
                                     )
                                 ),
                                 array(
+                                    "title" => "Producto Bonificado",
+                                    "style" => array(
+                                        "fill" => array(
+                                            "patternType" => "solid",
+                                            "fgColor" => array(
+                                                "rgb" => $colorAzul
+                                            )
+                                        ),
+                                        "font" => array(
+                                            "color" => array(
+                                                "rgb" => $colorBlanco
+                                            )
+                                        )
+                                    )
+                                ),
+                                array(
                                     "title" => "Mecánica",
                                     "style" => array(
                                         "fill" => array(
@@ -1375,8 +1413,9 @@ class CategoriasPromocionesMostrarController extends Controller
                         $desc_cannombre = $csp->cannombre;
                         $desc_catnombre = $csp->catnombre;
                         $desc_prmsku    = $csp->prmsku;
-                        $desc_prmsku_bonif = $csp->prmsku;
+                        $desc_prmsku_bonif = $csp->prmskubonificado;
                         $desc_pronombre = $csp->pronombre;
+                        $desc_pronombre_bonif = $csp->pronombrebonif;
                         $desc_prmmecanica = $csp->prmmecanica;
 
                         $desc_cspcantidadcombo   = $csp->cspcantidadcombo;
@@ -1417,6 +1456,9 @@ class CategoriasPromocionesMostrarController extends Controller
                         }
                         if($desc_pronombre == null || $desc_pronombre == " " || $desc_pronombre == "-" ){
                             $desc_pronombre = "0";
+                        }
+                        if($desc_pronombre_bonif == null || $desc_pronombre_bonif == " " || $desc_pronombre_bonif == "-" ){
+                            $desc_pronombre_bonif = "0";
                         }
                         if($desc_prmmecanica == null || $desc_prmmecanica == " " || $desc_prmmecanica == "-" ){
                             $desc_prmmecanica = "0";
@@ -1598,6 +1640,17 @@ class CategoriasPromocionesMostrarController extends Controller
 
                                     $arrayFilaExcel[] = array(
                                         "value" => $desc_pronombre,
+                                        "style" => array(
+                                            "font" => array(
+                                                "sz" => "9"
+                                            )
+                                        )
+                                    );
+
+                                }else if($re_columna['columna'] == "Producto Bonificado"){
+
+                                    $arrayFilaExcel[] = array(
+                                        "value" => $desc_pronombre_bonif,
                                         "style" => array(
                                             "font" => array(
                                                 "sz" => "9"
