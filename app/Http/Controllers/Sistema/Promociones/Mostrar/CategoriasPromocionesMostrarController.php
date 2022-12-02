@@ -1375,6 +1375,7 @@ class CategoriasPromocionesMostrarController extends Controller
                         $desc_cannombre = $csp->cannombre;
                         $desc_catnombre = $csp->catnombre;
                         $desc_prmsku    = $csp->prmsku;
+                        $desc_prmsku_bonif = $csp->prmsku;
                         $desc_pronombre = $csp->pronombre;
                         $desc_prmmecanica = $csp->prmmecanica;
 
@@ -1410,6 +1411,9 @@ class CategoriasPromocionesMostrarController extends Controller
                         }
                         if($desc_prmsku == null || $desc_prmsku == " " || $desc_prmsku == "-" ){
                             $desc_prmsku = "0";
+                        }
+                        if($desc_prmsku_bonif == null || $desc_prmsku_bonif == " " || $desc_prmsku_bonif == "-" ){
+                            $desc_prmsku_bonif = "0";
                         }
                         if($desc_pronombre == null || $desc_pronombre == " " || $desc_pronombre == "-" ){
                             $desc_pronombre = "0";
@@ -1572,6 +1576,17 @@ class CategoriasPromocionesMostrarController extends Controller
 
                                     $arrayFilaExcel[] = array(
                                         "value" => $desc_prmsku,
+                                        "style" => array(
+                                            "font" => array(
+                                                "sz" => "9"
+                                            )
+                                        )
+                                    );
+
+                                }else if($re_columna['columna'] == "Sku Bonificado"){
+
+                                    $arrayFilaExcel[] = array(
+                                        "value" => $desc_prmsku_bonif,
                                         "style" => array(
                                             "font" => array(
                                                 "sz" => "9"
