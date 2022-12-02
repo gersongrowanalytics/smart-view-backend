@@ -1221,6 +1221,22 @@ class CategoriasPromocionesMostrarController extends Controller
                                     )
                                 ),
                                 array(
+                                    "title" => "Sku Bonificado",
+                                    "style" => array(
+                                        "fill" => array(
+                                            "patternType" => "solid",
+                                            "fgColor" => array(
+                                                "rgb" => $colorAzul
+                                            )
+                                        ),
+                                        "font" => array(
+                                            "color" => array(
+                                                "rgb" => $colorBlanco
+                                            )
+                                        )
+                                    )
+                                ),
+                                array(
                                     "title" => "Producto",
                                     "style" => array(
                                         "fill" => array(
