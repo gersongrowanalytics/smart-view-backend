@@ -639,6 +639,25 @@ class salvacionController extends Controller
 
     }
 
+    // Asignar el sku bonif a el id de la prm desde el prb
+    public function AsignarSkuBonifPrm($fecid)
+    {
+        $prbs = prbpromocionesbonificaciones::join('proproductos as pro', 'pro.proid', 'prbpromocionesbonificaciones.proid')
+                                            ->join('prmpromociones as prm', 'prm.prmid', 'prbpromocionesbonificaciones.prmid')
+                                            ->where('prm.fecid', $fecid)
+                                            ->get([
+                                                'prbpromocionesbonificaciones.prmid',
+                                                'pro.proid',
+                                                'pro.prosku'
+                                            ]);
+
+        foreach($prbs as $prb){
+            $prm = prmpromociones::find($prb->prmid);
+            $prm->prmskubonificado = $prb->prosku;
+            $prm->update();
+        }
+    }
+
 }
 
 

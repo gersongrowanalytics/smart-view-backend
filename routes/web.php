@@ -36,6 +36,7 @@ $router->get('/actualizar', 'salvacionController@salvacion');
 $router->get('/asignarsuc', 'salvacionController@asignarzonassucursales');
 $router->get('/actualizarestadosucursales', 'salvacionController@cambiarEstadoSucursales');
 $router->get('/actualizarimagenessellinout', 'salvacionController@CambiarImagenSellOut');
+$router->get('/asignar-sku-bonif-prm/{fecid}', 'salvacionController@AsignarSkuBonifPrm');
 
 $router->get('/mail', 'MailController@getMail');
 $router->post('/recuperar/contrasena', 'MailController@recuperarContrasena');
