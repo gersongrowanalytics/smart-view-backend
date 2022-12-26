@@ -46,7 +46,7 @@ class MetCorreoUsuarioController extends Controller
                     "nombre"      => $usu->pernombre
                 ];
                 Mail::to([$req_correo])
-                    ->cc(['mzorrilla@kcc.com', 'gerson.vilca@grow-analytics.com.pe', 'eunice.calle@grow-analytics.com.pe'])
+                    ->cc(['mzorrilla@kcc.com', 'miguel.caballero@grow-analytics.com.pe', 'gerson.vilca@grow-analytics.com.pe', 'eunice.calle@grow-analytics.com.pe'])
                     ->send( new MailUsuariosInformacion($data, $asunto));
             } catch (Exception $e) {
                 $mensajeserv[]  = $e->getMessage();
