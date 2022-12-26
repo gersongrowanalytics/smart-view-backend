@@ -34,8 +34,10 @@ class MetCorreoUsuarioController extends Controller
                     $asunto  = "¡Bienvenido a Creciendo Juntos! ¿Listo para colaborar?";
                     $mensaje = "El correo de bienvenida fue enviado correctamente";
                 }else{
-                    $asunto  = "CORREO DE ACTUALIZACIÓN DE USUARIO";
-                    $mensaje = "El correo de actualización de usuario fue enviado correctamente";
+                    // $asunto  = "CORREO DE ACTUALIZACIÓN DE USUARIO";
+                    $asunto  = "¡Bienvenido a Creciendo Juntos! ¿Listo para colaborar?";
+                    // $mensaje = "El correo de actualización de usuario fue enviado correctamente";
+                    $mensaje = "El correo de bienvenida fue enviado correctamente";
                 }
 
                 $data = [
