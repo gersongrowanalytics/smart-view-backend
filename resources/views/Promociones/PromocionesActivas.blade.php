@@ -119,7 +119,7 @@
                 <tr style="height: 57px;">
                     <td align="center">
                         <div style=" font-style: normal; font-weight: bold; font-size: 13px; line-height: 11px; color: black;">
-                            © 2022 GROW ANALYTICS
+                            © 2023 GROW ANALYTICS
                         </div>
                     </td>
                 </tr>
