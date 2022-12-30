@@ -406,7 +406,8 @@ class EnviarPromocionesActivasController extends Controller
                             }else{
                                 $suc = $usuario['gsunombre'];
                             }
-                            $anio = date("Y");
+                            // $anio = date("Y");
+                            $anio = "2023";
 
                             $data = [
                                 "txtSucursales" => $suc, 
