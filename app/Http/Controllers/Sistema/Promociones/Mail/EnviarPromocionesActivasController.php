@@ -468,8 +468,8 @@ class EnviarPromocionesActivasController extends Controller
                     $dataEnviada[] = $usuarios_correo;
                     
                     // REAL A UTILIZAR
-                    // Mail::to($usuarios_correo)->cc(['0540Peru.salescontrolling@kcc.com', 'Cuidatunegocio.KC@kcc.com', 'gerson.vilca@grow-analytics.com.pe', 'miguel.caballero@grow-analytics.com.pe', 'eunice.calle@grow-analytics.com.pe'])
-                    //                             ->send(new MailPromocionesActivas($data_correo, $asunto_correo));
+                    Mail::to($usuarios_correo)->cc(['0540Peru.salescontrolling@kcc.com', 'Cuidatunegocio.KC@kcc.com', 'gerson.vilca@grow-analytics.com.pe', 'miguel.caballero@grow-analytics.com.pe', 'eunice.calle@grow-analytics.com.pe'])
+                                                ->send(new MailPromocionesActivas($data_correo, $asunto_correo));
 
                     // ENVIAR RECORDATORIO
                     // Mail::to($usuarios_correo)->cc(['eunice.calle@grow-analytics.com.pe'])
@@ -507,23 +507,45 @@ class EnviarPromocionesActivasController extends Controller
 }
 
 
-// CENTRO OCTUBRE
-
-// "DISTR. SEÑOR DE POTOSI",
-// "DISTR. GABRIEL ARCANGEL",
-// "ROMA AYACUCHO",
-// "ROMA",
-// "CONSORCIO ARBECO",
-// "DISTR. ARBECO",
-// "DISTR. GIANCARLO",
-// "DISALTI",
-// "LOGISTIC ONE",
-// "DIMEXA",
-// "DIST DE SEGMENTOS ",
-// "JN SUR",
-// "SERV. VIRGEN",
-// "BRENMA",
-// "SANTA ROSA",
-// "GLOSER",
-// "GABRIELA INDI",
+// CENTRO
+// "5M DISTRIBUCIONES SRL"
+// "DISTR. SEÑOR DE POTOSI"
+// "DISTR. GABRIEL ARCANGEL"
+// "ROMA AYACUCHO"
+// "ROMA"
+// "CONSORCIO ARBECO"
+// "DISTR. ARBECO"
+// "DISTR. GIANCARLO"
+// "DISALTI"
+// "SERV. VIRGEN"
+// "BRENMA"
+// "GLOSER"
+// "GABRIELA INDI"
+// "LOGISTIC ONE"
 // "GRUPO COMERCIAL ARELLANO"
+// "DIMEXA"
+// "JN SUR"
+// "SANTA ROSA"
+// "PAPA DE AMERICA SA"
+// "DISTR. E INVERSIONES ANDERSO"
+
+// NORTE  PERAMAS
+
+// "ALMACENES DE LA SELVA JAEN"
+// "ALMACENES DE LA SELVA PUCALLPA"
+// "ALMACENES DE LA SELVA TARAPOTO"
+// "CODIJISA"
+// "RACSER"
+// "DESPENSA DE LA SELVA"
+// "DESPENSA CAJAMARCA"
+// "DESPENSA CHIMBOTE"
+// "DESPENSA CHICLAYO"
+// "DESPENSA TRUJILLO"
+// "CHALI"
+// "DISTR. SILVIA"
+// "D Y R"
+// "DISTR. PATITA"
+// "GRUPO RACCE"
+// "PUNTO BLANCO"
+// "GUMI CHIMBOTE"
+// "JIMENEZ & AVENDAÑO"
