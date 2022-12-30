@@ -306,7 +306,7 @@ class EnviarPromocionesActivasController extends Controller
         $correo = "jeanmarcoe@gmail.com";
 
         $dataEnviada = [];
-
+        $data_correo = [];
         if (true == true) {
             //OBTENER LA FECHA
             date_default_timezone_set("America/Lima");
