@@ -136,6 +136,61 @@ class ClientesCargarController extends Controller
 
                         $suc->update();
                     }
+                    // CREAR UNA NUEVA SUCURSAL
+                    else{
+
+                        $sucn = new sucsucursales;
+                        $sucn->sucsoldto = $codSoldTo;
+                        $sucn->sucnombre = $clienteHml;
+                        $sucn->sucregionalgba = $gbaRegional;
+
+                        if($gbaRegional == "DTT"){
+                            
+                            $tre = tretiposrebates::where('trenombre', 'like', $codEjecutivo)
+                                                    ->first();
+                            $treid = 0;
+                            if($tre){
+                                $treid = $tre->treid;
+                            }else{
+                                $treid = 0;
+                            }
+                            
+                            $cas = cascanalessucursales::where('casnombre', 'LIKE', $canal)
+                                                        ->first();
+
+                            $casid = 0;
+                            if($cas){
+                                $casid = $cas->casid;
+                            }else{
+                                $casid = null;
+                            }
+                            
+                            $zon = zonzonas::where('zonnombre', 'LIKE', $zona)
+                                            ->first();
+
+                            $zonid = 0;
+                            if($zon){
+                                $zonid = $zon->zonid;
+                            }else{
+                                $zonn = new zonzonas;
+                                $zonn->zonnombre = $zona;
+                                $zonn->zonestado = 1;
+                                $zonn->zonregionalgba = $gbaRegional;
+                                $zonn->casid = $casid;
+                                if($zonn->save()){
+                                    $zonid = $zonn->zonid;  
+                                }
+                            }
+
+                            $sucn->treid = $treid;
+                            $sucn->gsuid = 1;
+                            $sucn->zonid = $zonid;
+                            $sucn->casid = $casid;
+                        }
+
+                        $sucn->save();
+
+                    }
 
 
                 }
