@@ -479,7 +479,7 @@ class EnviarPromocionesActivasController extends Controller
                     //                             ->send(new MailPromocionesActivas($data_correo, $asunto_correo));
 
                     // RECORDATORIO SIN EUNICE
-                    Mail::to($usuarios_correo)->send(new MailPromocionesActivas($data_correo, $asunto_correo));
+                    // Mail::to($usuarios_correo)->send(new MailPromocionesActivas($data_correo, $asunto_correo));
 
                     
 
@@ -513,45 +513,80 @@ class EnviarPromocionesActivasController extends Controller
 }
 
 
+// MARZO
 // CENTRO
-// "5M DISTRIBUCIONES SRL"
-// "DISTR. SEÑOR DE POTOSI"
-// "DISTR. GABRIEL ARCANGEL"
-// "ROMA AYACUCHO"
-// "ROMA"
-// "CONSORCIO ARBECO"
-// "DISTR. ARBECO"
-// "DISTR. GIANCARLO"
-// "DISALTI"
-// "SERV. VIRGEN"
-// "BRENMA"
-// "GLOSER"
-// "GABRIELA INDI"
-// "LOGISTIC ONE"
-// "GRUPO COMERCIAL ARELLANO"
-// "DIMEXA"
+
+// "LOGISTIC ONE",
+// "SERV. VIRGEN",
+// "ROMA AYACUCHO",
+// "ROMA",
+// "CONSORCIO ARBECO",
+// "DISTR. ARBECO",
+// "GLOSER",
+// "SANTA ROSA",
+// "BRENMA",
+// "GABRIELA INDI",
+// "GRUPO COMERCIAL ARELLANO",
+// "5M DISTRIBUCIONES SRL",
+// "DISTR. GIANCARLO",
+// "DISTR. SEÑOR DE POTOSI",
+// "DISTR. GABRIEL ARCANGEL",
+// "DISALTI",
+// "PAPA DE AMERICA SA",
+// "DISTR. E INVERSIONES ANDERSO",
+// "DIMEXA",
 // "JN SUR"
-// "SANTA ROSA"
-// "PAPA DE AMERICA SA"
-// "DISTR. E INVERSIONES ANDERSO"
 
-// NORTE  PERAMAS
+// // PERAMAS
 
-// "ALMACENES DE LA SELVA JAEN"
-// "ALMACENES DE LA SELVA PUCALLPA"
-// "ALMACENES DE LA SELVA TARAPOTO"
-// "CODIJISA"
-// "RACSER"
-// "DESPENSA DE LA SELVA"
-// "DESPENSA CAJAMARCA"
-// "DESPENSA CHIMBOTE"
-// "DESPENSA CHICLAYO"
-// "DESPENSA TRUJILLO"
-// "CHALI"
-// "DISTR. SILVIA"
-// "D Y R"
-// "DISTR. PATITA"
-// "GRUPO RACCE"
+// "DESPENSA CHICLAYO",
+// "DESPENSA TRUJILLO",
+// "ALMACENES DE LA SELVA JAEN",
+// "ALMACENES DE LA SELVA PUCALLPA",
+// "ALMACENES DE LA SELVA TARAPOTO",
+// "RACSER",
+// "DESPENSA DE LA SELVA",
+// "DESPENSA CAJAMARCA",
+// "DESPENSA CHIMBOTE",
+// "CHALI",
+// "DISTR. SILVIA",
+// "D Y R",
+// "DISTR. PATITA",
+// "GRUPO RACCE",
 // "PUNTO BLANCO"
-// "GUMI CHIMBOTE"
-// "JIMENEZ & AVENDAÑO"
+
+// // LIMA
+
+// "GUMI",
+// "VIJISA",
+// "REDIJISA",
+// "JIRUSA",
+// "JINORSA",
+// "ABAFLOR",
+// "RODAMEOS",
+// "INV. ZISCO",
+// "REP. JHOSEP",
+// "ZV INVERSIONES GENERALES",
+// "ROXAL",
+// "MA DI",
+// "M&S INV. TRADING",
+// "SUPERPLAZA",
+// "CODIJISA",
+// "CORP. CODIFER",
+// "ECONOMYSA",
+// "TUIN",
+// "DIST. JOMER",
+// "AUREN",
+// "DEHOCA",
+// "ORIUNDA SAC",
+// "CORP. VEGA",
+// "SAN RAFAELITO",
+// "SAGRA DISTRIBUCION",
+// "TERRANORTE",
+// "URIAFER",
+// "GUMI CHIMBOTE",
+// "JIMENEZ & AVENDAÑO",
+// "MOLI",
+// "TOTAL CALIDAD AMERICA",
+// "CORP. REHB",
+// "UNIÓN DE CERVECERÍAS PERUANAS BACKU"
