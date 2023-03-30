@@ -478,6 +478,9 @@ class EnviarPromocionesActivasController extends Controller
                     // Mail::to($usuarios_correo)->cc(['eunice.calle@grow-analytics.com.pe'])
                     //                             ->send(new MailPromocionesActivas($data_correo, $asunto_correo));
 
+                    // RECORDATORIO SIN EUNICE
+                    Mail::to($usuarios_correo)->send(new MailPromocionesActivas($data_correo, $asunto_correo));
+
                     
 
                     // Mail::to($correo)->send(new MailPromocionesActivas($data_correo, $asunto_correo));
