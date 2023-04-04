@@ -300,6 +300,7 @@ class EnviarPromocionesActivasController extends Controller
         $re_sucursales = $request['sucursales'];
         $re_fecha = $request['fecha'];
         $re_reenviado = $request['reenviado'];
+        $re_enviarcorreo = $request['enviarcorreo'];
 
         $usu = usuusuarios::where('usutoken', $usutoken)->first();
 
@@ -473,8 +474,12 @@ class EnviarPromocionesActivasController extends Controller
                     //                             ->send(new MailPromocionesActivas($data_correo, $asunto_correo));
 
                     if($usu->usuid == 1){
-                        Mail::to($usuarios_correo)->cc(['0540Peru.salescontrolling@kcc.com', 'Cuidatunegocio.KC@kcc.com', 'gerson.vilca@grow-analytics.com.pe', 'miguel.caballero@grow-analytics.com.pe', 'eunice.calle@grow-analytics.com.pe'])
-                            ->send(new MailPromocionesActivas($data_correo, $asunto_correo));
+                        if(isset($re_enviarcorreo)){
+                            if($re_enviarcorreo == true){
+                                Mail::to($usuarios_correo)->cc(['0540Peru.salescontrolling@kcc.com', 'Cuidatunegocio.KC@kcc.com', 'gerson.vilca@grow-analytics.com.pe', 'miguel.caballero@grow-analytics.com.pe', 'eunice.calle@grow-analytics.com.pe'])
+                                    ->send(new MailPromocionesActivas($data_correo, $asunto_correo));
+                            }
+                        }
                     }
 
                     // ENVIAR RECORDATORIO
