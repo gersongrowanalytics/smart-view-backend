@@ -473,21 +473,21 @@ class EnviarPromocionesActivasController extends Controller
                     // Mail::to($usuarios_correo)->cc(['gerson.vilca@grow-analytics.com.pe'])
                     //                             ->send(new MailPromocionesActivas($data_correo, $asunto_correo));
 
-                    if($usu->usuid == 1){
-                        if(isset($re_enviarcorreo)){
-                            if($re_enviarcorreo == true){
-                                Mail::to($usuarios_correo)->cc(['0540Peru.salescontrolling@kcc.com', 'Cuidatunegocio.KC@kcc.com', 'gerson.vilca@grow-analytics.com.pe', 'miguel.caballero@grow-analytics.com.pe', 'eunice.calle@grow-analytics.com.pe'])
-                                    ->send(new MailPromocionesActivas($data_correo, $asunto_correo));
-                            }
-                        }
-                    }
+                    // if($usu->usuid == 1){
+                    //     if(isset($re_enviarcorreo)){
+                    //         if($re_enviarcorreo == true){
+                    //             Mail::to($usuarios_correo)->cc(['0540Peru.salescontrolling@kcc.com', 'Cuidatunegocio.KC@kcc.com', 'gerson.vilca@grow-analytics.com.pe', 'miguel.caballero@grow-analytics.com.pe', 'eunice.calle@grow-analytics.com.pe'])
+                    //                 ->send(new MailPromocionesActivas($data_correo, $asunto_correo));
+                    //         }
+                    //     }
+                    // }
 
                     // ENVIAR RECORDATORIO
                     // Mail::to($usuarios_correo)->cc(['eunice.calle@grow-analytics.com.pe'])
                     //                             ->send(new MailPromocionesActivas($data_correo, $asunto_correo));
 
                     // RECORDATORIO SIN EUNICE
-                    // Mail::to($usuarios_correo)->send(new MailPromocionesActivas($data_correo, $asunto_correo));
+                    Mail::to($usuarios_correo)->send(new MailPromocionesActivas($data_correo, $asunto_correo));
 
                     
 
