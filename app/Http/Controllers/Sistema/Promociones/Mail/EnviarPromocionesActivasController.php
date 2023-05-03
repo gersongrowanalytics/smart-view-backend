@@ -487,7 +487,7 @@ class EnviarPromocionesActivasController extends Controller
                     //                             ->send(new MailPromocionesActivas($data_correo, $asunto_correo));
 
                     // RECORDATORIO SIN EUNICE
-                    Mail::to($usuarios_correo)->cc(['gerson.vilca@grow-analytics.com.pe'])->send(new MailPromocionesActivas($data_correo, $asunto_correo));
+                    // Mail::to($usuarios_correo)->cc(['gerson.vilca@grow-analytics.com.pe'])->send(new MailPromocionesActivas($data_correo, $asunto_correo));
 
                     
 
