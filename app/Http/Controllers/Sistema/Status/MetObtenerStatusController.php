@@ -64,98 +64,99 @@ class MetObtenerStatusController extends Controller
             $mensaje   = "Se obtuvieron los registros con exito";
 
 
-                foreach ($coas as $posicioncoa => $coa) {
-                    $coas[$posicioncoa]['key'] = $posicioncoa;
-                    $coas[$posicioncoa]['item'] = $posicioncoa+1;
-    
-                    // CALCULAR DIAS DE RETRASO
-    
-                    if(isset($coas[$posicioncoa]['fechaCar'])){
-                        
-                        $fechaActual = date('Y-m-d');
-    
-                        if(isset( $coas[$posicioncoa]['coafechacaducidad'] )){
-                            $date1 = date("Y-m-d", strtotime($coas[$posicioncoa]['coafechacaducidad']));
-                            $date1 = new DateTime($date1);
-                        }else{
-                            $date1 = new DateTime($fechaActual);
-                        } 
-                            
-                        $fecha_carga_real = date("Y-m-d", strtotime($coas[$posicioncoa]['fechaCar']));
-    
-                        $date2 = new DateTime($fecha_carga_real);
-    
-                        if($date1 == $date2){
-                            $diaRetraso = "0";
-                        }else{
-                            if($date1 < $date2){
-                                $diff = $date1->diff($date2);
-    
-                                if($diff->days > 0){
-                                    $diaRetraso = $diff->days;
-                                }else{
-                                    $diaRetraso = "0";
-                                }
-    
-                            }else{
-                                $diaRetraso = "0";
-                            }
-                        }
-    
+            foreach ($coas as $posicioncoa => $coa) {
+                $coas[$posicioncoa]['key'] = $posicioncoa;
+                $coas[$posicioncoa]['item'] = $posicioncoa+1;
+
+                // CALCULAR DIAS DE RETRASO
+
+                if(isset($coas[$posicioncoa]['fechaCar'])){
+                    
+                    $fechaActual = date('Y-m-d');
+
+                    if(isset( $coas[$posicioncoa]['coafechacaducidad'] )){
+                        $date1 = date("Y-m-d", strtotime($coas[$posicioncoa]['coafechacaducidad']));
+                        $date1 = new DateTime($date1);
                     }else{
-                        $fechaActual = date('Y-m-d');
-    
-                        if(isset( $coas[$posicioncoa]['coafechacaducidad'] )){
-                            $date1 = date("Y-m-d", strtotime($coas[$posicioncoa]['coafechacaducidad']));
-                            $date1 = new DateTime($date1);
-                        }else{
-                            $date1 = new DateTime($fechaActual);
-                        }
+                        $date1 = new DateTime($fechaActual);
+                    } 
+                        
+                    $fecha_carga_real = date("Y-m-d", strtotime($coas[$posicioncoa]['fechaCar']));
 
-                        $date2 = new DateTime($fechaActual);
+                    $date2 = new DateTime($fecha_carga_real);
 
-                        if($date1 == $date2){
-                            $diaRetraso = "0";
-                        }else{
-                            if($date1 < $date2){
-                                $diff = $date1->diff($date2);
-    
-                                if($diff->days > 0){
-                                    $diaRetraso = $diff->days;
-                                }else{
-                                    $diaRetraso = "0";
-                                }
-    
+                    if($date1 == $date2){
+                        $diaRetraso = "0";
+                    }else{
+                        if($date1 < $date2){
+                            $diff = $date1->diff($date2);
+
+                            if($diff->days > 0){
+                                $diaRetraso = $diff->days;
                             }else{
                                 $diaRetraso = "0";
                             }
+
+                        }else{
+                            $diaRetraso = "0";
                         }
                     }
-                    $coas[$posicioncoa]['diasretraso'] = $diaRetraso;
 
-                    //ALMACENANDO LOS DATOS EN UN ARRAY PARA EL ENVIO DE CORREO
-                    $coa['fechaCar'] = ($this->MetFormatearFecha($coa->fechaCar) == '1 Ene 1970') ? '': $this->MetFormatearFecha($coa->fechaCar) ;
-                    $coa['coafechacaducidad'] = $this->MetFormatearFecha($coa->coafechacaducidad);
-                    $datos[] = [
-                        "areaid"       => $coa->areid,
-                        "area"         => $coa->arenombre,
-                        "base_datos"   => $coa->badnombre,
-                        "responsable"  => $coa->pernombrecompletoresponsable,
-                        "usuario"      => $coa->pernombrecompletosubida,
-                        "deadline"     => $coa->coafechacaducidad,
-                        "fecha_carga"  => $coa->fechaCar,
-                        "dias_retraso" => $coa->diasretraso,
-                        "status"       => $coa->estnombre
+                }else{
+                    $fechaActual = date('Y-m-d');
 
-                    ];
-    
+                    if(isset( $coas[$posicioncoa]['coafechacaducidad'] )){
+                        $date1 = date("Y-m-d", strtotime($coas[$posicioncoa]['coafechacaducidad']));
+                        $date1 = new DateTime($date1);
+                    }else{
+                        $date1 = new DateTime($fechaActual);
+                    }
+
+                    $date2 = new DateTime($fechaActual);
+
+                    if($date1 == $date2){
+                        $diaRetraso = "0";
+                    }else{
+                        if($date1 < $date2){
+                            $diff = $date1->diff($date2);
+
+                            if($diff->days > 0){
+                                $diaRetraso = $diff->days;
+                            }else{
+                                $diaRetraso = "0";
+                            }
+
+                        }else{
+                            $diaRetraso = "0";
+                        }
+                    }
                 }
+                $coas[$posicioncoa]['diasretraso'] = $diaRetraso;
+
+                //ALMACENANDO LOS DATOS EN UN ARRAY PARA EL ENVIO DE CORREO
+                $coa['fechaCar'] = ($this->MetFormatearFecha($coa->fechaCar) == '1 Ene 1970') ? '': $this->MetFormatearFecha($coa->fechaCar) ;
+                $coa['coafechacaducidad'] = $this->MetFormatearFecha($coa->coafechacaducidad);
+                $datos[] = [
+                    "areaid"       => $coa->areid,
+                    "area"         => $coa->arenombre,
+                    "base_datos"   => $coa->badnombre,
+                    "responsable"  => $coa->pernombrecompletoresponsable,
+                    "usuario"      => $coa->pernombrecompletosubida,
+                    "deadline"     => $coa->coafechacaducidad,
+                    "fecha_carga"  => $coa->fechaCar,
+                    "dias_retraso" => $coa->diasretraso,
+                    "status"       => $coa->estnombre
+
+                ];
+
+            }
 
             //OBTENER LAS AREAS 
 
             $areas = array();
             $promedio = 0;
             $ares = areareas::get(['areid','arenombre']);
+
             foreach ($ares as $key => $are) {
                 $cantidad = 0;
                 $archivos_subidos = 0;
@@ -177,17 +178,21 @@ class MetObtenerStatusController extends Controller
             }
         
             if (sizeof($areas) > 0) {
+
                 foreach ($areas as $key => $area) {
                     $cuadros[] = [
                         "arenombre"     => $area['area'],
                         "areporcentaje" => $area['promedio'] 
                     ];
                 }
+
                 $fechas = ["25.07.2022"];
+
                 foreach ($fechas as $key => $fecha) {
-                    Mail::to(['marco.espinoza@grow-analytics.com.pe','director.creativo@grow-analytics.com.pe'])->send(new MailInformarStatus($datos, $cuadros, $fecha));
+                    Mail::to(['gerson.vilca@grow-analytics.com.pe'])->send(new MailInformarStatus($datos, $cuadros, $fecha));
                 }
             }
+
         }else{
             $respuesta = false;
             $mensaje   = "Lo siento, no se encontraron registros";
@@ -238,7 +243,7 @@ class MetObtenerStatusController extends Controller
 
     public function MetObtenerStatusV2 ()
     {
-        Mail::to(['marco.espinoza@grow-analytics.com.pe','director.creativo@grow-analytics.com.pe'])->send(new MailInformarStatusV2());
+        Mail::to(['gerson.vilca@grow-analytics.com.pe'])->send(new MailInformarStatusV2());
         // return view('CorreoInformarStatusV2');
     } 
 }
