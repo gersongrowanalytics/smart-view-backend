@@ -276,3 +276,6 @@ $router->post('/reporte-archivos-subidos', 'Sistema\ControlArchivos\Reportes\Gen
 $router->post('/reportes-logicaLP','Sistema\CargarArchivo\ListaPrecios\CargarListaPreciosController@DividirCG');
 $router->get('/mostrar-tipo-rebates','Sistema\CargarArchivo\ListaPrecios\TipoRebate\MostrarTipoRebateDescargaLPController@MostrarTipoRebate');
 $router->get('/mostrar-canales-sucursales', 'Sistema\CargarArchivo\ListaPrecios\CanalesSucursales\MostrarCanalesSucursalesDescargaLPController@MostrarCanalesSucursales');
+
+$router->get('/ws/obtenerSOconsolidado/{anio}/{mes}', 'Sistema\SellOut\ObtenerSellOutController@ObtenerSellOutConsolidado');
+$router->get('/ws/obtenerSOconsolidadoXCategoria/{anio}/{mes}', 'Sistema\SellOut\ObtenerSellOutController@ObtenerSOXCategoria');
