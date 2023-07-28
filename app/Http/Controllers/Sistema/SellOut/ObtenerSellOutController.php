@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\SmartViewSellsSO;
 use App\SmartViewSellsSOxCategory;
 use App\SmartViewSellsSOxMonth;
+use App\PortafolioSales;
 
 class ObtenerSellOutController extends Controller
 {
@@ -31,6 +32,13 @@ class ObtenerSellOutController extends Controller
         $so = SmartViewSellsSOxCategory::where('YEAR', $anio)
                                         ->where('MONTH', $mes)
                                         ->get();
+
+        return $so;
+    }
+
+    public function ObtenerSOxPO($anio, $mes)
+    {
+        $so = PortafolioSales::limit(10)->get();
 
         return $so;
     }
