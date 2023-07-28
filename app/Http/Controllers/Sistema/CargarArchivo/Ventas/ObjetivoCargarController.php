@@ -187,6 +187,15 @@ class ObjetivoCargarController extends Controller
                         }
 
                         if($i == 2){
+
+                            // UPDATE tsutipospromocionessucursales SET tsuvalorizadoobjetivo = 0 WHERE fecid = 181 && tprid = 1;
+                            // UPDATE scasucursalescategorias SET scavalorizadoobjetivo = 0 WHERE fecid = 181;
+                            // UPDATE osiobjetivosssi SET osivalorizado = 0 WHERE fecid = 181;
+
+                            // UPDATE tsutipospromocionessucursales SET tsuvalorizadoobjetivo = 0 WHERE fecid = 180 && tprid = 1;
+                            // UPDATE scasucursalescategorias SET scavalorizadoobjetivo = 0 WHERE fecid = 180;
+                            // UPDATE osoobjetivossso SET osovalorizado = 0 WHERE fecid = 180;
+
                             // $tsus = tsutipospromocionessucursales::where('fecid', $fecid)
                             //                                     ->where('tprid', 1)
                             //                                     // ->get(['tsuid']);
