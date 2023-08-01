@@ -84,7 +84,7 @@ class ObtenerSellOutController extends Controller
 
         $count_sos = PortafolioSales::where('PERIOD', '=', $period)
                                 ->where('SALES', '!=', 0)
-                                // ->where('CLIENT_HML', $clienthml)
+                                ->where('CLIENT_HML', "PUNTO BLANCO")
                                 ->distinct('PK_CLIENT_SO')
                                 ->orderBy('PK_CLIENT_SO')
                                 ->count([
@@ -95,7 +95,7 @@ class ObtenerSellOutController extends Controller
 
         $sos = PortafolioSales::where('PERIOD', '=', $period)
                                 ->where('SALES', '!=', 0)
-                                // ->where('CLIENT_HML', $clienthml)
+                                ->where('CLIENT_HML', "PUNTO BLANCO")
                                 ->distinct('PK_CLIENT_SO')
                                 ->orderBy('PK_CLIENT_SO')
                                 ->limit(10)
@@ -106,8 +106,8 @@ class ObtenerSellOutController extends Controller
                                 ]);
 
         return array(
+            "count" => $count_sos,
             "so" => $sos,
-            "count" => $count_sos
         );
 
     }
