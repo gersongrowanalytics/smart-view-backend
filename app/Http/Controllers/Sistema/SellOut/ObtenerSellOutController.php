@@ -45,17 +45,36 @@ class ObtenerSellOutController extends Controller
                                     ->orderBy('PK_CLIENT_SO')
                                     ->count();
 
-        $so = PortafolioSales::where('PERIOD', '=', '202212')
+
+        $count_CLIENT_HML = PortafolioSales::where('PERIOD', '=', '202212')
                                 // ->where('PERIOD', '<=', '202305')
                                 ->where('SALES', '>', 0)
-                                ->distinct('PK_CLIENT_SO')
-                                ->orderBy('PK_CLIENT_SO')
+                                ->distinct('CLIENT_HML')
+                                ->orderBy('CLIENT_HML')
                                 // ->limit(100)
-                                ->get();
+                                ->count(['CLIENT_HML']);
+
+        $CLIENT_HML = PortafolioSales::where('PERIOD', '=', '202212')
+                                // ->where('PERIOD', '<=', '202305')
+                                ->where('SALES', '>', 0)
+                                ->distinct('CLIENT_HML')
+                                ->orderBy('CLIENT_HML')
+                                // ->limit(100)
+                                ->get(['CLIENT_HML']);
+
+        // $so = PortafolioSales::where('PERIOD', '=', '202212')
+        //                         // ->where('PERIOD', '<=', '202305')
+        //                         ->where('SALES', '>', 0)
+        //                         ->distinct('PK_CLIENT_SO')
+        //                         ->orderBy('PK_CLIENT_SO')
+        //                         // ->limit(100)
+        //                         ->get();
 
         return array(
             "cantidad" => $cantidad_so,
-            "so" => $so
+            // "so" => $so,
+            "count_CLIENT_HML" => $count_CLIENT_HML,
+            "CLIENT_HML" => $CLIENT_HML,
         );
     }
 }
