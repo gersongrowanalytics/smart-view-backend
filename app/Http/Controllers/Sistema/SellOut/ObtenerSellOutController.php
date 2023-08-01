@@ -90,11 +90,7 @@ class ObtenerSellOutController extends Controller
                                 // ->distinct('PK_CLIENT_SO')
                                 ->orderBy('PK_CLIENT_SO')
                                 // ->groupBy('PK_CLIENT_SO')
-                                ->count([
-                                    'CLIENT_HML',
-                                    'PK_CLIENT_SO',
-                                    'SALES'
-                                ]);
+                                ->count();
 
         $sos = PortafolioSales::where('PERIOD', '=', $re_periodo)
                                 ->where('SALES', '!=', 0)
