@@ -39,13 +39,11 @@ class ObtenerSellOutController extends Controller
     public function ObtenerSOxPO($anio, $mes)
     {
         $cantidad_so = PortafolioSales::where('PERIOD', '=', '202301')
-                                ->limit(10)
-                                ->groupBy(['CLIENT_HML'])
                                 ->count();
 
         $so = PortafolioSales::where('PERIOD', '=', '202301')
-                                ->limit(10)
                                 ->groupBy(['CLIENT_HML'])
+                                ->limit(10)
                                 ->get();
 
         return array(
