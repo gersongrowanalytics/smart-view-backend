@@ -43,6 +43,7 @@ class ObtenerSellOutController extends Controller
                                     ->where('SALES', '>', 0)
                                     ->distinct('PK_CLIENT_SO')
                                     ->orderBy('PK_CLIENT_SO')
+                                    ->groupby('CLIENT_HML')
                                     ->count();
 
         $so = PortafolioSales::where('PERIOD', '=', '202212')
@@ -50,6 +51,7 @@ class ObtenerSellOutController extends Controller
                                 ->where('SALES', '>', 0)
                                 ->distinct('PK_CLIENT_SO')
                                 ->orderBy('PK_CLIENT_SO')
+                                ->groupby('CLIENT_HML')
                                 ->limit(100)
                                 ->get();
 
