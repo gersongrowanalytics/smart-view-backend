@@ -42,7 +42,8 @@ class ObtenerSellOutController extends Controller
                                 ->count();
 
         $so = PortafolioSales::where('PERIOD', '=', '202301')
-                                ->limit(10)
+                                ->distinct('PK_CLIENT_SO')
+                                ->limit(100)
                                 ->get();
 
         return array(
