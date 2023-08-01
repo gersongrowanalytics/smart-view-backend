@@ -282,4 +282,4 @@ $router->get('/ws/obtenerSOconsolidadoXCategoria/{anio}/{mes}', 'Sistema\SellOut
 
 // OBTENER SELL OUT PARA PORTAFOLIO OBLIGATORIO PARA EL PROYECTO INCENTIVOS (DRIVERS)
 $router->get('/ws/obtenerSO-PO-Incentivos/{anio}/{mes}', 'Sistema\SellOut\ObtenerSellOutController@ObtenerSOxPO');
-$router->get('/ws/obtenerSO-PO-Incentivos-dinamico/{period}/{clienthml}', 'Sistema\SellOut\ObtenerSellOutController@ObtenerSOxPODinamico');
+$router->post('/ws/obtenerSO-PO-Incentivos-dinamico/{period}/{clienthml}', 'Sistema\SellOut\ObtenerSellOutController@ObtenerSOxPODinamico');
