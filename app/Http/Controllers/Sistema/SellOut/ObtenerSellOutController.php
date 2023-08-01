@@ -40,12 +40,12 @@ class ObtenerSellOutController extends Controller
     {
         $cantidad_so = PortafolioSales::where('PERIOD', '=', '202301')
                                 ->limit(10)
-                                ->groupBy('CLIENT_HML', 'PK_CLIENT_SO')
+                                ->groupBy(['CLIENT_HML', 'PK_CLIENT_SO'])
                                 ->count();
 
         $so = PortafolioSales::where('PERIOD', '=', '202301')
                                 ->limit(10)
-                                ->groupBy('CLIENT_HML', 'PK_CLIENT_SO')
+                                ->groupBy(['CLIENT_HML', 'PK_CLIENT_SO'])
                                 ->get();
 
         return array(
