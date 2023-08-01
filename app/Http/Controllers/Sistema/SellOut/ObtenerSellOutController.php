@@ -40,17 +40,17 @@ class ObtenerSellOutController extends Controller
     {
         $cantidad_so = PortafolioSales::where('PERIOD', '=', '202212')
                                     // ->where('PERIOD', '<=', '202305')
-                                    ->where('SALES', '<', 0)
+                                    ->where('SALES', '>', 0)
                                     ->distinct('PK_CLIENT_SO')
                                     ->orderBy('PK_CLIENT_SO')
                                     ->count();
 
         $so = PortafolioSales::where('PERIOD', '=', '202212')
                                 // ->where('PERIOD', '<=', '202305')
-                                ->where('SALES', '<', 0)
+                                ->where('SALES', '>', 0)
                                 ->distinct('PK_CLIENT_SO')
                                 ->orderBy('PK_CLIENT_SO')
-                                ->limit(100)
+                                // ->limit(100)
                                 ->get();
 
         return array(
