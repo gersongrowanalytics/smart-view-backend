@@ -77,4 +77,38 @@ class ObtenerSellOutController extends Controller
             "CLIENT_HML" => $CLIENT_HML,
         );
     }
+
+    // Periodo (202212; 202201)
+    public function ObtenerSOxPODinamico($period, $clienthml)
+    {
+
+        $count_sos = PortafolioSales::where('PERIOD', '=', $period)
+                                ->where('SALES', '!=', 0)
+                                ->where('CLIENT_HML', $clienthml)
+                                ->distinct('PK_CLIENT_SO')
+                                ->orderBy('PK_CLIENT_SO')
+                                ->count([
+                                    'CLIENT_HML',
+                                    'PK_CLIENT_SO',
+                                    'SALES'
+                                ]);
+
+        $sos = PortafolioSales::where('PERIOD', '=', $period)
+                                ->where('SALES', '!=', 0)
+                                ->where('CLIENT_HML', $clienthml)
+                                ->distinct('PK_CLIENT_SO')
+                                ->orderBy('PK_CLIENT_SO')
+                                ->get([
+                                    'CLIENT_HML',
+                                    'PK_CLIENT_SO',
+                                    'SALES'
+                                ]);
+
+        return array(
+            "so" => $sos,
+            "count" => $count_sos
+        );
+
+    }
+
 }
