@@ -78,36 +78,60 @@ class ObtenerSellOutController extends Controller
         );
     }
 
+
+    // SELECT
+    //     'S1-2023' AS 'PERIOD',
+    //     D_CSI.[CLIENT_HML],
+    //     T.PK_CLIENT_SO,
+    //     SUM(T.S_SELL_TOTAL) AS 'SALES'
+    // FROM
+    //     F_SELLS_SO T
+    // INNER JOIN
+    //     D_DATES D_DT
+    //     ON
+    //     D_DT.PK_DATE = T.PK_DATE
+    // INNER JOIN
+    //     D_CLIENTS_SI D_CSI
+    //     ON
+    //     D_CSI.PK_CLIENT_SI = T.PK_CLIENT_SI
+    // WHERE
+    //     T.PK_DATE >= 20221201 AND T.PK_DATE <=20230531
+    // GROUP BY
+    // D_CSI.[CLIENT_HML],
+    // T.PK_CLIENT_SO
+
     // Periodo (202212; 202201)
     public function ObtenerSOxPODinamico(Request $request)
     {
         $re_periodo = $request['periodo'];
         $re_clienthml = $request['clienthml'];
+        $period = 'S1-2023';
+        
+        $countso = PortafolioSales::selectRaw("'$period' AS PERIOD")
+                                    ->select('CLIENT_HML')
+                                    ->select('PK_CLIENT_SO')
+                                    ->selectRaw('SUM(SALES)')
+                                    ->where('PERIOD', '>=', '20221201')
+                                    ->where('PERIOD', '<=', '20230531')
+                                    ->groupBy('CLIENT_HML')
+                                    ->groupBy('PK_CLIENT_SO')
+                                    ->count();
+        
 
-        $count_sos = PortafolioSales::where('PERIOD', '=', $re_periodo)
-                                ->where('SALES', '!=', 0)
-                                ->where('CLIENT_HML', $re_clienthml)
-                                // ->distinct('PK_CLIENT_SO')
-                                ->orderBy('PK_CLIENT_SO')
-                                // ->groupBy('PK_CLIENT_SO')
-                                ->count();
-
-        $sos = PortafolioSales::where('PERIOD', '=', $re_periodo)
-                                ->where('SALES', '!=', 0)
-                                ->where('CLIENT_HML', $re_clienthml)
-                                // ->distinct('PK_CLIENT_SO')
-                                ->orderBy('PK_CLIENT_SO')
-                                // ->groupBy('PK_CLIENT_SO')
-                                ->limit(10)
-                                ->get([
-                                    'CLIENT_HML',
-                                    'PK_CLIENT_SO',
-                                    'SALES'
-                                ]);
+        $results = PortafolioSales::selectRaw("'$period' AS PERIOD")
+                            ->select('CLIENT_HML')
+                            ->select('PK_CLIENT_SO')
+                            ->selectRaw('SUM(SALES)')
+                            ->where('PERIOD', '>=', '20221201')
+                            ->where('PERIOD', '<=', '20230531')
+                            ->groupBy('CLIENT_HML')
+                            ->groupBy('PK_CLIENT_SO')
+                            ->limit(10)
+                            ->get();
 
         return array(
-            "count" => $count_sos,
-            "so" => $sos,
+            "count" => $countso,
+            "so" => $results,
         );
 
     }
