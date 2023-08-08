@@ -118,7 +118,7 @@ class ObtenerSellOutController extends Controller
                             ->groupby(['COD_SHIP_TO', 'CLIENT_HML', 'PK_CLIENT_SO'])
                             ->where('PERIOD', '>=','202212')
                             ->where('PERIOD', '<=','202305')
-                            ->limit(10)
+                            // ->limit(10)
                             ->get();
 
         $resultsv2 = PortafolioSales::limit(1)
@@ -127,7 +127,7 @@ class ObtenerSellOutController extends Controller
         return array(
             "resultsv2" => $resultsv2,
             "count" => $countso,
-            "so" => $results,
+            "so" => sizeof($results),
         );
 
     }
