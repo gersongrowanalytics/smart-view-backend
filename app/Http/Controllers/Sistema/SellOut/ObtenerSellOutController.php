@@ -118,7 +118,9 @@ class ObtenerSellOutController extends Controller
                                     ->count();
         
 
-        $results = PortafolioSales::limit(10)
+        $results = PortafolioSales::selectRaw('COD_SHIP_TO, SUM(SALES)')
+                            ->groupby('COD_SHIP_TO')
+                            ->limit(10)
                             ->get();
 
         return array(
