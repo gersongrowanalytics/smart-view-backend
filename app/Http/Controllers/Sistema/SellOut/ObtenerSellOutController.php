@@ -119,7 +119,7 @@ class ObtenerSellOutController extends Controller
         
 
         $results = PortafolioSales::selectRaw('COD_SHIP_TO, CLIENT_HML, SUM(SALES) as sales')
-                            ->groupby(['COD_SHIP_TO, CLIENT_HML'])
+                            ->groupby(['COD_SHIP_TO', 'CLIENT_HML'])
                             ->limit(1)
                             ->get();
 
