@@ -118,15 +118,7 @@ class ObtenerSellOutController extends Controller
                                     ->count();
         
 
-        $results = PortafolioSales::selectRaw("'$period' AS PERIOD")
-                            ->select('CLIENT_HML')
-                            ->select('PK_CLIENT_SO')
-                            ->selectRaw('SUM(SALES)')
-                            ->where('PERIOD', '>=', '20221201')
-                            ->where('PERIOD', '<=', '20230531')
-                            ->groupBy('CLIENT_HML')
-                            ->groupBy('PK_CLIENT_SO')
-                            ->limit(10)
+        $results = PortafolioSales::limit(10)
                             ->get();
 
         return array(
