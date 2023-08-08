@@ -107,19 +107,17 @@ class ObtenerSellOutController extends Controller
         $re_clienthml = $request['clienthml'];
         $period = 'S1-2023';
         
-        $countso = PortafolioSales::selectRaw("'$period' AS PERIOD")
-                                    ->select('CLIENT_HML')
-                                    ->select('PK_CLIENT_SO')
-                                    ->selectRaw('SUM(SALES)')
-                                    ->where('PERIOD', '>=', '20221201')
-                                    ->where('PERIOD', '<=', '20230531')
-                                    ->groupBy('CLIENT_HML')
-                                    ->groupBy('PK_CLIENT_SO')
+        $countso = PortafolioSales::selectRaw('COD_SHIP_TO, CLIENT_HML, PK_CLIENT_SO, SUM(SALES) as sales')
+                                    ->groupby(['COD_SHIP_TO', 'CLIENT_HML', 'PK_CLIENT_SO'])
+                                    ->where('PERIOD', '>=','202212')
+                                    ->where('PERIOD', '<=','202305')
                                     ->count();
         
 
-        $results = PortafolioSales::selectRaw('COD_SHIP_TO, CLIENT_HML, SUM(SALES) as sales')
-                            ->groupby(['COD_SHIP_TO', 'CLIENT_HML'])
+        $results = PortafolioSales::selectRaw('COD_SHIP_TO, CLIENT_HML, PK_CLIENT_SO, SUM(SALES) as sales')
+                            ->groupby(['COD_SHIP_TO', 'CLIENT_HML', 'PK_CLIENT_SO'])
+                            ->where('PERIOD', '>=','202212')
+                            ->where('PERIOD', '<=','202305')
                             ->limit(1)
                             ->get();
 
