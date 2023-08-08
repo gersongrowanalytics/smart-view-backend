@@ -131,7 +131,7 @@ class ObtenerSellOutController extends Controller
             "resultsv2" => $resultsv2,
             "count" => $countso,
             "so" => sizeof($results),
-            // "distinctpdf" => sizeof($distinctpdf),
+            "distinctpdf" => sizeof($distinctpdf),
         );
 
     }
