@@ -122,6 +122,8 @@ class ObtenerSellOutController extends Controller
                             ->get();
 
         $distinctpdf = PortafolioSales::distinct('PK_CLIENT_SO')->pluck('PK_CLIENT_SO');
+        $distinctcod = PortafolioSales::distinct('COD_SHIP_TO')->pluck('COD_SHIP_TO');
+        $distinctclient = PortafolioSales::distinct('CLIENT_HML')->pluck('CLIENT_HML');
 
         $resultsv2 = PortafolioSales::limit(1)
                                     ->get();
@@ -131,6 +133,8 @@ class ObtenerSellOutController extends Controller
             "count" => $countso,
             "so" => sizeof($results),
             "distinctpdf" => sizeof($distinctpdf),
+            "distinctcod" => sizeof($distinctcod),
+            "distinctclient" => sizeof($distinctclient),
         );
 
     }
