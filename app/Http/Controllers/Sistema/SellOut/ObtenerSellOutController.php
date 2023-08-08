@@ -121,8 +121,8 @@ class ObtenerSellOutController extends Controller
                             ->limit(10)
                             ->get();
 
-        $distinctpdf = PortafolioSales::distinct('PK_CLIENT_SO')
-                                        ->get();
+        $distinctpdf = PortafolioSales::distinct('PK_CLIENT_SO');
+                                        // ->get();
 
         $resultsv2 = PortafolioSales::limit(1)
                                     ->get();
@@ -131,7 +131,7 @@ class ObtenerSellOutController extends Controller
             "resultsv2" => $resultsv2,
             "count" => $countso,
             "so" => sizeof($results),
-            "distinctpdf" => sizeof($distinctpdf),
+            // "distinctpdf" => sizeof($distinctpdf),
         );
 
     }
