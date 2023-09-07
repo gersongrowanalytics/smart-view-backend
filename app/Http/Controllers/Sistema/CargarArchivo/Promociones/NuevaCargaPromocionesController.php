@@ -732,7 +732,8 @@ class NuevaCargaPromocionesController extends Controller
                                                 $nuevoPrm->prmcodigo            = "-";
                                                 $nuevoPrm->prmmecanica          = $mecanica;
                                                 $nuevoPrm->prmaccion            = $accion;
-                                                $nuevoPrm->prmsku            = $sku;
+                                                $nuevoPrm->prmsku               = $sku;
+                                                $nuevoPrm->prmskubonificado     = $skuBonifi;
                                                 if($nuevoPrm->save()){
                                                     $prmid = $nuevoPrm->prmid;
                                                     $log["NUEVO_PROMOCION_CREADO"][] = $i."-".$prmid;
