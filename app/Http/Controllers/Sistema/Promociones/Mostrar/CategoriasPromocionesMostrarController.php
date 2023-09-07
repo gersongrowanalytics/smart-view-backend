@@ -661,7 +661,8 @@ class CategoriasPromocionesMostrarController extends Controller
                 
                 $csps = cspcanalessucursalespromociones::leftjoin('prmpromociones as prm', 'prm.prmid', 'cspcanalessucursalespromociones.prmid')
                                                         ->leftjoin('proproductos as pro', 'pro.prosku', 'prm.prmsku')
-                                                        ->leftjoin('proproductos as probonif', 'probonif.prosku', 'prm.prmskubonificado')
+                                                        ->leftjoin('proproductos as pro_bonif', 'pro.prosku', 'prm.prmskubonificado')
+
                                                         ->leftjoin('csccanalessucursalescategorias as csc', 'csc.cscid', 'cspcanalessucursalespromociones.cscid')
                                                         ->leftjoin('cancanales as can', 'can.canid', 'csc.canid')
                                                         ->leftjoin('scasucursalescategorias as sca', 'sca.scaid', 'csc.scaid')
@@ -689,10 +690,12 @@ class CategoriasPromocionesMostrarController extends Controller
                                                             'sucsoldto',
                                                             'cannombre',
                                                             'catnombre',
+
                                                             'prm.prmsku',
-                                                            'pro.pronombre as pronombre',
-                                                            'prm.prmskubonificado',
-                                                            'probonif.pronombre as pronombrebonif',
+                                                            'pro.pronombre',
+                                                            'pro_bonif.prmsku as prmsku_bonif',
+                                                            'pro_bonif.pronombre as pronombre_bonif',
+
                                                             'prmmecanica',
                                                             'cspcantidadcombo',
                                                             'cspcantidadplancha',
@@ -1399,9 +1402,10 @@ class CategoriasPromocionesMostrarController extends Controller
                     }else{
 
                         $repetidas_mecanicas[] = array(
-                            "mecanica" => $csp->prmmecanica,
-                            "sku"      => $csp->prmsku,
-                            "soldto"   => $csp->sucsoldto,
+                            "mecanica"    => $csp->prmmecanica,
+                            "sku"         => $csp->prmsku,
+                            "sku_bonif"   => $csp->prmsku_bonif,
+                            "soldto"      => $csp->sucsoldto,
                             "cannombre"   => $csp->cannombre,
                         );
 
@@ -1413,9 +1417,11 @@ class CategoriasPromocionesMostrarController extends Controller
                         $desc_cannombre = $csp->cannombre;
                         $desc_catnombre = $csp->catnombre;
                         $desc_prmsku    = $csp->prmsku;
-                        $desc_prmsku_bonif = $csp->prmskubonificado;
                         $desc_pronombre = $csp->pronombre;
-                        $desc_pronombre_bonif = $csp->pronombrebonif;
+
+                        $desc_prmsku_bonif    = $csp->prmsku_bonif;
+                        $desc_pronombre_bonif = $csp->pronombre_bonif;
+
                         $desc_prmmecanica = $csp->prmmecanica;
 
                         $desc_cspcantidadcombo   = $csp->cspcantidadcombo;
@@ -1815,7 +1821,23 @@ class CategoriasPromocionesMostrarController extends Controller
                                     )
                                 ),
                                 array(
+                                    "value" => $desc_prmsku_bonif,
+                                    "style" => array(
+                                        "font" => array(
+                                            "sz" => "9"
+                                        )
+                                    )
+                                ),
+                                array(
                                     "value" => $desc_pronombre,
+                                    "style" => array(
+                                        "font" => array(
+                                            "sz" => "9"
+                                        )
+                                    )
+                                ),
+                                array(
+                                    "value" => $desc_pronombre_bonif,
                                     "style" => array(
                                         "font" => array(
                                             "sz" => "9"

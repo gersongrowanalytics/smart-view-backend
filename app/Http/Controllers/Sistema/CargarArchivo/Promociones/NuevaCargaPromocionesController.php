@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Sistema\CargarArchivo\Promociones;
 
-use App\badbasedatos;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
@@ -32,9 +31,6 @@ use App\cspcanalessucursalespromociones;
 use App\prbpromocionesbonificaciones;
 use App\prppromocionesproductos;
 use App\carcargasarchivos;
-use App\coacontrolarchivos;
-use App\dmpdetallemecanicaspromocional;
-use App\Http\Controllers\Sistema\CargarArchivo\MetRegistrarMovimientoStatusController;
 use App\Mail\MailCargaArchivos;
 use App\tcatiposcargasarchivos;
 use App\tuptiposusuariospermisos;
@@ -93,6 +89,7 @@ class NuevaCargaPromocionesController extends Controller
         //     }
         // }
         
+
         $fichero_subido = '';
 
         $pkid = 0;
@@ -735,7 +732,8 @@ class NuevaCargaPromocionesController extends Controller
                                                 $nuevoPrm->prmcodigo            = "-";
                                                 $nuevoPrm->prmmecanica          = $mecanica;
                                                 $nuevoPrm->prmaccion            = $accion;
-                                                $nuevoPrm->prmsku            = $sku;
+                                                $nuevoPrm->prmsku               = $sku;
+                                                $nuevoPrm->prmskubonificado     = $skuBonifi;
                                                 if($nuevoPrm->save()){
                                                     $prmid = $nuevoPrm->prmid;
                                                     $log["NUEVO_PROMOCION_CREADO"][] = $i."-".$prmid;
@@ -915,9 +913,9 @@ class NuevaCargaPromocionesController extends Controller
 
                                     
                                 }else{
-                                    $log['SKU_NO_IDENTIFICADAS'][] = "PRODUCTO: ".$sku." LINEA: ".$i;
+                                    $log['CATEGORIAS_NO_IDENTIFICADAS'][] = "PRODUCTO DE CATEGORIA: ".$categoria." LINEA: ".$i;
                                     $respuesta = false;
-                                    $mensaje   = "Hay productos que no existen (".$sku.")";
+                                    $mensaje   = "Hay categorias que no existen (".$categoria.")";
                                 }
         
                             }else{
@@ -1010,49 +1008,6 @@ class NuevaCargaPromocionesController extends Controller
 
                 $data = ['linkArchivoSubido' => $nuevoCargaArchivo->carurl , 'nombre' => $nuevoCargaArchivo->carnombrearchivo , 'tipo' => $tca->tcanombre, 'usuario' => $usuusuario->usuusuario];
                 Mail::to('gerson.vilca@grow-analytics.com.pe')->send(new MailCargaArchivos($data));
-
-
-                if (strpos($archivo, "lima") !== false) {
-                    $bad = badbasedatos::where('badnombre', 'like', '%lima%')->first('badid');
-                }else if (strpos($archivo, "norte") !== false){
-                    $bad = badbasedatos::where('badnombre','like', '%norte%')->first('badid');
-                }else if (strpos($archivo, "sur") !== false){
-                    $bad = badbasedatos::where('badnombre', 'like', '%sur%')->first('badid');
-                }else{
-                    $bad = null;
-                }
-
-                if ($bad) {
-                    //ACTUALIZAR REGISTROS DE COA
-                    $registro_coa = new MetRegistrarMovimientoStatusController;
-                    $actualizacion_coa =  $registro_coa->MetRegistrarMovimientoStatus($bad->badid, $nuevoCargaArchivo->carid, $fecid);
-                    // $sucursalesSeleccionadas = ["AUREN","CODIJISA","CORP. CODIFER","SAN RAFAELITO","GUMI","ECONOMYSA","VIJISA","JIRUSA","REDIJISA","TUIN","DEHOCA","DIST. JOMER","URIAFER","TERRANORTE","TOTAL CALIDAD AMERICA","SAGRA DISTRIBUCION","MOLI","JIMENEZ NORTE"];
-                   
-                    //ACTUALIZA TABLA DE DETALLES MECANICA PROMOCIONAL
-                    if ($actualizacion_coa == true) {
-                        foreach ($sucursalesSeleccionadas as $key => $sucursal) {
-
-                            $suc = sucsucursales::where('sucnombre', $sucursal)->first(['sucid']);
-                            if ($suc) {
-                                $dmp = dmpdetallemecanicaspromocional::where('sucid', $suc->sucid)->first();
-                                if ($dmp) {
-                                    $dmp->badid = $bad->badid;
-                                    $dmp->carid = $nuevoCargaArchivo->carid;
-                                    $dmp->update();
-                                }else{
-                                    $dmpn = new dmpdetallemecanicaspromocional();
-                                    $dmpn->carid = $nuevoCargaArchivo->carid;
-                                    $dmpn->sucid = $suc->sucid;
-                                    $dmpn->badid = $bad->badid;
-                                    $dmpn->save();
-                                }
-                            }
-                        
-                        }
-                    }
-                }
-                
-
             }else{
 
             }
