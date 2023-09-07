@@ -693,7 +693,7 @@ class CategoriasPromocionesMostrarController extends Controller
 
                                                             'prm.prmsku',
                                                             'pro.pronombre',
-                                                            'pro_bonif.prmsku as prmsku_bonif',
+                                                            'prm.prmskubonificado as prmsku_bonif',
                                                             'pro_bonif.pronombre as pronombre_bonif',
 
                                                             'prmmecanica',
