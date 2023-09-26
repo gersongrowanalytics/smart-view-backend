@@ -366,6 +366,7 @@ class EnviarPromocionesActivasController extends Controller
                                             ->get([
                                                 'usu.usuid',
                                                 'suc.gsuid',
+                                                'suc.sucid', 
                                                 'suc.sucnombre', 
                                                 'ussusuariossucursales.usuid',
                                                 'usu.usuusuario',
@@ -435,6 +436,7 @@ class EnviarPromocionesActivasController extends Controller
                                 $usuariosCorreo[] = array(
                                     "usuario"   => $usuario['usuusuario'],
                                     "gsunombre" => $usuario['gsunombre'],
+                                    "sucid"     => $usuario['sucid'],
                                     "sucnombre" => $usuario['sucnombre'],
                                     "data"      => $data,
                                     "asunto"    => $asunto
@@ -509,7 +511,7 @@ class EnviarPromocionesActivasController extends Controller
         $requestsalida = response()->json([
             "respuesta" => $respuesta,
             "mensaje"   => $mensaje,
-            // "datos"     => $usuariosCorreo,
+            "datos"     => $usuariosCorreo,
             // "datos" => $dataEnviada,
             "data_correo" => $data_correo,
             // "asunto" => $asunto_correo,
