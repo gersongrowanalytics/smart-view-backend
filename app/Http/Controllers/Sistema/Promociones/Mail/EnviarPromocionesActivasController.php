@@ -301,6 +301,7 @@ class EnviarPromocionesActivasController extends Controller
         $re_fecha = $request['fecha'];
         $re_reenviado = $request['reenviado'];
         $re_enviarcorreo = $request['enviarcorreo'];
+        $re_apiexpress = $request['apiexpress'];
 
         $usu = usuusuarios::where('usutoken', $usutoken)->first();
 
@@ -421,13 +422,15 @@ class EnviarPromocionesActivasController extends Controller
 
                             $anadirCorreo = true;
 
-                            foreach ($usuariosCorreo as $usuarioCorreo) {
-                                if ($usuario['usuusuario'] == $usuarioCorreo['usuario']) {
-
-                                    if($usuario['gsunombre'] == 'Clientes'){
-                                        $anadirCorreo = false;
-                                    }else if($usuarioCorreo['gsunombre'] == $usuario['gsunombre']){
-                                        $anadirCorreo = false;
+                            if(!$re_apiexpress){
+                                foreach ($usuariosCorreo as $usuarioCorreo) {
+                                    if ($usuario['usuusuario'] == $usuarioCorreo['usuario']) {
+    
+                                        if($usuario['gsunombre'] == 'Clientes'){
+                                            $anadirCorreo = false;
+                                        }else if($usuarioCorreo['gsunombre'] == $usuario['gsunombre']){
+                                            $anadirCorreo = false;
+                                        }
                                     }
                                 }
                             }
