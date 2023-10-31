@@ -67,7 +67,7 @@ class NuevaCargaPromocionesController extends Controller
                                 ]);
 
         if($usuusuario){
-            if($usuusuario->usuid == 1){
+            if($usuusuario->tpuid == 1){
                 $cargarData = true;
             }
         }
@@ -993,27 +993,31 @@ class NuevaCargaPromocionesController extends Controller
                 $mensaje   = "El excel no se pudo guardar en el servidor";
             }
 
-            $nuevoCargaArchivo = new carcargasarchivos;
-            $nuevoCargaArchivo->tcaid            = 1;
-            $nuevoCargaArchivo->fecid            = $fecid;
-            $nuevoCargaArchivo->usuid            = $usuusuario->usuid;
-            $nuevoCargaArchivo->carnombrearchivo = $archivo;
-            $nuevoCargaArchivo->carubicacion     = $fichero_subido;
-            $nuevoCargaArchivo->carexito         = $cargarData;
-            $nuevoCargaArchivo->carurl           = env('APP_URL').'/Sistema/cargaArchivos/promociones/'.$archivo;
-            if($nuevoCargaArchivo->save()){
-                $pkid = "CAR-".$nuevoCargaArchivo->carid;
-                $tca = tcatiposcargasarchivos::where('tcaid',$nuevoCargaArchivo->tcaid)
-                                                ->first(['tcanombre']);
+            if($usuusuario->tpuid == 1){
 
-                $data = ['linkArchivoSubido' => $nuevoCargaArchivo->carurl , 'nombre' => $nuevoCargaArchivo->carnombrearchivo , 'tipo' => $tca->tcanombre, 'usuario' => $usuusuario->usuusuario];
-                Mail::to([
-                    'gerson.vilca@grow-analytics.com.pe',
-                    'Jose.Cruz@grow-analytics.com.pe',
-                    'Frank.Martinez@grow-analytics.com.pe'
-                ])->send(new MailCargaArchivos($data));
             }else{
+                $nuevoCargaArchivo = new carcargasarchivos;
+                $nuevoCargaArchivo->tcaid            = 1;
+                $nuevoCargaArchivo->fecid            = $fecid;
+                $nuevoCargaArchivo->usuid            = $usuusuario->usuid;
+                $nuevoCargaArchivo->carnombrearchivo = $archivo;
+                $nuevoCargaArchivo->carubicacion     = $fichero_subido;
+                $nuevoCargaArchivo->carexito         = $cargarData;
+                $nuevoCargaArchivo->carurl           = env('APP_URL').'/Sistema/cargaArchivos/promociones/'.$archivo;
+                if($nuevoCargaArchivo->save()){
+                    $pkid = "CAR-".$nuevoCargaArchivo->carid;
+                    $tca = tcatiposcargasarchivos::where('tcaid',$nuevoCargaArchivo->tcaid)
+                                                    ->first(['tcanombre']);
 
+                    $data = ['linkArchivoSubido' => $nuevoCargaArchivo->carurl , 'nombre' => $nuevoCargaArchivo->carnombrearchivo , 'tipo' => $tca->tcanombre, 'usuario' => $usuusuario->usuusuario];
+                    Mail::to([
+                        'gerson.vilca@grow-analytics.com.pe',
+                        'Jose.Cruz@grow-analytics.com.pe',
+                        'Frank.Martinez@grow-analytics.com.pe'
+                    ])->send(new MailCargaArchivos($data));
+                }else{
+
+                }
             }
             
             
