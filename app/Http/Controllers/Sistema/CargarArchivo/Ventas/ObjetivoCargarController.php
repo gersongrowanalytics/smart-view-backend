@@ -188,9 +188,9 @@ class ObjetivoCargarController extends Controller
 
                         if($i == 2){
 
-                            // UPDATE tsutipospromocionessucursales SET tsuvalorizadoobjetivo = 0 WHERE fecid = 181 && tprid = 1;
-                            // UPDATE scasucursalescategorias SET scavalorizadoobjetivo = 0 WHERE fecid = 181;
-                            // UPDATE osiobjetivosssi SET osivalorizado = 0 WHERE fecid = 181;
+                            // UPDATE tsutipospromocionessucursales SET tsuvalorizadoobjetivo = 0 WHERE fecid = 190 && tprid = 1;
+                            // UPDATE scasucursalescategorias SET scavalorizadoobjetivo = 0 WHERE fecid = 190;
+                            // UPDATE osiobjetivosssi SET osivalorizado = 0 WHERE fecid = 190;
 
                             // UPDATE tsutipospromocionessucursales SET tsuvalorizadoobjetivo = 0 WHERE fecid = 180 && tprid = 1;
                             // UPDATE scasucursalescategorias SET scavalorizadoobjetivo = 0 WHERE fecid = 180;
@@ -570,7 +570,8 @@ class ObjetivoCargarController extends Controller
 
                             Mail::to([
                                 'gerson.vilca@grow-analytics.com.pe',
-                                'gerson.vilca.growanalytics@gmail.com'
+                                'Jose.Cruz@grow-analytics.com.pe',
+                                'Frank.Martinez@grow-analytics.com.pe'
                             ])->send(new MailCargaArchivos($data));
 
                             $bad = badbasedatos::where('badnombre', 'Sell In Objetivo')->first('badid');
@@ -1777,7 +1778,8 @@ class ObjetivoCargarController extends Controller
 
                             Mail::to([
                                 'gerson.vilca@grow-analytics.com.pe',
-                                'gerson.vilca.growanalytics@gmail.com'
+                                'Jose.Cruz@grow-analytics.com.pe',
+                                'Frank.Martinez@grow-analytics.com.pe'
                             ])->send(new MailCargaArchivos($data));
 
                             $bad = badbasedatos::where('badnombre', 'Sell Out Objetivo')->first('badid');
@@ -1986,7 +1988,8 @@ class ObjetivoCargarController extends Controller
 
                     Mail::to([
                         'gerson.vilca@grow-analytics.com.pe',
-                        'gerson.vilca.growanalytics@gmail.com'
+                        'Jose.Cruz@grow-analytics.com.pe',
+                        'Frank.Martinez@grow-analytics.com.pe'  
                     ])->send(new MailCargaArchivos($data));
 
                     $bad = badbasedatos::where('badnombre', 'Rebate DT (Carga)')->first('badid');
