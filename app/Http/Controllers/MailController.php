@@ -20,7 +20,11 @@ class MailController extends Controller
         $data = ['nombre' => 'Gerson Vilca Alvarez', "usuario" => "Gerson", "contrasena" => "1234", "correo" => "gerson@hotmail.com"];
 
 
-        Mail::to('gerson.vilca@grow-analytics.com')->send(new TestMail($data));
+        Mail::to([
+            'gerson.vilca@grow-analytics.com.pe',
+            'Jose.Cruz@grow-analytics.com.pe',
+            'Frank.Martinez@grow-analytics.com.pe'
+        ])->send(new TestMail($data));
         return view('testmail')->with($data);
     }
 
@@ -74,7 +78,11 @@ class MailController extends Controller
 
         // $data = ["contrasena" => "asd"];
 
-        // Mail::to("gerson.vilca@tecsup.edu.pe")->send(new MailRecuperarContrasena($data));
+        // Mail::to([
+        //     'gerson.vilca@grow-analytics.com.pe',
+        //     'Jose.Cruz@grow-analytics.com.pe',
+        //     'Frank.Martinez@grow-analytics.com.pe'
+        // ])->send(new MailRecuperarContrasena($data));
 
         
         // return view('CorreoRecuperarContrasena')->with($data);

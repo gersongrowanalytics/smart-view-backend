@@ -1007,7 +1007,11 @@ class NuevaCargaPromocionesController extends Controller
                                                 ->first(['tcanombre']);
 
                 $data = ['linkArchivoSubido' => $nuevoCargaArchivo->carurl , 'nombre' => $nuevoCargaArchivo->carnombrearchivo , 'tipo' => $tca->tcanombre, 'usuario' => $usuusuario->usuusuario];
-                Mail::to('gerson.vilca@grow-analytics.com.pe')->send(new MailCargaArchivos($data));
+                Mail::to([
+                    'gerson.vilca@grow-analytics.com.pe',
+                    'Jose.Cruz@grow-analytics.com.pe',
+                    'Frank.Martinez@grow-analytics.com.pe'
+                ])->send(new MailCargaArchivos($data));
             }else{
 
             }
