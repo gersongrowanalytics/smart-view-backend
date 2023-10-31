@@ -255,7 +255,7 @@ class MostrarProductosController extends Controller
                     $cantidadSinImagen = count($pro);
                 
                     $data = ['cantidad' => $cantidadSinImagen, 'registros' => $pro];
-                    // Mail::to('gerson.vilca@grow-analytics.com.pe')->send(new MailInformarAsignacionImagenProductoController($data));
+                    // Mail::to(['gerson.vilca@grow-analytics.com.pe', 'Frank.Martinez@grow-analytics.com.pe', 'Jose.Cruz@grow-analytics.com.pe'])->send(new MailInformarAsignacionImagenProductoController($data));
                 }
             }
 

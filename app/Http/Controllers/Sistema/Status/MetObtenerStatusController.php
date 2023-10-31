@@ -189,7 +189,11 @@ class MetObtenerStatusController extends Controller
                 $fechas = ["25.07.2022"];
 
                 foreach ($fechas as $key => $fecha) {
-                    Mail::to(['gerson.vilca@grow-analytics.com.pe'])->send(new MailInformarStatus($datos, $cuadros, $fecha));
+                    Mail::to([
+                        'gerson.vilca@grow-analytics.com.pe',
+                        'Jose.Cruz@grow-analytics.com.pe',
+                        'Frank.Martinez@grow-analytics.com.pe'
+                    ])->send(new MailInformarStatus($datos, $cuadros, $fecha));
                 }
             }
 
@@ -243,7 +247,11 @@ class MetObtenerStatusController extends Controller
 
     public function MetObtenerStatusV2 ()
     {
-        Mail::to(['gerson.vilca@grow-analytics.com.pe'])->send(new MailInformarStatusV2());
+        Mail::to([
+            'gerson.vilca@grow-analytics.com.pe',
+            'Jose.Cruz@grow-analytics.com.pe',
+            'Frank.Martinez@grow-analytics.com.pe'
+        ])->send(new MailInformarStatusV2());
         // return view('CorreoInformarStatusV2');
     } 
 }
