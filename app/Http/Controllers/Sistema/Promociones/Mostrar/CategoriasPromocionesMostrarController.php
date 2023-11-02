@@ -661,8 +661,7 @@ class CategoriasPromocionesMostrarController extends Controller
                 
                 $csps = cspcanalessucursalespromociones::leftjoin('prmpromociones as prm', 'prm.prmid', 'cspcanalessucursalespromociones.prmid')
                                                         ->leftjoin('proproductos as pro', 'pro.prosku', 'prm.prmsku')
-                                                        ->leftjoin('proproductos as pro_bonif', 'pro.prosku', 'prm.prmskubonificado')
-
+                                                        ->leftjoin('proproductos as probonif', 'probonif.prosku', 'prm.prmskubonificado')
                                                         ->leftjoin('csccanalessucursalescategorias as csc', 'csc.cscid', 'cspcanalessucursalespromociones.cscid')
                                                         ->leftjoin('cancanales as can', 'can.canid', 'csc.canid')
                                                         ->leftjoin('scasucursalescategorias as sca', 'sca.scaid', 'csc.scaid')
@@ -690,12 +689,10 @@ class CategoriasPromocionesMostrarController extends Controller
                                                             'sucsoldto',
                                                             'cannombre',
                                                             'catnombre',
-
                                                             'prm.prmsku',
-                                                            'pro.pronombre',
+                                                            'pro.pronombre as pronombre',
                                                             'prm.prmskubonificado as prmsku_bonif',
-                                                            'pro_bonif.pronombre as pronombre_bonif',
-
+                                                            'probonif.pronombre as pronombrebonif',
                                                             'prmmecanica',
                                                             'cspcantidadcombo',
                                                             'cspcantidadplancha',
@@ -1418,10 +1415,8 @@ class CategoriasPromocionesMostrarController extends Controller
                         $desc_catnombre = $csp->catnombre;
                         $desc_prmsku    = $csp->prmsku;
                         $desc_pronombre = $csp->pronombre;
-
                         $desc_prmsku_bonif    = $csp->prmsku_bonif;
-                        $desc_pronombre_bonif = $csp->pronombre_bonif;
-
+                        $desc_pronombre_bonif = $csp->pronombrebonif;
                         $desc_prmmecanica = $csp->prmmecanica;
 
                         $desc_cspcantidadcombo   = $csp->cspcantidadcombo;
