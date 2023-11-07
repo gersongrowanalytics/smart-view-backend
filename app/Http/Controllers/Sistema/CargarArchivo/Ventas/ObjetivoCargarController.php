@@ -96,7 +96,7 @@ class ObjetivoCargarController extends Controller
         $cargarData = false;
 
         if($usuusuario){
-            if($usuusuario->usuid == 1){
+            if($usuusuario->tpuid == 1){
                 $cargarData = true;
             }
         }
@@ -545,7 +545,7 @@ class ObjetivoCargarController extends Controller
                     date_default_timezone_set("America/Lima");
                     $fechaActual = date('Y-m-d');
 
-                    if($usuusuario->usuid != 1){
+                    if($usuusuario->tpuid != 1){
                         
                         $nuevoCargaArchivo = new carcargasarchivos;
                         $nuevoCargaArchivo->tcaid             = 5;
@@ -1336,7 +1336,7 @@ class ObjetivoCargarController extends Controller
         $cargarData = false;
 
         if($usuusuario){
-            if($usuusuario->usuid == 1){
+            if($usuusuario->tpuid == 1){
                 $cargarData = true;
             }
         }
@@ -1755,7 +1755,7 @@ class ObjetivoCargarController extends Controller
                     $fechaActual = date('Y-m-d');
 
 
-                    if($usuusuario->usuid != 1){
+                    if($usuusuario->tpuid != 1){
                         $nuevoCargaArchivo = new carcargasarchivos;
                         $nuevoCargaArchivo->tcaid             = 4;
                         $nuevoCargaArchivo->fecid             = $fecid;
