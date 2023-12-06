@@ -49,7 +49,6 @@ class MetCorreoUsuarioController extends Controller
                     ->cc([
                         'mzorrilla@kcc.com', 
                         'miguel.caballero@grow-analytics.com.pe', 
-                        'gerson.vilca@grow-analytics.com.pe', 
                         'eunice.calle@grow-analytics.com.pe',
                         'Frank.Martinez@grow-analytics.com.pe',
                         'Jose.Cruz@grow-analytics.com.pe'
