@@ -143,8 +143,18 @@ class CargarRebateController extends Controller
                     $tca = tcatiposcargasarchivos::where('tcaid',$nuevoCargaArchivo->tcaid)
                                         ->first(['tcanombre']);
 
-                    $data = ['linkArchivoSubido' => $nuevoCargaArchivo->carurl , 'nombre' => $nuevoCargaArchivo->carnombrearchivo , 'tipo' => $tca->tcanombre, 'usuario' => $usuusuario->usuusuario];
-                    Mail::to('gerson.vilca@grow-analytics.com.pe')->send(new MailCargaArchivos($data));
+                    $data = [
+                        'linkArchivoSubido' => $nuevoCargaArchivo->carurl , 
+                        'nombre' => $nuevoCargaArchivo->carnombrearchivo , 
+                        'tipo' => $tca->tcanombre, 
+                        'usuario' => $usuusuario->usuusuario
+                    ];
+
+                    Mail::to([
+                        'gerson.vilca@grow-analytics.com.pe',
+                        'Jose.Cruz@grow-analytics.com.pe',
+                        'Frank.Martinez@grow-analytics.com.pe'
+                    ])->send(new MailCargaArchivos($data));
 
                 }else{
 

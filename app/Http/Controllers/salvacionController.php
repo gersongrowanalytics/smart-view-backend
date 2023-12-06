@@ -34,7 +34,7 @@ class salvacionController extends Controller
             }
         }
 
-        // $linkAntiguo = "http://backs.gavsistemas.com/";
+        
         // $linkNuevo   = "http://backend.leadsmartview.com/";
 
         // $linkAntiguo = "http://backend.leadsmartview.com/";
@@ -466,7 +466,10 @@ class salvacionController extends Controller
 
     public function QuitarDecimales($fecid)
     {
-        $logs = [];
+        $logs = array(
+            "PRB" => [],
+            "PRP" => []
+        );
 
         $prbs = prbpromocionesbonificaciones::join('prmpromociones as prm', 'prm.prmid', 'prbpromocionesbonificaciones.prmid')
                                     ->where('prm.fecid', $fecid)
@@ -484,14 +487,14 @@ class salvacionController extends Controller
                     $prbe = prbpromocionesbonificaciones::find($prb->prbid);
                     $prbe->prbcomprappt = $porcentaje."%";
                     $prbe->update();
-                    $logs[] = $desc." | ".$prb->prbcomprappt." - ".$porcentaje."%";
+                    $logs["PRB"][] = $desc." | ".$prb->prbcomprappt." - ".$porcentaje."%";
 
                 }else{
 
                     $prbe = prbpromocionesbonificaciones::find($prb->prbid);
                     $prbe->prbcomprappt = number_format($prb->prbcomprappt, 2);
                     $prbe->update();
-                    $logs[] = $desc." | ".$prb->prbcomprappt." - ".number_format($prb->prbcomprappt, 2);
+                    $logs["PRB"][] = $desc." | ".$prb->prbcomprappt." - ".number_format($prb->prbcomprappt, 2);
 
                 }
 
@@ -499,6 +502,47 @@ class salvacionController extends Controller
                 
             }
         }
+
+        $prps = prppromocionesproductos::join('prmpromociones as prm', 'prm.prmid', 'prppromocionesproductos.prmid')
+                                    ->where('prm.fecid', $fecid)
+                                    ->get(['prpid', 'prpcomprappt']);
+
+        foreach($prps as $prp){
+
+            $frases_compra_ppt = explode(" ", $prp->prpcomprappt);
+
+            $nuevo_compra_ppt = "";
+
+            foreach ($frases_compra_ppt as $posicionFase => $frase_compra_ppt) {
+            
+                if(is_numeric ( $frase_compra_ppt )){
+
+                    if($posicionFase == 0){
+                        $nuevo_compra_ppt = number_format($frase_compra_ppt, 2);
+                    }else{
+                        $nuevo_compra_ppt = $nuevo_compra_ppt." ".number_format($frase_compra_ppt, 2);
+                    }
+
+                    $logs["PRP"][] = "ANTES: ".$frase_compra_ppt." AHORA: ". number_format($frase_compra_ppt, 2);
+
+                }else{
+                    if($posicionFase == 0){
+                        $nuevo_compra_ppt = $frase_compra_ppt;
+                    }else{
+                        $nuevo_compra_ppt = $nuevo_compra_ppt." ".$frase_compra_ppt;
+                    }
+                    
+                }
+            }
+            
+            
+
+            $prpe = prppromocionesproductos::find($prp->prpid);
+            $prpe->prpcomprappt = $nuevo_compra_ppt;
+            $prpe->update();
+
+        }
+
 
         return $logs;
     }
@@ -510,21 +554,21 @@ class salvacionController extends Controller
         // ELIMINAR PRP Y PRB
         prppromocionesproductos::join('prmpromociones as prm', 'prm.prmid', 'prppromocionesproductos.prmid')
                                 ->where('prm.fecid', $fecid)
-                                // ->where('prpzona', $ex_zona)
+                                ->where('prpzona', $ex_zona)
                                 ->delete();
 
         prbpromocionesbonificaciones::join('prmpromociones as prm', 'prm.prmid', 'prbpromocionesbonificaciones.prmid')
                                     ->where('prm.fecid', $fecid)
-                                    // ->where('prbzona', $ex_zona)
+                                    ->where('prbzona', $ex_zona)
                                     ->delete();
         
         cspcanalessucursalespromociones::join('prmpromociones as prm', 'prm.prmid', 'cspcanalessucursalespromociones.prmid')
                                         ->where('cspcanalessucursalespromociones.fecid', $fecid)
-                                        // ->where('cspzona', $ex_zona)
+                                        ->where('cspzona', $ex_zona)
                                         ->delete();
 
         prmpromociones::where('fecid', $fecid)
-                        // ->where('prmzona', $ex_zona)
+                        ->where('prmzona', $ex_zona)
                         ->delete();
 
     }
@@ -595,38 +639,57 @@ class salvacionController extends Controller
 
     }
 
+    // Asignar el sku bonif a el id de la prm desde el prb
+    public function AsignarSkuBonifPrm($fecid)
+    {
+        $prbs = prbpromocionesbonificaciones::join('proproductos as pro', 'pro.proid', 'prbpromocionesbonificaciones.proid')
+                                            ->join('prmpromociones as prm', 'prm.prmid', 'prbpromocionesbonificaciones.prmid')
+                                            ->where('prm.fecid', $fecid)
+                                            ->get([
+                                                'prbpromocionesbonificaciones.prmid',
+                                                'pro.proid',
+                                                'pro.prosku'
+                                            ]);
+
+        foreach($prbs as $prb){
+            $prm = prmpromociones::find($prb->prmid);
+            $prm->prmskubonificado = $prb->prosku;
+            $prm->update();
+        }
+    }
+
 }
 
 
 
-// UPDATE scasucursalescategorias SET scaiconocategoria  = "http://backend.leadsmartview.com/Sistema/categorias-tiposPromociones/img/iconos/Family Care-Sell In.png" WHERE scaiconocategoria  = "http://backs.gavsistemas.com/Sistema/categorias-tiposPromociones/img/iconos/Family Care-Sell In.png";
-// UPDATE scasucursalescategorias SET scaiconocategoria  = "http://backend.leadsmartview.com/Sistema/categorias-tiposPromociones/img/iconos/Family Care-Sell Out.png" WHERE scaiconocategoria  = "http://backs.gavsistemas.com/Sistema/categorias-tiposPromociones/img/iconos/Family Care-Sell Out.png";
+// UPDATE scasucursalescategorias SET scaiconocategoria  = "http://backend.leadsmartview.com/Sistema/categorias-tiposPromociones/img/iconos/Family Care-Sell In.png" WHERE scaiconocategoria  = "http://backs.linkantiguo.com/Sistema/categorias-tiposPromociones/img/iconos/Family Care-Sell In.png";
+// UPDATE scasucursalescategorias SET scaiconocategoria  = "http://backend.leadsmartview.com/Sistema/categorias-tiposPromociones/img/iconos/Family Care-Sell Out.png" WHERE scaiconocategoria  = "http://backs.linkantiguo.com/Sistema/categorias-tiposPromociones/img/iconos/Family Care-Sell Out.png";
 
-// UPDATE scasucursalescategorias SET scaiconocategoria  = "http://backend.leadsmartview.com/Sistema/categorias-tiposPromociones/img/iconos/Infant Care-Sell In.png" WHERE scaiconocategoria  = "http://backs.gavsistemas.com/Sistema/categorias-tiposPromociones/img/iconos/Infant Care-Sell In.png";
-// UPDATE scasucursalescategorias SET scaiconocategoria  = "http://backend.leadsmartview.com/Sistema/categorias-tiposPromociones/img/iconos/Infant Care-Sell Out.png" WHERE scaiconocategoria  = "http://backs.gavsistemas.com/Sistema/categorias-tiposPromociones/img/iconos/Infant Care-Sell Out.png";
+// UPDATE scasucursalescategorias SET scaiconocategoria  = "http://backend.leadsmartview.com/Sistema/categorias-tiposPromociones/img/iconos/Infant Care-Sell In.png" WHERE scaiconocategoria  = "http://backs.linkantiguo.com/Sistema/categorias-tiposPromociones/img/iconos/Infant Care-Sell In.png";
+// UPDATE scasucursalescategorias SET scaiconocategoria  = "http://backend.leadsmartview.com/Sistema/categorias-tiposPromociones/img/iconos/Infant Care-Sell Out.png" WHERE scaiconocategoria  = "http://backs.linkantiguo.com/Sistema/categorias-tiposPromociones/img/iconos/Infant Care-Sell Out.png";
 
-// UPDATE scasucursalescategorias SET scaiconocategoria  = "http://backend.leadsmartview.com/Sistema/categorias-tiposPromociones/img/iconos/Family Care-Sell In.png" WHERE scaiconocategoria  = "http://backs.gavsistemas.com/Sistema/categorias-tiposPromociones/img/iconos/Family Care-Sell In.png";
-// UPDATE scasucursalescategorias SET scaiconocategoria  = "http://backend.leadsmartview.com/Sistema/categorias-tiposPromociones/img/iconos/Family Care-Sell In.png" WHERE scaiconocategoria  = "http://backs.gavsistemas.com/Sistema/categorias-tiposPromociones/img/iconos/Family Care-Sell In.png";
-
-
-
-// UPDATE scasucursalescategorias SET scaiconocategoria  = "http://backend.leadsmartview.com/Sistema/categorias-tiposPromociones/img/iconos/Adult Care-Sell In.png" WHERE scaiconocategoria  = "http://backs.gavsistemas.com/Sistema/categorias-tiposPromociones/img/iconos/Adult Care-Sell In.png";
-// UPDATE scasucursalescategorias SET scaiconocategoria  = "http://backend.leadsmartview.com/Sistema/categorias-tiposPromociones/img/iconos/Adult Care-Sell Out.png" WHERE scaiconocategoria  = "http://backs.gavsistemas.com/Sistema/categorias-tiposPromociones/img/iconos/Adult Care-Sell Out.png";
-
-
-// UPDATE scasucursalescategorias SET scaiconocategoria  = "http://backend.leadsmartview.com/Sistema/categorias-tiposPromociones/img/iconos/Family Care-Sell In.png" WHERE scaiconocategoria  = "http://backs.gavsistemas.com/Sistema/categorias-tiposPromociones/img/iconos/Family Care-Sell In.png";
-// UPDATE scasucursalescategorias SET scaiconocategoria  = "http://backend.leadsmartview.com/Sistema/categorias-tiposPromociones/img/iconos/Family Care-Sell In.png" WHERE scaiconocategoria  = "http://backs.gavsistemas.com/Sistema/categorias-tiposPromociones/img/iconos/Family Care-Sell In.png";
-
-
-// UPDATE scasucursalescategorias SET scaiconocategoria  = "http://backend.leadsmartview.com/Sistema/categorias-tiposPromociones/img/iconos/Wipes-Sell In.png" WHERE scaiconocategoria  = "http://backs.gavsistemas.com/Sistema/categorias-tiposPromociones/img/iconos/Wipes-Sell In.png";
-// UPDATE scasucursalescategorias SET scaiconocategoria  = "http://backend.leadsmartview.com/Sistema/categorias-tiposPromociones/img/iconos/Wipes-Sell Out.png" WHERE scaiconocategoria  = "http://backs.gavsistemas.com/Sistema/categorias-tiposPromociones/img/iconos/Wipes-Sell Out.png";
-
-// UPDATE scasucursalescategorias SET scaiconocategoria  = "http://backend.leadsmartview.com/Sistema/categorias-tiposPromociones/img/iconos/Fem Care-Sell In.png" WHERE scaiconocategoria  = "http://backs.gavsistemas.com/Sistema/categorias-tiposPromociones/img/iconos/Fem Care-Sell In.png";
-// UPDATE scasucursalescategorias SET scaiconocategoria  = "http://backend.leadsmartview.com/Sistema/categorias-tiposPromociones/img/iconos/Fem Care-Sell Out.png" WHERE scaiconocategoria  = "http://backs.gavsistemas.com/Sistema/categorias-tiposPromociones/img/iconos/Fem Care-Sell Out.png";
+// UPDATE scasucursalescategorias SET scaiconocategoria  = "http://backend.leadsmartview.com/Sistema/categorias-tiposPromociones/img/iconos/Family Care-Sell In.png" WHERE scaiconocategoria  = "http://backs.linkantiguo.com/Sistema/categorias-tiposPromociones/img/iconos/Family Care-Sell In.png";
+// UPDATE scasucursalescategorias SET scaiconocategoria  = "http://backend.leadsmartview.com/Sistema/categorias-tiposPromociones/img/iconos/Family Care-Sell In.png" WHERE scaiconocategoria  = "http://backs.linkantiguo.com/Sistema/categorias-tiposPromociones/img/iconos/Family Care-Sell In.png";
 
 
 
+// UPDATE scasucursalescategorias SET scaiconocategoria  = "http://backend.leadsmartview.com/Sistema/categorias-tiposPromociones/img/iconos/Adult Care-Sell In.png" WHERE scaiconocategoria  = "http://backs.linkantiguo.com/Sistema/categorias-tiposPromociones/img/iconos/Adult Care-Sell In.png";
+// UPDATE scasucursalescategorias SET scaiconocategoria  = "http://backend.leadsmartview.com/Sistema/categorias-tiposPromociones/img/iconos/Adult Care-Sell Out.png" WHERE scaiconocategoria  = "http://backs.linkantiguo.com/Sistema/categorias-tiposPromociones/img/iconos/Adult Care-Sell Out.png";
 
 
-// UPDATE scasucursalescategorias SET scaiconocategoria  = "http://backend.leadsmartview.com/Sistema/categorias-tiposPromociones/img/iconos/Family Care-Sell In.png" WHERE scaiconocategoria  = "http://backs.gavsistemas.com/Sistema/categorias-tiposPromociones/img/iconos/Family Care-Sell In.png";
-// UPDATE scasucursalescategorias SET scaiconocategoria  = "http://backend.leadsmartview.com/Sistema/categorias-tiposPromociones/img/iconos/Family Care-Sell In.png" WHERE scaiconocategoria  = "http://backs.gavsistemas.com/Sistema/categorias-tiposPromociones/img/iconos/Family Care-Sell In.png";
+// UPDATE scasucursalescategorias SET scaiconocategoria  = "http://backend.leadsmartview.com/Sistema/categorias-tiposPromociones/img/iconos/Family Care-Sell In.png" WHERE scaiconocategoria  = "http://backs.linkantiguo.com/Sistema/categorias-tiposPromociones/img/iconos/Family Care-Sell In.png";
+// UPDATE scasucursalescategorias SET scaiconocategoria  = "http://backend.leadsmartview.com/Sistema/categorias-tiposPromociones/img/iconos/Family Care-Sell In.png" WHERE scaiconocategoria  = "http://backs.linkantiguo.com/Sistema/categorias-tiposPromociones/img/iconos/Family Care-Sell In.png";
+
+
+// UPDATE scasucursalescategorias SET scaiconocategoria  = "http://backend.leadsmartview.com/Sistema/categorias-tiposPromociones/img/iconos/Wipes-Sell In.png" WHERE scaiconocategoria  = "http://backs.linkantiguo.com/Sistema/categorias-tiposPromociones/img/iconos/Wipes-Sell In.png";
+// UPDATE scasucursalescategorias SET scaiconocategoria  = "http://backend.leadsmartview.com/Sistema/categorias-tiposPromociones/img/iconos/Wipes-Sell Out.png" WHERE scaiconocategoria  = "http://backs.linkantiguo.com/Sistema/categorias-tiposPromociones/img/iconos/Wipes-Sell Out.png";
+
+// UPDATE scasucursalescategorias SET scaiconocategoria  = "http://backend.leadsmartview.com/Sistema/categorias-tiposPromociones/img/iconos/Fem Care-Sell In.png" WHERE scaiconocategoria  = "http://backs.linkantiguo.com/Sistema/categorias-tiposPromociones/img/iconos/Fem Care-Sell In.png";
+// UPDATE scasucursalescategorias SET scaiconocategoria  = "http://backend.leadsmartview.com/Sistema/categorias-tiposPromociones/img/iconos/Fem Care-Sell Out.png" WHERE scaiconocategoria  = "http://backs.linkantiguo.com/Sistema/categorias-tiposPromociones/img/iconos/Fem Care-Sell Out.png";
+
+
+
+
+
+// UPDATE scasucursalescategorias SET scaiconocategoria  = "http://backend.leadsmartview.com/Sistema/categorias-tiposPromociones/img/iconos/Family Care-Sell In.png" WHERE scaiconocategoria  = "http://backs.linkantiguo.com/Sistema/categorias-tiposPromociones/img/iconos/Family Care-Sell In.png";
+// UPDATE scasucursalescategorias SET scaiconocategoria  = "http://backend.leadsmartview.com/Sistema/categorias-tiposPromociones/img/iconos/Family Care-Sell In.png" WHERE scaiconocategoria  = "http://backs.linkantiguo.com/Sistema/categorias-tiposPromociones/img/iconos/Family Care-Sell In.png";

@@ -31,7 +31,7 @@ class MailCargaArchivos extends Mailable
     {
         return $this->from('smartview@grow-analytics.com', 'Grow: TeamSupport')
                     ->view('CorreoInformarCargaArchivo')
-                    ->subject('CARGA ARCHIVO')
+                    ->subject('Smartview: Archivo Cargado')
                     ->with($this->data);
     }
 }

@@ -255,19 +255,19 @@ class MostrarProductosController extends Controller
                     $cantidadSinImagen = count($pro);
                 
                     $data = ['cantidad' => $cantidadSinImagen, 'registros' => $pro];
-                    Mail::to('jeanmarcoe@gmail.com')->send(new MailInformarAsignacionImagenProductoController($data));
+                    // Mail::to(['gerson.vilca@grow-analytics.com.pe', 'Frank.Martinez@grow-analytics.com.pe', 'Jose.Cruz@grow-analytics.com.pe'])->send(new MailInformarAsignacionImagenProductoController($data));
                 }
             }
 
-            // prppromocionesproductos::join('prmpromociones as prm', 'prm.prmid', 'prppromocionesproductos.prmid')
-            //                         ->where('proid', $proe->proid)
-            //                         ->where('prm.fecid', '>' ,62)
-            //                         ->update(['prpimagen' => $proe->proimagen]);
+            prppromocionesproductos::join('prmpromociones as prm', 'prm.prmid', 'prppromocionesproductos.prmid')
+                                    ->where('proid', $proe->proid)
+                                    ->where('prm.fecid', '>' ,62)
+                                    ->update(['prpimagen' => $proe->proimagen]);
 
-            // prbpromocionesbonificaciones::join('prmpromociones as prm', 'prm.prmid', 'prbpromocionesbonificaciones.prmid')
-            //                         ->where('proid', $proe->proid)
-            //                         ->where('prm.fecid', '>' ,62)
-            //                         ->update(['prbimagen' => $proe->proimagen]);
+            prbpromocionesbonificaciones::join('prmpromociones as prm', 'prm.prmid', 'prbpromocionesbonificaciones.prmid')
+                                    ->where('proid', $proe->proid)
+                                    ->where('prm.fecid', '>' ,62)
+                                    ->update(['prbimagen' => $proe->proimagen]);
 
 
         }else{

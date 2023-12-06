@@ -34,8 +34,10 @@ class MetCorreoUsuarioController extends Controller
                     $asunto  = "¡Bienvenido a Creciendo Juntos! ¿Listo para colaborar?";
                     $mensaje = "El correo de bienvenida fue enviado correctamente";
                 }else{
-                    $asunto  = "CORREO DE ACTUALIZACIÓN DE USUARIO";
-                    $mensaje = "El correo de actualización de usuario fue enviado correctamente";
+                    // $asunto  = "CORREO DE ACTUALIZACIÓN DE USUARIO";
+                    $asunto  = "¡Bienvenido a Creciendo Juntos! ¿Listo para colaborar?";
+                    // $mensaje = "El correo de actualización de usuario fue enviado correctamente";
+                    $mensaje = "El correo de bienvenida fue enviado correctamente";
                 }
 
                 $data = [
@@ -43,7 +45,16 @@ class MetCorreoUsuarioController extends Controller
                     "contrasenia" => $req_contrasenia,
                     "nombre"      => $usu->pernombre
                 ];
-                Mail::to($req_correo)->send( new MailUsuariosInformacion($data, $asunto));
+                Mail::to([$req_correo])
+                    ->cc([
+                        'mzorrilla@kcc.com', 
+                        'miguel.caballero@grow-analytics.com.pe', 
+                        'gerson.vilca@grow-analytics.com.pe', 
+                        'eunice.calle@grow-analytics.com.pe',
+                        'Frank.Martinez@grow-analytics.com.pe',
+                        'Jose.Cruz@grow-analytics.com.pe'
+                    ])
+                    ->send( new MailUsuariosInformacion($data, $asunto));
             } catch (Exception $e) {
                 $mensajeserv[]  = $e->getMessage();
                 $respuesta      = false;

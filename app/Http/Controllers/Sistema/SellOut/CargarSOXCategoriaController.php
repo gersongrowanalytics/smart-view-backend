@@ -166,11 +166,18 @@ class CargarSOXCategoriaController extends Controller
             $fecn->fecano       = $anioSelec;
             if($fecn->save()){
                 $fecidFec = $fecn->fecid;
-                $pks["PK_FECHAS"]["NUEVOS"][] = "NUEVA FEC-".$fecid;
+                $pks["PK_FECHAS"]["NUEVOS"][] = "NUEVA FEC-".$fecidFec;
             }
         }
 
-        $datos = json_decode( file_get_contents('http://back-api-leadsmartview.grow-corporate.com/ws/obtenerSOconsolidadoXCategoria/'.$anioSelec.'/'.$mesTxtIngles), true );
+
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, 'https://back-api-leadsmartview.grow-corporate.com/ws/obtenerSOconsolidadoXCategoria/'.$anioSelec.'/'.$mesTxtIngles);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        $res = curl_exec($ch);
+        curl_close($ch);
+
+        $datos = json_decode($res, true);
 
         foreach($datos as $posicion => $dato){
             

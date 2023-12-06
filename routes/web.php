@@ -40,6 +40,7 @@ $router->get('/actualizar', 'salvacionController@salvacion');
 $router->get('/asignarsuc', 'salvacionController@asignarzonassucursales');
 $router->get('/actualizarestadosucursales', 'salvacionController@cambiarEstadoSucursales');
 $router->get('/actualizarimagenessellinout', 'salvacionController@CambiarImagenSellOut');
+$router->get('/asignar-sku-bonif-prm/{fecid}', 'salvacionController@AsignarSkuBonifPrm');
 
 $router->get('/mail', 'MailController@getMail');
 $router->post('/recuperar/contrasena', 'MailController@recuperarContrasena');
@@ -291,3 +292,14 @@ $router->get('/mostrar-tipo-rebates','Sistema\CargarArchivo\ListaPrecios\TipoReb
 $router->get('/mostrar-canales-sucursales', 'Sistema\CargarArchivo\ListaPrecios\CanalesSucursales\MostrarCanalesSucursalesDescargaLPController@MostrarCanalesSucursales');
 
 // $router->post('/prueba', 'MailController@prueba');
+
+
+// BOLIVIA
+// $router->get('/bo/mostrar-cubo-so/{anio}/{mes}/{dia}/{limit}', 'Bolivia\CuboSO\MetObtenerSOController@ObtenerSO');
+$router->get('/bo/mostrar-cubo-so/{fecha}', 'Bolivia\CuboSO\MetObtenerSOController@ObtenerSO');
+
+// $router->get('/bo/agregar-so-obtenido-cubo/{anio}/{mes}/{dia}/{limit}', 'Bolivia\CuboSO\MetAgregarSOController@MetAgregarSO');
+$router->get('/bo/agregar-so-obtenido-cubo/{fecha}', 'Bolivia\CuboSO\MetAgregarSOController@MetAgregarSO');
+
+$router->post('/obtener-nombre-archivo-seleccionado-descarga', 'Bolivia\CuboSO\MetObtenerArchivoSOController@MetObtenerArchivoSO');
+$router->post('/obtener-filtros-empresas-region', 'Bolivia\CuboSO\MetObtenerArchivoSOController@MetObtenerFiltros');

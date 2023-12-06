@@ -229,8 +229,8 @@ class EnviarPromocionesActivasController extends Controller
                             $atributo = $usuario_sucursal['sucnombre'];
                             $data = ['txtSucursales' => $atributo, 're_fecha' => $re_fecha, "anio" => $anio, "usuario" => $usuario_sucursal['usuusuario']];
                             $asunto = "Kimberly Clark (PE): PROMOCIONES ".$re_fecha." ".$anio." (".$atributo.")";
-                            Mail::to($correo)->cc(['gerson.vilca.growanalytics@gmail.com'])
-                                         ->send(new MailPromocionesActivas($data, $asunto));
+                            // Mail::to($correo)->cc(['gerson.vilca.growanalytics@gmail.com'])
+                            //              ->send(new MailPromocionesActivas($data, $asunto));
                         }else{
                             $gsu = gsugrupossucursales::where('gsuid',$usuario_sucursal['gsuid'])
                                                         ->first();
@@ -238,8 +238,8 @@ class EnviarPromocionesActivasController extends Controller
                                 $atributo = $gsu->gsunombre;
                                 $data = ['txtSucursales' => $atributo, 're_fecha' => $re_fecha, "anio" => $anio, "usuario" => $usuario_sucursal['usuusuario']];
                                 $asunto = "Kimberly Clark (PE): PROMOCIONES ".$re_fecha." ".$anio." (".$atributo.")";
-                                Mail::to($correo)->cc(['gerson.vilca.growanalytics@gmail.com'])
-                                             ->send(new MailPromocionesActivas($data, $asunto));
+                                // Mail::to($correo)->cc(['gerson.vilca.growanalytics@gmail.com'])
+                                //              ->send(new MailPromocionesActivas($data, $asunto));
                             }
                         }
                         
@@ -300,13 +300,15 @@ class EnviarPromocionesActivasController extends Controller
         $re_sucursales = $request['sucursales'];
         $re_fecha = $request['fecha'];
         $re_reenviado = $request['reenviado'];
+        $re_enviarcorreo = $request['enviarcorreo'];
+        $re_apiexpress = $request['apiexpress'];
 
         $usu = usuusuarios::where('usutoken', $usutoken)->first();
 
         $correo = "jeanmarcoe@gmail.com";
 
         $dataEnviada = [];
-
+        $data_correo = [];
         if (true == true) {
             //OBTENER LA FECHA
             date_default_timezone_set("America/Lima");
@@ -357,11 +359,15 @@ class EnviarPromocionesActivasController extends Controller
                                             ->where('usu.usuusuario', 'not like', '%jose.delbusto%')
                                             ->where('usu.usuusuario', 'not like', '%melissa.garcia%')
                                             ->where('usu.usuusuario', 'not like', '%pruebagrow%')
+                                            ->where('usu.usuusuario', 'not like', '%joaquin.J.Cuervas%')
+                                            ->where('usu.usuusuario', 'not like', '%carmenvanessa.malaga%')
+                                            ->where('usu.usuusuario', 'not like', '%luis.e.acevedo%')
                                             ->whereNotNull('usu.usuusuario')
                                             ->orderBy('ussusuariossucursales.usuid', 'DESC')
                                             ->get([
                                                 'usu.usuid',
                                                 'suc.gsuid',
+                                                'suc.sucid', 
                                                 'suc.sucnombre', 
                                                 'ussusuariossucursales.usuid',
                                                 'usu.usuusuario',
@@ -403,7 +409,8 @@ class EnviarPromocionesActivasController extends Controller
                             }else{
                                 $suc = $usuario['gsunombre'];
                             }
-                            $anio = date("Y");
+                            // $anio = date("Y");
+                            $anio = "2023";
 
                             $data = [
                                 "txtSucursales" => $suc, 
@@ -415,13 +422,15 @@ class EnviarPromocionesActivasController extends Controller
 
                             $anadirCorreo = true;
 
-                            foreach ($usuariosCorreo as $usuarioCorreo) {
-                                if ($usuario['usuusuario'] == $usuarioCorreo['usuario']) {
-
-                                    if($usuario['gsunombre'] == 'Clientes'){
-                                        $anadirCorreo = false;
-                                    }else if($usuarioCorreo['gsunombre'] == $usuario['gsunombre']){
-                                        $anadirCorreo = false;
+                            if(!$re_apiexpress){
+                                foreach ($usuariosCorreo as $usuarioCorreo) {
+                                    if ($usuario['usuusuario'] == $usuarioCorreo['usuario']) {
+    
+                                        if($usuario['gsunombre'] == 'Clientes'){
+                                            $anadirCorreo = false;
+                                        }else if($usuarioCorreo['gsunombre'] == $usuario['gsunombre']){
+                                            $anadirCorreo = false;
+                                        }
                                     }
                                 }
                             }
@@ -430,6 +439,7 @@ class EnviarPromocionesActivasController extends Controller
                                 $usuariosCorreo[] = array(
                                     "usuario"   => $usuario['usuusuario'],
                                     "gsunombre" => $usuario['gsunombre'],
+                                    "sucid"     => $usuario['sucid'],
                                     "sucnombre" => $usuario['sucnombre'],
                                     "data"      => $data,
                                     "asunto"    => $asunto
@@ -464,8 +474,28 @@ class EnviarPromocionesActivasController extends Controller
 
                     $dataEnviada[] = $usuarios_correo;
                     
-                    Mail::to($usuarios_correo)->cc(['0540Peru.salescontrolling@kcc.com', 'Cuidatunegocio.KC@kcc.com', 'gerson.vilca@grow-analytics.com.pe', 'miguel.caballero@grow-analytics.com.pe', 'director.creativo@grow-analytics.com.pe'])
-                                                ->send(new MailPromocionesActivas($data_correo, $asunto_correo));
+                    // REAL A UTILIZAR
+                    // Mail::to($usuarios_correo)->cc(['gerson.vilca@grow-analytics.com.pe'])
+                    //                             ->send(new MailPromocionesActivas($data_correo, $asunto_correo));
+
+                    if($usu->usuid == 1){
+                        if(isset($re_enviarcorreo)){
+                            if($re_enviarcorreo == true){
+                                Mail::to($usuarios_correo)->cc(['0540Peru.salescontrolling@kcc.com', 'Cuidatunegocio.KC@kcc.com', 'gerson.vilca@grow-analytics.com.pe', 'miguel.caballero@grow-analytics.com.pe', 'eunice.calle@grow-analytics.com.pe'])
+                                    ->send(new MailPromocionesActivas($data_correo, $asunto_correo));
+                            }
+                        }
+                    }
+
+                    // ENVIAR RECORDATORIO
+                    // Mail::to($usuarios_correo)->cc(['eunice.calle@grow-analytics.com.pe'])
+                    //                             ->send(new MailPromocionesActivas($data_correo, $asunto_correo));
+
+                    // RECORDATORIO SIN EUNICE
+                    // Mail::to($usuarios_correo)->cc(['gerson.vilca@grow-analytics.com.pe'])->send(new MailPromocionesActivas($data_correo, $asunto_correo));
+
+                    
+
                     // Mail::to($correo)->send(new MailPromocionesActivas($data_correo, $asunto_correo));
                 }
 
@@ -484,10 +514,12 @@ class EnviarPromocionesActivasController extends Controller
         $requestsalida = response()->json([
             "respuesta" => $respuesta,
             "mensaje"   => $mensaje,
-            // "datos"     => $usuariosCorreo,
-            "datos" => $dataEnviada,
-            // "data_correo" => $data_correo,
-            // "asunto" => $asunto_correo
+            "datos"     => $usuariosCorreo,
+            // "datos" => $dataEnviada,
+            "data_correo" => $data_correo,
+            // "asunto" => $asunto_correo,
+            "token"     => $usutoken,
+            "usu"     => $usu,
 
         ]);
 
@@ -496,3 +528,80 @@ class EnviarPromocionesActivasController extends Controller
 }
 
 
+// MARZO
+// CENTRO
+
+// "LOGISTIC ONE",
+// "SERV. VIRGEN",
+// "ROMA AYACUCHO",
+// "ROMA",
+// "CONSORCIO ARBECO",
+// "DISTR. ARBECO",
+// "GLOSER",
+// "SANTA ROSA",
+// "BRENMA",
+// "GABRIELA INDI",
+// "GRUPO COMERCIAL ARELLANO",
+// "5M DISTRIBUCIONES SRL",
+// "DISTR. GIANCARLO",
+// "DISTR. SEÑOR DE POTOSI",
+// "DISTR. GABRIEL ARCANGEL",
+// "DISALTI",
+// "PAPA DE AMERICA SA",
+// "DISTR. E INVERSIONES ANDERSO",
+// "DIMEXA",
+// "JN SUR"
+
+// // PERAMAS
+
+// "DESPENSA CHICLAYO",
+// "DESPENSA TRUJILLO",
+// "ALMACENES DE LA SELVA JAEN",
+// "ALMACENES DE LA SELVA PUCALLPA",
+// "ALMACENES DE LA SELVA TARAPOTO",
+// "RACSER",
+// "DESPENSA DE LA SELVA",
+// "DESPENSA CAJAMARCA",
+// "DESPENSA CHIMBOTE",
+// "CHALI",
+// "DISTR. SILVIA",
+// "D Y R",
+// "DISTR. PATITA",
+// "GRUPO RACCE",
+// "PUNTO BLANCO"
+
+// // LIMA
+
+// "GUMI",
+// "VIJISA",
+// "REDIJISA",
+// "JIRUSA",
+// "JINORSA",
+// "ABAFLOR",
+// "RODAMEOS",
+// "INV. ZISCO",
+// "REP. JHOSEP",
+// "ZV INVERSIONES GENERALES",
+// "ROXAL",
+// "MA DI",
+// "M&S INV. TRADING",
+// "SUPERPLAZA",
+// "CODIJISA",
+// "CORP. CODIFER",
+// "ECONOMYSA",
+// "TUIN",
+// "DIST. JOMER",
+// "AUREN",
+// "DEHOCA",
+// "ORIUNDA SAC",
+// "CORP. VEGA",
+// "SAN RAFAELITO",
+// "SAGRA DISTRIBUCION",
+// "TERRANORTE",
+// "URIAFER",
+// "GUMI CHIMBOTE",
+// "JIMENEZ & AVENDAÑO",
+// "MOLI",
+// "TOTAL CALIDAD AMERICA",
+// "CORP. REHB",
+// "UNIÓN DE CERVECERÍAS PERUANAS BACKU"

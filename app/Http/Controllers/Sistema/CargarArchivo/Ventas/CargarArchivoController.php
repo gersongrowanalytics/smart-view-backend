@@ -72,29 +72,7 @@ class CargarArchivoController extends Controller
                                 ]);
 
         $fichero_subido = '';
-
-
-        if($usuusuario->tpuprivilegio == "todo"){
-            $cargarData = true;
-        }else{
-            $tup = tuptiposusuariospermisos::join('pempermisos as pem', 'pem.pemid', 'tuptiposusuariospermisos.pemid')
-                                            ->where('tuptiposusuariospermisos.tpuid', $usuusuario->tpuid)
-                                            ->where('pem.pemslug', "cargar.data.servidor")
-                                            ->first([
-                                                'tuptiposusuariospermisos.tpuid'
-                                            ]);
-
-            if($tup){
-                // $cargarData = true;
-            }else{
-                $cargarData = false;
-            }
-        }
-
-        // NO SUBIR DATA
-        // $cargarData = true;
-        
-        
+    
         try{
 
             $fichero_subido = base_path().'/public/Sistema/cargaArchivos/ventas/sellin/'.basename($_FILES['file']['name']);
@@ -513,7 +491,11 @@ class CargarArchivoController extends Controller
                                                     ->first(['tcanombre']);
 
                         $data = ['linkArchivoSubido' => $nuevoCargaArchivo->carurl , 'nombre' => $nuevoCargaArchivo->carnombrearchivo , 'tipo' => $tca->tcanombre, 'usuario' => $usuusuario->usuusuario];
-                        Mail::to('gerson.vilca@grow-analytics.com.pe')->send(new MailCargaArchivos($data));
+                        Mail::to([
+                            'gerson.vilca@grow-analytics.com.pe',
+                            'Jose.Cruz@grow-analytics.com.pe',
+                            'Frank.Martinez@grow-analytics.com.pe'
+                        ])->send(new MailCargaArchivos($data));
 
                         $registro_coa = new MetRegistrarMovimientoStatusController;
                         $registro_coa->MetRegistrarMovimientoStatus(11, $nuevoCargaArchivo->carid, $fecid);
@@ -527,6 +509,16 @@ class CargarArchivoController extends Controller
             }else{
 
             }
+
+            date_default_timezone_set("America/Lima");
+            $anioActual = date('Y');
+            $mesActual  = date('m');
+            $diaActual  = '01';
+
+            $fecfecid = fecfechas::where('fecdia', $diaActual)
+                                ->where('fecmesnumero', $mesActual)
+                                ->where('fecano', $anioActual)
+                                ->first(['fecid']);
 
         } catch (Exception $e) {
             $mensajedev = $e->getMessage();
@@ -554,7 +546,8 @@ class CargarArchivoController extends Controller
             "numeroCelda"    => $numeroCelda,
             "logs"           => $log,
             "soldtosNoExis"  => $soldtosNoExis,
-            "notificacionesLogs" => $notificacionesLogs
+            "notificacionesLogs" => $notificacionesLogs,
+            "fecfecid"       => $fecfecid,
         ]);
         
         $descripcion = "CARGAR DATA DE UN EXCEL AL SISTEMA DE VENTAS SELL IN";

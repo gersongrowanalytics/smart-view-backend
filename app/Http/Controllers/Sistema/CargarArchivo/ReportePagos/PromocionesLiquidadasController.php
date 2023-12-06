@@ -11,6 +11,8 @@ use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use PhpOffice\PhpSpreadsheet\Shared\Date;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\MailCargaArchivos;
 use App\proproductos;
 use App\usuusuarios;
 use App\carcargasarchivos;
@@ -179,7 +181,7 @@ class PromocionesLiquidadasController extends Controller
                 
             }else{
                 $nuevoCargaArchivo = new carcargasarchivos;
-                $nuevoCargaArchivo->tcaid            = 16; // Carga Reconocimiento de Pagos
+                $nuevoCargaArchivo->tcaid            = 16; // Carga Promociones de Liquidadas
                 $nuevoCargaArchivo->fecid            = $fecid;
                 $nuevoCargaArchivo->usuid            = $usuusuario->usuid;
                 $nuevoCargaArchivo->carnombrearchivo = $archivo;
@@ -188,6 +190,20 @@ class PromocionesLiquidadasController extends Controller
                 $nuevoCargaArchivo->carurl           = env('APP_URL').'/Sistema/cargaArchivos/promocionesliquidadas/'.basename($usuusuario->usuid.'-'.$usuusuario->usuusuario.'-'.$fechaActual.'-'.$_FILES['file']['name']);
                 if($nuevoCargaArchivo->save()){
                     $pkid = "CAR-".$nuevoCargaArchivo->carid;
+
+
+                    $data = [
+                        'linkArchivoSubido' => $nuevoCargaArchivo->carurl , 
+                        'nombre' => $nuevoCargaArchivo->carnombrearchivo , 
+                        'tipo' => "Carga Promociones Liquidadas", 
+                        'usuario' => $usuusuario->usuusuario
+                    ];
+
+                    Mail::to([
+                        'gerson.vilca@grow-analytics.com.pe',
+                        'Jose.Cruz@grow-analytics.com.pe',
+                        'Frank.Martinez@grow-analytics.com.pe'
+                    ])->send(new MailCargaArchivos($data));
 
                     $bad = badbasedatos::where('badnombre', 'Promociones Liquidadas DT')->first('badid');
                     if ($bad) {

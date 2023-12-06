@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Sistema\CargarArchivo\Promociones;
 
-use App\badbasedatos;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
@@ -32,9 +31,6 @@ use App\cspcanalessucursalespromociones;
 use App\prbpromocionesbonificaciones;
 use App\prppromocionesproductos;
 use App\carcargasarchivos;
-use App\coacontrolarchivos;
-use App\dmpdetallemecanicaspromocional;
-use App\Http\Controllers\Sistema\CargarArchivo\MetRegistrarMovimientoStatusController;
 use App\Mail\MailCargaArchivos;
 use App\tcatiposcargasarchivos;
 use App\tuptiposusuariospermisos;
@@ -71,7 +67,7 @@ class NuevaCargaPromocionesController extends Controller
                                 ]);
 
         if($usuusuario){
-            if($usuusuario->usuid == 1){
+            if($usuusuario->tpuid == 1){
                 $cargarData = true;
             }
         }
@@ -93,6 +89,7 @@ class NuevaCargaPromocionesController extends Controller
         //     }
         // }
         
+
         $fichero_subido = '';
 
         $pkid = 0;
@@ -735,7 +732,8 @@ class NuevaCargaPromocionesController extends Controller
                                                 $nuevoPrm->prmcodigo            = "-";
                                                 $nuevoPrm->prmmecanica          = $mecanica;
                                                 $nuevoPrm->prmaccion            = $accion;
-                                                $nuevoPrm->prmsku            = $sku;
+                                                $nuevoPrm->prmsku               = $sku;
+                                                $nuevoPrm->prmskubonificado     = $skuBonifi;
                                                 if($nuevoPrm->save()){
                                                     $prmid = $nuevoPrm->prmid;
                                                     $log["NUEVO_PROMOCION_CREADO"][] = $i."-".$prmid;
@@ -995,64 +993,31 @@ class NuevaCargaPromocionesController extends Controller
                 $mensaje   = "El excel no se pudo guardar en el servidor";
             }
 
-            $nuevoCargaArchivo = new carcargasarchivos;
-            $nuevoCargaArchivo->tcaid            = 1;
-            $nuevoCargaArchivo->fecid            = $fecid;
-            $nuevoCargaArchivo->usuid            = $usuusuario->usuid;
-            $nuevoCargaArchivo->carnombrearchivo = $archivo;
-            $nuevoCargaArchivo->carubicacion     = $fichero_subido;
-            $nuevoCargaArchivo->carexito         = $cargarData;
-            $nuevoCargaArchivo->carurl           = env('APP_URL').'/Sistema/cargaArchivos/promociones/'.$archivo;
-            if($nuevoCargaArchivo->save()){
-                $pkid = "CAR-".$nuevoCargaArchivo->carid;
-                $tca = tcatiposcargasarchivos::where('tcaid',$nuevoCargaArchivo->tcaid)
-                                                ->first(['tcanombre']);
-
-                $data = ['linkArchivoSubido' => $nuevoCargaArchivo->carurl , 'nombre' => $nuevoCargaArchivo->carnombrearchivo , 'tipo' => $tca->tcanombre, 'usuario' => $usuusuario->usuusuario];
-                Mail::to('gerson.vilca@grow-analytics.com.pe')->send(new MailCargaArchivos($data));
-
-
-                if (strpos($archivo, "lima")) {
-                    $bad = badbasedatos::where('badnombre', 'like', '%lima%')->first('badid');
-                }else if (strpos($archivo, "norte")){
-                    $bad = badbasedatos::where('badnombre','like', '%norte%')->first('badid');
-                }else if (strpos($archivo, "sur")){
-                    $bad = badbasedatos::where('badnombre', 'like', '%sur%')->first('badid');
-                }
-
-                if ($bad) {
-                    //ACTUALIZAR REGISTROS DE COA
-                    $registro_coa = new MetRegistrarMovimientoStatusController;
-                    $actualizacion_coa =  $registro_coa->MetRegistrarMovimientoStatus($bad->badid, $nuevoCargaArchivo->carid, $fecid);
-                    // $sucursalesSeleccionadas = ["AUREN","CODIJISA","CORP. CODIFER","SAN RAFAELITO","GUMI","ECONOMYSA","VIJISA","JIRUSA","REDIJISA","TUIN","DEHOCA","DIST. JOMER","URIAFER","TERRANORTE","TOTAL CALIDAD AMERICA","SAGRA DISTRIBUCION","MOLI","JIMENEZ NORTE"];
-                   
-                    //ACTUALIZA TABLA DE DETALLES MECANICA PROMOCIONAL
-                    if ($actualizacion_coa == true) {
-                        foreach ($sucursalesSeleccionadas as $key => $sucursal) {
-
-                            $suc = sucsucursales::where('sucnombre', $sucursal)->first(['sucid']);
-                            if ($suc) {
-                                $dmp = dmpdetallemecanicaspromocional::where('sucid', $suc->sucid)->first();
-                                if ($dmp) {
-                                    $dmp->badid = $bad->badid;
-                                    $dmp->carid = $nuevoCargaArchivo->carid;
-                                    $dmp->update();
-                                }else{
-                                    $dmpn = new dmpdetallemecanicaspromocional();
-                                    $dmpn->carid = $nuevoCargaArchivo->carid;
-                                    $dmpn->sucid = $suc->sucid;
-                                    $dmpn->badid = $bad->badid;
-                                    $dmpn->save();
-                                }
-                            }
-                        
-                        }
-                    }
-                }
-                
+            if($usuusuario->tpuid == 1){
 
             }else{
+                $nuevoCargaArchivo = new carcargasarchivos;
+                $nuevoCargaArchivo->tcaid            = 1;
+                $nuevoCargaArchivo->fecid            = $fecid;
+                $nuevoCargaArchivo->usuid            = $usuusuario->usuid;
+                $nuevoCargaArchivo->carnombrearchivo = $archivo;
+                $nuevoCargaArchivo->carubicacion     = $fichero_subido;
+                $nuevoCargaArchivo->carexito         = $cargarData;
+                $nuevoCargaArchivo->carurl           = env('APP_URL').'/Sistema/cargaArchivos/promociones/'.$archivo;
+                if($nuevoCargaArchivo->save()){
+                    $pkid = "CAR-".$nuevoCargaArchivo->carid;
+                    $tca = tcatiposcargasarchivos::where('tcaid',$nuevoCargaArchivo->tcaid)
+                                                    ->first(['tcanombre']);
 
+                    $data = ['linkArchivoSubido' => $nuevoCargaArchivo->carurl , 'nombre' => $nuevoCargaArchivo->carnombrearchivo , 'tipo' => $tca->tcanombre, 'usuario' => $usuusuario->usuusuario];
+                    Mail::to([
+                        'gerson.vilca@grow-analytics.com.pe',
+                        'Jose.Cruz@grow-analytics.com.pe',
+                        'Frank.Martinez@grow-analytics.com.pe'
+                    ])->send(new MailCargaArchivos($data));
+                }else{
+
+                }
             }
             
             
