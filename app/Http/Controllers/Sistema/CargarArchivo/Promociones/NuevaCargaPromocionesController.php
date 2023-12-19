@@ -92,6 +92,8 @@ class NuevaCargaPromocionesController extends Controller
 
         $fichero_subido = '';
 
+        $zonasExistentes = [];
+
         $pkid = 0;
         $log  = array(
             "NUEVA_PERSONA_EJECUTIVO"      => [],
@@ -932,6 +934,28 @@ class NuevaCargaPromocionesController extends Controller
                         
                     } 
                 }else{
+
+                    for ($i=2; $i <= $numRows ; $i++) {
+
+                        $soldTo     = $objPHPExcel->getActiveSheet()->getCell('F'.$i)->getCalculatedValue();
+
+                        $suce = sucsucursales::where('sucsoldto', $soldTo)
+                                            ->first();
+                        
+                        if($suce){
+
+                            $zone = zonzonas::find($suce->zonid);
+                            if($zone){
+
+                                if (!in_array(strtolower($zone->zonnombre), $zonasExistentes)) {
+
+                                    array_push($zonasExistentes, strtolower($zone->zonnombre));
+                                }
+                            }
+                        }
+
+                    }
+                    
                     date_default_timezone_set("America/Lima");
                     $anioActual = date('Y');
                     $mesActual  = date('m');
@@ -1032,6 +1056,7 @@ class NuevaCargaPromocionesController extends Controller
             "respuesta"      => true,
             "mensaje"        => $mensaje,
             "datos"          => $datos,
+            "zonas"          => $zonasExistentes,
             "linea"          => $linea,
             "mensajeDetalle" => $mensajeDetalle,
             "mensajedev"     => $mensajedev,

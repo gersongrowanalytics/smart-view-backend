@@ -16,10 +16,10 @@ class ObtenerUsuarioController extends Controller
         $usu = usuusuarios::join('perpersonas as per', 'usuusuarios.perid', 'per.perid')
                             ->where('usuusuario', $req_usuusuario)
                             ->get([
-                                'per.pernombrecompleto',
+                                'per.pernombrecompleto as pernombrecompleto',
                                 'per.pernombre',
-                                'per.perapellidopaterno',
-                                'per.perapellidopaterno',
+                                'per.perapellidopaterno as perapellidopaterno',
+                                'per.perapellidopaterno as perapellidomaterno',
                                 'usuusuarios.usuusuario',
                             ])->first();
 
